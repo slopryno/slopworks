@@ -9,3 +9,5 @@
 **Can't:** Change content, loosen a check, or skip a revert to save a deploy.
 
 **Handoff:** Reverts → the maker, next run. Budget alerts → Coordinator and Ryno.
+
+**Discussions:** after a publish that includes a standup, run `scripts/post_standup.py`. It posts to the read-only Team chat category and locks the thread. If Discussions or the category are missing, log it in runs.json and move on.

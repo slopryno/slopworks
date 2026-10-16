@@ -20,3 +20,5 @@ Review loops are capped at 2 rounds; a second block on the same PR is a disagree
 
 **Rules learned** (added by Advisor, each with its reason):
 - Skip event, meetup, workshop, and livestream posts at the draft stage. They aren't product changes, and Verify dropped them in both the 2026-10-15 backfill (six livestream promos) and the 2026-10-16 daily run (a conference workshop post).
+
+**Standup and pitches:** post a standup line when you have something new (did, doing, blockers). Pitch ideas from your area, and comment on other roles' pitches over runs (support, concern, or oppose).
