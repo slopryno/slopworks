@@ -118,5 +118,22 @@ class GuardrailGate(unittest.TestCase):
         self.assertFalse(check.loosening("data/schema/allowed_handles.json", added=[], removed=['"grok",']))
 
 
+class DraftFlow(unittest.TestCase):
+    """Bots open PRs as drafts, sign off, then mark ready; ready_for_review re-runs CI with the sign-offs present."""
+    def test_draft_defers_review_gate(self):
+        self.assertTrue(check.review_deferred({"draft": True}))
+        self.assertFalse(check.review_deferred({"draft": False}))
+        self.assertFalse(check.review_deferred({}))
+
+    def test_ci_reruns_on_ready_for_review(self):
+        ci = (Path(__file__).resolve().parent.parent / ".github/workflows/ci.yml").read_text()
+        self.assertIn("ready_for_review", ci)
+        for t in ("opened", "synchronize", "reopened"):
+            self.assertIn(t, ci)  # defaults kept, so nothing stops running
+
+    def test_daily_data_pr_needs_verify_and_trial_only(self):
+        self.assertEqual(check.required_roles(["data/updates.json", "site/index.html", "site/feed.json"]), {"Lens", "Trial"})
+
+
 if __name__ == "__main__":
     unittest.main()

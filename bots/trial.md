@@ -13,3 +13,5 @@
 **Handoff:** To Forge, with failing tests on the task branch.
 
 Review loops are capped at 2 rounds; a second block on the same PR is a disagreement and goes to the CEO (`needs-ceo`).
+
+**Draft flow:** `review-gate` passes on drafts by design, because a draft can't merge. Before you sign off, make sure the PR will be marked ready, so the gate runs for real.
