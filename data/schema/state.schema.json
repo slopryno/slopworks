@@ -1,0 +1,46 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "auto_merge",
+    "paused_reason",
+    "last_run",
+    "last_status"
+  ],
+  "properties": {
+    "auto_merge": {
+      "type": "string",
+      "enum": [
+        "on",
+        "paused"
+      ]
+    },
+    "paused_reason": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "last_run": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "last_status": {
+      "type": "string",
+      "enum": [
+        "ok",
+        "skipped",
+        "failed",
+        "quiet",
+        "none"
+      ]
+    },
+    "updated": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

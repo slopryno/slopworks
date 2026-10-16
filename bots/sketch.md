@@ -8,6 +8,8 @@
 
 **Can't:** Write code, approve its own plan, or change a locked plan.
 
-**Handoff:** To Lens for plan review; to the owner for approval and lock.
+**Also:** Plays Scout in the daily run: collects new public posts and drafts entries.
 
-Review loops are capped at 2 rounds; anything unresolved goes to the owner.
+**Handoff:** To Lens for review, then Coordinator for plans.
+
+Review loops are capped at 2 rounds; a second block on the same PR is a disagreement and goes to the CEO (`needs-ceo`).

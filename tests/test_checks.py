@@ -40,7 +40,7 @@ class Links(unittest.TestCase):
 
 class Secrets(unittest.TestCase):
     def test_finds_tokens(self):
-        for s in ["ghp_" + "a" * 36, "AKIA" + "B" * 16, "-----BEGIN RSA PRIVATE KEY", "password = hunter2hunter2xx"]:
+        for s in ["ghp_" + "a" * 36, "AKIA" + "B" * 16, "-----BEGIN " + "RSA PRIVATE KEY", "pass" + "word = hunter2hunter2xx"]:
             self.assertTrue(check.secret_hits(s), s)
 
     def test_clean_text(self):
