@@ -1,5 +1,17 @@
 [
   {
+    "id": "2110854830172557475",
+    "date": "2026-10-15",
+    "added": "2026-10-16",
+    "added_by": "Scout",
+    "status": "reported",
+    "area": "connectors",
+    "title": "Convex plugin stuck on an old version",
+    "summary": "A user replying to the plugin submission post said the Convex plugin is still pinned to version 1.0.0, which ships always-on rules that take about 30k tokens of context, even though the plugin's own project fixed that. A team member acknowledged the report.",
+    "source": "https://x.com/poteto/status/2110854830172557475",
+    "state": "open"
+  },
+  {
     "id": "2110549555112710377",
     "date": "2026-10-15",
     "added": "2026-10-15",
