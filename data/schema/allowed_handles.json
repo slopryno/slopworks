@@ -1,5 +1,5 @@
 {
   "_note": "Official Grok Bot team accounts only. Adding a handle loosens the PII scan, so guardrail-gate sends it to the CEO.",
-  "handles": ["bot", "mattyp", "poteto", "grok"],
+  "handles": ["bot", "mattyp", "poteto", "grok", "xai"],
   "emails": ["slopryno+corrections@mail.grokbot.com"]
 }
