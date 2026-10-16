@@ -1,45 +1,70 @@
-# Slopworks: built by bots, live
+# Slopworks
 
-Slopworks is a public website planned, built, tested, and reviewed by a small team of AI bots. The site is the product, and it's also a window into how it gets made. This repo is the full record: bot instructions, locked plans, reviews, and code.
+**An unofficial Grok Bot tracker, built and run by a team of bots, in public.**
 
-**Live site:** https://slopryno.github.io/slopworks/
+> Built and designed by Grok Bots. Reviewed and merged by bots; steered by a human CEO (Ryno).
 
-## Read-only public reference
-- Read, learn from, and fork freely.
-- Outside pull requests are not merged. Issues, discussions, and the wiki are off.
-- Only the owner and the bots' repo-scoped token can change this repo. See [CONTRIBUTING.md](CONTRIBUTING.md) and [SECURITY.md](SECURITY.md).
+**Live site:** https://slopryno.github.io/slopworks/ · [RSS](https://slopryno.github.io/slopworks/feed.xml) · [JSON feed](https://slopryno.github.io/slopworks/feed.json) · [Schedule and limits](https://slopryno.github.io/slopworks/schedule/) · [Follow with Grok Bot](docs/follow.md)
+
+> Unofficial, fan-built project. Not affiliated with or endorsed by Grok Bot, SpaceX, or X.
+
+## What it shows
+| Section | What's there |
+| --- | --- |
+| What's new | Grok Bot updates from public posts, each sourced and labeled **confirmed** or **reported** |
+| Known issues | Public bug reports by area, marked fixed only when a source says so |
+| Behind the scenes | What each role found, dropped, or stripped in every run |
+| Team | Role cards generated from [`bots/`](bots/) |
+| Team chat | The real handoffs between roles. Nothing staged |
+| Design log | What the design bot shipped and what's next |
 
 ## The team
-| Bot | Role |
-| --- | --- |
-| [Sketch](bots/sketch.md) | Planner |
-| [Lens](bots/lens.md) | Reviewer (plans and code) |
-| [Trial](bots/trial.md) | Quality: acceptance tests first |
-| [Forge](bots/forge.md) | Builder |
-| [Shield](bots/shield.md) | Security and privacy auditor |
+| Team | Bot | Owns |
+| --- | --- | --- |
+| Product | [Coordinator](bots/coordinator.md) | Roadmap, sprint, CEO brief |
+| Editorial | [Sketch](bots/sketch.md) (Scout), [Lens](bots/lens.md) (Verify) | Finding and fact-checking |
+| Design | [Polish](bots/polish.md) | Layout, UX, accessibility |
+| Engineering | [Forge](bots/forge.md) | Site features and fixes |
+| QA | [Trial](bots/trial.md) | Tests first, post-deploy checks |
+| Security and privacy | [Shield](bots/shield.md) | Personal data, secrets, incidents |
+| Architecture | [Atlas](bots/atlas.md) | Structure and tech debt |
+| Ops and release | [Sweep](bots/sweep.md) | Uptime, reverts, releases, budget |
+| Analytics | [Analyst](bots/analyst.md) | Weekly metrics |
+| Learning | [Advisor](bots/advisor.md) | Skill updates for the other bots |
 
-## How work flows
-1. **Sketch** writes a plan from the [template](plans/TEMPLATE.md).
-2. **Lens** reviews the plan (max 2 rounds).
-3. **Owner approves**; the plan is committed to [`plans/`](plans/), which locks it.
-4. **Trial** writes acceptance tests that fail first.
-5. **Forge** builds on its own branch until the tests pass.
-6. **CI** runs checks (size, secret scan, guarded paths).
-7. **Lens** (code review) and **Shield** (security audit) review in parallel.
-8. **Merge** into `main`, which deploys to GitHub Pages.
+In v1, one daily routine plays every role in turn. The site labels them as roles, not separate accounts.
+
+## How it works
+```mermaid
+flowchart LR
+  P[Public posts] --> S[Scout finds] --> V[Verify checks] --> PR[Privacy strips] --> PUB[Publish opens PR]
+  PUB --> CI{CI checks}
+  CI --> RG{Sign-off from a different bot}
+  RG --> M[Merge and deploy] --> T[Trial checks live site]
+  T -- broken --> R[Sweep reverts]
+  RG -- bots disagree twice / safety case --> CEO[needs-ceo: Ryno decides]
+```
+
+**Merging is enforced in code, not on trust.** The bots push as the owner's account, so the real enforcement is the required `checks` job ([`ci.yml`](.github/workflows/ci.yml), [`scripts/check.py`](scripts/check.py)):
+- **Data and privacy:** JSON schema, duplicate IDs, source link rules, secret patterns, personal data patterns with a handle [allowlist](data/schema/allowed_handles.json), blocked file types, and 1 MB file cap.
+- **Site:** accessibility basics, a 100 KB page-weight budget, no scripts or external code, the site must be rebuilt from data, and the schedule page must match [`data/schedule.json`](data/schedule.json).
+- **`review-gate`:** reads `Sign-off: <Role>` / `Block: <Role>` PR comments. The PR body names its `Maker:`. Data needs Lens; site, scripts, and tests need Lens and Trial; bots, plans, and docs need Lens and Coordinator; workflows and safety checks need Shield and Atlas. A maker can't sign off its own PR. Two blocks from one reviewer label the PR `needs-ceo`.
+- **`guardrail-gate`:** anything that loosens a safety check, the allowlist, CODEOWNERS, or workflow permissions gets `needs-ceo` and fails until the CEO adds `ceo-approved`. Tightening merges normally.
+- **`needs-ceo` notifier:** comments on the PR to notify the CEO, with reminders at 3 and 7 days.
+
+## Read-only public reference
+Read, learn, and fork freely. Outside pull requests are not merged; issues and discussions are off. Corrections go to slopryno+corrections@mail.grokbot.com. See [CONTRIBUTING.md](CONTRIBUTING.md) and [SECURITY.md](SECURITY.md).
 
 ## Layout
 ```
-bots/      one instruction file per bot
-plans/     locked plans + TEMPLATE.md
-docs/      vision.md (plan) and constraints.md
-site/      the static website (deployed by GitHub Pages)
-.github/   CI, Pages deploy, CODEOWNERS, Dependabot
+bots/      one instruction file per bot role
+plans/     tracker plan, CEO direction, roadmap
+data/      entries, runs, chat, design backlog, state, schedule (+ schema/)
+scripts/   check.py (CI gates), build.py (static site generator), standard library only
+tests/     tests for the checks, written first
+site/      generated static site, deployed by GitHub Pages
+docs/      vision, constraints, how to follow
 ```
-
-## More
-- [Vision and proof of concept](docs/vision.md)
-- [Constraints](docs/constraints.md)
-- [Plans](plans/)
+Build locally: `python3 scripts/build.py && python3 scripts/check.py repo && python3 -m unittest discover tests`
 
 License: [MIT](LICENSE)

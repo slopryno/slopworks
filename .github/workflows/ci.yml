@@ -9,6 +9,10 @@ jobs:
   checks:
     name: checks
     runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      pull-requests: write # only to add the needs-ceo label and comment; fork PRs get read-only
     steps:
       - uses: actions/checkout@v4
         with:
@@ -35,3 +39,36 @@ jobs:
           if [ "$AUTHOR" = "slopryno" ]; then exit 0; fi
           hits=$(git diff --name-only "$BASE" "$HEAD" | grep -E '^(\.github|bots|plans)/' || true)
           if [ -n "$hits" ]; then echo "PR by $AUTHOR touches guarded paths:"; echo "$hits"; exit 1; fi
+      - name: Unit tests for the checks
+        run: python3 -m unittest discover -s tests -v
+      - name: Repo checks (schema, duplicate IDs, sources, secrets, personal data, file types, accessibility, page weight, schedule)
+        env:
+          LINKCHECK: "1"
+        run: python3 scripts/check.py repo
+      - name: Site is built from data
+        run: python3 scripts/build.py --check
+      - name: bot/data-* path rule
+        if: github.event_name == 'pull_request'
+        env:
+          BRANCH: ${{ github.head_ref }}
+          BASE: ${{ github.event.pull_request.base.sha }}
+          HEAD: ${{ github.event.pull_request.head.sha }}
+        run: python3 scripts/check.py paths
+      - name: guardrail-gate
+        if: github.event_name == 'pull_request'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          PR: ${{ github.event.pull_request.number }}
+          BASE: ${{ github.event.pull_request.base.sha }}
+          HEAD: ${{ github.event.pull_request.head.sha }}
+        run: python3 scripts/check.py guardrail-gate
+      - name: review-gate
+        if: github.event_name == 'pull_request'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          PR: ${{ github.event.pull_request.number }}
+          BASE: ${{ github.event.pull_request.base.sha }}
+          HEAD: ${{ github.event.pull_request.head.sha }}
+        run: python3 scripts/check.py review-gate

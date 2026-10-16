@@ -2,3 +2,13 @@
 .env.*
 node_modules/
 .DS_Store
+__pycache__/
+*.pyc
+*.pem
+*.key
+*.p12
+cookies.*
+credentials*
+.netrc
+id_rsa*
+id_ed25519*

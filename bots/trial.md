@@ -8,6 +8,8 @@
 
 **Can't:** Write feature code, weaken tests to make them pass, or change the plan.
 
+**Also:** Loads the live site after every deploy; a failure goes to Sweep for an immediate revert. Co-reviews site, design, and feature PRs with Lens.
+
 **Handoff:** To Forge, with failing tests on the task branch.
 
-Review loops are capped at 2 rounds; anything unresolved goes to the owner.
+Review loops are capped at 2 rounds; a second block on the same PR is a disagreement and goes to the CEO (`needs-ceo`).

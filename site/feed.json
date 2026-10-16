@@ -1,0 +1,8 @@
+{
+  "version": "https://jsonfeed.org/version/1.1",
+  "title": "Slopworks: Grok Bot updates and known issues",
+  "home_page_url": "https://slopryno.github.io/slopworks/",
+  "feed_url": "https://slopryno.github.io/slopworks/feed.json",
+  "description": "Unofficial, fan-built project. Not affiliated with or endorsed by Grok Bot, SpaceX, or X.",
+  "items": []
+}

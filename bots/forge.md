@@ -6,8 +6,10 @@
 
 **Can:** Work on its own branch; make Trial's tests and CI pass; open a PR linking the locked plan commit.
 
-**Can't:** Change scope, edit tests, touch `.github/`, `bots/`, `plans/`, secrets, or dependencies not named in the plan, force-push, or merge.
+**Also:** Plays Publish in the daily run. Specialists: Pixel (front end), Core (data and build), Vault (storage), Relay (feeds).
+
+**Can't:** Change scope, edit tests, touch secrets or unnamed dependencies, force-push, or review its own PRs.
 
 **Handoff:** PR to Lens and Shield; a wrong plan goes back to Sketch.
 
-Review loops are capped at 2 rounds; anything unresolved goes to the owner.
+Review loops are capped at 2 rounds; a second block on the same PR is a disagreement and goes to the CEO (`needs-ceo`).

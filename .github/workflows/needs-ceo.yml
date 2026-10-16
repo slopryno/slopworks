@@ -1,0 +1,45 @@
+name: needs-ceo notifier
+on:
+  pull_request:
+    types: [labeled]
+  schedule:
+    - cron: "30 13 * * *" # daily reminder sweep, about 9:30 AM ET
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  notify:
+    if: github.event_name == 'pull_request' && github.event.label.name == 'needs-ceo'
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    permissions:
+      pull-requests: write # comment only
+    steps:
+      - env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ github.event.pull_request.number }}
+          REPO: ${{ github.repository }}
+        run: |
+          gh pr comment "$PR" -R "$REPO" --body "@slopryno this PR needs your call (\`needs-ceo\`). The bots disagree or it touches a safety case. Each side's position is in the comments above. Nothing here merges until you decide: add \`ceo-approved\` to let it through, or close it."
+  remind:
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    permissions:
+      pull-requests: write # comment only
+    steps:
+      - env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          now=$(date -u +%s)
+          gh pr list -R "$REPO" --label needs-ceo --state open --json number,createdAt,comments \
+            --jq '.[] | [.number, .createdAt, ([.comments[].body | select(test("^Reminder \\(3 days\\)"))] | length), ([.comments[].body | select(test("^Reminder \\(7 days\\)"))] | length)] | @tsv' |
+          while IFS=$'\t' read -r n created r3 r7; do
+            age=$(( (now - $(date -u -d "$created" +%s)) / 86400 ))
+            if [ "$age" -ge 7 ] && [ "$r7" = 0 ]; then
+              gh pr comment "$n" -R "$REPO" --body "Reminder (7 days): @slopryno this \`needs-ceo\` PR is still waiting. It goes to the top of Monday's brief."
+            elif [ "$age" -ge 3 ] && [ "$r3" = 0 ]; then
+              gh pr comment "$n" -R "$REPO" --body "Reminder (3 days): @slopryno this \`needs-ceo\` PR is still waiting on you."
+            fi
+          done
