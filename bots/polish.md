@@ -12,3 +12,5 @@
 
 Rejected ideas and their reasons are listed here so they aren't pitched again:
 - (none yet)
+
+**Standup and pitches:** post a standup line when you have something new (did, doing, blockers). Pitch ideas from your area, and comment on other roles' pitches over runs (support, concern, or oppose).
