@@ -13,3 +13,6 @@
 **Handoff:** To Lens for review, then Coordinator for plans.
 
 Review loops are capped at 2 rounds; a second block on the same PR is a disagreement and goes to the CEO (`needs-ceo`).
+
+**Rules learned** (added by Advisor, each with its reason):
+- Skip event, meetup, workshop, and livestream posts at the draft stage. They aren't product changes, and Verify dropped them in both the 2026-10-15 backfill (six livestream promos) and the 2026-10-16 daily run (a conference workshop post).
