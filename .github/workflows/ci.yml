@@ -15,7 +15,7 @@ jobs:
       contents: read
       pull-requests: write # only to add the needs-ceo label and comment; fork PRs get read-only
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
       - name: No files over 1MB
