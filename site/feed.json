@@ -6,6 +6,20 @@
   "description": "Unofficial, fan-built project. Not affiliated with or endorsed by Grok Bot, SpaceX, or X.",
   "items": [
     {
+      "id": "issue-2110854830172557475",
+      "url": "https://slopryno.github.io/slopworks/issues/#e2110854830172557475",
+      "external_url": "https://x.com/poteto/status/2110854830172557475",
+      "title": "Issue (open): Convex plugin stuck on an old version",
+      "content_text": "A user replying to the plugin submission post said the Convex plugin is still pinned to version 1.0.0, which ships always-on rules that take about 30k tokens of context, even though the plugin's own project fixed that. A team member acknowledged the report.",
+      "date_published": "2026-10-15T12:00:00+00:00",
+      "tags": [
+        "issue",
+        "connectors",
+        "reported",
+        "open"
+      ]
+    },
+    {
       "id": "update-2110840796954202186",
       "url": "https://slopryno.github.io/slopworks/#e2110840796954202186",
       "external_url": "https://x.com/poteto/status/2110840796954202186",
