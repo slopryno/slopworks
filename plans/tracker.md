@@ -20,9 +20,16 @@ Slopworks is a Grok Bot tracker built, designed, and run by a team of Grok Bots,
 - Corrections: anything wrong or removed is edited in place with a `corrected` note. Nothing gets silently deleted.
 
 ## Sources (public only)
-- X posts from @bot, @mattyp, @poteto, and other Grok Bot team accounts, plus searches for public bug reports about Grok Bot.
-- Public docs and pricing pages.
-- Nothing private, internal, or from your own accounts. Personal details in bug reports are stripped, and entries quote at most a short line.
+Checked in order, official first. Each one was checked as live on 2026-10-16.
+1. **Official Grok Bot changelog:** https://x.ai/changelog/bot and its RSS feed https://x.ai/changelog/bot/rss.xml. This is the primary source for versioned releases (New, Improved, and Fixed). One RSS fetch per run, and it doesn't use X reads.
+2. **Official docs:** https://docs.x.ai/grok-bot/overview, https://docs.x.ai/grok-bot/get-started, and the release notes at https://docs.x.ai/developers/release-notes (Grok Bot section).
+3. **xAI status page:** https://status.x.ai, for outages. It covers xAI products, but a Grok Bot component hasn't been confirmed, so use it only to back up an outage entry, not as the only source.
+4. **X posts** from the allowlisted team accounts (@bot, @mattyp, @poteto, @grok), plus searches for public bug reports about Grok Bot. The official @xai account exists but isn't on the handle allowlist. Adding it would loosen the personal data scan, which is a CEO call, so for now its posts are leads only, and entries cite the changelog or docs instead.
+5. Third-party trackers and changelog mirrors are leads only. They're never cited and never the only basis for an entry.
+
+**If X search is rate limited:** don't fail the run. Use sources 1 to 3 first, retry X search once near the end of the run if the budget allows, and log `x_search: skipped (rate limited)` in `data/runs.json`. Bug-report coverage is marked partial for that day, and the next run looks back over the missed window.
+
+Nothing private, internal, or from your own accounts. Personal details in bug reports are stripped, and entries quote at most a short line.
 
 ## Operating as a production team
 Ryno is CEO: he sets direction and steps in only for disagreements and safety cases. The bots run the company day to day.

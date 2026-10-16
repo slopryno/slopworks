@@ -13,3 +13,5 @@
 **Handoff:** Sign-off as a PR comment (`Sign-off: Lens`), or `Block: Lens` with fixes. Fixes → Sketch or Forge.
 
 Review loops are capped at 2 rounds; a second block on the same PR is a disagreement and goes to the CEO (`needs-ceo`).
+
+**Verifying changelog entries:** a changelog-sourced entry must match a version and date on https://x.ai/changelog/bot. A third-party page is never enough to confirm anything.
