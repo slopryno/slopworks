@@ -1,1 +1,24 @@
-[]
+[
+  {
+    "id": "2026-10-15-backfill",
+    "date": "2026-10-15",
+    "kind": "backfill",
+    "status": "ok",
+    "x_reads": 4,
+    "counts": {
+      "candidates": 30,
+      "published_updates": 17,
+      "published_issues": 2,
+      "dropped_verify": 10,
+      "stripped_privacy": 4,
+      "ci_failures": 0,
+      "dropped_privacy": 1
+    },
+    "notes": [
+      "Launch backfill of about 30 days of public posts from team accounts (Sep 15 to Oct 15).",
+      "Verify dropped 10: six livestream promos and one case study (not product changes), one connector post from an account it couldn't identify, one bug reply with no context, and one duplicate fix reply.",
+      "Privacy rewrote 4 entries so no regular user is named, and uses x.com/i/status links for non-team sources.",
+      "Privacy dropped one entry because it centered on a person's email address."
+    ]
+  }
+]
