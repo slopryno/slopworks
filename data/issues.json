@@ -1,1 +1,28 @@
-[]
+[
+  {
+    "id": "2110549555112710377",
+    "date": "2026-10-15",
+    "added": "2026-10-15",
+    "added_by": "Scout",
+    "status": "reported",
+    "area": "billing",
+    "title": "Locked out during plan unification",
+    "summary": "A user on X reported being locked out of Grok Bot for about two days while moving to the unified plan. A team member replied that they are looking into it.",
+    "source": "https://x.com/poteto/status/2110549555112710377",
+    "state": "open"
+  },
+  {
+    "id": "2110069342029447452",
+    "date": "2026-10-13",
+    "added": "2026-10-15",
+    "added_by": "Scout",
+    "status": "confirmed",
+    "area": "billing",
+    "title": "404 errors on unified plan link",
+    "summary": "Users replying to the unified plan announcement got 404 errors from a shared link. A team member said the cause was mitigated.",
+    "source": "https://x.com/mattyp/status/2110069342029447452",
+    "state": "fixed",
+    "fixed_date": "2026-10-13",
+    "fixed_source": "https://x.com/mattyp/status/2110069342029447452"
+  }
+]

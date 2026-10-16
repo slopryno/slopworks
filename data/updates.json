@@ -1,1 +1,189 @@
-[]
+[
+  {
+    "id": "2110840796954202186",
+    "date": "2026-10-15",
+    "added": "2026-10-15",
+    "added_by": "Scout",
+    "status": "confirmed",
+    "area": "connectors",
+    "title": "Plugins can be submitted",
+    "summary": "A Grok Bot team member shared that anyone can submit plugins for Grok Bot (and Grok and Cursor) through a public submission form.",
+    "source": "https://x.com/poteto/status/2110840796954202186"
+  },
+  {
+    "id": "2110496237241667621",
+    "date": "2026-10-14",
+    "added": "2026-10-15",
+    "added_by": "Scout",
+    "status": "reported",
+    "area": "email",
+    "title": "Plus aliases for Grok Bot email",
+    "summary": "Grok Bot email supports plus aliases: send and receive with dedicated aliases, or set routines that trigger only for mail sent to one alias.",
+    "source": "https://x.com/i/status/2110496237241667621"
+  },
+  {
+    "id": "2110469724660441365",
+    "date": "2026-10-14",
+    "added": "2026-10-15",
+    "added_by": "Scout",
+    "status": "reported",
+    "area": "connectors",
+    "title": "Basecamp connector launched",
+    "summary": "Basecamp announced an official Grok Bot connector, available from Connect Apps inside Grok Bot.",
+    "source": "https://x.com/i/status/2110469724660441365"
+  },
+  {
+    "id": "2110029484758028732",
+    "date": "2026-10-13",
+    "added": "2026-10-15",
+    "added_by": "Scout",
+    "status": "confirmed",
+    "area": "community",
+    "title": "Grok Bot X Communities",
+    "summary": "The team opened applications for curated Grok Bot group chats on X for GTM, product, marketing, engineering, recruiting, and design.",
+    "source": "https://x.com/poteto/status/2110029484758028732"
+  },
+  {
+    "id": "2110009541760839701",
+    "date": "2026-10-13",
+    "added": "2026-10-15",
+    "added_by": "Scout",
+    "status": "confirmed",
+    "area": "app",
+    "title": "Weekly roundup video",
+    "summary": "A team video walks through the week: Bot's own email, better X, Shopify, more color, email drafts, Bot's computer, template search, PR previews, routine right-clicks, and 5 new languages.",
+    "source": "https://x.com/mattyp/status/2110009541760839701"
+  },
+  {
+    "id": "2109784144649838754",
+    "date": "2026-10-12",
+    "added": "2026-10-15",
+    "added_by": "Scout",
+    "status": "confirmed",
+    "area": "billing",
+    "title": "One plan for Grok, Grok Bot, Cursor, and X",
+    "summary": "The X Subscription is one plan covering Cursor, Grok, Grok Bot, and X Premium. Every change is opt-in; if you do nothing, nothing changes.",
+    "source": "https://x.com/mattyp/status/2109784144649838754"
+  },
+  {
+    "id": "2108609764766908772",
+    "date": "2026-10-09",
+    "added": "2026-10-15",
+    "added_by": "Scout",
+    "status": "confirmed",
+    "area": "email",
+    "title": "Grok Bot gets its own email",
+    "summary": "Bots can use their own email address to sign up for services, contact businesses for you, or schedule time with someone.",
+    "source": "https://x.com/bot/status/2108609764766908772"
+  },
+  {
+    "id": "2108228871938359347",
+    "date": "2026-10-08",
+    "added": "2026-10-15",
+    "added_by": "Scout",
+    "status": "confirmed",
+    "area": "connectors",
+    "title": "Shopify connector",
+    "summary": "Connect Shopify, then ask Grok Bot to check orders, track inventory, and keep product listings up to date.",
+    "source": "https://x.com/bot/status/2108228871938359347"
+  },
+  {
+    "id": "2107949161878606089",
+    "date": "2026-10-07",
+    "added": "2026-10-15",
+    "added_by": "Scout",
+    "status": "confirmed",
+    "area": "x",
+    "title": "Search, read, and monitor X",
+    "summary": "Grok Bot can now search, read, and monitor X.",
+    "source": "https://x.com/bot/status/2107949161878606089"
+  },
+  {
+    "id": "2106083136002310193",
+    "date": "2026-10-02",
+    "added": "2026-10-15",
+    "added_by": "Scout",
+    "status": "confirmed",
+    "area": "billing",
+    "title": "Usage limits reset",
+    "summary": "Usage limits were reset for all Grok Bot users.",
+    "source": "https://x.com/bot/status/2106083136002310193"
+  },
+  {
+    "id": "2105713240701538538",
+    "date": "2026-10-01",
+    "added": "2026-10-15",
+    "added_by": "Scout",
+    "status": "confirmed",
+    "area": "app",
+    "title": "Proactive suggestions",
+    "summary": "Grok Bot can now suggest ways to help without you needing to ask.",
+    "source": "https://x.com/bot/status/2105713240701538538"
+  },
+  {
+    "id": "2105373767568621895",
+    "date": "2026-09-30",
+    "added": "2026-10-15",
+    "added_by": "Scout",
+    "status": "confirmed",
+    "area": "coding",
+    "title": "Better for building software",
+    "summary": "Bots can hand off coding tasks to Cursor, manage PRs with the GitHub and Origin plugins, and share video demos of what they build.",
+    "source": "https://x.com/bot/status/2105373767568621895"
+  },
+  {
+    "id": "2103936247995752705",
+    "date": "2026-09-26",
+    "added": "2026-10-15",
+    "added_by": "Scout",
+    "status": "confirmed",
+    "area": "connectors",
+    "title": "Finance integration",
+    "summary": "Link bank, card, and investment accounts with the new Finance integration, then ask Grok Bot to help manage spending and investments.",
+    "source": "https://x.com/bot/status/2103936247995752705"
+  },
+  {
+    "id": "2102532697960956074",
+    "date": "2026-09-22",
+    "added": "2026-10-15",
+    "added_by": "Scout",
+    "status": "confirmed",
+    "area": "app",
+    "title": "Cleaner interface",
+    "summary": "Quality-of-life update with a cleaner interface for working with your bots.",
+    "source": "https://x.com/bot/status/2102532697960956074"
+  },
+  {
+    "id": "2101014478255247544",
+    "date": "2026-09-18",
+    "added": "2026-10-15",
+    "added_by": "Scout",
+    "status": "confirmed",
+    "area": "voice",
+    "title": "Voice notes",
+    "summary": "Grok Bot can now send you voice notes.",
+    "source": "https://x.com/bot/status/2101014478255247544"
+  },
+  {
+    "id": "2100659463569170779",
+    "date": "2026-09-17",
+    "added": "2026-10-15",
+    "added_by": "Scout",
+    "status": "confirmed",
+    "area": "voice",
+    "title": "Grok Bot can talk",
+    "summary": "Grok Bot can now talk.",
+    "source": "https://x.com/bot/status/2100659463569170779"
+  },
+  {
+    "id": "2100335532597502311",
+    "date": "2026-09-16",
+    "added": "2026-10-15",
+    "added_by": "Scout",
+    "status": "confirmed",
+    "area": "connectors",
+    "title": "1Password",
+    "summary": "Grok Bot can use 1Password: share items in a vault, approve each fill, and the secrets stay in your password manager.",
+    "source": "https://x.com/bot/status/2100335532597502311"
+  }
+]
