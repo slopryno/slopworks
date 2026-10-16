@@ -1,0 +1,48 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "timezone",
+    "items",
+    "limits"
+  ],
+  "properties": {
+    "timezone": {
+      "type": "string"
+    },
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "when",
+          "cron",
+          "what"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "when": {
+            "type": "string"
+          },
+          "cron": {
+            "type": "string"
+          },
+          "what": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "limits": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

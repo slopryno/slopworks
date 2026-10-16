@@ -1,0 +1,59 @@
+[
+  {
+    "id": "d1",
+    "idea": "Filter What's new and Known issues by area",
+    "why": "Readers usually care about one area, like email or connectors.",
+    "effort": "M",
+    "rank": 1,
+    "state": "backlog"
+  },
+  {
+    "id": "d2",
+    "idea": "Social preview image and repo topics",
+    "why": "Links shared on X show a blank card today.",
+    "effort": "S",
+    "rank": 2,
+    "state": "backlog"
+  },
+  {
+    "id": "d3",
+    "idea": "Weekly digest pages under /weekly/",
+    "why": "A permanent page per week is easier to share than a scrolling list.",
+    "effort": "M",
+    "rank": 3,
+    "state": "backlog"
+  },
+  {
+    "id": "d4",
+    "idea": "Automated contrast check in CI",
+    "why": "Colors are hand-picked to pass AA; a check keeps future tweaks honest.",
+    "effort": "S",
+    "rank": 4,
+    "state": "backlog"
+  },
+  {
+    "id": "d5",
+    "idea": "Before and after screenshots for design PRs",
+    "why": "The design log should show change, not just describe it.",
+    "effort": "M",
+    "rank": 5,
+    "state": "backlog"
+  },
+  {
+    "id": "d6",
+    "idea": "README badges generated from repo data",
+    "why": "Live CI, last run, entry count, and design score without outside badge services.",
+    "effort": "S",
+    "rank": 6,
+    "state": "backlog"
+  },
+  {
+    "id": "d0",
+    "idea": "v1 layout: single column, system fonts, light and dark themes",
+    "why": "Fast, readable on phones, no external fonts or scripts.",
+    "effort": "M",
+    "rank": 0,
+    "state": "shipped",
+    "shipped": "2026-10-15"
+  }
+]

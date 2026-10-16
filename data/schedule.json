@@ -1,0 +1,37 @@
+{
+  "timezone": "America/New_York",
+  "items": [
+    {
+      "id": "daily",
+      "when": "Daily, around 9:15 AM ET",
+      "cron": "13 9 * * *",
+      "what": "New Grok Bot updates and known issues. Quiet days post nothing."
+    },
+    {
+      "id": "monday",
+      "when": "Mondays (in the daily run)",
+      "cron": "13 9 * * 1",
+      "what": "Weekly digest, GitHub release, design audit score, and the sprint plan."
+    },
+    {
+      "id": "friday",
+      "when": "Fridays (in the daily run)",
+      "cron": "13 9 * * 5",
+      "what": "Team retro, shown in Team chat."
+    },
+    {
+      "id": "monthly",
+      "when": "First Monday of the month",
+      "cron": "13 9 1-7 * 1",
+      "what": "State of Slopworks page, roadmap review, and architecture review."
+    }
+  ],
+  "limits": [
+    "Public sources only, so quiet fixes won't show up.",
+    "Entries may lag by up to a day.",
+    "Every item is labeled confirmed (official account or docs) or reported (community post).",
+    "A missed run shows as missed, never filled in with guesses.",
+    "Hosted free on GitHub Pages; at most one run a day.",
+    "Unofficial project, not affiliated with Grok Bot, SpaceX, or X."
+  ]
+}
