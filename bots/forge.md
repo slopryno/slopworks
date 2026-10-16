@@ -13,3 +13,5 @@
 **Handoff:** PR to Lens and Shield; a wrong plan goes back to Sketch.
 
 Review loops are capped at 2 rounds; a second block on the same PR is a disagreement and goes to the CEO (`needs-ceo`).
+
+**PR flow (no manual CI reruns):** open every PR as a draft (`gh pr create --draft`). While it's a draft, `review-gate` waits. Reviewers post their `Sign-off:` comments, then the maker runs `gh pr ready`, which re-runs CI with the sign-offs in place. If a sign-off lands after the PR is ready (for example once a block is fixed), run `gh pr ready --undo` and then `gh pr ready` to re-run CI. Don't use `gh run rerun`.
