@@ -355,6 +355,11 @@ def flag_ceo(reason):
         gh("POST", f"/issues/{n}/comments", {"body": f"@slopryno this PR needs your call (`needs-ceo`).\n\n{reason}\n\nNothing here merges until you decide. Add `ceo-approved` to let it through, or close it."})
 
 
+def review_deferred(pr):
+    """A draft can't merge, and marking it ready re-runs CI, so the sign-off check waits for that run."""
+    return pr.get("draft") is True
+
+
 def run_review_gate():
     base, head = pr_context()
     comments = []
@@ -366,6 +371,9 @@ def run_review_gate():
             break
         page += 1
     pr = gh("GET", f"/pulls/{os.environ['PR']}")
+    if review_deferred(pr):
+        print("review-gate: draft PR, sign-offs are checked when it is marked ready for review")
+        return []
     errs = review_gate(changed(base, head), pr.get("body") or "", comments)
     repeat = {r: n for r, n in block_count(comments).items() if n >= 2}
     if repeat:
