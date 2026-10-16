@@ -1,0 +1,22 @@
+{
+  "_note": "Guarded by guardrail-gate: removing or editing a pattern needs CEO sign-off. Adding one is fine.",
+  "secrets": {
+    "aws_key": "AKIA[0-9A-Z]{16}",
+    "github_token": "gh[pousr]_[A-Za-z0-9]{20,}",
+    "github_pat": "github_pat_[A-Za-z0-9_]{20,}",
+    "slack_token": "xox[baprs]-[A-Za-z0-9-]{10,}",
+    "private_key": "-----BEGIN [A-Z ]*PRIVATE KEY",
+    "jwt": "eyJ[A-Za-z0-9_-]{8,}\\.eyJ[A-Za-z0-9_-]{8,}\\.[A-Za-z0-9_-]{8,}",
+    "assignment": "(?i)\\b(api[_-]?key|secret|token|password|passwd)\\s*[:=]\\s*['\"]?[A-Za-z0-9_\\-/+]{12,}",
+    "high_entropy": "[A-Za-z0-9+/_-]{48,}"
+  },
+  "pii": {
+    "email": "[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}",
+    "phone": "(?<![\\d/])(?:\\+?1[ .-]?)?\\(?\\d{3}\\)?[ .-]\\d{3}[ .-]\\d{4}(?!\\d)",
+    "handle": "(?<![A-Za-z0-9_./])@([A-Za-z0-9_]{1,15})\\b",
+    "x_url_handle": "(?:x|twitter)\\.com/([A-Za-z0-9_]{1,15})/status"
+  },
+  "blocked_files": ["\\.env($|\\.)", "\\.pem$", "\\.key$", "\\.p12$", "\\.pfx$", "(^|/)id_(rsa|ed25519|ecdsa)", "cookies?(\\.txt|\\.json|\\.sqlite)$", "credentials?(\\.json)?$", "\\.netrc$"],
+  "max_file_bytes": 1048576,
+  "max_page_bytes": 102400
+}
