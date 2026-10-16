@@ -18,6 +18,7 @@ ALLOWED_EMAILS = {e.lower() for e in ALLOW["emails"]}
 CSS_AT_RULES = {"media", "font", "keyframes", "import", "supports", "charset", "page", "layer", "container", "namespace"}
 SOURCE_HOSTS = ("x.com", "github.com", "grokbot.com", "grok.com", "x.ai")
 DATA_FILES = ["updates", "issues", "runs", "chat", "design_backlog", "state", "schedule"]
+DATA_FILES += ["standup", "ideas"]
 ALIASES = {"verify": "Lens", "scout": "Sketch", "publish": "Forge", "privacy": "Shield"}
 
 
@@ -94,6 +95,48 @@ def live_link_errors(urls):
                 errs.append(f"dead source ({e.code}): {url}")
         except Exception as e:  # network hiccup: warn, don't fail
             print(f"warning: could not reach {url}: {e}")
+    return errs
+
+
+# ---------- standup pitches and idea log ----------
+DECIDED = {"yes", "no", "later", "vetoed", "needs-ceo", "shipped"}
+
+
+def idea_errors(ideas):
+    """Rules from plans/tracker.md: Coordinator decides, only Shield vetoes, 2+ strong objections go to the CEO."""
+    errs = []
+    for i in ideas:
+        n, st = i.get("id"), i.get("state")
+        if st in DECIDED and not (i.get("decided") and i.get("reason") and i.get("decided_by")):
+            errs.append(f"idea {n}: a {st} decision needs decided, decided_by, and reason")
+        if st == "vetoed" and i.get("decided_by") != "Shield":
+            errs.append(f"idea {n}: only Shield can veto")
+        if st in ("yes", "no", "later") and i.get("decided_by") != "Coordinator":
+            errs.append(f"idea {n}: only Coordinator decides yes/no/later")
+        strong = {c["role"] for c in i.get("comments", []) if c.get("stance") == "oppose" and c.get("strong") and c["role"] != "Coordinator"}
+        if st in ("yes", "no", "later") and len(strong) >= 2:
+            errs.append(f"idea {n}: {len(strong)} roles strongly disagree, so it must be needs-ceo")
+        if i.get("repitch_of") and not i.get("evidence"):
+            errs.append(f"idea {n}: a re-pitch needs new evidence")
+    return errs
+
+
+EMOJI = re.compile("[\U0001F000-\U0001FAFF\u2600-\u27BF]")
+
+
+def x_draft_errors(text):
+    """Ryno's style for X drafts. Bots never post; drafts go to Ryno in the run report."""
+    errs = []
+    if text != text.lower():
+        errs.append("use lowercase")
+    if re.search(r"(^|\s)#\w", text):
+        errs.append("no hashtags")
+    if len(EMOJI.findall(text)) > 1:
+        errs.append("at most one emoji")
+    if "slopryno.github.io/slopworks" not in text:
+        errs.append("link the site")
+    if len(text) > 280:
+        errs.append("over 280 characters")
     return errs
 
 
@@ -309,6 +352,7 @@ def run_repo():
         errs += [f"{f}: possible secret ({n}: {s})" for n, s in secret_hits(text)]
         if f.startswith(("data/", "site/")) and f != "data/schema/allowed_handles.json":
             errs += [f"{f}: personal data ({n}: {s})" for n, s in pii_hits(text)]
+    errs += idea_errors(data.get("ideas", []))
     css = sum((ROOT / f).stat().st_size for f in files if f.startswith("site/") and f.endswith(".css"))
     for f in files:
         if f.startswith("site/") and f.endswith(".html"):
@@ -408,6 +452,10 @@ def run_paths():
 
 def main():
     cmd = sys.argv[1] if len(sys.argv) > 1 else "repo"
+    if cmd == "x-draft":
+        problems = x_draft_errors(" ".join(sys.argv[2:]))
+        print("\n".join(problems) or "x-draft: ok")
+        sys.exit(1 if problems else 0)
     errs = {"repo": run_repo, "paths": run_paths, "review-gate": run_review_gate, "guardrail-gate": run_guardrail_gate}[cmd]()
     for e in errs:
         print(f"::error::{e}")

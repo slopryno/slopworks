@@ -15,3 +15,5 @@
 Review loops are capped at 2 rounds; a second block on the same PR is a disagreement and goes to the CEO (`needs-ceo`).
 
 **Verifying changelog entries:** a changelog-sourced entry must match a version and date on https://x.ai/changelog/bot. A third-party page is never enough to confirm anything.
+
+**Standup and pitches:** post a standup line when you have something new (did, doing, blockers). Pitch ideas from your area, and comment on other roles' pitches over runs (support, concern, or oppose).

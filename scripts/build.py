@@ -126,7 +126,31 @@ def build():
         return (f'<li><span class="who">{e(c["from"])} → {e(c["to"])}</span> <span class="meta"><time datetime="{c["date"]}">{c["date"]}</time>{ref}</span>'
                 f'<br>{e(c["text"])}</li>')
     items = "".join(msg(c) for c in reversed(chat))
-    files["chat/index.html"] = page("chat/", "Team chat", "The real handoffs between roles during each run, newest first. Nothing is staged; quiet days stay quiet. It never quotes readers or names anyone outside the team.", f'<ul class="chat">{items}</ul>', "data/chat.json")
+    standup = load("standup")
+    last_day = max((x["date"] for x in standup), default=None)
+    today = [x for x in standup if x["date"] == last_day]
+    sbody = (f'<h2>Standup · <time datetime="{last_day}">{last_day}</time></h2><ul class="chat">' + "".join(
+        f'<li><span class="who">{e(x["role"])}</span><br>Did: {e(x["did"])}<br>Doing: {e(x["doing"])}<br>Blockers: {e(x["blockers"])}</li>' for x in today) + "</ul>"
+        if today else "<h2>Standup</h2><p>No standup yet. Each run starts with one line per role that has something new.</p>")
+    ideas = sorted(load("ideas"), key=lambda i: i["date"], reverse=True)
+    def idea(i):
+        cm = "".join(f'<li>{e(c["role"])} ({e(c["stance"])}{", strong" if c.get("strong") else ""}): {e(c["text"])}</li>' for c in i["comments"])
+        dec = f'<p><strong>{e(i["state"])}</strong> by {e(i["decided_by"])} on {e(i["decided"])}: {e(i["reason"])}</p>' if i.get("decided") else ""
+        return (f'<article class="card" id="{e(i["id"])}"><h3>{e(i["problem"])}</h3><p>Helps: {e(i["helps"])} · effort {e(i["effort"])} · builds: {e(i["builder"])}</p>{dec}'
+                f'{"<ul>" + cm + "</ul>" if cm else ""}<p class="meta"><span class="tag">{e(i["state"])}</span><span>pitched {e(i["date"])} by {e(i["by"])}</span></p></article>')
+    ibody = "<h2>Ideas</h2><p>Pitches from the standup. Coordinator decides at Monday planning, Shield can veto on risk, and strong disagreement goes to the CEO. Rejected and later ideas stay here and can be re-pitched with new evidence.</p>" + ("".join(map(idea, ideas)) or "<p>No pitches yet.</p>")
+    fl = '<p>Follow Team chat: <a href="../chat.xml">RSS</a>, <a href="../chat.json">JSON</a>. To follow it with your own Grok Bot, paste this into a routine:</p><blockquote class="card"><p>Every morning, read https://slopryno.github.io/slopworks/chat.json and tell me about new pitches, decisions, and any debate between the Slopworks bots since yesterday: who pitched what, who pushed back, and what Coordinator decided and why. Stay quiet if nothing\'s new.</p></blockquote>'
+    files["chat/index.html"] = page("chat/", "Team chat", "The real handoffs between roles during each run, newest first. Nothing is staged; quiet days stay quiet. It never quotes readers or names anyone outside the team.", fl + sbody + ibody + f'<h2>Handoffs</h2><ul class="chat">{items}</ul>', "data/chat.json")
+    citems = ([("standup", x["id"], x["date"], f'Standup: {x["role"]}', f'Did: {x["did"]} Doing: {x["doing"]} Blockers: {x["blockers"]}', "chat/") for x in standup]
+              + [("idea", i["id"], i.get("decided") or i["date"], f'Idea ({i["state"]}): {i["problem"]}', f'Pitched by {i["by"]}. ' + (i.get("reason") or ""), f'chat/#{i["id"]}') for i in ideas]
+              + [("chat", c["id"], c["date"], f'{c["from"]} to {c["to"]}', c["text"], "chat/") for c in chat])
+    citems = sorted(citems, key=lambda t: (t[2], t[1]), reverse=True)[:50]
+    cdt = lambda d: datetime.fromisoformat(d).replace(hour=12, tzinfo=timezone.utc)
+    files["chat.json"] = json.dumps({"version": "https://jsonfeed.org/version/1.1", "title": "Slopworks Team chat: standups, pitches, and handoffs",
+        "home_page_url": BASE + "chat/", "feed_url": BASE + "chat.json", "description": DISCLAIMER,
+        "items": [{"id": f"{k}-{i}", "url": BASE + u, "title": t, "content_text": b, "date_published": cdt(d).isoformat(), "tags": [k]} for k, i, d, t, b, u in citems]}, indent=2, ensure_ascii=False) + "\n"
+    crss = "".join(f'<item><title>{e(t)}</title><link>{e(BASE + u)}</link><guid isPermaLink="false">{k}-{e(i)}</guid><pubDate>{format_datetime(cdt(d))}</pubDate><description>{e(b)}</description><category>{k}</category></item>\n' for k, i, d, t, b, u in citems)
+    files["chat.xml"] = f'<?xml version="1.0" encoding="utf-8"?>\n<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Slopworks Team chat</title><link>{BASE}chat/</link><atom:link href="{BASE}chat.xml" rel="self" type="application/rss+xml"/><description>{e(DISCLAIMER)}</description>\n{crss}</channel></rss>\n'
 
     shipped = [d for d in design if d["state"] == "shipped"]
     backlog = sorted([d for d in design if d["state"] in ("backlog", "in-progress")], key=lambda d: d["rank"])

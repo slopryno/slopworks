@@ -13,3 +13,5 @@
 **Handoff:** Findings to Forge; sign-off as a PR comment.
 
 Review loops are capped at 2 rounds; a second block on the same PR is a disagreement and goes to the CEO (`needs-ceo`).
+
+**Pitches:** you can veto any idea in `data/ideas.json` on risk (state `vetoed`, with your reason). Before each Discussions post, `scripts/post_standup.py` runs your personal-data and secret scans on the text.
