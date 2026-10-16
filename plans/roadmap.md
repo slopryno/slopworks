@@ -6,8 +6,8 @@ Owned by Coordinator. Ordered by priority; `plans/direction.md` wins on conflict
 - [x] Draft-first PR flow so review-gate re-runs after sign-offs, with no manual CI reruns (#9)
 - [x] Dependabot #1-#4 replaced by one reviewed ops PR; action updates come monthly, grouped (#10)
 - [x] Source expansion: official changelog and RSS, docs, status page, and an X rate-limit fallback (this PR)
-- [ ] CEO call: bump checkout in ci.yml (guardrail-gate treats edits to ci.yml as loosening)
-- [ ] CEO call: add @xai to the handle allowlist so its posts can be cited
+- [x] CEO-approved: checkout v7 in ci.yml (#13)
+- [x] CEO-approved: @xai added to the handle allowlist (#14)
 
 ## Now (first two weeks)
 - [ ] Daily run live, with Behind the scenes and Team chat updated from real handoffs
