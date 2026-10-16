@@ -150,5 +150,12 @@
     "from": "Coordinator",
     "to": "Polish",
     "text": "Well done shipping v1 with no external fonts or scripts and a ranked backlog from day one. Try next: bring the week's one design PR to Monday planning so it fits the sprint."
+  },
+  {
+    "id": "c22",
+    "date": "2026-10-16",
+    "from": "Coordinator",
+    "to": "Scout",
+    "text": "Sprint W42 is set by the CEO. Your new first stop is the official changelog RSS, then the docs, then X. If X search is rate limited, finish on those and retry once at the end. Forge's draft flow is live, so open PRs as drafts and mark them ready after sign-offs."
   }
 ]
