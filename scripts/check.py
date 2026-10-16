@@ -213,7 +213,7 @@ def review_gate(paths, pr_body, comments):
         return ["PR body must name its maker, e.g. 'Maker: Forge'"]
     maker = _role(m.group(1))
     latest = {}
-    for c in comments:
+    for c in trusted(comments):
         for kind, who in re.findall(r"^\s*(Sign-off|Block):\s*(\S+)", c.get("body", ""), re.M | re.I):
             latest[_role(who)] = kind.lower()
     for role in sorted(required_roles(paths)):
@@ -229,9 +229,17 @@ def review_gate(paths, pr_body, comments):
     return sorted(set(errs))
 
 
+TRUSTED = {"OWNER", "MEMBER", "COLLABORATOR"}
+
+
+def trusted(comments):
+    """Public repo: anyone can comment, so only comments from people with write access count."""
+    return [c for c in comments if c.get("author_association", "OWNER") in TRUSTED]
+
+
 def block_count(comments, role=None):
     n = {}
-    for c in comments:
+    for c in trusted(comments):
         for who in re.findall(r"^\s*Block:\s*(\S+)", c.get("body", ""), re.M | re.I):
             n[_role(who)] = n.get(_role(who), 0) + 1
     return n

@@ -94,6 +94,12 @@ class ReviewGate(unittest.TestCase):
         self.assertTrue(check.review_gate(["data/x.json"], "", c))  # no maker
         self.assertTrue(check.review_gate(["site/a.css"], "Maker: Forge", c))  # missing Trial
 
+    def test_outsider_signoff_ignored(self):
+        c = [{"body": "Sign-off: Lens", "author_association": "NONE"}]
+        self.assertTrue(check.review_gate(["data/x.json"], "Maker: Scout", c))
+        c = [{"body": "Sign-off: Lens", "author_association": "OWNER"}]
+        self.assertEqual(check.review_gate(["data/x.json"], "Maker: Scout", c), [])
+
     def test_blocking_comment_wins(self):
         c = [{"body": "Sign-off: Lens"}, {"body": "Block: Lens\nsource is dead"}]
         self.assertTrue(check.review_gate(["data/x.json"], "Maker: Scout", c))
