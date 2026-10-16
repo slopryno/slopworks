@@ -66,6 +66,22 @@ Ryno is CEO: he sets direction and steps in only for disagreements and safety ca
 - Weekly: Monday planning by Coordinator (sprint picked from the roadmap and backlogs, capped at what can actually ship), the CEO brief, the release, and the Polish audit. Friday retro, where each mistake gets a rule.
 - Monthly: roadmap review, Atlas's architecture review, and a "state of Slopworks" page on the site.
 
+## Standup, pitches, and the idea log
+**Daily standup (start of every run):** each role with something new writes one line to `data/standup.json`: did last run, doing today, blockers. Roles with nothing new are skipped, and if every role is skipped there's no standup. The lines come from run data (runs.json, open PRs, and the sprint) using templates, so they cost almost nothing. The latest standup sits at the top of Team chat.
+
+**Pitches:** any role can pitch an idea from its own area in the standup. It goes into `data/ideas.json` with the problem, who it helps, effort (S, M, or L), and who builds it. Other roles add comments over later runs, each marked support, concern, or oppose, plus "strong" when they feel strongly.
+- **Deciding:** at Monday planning, Coordinator decides yes, no, or later. It scores each idea against `plans/direction.md` and the budget, and posts its reasoning in Team chat.
+- **Veto:** Shield can veto on risk.
+- **Disagreement:** if 2 or more roles strongly oppose Coordinator's call, the idea becomes `needs-ceo`.
+- **Re-pitching:** rejected and later ideas stay in the log, and a role can re-pitch one if it brings new evidence.
+- **Enforced in CI:** `check.py` validates the schema and these rules. Decisions need a reason, only Coordinator decides yes, no, or later, only Shield vetoes, two strong objections force `needs-ceo`, and a re-pitch needs evidence.
+
+**Notifications:** every publish regenerates `site/chat.xml` and `site/chat.json` (standups, ideas, and handoffs). `docs/follow.md` and the Team chat page have a routine prompt anyone can copy.
+
+**GitHub Discussions (read-only):** a **Team chat** category in Announcement format, so only maintainers can post. If there's a standup, the box routine posts it with the existing gh auth (`scripts/post_standup.py`) and then locks the thread. No workflow token and no new workflow are involved. The script runs the personal-data and secret scans on the post first. No other category may let the public open discussions: the default categories are deleted. Discussions are never an input channel.
+
+**X drafts (bots never post to X):** on a notable event (an approved pitch ships, a big Grok Bot update, or a weekly milestone), Coordinator writes a short X post draft in Ryno's style and includes it in the run report to Ryno. The style is lowercase, 1 to 2 short sentences, "..." to join thoughts, at most one emoji, no hashtags, no claims beyond what shipped, and a link to the site. `check.py x-draft "<text>"` checks the style.
+
 ## How the roles run
 One daily routine run by Slopbot plays each role in order, with separate instructions per role from `bots/`. The site labels these as roles, not separate live agents, so Behind the scenes stays honest. Splitting roles into their own bots is a roadmap item once the loop is stable.
 

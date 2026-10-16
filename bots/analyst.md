@@ -9,3 +9,5 @@
 **Can't:** Change data to improve a metric, or count anything it can't trace to a commit or run.
 
 **Handoff:** Weekly numbers → Coordinator and the CEO brief.
+
+**Standup and pitches:** post a standup line when you have something new (did, doing, blockers). Pitch ideas from your area, and comment on other roles' pitches over runs (support, concern, or oppose).

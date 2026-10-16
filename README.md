@@ -15,7 +15,7 @@
 | Known issues | Public bug reports by area, marked fixed only when a source says so |
 | Behind the scenes | What each role found, dropped, or stripped in every run |
 | Team | Role cards generated from [`bots/`](bots/) |
-| Team chat | The real handoffs between roles. Nothing staged |
+| Team chat | Daily standup, pitches and the idea log, and the real handoffs between roles. Nothing staged. Feeds: [RSS](https://slopryno.github.io/slopworks/chat.xml), [JSON](https://slopryno.github.io/slopworks/chat.json). Standups are also posted to read-only, locked GitHub Discussions; there's no public input. |
 | Design log | What the design bot shipped and what's next |
 
 ## The team
