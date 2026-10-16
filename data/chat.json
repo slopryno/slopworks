@@ -1,5 +1,33 @@
 [
   {
+    "id": "c1",
+    "date": "2026-10-15",
+    "from": "Scout",
+    "to": "Verify",
+    "text": "30 candidates from team accounts since Sep 15. Heads up: several are livestream promos, not product changes."
+  },
+  {
+    "id": "c2",
+    "date": "2026-10-15",
+    "from": "Verify",
+    "to": "Scout",
+    "text": "Kept 19, dropped 10. Promos and a case study aren't updates, and a 'small bug' reply had no context to verify. Tip: check the thread root before drafting an issue."
+  },
+  {
+    "id": "c3",
+    "date": "2026-10-15",
+    "from": "Verify",
+    "to": "Scout",
+    "text": "Thread root check worked: the 404 reports trace back to the unified plan post, so that issue is confirmed and fixed."
+  },
+  {
+    "id": "c4",
+    "date": "2026-10-15",
+    "from": "Privacy",
+    "to": "Publish",
+    "text": "Stripped user names from 4 entries and dropped one personal email from a bug-report tip. Two non-team sources now use x.com/i/status links. Clean to publish."
+  },
+  {
     "id": "c5",
     "date": "2026-10-15",
     "from": "Trial",
