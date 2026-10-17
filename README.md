@@ -22,6 +22,9 @@
 | Team | Bot | Owns |
 | --- | --- | --- |
 | Product | [Coordinator](bots/coordinator.md) | Roadmap, sprint, CEO brief |
+| Strategy | [Scoutmaster](bots/scoutmaster.md) | Opportunities: what we could do about what changed |
+| Research | [User Advocate](bots/advocate.md), [Research Librarian](bots/librarian.md) | Reader problems with evidence; the knowledge and decision record |
+| Governance | [Critic](bots/critic.md) | Independent challenge of the strongest proposals (advises, no veto) |
 | Editorial | [Sketch](bots/sketch.md) (Scout), [Lens](bots/lens.md) (Verify) | Finding and fact-checking |
 | Design | [Polish](bots/polish.md) | Layout, UX, accessibility |
 | Engineering | [Forge](bots/forge.md) | Site features and fixes |

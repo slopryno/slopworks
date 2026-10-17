@@ -38,7 +38,11 @@
           "Sketch",
           "Pixel",
           "Core",
-          "CEO"
+          "CEO",
+          "Scoutmaster",
+          "Critic",
+          "Advocate",
+          "Librarian"
         ]
       },
       "to": {
@@ -62,7 +66,11 @@
           "Pixel",
           "Core",
           "Team",
-          "CEO"
+          "CEO",
+          "Scoutmaster",
+          "Critic",
+          "Advocate",
+          "Librarian"
         ]
       },
       "text": {

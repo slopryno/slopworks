@@ -42,7 +42,11 @@
           "Sketch",
           "Pixel",
           "Core",
-          "CEO"
+          "CEO",
+          "Scoutmaster",
+          "Critic",
+          "Advocate",
+          "Librarian"
         ]
       },
       "problem": {
@@ -80,7 +84,11 @@
           "Shield",
           "Sketch",
           "Pixel",
-          "Core"
+          "Core",
+          "Scoutmaster",
+          "Critic",
+          "Advocate",
+          "Librarian"
         ]
       },
       "state": {
@@ -131,7 +139,11 @@
                 "Shield",
                 "Sketch",
                 "Pixel",
-                "Core"
+                "Core",
+                "Scoutmaster",
+                "Critic",
+                "Advocate",
+                "Librarian"
               ]
             },
             "stance": {
@@ -176,7 +188,11 @@
           "Sketch",
           "Pixel",
           "Core",
-          "CEO"
+          "CEO",
+          "Scoutmaster",
+          "Critic",
+          "Advocate",
+          "Librarian"
         ]
       },
       "reason": {

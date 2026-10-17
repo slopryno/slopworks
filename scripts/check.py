@@ -21,6 +21,7 @@ DATA_FILES = ["updates", "issues", "runs", "chat", "design_backlog", "state", "s
 DATA_FILES += ["standup", "ideas"]
 DATA_FILES += ["wins"]
 DATA_FILES += ["research"]
+DATA_FILES += ["alumni"]
 ALIASES = {"verify": "Lens", "scout": "Sketch", "publish": "Forge", "privacy": "Shield"}
 
 
@@ -195,6 +196,23 @@ def research_errors(notes, schedule, ideas):
             errs.append(f"{k}: bad date")
         if n.get("pitch") and n["pitch"] not in idea_ids:
             errs.append(f"{k}: pitch {n['pitch']} isn't in data/ideas.json")
+    return errs
+
+
+def alumni_errors(alumni, schedule, active_bots=None):
+    """Offboarded roles: no active bot file, no rotation slot. History stays, archived under bots/alumni/."""
+    if active_bots is None:
+        active_bots = [f.stem for f in (ROOT / "bots").glob("*.md")]
+    rot = {r["role"].lower() for d in schedule.get("research", []) for r in d["roles"]}
+    errs = []
+    for a in alumni:
+        r = a["role"].lower()
+        if r in active_bots:
+            errs.append(f"offboarded role {a['role']}: move bots/{r}.md to bots/alumni/ (archive, don't delete)")
+        if r in rot:
+            errs.append(f"offboarded role {a['role']}: still in the research rotation")
+        if not a.get("successor"):
+            errs.append(f"offboarded role {a['role']}: open work needs a successor")
     return errs
 
 
@@ -433,6 +451,7 @@ def run_repo():
             errs += [f"{f}: personal data ({n}: {s})" for n, s in pii_hits(text)]
     errs += idea_errors(data.get("ideas", []))
     errs += chat_errors(data.get("chat", []), data.get("ideas", []))
+    errs += alumni_errors(data.get("alumni", []), data.get("schedule", {}))
     errs += research_errors(data.get("research", []), data.get("schedule", {}), data.get("ideas", []))
     css = sum((ROOT / f).stat().st_size for f in files if f.startswith("site/") and f.endswith(".css"))
     for f in files:
