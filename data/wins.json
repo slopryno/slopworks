@@ -1,5 +1,13 @@
 [
   {
+    "id": "pr74",
+    "role": "Polish",
+    "title": "Polish/Trial: mobile-first CSS (i36), 0 overflow and 0 small tap targets at every width, 360px browser test",
+    "pr": "https://github.com/slopryno/slopworks/pull/74",
+    "date": "2026-10-17",
+    "merged": "2026-10-17T19:30-04:00"
+  },
+  {
     "id": "pr73",
     "role": "Polish",
     "title": "Comms/Polish: simpler landing (i36): one headline, three entry points, three short answers",

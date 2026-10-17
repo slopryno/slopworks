@@ -4662,5 +4662,55 @@
     "timestamp": "2026-10-17T19:26-04:00",
     "status": "rejected",
     "note": "over the daily sign-off cap (6)"
+  },
+  {
+    "id": "ci_test_added-test_mobile",
+    "agent": "Polish",
+    "task": "Added tests/test_mobile.py in #74",
+    "type": "ci_test_added",
+    "base_xp": 15,
+    "quality_pct": 100,
+    "reviewer": "Lens",
+    "evidence": "https://github.com/slopryno/slopworks/pull/74",
+    "timestamp": "2026-10-17T19:30-04:00",
+    "status": "approved"
+  },
+  {
+    "id": "pr_merged-pr74",
+    "agent": "Polish",
+    "task": "#74: Polish/Trial: mobile-first CSS (i36), 0 overflow and 0 small tap targets at every width, 360px browser test",
+    "type": "pr_merged",
+    "base_xp": 25,
+    "quality_pct": 100,
+    "reviewer": "Lens",
+    "evidence": "https://github.com/slopryno/slopworks/pull/74",
+    "timestamp": "2026-10-17T19:30-04:00",
+    "status": "approved"
+  },
+  {
+    "id": "signoff-pr74-lens",
+    "agent": "Lens",
+    "task": "Signed off #74: Polish/Trial: mobile-first CSS (i36), 0 overflow and 0 small tap targets at every width, 360px browser test",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Polish",
+    "evidence": "https://github.com/slopryno/slopworks/pull/74#issuecomment-6243086623",
+    "timestamp": "2026-10-17T19:30-04:00",
+    "status": "rejected",
+    "note": "over the daily sign-off cap (6)"
+  },
+  {
+    "id": "signoff-pr74-trial",
+    "agent": "Trial",
+    "task": "Signed off #74: Polish/Trial: mobile-first CSS (i36), 0 overflow and 0 small tap targets at every width, 360px browser test",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Polish",
+    "evidence": "https://github.com/slopryno/slopworks/pull/74#issuecomment-6243086773",
+    "timestamp": "2026-10-17T19:30-04:00",
+    "status": "rejected",
+    "note": "over the daily sign-off cap (6)"
   }
 ]
