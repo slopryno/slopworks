@@ -26,6 +26,10 @@ GROUPS = [("Leadership and Strategy", ["Coordinator", "Scoutmaster"]),
           ("Architecture and Development", ["Atlas", "Forge", "Polish"]),
           ("Quality and Governance", ["Lens", "Trial", "Shield", "Critic", "Advisor"]),
           ("Operations and Measurement", ["Sweep", "Analyst"])]
+CHAT_TARGET = 0.5  # main Team chat page and each archive page aim for half the page-weight budget (HTML + CSS)
+CHAT_OVERHEAD = 9000  # header, nav, intro, footer, legend, archive list
+CHAT_SHARES = {"ideas": 0.25, "research": 0.3, "handoffs": 0.45}
+OPEN_IDEAS = {"pitched", "yes", "needs-ceo", "advised"}
 BADGE = {"pitched": "open", "needs-ceo": "ceo", "advised": "ceo"}
 # Showcase label set (i22, Verify's proposal): one tier per claim, words not percentages, icon + text so color is never the only cue.
 LABELS = {"verified": ("\u2713", "Verified", "Checked against a linked public source or a merged change"),
@@ -240,6 +244,149 @@ def build():
                  f'<table><tbody>{counts}<tr><th scope="row">X reads</th><td>{r.get("x_reads", 0)}</td></tr></tbody></table><ul>{notes}</ul></article>')
     files["behind/index.html"] = page("behind/", "Behind the scenes", f"What each role found, dropped, or stripped in every run. Auto-merge is <strong>{e(state['auto_merge'])}</strong>. These are roles played in one daily routine, not separate live bots.", body, "data/runs.json")
 
+    # ---------- Team chat with automatic archive rollover ----------
+    # The main page keeps the newest threads, notes, and ideas inside a byte target (well under the page-weight budget);
+    # everything older moves to dated archive pages (chat/archive/YYYY-MM.html, then -2, -3 when a month is big). Nothing is dropped.
+    # Case-file steps link ../chat/#id literally (and CI checks that anchor), so those items and open ideas stay pinned on the main page.
+    # Every other link (team cards, arena, demo challenge, feeds, badges) goes through href(), which points at wherever the item lives now.
+    budget = json.loads((ROOT / "scripts/patterns.json").read_text())["max_page_bytes"]
+    css_bytes = sum(p.stat().st_size for p in SITE.glob("*.css"))
+    page_target = int(budget * CHAT_TARGET) - css_bytes
+    ideas = sorted(load("ideas"), key=lambda i: i["date"], reverse=True)
+    idea_state = {i["id"]: i["state"] for i in ideas}
+    research = sorted(load("research"), key=lambda r: r["date"], reverse=True)
+    is_demo = lambda r: r["question"].startswith("Demo challenge")
+    SPEAKS_AS = {"Sketch": {"Sketch", "Scout"}, "Lens": {"Lens", "Verify"}, "Forge": {"Forge", "Pixel", "Core", "Publish"}, "Shield": {"Shield", "Privacy"}}
+    def latest_of(n):
+        return next((c for c in reversed(chat) if c["from"] in SPEAKS_AS.get(n, {n})), None)
+    pinned = {s["link"].split("#", 1)[1] for c in load("cases") for s in c["steps"] if s.get("link", "").startswith("../chat/#")}
+    pinned |= {i["id"] for i in ideas if i["state"] in OPEN_IDEAS}
+    loc = {r["id"]: "challenges/" for r in research if is_demo(r)}
+    def href(i, up, here):
+        where = loc.get(i, "chat/")
+        return f"#{e(i)}" if where == here else f"{up}{where}#{e(i)}"
+
+    def msg(c, up, here, cls="msg"):
+        ref = f' <a href="{e(c["ref"])}">ref</a>' if c.get("ref") else ""
+        when = f'{c["date"]} {c["time"]} ET' if c.get("time") else c["date"]
+        badge = ""
+        if c.get("idea") in idea_state:
+            st = idea_state[c["idea"]]
+            badge = f' <a class="badge b-{BADGE.get(st, st)}" href="{href(c["idea"], up, here)}">pitch: {e(BADGE.get(st, st))}</a>'
+        return (f'<li class="{cls}" id="{e(c["id"])}">{avatar(c["from"], up)}<div><p class="hd"><strong class="who" style="--c:{color(c["from"])}">{e(c["from"])}</strong>'
+                f' <span class="meta">to {e(c["to"])} · <time datetime="{c["date"]}">{e(when)}</time>{ref}</span>{badge}</p><p>{e(c["text"])}</p>')
+    replies = {}
+    for c in chat:
+        if c.get("reply_to"):
+            replies.setdefault(c["reply_to"], []).append(c)
+    def root(c, up="../", here="chat/"):
+        rs = replies.get(c["id"], [])
+        th = (f'<details><summary>{len(rs)} {"reply" if len(rs) == 1 else "replies"}</summary><ul class="thread">' + "".join(msg(r, up, here, "msg reply") + "</div></li>" for r in rs) + "</ul></details>") if rs else ""
+        return msg(c, up, here) + th + "</div></li>"
+    def idea(i, up="../", here="chat/"):
+        cm = "".join(f'<li>{e(c["role"])} ({e(c["stance"])}{", strong" if c.get("strong") else ""}): {e(c["text"])}</li>' for c in i["comments"])
+        dec = f'<p><strong>{e(i["state"])}</strong> by {e(i["decided_by"])} on {e(i["decided"])}: {e(i["reason"])}</p>' if i.get("decided") else ""
+        return (f'<article class="card" id="{e(i["id"])}"><h3>{e(i["problem"])}</h3><p>Helps: {e(i["helps"])} · effort {e(i["effort"])} · builds: {e(i["builder"])}</p>{dec}'
+                f'{"<ul>" + cm + "</ul>" if cm else ""}<p class="meta"><span class="tag">{e(i["state"])}</span><span>pitched {e(i["date"])} by {e(i["by"])}</span></p></article>')
+    def rnote(r, up="../", here="chat/"):
+        tk = f'<p>{e(r["finding"])}</p>' + (f"<p>{label('verified')} <strong>Facts</strong></p><ul>" + "".join(f"<li>{e(t)}</li>" for t in r.get("facts", [])) + "</ul>" if r.get("facts") else "") \
+            + (f"<p>{label('hypothesis')} <strong>Inferences</strong></p><ul>" + "".join(f"<li>{e(t)}</li>" for t in r.get("inferences", [])) + "</ul>" if r.get("inferences") else "")
+        tk = f'<p class="meta"><span class="tag">{e(r["outcome"])}</span><span class="tag">{e(r["status"])}</span><span>confidence {e(r["confidence"])}</span>' + (f'<span>recommend {e(r["recommendation"])}</span>' if r.get("recommendation") else "") + "</p>" + tk
+        src = " · ".join(f'<a href="{e(u)}">source {k + 1}</a>' for k, u in enumerate(r["evidence"]))
+        pitched = f' (<a href="{href(r["pitch"], up, here)}">pitched</a>)' if r.get("pitch") else ""
+        idea_p = (f'<p>{label("recommendation")} <strong>Opportunity:</strong> {e(r["opportunity"])}' if r.get("opportunity") else "<p>") + pitched + "</p>"
+        demo = f' {label("demo")}' if is_demo(r) else ""
+        return (f'<article class="card" id="{e(r["id"])}"><p class="hd">{avatar(r["role"], up, 32)} <strong class="who" style="--c:{color(r["role"])}">{e(r["role"])}</strong>{demo}'
+                f' <span class="meta"><time datetime="{r["date"]}">{r["date"]}</time></span></p><h3>{e(r["question"])}</h3>{tk}{idea_p}<p class="meta">{src}</p></article>')
+
+    # Units that roll over together, newest first: (kind, ids, date, render). A thread moves as one unit.
+    units = {"ideas": [("ideas", [i["id"]], i["date"], lambda up, here, i=i: idea(i, up, here)) for i in ideas],
+             "research": [("research", [r["id"]], r["date"], lambda up, here, r=r: rnote(r, up, here)) for r in research if not is_demo(r)],
+             "handoffs": [("handoffs", [c["id"]] + [x["id"] for x in replies.get(c["id"], [])], c["date"], lambda up, here, c=c: root(c, up, here))
+                          for c in reversed(chat) if not c.get("reply_to")]}
+    size = lambda u: len(u[3]("../", "chat/").encode())
+    standup = load("standup")
+    last_day = max((x["date"] for x in standup), default=None)
+    today = [x for x in standup if x["date"] == last_day]
+    sbody = (f'<h2 id="standup">Standup · <time datetime="{last_day}">{last_day}</time></h2><ul class="chat">' + "".join(
+        f'<li class="msg">{avatar(x["role"], "../")}<div><strong class="who" style="--c:{color(x["role"])}">{e(x["role"])}</strong><br>Did: {e(x["did"])}<br>Doing: {e(x["doing"])}<br>Blockers: {e(x["blockers"])}</div></li>' for x in today) + "</ul>"
+        if today else "<h2 id=standup>Standup</h2><p class=empty>No standup yet today. The daily run (around 9:15 AM ET) opens with one line per role that has something new.</p>")
+    room = max(page_target - CHAT_OVERHEAD - len(sbody.encode()), 0)
+    main_units, archived = {}, []
+    for kind, share in CHAT_SHARES.items():
+        left, keep, full = int(room * share), [], False
+        for u in units[kind]:
+            if set(u[1]) & pinned:
+                keep.append(u); left -= size(u)
+            elif not full and size(u) <= left:
+                keep.append(u); left -= size(u)
+            else:
+                full = True
+                archived.append(u)
+        main_units[kind] = keep
+    # Archive pages: by month of the item, filled oldest first so an item's page stays put as new items roll in.
+    parts = []
+    for month in sorted({u[2][:7] for u in archived}):
+        n, used = 1, 0
+        for u in sorted((u for u in archived if u[2][:7] == month), key=lambda u: (u[2], u[0], u[1][0])):
+            if used and used + size(u) > page_target - CHAT_OVERHEAD:
+                n, used = n + 1, 0
+            used += size(u)
+            slug = f"chat/archive/{month}{'' if n == 1 else '-' + str(n)}.html"
+            if not parts or parts[-1][0] != slug:
+                parts.append((slug, month, n, []))
+            parts[-1][3].append(u)
+    for slug, month, n, us in parts:
+        for u in us:
+            for i in u[1]:
+                loc[i] = slug
+    for us in main_units.values():
+        for u in us:
+            for i in u[1]:
+                loc[i] = "chat/"
+    MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+    def part_name(month, n):
+        y, m = month.split("-")
+        return f"{MONTHS[int(m) - 1]} {y}" + (f", part {n}" if n > 1 or any(p[1] == month and p[2] == 2 for p in parts) else "")
+    def counts(us):
+        k = {x: sum(len(u[1]) if x == "handoffs" else 1 for u in us if u[0] == x) for x in ("handoffs", "research", "ideas")}
+        pl = lambda n, w: f"{n} {w}{'' if n == 1 else 's'}"
+        return f'{pl(k["handoffs"], "message")}, {pl(k["research"], "research note")}, {pl(k["ideas"], "idea")}'
+    def sections(us, up, here, empty):
+        out = ""
+        for kind, title in (("ideas", "Ideas"), ("research", "Research"), ("handoffs", "Handoffs")):
+            body = "".join(u[3](up, here) for u in sorted((u for u in us if u[0] == kind), key=lambda u: u[2], reverse=True))
+            out += f'<h2 id="{kind}">{title}</h2>' + ((legend() if kind == "research" else "") + (f'<ul class="chat">{body}</ul>' if kind == "handoffs" else body) if body else f'<p class="empty">{empty}</p>')
+        return out
+    arch_list = ('<h2 id="archive">Archive</h2><p>Older threads, research notes, and ideas move to dated archive pages automatically, so this page stays light. Nothing is removed, and every item has its own permalink.</p><ul>'
+                 + "".join(f'<li><a href="{slug[5:]}">{part_name(m, n)}</a>: {counts(us)}</li>' for slug, m, n, us in reversed(parts)) + "</ul>") if parts else ""
+    for k, (slug, m, n, us) in enumerate(parts):
+        nav_l = [f'<a href="../">Team chat (latest)</a>'] + [f'<a href="{p[0].rsplit("/", 1)[1]}">{"Newer" if j > k else "Older"}: {part_name(p[1], p[2])}</a>' for j, p in enumerate(parts) if abs(j - k) == 1]
+        body = (f'<nav class="jump" aria-label="Archive pages">{"".join(nav_l)}</nav><p class="meta">{counts(us)}. Newest first. Items that case files link to, and open ideas, stay on the main Team chat page.</p>'
+                + sections(us, "../../", slug, "Nothing from this period in this part."))
+        files[slug] = page(slug, f"Team chat archive: {part_name(m, n)}", "Older Team chat handoffs, research notes, and ideas, moved here automatically to keep the main page light. They are the same real records, unchanged.", body, "data/chat.json")
+
+    mu = [u for us in main_units.values() for u in us]
+    rintro = "<p>Each role researches its own area once a week (see the <a href=\"../schedule/\">rotation</a>), reading public web pages only, and writes the takeaways in its own words. Ideas go through the pitch flow.</p>"
+    iintro = "<p>Pitches from the standup. Coordinator decides at Monday planning, Shield can veto on risk, and strong disagreement goes to the CEO. Rejected and later ideas stay on record and can be re-pitched with new evidence.</p>"
+    more = ' <a href="#archive">Older items are in the archive.</a>' if parts else ""
+    msec = sections(mu, "../", "chat/", "Nothing here yet. New items appear after the next daily run.")
+    msec = msec.replace('<h2 id="ideas">Ideas</h2>', '<h2 id="ideas">Ideas</h2>' + iintro[:-4] + more + "</p>", 1).replace('<h2 id="research">Research</h2>', '<h2 id="research">Research</h2>' + rintro[:-4] + more + "</p>", 1)
+    fl = '<p>Follow Team chat: <a href="../chat.xml">RSS</a>, <a href="../chat.json">JSON</a>. </p><details class="routine"><summary>Follow it with your own Grok Bot</summary><p>Paste this into a routine:</p><blockquote class="card"><p>Every morning, read https://slopryno.github.io/slopworks/chat.json and tell me about new pitches, decisions, and any debate between the Slopworks bots since yesterday: who pitched what, who pushed back, and what Coordinator decided and why. Stay quiet if nothing\'s new.</p></blockquote></details>'
+    fl = '<nav class="jump" aria-label="On this page"><a href="#standup">Standup</a><a href="#ideas">Ideas</a><a href="#research">Research</a><a href="#handoffs">Handoffs</a>' + ('<a href="#archive">Archive</a>' if parts else "") + '</nav>' + fl
+    files["chat/index.html"] = page("chat/", "Team chat", "The real handoffs between roles during each run, newest first. Nothing is staged; quiet days stay quiet. It never quotes readers or names anyone outside the team.", fl + sbody + msec + arch_list, "data/chat.json")
+    url = lambda i: loc.get(i, "chat/") + "#" + i
+    citems = ([("standup", x["id"], x["date"], f'Standup: {x["role"]}', f'Did: {x["did"]} Doing: {x["doing"]} Blockers: {x["blockers"]}', "chat/") for x in standup]
+              + [("idea", i["id"], i.get("decided") or i["date"], f'Idea ({i["state"]}): {i["problem"]}', f'Pitched by {i["by"]}. ' + (i.get("reason") or ""), url(i["id"])) for i in ideas]
+              + [("research", r["id"], r["date"], f'Research ({r["role"]}): {r["question"]}', r["finding"] + (" Recommend: " + r["recommendation"] if r.get("recommendation") else ""), url(r["id"])) for r in research]
+              + [("chat", c["id"], c["date"], f'{c["from"]} to {c["to"]}', c["text"], url(c["id"])) for c in chat])
+    citems = sorted(citems, key=lambda t: (t[2], t[1]), reverse=True)[:50]
+    cdt = lambda d: datetime.fromisoformat(d).replace(hour=12, tzinfo=timezone.utc)
+    files["chat.json"] = json.dumps({"version": "https://jsonfeed.org/version/1.1", "title": "Slopworks Team chat: standups, pitches, and handoffs",
+        "home_page_url": BASE + "chat/", "feed_url": BASE + "chat.json", "description": DISCLAIMER,
+        "items": [{"id": f"{k}-{i}", "url": BASE + u, "title": t, "content_text": b, "date_published": cdt(d).isoformat(), "tags": [k]} for k, i, d, t, b, u in citems]}, indent=2, ensure_ascii=False) + "\n"
+    crss = "".join(f'<item><title>{e(t)}</title><link>{e(BASE + u)}</link><guid isPermaLink="false">{k}-{e(i)}</guid><pubDate>{format_datetime(cdt(d))}</pubDate><description>{e(b)}</description><category>{k}</category></item>\n' for k, i, d, t, b, u in citems)
+    files["chat.xml"] = f'<?xml version="1.0" encoding="utf-8"?>\n<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Slopworks Team chat</title><link>{BASE}chat/</link><atom:link href="{BASE}chat.xml" rel="self" type="application/rss+xml"/><description>{e(DISCLAIMER)}</description>\n{crss}</channel></rss>\n'
     wins = load("wins")
     alumni = load("alumni")
     alumni_html = ("<h2 class=\"group\">Alumni</h2><ul>" + "".join(f'<li><a href="{REPO}/blob/main/bots/alumni/{e(a["role"].lower())}.md">{e(a["role"])}</a>: retired {a["date"]}. {e(a["reason"])} Work handed to {e(a["successor"])}.</li>' for a in alumni) + "</ul>") if alumni else ""
@@ -251,17 +398,16 @@ def build():
         day, focus = rot.get(r, ("", ""))
         last = next((x for x in research if x["role"] == r), None)
         in_arena = last and any(last["id"] in a["reports"] for a in load("arena"))
-        lt = f' Last: <a href="../{"arena" if in_arena else "chat"}/#{e(last["id"])}">{e(last["question"])}</a> ({last["date"]}).' if last else " No notes yet. The weekly rotation adds one."
+        lt = f' Last: <a href="{"../arena/#" + e(last["id"]) if in_arena else href(last["id"], "../", "team/")}">{e(last["question"])}</a> ({last["date"]}).' if last else " No notes yet. The weekly rotation adds one."
         return f'<p><strong>Researches</strong> ({e(day)}s): {e(focus)}.{lt}</p>' if day else ""
     # Living Team (i22, PR 5 of 8): each card shows the role's latest real handoff from data/chat.json, with its date. No live claims.
-    SPEAKS_AS = {"Sketch": {"Sketch", "Scout"}, "Lens": {"Lens", "Verify"}, "Forge": {"Forge", "Pixel", "Core", "Publish"}, "Shield": {"Shield", "Privacy"}}
     def latest_msg(n):
-        m = next((c for c in reversed(chat) if c["from"] in SPEAKS_AS.get(n, {n})), None)
+        m = latest_of(n)
         if not m:
             return '<p class="empty">No handoffs yet. They appear here after the role posts in Team chat.</p>'
         txt = m["text"] if len(m["text"]) <= 140 else m["text"][:137].rsplit(" ", 1)[0] + "\u2026"
         return (f'<blockquote class="latest"><p>{e(txt)}</p><p class="meta">{as_of(m["date"], "said on")}<span>to {e(m["to"])}</span>'
-                f'{"<span>as " + e(m["from"]) + "</span>" if m["from"] != n else ""}<a href="../chat/#{e(m["id"])}">in Team chat</a></p></blockquote>')
+                f'{"<span>as " + e(m["from"]) + "</span>" if m["from"] != n else ""}<a href="{href(m["id"], "../", "team/")}">in Team chat</a></p></blockquote>')
     def tcard(n, t, r, o, f):
         w = [x for x in wins if x["role"] == n][:3]
         wl = "".join(f'<li><a href="{e(x["pr"])}">{e(x["title"])}</a> <time datetime="{x["date"]}">{x["date"]}</time></li>' for x in w) or '<li class="empty">No merged PRs yet. Shipped work shows up here after CI passes and the PR is squash-merged.</li>'
@@ -270,68 +416,6 @@ def build():
     files["team/index.html"] = page("team/", "The team", e(CREDIT) + " Each card comes from the bot's own instruction file, and the bios are written by the bots in their own words. The latest handoff is the role's most recent real Team chat message, with its date. One daily routine plays every role in turn, so these are roles, not separate accounts. Recent wins are the merged PRs each role made. Pixel and Core work under Forge.",
                                     "".join(f'<h2 class="group">{e(g)}</h2><div class="grid">' + "".join(tcard(*x) for x in team() if x[0] in members) + "</div>" for g, members in GROUPS) + alumni_html, "bots")
 
-    idea_state = {i["id"]: i["state"] for i in load("ideas")}
-    def msg(c, cls="msg"):
-        ref = f' <a href="{e(c["ref"])}">ref</a>' if c.get("ref") else ""
-        when = f'{c["date"]} {c["time"]} ET' if c.get("time") else c["date"]
-        badge = ""
-        if c.get("idea") in idea_state:
-            st = idea_state[c["idea"]]
-            badge = f' <a class="badge b-{BADGE.get(st, st)}" href="#{e(c["idea"])}">pitch: {e(BADGE.get(st, st))}</a>'
-        return (f'<li class="{cls}" id="{e(c["id"])}">{avatar(c["from"], "../")}<div><p class="hd"><strong class="who" style="--c:{color(c["from"])}">{e(c["from"])}</strong>'
-                f' <span class="meta">to {e(c["to"])} · <time datetime="{c["date"]}">{e(when)}</time>{ref}</span>{badge}</p><p>{e(c["text"])}</p>')
-    replies = {}
-    for c in chat:
-        if c.get("reply_to"):
-            replies.setdefault(c["reply_to"], []).append(c)
-    def root(c):
-        rs = replies.get(c["id"], [])
-        th = (f'<details><summary>{len(rs)} {"reply" if len(rs) == 1 else "replies"}</summary><ul class="thread">' + "".join(msg(r, "msg reply") + "</div></li>" for r in rs) + "</ul></details>") if rs else ""
-        return msg(c) + th + "</div></li>"
-    items = "".join(root(c) for c in reversed(chat) if not c.get("reply_to"))
-    standup = load("standup")
-    last_day = max((x["date"] for x in standup), default=None)
-    today = [x for x in standup if x["date"] == last_day]
-    sbody = (f'<h2 id="standup">Standup · <time datetime="{last_day}">{last_day}</time></h2><ul class="chat">' + "".join(
-        f'<li class="msg">{avatar(x["role"], "../")}<div><strong class="who" style="--c:{color(x["role"])}">{e(x["role"])}</strong><br>Did: {e(x["did"])}<br>Doing: {e(x["doing"])}<br>Blockers: {e(x["blockers"])}</div></li>' for x in today) + "</ul>"
-        if today else "<h2 id=standup>Standup</h2><p class=empty>No standup yet today. The daily run (around 9:15 AM ET) opens with one line per role that has something new.</p>")
-    ideas = sorted(load("ideas"), key=lambda i: i["date"], reverse=True)
-    def idea(i):
-        cm = "".join(f'<li>{e(c["role"])} ({e(c["stance"])}{", strong" if c.get("strong") else ""}): {e(c["text"])}</li>' for c in i["comments"])
-        dec = f'<p><strong>{e(i["state"])}</strong> by {e(i["decided_by"])} on {e(i["decided"])}: {e(i["reason"])}</p>' if i.get("decided") else ""
-        return (f'<article class="card" id="{e(i["id"])}"><h3>{e(i["problem"])}</h3><p>Helps: {e(i["helps"])} · effort {e(i["effort"])} · builds: {e(i["builder"])}</p>{dec}'
-                f'{"<ul>" + cm + "</ul>" if cm else ""}<p class="meta"><span class="tag">{e(i["state"])}</span><span>pitched {e(i["date"])} by {e(i["by"])}</span></p></article>')
-    ibody = "<h2 id=\"ideas\">Ideas</h2><p>Pitches from the standup. Coordinator decides at Monday planning, Shield can veto on risk, and strong disagreement goes to the CEO. Rejected and later ideas stay here and can be re-pitched with new evidence.</p>" + ("".join(map(idea, ideas)) or '<p class="empty">No pitches yet. Ideas come from the standup and get decided at Monday planning.</p>')
-    research = sorted(load("research"), key=lambda r: r["date"], reverse=True)
-    latest = {}
-    for r in research:
-        if not r["question"].startswith("Demo challenge"):  # demo reports live on challenges/
-            latest.setdefault(r["role"], r)
-    def rnote(r):
-        tk = f'<p>{e(r["finding"])}</p>' + (f"<p>{label('verified')} <strong>Facts</strong></p><ul>" + "".join(f"<li>{e(t)}</li>" for t in r.get("facts", [])) + "</ul>" if r.get("facts") else "") \
-            + (f"<p>{label('hypothesis')} <strong>Inferences</strong></p><ul>" + "".join(f"<li>{e(t)}</li>" for t in r.get("inferences", [])) + "</ul>" if r.get("inferences") else "")
-        tk = f'<p class="meta"><span class="tag">{e(r["outcome"])}</span><span class="tag">{e(r["status"])}</span><span>confidence {e(r["confidence"])}</span>' + (f'<span>recommend {e(r["recommendation"])}</span>' if r.get("recommendation") else "") + "</p>" + tk
-        src = " · ".join(f'<a href="{e(u)}">source {k + 1}</a>' for k, u in enumerate(r["evidence"]))
-        idea = (f'<p>{label("recommendation")} <strong>Opportunity:</strong> {e(r["opportunity"])}' if r.get("opportunity") else "<p>") + (f' (<a href="#{e(r["pitch"])}">pitched</a>)' if r.get("pitch") else "") + "</p>"
-        demo = f' {label("demo")}' if r["question"].startswith("Demo challenge") else ""
-        return (f'<article class="card" id="{e(r["id"])}"><p class="hd">{avatar(r["role"], "../", 32)} <strong class="who" style="--c:{color(r["role"])}">{e(r["role"])}</strong>{demo}'
-                f' <span class="meta"><time datetime="{r["date"]}">{r["date"]}</time></span></p><h3>{e(r["question"])}</h3>{tk}{idea}<p class="meta">{src}</p></article>')
-    rbody = ("<h2 id=\"research\">Research</h2><p>Each role researches its own area once a week (see the <a href=\"../schedule/\">rotation</a>), reading public web pages only, and writes the takeaways in its own words. Ideas go through the pitch flow.</p>" + legend()
-             + ("".join(rnote(r) for r in sorted(latest.values(), key=lambda r: r["date"], reverse=True)) or '<p class="empty">No research notes yet. Each role adds one through the weekly rotation; urgent questions can add more.</p>'))
-    fl = '<p>Follow Team chat: <a href="../chat.xml">RSS</a>, <a href="../chat.json">JSON</a>. </p><details class="routine"><summary>Follow it with your own Grok Bot</summary><p>Paste this into a routine:</p><blockquote class="card"><p>Every morning, read https://slopryno.github.io/slopworks/chat.json and tell me about new pitches, decisions, and any debate between the Slopworks bots since yesterday: who pitched what, who pushed back, and what Coordinator decided and why. Stay quiet if nothing\'s new.</p></blockquote></details>'
-    fl = '<nav class="jump" aria-label="On this page"><a href="#standup">Standup</a><a href="#ideas">Ideas</a><a href="#research">Research</a><a href="#handoffs">Handoffs</a></nav>' + fl
-    files["chat/index.html"] = page("chat/", "Team chat", "The real handoffs between roles during each run, newest first. Nothing is staged; quiet days stay quiet. It never quotes readers or names anyone outside the team.", fl + sbody + ibody + rbody + f'<h2 id="handoffs">Handoffs</h2><ul class="chat">{items}</ul>', "data/chat.json")
-    citems = ([("standup", x["id"], x["date"], f'Standup: {x["role"]}', f'Did: {x["did"]} Doing: {x["doing"]} Blockers: {x["blockers"]}', "chat/") for x in standup]
-              + [("idea", i["id"], i.get("decided") or i["date"], f'Idea ({i["state"]}): {i["problem"]}', f'Pitched by {i["by"]}. ' + (i.get("reason") or ""), f'chat/#{i["id"]}') for i in ideas]
-              + [("research", r["id"], r["date"], f'Research ({r["role"]}): {r["question"]}', r["finding"] + (" Recommend: " + r["recommendation"] if r.get("recommendation") else ""), f'challenges/#{r["id"]}' if r["question"].startswith("Demo challenge") else f'chat/#{r["id"]}') for r in research]
-              + [("chat", c["id"], c["date"], f'{c["from"]} to {c["to"]}', c["text"], "chat/") for c in chat])
-    citems = sorted(citems, key=lambda t: (t[2], t[1]), reverse=True)[:50]
-    cdt = lambda d: datetime.fromisoformat(d).replace(hour=12, tzinfo=timezone.utc)
-    files["chat.json"] = json.dumps({"version": "https://jsonfeed.org/version/1.1", "title": "Slopworks Team chat: standups, pitches, and handoffs",
-        "home_page_url": BASE + "chat/", "feed_url": BASE + "chat.json", "description": DISCLAIMER,
-        "items": [{"id": f"{k}-{i}", "url": BASE + u, "title": t, "content_text": b, "date_published": cdt(d).isoformat(), "tags": [k]} for k, i, d, t, b, u in citems]}, indent=2, ensure_ascii=False) + "\n"
-    crss = "".join(f'<item><title>{e(t)}</title><link>{e(BASE + u)}</link><guid isPermaLink="false">{k}-{e(i)}</guid><pubDate>{format_datetime(cdt(d))}</pubDate><description>{e(b)}</description><category>{k}</category></item>\n' for k, i, d, t, b, u in citems)
-    files["chat.xml"] = f'<?xml version="1.0" encoding="utf-8"?>\n<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Slopworks Team chat</title><link>{BASE}chat/</link><atom:link href="{BASE}chat.xml" rel="self" type="application/rss+xml"/><description>{e(DISCLAIMER)}</description>\n{crss}</channel></rss>\n'
 
     # Research Arena (i22, PR 2 of 8): one question, independent reports, challenge, scores, decision. Real records only.
     rmap = {r["id"]: r for r in load("research")}
@@ -357,12 +441,12 @@ def build():
         dec = imap.get(a["decision"], {})
         rows = "".join(f'<tr><th scope="row">{e(c["name"])}</th>' + ("".join(f"<td>{c['scores'][k]}</td>" for k in ("impact", "evidence", "fit", "effort", "risk")) + f'<td><strong>{prio(c["scores"])}</strong></td>' if c["scores"] else '<td colspan="6">not scored</td>')
                        + f'<td>{e(c["outcome"])}<br><span class="meta">{e(c["note"])}</span></td></tr>' for c in a["concepts"])
-        steps = [("Question", f'Ryno (CEO) asked: {e(a["question"])} <a href="../chat/#{e(a["thread"])}">CEO thread</a>'),
+        steps = [("Question", f'Ryno (CEO) asked: {e(a["question"])} <a href="{href(a["thread"], "../", "arena/")}">CEO thread</a>'),
                  ("Independent research", f"{len(reps)} reports from {len({r['role'] for r in reps})} roles, written before reading each other's. {reads} distinct public web pages read, no X reads."),
                  ("Consolidate", 'Librarian merged duplicates into five concepts and checked them against prior work. <a href="#r-librarian-2026-10-17-showcase">Librarian\'s note</a>'),
                  ("Challenge", 'Critic challenged the strongest proposals and named what to cut. <a href="#r-critic-2026-10-17-showcase">Critic\'s report</a>'),
                  ("Score", "Coordinator scored each concept: Priority = (Impact × Evidence × Fit) / (Effort × Risk), each 1-5."),
-                 ("Decide", f'Decision <a href="../chat/#{e(a["decision"])}">{e(a["decision"])}</a>: {e(dec.get("state", ""))} by {e(dec.get("decided_by", ""))}. Merged in <a href="{REPO}/pull/{a["pr"]}">PR #{a["pr"]}</a>.')]
+                 ("Decide", f'Decision <a href="{href(a["decision"], "../", "arena/")}">{e(a["decision"])}</a>: {e(dec.get("state", ""))} by {e(dec.get("decided_by", ""))}. Merged in <a href="{REPO}/pull/{a["pr"]}">PR #{a["pr"]}</a>.')]
         abody += (f'<section class="round" aria-labelledby="{e(a["id"])}-t"><h2 id="{e(a["id"])}-t">{e(a["title"])}</h2><p class="meta">{as_of(a["date"], "round held")}<span>{len(reps)} reports</span><span>all records real, nothing staged</span></p>'
                   + '<ol class="steps">' + "".join(f"<li><strong>{e(t)}.</strong> {d}</li>" for t, d in steps) + "</ol>"
                   + '<h3>The scoreboard</h3><div class="scroll"><table class="score"><thead><tr><th scope="col">Concept</th><th scope="col">Impact</th><th scope="col">Evidence</th><th scope="col">Fit</th><th scope="col">Effort</th><th scope="col">Risk</th><th scope="col">Priority</th><th scope="col">Outcome</th></tr></thead><tbody>' + rows + "</tbody></table></div>"
@@ -393,7 +477,7 @@ def build():
                 f'<p><strong>The brief (fictional):</strong> {e(c["brief"])}</p>{secs}'
                 f'<h3>The {len(reps)} research reports</h3>' + "".join(rnote(rr) for rr in reps) +
                 f'<h3>Sources</h3><ul class="meta">' + "".join(f'<li><a href="{e(u)}">{e(u)}</a></li>' for u in srcs) + "</ul>"
-                f'<p>How it was run: <a href="../chat/#{e(c["thread"])}">Team chat thread</a> · <a href="{REPO}/pull/{c["pr"]}">research PR #{c["pr"]}</a></p></article>')
+                f'<p>How it was run: <a href="{href(c["thread"], "../", "challenges/")}">Team chat thread</a> · <a href="{REPO}/pull/{c["pr"]}">research PR #{c["pr"]}</a></p></article>')
     chs = load("challenges")
     files["challenges/index.html"] = page("challenges/", "Demo challenge", "What working with this team looks like: a brief goes in, roles research it independently, a critic challenges it, and a structured outcome comes back. " + e(DEMO_NOTE),
                                           legend() + ("".join(map(challenge, chs)) or '<p class="empty">No demo challenges yet. Each one is researched by the team and labeled Demo.</p>'), "data/challenges.json")
