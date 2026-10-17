@@ -105,10 +105,25 @@ def entry_card(x, issue=False):
         extra += f'<p>Fixed {e(x.get("fixed_date", ""))} · <a href="{e(x["fixed_source"])}">fix source</a></p>'
     if x.get("corrected"):
         extra += f'<p><strong>Corrected:</strong> {e(x["corrected"])}</p>'
-    return (f'<article class="card" id="e{e(x["id"])}"><h3>{e(x["title"])}</h3><p>{e(x["summary"])}</p>{extra}'
+    return (f'<article class="card" id="e{e(x["id"])}" data-area="{e(x["area"])}"><h3>{e(x["title"])}</h3><p>{e(x["summary"])}</p>{extra}'
             f'<p class="meta"><span>{tags}</span><time datetime="{x["date"]}">{x["date"]}</time>'
             f'<a href="{e(x["source"])}">source</a><span>added {x["added"]} by {e(x["added_by"])}</span></p></article>')
 
+
+def area_filter(items):
+    """d1: CSS-only area filter using anchor links + :target + :has(); no scripts or form inputs.
+    With CSS off, or in browsers without :has(), every item still shows."""
+    areas = sorted({x["area"] for x in items})
+    if len(areas) < 2:
+        return "", ""
+    opts = [("all", "All", len(items))] + [(a, a.capitalize(), sum(x["area"] == a for x in items)) for a in areas]
+    targets = "".join(f'<span class="ft" id="area-{e(k)}"></span>' for k, _, _ in opts)
+    chips = "".join(f'<li><a href="#area-{e(k)}">{e(t)} <span>{n}</span></a></li>' for k, t, n in opts)
+    hide = ",".join(f'.filtered:has(#area-{a}:target) [data-area]:not([data-area="{a}"])' for a in areas)
+    on = ",".join(f'.filtered:has(#area-{k}:target) a[href="#area-{k}"]' for k, _, _ in opts)
+    all_on = ".filtered:not(:has(.ft:target)) a[href=\"#area-all\"]"
+    css = f"<style>{hide}{{display:none}}{on},{all_on}{{background:var(--link);border-color:var(--link);color:var(--bg)}}</style>"
+    return f'{targets}<div class="filter" role="group" aria-label="Filter by area"><span>Filter by area:</span><ul>{chips}</ul></div>', css
 
 def team():
     out = []
@@ -143,11 +158,14 @@ def build():
             + "".join(f'<li><a href="{u}"><strong>{e(v)}</strong> <span>{e(l)}</span></a></li>' if u else f'<li><strong>{e(v)}</strong> <span>{e(l)}</span></li>' for v, l, u in stats)
             + '</ul><p class="cta"><a href="team/">Meet the team</a> · <a href="chat/">Watch them work</a> · <a href="schedule/">What to expect</a></p></section>')
     files["index.html"] = page("", "What's new in Grok Bot", f"{len(ups)} updates from public posts, newest first. Every item links its source and says whether it's <strong>confirmed</strong> (official account or docs) or <strong>reported</strong> (community post).",
-                               hero + "<h2>Latest updates</h2>" + ("".join(entry_card(x) for x in ups) or "<p>Nothing yet.</p>"), "data/updates.json")
+                               hero + "<h2>Latest updates</h2>" + (lambda f: f[1] + '<div class="filtered">' + f[0] + "".join(entry_card(x) for x in ups) + "</div>")(area_filter(ups)) if ups else hero + "<h2>Latest updates</h2><p>Nothing yet.</p>", "data/updates.json")
     areas = sorted({x["area"] for x in iss})
     body = ""
     for a in areas:
-        body += f"<h2>{e(a.capitalize())}</h2>" + "".join(entry_card(x, True) for x in iss if x["area"] == a)
+        body += f'<section data-area="{e(a)}"><h2>{e(a.capitalize())}</h2>' + "".join(entry_card(x, True) for x in iss if x["area"] == a) + "</section>"
+    if body:
+        fl, st = area_filter(iss)
+        body = st + '<div class="filtered">' + fl + body + "</div>"
     files["issues/index.html"] = page("issues/", "Known issues", f"{sum(x['state']=='open' for x in iss)} open, {sum(x['state']=='fixed' for x in iss)} fixed. Grouped by area. Marked fixed only when a public source says so.", body or '<p class="empty">No known issues right now. Issues land here when a public source reports one; the daily run checks around 9:15 AM ET.</p>', "data/issues.json")
 
     body = ""
