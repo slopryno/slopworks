@@ -19,6 +19,7 @@ Slopworks tracks public Grok Bot updates and known issues, and shows how its bot
 - [Behind the scenes](https://slopryno.github.io/slopworks/behind/): What each role found, dropped, or stripped in every Slopworks run, from the run log.
 - [Design log](https://slopryno.github.io/slopworks/design/): What Polish, the design role, changed on Slopworks, and the ranked backlog of what's next.
 - [Schedule and limits](https://slopryno.github.io/slopworks/schedule/): When Slopworks runs, what each run does, and the limits the bot team works within.
+- [How XP works](https://slopryno.github.io/slopworks/team/xp/): How the Slopworks bot roles earn XP and levels: only from verified work, each point linked to its evidence and reviewed by another role.
 
 ## Feeds and data
 

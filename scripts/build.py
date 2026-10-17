@@ -139,6 +139,7 @@ DESCRIPTIONS = {
     "chat/": "The real handoffs, standups, pitches, and research notes between the Slopworks bot roles, newest first.",
     "behind/": "What each role found, dropped, or stripped in every Slopworks run, from the run log.",
     "design/": "What Polish, the design role, changed on Slopworks, and the ranked backlog of what's next.",
+    "team/xp/": "How the Slopworks bot roles earn XP and levels: only from verified work, each point linked to its evidence and reviewed by another role.",
     "schedule/": "When Slopworks runs, what each run does, and the limits the bot team works within.",
 }
 
@@ -555,8 +556,79 @@ def build():
         w = [x for x in wins if x["role"] == n][:3]
         wl = "".join(f'<li><a href="{e(x["pr"])}">{e(x["title"])}</a> <time datetime="{x["date"]}">{x["date"]}</time></li>' for x in w) or '<li class="empty">No merged PRs yet. Shipped work shows up here after CI passes and the PR is squash-merged.</li>'
         return (f'<article class="card lead" style="border-top:4px solid {color(n)}">{avatar(n, "../", 72)}<h2><a href="{REPO}/blob/main/bots/{f}">{e(n)}</a></h2>'
-                f'<p class="title">{e(t)}</p><p>{e(bio(n))}</p><p><strong>Owns:</strong> {e(o)}</p><h3>Latest handoff</h3>{latest_msg(n)}{researched(n)}<h3>Recent wins</h3><ul>{wl}</ul></article>')
-    files["team/index.html"] = page("team/", "The team", e(CREDIT) + " Each card comes from the bot's own instruction file, and the bios are written by the bots in their own words. The latest handoff is the role's most recent real Team chat message, with its date. One daily routine plays every role in turn, so these are roles, not separate accounts. Recent wins are the merged PRs each role made. Pixel and Core work under Forge.",
+                f'<p class="title">{e(t)}</p><p class="xp"><a href="{f[:-3]}/">Character sheet</a>: {xp_line(n, "")}</p><p>{e(bio(n))}</p><p><strong>Owns:</strong> {e(o)}</p><h3>Latest handoff</h3>{latest_msg(n)}{researched(n)}<h3>Recent wins</h3><ul>{wl}</ul></article>')
+    # Character sheets (i34, Week 1): every number is computed here from data/xp_ledger.json and data/progression.json.
+    prog, ledger_all = load("progression"), load("xp_ledger")
+    totals, levels = xp_totals(ledger_all), prog["levels"]
+    stems = {n: f[:-3] for n, _, _, _, f in team()}
+    def xp_line(n, up):
+        x = totals.get(n, 0)
+        num, lv, nxt = level_for(x, levels)
+        return f'Level {num}, {e(lv["name"])}, {x} XP'
+    def sheet(n, t, r, o, f):
+        x = totals.get(n, 0)
+        num, lv, nxt = level_for(x, levels)
+        mine = [y for y in ledger_all if y["agent"] == n]
+        ok = [y for y in mine if y["status"] == "approved"]
+        pct = 100 if not nxt else int(100 * (x - lv["xp"]) / (nxt["xp"] - lv["xp"]))
+        togo = f'{nxt["xp"] - x} XP to {e(nxt["name"])} ({nxt["xp"]} XP)' if nxt else "Top level reached"
+        bar = (f'<div class="xpbar" aria-hidden="true"><span style="width:{pct}%;background:{color(n)}"></span></div>'
+               f'<p class="xpnum"><strong>{x} XP</strong> · {togo}</p>')
+        if not x:
+            bar += '<p class="empty">No XP yet. Every role starts here.</p>'
+        skipped = {s: sum(y["status"] == s for y in mine) for s in ("rejected", "pending", "reversed")}
+        notes = sorted({y.get("note", "") for y in mine if y["status"] != "approved"} - {""})
+        counted = (f'<p>{len(ok)} entries count. ' + (", ".join(f"{v} {k}" for k, v in skipped.items() if v) + " don't" if any(skipped.values()) else "Nothing was turned away")
+                   + (f' ({e("; ".join(notes))})' if notes else "") + '. <a href="../xp/">How XP works</a></p>')
+        kinds = {}
+        for y in ok:
+            k = kinds.setdefault(y["type"], [0, 0]); k[0] += 1; k[1] += y["base_xp"] * y["quality_pct"] // 100
+        skills = ("<table><thead><tr><th scope=\"col\">Kind of work</th><th scope=\"col\">Entries</th><th scope=\"col\">XP</th></tr></thead><tbody>"
+                  + "".join(f'<tr><td>{e(prog["events"][k]["label"])}</td><td>{c}</td><td>{v}</td></tr>' for k, (c, v) in sorted(kinds.items(), key=lambda kv: -kv[1][1]))
+                  + "</tbody></table>") if kinds else '<p class="empty">No verified work yet.</p>'
+        ach = ""
+        for a in prog["achievements"]:
+            got = next((y for y in ok if y["type"] == a["event"]), None)
+            ach += (f'<li class="ach got"><a href="{e(got["evidence"])}"><span aria-hidden="true">★</span> {e(a["name"])}</a> <span class="meta">{e(a["rule"])}, {got["timestamp"][:10]}</span></li>' if got
+                    else f'<li class="ach"><span aria-hidden="true">○</span> {e(a["name"])} <span class="meta">not yet: {e(a["rule"][0].lower() + a["rule"][1:])}</span></li>')
+        quest = prog["quests"].get(n, prog["quests"]["default"])
+        work = "".join(f'<li><time datetime="{y["timestamp"]}">{y["timestamp"][:10]}</time> <a href="{e(y["evidence"])}">{e(y["task"])}</a> '
+                       f'<span class="meta">+{y["base_xp"] * y["quality_pct"] // 100} XP · {e(prog["events"][y["type"]]["label"])} · reviewed by {e(y["reviewer"])}</span></li>'
+                       for y in sorted(ok, key=lambda y: y["timestamp"], reverse=True)[:15])
+        more = f'<p class="meta">Showing the newest {min(15, len(ok))} of {len(ok)}. The full record is in <a href="{REPO}/blob/main/data/xp_ledger.json">data/xp_ledger.json</a>.</p>' if ok else ""
+        said = [s for s in load("standup") if s["role"] == n]
+        claimed = ("<ul>" + "".join(f'<li><time datetime="{s["date"]}">{s["date"]}</time> {e(s["did"])}</li>' for s in said) + "</ul>") if said else '<p class="empty">No standup claims.</p>'
+        body = (f'<section class="sheet card" style="border-top:4px solid {color(n)}">{avatar(n, "../../", 96)}<div><p class="title">{e(t)}</p>'
+                f'<p class="lvl">Level {num} · {e(lv["name"])}</p>{bar}{counted}</div></section>'
+                f'<h2>Next level-up quest</h2><p>{e(quest)}</p><p class="meta">The quest board arrives in Week 2. For now this is the next step, not a tracked quest.</p>'
+                f'<h2>Achievements</h2><ul class="achs">{ach}</ul>'
+                f'<h2>Skills</h2><p class="meta">XP by kind of work. Skill trees (three branches, four milestones each) arrive in Week 4.</p>{skills}'
+                f'<h2>Verified work</h2>{label("verified")} <span class="meta">Approved entries, each with its evidence and a reviewer who isn\'t {e(n)}.</span>'
+                + (f"<ul>{work}</ul>" if work else '<p class="empty">No verified work yet.</p>') + more
+                + f'<h2>Claimed</h2><p class="meta">Standup lines: what {e(n)} said it did. They carry no XP until they link to evidence.</p>{claimed}'
+                + f'<p><a href="../">Back to the team</a> · <a href="../xp/">How XP works</a></p>')
+        return page(f"team/{stems[n]}/", f"{n}: character sheet", f"{e(n)}'s level, XP, achievements, and verified work, computed from the XP ledger at build time.", body, "data/xp_ledger.json")
+    for x in team():
+        files[f"team/{stems[x[0]]}/index.html"] = sheet(*x)
+    ev_rows = ""
+    for k, v in prog["events"].items():
+        d = prog["tables"]["default"].get(k)
+        extra = ", ".join(f'{r} {tb[k]}' for r, tb in prog["tables"].items() if r != "default" and k in tb)
+        ev_rows += f'<tr><td>{e(v["label"])}</td><td>{d if d is not None else "-"}</td><td>{e(extra) or "-"}</td><td>{e(v["who"])}</td><td>{e(v["reviewer"])}</td></tr>'
+    roster = "".join(f'<li><a href="../{stems[n]}/">{e(n)}</a>: {xp_line(n, "")}</li>' for n in sorted(stems))
+    xbody = (f'<p>{e(prog["note"])}</p>'
+             f'<h2>Levels</h2><table><thead><tr><th scope="col">Level</th><th scope="col">Name</th><th scope="col">XP needed</th></tr></thead><tbody>'
+             + "".join(f'<tr><td>{i + 1}</td><td>{e(l["name"])}</td><td>{l["xp"]}</td></tr>' for i, l in enumerate(levels)) + "</tbody></table>"
+             f'<h2>What earns XP</h2><div class="scroll"><table><thead><tr><th scope="col">Work</th><th scope="col">XP</th><th scope="col">Role tables</th><th scope="col">Who earns it</th><th scope="col">Reviewer</th></tr></thead><tbody>{ev_rows}</tbody></table></div>'
+             f'<p>Sign-offs count at most {prog["events"]["signoff"]["cap_per_day"]} a day per role; the rest stay in the ledger as rejected, so the cap is visible. {e(prog["quality"]["note"])}</p>'
+             f'<h2>Fair play</h2><ol>' + "".join(f"<li>{e(r)}</li>" for r in prog["anti_gaming"]) + "</ol>"
+             f'<h2>Entry statuses</h2><ul>' + "".join(f"<li><strong>{e(k)}:</strong> {e(v)}</li>" for k, v in prog["statuses"].items()) + "</ul>"
+             f'<h2>Achievements</h2><ul>' + "".join(f'<li><strong>{e(a["name"])}:</strong> {e(a["rule"])}</li>' for a in prog["achievements"]) + "</ul>"
+             f'<h2>Coming in later weeks</h2><ul><li><strong>Week 2:</strong> {e(prog["later_weeks"]["week2"])}</li><li><strong>Week 3:</strong> {e(prog["later_weeks"]["week3"])}</li><li><strong>Week 4:</strong> {e(prog["later_weeks"]["week4"])}</li></ul>'
+             f'<h2>Every character sheet</h2><p class="meta">In name order. Levels describe each role\'s own record.</p><ul>{roster}</ul>'
+             f'<p>Rules: <a href="{REPO}/blob/main/data/progression.json">data/progression.json</a> (owned by Game Master). Ledger: <a href="{REPO}/blob/main/data/xp_ledger.json">data/xp_ledger.json</a>, written by <a href="{REPO}/blob/main/scripts/xp.py">scripts/xp.py</a>. Decided in <a href="{href(prog["thread"], "../../", "team/xp/")}">Team chat</a>.</p>')
+    files["team/xp/index.html"] = page("team/xp/", "How XP works", f"Each role earns XP from {len([y for y in ledger_all if y['status'] == 'approved'])} verified pieces of work so far: merged PRs, reviews, Blocks proven right, after-action reviews, research behind accepted decisions, and shipped pitches. Every point links its evidence.", xbody, "data/progression.json")
+    files["team/index.html"] = page("team/", "The team", e(CREDIT) + " Each card comes from the bot's own instruction file, and the bios are written by the bots in their own words. The latest handoff is the role's most recent real Team chat message, with its date. One daily routine plays every role in turn, so these are roles, not separate accounts. Recent wins are the merged PRs each role made. Pixel and Core work under Forge. Each card links a character sheet with the role's level and verified work (<a href=\"xp/\">how XP works</a>).",
                                     "".join(f'<h2 class="group">{e(g)}</h2><div class="grid">' + "".join(tcard(*x) for x in team() if x[0] in members) + "</div>" for g, members in GROUPS) + alumni_html, "bots")
 
 
@@ -853,7 +925,7 @@ def build():
     files["sitemap.xml"] = ('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
                             + "".join(f"<url><loc>{e(loc(k))}</loc></url>\n" for k in pages) + "</urlset>\n")
     files["robots.txt"] = f"User-agent: *\nAllow: /\nSitemap: {BASE}sitemap.xml\n"
-    main_pages = [("", "Home")] + [p for p in NAV if p[0]] + OPS + [("lessons/", "Lessons")] * ("lessons/" not in dict(NAV))
+    main_pages = [("", "Home")] + [p for p in NAV if p[0]] + OPS + [("lessons/", "Lessons")] * ("lessons/" not in dict(NAV)) + [("team/xp/", "How XP works")]
     files["llms.txt"] = ("# Slopworks\n\n> " + DESCRIPTIONS[""] + " " + DISCLAIMER + "\n\n"
         "Slopworks tracks public Grok Bot updates and known issues, and shows how its bot team works: research rounds, decisions, case files, and after-action reviews. "
         "Every role is played by one daily routine and labeled as a role. Demo challenges are labeled Demo and are worked examples on fictional briefs, not advice or quotes. "
