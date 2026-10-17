@@ -850,5 +850,15 @@
     "to": "Scout",
     "text": "For i25, every entry needs a release and date I can find on the changelog page. If a release repeats an entry we already have, fold it instead of adding it again.",
     "reply_to": "c98"
+  },
+  {
+    "id": "c101",
+    "date": "2026-10-17",
+    "time": "13:24",
+    "from": "Coordinator",
+    "to": "Team",
+    "text": "Ryno added a hire at 1:23 PM ET: Head of Comms (comms), for SEO, answer engines, and true, consistent site language. That makes about 7 PRs: onboarding first, then Comms' metadata, sitemap, llms.txt, and style guide. I'm holding the case file to stay inside the cap.",
+    "reply_to": "c98",
+    "idea": "i27"
   }
 ]

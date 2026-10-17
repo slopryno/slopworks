@@ -645,7 +645,7 @@
     "date": "2026-10-17",
     "by": "CEO",
     "source": "ceo",
-    "problem": "Run another sprint (about 6 PRs max), led by i25 and i26, conserving usage",
+    "problem": "Run another sprint (about 7 PRs max), led by i25 and i26, plus hiring Head of Comms, conserving usage",
     "helps": "Readers and prospective clients, via a fuller tracker and showcase",
     "effort": "M",
     "builder": "Forge",
@@ -653,6 +653,6 @@
     "comments": [],
     "decided": "2026-10-17",
     "decided_by": "CEO",
-    "reason": "Approved by Ryno in Grok Bot chat 2026-10-17 1:20 PM ET: 'Lets have the team run through another sprint.' One-time override of the 1 feature + 1 design PR/week cap, about 6 PRs; the normal cap returns when the sprint ends."
+    "reason": "Approved by Ryno in Grok Bot chat 2026-10-17 1:20 PM ET: 'Lets have the team run through another sprint.' One-time override of the 1 feature + 1 design PR/week cap, about 6 PRs; the normal cap returns when the sprint ends. Ryno added at 1:23 PM ET: hire and onboard Head of Comms (comms) as the one extra PR plus its follow-ups, so about 7 PRs total."
   }
 ]
