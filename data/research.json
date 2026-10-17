@@ -712,5 +712,101 @@
     "confidence": "high",
     "status": "verified",
     "fresh_until": "2027-04-17"
+  },
+  {
+    "id": "r-atlas-2026-10-17-hardening",
+    "date": "2026-10-17",
+    "role": "Atlas",
+    "kind": "focused",
+    "confidence": "high",
+    "status": "verified",
+    "fresh_until": "2027-01-17",
+    "question": "Which pitfalls do our agents hit most, and which can code or CI remove so the right path is the default?",
+    "outcome": "proposal",
+    "finding": "Top agent pitfalls: sign-offs picked by hand (4 PRs, 6 failed runs), values typed by hand (8 wrong values), repeats (4), unchecked properties (3 AARs), and wrong branch type (2 PRs). A, B, and E need one helper; D needs schema-checked loaders.",
+    "facts": [
+      "31 of 247 CI runs failed, all on PRs: review-gate 6, path rule 4, guardrail-gate 6, repo check 1, unit tests 1, Dependabot guarded paths 13.",
+      "The Lessons page lists 8 AARs. Each traces to a step a bot did by hand or that nothing checked at the time."
+    ],
+    "inferences": [
+      "Fixing the tool the bots already use removes the shortest wrong path.",
+      "CI stays the backstop; the helper makes the right path the easy one."
+    ],
+    "evidence": [
+      "https://github.com/slopryno/slopworks/actions?query=is%3Afailure",
+      "https://slopryno.github.io/slopworks/lessons/"
+    ],
+    "existing_work": "review-gate, the path rule, the chat future-time check, and the AAR checks",
+    "opportunity": "scripts/bot.py (branch, pr, chat, count) plus strict loaders in build.py; then cut the prose those enforce",
+    "alternatives": "More rules in bot files (this is what failed), or human review of every PR",
+    "effort": "M",
+    "risks": "A helper the bots can skip; mitigated because CI still enforces every gate",
+    "experiment": "Tests run the helper's branch choice against CI's path rule, and the strict loaders against today's build",
+    "success_metric": "Zero review-gate or path-rule failures caused by hand-picked roles or branches in the next 2 weeks",
+    "recommendation": "pursue"
+  },
+  {
+    "id": "r-critic-2026-10-17-hardening",
+    "date": "2026-10-17",
+    "role": "Critic",
+    "kind": "focused",
+    "confidence": "high",
+    "status": "verified",
+    "fresh_until": "2027-01-17",
+    "question": "Hardening challenge: what is the weakest assumption in moving rules into a helper?",
+    "outcome": "proposal",
+    "finding": "Weakest assumption: that bots will use the helper. Rules that only the helper enforces go back to being prose if it is skipped. Proceed, but cut prose only where CI enforces the rule too, or where the helper is the only documented path.",
+    "facts": [
+      "Two of the four review-gate PRs (#5 and #8) came before the draft flow in #9, so a process fix already cut that failure once.",
+      "The closed-PR list shows #21 redone as #22 after the path rule failed."
+    ],
+    "inferences": [
+      "Counts from 3 days of history are small, so the plan should be judged again in 2 weeks.",
+      "Repeats (C) stay a judgment call; a helper can't decide what counts as the same feature."
+    ],
+    "evidence": [
+      "https://github.com/slopryno/slopworks/pulls?q=is%3Apr+is%3Aclosed+-is%3Amerged",
+      "https://github.com/slopryno/slopworks/actions?query=is%3Afailure"
+    ],
+    "existing_work": "Atlas's audit; CI gates",
+    "opportunity": "Keep CI as the source of truth and the helper as the default path",
+    "alternatives": "Make the helper mandatory through CI (would touch ci.yml; not worth a CEO call now)",
+    "effort": "S",
+    "risks": "Over-cutting prose that is still judgment",
+    "experiment": "Inventory each cut against an enforcing check or a test",
+    "success_metric": "Every cut prose line maps to a CI check, a test, or a helper command",
+    "recommendation": "investigate"
+  },
+  {
+    "id": "r-coordinator-2026-10-17-hardening",
+    "date": "2026-10-17",
+    "role": "Coordinator",
+    "kind": "focused",
+    "confidence": "high",
+    "status": "verified",
+    "fresh_until": "2027-01-17",
+    "question": "Hardening: how do the concepts score, and what ships first?",
+    "outcome": "proposal",
+    "finding": "Ship in this order: the helper (priority 40), strict loaders and drift tests (24), then the prose trim (25, after the first two). Corrections-diff and entry-cap checks are deferred: no incidents yet.",
+    "facts": [
+      "Scores use the standard formula (I×E×F)/(Effort×Risk).",
+      "The three deferred candidates have 0 incidents in the audit."
+    ],
+    "inferences": [
+      "Four PRs fit the cap Ryno set.",
+      "Trimming last keeps every cut tied to a merged enforcer."
+    ],
+    "evidence": [
+      "https://github.com/slopryno/slopworks/actions?query=is%3Afailure",
+      "https://slopryno.github.io/slopworks/lessons/"
+    ],
+    "existing_work": "Atlas and Critic reports",
+    "opportunity": "Four PRs: audit, helper, loaders and drift tests, trim",
+    "alternatives": "One big PR (harder to review)",
+    "effort": "M",
+    "risks": "Scope creep; capped at about 4 PRs",
+    "experiment": "Prototype questions are answered in the PRs' tests",
+    "success_metric": "All four merge with CI green and no guardrail line removed",
+    "recommendation": "pursue"
   }
 ]
