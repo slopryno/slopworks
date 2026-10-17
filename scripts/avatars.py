@@ -14,13 +14,17 @@ ROLES = {
     "shield": ("#cf222e", "squircle", (4,), "shield", "a sturdy squircle"),
     "forge": ("#bc4c00", "wave", (7, .07), "bolt", "a cookie-edged builder"),
     "pixel": ("#d63384", "cloud", (4,), "square", "a four-puff cloud"),
-    "core": ("#6e7781", "wave", (2, .09), "ring", "a bean-shaped data blob"),
+    "core": ("#9aa5b1", "wave", (2, .09), "ring", "a bean-shaped data blob"),
     "trial": ("#bf8700", "wave", (8, .05), "flask", "a puffy, careful tester"),
     "polish": ("#bf3989", "cloud", (5,), "sparkle", "a flower-ish puff"),
-    "advisor": ("#4e5ba6", "egg", (.12,), "book", "an egg that's seen it all"),
+    "advisor": ("#7d8fe0", "egg", (.12,), "book", "an egg that's seen it all"),
     "atlas": ("#1b7c83", "wave", (6, .11), "globe", "a six-bump cookie"),
     "sweep": ("#218bff", "squircle", (2.6,), "wave", "a soft rounded square"),
     "analyst": ("#a371f7", "wave", (4, .1), "bars", "a four-lobe clover"),
+    "scoutmaster": ("#6fa82b", "wave", (9, .05), "target", "a gear-edged strategist that looks ahead"),
+    "critic": ("#f0883e", "wave", (3, .12), "bang", "a three-cornered challenger"),
+    "advocate": ("#3fb8af", "cloud", (6,), "heart", "a six-puff blob that speaks for readers"),
+    "librarian": ("#c9a26b", "drop", (1.6,), "stack", "a settled droplet that keeps the record"),
     "ceo": ("#d4a72c", "drop", (-0.8,), "star", "a gold droplet placeholder for the CEO, not a photo"),
 }
 BADGE = {
@@ -29,9 +33,11 @@ BADGE = {
     "square": "M-4-4h8v8h-8z", "ring": "M-4 0a4 4 0 1 0 8 0a4 4 0 1 0-8 0", "flask": "M-2-5h4M-1-5v3l-4 7h10l-4-7v-3",
     "sparkle": "M0-6l1.5 4.5L6 0l-4.5 1.5L0 6l-1.5-4.5L-6 0l4.5-1.5z", "book": "M-5-4h4v8h-4zM1-4h4v8h-4z",
     "globe": "M-5 0h10M0-5c-3 3-3 7 0 10c3-3 3-7 0-10", "wave": "M-5 1q2.5-4 5 0t5 0", "bars": "M-3 4v-3M0 4v-8M3 4v-5",
+    "target": "M-4 0a4 4 0 1 0 8 0a4 4 0 1 0-8 0M0 0h.1", "bang": "M0-5v5M0 4v.5",
+    "heart": "M0 4.5l-4.5-4.5a2.6 2.6 0 0 1 4.5-3.5a2.6 2.6 0 0 1 4.5 3.5z", "stack": "M-5 3.5h10M-4 0h8M-3-3.5h6",
     "star": "M0-5.5l1.6 3.4 3.7.4-2.8 2.5.8 3.7L0 2.6-3.3 4.5l.8-3.7-2.8-2.5 3.7-.4z",
 }
-STROKED = {"ring", "check", "flask", "globe", "wave", "bars"}
+STROKED = {"target", "bang", "stack", "ring", "check", "flask", "globe", "wave", "bars"}
 
 
 def radius(shape, p, t):

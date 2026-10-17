@@ -47,7 +47,11 @@
           "Shield",
           "Sketch",
           "Pixel",
-          "Core"
+          "Core",
+          "Scoutmaster",
+          "Critic",
+          "Advocate",
+          "Librarian"
         ]
       },
       "status": {

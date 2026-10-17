@@ -15,9 +15,9 @@ class Rotation(unittest.TestCase):
         rot = SCHED["research"]
         roles = [r["role"] for d in rot for r in d["roles"]]
         self.assertEqual(len(roles), len(set(roles)))
-        for r in ["Coordinator", "Scout", "Verify", "Shield", "Forge", "Pixel", "Core", "Trial", "Polish", "Advisor", "Atlas", "Sweep", "Analyst"]:
+        for r in ["Coordinator", "Scout", "Verify", "Shield", "Forge", "Pixel", "Core", "Trial", "Polish", "Advisor", "Atlas", "Sweep", "Analyst", "Scoutmaster", "Critic", "Advocate", "Librarian"]:
             self.assertIn(r, roles)
-        self.assertTrue(all(1 <= len(d["roles"]) <= 2 for d in rot))
+        self.assertTrue(all(1 <= len(d["roles"]) <= 3 for d in rot))
         self.assertEqual(len(rot), 7)
 
     def test_schedule_page_shows_rotation(self):
