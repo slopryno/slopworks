@@ -921,10 +921,19 @@
     "helps": "Visitors on phones and tablets",
     "effort": "M",
     "builder": "Polish",
-    "state": "yes",
+    "state": "shipped",
     "comments": [],
     "decided": "2026-10-17",
     "decided_by": "CEO",
-    "reason": "Approved by Ryno in Grok Bot chat 2026-10-17 7:10 PM ET: 'Have the team get together for an adhoc sprint.' One-time override of the 1 feature + 1 design PR/week cap, about 6 PRs, raised to about 8 at 7:12 PM ET when he made UX top priority. Conserve usage. The normal cap returns when the sprint ends."
+    "reason": "Approved by Ryno in Grok Bot chat 2026-10-17 7:10 PM ET: 'Have the team get together for an adhoc sprint.' One-time override of the 1 feature + 1 design PR/week cap, about 6 PRs, raised to about 8 at 7:12 PM ET when he made UX top priority. Conserve usage. The normal cap returns when the sprint ends.",
+    "acceptance_criteria": [
+      "About 8 PRs at most",
+      "Measured before and after at 360, 390, 414, 768 and 1280",
+      "0 overflowing pages and 0 undersized non-inline tap targets at 360, with an add-only CI test",
+      "No desktop regression at 1280",
+      "Retro posted and the normal cap restored"
+    ],
+    "acceptance_verified_by": "Trial",
+    "shipped": "#70 to #76: audit, 4-link nav and hubs, simpler home, mobile-first CSS, 360px CI test, cuts, retro. At 360: overflow 3 to 0, small targets 622 to 0. Cap restored."
   }
 ]
