@@ -68,3 +68,4 @@ main.home>h1{font-size:2.5rem;letter-spacing:-.02em;max-width:22ch;margin-top:1.
 .catches{list-style:none;padding:0}.catches li{margin:.5rem 0}.cancant{display:grid;grid-template-columns:repeat(auto-fit,minmax(14rem,1fr));gap:1rem;margin-top:1.5rem}.cancant h2{font-size:1.1rem;margin:.25rem 0}
 .strip{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:.5rem}.strip a{display:flex;flex-direction:column;align-items:center;text-decoration:none;font-size:.75rem;width:4.5rem;color:var(--muted)}.strip a:hover .av{animation:hop .9s ease-in-out infinite}
 @media (max-width:40rem){main.home>h1{font-size:1.9rem}.ops{font-size:.8rem}.ops ul{flex-wrap:nowrap;overflow-x:auto}}
+.latest{margin:.25rem 0 .5rem;padding:.4rem .7rem;border-left:3px solid var(--line);background:var(--card);border-radius:0 6px 6px 0;font-size:.9rem}.latest p{margin:.15rem 0}

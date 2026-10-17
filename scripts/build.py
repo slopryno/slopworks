@@ -250,14 +250,24 @@ def build():
         r = TEAM_ROLE.get(n, n)
         day, focus = rot.get(r, ("", ""))
         last = next((x for x in research if x["role"] == r), None)
-        lt = f' Last: <a href="../chat/#{e(last["id"])}">{e(last["question"])}</a> ({last["date"]}).' if last else " No notes yet. The weekly rotation adds one."
+        in_arena = last and any(last["id"] in a["reports"] for a in load("arena"))
+        lt = f' Last: <a href="../{"arena" if in_arena else "chat"}/#{e(last["id"])}">{e(last["question"])}</a> ({last["date"]}).' if last else " No notes yet. The weekly rotation adds one."
         return f'<p><strong>Researches</strong> ({e(day)}s): {e(focus)}.{lt}</p>' if day else ""
+    # Living Team (i22, PR 5 of 8): each card shows the role's latest real handoff from data/chat.json, with its date. No live claims.
+    SPEAKS_AS = {"Sketch": {"Sketch", "Scout"}, "Lens": {"Lens", "Verify"}, "Forge": {"Forge", "Pixel", "Core", "Publish"}, "Shield": {"Shield", "Privacy"}}
+    def latest_msg(n):
+        m = next((c for c in reversed(chat) if c["from"] in SPEAKS_AS.get(n, {n})), None)
+        if not m:
+            return '<p class="empty">No handoffs yet. They appear here after the role posts in Team chat.</p>'
+        txt = m["text"] if len(m["text"]) <= 140 else m["text"][:137].rsplit(" ", 1)[0] + "\u2026"
+        return (f'<blockquote class="latest"><p>{e(txt)}</p><p class="meta">{as_of(m["date"], "said on")}<span>to {e(m["to"])}</span>'
+                f'{"<span>as " + e(m["from"]) + "</span>" if m["from"] != n else ""}<a href="../chat/#{e(m["id"])}">in Team chat</a></p></blockquote>')
     def tcard(n, t, r, o, f):
         w = [x for x in wins if x["role"] == n][:3]
         wl = "".join(f'<li><a href="{e(x["pr"])}">{e(x["title"])}</a> <time datetime="{x["date"]}">{x["date"]}</time></li>' for x in w) or '<li class="empty">No merged PRs yet. Shipped work shows up here after CI passes and the PR is squash-merged.</li>'
         return (f'<article class="card lead" style="border-top:4px solid {color(n)}">{avatar(n, "../", 72)}<h2><a href="{REPO}/blob/main/bots/{f}">{e(n)}</a></h2>'
-                f'<p class="title">{e(t)}</p><p>{e(bio(n))}</p><p><strong>Owns:</strong> {e(o)}</p>{researched(n)}<h3>Recent wins</h3><ul>{wl}</ul></article>')
-    files["team/index.html"] = page("team/", "The team", e(CREDIT) + " Each card comes from the bot's own instruction file, and the bios are written by the bots in their own words. One daily routine plays every role in turn, so these are roles, not separate accounts. Recent wins are the merged PRs each role made. Pixel and Core work under Forge.",
+                f'<p class="title">{e(t)}</p><p>{e(bio(n))}</p><p><strong>Owns:</strong> {e(o)}</p><h3>Latest handoff</h3>{latest_msg(n)}{researched(n)}<h3>Recent wins</h3><ul>{wl}</ul></article>')
+    files["team/index.html"] = page("team/", "The team", e(CREDIT) + " Each card comes from the bot's own instruction file, and the bios are written by the bots in their own words. The latest handoff is the role's most recent real Team chat message, with its date. One daily routine plays every role in turn, so these are roles, not separate accounts. Recent wins are the merged PRs each role made. Pixel and Core work under Forge.",
                                     "".join(f'<h2 class="group">{e(g)}</h2><div class="grid">' + "".join(tcard(*x) for x in team() if x[0] in members) + "</div>" for g, members in GROUPS) + alumni_html, "bots")
 
     idea_state = {i["id"]: i["state"] for i in load("ideas")}
