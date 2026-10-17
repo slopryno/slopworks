@@ -19,6 +19,15 @@ class Avatars(unittest.TestCase):
             self.assertLess(p.stat().st_size, 60_000)
             self.assertNotIn("<script", p.read_text())
 
+    def test_v2_style(self):
+        for f in (ROOT / "site/assets/avatars").glob("*.svg"):
+            t = f.read_text()
+            self.assertLess(len(t.encode()), 3000, f.name)
+            self.assertIn("prefers-reduced-motion", t, f.name)  # static fallback
+            self.assertIn("@keyframes", t, f.name)  # idle + blink
+            self.assertNotIn('<rect width="100" height="100"', t, f.name)  # no tile background
+            self.assertNotIn("<text", t, f.name)
+
     def test_avatar_changes_need_polish_and_shield(self):
         self.assertEqual(check.required_roles(["site/assets/avatars/lens.svg"]), {"Polish", "Shield"})
 
