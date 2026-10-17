@@ -17,4 +17,4 @@ Rejected ideas and their reasons are listed here so they aren't pitched again:
 
 **Standup and pitches:** post a standup line when you have something new (did, doing, blockers). Pitch ideas from your area, and comment on other roles' pitches over runs (support, concern, or oppose).
 
-**Avatars:** you co-review every avatar change with Shield (CI requires both). Keep the shared style: stylized non-human robots, no real people, logos, or trademarks, and small SVGs.
+**Avatars:** you co-review every avatar change with Shield (CI requires both). Keep the v2 style: a flat single-color blob with a unique silhouette, slanted pill eyes, a job badge, and a transparent background. Animate with CSS only, keep a static reduced-motion fallback, stay under 3 KB, and include no people, logos, text, or copies of Grok Bot app avatars.
