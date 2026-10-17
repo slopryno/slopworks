@@ -15,7 +15,7 @@ REPO = "https://github.com/slopryno/slopworks"
 CREDIT = "Built and designed by Grok Bots. Reviewed and merged by bots; steered by a human CEO (Ryno)."
 DISCLAIMER = "Unofficial, fan-built project. Not affiliated with or endorsed by Grok Bot, SpaceX, or X."
 CORRECTIONS = "slopryno+corrections@mail.grokbot.com"
-NAV = [("", "Home"), ("cases/", "Case files"), ("lessons/", "Lessons"), ("arena/", "Research Arena"), ("challenges/", "Demo challenge"), ("team/", "Team"), ("chat/", "Team chat")]
+NAV = [("", "Home"), ("timeline/", "Timeline"), ("cases/", "Case files"), ("lessons/", "Lessons"), ("arena/", "Research Arena"), ("challenges/", "Demo challenge"), ("team/", "Team"), ("chat/", "Team chat")]
 OPS = [("updates/", "What's new"), ("issues/", "Known issues"), ("behind/", "Behind the scenes"), ("design/", "Design log"), ("schedule/", "Schedule and limits")]
 e = lambda s: html.escape(str(s), quote=True)
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -130,6 +130,7 @@ DESCRIPTIONS = {
     "": "An unofficial Grok Bot tracker built, designed, and run by Grok Bots, with every claim linked to a public source or a merged change.",
     "updates/": "Grok Bot updates from the official changelog and team posts, newest first, each labeled confirmed or reported and linked to its source.",
     "issues/": "Known Grok Bot issues from public reports, grouped by area, and marked fixed only when a public source says so.",
+    "timeline/": "The Slopworks bot team's progress over time, newest first: what shipped, what Ryno decided, who joined, what was researched, and what was learned.",
     "cases/": "Real decisions by the Slopworks bot team, replayed step by step from the problem to the shipped change, with every step linked.",
     "lessons/": "Same-day after-action reviews: what went wrong on Slopworks, why, and the rule, test, or CI check that changed, each linked to its record.",
     "arena/": "A real research round: independent reports from the bot roles, a challenge, scores, and the decision, with every source linked.",
@@ -239,6 +240,43 @@ def area_filter(items):
     css = f"<style>{hide}{{display:none}}{on},{all_on}{{background:var(--link);border-color:var(--link);color:var(--bg)}}</style>"
     return f'{targets}<div class="filter" role="group" aria-label="Filter by area"><span>Filter by area:</span><ul>{chips}</ul></div>', css
 
+
+def rollover(units, size, target):
+    """Archive rollover shared by Timeline and Lessons, in the Team chat pattern. units: newest first, each (date, ...).
+    The newest units stay on the main page while they fit the byte target; older ones go to month parts
+    (YYYY-MM, then YYYY-MM-2 ...), filled oldest first so an item's archive page stays put as new items roll in."""
+    main, rest, used = [], [], 0
+    for u in units:
+        if not rest and (not main or used + size(u) <= target):
+            main.append(u); used += size(u)
+        else:
+            rest.append(u)
+    parts = []
+    for month in sorted({u[0][:7] for u in rest}):
+        n, used = 1, 0
+        for u in sorted((u for u in rest if u[0][:7] == month), key=lambda u: u[0]):
+            if used and used + size(u) > target:
+                n, used = n + 1, 0
+            used += size(u)
+            key = f"{month}{'' if n == 1 else '-' + str(n)}"
+            if not parts or parts[-1][0] != key:
+                parts.append((key, month, n, []))
+            parts[-1][3].append(u)
+    return main, parts
+
+
+def type_filter(types, label_text="Filter by type"):
+    """The #33 chips, for items that carry one or more types in data-type (CSS only: anchors, :target, :has())."""
+    opts = [("all", "All")] + types
+    targets = "".join(f'<span class="ft" id="type-{k}"></span>' for k, _ in opts)
+    chips = "".join(f'<li><a href="#type-{k}">{e(t)}</a></li>' for k, t in opts)
+    hide = ",".join(f'.filtered:has(#type-{k}:target) [data-type]:not([data-type~="{k}"]),.filtered:has(#type-{k}:target) .tl-day:not(:has([data-type~="{k}"]))' for k, _ in types)
+    on = ",".join(f'.filtered:has(#type-{k}:target) a[href="#type-{k}"]' for k, _ in opts)
+    all_on = '.filtered:not(:has(.ft:target)) a[href="#type-all"]'
+    css = f"<style>{hide}{{display:none}}{on},{all_on}{{background:var(--link);border-color:var(--link);color:var(--bg)}}</style>"
+    return f'{targets}<div class="filter" role="group" aria-label="{e(label_text)}"><span>{e(label_text)}:</span><ul>{chips}</ul></div>', css
+
+
 def badge(label, value, color):
     """d6: flat SVG badge generated from repo data; no outside badge service."""
     w1, w2 = 10 + 7 * len(label), 10 + 7 * len(str(value))
@@ -311,6 +349,7 @@ def build():
                + '<section aria-labelledby="catch-t"><h2 id="catch-t">How the team catches its own mistakes</h2><ul class="catches">' + "".join(f'<li>{label("verified")} {e(t)} <a href="{u}">record</a></li>' for t, u in catches)
                + f'<li class="meta">The history is young: runs began on {e(runs[-1]["date"]) if runs else "n/a"}, and no merged change has needed a revert yet.</li></ul></section>'
                + '<section class="cancant" aria-label="What the team can and can\'t do"><div class="card"><h2>Can</h2><ul>' + "".join(f"<li>{e(x)}</li>" for x in can) + '</ul></div><div class="card"><h2>Won\'t</h2><ul>' + "".join(f"<li>{e(x)}</li>" for x in cant) + "</ul></div></section>"
+               + '<section aria-labelledby="tl-t"><h2 id="tl-t">Follow the progress</h2><p>Every merged PR, CEO decision, new role, research round, and lesson since launch, newest first, each linked to its record. <a href="timeline/">See the Timeline</a>.</p></section>'
                + f'<section aria-labelledby="team-t"><h2 id="team-t">The team</h2><p>{len(team())} roles in five groups, played by one daily routine and labeled honestly as roles. <a href="team/">Meet them</a>.</p><ul class="strip">{team_strip}</ul></section>'
                + '<section aria-labelledby="latest-t"><h2 id="latest-t">Latest from the tracker</h2>' + "".join(entry_card(x) for x in ups[:3]) + '<p><a href="updates/">All updates</a> · <a href="issues/">Known issues</a></p></section>'
                + legend())
@@ -600,6 +639,152 @@ def build():
     chs = load("challenges")
     files["challenges/index.html"] = page("challenges/", "Demo challenge", "What working with this team looks like: a brief goes in, roles research it independently, a critic challenges it, and a structured outcome comes back. " + e(DEMO_NOTE),
                                           legend() + ("".join(map(challenge, chs)) or '<p class="empty">No demo challenges yet. Each one is researched by the team and labeled Demo.</p>'), "data/challenges.json")
+
+    # ---------- Timeline (i32): generated from the records, newest first, grouped by day (Comms wording, c136-c142) ----------
+    TL_TYPES = [("shipped", "Shipped"), ("milestone", "Milestones"), ("decision", "Decisions"), ("team", "Team"), ("research", "Research"), ("case", "Case files"), ("lesson", "Lessons")]
+    TL_TARGET = int(budget * CHAT_TARGET) - css_bytes - 7000
+    from zoneinfo import ZoneInfo
+    ET = ZoneInfo("America/New_York")  # every record here is ET; the offset follows daylight saving
+    when = lambda d, t: (datetime.fromisoformat(f"{d}T{t}").replace(tzinfo=ET).isoformat(timespec="minutes") if t else d, t)
+    chat_by = {c["id"]: c for c in chat}
+    root_idea = {c["id"]: c.get("idea") for c in chat if not c.get("reply_to")}
+    thread_of = lambda c: c.get("idea") or root_idea.get(c.get("reply_to"))
+    msgs_for = lambda i: [c for c in chat if thread_of(c) == i and c.get("time")]
+    first_time = lambda i: min(((c["date"], c["time"]) for c in msgs_for(i)), default=None)
+    prs = sorted(wins, key=lambda w: w.get("merged") or w["date"])
+    num = lambda w: int(w["pr"].rsplit("/", 1)[1])
+    def pr_item(w):
+        d, t = (w["merged"][:10], w["merged"][11:16]) if w.get("merged") else (w["date"], None)
+        return {"types": ["shipped"], "date": d, "time": t, "id": f"tl-{w['id']}", "who": w["role"],
+                "title": w["title"], "link": lambda up, w=w: w["pr"], "cue": f"PR #{num(w)}"}
+    items, used_prs = [], set()
+    ceo = [i for i in ideas_all if i.get("source") == "ceo"]
+    def said_at(i):
+        """When Ryno decided, from the time quoted in the decision's own reason ('5:25 PM ET'), else None."""
+        m = re.search(r"(\d{1,2}):(\d{2}) ?([AP]M) ET", i.get("reason") or "")
+        return f"{int(m.group(1)) % 12 + (12 if m.group(3) == 'PM' else 0):02d}:{m.group(2)}" if m else None
+    by_num = {num(w): w for w in prs}
+    for i in sorted(ceo, key=lambda i: (i.get("decided", i["date"]), said_at(i) or "")):
+        ms = msgs_for(i["id"])
+        if not ms or not ("cap" in (i["problem"] + " " + (i.get("reason") or "")).lower() or i["state"] == "shipped"):
+            continue
+        cands = ms + [chat_by[c["reply_to"]] for c in ms if c.get("reply_to") in chat_by]
+        retro = [c for c in cands if c["text"].startswith("Retro") or re.search(r"\bdone\b", c["text"][:60])]
+        PR_RANGE = r"#(\d+)\s*(?:-|to)\s*#(\d+)"
+        retro = sorted(retro, key=lambda c: (bool(re.search(PR_RANGE, c["text"])), c["date"], c["time"]))
+        out = retro[-1] if retro else None
+        rng = re.search(PR_RANGE, out["text"]) if out else None
+        if rng:  # a closed sprint: exactly the PR range its retro names
+            group = [by_num[n] for n in range(int(rng.group(1)), int(rng.group(2)) + 1) if n in by_num and f"pr{n}" not in used_prs]
+        else:  # a sprint still running: every PR merged since Ryno's decision
+            start = f'{i.get("decided", i["date"])}T{said_at(i) or "00:00"}'
+            group = [w for w in prs if w["id"] not in used_prs and (w.get("merged") or "")[:16] >= start]
+        if not group:
+            continue
+        used_prs |= {w["id"] for w in group}
+        last = group[-1]
+        items.append({"types": ["shipped"] + (["milestone"] if i["state"] == "shipped" else []), "date": last["merged"][:10], "time": last["merged"][11:16],
+                      "id": f"tl-sprint-{i['id']}", "who": None, "title": i["problem"], "sprint": i["id"],
+                      "text": out["text"] if out else "In progress.", "link": lambda up, c=(out or ms[0]): href(c["id"], up, "timeline/"),
+                      "cue": "retro" if out else "kickoff", "children": [pr_item(w) for w in reversed(group)]})
+    first = prs[0] if prs else None
+    for w in prs:
+        if w["id"] in used_prs:
+            continue
+        it = pr_item(w)
+        if first and w is first:
+            it["types"].append("milestone")
+            it["title"] = "Slopworks launched: " + w["title"]
+        items.append(it)
+    for i in ceo:
+        if i.get("decided_by") != "CEO":
+            continue
+        d, t = i.get("decided", i["date"]), said_at(i)
+        items.append({"types": ["decision"], "date": d, "time": t, "id": f"tl-{i['id']}", "who": "CEO", "title": "Ryno decided: " + i["problem"],
+                      "link": lambda up, i=i: href(i["id"], up, "timeline/"), "cue": f"decision {i['id']}"})
+    for c in chat:
+        m = re.match(r"Onboarding run[^.:]*[.:]\s*Welcome, ([A-Z][\w ]+?)[.!]", c["text"], re.I)
+        if m and not c.get("reply_to"):
+            items.append({"types": ["team", "milestone"], "date": c["date"], "time": c.get("time"), "id": f"tl-{c['id']}", "who": c["from"],
+                          "title": f"{m.group(1)} joined the team", "link": lambda up, c=c: href(c["id"], up, "timeline/"), "cue": "onboarding thread"})
+    daily = sorted((r for r in runs if r["kind"] == "daily"), key=lambda r: r["date"])
+    if daily:
+        r = daily[0]
+        items.append({"types": ["milestone"], "date": r["date"], "time": None, "id": "tl-first-run", "who": None, "title": "First daily run: the team published on its own schedule",
+                      "link": lambda up, r=r: f"{up}behind/#run-{r['id']}", "cue": "run log"})
+    for a in load("arena"):
+        th = chat_by.get(a["thread"], {})
+        items.append({"types": ["research"], "date": a["date"], "time": th.get("time") if th.get("date") == a["date"] else None, "id": f"tl-{a['id']}", "who": None,
+                      "title": f"Research round: {a['title']}", "text": f"{len(a['reports'])} independent reports, a challenge, scores, and a decision.",
+                      "link": lambda up, a=a: f"{up}arena/#{a['id']}-t", "cue": "Research Arena"})
+    for ch in chs:
+        th = chat_by.get(ch["thread"], {})
+        items.append({"types": ["research"], "date": ch["date"], "time": th.get("time") if th.get("date") == ch["date"] else None, "id": f"tl-{ch['id']}", "who": None,
+                      "title": f"Demo challenge: {ch['title']}", "demo": True, "link": lambda up, ch=ch: f"{up}challenges/#{ch['id']}", "cue": "demo challenge"})
+    for c in cases:
+        items.append({"types": ["case"], "date": c["date"], "time": None, "id": f"tl-{c['id']}", "who": None, "title": f"Case file: {c['title']}",
+                      "link": lambda up, c=c: f"{up}cases/#{c['id']}", "cue": "case file"})
+    for a in aars:
+        th = chat_by.get(a["thread"], {})
+        items.append({"types": ["lesson"], "date": a["date"], "time": th.get("time") if th.get("date") == a["date"] else None, "id": f"tl-{a['id']}", "who": a["owner"],
+                      "title": f"Lesson: {a['title']}", "link": lambda up, a=a: f"{up}lessons/#{a['id']}", "cue": "after-action review"})
+    items.sort(key=lambda x: (x["date"], x["time"] or "00:00", x["id"]), reverse=True)
+    def tl_item(x, up):
+        dt, t = when(x["date"], x["time"])
+        tm = f'<time datetime="{dt}">{t} ET</time>' if t else f'<time datetime="{dt}">{x["date"]}</time>'
+        tag = TL_NAMES[x["types"][0]] if not x.get("sprint") else "Sprint"
+        lbl = f' {label("demo")}' if x.get("demo") else ""
+        who = f' <span class="meta">{e(x["who"])}</span>' if x.get("who") else ""
+        body = f'<p>{e(x["text"])}</p>' if x.get("text") else ""
+        kids = ""
+        if x.get("children"):
+            ks = x["children"]
+            kids = (f'<details><summary>{len(ks)} merged {"PR" if len(ks) == 1 else "PRs"}</summary><ul class="tl-prs">'
+                    + "".join(f'<li><a href="{e(k["link"](up))}">{e(k["cue"])}</a> {e(k["title"])}{" <span class=meta>" + e(k["who"]) + "</span>" if k.get("who") else ""}</li>' for k in ks) + "</ul></details>")
+        return (f'<li class="tl-item{" tl-mile" if "milestone" in x["types"] else ""}" id="{e(x["id"])}" data-type="{" ".join(x["types"])}">'
+                f'<p class="hd"><span class="tag">{e(tag)}</span>{lbl} {tm}{who}</p><p class="tl-title">{e(x["title"])} <a href="{e(x["link"](up))}">{e(x["cue"])}</a></p>{body}{kids}</li>')
+    TL_NAMES = {"shipped": "Shipped", "milestone": "Milestone", "decision": "Decision", "team": "Team", "research": "Research", "case": "Case file", "lesson": "Lesson"}
+    DAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+    MON = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+    def day_name(d):
+        dd = datetime.fromisoformat(d)
+        return f"{DAYS[dd.weekday()]}, {MON[dd.month - 1]} {dd.day}"
+    def day_counts(xs):
+        n_pr = sum(len(x.get("children", [])) or (1 if x["types"][0] == "shipped" else 0) for x in xs)
+        bits = [(n_pr, "merged PR", "merged PRs")] + [(sum(x["types"][0] == k for x in xs), a, b) for k, a, b in
+                (("decision", "CEO decision", "CEO decisions"), ("team", "new role", "new roles"), ("research", "research round", "research rounds"), ("case", "case file", "case files"), ("lesson", "lesson", "lessons"))]
+        return " · ".join(f"{n} {a if n == 1 else b}" for n, a, b in bits if n)
+    days = []
+    for x in items:
+        if not days or days[-1][0] != x["date"]:
+            days.append((x["date"], []))
+        days[-1][1].append(x)
+    def day_html(dd, up):
+        d, xs = dd
+        return (f'<section class="tl-day" aria-labelledby="d-{d}"><h2 id="d-{d}">{day_name(d)}</h2><p class="meta">{day_counts(xs)}</p>'
+                f'<ol class="tl">' + "".join(tl_item(x, up) for x in xs) + "</ol></section>")
+    tl_main, tl_parts = rollover(days, lambda dd: len(day_html(dd, "../").encode()), TL_TARGET)
+    present = [(k, t) for k, t in TL_TYPES if any(k in x["types"] for x in items)]
+    n_pr = len(prs)
+    n_sprint = sum(1 for x in items if x.get("sprint"))
+    launch = prs[0]["date"] if prs else None
+    hero = (f'<p class="meta">{label("verified")} counted from the repo when this page was built</p><ul class="proof tl-proof">'
+            + "".join(f"<li><strong>{v}</strong> <span>{e(l)}</span></li>" for v, l in ((n_pr, "merged PRs"), (n_sprint, "sprints"), (sum("decision" in x["types"] for x in items), "CEO decisions"), (len(aars), "lessons written up"), (len(team()), "roles"))) + "</ul>")
+    def arch_name(m, n):
+        y, mo = m.split("-")
+        return f"{MON[int(mo) - 1]} {y}" + (f", part {n}" if n > 1 or any(p[1] == m and p[2] == 2 for p in tl_parts) else "")
+    tl_arch = ('<h2 id="archive">Archive</h2><p>Older days move to archive pages automatically, so this page stays light. Nothing is removed.</p><ul>'
+               + "".join(f'<li><a href="archive/{k}.html">{arch_name(m, n)}</a>: {len(us)} {"day" if len(us) == 1 else "days"}</li>' for k, m, n, us in reversed(tl_parts)) + "</ul>") if tl_parts else ""
+    fhtml, fcss = type_filter(present)
+    intro = ("How this team got here, newest first: what shipped, what Ryno decided, who joined, what the team researched, and what it learned when something went wrong."
+             " Every line links its record.")
+    files["timeline/index.html"] = page("timeline/", "Timeline", e(intro) + (f" Launched {e(day_name(launch))}." if launch else ""),
+        hero + fcss + '<div class="filtered">' + fhtml + "".join(day_html(dd, "../") for dd in tl_main) + "</div>" + tl_arch + legend(), "data")
+    for k, (key, m, n, us) in enumerate(tl_parts):
+        slug = f"timeline/archive/{key}.html"
+        nav_l = ['<a href="../">Timeline (latest)</a>'] + [f'<a href="{p[0]}.html">{"Newer" if j > k else "Older"}: {arch_name(p[1], p[2])}</a>' for j, p in enumerate(tl_parts) if abs(j - k) == 1]
+        files[slug] = page(slug, f"Timeline archive: {arch_name(m, n)}", "Older days from the Slopworks timeline, moved here automatically to keep the main page light. The same records, unchanged.",
+            f'<nav class="jump" aria-label="Archive pages">{"".join(nav_l)}</nav>' + fcss + '<div class="filtered">' + fhtml + "".join(day_html(dd, "../../") for dd in sorted(us, reverse=True)) + "</div>", "data")
 
     shipped = [d for d in design if d["state"] == "shipped"]
     backlog = sorted([d for d in design if d["state"] in ("backlog", "in-progress")], key=lambda d: d["rank"])
