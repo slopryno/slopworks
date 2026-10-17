@@ -1,1 +1,74 @@
-[]
+[
+  {
+    "id": "s-2026-10-17-coordinator",
+    "date": "2026-10-17",
+    "role": "Coordinator",
+    "did": "Showcase v1 sprint (i22): #37 to #44 merged under CEO override i24; cap restored",
+    "doing": "host standup; no new CEO pitch (goal 6 is i21, already decided); log today's pitches for Monday",
+    "blockers": "none"
+  },
+  {
+    "id": "s-2026-10-17-scout",
+    "date": "2026-10-17",
+    "role": "Scout",
+    "did": "2026-10-16 run: 36 team posts screened, 1 new issue",
+    "doing": "changelog RSS diff, docs, team posts and bug search since the last run",
+    "blockers": "none"
+  },
+  {
+    "id": "s-2026-10-17-verify",
+    "date": "2026-10-17",
+    "role": "Verify",
+    "did": "2026-10-16: dropped an event post and a duplicate pricing reply",
+    "doing": "check today's candidates against sources; re-check open issues for fixes",
+    "blockers": "none"
+  },
+  {
+    "id": "s-2026-10-17-shield",
+    "date": "2026-10-17",
+    "role": "Shield",
+    "did": "showcase sprint review: traces link only merged PRs, chat, and research",
+    "doing": "privacy strip on today's entries and the Discussions scan",
+    "blockers": "none"
+  },
+  {
+    "id": "s-2026-10-17-forge",
+    "date": "2026-10-17",
+    "role": "Forge",
+    "did": "built the showcase pages with Pixel (#38 to #43)",
+    "doing": "publish today's data PR; Saturday research: release techniques",
+    "blockers": "none"
+  },
+  {
+    "id": "s-2026-10-17-sweep",
+    "date": "2026-10-17",
+    "role": "Sweep",
+    "did": "logged demo challenge 1: 6 fetches, 4 sources used",
+    "doing": "Saturday research: Pages, feeds, release hygiene; run budget; standup post",
+    "blockers": "none"
+  },
+  {
+    "id": "s-2026-10-17-trial",
+    "date": "2026-10-17",
+    "role": "Trial",
+    "did": "showcase acceptance checks and tighten-only CI tests (#44)",
+    "doing": "review today's data PR; post-deploy check of the live site",
+    "blockers": "none"
+  },
+  {
+    "id": "s-2026-10-17-polish",
+    "date": "2026-10-17",
+    "role": "Polish",
+    "did": "outcome-led landing with Pixel (#40)",
+    "doing": "quick look on desktop and mobile; deep audit is Monday",
+    "blockers": "none"
+  },
+  {
+    "id": "s-2026-10-17-advisor",
+    "date": "2026-10-17",
+    "role": "Advisor",
+    "did": "Scout rule on event and livestream posts (#7)",
+    "doing": "turn repeat mistakes from the retro and runs into bot-file rules",
+    "blockers": "none"
+  }
+]
