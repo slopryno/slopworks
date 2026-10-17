@@ -569,11 +569,28 @@ def build():
                 f'<span class="tag">{st}</span><span>owner {e(a["owner"])}</span><a href="{href(a["thread"], "../", "lessons/")}">Team chat thread</a></p><dl>{rows}</dl></article>')
     aars = sorted(load("aars"), key=lambda a: (a["date"], a["id"]), reverse=True)
     n_open = sum(a["status"] == "open" for a in aars)
+    # Lessons archive rollover (sprint i31): the shared rollover() helper, in the Team chat pattern. Open reviews stay on the main page.
+    lesson_loc = {}
+    lesson_href = lambda i, up: f'{up}{lesson_loc.get(i, "lessons/")}#{e(i)}'
+    l_target = int(budget * CHAT_TARGET) - css_bytes - 7000
+    l_units = [(a["date"], a) for a in aars]
+    l_main, l_parts = rollover([u for u in l_units if u[1]["status"] != "open"], lambda u: len(aar(u[1]).encode()), l_target)
+    l_main = sorted([u for u in l_units if u[1]["status"] == "open"] + l_main, key=lambda u: (u[0], u[1]["id"]), reverse=True)
+    for key, m, n, us in l_parts:
+        for u in us:
+            lesson_loc[u[1]["id"]] = f"lessons/archive/{key}.html"
+    l_arch = ('<h2 id="archive">Archive</h2><p>Older reviews move to archive pages automatically, so this page stays light. Nothing is removed, and each review keeps its own permalink.</p><ul>'
+              + "".join(f'<li><a href="archive/{k}.html">{e(k)}</a>: {len(us)} {"review" if len(us) == 1 else "reviews"}</li>' for k, m, n, us in reversed(l_parts)) + "</ul>") if l_parts else ""
     files["lessons/index.html"] = page("lessons/", "Lessons",
         "When something goes wrong, the team writes an after-action review the same run: what was supposed to happen, what actually happened, why (blameless, with evidence), and what changes. "
         "The Friday retro reviews the week's reviews and closes them, and Advisor turns repeats into rules or CI checks. Every line links the PR, CI run, commit, or Team chat message behind it.",
         f'<p class="meta"><span>{len(aars)} reviews</span><span>{n_open} open</span><span>newest first</span></p>'
-        + ("".join(map(aar, aars)) or '<p class="empty">No after-action reviews yet. One appears here the same day something goes wrong.</p>'), "data/aars.json")
+        + ("".join(aar(u[1]) for u in l_main) or '<p class="empty">No after-action reviews yet. One appears here the same day something goes wrong.</p>') + l_arch, "data/aars.json")
+    for k, (key, m, n, us) in enumerate(l_parts):
+        slug = f"lessons/archive/{key}.html"
+        nav_l = ['<a href="../">Lessons (latest)</a>'] + [f'<a href="{p[0]}.html">{"Newer" if j > k else "Older"}: {e(p[0])}</a>' for j, p in enumerate(l_parts) if abs(j - k) == 1]
+        files[slug] = page(slug, f"Lessons archive: {key}", "Older after-action reviews, moved here automatically to keep the Lessons page light. The same records, unchanged.",
+            f'<nav class="jump" aria-label="Archive pages">{"".join(nav_l)}</nav>' + "".join(aar(u[1]).replace('href="../', 'href="../../') for u in sorted(us, key=lambda u: u[0], reverse=True)), "data/aars.json")
 
     # Research Arena (i22, PR 2 of 8): one question, independent reports, challenge, scores, decision. Real records only.
     rmap = {r["id"]: r for r in load("research")}
@@ -727,7 +744,7 @@ def build():
     for a in aars:
         th = chat_by.get(a["thread"], {})
         items.append({"types": ["lesson"], "date": a["date"], "time": th.get("time") if th.get("date") == a["date"] else None, "id": f"tl-{a['id']}", "who": a["owner"],
-                      "title": f"Lesson: {a['title']}", "link": lambda up, a=a: f"{up}lessons/#{a['id']}", "cue": "after-action review"})
+                      "title": f"Lesson: {a['title']}", "link": lambda up, a=a: lesson_href(a["id"], up), "cue": "after-action review"})
     items.sort(key=lambda x: (x["date"], x["time"] or "00:00", x["id"]), reverse=True)
     def tl_item(x, up):
         dt, t = when(x["date"], x["time"])

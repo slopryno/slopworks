@@ -13,16 +13,18 @@ ET = ZoneInfo("America/New_York")
 load = lambda n: json.loads((ROOT / f"data/{n}.json").read_text())
 
 
-def resolve_all(files, test):
+def resolve_all(files, test, prefix="timeline/", check_prs=True):
     merged = {w["pr"] for w in load("wins")}
-    pages = [k for k in files if k.startswith("timeline/") and k.endswith(".html")]
+    pages = [k for k in files if k.startswith(prefix) and k.endswith(".html")]
     n = 0
     for k in pages:
         doc = files[k]
         main = doc[doc.index('<main'):doc.index('</main>')]
         for h in re.findall(r'href="([^"]+)"', main):
             if h.startswith("https://github.com/slopryno/slopworks/pull/"):
-                test.assertIn(h, merged, f"{k}: {h} is not a merged PR"); n += 1
+                if check_prs:
+                    test.assertIn(h, merged, f"{k}: {h} is not a merged PR")
+                n += 1
                 continue
             if h.startswith(("http", "mailto:")):
                 continue
