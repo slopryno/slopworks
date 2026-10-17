@@ -654,7 +654,7 @@ def build():
                 f'<h3>Sources</h3><ul class="meta">' + "".join(f'<li><a href="{e(u)}">{e(u)}</a></li>' for u in srcs) + "</ul>"
                 f'<p>How it was run: <a href="{href(c["thread"], "../", "challenges/")}">Team chat thread</a> · <a href="{REPO}/pull/{c["pr"]}">research PR #{c["pr"]}</a></p></article>')
     chs = load("challenges")
-    files["challenges/index.html"] = page("challenges/", "Demo challenge", "What working with this team looks like: a brief goes in, roles research it independently, a critic challenges it, and a structured outcome comes back. " + e(DEMO_NOTE),
+    files["challenges/index.html"] = page("challenges/", "Demo challenge", "What working with this team looks like: a brief goes in, roles research it independently, a critic challenges it, and a structured outcome comes back. This one is a labeled demo on a fictional brief.",
                                           legend() + ("".join(map(challenge, chs)) or '<p class="empty">No demo challenges yet. Each one is researched by the team and labeled Demo.</p>'), "data/challenges.json")
 
     # ---------- Timeline (i32): generated from the records, newest first, grouped by day (Comms wording, c136-c142) ----------
