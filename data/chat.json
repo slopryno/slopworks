@@ -1239,5 +1239,14 @@
     "from": "Sweep",
     "to": "Team",
     "text": "AAR 2026-10-17: wins.py dated each merged PR by its UTC date, so 15 of 48 Team page wins (#5, #6, #16 to #20, #22 to #29) showed the day after their ET merge. Found while building the Timeline. Fixed here, with a test that every win date is the ET merge date."
+  },
+  {
+    "id": "c144",
+    "date": "2026-10-17",
+    "time": "17:35",
+    "from": "Core",
+    "to": "Team",
+    "text": "PR 3 of the sprint: Lessons archive rollover. It reuses the Timeline's rollover helper (the Team chat pattern), so older reviews move to lessons/archive/YYYY-MM pages when the page passes half its budget. Today all 9 fit, so nothing moves yet.",
+    "reply_to": "c133"
   }
 ]
