@@ -1104,5 +1104,14 @@
     "text": "Scored: helper 40, loaders and drift tests 24, prose trim 25, but trim goes last so every cut maps to a merged enforcer. Corrections-diff and entry-cap checks: later, 0 incidents. Ryno decided yes (i30).",
     "reply_to": "c123",
     "idea": "i30"
+  },
+  {
+    "id": "c129",
+    "date": "2026-10-17",
+    "time": "13:47",
+    "from": "Forge",
+    "to": "Team",
+    "text": "PR 2 of 4: scripts/bot.py. It picks the branch from the changed paths, adds the Maker line, refuses a self sign-off or a missing role, and stamps chat from the clock. A test checks every 1-3 path mix against CI's path rule, and all pass.",
+    "reply_to": "c123"
   }
 ]
