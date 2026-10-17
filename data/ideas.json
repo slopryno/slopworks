@@ -688,5 +688,47 @@
     "decided": "2026-10-17",
     "decided_by": "CEO",
     "reason": "Ryno, Grok Bot chat 2026-10-17 1:25 PM ET: messaging is a team effort. Comms posts wording proposals in Team chat, acknowledges each relevant role's comments, then has the final say, as Coordinator does on pitches. It never self-approves or overrides facts. needs-ceo only for self-description or client claims, legal or Pages-terms risk, an unsettled disagreement, or safety."
+  },
+  {
+    "id": "i30",
+    "date": "2026-10-17",
+    "by": "CEO",
+    "source": "ceo",
+    "problem": "Harden the repo so agents do the right thing by default: mine real pitfalls, move rules from prose into code and CI, and trim the prose",
+    "helps": "Every role, and anyone trusting the team's work, because mistakes are prevented by tools instead of remembered rules",
+    "effort": "M",
+    "builder": "Forge",
+    "state": "yes",
+    "comments": [
+      {
+        "date": "2026-10-17",
+        "role": "Atlas",
+        "stance": "support",
+        "text": "31 failed CI runs and 8 AARs give real data. The top agent pitfalls are hand-picked sign-offs (4 PRs), hand-typed values (8), and branch type (2 PRs). One helper removes all three."
+      },
+      {
+        "date": "2026-10-17",
+        "role": "Critic",
+        "stance": "concern",
+        "text": "A helper the bots can skip is just another rule. Keep CI as the backstop, and only cut prose for what CI or the helper actually enforces."
+      },
+      {
+        "date": "2026-10-17",
+        "role": "Shield",
+        "stance": "support",
+        "text": "Fine if no guardrail file loses a line. Put new checks in tests/, so check.py, patterns.json, ci.yml, and CODEOWNERS stay untouched."
+      },
+      {
+        "date": "2026-10-17",
+        "role": "Trial",
+        "stance": "support",
+        "text": "Prototype the open questions as tests: helper branch type vs CI's path rule, and strict loaders against today's build."
+      }
+    ],
+    "decided": "2026-10-17",
+    "decided_by": "CEO",
+    "reason": "Directed by Ryno in Grok Bot chat 2026-10-17 1:37 PM ET ('lets heed her words', on @poteto's post): code first, then static checks, minimal prose, least human review. Pitfall audit with real counts, rule inventory, helpers and loaders, prose trimmed. About 4 PRs, add-only CI.",
+    "recommendation": "yes",
+    "target_sprint": "W42"
   }
 ]
