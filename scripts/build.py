@@ -15,8 +15,8 @@ REPO = "https://github.com/slopryno/slopworks"
 CREDIT = "Built and designed by Grok Bots. Reviewed and merged by bots; steered by a human CEO (Ryno)."
 DISCLAIMER = "Unofficial, fan-built project. Not affiliated with or endorsed by Grok Bot, SpaceX, or X."
 CORRECTIONS = "slopryno+corrections@mail.grokbot.com"
-NAV = [("", "What's new"), ("issues/", "Known issues"), ("behind/", "Behind the scenes"), ("team/", "Team"),
-       ("chat/", "Team chat"), ("cases/", "Case files"), ("arena/", "Research Arena"), ("design/", "Design log"), ("schedule/", "Schedule and limits")]
+NAV = [("", "Home"), ("cases/", "Case files"), ("arena/", "Research Arena"), ("team/", "Team"), ("chat/", "Team chat")]
+OPS = [("updates/", "What's new"), ("issues/", "Known issues"), ("behind/", "Behind the scenes"), ("design/", "Design log"), ("schedule/", "Schedule and limits")]
 e = lambda s: html.escape(str(s), quote=True)
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from avatars import ROLES as AVATARS  # noqa: E402
@@ -79,6 +79,7 @@ def load(name):
 def page(slug, title, lede, body, source):
     up = "../" * slug.count("/")
     nav = "".join(f'<li><a href="{up}{s}"{" aria-current=\"page\"" if s == slug else ""}>{e(t)}</a></li>' for s, t in NAV)
+    ops = "".join(f'<li><a href="{up}{s}"{" aria-current=\"page\"" if s == slug else ""}>{e(t)}</a></li>' for s, t in OPS)
     return f"""<!doctype html>
 <html lang="en">
 <head>
@@ -95,9 +96,10 @@ def page(slug, title, lede, body, source):
 <header><div class="wrap">
 <a class="brand" href="{up}">Slopworks</a>
 <p class="credit">{e(CREDIT)}</p>
-<nav aria-label="Sections"><ul>{nav}</ul></nav>
+<nav aria-label="Showcase"><ul>{nav}</ul></nav>
+<nav class="ops" aria-label="Tracker and operations"><span>Tracker and ops:</span><ul>{ops}</ul></nav>
 </div></header>
-<main id="main" class="wrap">
+<main id="main" class="wrap{" home" if slug == "" else ""}">
 <p class="disclaimer">{e(DISCLAIMER)}</p>
 <h1>{e(title)}</h1>
 <p class="lede">{lede}</p>
@@ -182,12 +184,45 @@ def build():
     n_open = sum(x["state"] == "open" for x in iss)
     stats = [(len(ups), "updates tracked", ""), (n_open, "open issues", "issues/"), (len(team()), "bot roles", "team/"),
              (last_run["date"] if last_run else "none", f'last run ({last_run["status"]}), as of this build' if last_run else "last run", "behind/")]
-    hero = ('<section class="hero" aria-label="About Slopworks"><p class="intro">An unofficial Grok Bot tracker, researched, written, reviewed, and shipped by a team of bots. '
-            'One daily run around 9:15 AM ET; every item is sourced.</p><ul class="stats">'
-            + "".join(f'<li><a href="{u}"><strong>{e(v)}</strong> <span>{e(l)}</span></a></li>' if u else f'<li><strong>{e(v)}</strong> <span>{e(l)}</span></li>' for v, l, u in stats)
-            + '</ul><p class="cta"><a href="team/">Meet the team</a> · <a href="chat/">Watch them work</a> · <a href="schedule/">What to expect</a></p></section>')
-    files["index.html"] = page("", "What's new in Grok Bot", f"{len(ups)} updates from public posts, newest first. Every item links its source and says whether it's <strong>confirmed</strong> (official account or docs) or <strong>reported</strong> (community post).",
-                               hero + "<h2>Latest updates</h2>" + (lambda f: f[1] + '<div class="filtered">' + f[0] + "".join(entry_card(x) for x in ups) + "</div>")(area_filter(ups)) if ups else hero + "<h2>Latest updates</h2><p>Nothing yet.</p>", "data/updates.json")
+    files["updates/index.html"] = page("updates/", "What's new in Grok Bot", f"{len(ups)} updates from public posts, newest first. Every item links its source and says whether it's <strong>confirmed</strong> (official account or docs) or <strong>reported</strong> (community post). This tracker is the product the team runs every day.",
+                               (lambda f: f[1] + '<div class="filtered">' + f[0] + "".join(entry_card(x) for x in ups) + "</div>")(area_filter(ups)) if ups else '<p class="empty">Nothing yet.</p>', "data/updates.json")
+
+    # Showcase landing (i22, PR 4 of 8): outcomes first, every number derived from repo data, every claim linked.
+    research_all = load("research")
+    ideas_all = load("ideas")
+    shipped_ok = [i for i in ideas_all if i["state"] == "shipped" and i.get("acceptance_verified_by") == "Trial"]
+    dropped = sum(r["counts"].get("dropped_verify", 0) for r in runs)
+    screened = sum(r["counts"].get("candidates", 0) for r in runs)
+    pdrop = sum(r["counts"].get("dropped_privacy", 0) for r in runs)
+    proof = [(len(research_all), "research reports filed, each with its sources", "arena/"),
+             (len(shipped_ok), "shipped changes with acceptance checked by Trial", "cases/"),
+             (f"{dropped} of {screened}", "candidate entries Verify dropped before publishing", "behind/"),
+             (len(ups), "Grok Bot updates tracked from public sources", "updates/")]
+    asof = last_run["date"] if last_run else ""
+    q = [("What can this team do?", "Run a real product end to end. Every day it finds and verifies public Grok Bot updates, and it designs, builds, reviews, and ships its own site through pull requests.",
+          [("updates/", "See the tracker"), ("cases/", "Read the case files")]),
+         ("Why is the approach different?", "Every claim links a source, every change is reviewed by a different role, and the guardrails live in CI, where nobody, bots included, can quietly switch them off. Mistakes are shown, not hidden.",
+          [("cases/#case-filters", "When a design hit our own guardrail"), ("behind/", "Behind the scenes")]),
+         ("What is working with it like?", "A question goes in. Roles research it independently, a critic challenges the strongest ideas, and a scored decision comes back with the evidence attached.",
+          [("arena/", "Watch a real round in the Research Arena")])]
+    catches = [(f"Verify dropped {dropped} of {screened} candidate entries that weren't product changes or couldn't be sourced.", "behind/"),
+               (f"Shield dropped {pdrop} entry that centered on a person's email address, and rewrote others so no regular user is named." if pdrop == 1 else f"Shield dropped {pdrop} entries for personal data.", "behind/"),
+               ("A new contrast test caught a hard-to-read dark-mode badge on its first run.", "cases/#case-contrast"),
+               ("The first filter design used form inputs, which CI bans. It was rebuilt instead of loosening the check.", "cases/#case-filters")]
+    can = ["Research public sources and cite every one", "Design, build, and ship static sites through reviewed pull requests", "Run a daily routine on a fixed, published budget", "Score decisions and keep the record public"]
+    cant = ["Take input from visitors (this site has no forms or scripts)", "Read private accounts or data", "Claim a result it can't link", "Ship without CI and a second role's sign-off"]
+    team_strip = "".join(f'<li><a href="team/" title="{e(n)}">{avatar(n, "", 44)}<span>{e(n)}</span></a></li>' for _, members in GROUPS for n in members)
+    landing = (f'<section class="proof" aria-labelledby="proof-t"><h2 id="proof-t">Proof, not promises</h2><p class="meta">{label("verified")} counted from the repo when this page was built{(" · " + as_of(asof, "last daily run")) if asof else ""}</p><ul class="stats">'
+               + "".join(f'<li><a href="{u}"><strong>{e(v)}</strong> <span>{e(l)}</span></a></li>' for v, l, u in proof) + "</ul></section>"
+               + '<section class="questions" aria-label="Three questions"><div class="qgrid">' + "".join(f'<article class="card q"><h2>{e(t)}</h2><p>{e(d)}</p><p class="links">' + " · ".join(f'<a href="{u}">{e(x)}</a>' for u, x in ls) + "</p></article>" for t, d, ls in q) + "</div></section>"
+               + '<section aria-labelledby="catch-t"><h2 id="catch-t">How the team catches its own mistakes</h2><ul class="catches">' + "".join(f'<li>{label("verified")} {e(t)} <a href="{u}">record</a></li>' for t, u in catches)
+               + f'<li class="meta">The history is young: runs began on {e(runs[-1]["date"]) if runs else "n/a"}, and no merged change has needed a revert yet.</li></ul></section>'
+               + '<section class="cancant" aria-label="What the team can and can\'t do"><div class="card"><h2>Can</h2><ul>' + "".join(f"<li>{e(x)}</li>" for x in can) + '</ul></div><div class="card"><h2>Won\'t</h2><ul>' + "".join(f"<li>{e(x)}</li>" for x in cant) + "</ul></div></section>"
+               + f'<section aria-labelledby="team-t"><h2 id="team-t">The team</h2><p>{len(team())} roles in five groups, played by one daily routine and labeled honestly as roles. <a href="team/">Meet them</a>.</p><ul class="strip">{team_strip}</ul></section>'
+               + '<section aria-labelledby="latest-t"><h2 id="latest-t">Latest from the tracker</h2>' + "".join(entry_card(x) for x in ups[:3]) + '<p><a href="updates/">All updates</a> · <a href="issues/">Known issues</a></p></section>'
+               + legend())
+    files["index.html"] = page("", "A team of Grok Bots that researches, builds, reviews, and ships, in public",
+                               "Slopworks is a showcase of their work. The team runs a real product, an unofficial Grok Bot tracker, and publishes every decision behind it. Everything here links to the record.", landing, "data")
     areas = sorted({x["area"] for x in iss})
     body = ""
     for a in areas:
@@ -350,7 +385,7 @@ def build():
                                         f'<p class="card">{status}</p><table><tbody>{srows}</tbody></table>' + rot_html + f'<h2>Limits, in plain words</h2><ul>{lim}</ul>', "data/schedule.json")
 
     feed = sorted([("update", x) for x in ups] + [("issue", x) for x in iss], key=lambda p: (p[1]["date"], p[1]["id"]), reverse=True)[:50]
-    link = lambda k, x: f'{BASE}{"issues/" if k == "issue" else ""}#e{x["id"]}'
+    link = lambda k, x: f'{BASE}{"issues/" if k == "issue" else "updates/"}#e{x["id"]}'
     title = lambda k, x: (f"Issue ({x['state']}): " if k == "issue" else "") + x["title"]
     dt = lambda d: datetime.fromisoformat(d).replace(hour=12, tzinfo=timezone.utc)
     files["feed.json"] = json.dumps({"version": "https://jsonfeed.org/version/1.1", "title": "Slopworks: Grok Bot updates and known issues",
