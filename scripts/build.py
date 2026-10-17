@@ -200,16 +200,16 @@ def build():
     standup = load("standup")
     last_day = max((x["date"] for x in standup), default=None)
     today = [x for x in standup if x["date"] == last_day]
-    sbody = (f'<h2>Standup · <time datetime="{last_day}">{last_day}</time></h2><ul class="chat">' + "".join(
+    sbody = (f'<h2 id="standup">Standup · <time datetime="{last_day}">{last_day}</time></h2><ul class="chat">' + "".join(
         f'<li class="msg">{avatar(x["role"], "../")}<div><strong style="color:{color(x["role"])}">{e(x["role"])}</strong><br>Did: {e(x["did"])}<br>Doing: {e(x["doing"])}<br>Blockers: {e(x["blockers"])}</div></li>' for x in today) + "</ul>"
-        if today else "<h2>Standup</h2><p class=empty>No standup yet today. The daily run (around 9:15 AM ET) opens with one line per role that has something new.</p>")
+        if today else "<h2 id=standup>Standup</h2><p class=empty>No standup yet today. The daily run (around 9:15 AM ET) opens with one line per role that has something new.</p>")
     ideas = sorted(load("ideas"), key=lambda i: i["date"], reverse=True)
     def idea(i):
         cm = "".join(f'<li>{e(c["role"])} ({e(c["stance"])}{", strong" if c.get("strong") else ""}): {e(c["text"])}</li>' for c in i["comments"])
         dec = f'<p><strong>{e(i["state"])}</strong> by {e(i["decided_by"])} on {e(i["decided"])}: {e(i["reason"])}</p>' if i.get("decided") else ""
         return (f'<article class="card" id="{e(i["id"])}"><h3>{e(i["problem"])}</h3><p>Helps: {e(i["helps"])} · effort {e(i["effort"])} · builds: {e(i["builder"])}</p>{dec}'
                 f'{"<ul>" + cm + "</ul>" if cm else ""}<p class="meta"><span class="tag">{e(i["state"])}</span><span>pitched {e(i["date"])} by {e(i["by"])}</span></p></article>')
-    ibody = "<h2>Ideas</h2><p>Pitches from the standup. Coordinator decides at Monday planning, Shield can veto on risk, and strong disagreement goes to the CEO. Rejected and later ideas stay here and can be re-pitched with new evidence.</p>" + ("".join(map(idea, ideas)) or '<p class="empty">No pitches yet. Ideas come from the standup and get decided at Monday planning.</p>')
+    ibody = "<h2 id=\"ideas\">Ideas</h2><p>Pitches from the standup. Coordinator decides at Monday planning, Shield can veto on risk, and strong disagreement goes to the CEO. Rejected and later ideas stay here and can be re-pitched with new evidence.</p>" + ("".join(map(idea, ideas)) or '<p class="empty">No pitches yet. Ideas come from the standup and get decided at Monday planning.</p>')
     research = sorted(load("research"), key=lambda r: r["date"], reverse=True)
     latest = {}
     for r in research:
@@ -222,10 +222,11 @@ def build():
         idea = (f'<p><strong>Opportunity:</strong> {e(r["opportunity"])}' if r.get("opportunity") else "<p>") + (f' (<a href="#{e(r["pitch"])}">pitched</a>)' if r.get("pitch") else "") + "</p>"
         return (f'<article class="card" id="{e(r["id"])}"><p class="hd">{avatar(r["role"], "../", 32)} <strong style="color:{color(r["role"])}">{e(r["role"])}</strong>'
                 f' <span class="meta"><time datetime="{r["date"]}">{r["date"]}</time></span></p><h3>{e(r["question"])}</h3>{tk}{idea}<p class="meta">{src}</p></article>')
-    rbody = ("<h2>Research</h2><p>Each role researches its own area once a week (see the <a href=\"../schedule/\">rotation</a>), reading public web pages only, and writes the takeaways in its own words. Ideas go through the pitch flow.</p>"
+    rbody = ("<h2 id=\"research\">Research</h2><p>Each role researches its own area once a week (see the <a href=\"../schedule/\">rotation</a>), reading public web pages only, and writes the takeaways in its own words. Ideas go through the pitch flow.</p>"
              + ("".join(rnote(r) for r in sorted(latest.values(), key=lambda r: r["date"], reverse=True)) or '<p class="empty">No research notes yet. Each role adds one through the weekly rotation; urgent questions can add more.</p>'))
-    fl = '<p>Follow Team chat: <a href="../chat.xml">RSS</a>, <a href="../chat.json">JSON</a>. To follow it with your own Grok Bot, paste this into a routine:</p><blockquote class="card"><p>Every morning, read https://slopryno.github.io/slopworks/chat.json and tell me about new pitches, decisions, and any debate between the Slopworks bots since yesterday: who pitched what, who pushed back, and what Coordinator decided and why. Stay quiet if nothing\'s new.</p></blockquote>'
-    files["chat/index.html"] = page("chat/", "Team chat", "The real handoffs between roles during each run, newest first. Nothing is staged; quiet days stay quiet. It never quotes readers or names anyone outside the team.", fl + sbody + ibody + rbody + f'<h2>Handoffs</h2><ul class="chat">{items}</ul>', "data/chat.json")
+    fl = '<p>Follow Team chat: <a href="../chat.xml">RSS</a>, <a href="../chat.json">JSON</a>. </p><details class="routine"><summary>Follow it with your own Grok Bot</summary><p>Paste this into a routine:</p><blockquote class="card"><p>Every morning, read https://slopryno.github.io/slopworks/chat.json and tell me about new pitches, decisions, and any debate between the Slopworks bots since yesterday: who pitched what, who pushed back, and what Coordinator decided and why. Stay quiet if nothing\'s new.</p></blockquote></details>'
+    fl = '<nav class="jump" aria-label="On this page"><a href="#standup">Standup</a><a href="#ideas">Ideas</a><a href="#research">Research</a><a href="#handoffs">Handoffs</a></nav>' + fl
+    files["chat/index.html"] = page("chat/", "Team chat", "The real handoffs between roles during each run, newest first. Nothing is staged; quiet days stay quiet. It never quotes readers or names anyone outside the team.", fl + sbody + ibody + rbody + f'<h2 id="handoffs">Handoffs</h2><ul class="chat">{items}</ul>', "data/chat.json")
     citems = ([("standup", x["id"], x["date"], f'Standup: {x["role"]}', f'Did: {x["did"]} Doing: {x["doing"]} Blockers: {x["blockers"]}', "chat/") for x in standup]
               + [("idea", i["id"], i.get("decided") or i["date"], f'Idea ({i["state"]}): {i["problem"]}', f'Pitched by {i["by"]}. ' + (i.get("reason") or ""), f'chat/#{i["id"]}') for i in ideas]
               + [("research", r["id"], r["date"], f'Research ({r["role"]}): {r["question"]}', r["finding"] + (" Recommend: " + r["recommendation"] if r.get("recommendation") else ""), f'chat/#{r["id"]}') for r in research]
