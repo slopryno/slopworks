@@ -1,5 +1,29 @@
 [
   {
+    "id": "pr63",
+    "role": "Polish",
+    "title": "Polish: demo challenge polish: one full demo note, label chips on their own line (sprint i31)",
+    "pr": "https://github.com/slopryno/slopworks/pull/63",
+    "date": "2026-10-17",
+    "merged": "2026-10-17T17:38-04:00"
+  },
+  {
+    "id": "pr62",
+    "role": "Forge",
+    "title": "Core: Lessons archive rollover, reusing the shared rollover helper (sprint i31)",
+    "pr": "https://github.com/slopryno/slopworks/pull/62",
+    "date": "2026-10-17",
+    "merged": "2026-10-17T17:37-04:00"
+  },
+  {
+    "id": "pr61",
+    "role": "Forge",
+    "title": "Pixel/Core: Timeline page generated from the records (i32), ET win dates (AAR), archive rollover",
+    "pr": "https://github.com/slopryno/slopworks/pull/61",
+    "date": "2026-10-17",
+    "merged": "2026-10-17T17:35-04:00"
+  },
+  {
     "id": "pr60",
     "role": "Coordinator",
     "title": "Coordinator: sprint 3 kickoff (CEO override i31), Timeline decision (i32), held case file",
