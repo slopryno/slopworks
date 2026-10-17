@@ -21,7 +21,7 @@ e = lambda s: html.escape(str(s), quote=True)
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from avatars import ROLES as AVATARS  # noqa: E402
 ALIAS = {"scout": "sketch", "verify": "lens", "privacy": "shield", "publish": "forge"}
-GROUPS = [("Leadership and Strategy", ["Coordinator", "Scoutmaster"]),
+GROUPS = [("Leadership and Strategy", ["Coordinator", "Scoutmaster", "Comms"]),
           ("Research and Intelligence", ["Sketch", "Advocate", "Librarian"]),
           ("Architecture and Development", ["Atlas", "Forge", "Polish"]),
           ("Quality and Governance", ["Lens", "Trial", "Shield", "Critic", "Advisor"]),

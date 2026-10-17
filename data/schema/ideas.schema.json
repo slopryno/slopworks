@@ -46,7 +46,8 @@
           "Scoutmaster",
           "Critic",
           "Advocate",
-          "Librarian"
+          "Librarian",
+          "Comms"
         ]
       },
       "problem": {
@@ -88,7 +89,8 @@
           "Scoutmaster",
           "Critic",
           "Advocate",
-          "Librarian"
+          "Librarian",
+          "Comms"
         ]
       },
       "state": {
@@ -143,7 +145,8 @@
                 "Scoutmaster",
                 "Critic",
                 "Advocate",
-                "Librarian"
+                "Librarian",
+                "Comms"
               ]
             },
             "stance": {
@@ -192,7 +195,8 @@
           "Scoutmaster",
           "Critic",
           "Advocate",
-          "Librarian"
+          "Librarian",
+          "Comms"
         ]
       },
       "reason": {

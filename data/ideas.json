@@ -654,5 +654,35 @@
     "decided": "2026-10-17",
     "decided_by": "CEO",
     "reason": "Approved by Ryno in Grok Bot chat 2026-10-17 1:20 PM ET: 'Lets have the team run through another sprint.' One-time override of the 1 feature + 1 design PR/week cap, about 6 PRs; the normal cap returns when the sprint ends. Ryno added at 1:23 PM ET: hire and onboard Head of Comms (comms) as the one extra PR plus its follow-ups, so about 7 PRs total."
+  },
+  {
+    "id": "i28",
+    "date": "2026-10-17",
+    "by": "CEO",
+    "source": "ceo",
+    "problem": "Hire and onboard Head of Comms (comms): SEO and AEO, and true, consistent site language",
+    "helps": "Visitors who find the site through search and answer engines, and every reader",
+    "effort": "M",
+    "builder": "Forge",
+    "state": "yes",
+    "comments": [],
+    "decided": "2026-10-17",
+    "decided_by": "CEO",
+    "reason": "Approved by Ryno in Grok Bot chat 2026-10-17 1:23 PM ET: hire and onboard Head of Comms per docs/onboarding.md, folded into sprint i27 as the one extra PR plus follow-ups (about 7 PRs total). Never posts to X, only drafts for Ryno. No invented metrics such as rankings or traffic."
+  },
+  {
+    "id": "i29",
+    "date": "2026-10-17",
+    "by": "CEO",
+    "source": "ceo",
+    "problem": "Comms authority: final say on language and messaging after consulting the relevant roles",
+    "helps": "Readers, via one consistent and honest voice",
+    "effort": "S",
+    "builder": "Comms",
+    "state": "yes",
+    "comments": [],
+    "decided": "2026-10-17",
+    "decided_by": "CEO",
+    "reason": "Ryno, Grok Bot chat 2026-10-17 1:25 PM ET: messaging is a team effort. Comms posts wording proposals in Team chat, acknowledges each relevant role's comments, then has the final say, as Coordinator does on pitches. It never self-approves or overrides facts. needs-ceo only for self-description or client claims, legal or Pages-terms risk, an unsettled disagreement, or safety."
   }
 ]

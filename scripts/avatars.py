@@ -26,6 +26,7 @@ ROLES = {
     "advocate": ("#3fb8af", "cloud", (6,), "heart", "a six-puff blob that speaks for readers"),
     "librarian": ("#c9a26b", "drop", (1.6,), "stack", "a settled droplet that keeps the record"),
     "ceo": ("#d4a72c", "drop", (-0.8,), "star", "a gold droplet placeholder for the CEO, not a photo"),
+    "comms": ("#0aa5c4", "wave", (10, .045), "quote", "a scalloped speech burst that says only what's true"),
 }
 BADGE = {
     "arrow": "M0-5l4 9-4-2-4 2z", "pencil": "M-4 4l1-4 6-6 3 3-6 6z", "check": "M-4 0l3 3 5-6",
@@ -35,6 +36,7 @@ BADGE = {
     "globe": "M-5 0h10M0-5c-3 3-3 7 0 10c3-3 3-7 0-10", "wave": "M-5 1q2.5-4 5 0t5 0", "bars": "M-3 4v-3M0 4v-8M3 4v-5",
     "target": "M-4 0a4 4 0 1 0 8 0a4 4 0 1 0-8 0M0 0h.1", "bang": "M0-5v5M0 4v.5",
     "heart": "M0 4.5l-4.5-4.5a2.6 2.6 0 0 1 4.5-3.5a2.6 2.6 0 0 1 4.5 3.5z", "stack": "M-5 3.5h10M-4 0h8M-3-3.5h6",
+    "quote": "M-5-3.5h10v6h-5l-3 3v-3h-2z",
     "star": "M0-5.5l1.6 3.4 3.7.4-2.8 2.5.8 3.7L0 2.6-3.3 4.5l.8-3.7-2.8-2.5 3.7-.4z",
 }
 STROKED = {"target", "bang", "stack", "ring", "check", "flask", "globe", "wave", "bars"}

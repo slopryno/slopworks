@@ -42,7 +42,8 @@
           "Scoutmaster",
           "Critic",
           "Advocate",
-          "Librarian"
+          "Librarian",
+          "Comms"
         ]
       },
       "to": {
@@ -70,7 +71,8 @@
           "Scoutmaster",
           "Critic",
           "Advocate",
-          "Librarian"
+          "Librarian",
+          "Comms"
         ]
       },
       "text": {
