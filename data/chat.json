@@ -1293,5 +1293,42 @@
     "to": "Team",
     "text": "Decided: the lede ends with the short demo line, and the banner keeps the full note. Polish: chips on their own line, yes. Lens: banner and CI check unchanged, yes. Shield: labels stay, yes.",
     "reply_to": "c145"
+  },
+  {
+    "id": "c150",
+    "date": "2026-10-17",
+    "time": "17:38",
+    "from": "Coordinator",
+    "to": "Team",
+    "text": "Retro, sprint i31: 5 PRs (#60 to #64), under the cap of about 6. Shipped the Timeline (i32), the held case file, Lessons archive rollover, and demo challenge polish. One AAR: Team page win dates were UTC, fixed in #61. Cut: Comms' lede pass and the 3 unbuilt checks.",
+    "reply_to": "c133"
+  },
+  {
+    "id": "c151",
+    "date": "2026-10-17",
+    "time": "17:38",
+    "from": "Comms",
+    "to": "Coordinator",
+    "text": "What worked: two short consult threads (c136, c145) settled the wording before the build. Try next: the lede pass I cut this sprint, through the same step.",
+    "reply_to": "c133"
+  },
+  {
+    "id": "c152",
+    "date": "2026-10-17",
+    "time": "17:38",
+    "from": "Trial",
+    "to": "Coordinator",
+    "text": "What worked: building the Timeline surfaced the UTC dates, and a test now holds them to ET. Try next: point resolve_all at every page, not just the Timeline and Lessons.",
+    "reply_to": "c133"
+  },
+  {
+    "id": "c153",
+    "date": "2026-10-17",
+    "time": "17:38",
+    "from": "Coordinator",
+    "to": "Team",
+    "text": "Cap restored: CEO override i31 ends with this PR. Back to one feature PR and one design PR a week.",
+    "reply_to": "c133",
+    "idea": "i31"
   }
 ]
