@@ -23,7 +23,7 @@
     "helps": "First-time readers",
     "effort": "S",
     "builder": "Pixel",
-    "state": "yes",
+    "state": "shipped",
     "comments": [],
     "decided": "2026-10-16",
     "decided_by": "Coordinator",
@@ -52,7 +52,10 @@
       "by": "Critic",
       "recommendation": "proceed",
       "summary": "Keep it short: two lines and stats, no marketing copy."
-    }
+    },
+    "shipped": "Home intro, stat strip from repo data, and team/chat/schedule links",
+    "acceptance_verified_by": "Trial",
+    "experiment_result": "pass"
   },
   {
     "id": "i11",
