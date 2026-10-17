@@ -6,6 +6,138 @@
   "description": "Unofficial, fan-built project. Not affiliated with or endorsed by Grok Bot, SpaceX, or X.",
   "items": [
     {
+      "id": "issue-2111250428595929141",
+      "url": "https://slopryno.github.io/slopworks/issues/#e2111250428595929141",
+      "external_url": "https://x.com/i/status/2111250428595929141",
+      "title": "Issue (open): Chats and drafts don't always sync to the Grok app",
+      "content_text": "Two users on X reported that, using Grok Bots inside the Grok app, chats don't always sync: drafts the bot says are in the chat show up on one device or app but not the other. Second report: https://x.com/i/status/2111295921539699143",
+      "date_published": "2026-10-16T12:00:00+00:00",
+      "tags": [
+        "issue",
+        "app",
+        "reported",
+        "open"
+      ]
+    },
+    {
+      "id": "update-2111184284786802881",
+      "url": "https://slopryno.github.io/slopworks/updates/#e2111184284786802881",
+      "external_url": "https://x.com/bot/status/2111184284786802881",
+      "title": "Robinhood, Coinbase, Trello, and more connectors",
+      "content_text": "Grok Bot now connects to Robinhood, Coinbase, Trello, PostHog, beehiiv, eToro, and more. Teams can also now submit connectors to the Grok Bot marketplace.",
+      "date_published": "2026-10-16T12:00:00+00:00",
+      "tags": [
+        "update",
+        "connectors",
+        "confirmed"
+      ]
+    },
+    {
+      "id": "update-2111184282903523440",
+      "url": "https://slopryno.github.io/slopworks/updates/#e2111184282903523440",
+      "external_url": "https://x.com/bot/status/2111184282903523440",
+      "title": "Grok Bot can read X Chat",
+      "content_text": "Grok Bot can now read X Chat. Connect X, then ask it to work across your messages.",
+      "date_published": "2026-10-16T12:00:00+00:00",
+      "tags": [
+        "update",
+        "x",
+        "confirmed"
+      ]
+    },
+    {
+      "id": "update-2111184281636909233",
+      "url": "https://slopryno.github.io/slopworks/updates/#e2111184281636909233",
+      "external_url": "https://x.com/bot/status/2111184281636909233",
+      "title": "Notifications only on the device you're using",
+      "content_text": "Grok Bot notifications now go only to the device you're using.",
+      "date_published": "2026-10-16T12:00:00+00:00",
+      "tags": [
+        "update",
+        "app",
+        "confirmed"
+      ]
+    },
+    {
+      "id": "update-2111184279938240959",
+      "url": "https://slopryno.github.io/slopworks/updates/#e2111184279938240959",
+      "external_url": "https://x.com/bot/status/2111184279938240959",
+      "title": "Tag @bot on X to start a task",
+      "content_text": "Tag @bot in a post on X and Grok Bot gets to work on it.",
+      "date_published": "2026-10-16T12:00:00+00:00",
+      "tags": [
+        "update",
+        "x",
+        "confirmed"
+      ]
+    },
+    {
+      "id": "update-2111184276662481202",
+      "url": "https://slopryno.github.io/slopworks/updates/#e2111184276662481202",
+      "external_url": "https://x.com/bot/status/2111184276662481202",
+      "title": "Faster, more reliable voice calls",
+      "content_text": "Voice calls with Grok Bot are faster, more reliable, and better at remembering past conversations.",
+      "date_published": "2026-10-16T12:00:00+00:00",
+      "tags": [
+        "update",
+        "voice",
+        "confirmed"
+      ]
+    },
+    {
+      "id": "update-2111184275374813362",
+      "url": "https://slopryno.github.io/slopworks/updates/#e2111184275374813362",
+      "external_url": "https://x.com/bot/status/2111184275374813362",
+      "title": "Grok Bot is much faster",
+      "content_text": "The Grok Bot team says computer tasks now finish 3x sooner on average, and replies to everything else arrive in less than half the time.",
+      "date_published": "2026-10-16T12:00:00+00:00",
+      "tags": [
+        "update",
+        "app",
+        "confirmed"
+      ]
+    },
+    {
+      "id": "update-2111184272933748980",
+      "url": "https://slopryno.github.io/slopworks/updates/#e2111184272933748980",
+      "external_url": "https://x.com/bot/status/2111184272933748980",
+      "title": "Refreshed look with a new typeface and themes",
+      "content_text": "Grok Bot has a refreshed look, with a new typeface and themes.",
+      "date_published": "2026-10-16T12:00:00+00:00",
+      "tags": [
+        "update",
+        "app",
+        "confirmed"
+      ]
+    },
+    {
+      "id": "update-2111184270819803351",
+      "url": "https://slopryno.github.io/slopworks/updates/#e2111184270819803351",
+      "external_url": "https://x.com/bot/status/2111184270819803351",
+      "title": "Redesigned chat cards",
+      "content_text": "Cards in Grok Bot chats have a new design with a cleaner layout, part of an update the team says improves quality, polish, and speed.",
+      "date_published": "2026-10-16T12:00:00+00:00",
+      "tags": [
+        "update",
+        "app",
+        "confirmed"
+      ]
+    },
+    {
+      "id": "issue-2111106317590933597",
+      "url": "https://slopryno.github.io/slopworks/issues/#e2111106317590933597",
+      "external_url": "https://x.com/i/status/2111106317590933597",
+      "title": "Issue (open): Plugins page lists fewer Finance accounts than are connected",
+      "content_text": "A user on X reported that Grok Bot's Your plugins page shows only one of two connected Plaid finance institutions, while Grok's Connectors shows both. They said Grok Bot itself still works; only the page is wrong.",
+      "date_published": "2026-10-16T12:00:00+00:00",
+      "tags": [
+        "issue",
+        "connectors",
+        "reported",
+        "open"
+      ]
+    },
+    {
       "id": "issue-2110854830172557475",
       "url": "https://slopryno.github.io/slopworks/issues/#e2110854830172557475",
       "external_url": "https://x.com/poteto/status/2110854830172557475",
@@ -56,7 +188,7 @@
       "tags": [
         "update",
         "email",
-        "reported"
+        "confirmed"
       ]
     },
     {
