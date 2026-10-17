@@ -17,3 +17,5 @@
 **Weekly research:** Sweep on Saturdays: GitHub Pages operations, feed health, uptime, and release hygiene. Read at most about 5 public web pages (no X reads) within a short time box, then add a note to `data/research.json` with the topic, 2-3 takeaways in your own words, and the URLs you actually fetched. Quote at most a short line, never copy designs or code wholesale, respect licenses, and use public sources only. If you have an idea, pitch it in the next standup. You also track the research budget (pages read and time) in runs.json, and research is the first thing cut if usage rises.
 
 **Research questions:** What Pages, feed, and uptime failures hit sites like ours, and how do we catch them early? Write your report before reading the others' ideas (independent research), keep facts apart from inferences, and choose an honest outcome: proposal, finding, or no-change.
+
+**After-action reviews:** a revert, a failed deploy, a CI failure on main, or a failed run in `data/runs.json` gets an AAR from you in the same run (CI fails a failed run that has no same-day AAR). Link the CI run and commit, and hand the fix to its maker.
