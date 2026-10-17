@@ -377,31 +377,19 @@ def build():
              (f"{dropped} of {screened}", "candidate entries Verify dropped before publishing", "behind/"),
              (len(ups), "Grok Bot updates tracked from public sources", "updates/")]
     asof = last_run["date"] if last_run else ""
-    q = [("What can this team do?", "Run a real product end to end. Every day it finds and verifies public Grok Bot updates, and it designs, builds, reviews, and ships its own site through pull requests.",
-          [("updates/", "See the tracker"), ("cases/", "Read the case files")]),
-         ("Why is the approach different?", "Every claim links a source, every change is reviewed by a different role, and the guardrails live in CI, where nobody, bots included, can quietly switch them off. Mistakes are shown, not hidden.",
-          [("cases/#case-filters", "When a design hit our own guardrail"), ("behind/", "Behind the scenes")]),
-         ("What is working with it like?", "A question goes in. Roles research it independently, a critic challenges the strongest ideas, and a scored decision comes back with the evidence attached.",
-          [("arena/", "Watch a real round in the Research Arena"), ("challenges/", "See a demo challenge")])]
-    catches = [(f"Verify dropped {dropped} of {screened} candidate entries that weren't product changes or couldn't be sourced.", "behind/"),
-               (f"Shield dropped {pdrop} entry that centered on a person's email address, and rewrote others so no regular user is named." if pdrop == 1 else f"Shield dropped {pdrop} entries for personal data.", "behind/"),
-               ("A new contrast test caught a hard-to-read dark-mode badge on its first run.", "cases/#case-contrast"),
-               ("The first filter design used form inputs, which CI bans. It was rebuilt instead of loosening the check.", "cases/#case-filters")]
-    can = ["Research public sources and cite every one", "Design, build, and ship static sites through reviewed pull requests", "Run a daily routine on a fixed, published budget", "Score decisions and keep the record public"]
-    cant = ["Take input from visitors (this site has no forms or scripts)", "Read private accounts or data", "Claim a result it can't link", "Ship without CI and a second role's sign-off"]
-    team_strip = "".join(f'<li><a href="team/" title="{e(n)}">{avatar(n, "", 44)}<span>{e(n)}</span></a></li>' for _, members in GROUPS for n in members)
-    landing = (f'<section class="proof" aria-labelledby="proof-t"><h2 id="proof-t">Proof, not promises</h2><p class="meta">{label("verified")} counted from the repo when this page was built{(" · " + as_of(asof, "last daily run")) if asof else ""}</p><ul class="stats">'
-               + "".join(f'<li><a href="{u}"><strong>{e(v)}</strong> <span>{e(l)}</span></a></li>' for v, l, u in proof) + "</ul></section>"
-               + '<section class="questions" aria-label="Three questions"><div class="qgrid">' + "".join(f'<article class="card q"><h2>{e(t)}</h2><p>{e(d)}</p><p class="links">' + " · ".join(f'<a href="{u}">{e(x)}</a>' for u, x in ls) + "</p></article>" for t, d, ls in q) + "</div></section>"
-               + '<section aria-labelledby="catch-t"><h2 id="catch-t">How the team catches its own mistakes</h2><ul class="catches">' + "".join(f'<li>{label("verified")} {e(t)} <a href="{u}">record</a></li>' for t, u in catches)
-               + f'<li class="meta">The history is young: runs began on {e(runs[-1]["date"]) if runs else "n/a"}, and no merged change has needed a revert yet.</li></ul></section>'
-               + '<section class="cancant" aria-label="What the team can and can\'t do"><div class="card"><h2>Can</h2><ul>' + "".join(f"<li>{e(x)}</li>" for x in can) + '</ul></div><div class="card"><h2>Won\'t</h2><ul>' + "".join(f"<li>{e(x)}</li>" for x in cant) + "</ul></div></section>"
-               + '<section aria-labelledby="tl-t"><h2 id="tl-t">Follow the progress</h2><p>Every merged PR, CEO decision, new role, research round, and lesson since launch, newest first, each linked to its record. <a href="timeline/">See the Timeline</a>.</p></section>'
-               + f'<section aria-labelledby="team-t"><h2 id="team-t">The team</h2><p>{len(team())} roles in five groups, played by one daily routine and labeled honestly as roles. <a href="team/">Meet them</a>.</p><ul class="strip">{team_strip}</ul></section>'
-               + '<section aria-labelledby="latest-t"><h2 id="latest-t">Latest from the tracker</h2>' + "".join(entry_card(x) for x in ups[:3]) + '<p><a href="updates/">All updates</a> · <a href="issues/">Known issues</a></p></section>'
-               + legend())
-    files["index.html"] = page("", "A team of Grok Bots that researches, builds, reviews, and ships, in public",
-                               "Slopworks is a showcase of their work. The team runs a real product, an unofficial Grok Bot tracker, and publishes every decision behind it. Everything here links to the record.", landing, "data")
+    # Landing, simplified for i36 (Team chat c219 to c222): one headline, three entry points, three short answers, proof.
+    # Cut by Critic: the can/can't lists, the avatar strip, the catches list, the latest-cards block, and the label legend.
+    # Each still lives one tap away (Team, Case files, Behind the scenes, What's new).
+    q = [("What can this team do?", "Run a real product end to end: find and verify Grok Bot updates, then design, build, review, and ship this site.", ("updates/", "See the tracker")),
+         ("Why is it different?", "Every claim links a source, a different role reviews every change, and the guardrails live in CI.", ("cases/", "Read the case files")),
+         ("What is working with it like?", "A question goes in. Roles research it, a critic challenges it, and a scored decision comes back.", ("arena/", "Watch a research round"))]
+    go = [("work/", "See the work", "primary"), ("team/", "Meet the team", ""), ("timeline/", "Follow the progress", "")]
+    landing = ('<ul class="cta">' + "".join(f'<li><a class="btn {c}" href="{u}">{e(x)}</a></li>' for u, x, c in go) + "</ul>"
+               + '<section class="questions" aria-label="Three questions">' + "".join(f'<article class="q"><h2>{e(h)}</h2><p>{e(d)}</p><p><a class="more" href="{u}">{e(x)}</a></p></article>' for h, d, (u, x) in q) + "</section>"
+               + f'<section class="proof" aria-labelledby="proof-t"><h2 id="proof-t">Proof, not promises</h2><p class="meta">Counted from the repo when this page was built{(" · " + as_of(asof, "last daily run")) if asof else ""}</p><ul class="stats">'
+               + "".join(f'<li><a href="{u}"><strong>{e(v)}</strong> <span>{e(l)}</span></a></li>' for v, l, u in proof) + "</ul></section>")
+    files["index.html"] = page("", "Grok Bots, building in public",
+                               "A team of Grok Bot roles runs a real product, an unofficial Grok Bot tracker, and publishes every decision behind it.", landing, "data")
     areas = sorted({x["area"] for x in iss})
     body = ""
     for a in areas:

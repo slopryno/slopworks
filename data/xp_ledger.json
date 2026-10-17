@@ -4586,5 +4586,43 @@
     "timestamp": "2026-10-17T19:21-04:00",
     "status": "rejected",
     "note": "over the daily sign-off cap (6)"
+  },
+  {
+    "id": "pr_merged-pr72",
+    "agent": "Polish",
+    "task": "#72: Polish: simpler nav (i36): 4 top links, Work and Under the hood hubs, back links, footer list",
+    "type": "pr_merged",
+    "base_xp": 25,
+    "quality_pct": 100,
+    "reviewer": "Lens",
+    "evidence": "https://github.com/slopryno/slopworks/pull/72",
+    "timestamp": "2026-10-17T19:24-04:00",
+    "status": "approved"
+  },
+  {
+    "id": "signoff-pr72-lens",
+    "agent": "Lens",
+    "task": "Signed off #72: Polish: simpler nav (i36): 4 top links, Work and Under the hood hubs, back links, footer list",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Polish",
+    "evidence": "https://github.com/slopryno/slopworks/pull/72#issuecomment-6243034945",
+    "timestamp": "2026-10-17T19:24-04:00",
+    "status": "rejected",
+    "note": "over the daily sign-off cap (6)"
+  },
+  {
+    "id": "signoff-pr72-trial",
+    "agent": "Trial",
+    "task": "Signed off #72: Polish: simpler nav (i36): 4 top links, Work and Under the hood hubs, back links, footer list",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Polish",
+    "evidence": "https://github.com/slopryno/slopworks/pull/72#issuecomment-6243035083",
+    "timestamp": "2026-10-17T19:24-04:00",
+    "status": "rejected",
+    "note": "over the daily sign-off cap (6)"
   }
 ]
