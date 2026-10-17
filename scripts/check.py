@@ -20,6 +20,7 @@ SOURCE_HOSTS = ("x.com", "github.com", "grokbot.com", "grok.com", "x.ai")
 DATA_FILES = ["updates", "issues", "runs", "chat", "design_backlog", "state", "schedule"]
 DATA_FILES += ["standup", "ideas"]
 DATA_FILES += ["wins"]
+DATA_FILES += ["research"]
 ALIASES = {"verify": "Lens", "scout": "Sketch", "publish": "Forge", "privacy": "Shield"}
 
 
@@ -164,6 +165,36 @@ def chat_errors(chat, ideas=None):
         if c.get("idea") and idea_ids is not None and c["idea"] not in idea_ids:
             errs.append(f"chat {c.get('id')}: idea {c['idea']} isn't in data/ideas.json")
         seen[c.get("id")] = c
+    return errs
+
+
+def research_errors(notes, schedule, ideas):
+    """Weekly research notes: 2-3 takeaways in own words, 1-5 fetched public web pages (no X reads), on the role's rotation day."""
+    import datetime
+    days = {r["role"]: d["day"] for d in schedule.get("research", []) for r in d["roles"]}
+    idea_ids = {i["id"] for i in ideas}
+    errs = []
+    for n in notes:
+        k = f"research {n.get('id')}"
+        if not 2 <= len(n.get("takeaways", [])) <= 3:
+            errs.append(f"{k}: needs 2-3 takeaways")
+        src = n.get("sources", [])
+        if not 1 <= len(src) <= 5:
+            errs.append(f"{k}: needs 1-5 sources (about 5 pages max per session)")
+        for u in src:
+            host = (urllib.parse.urlparse(u).hostname or "").lower()
+            if not u.startswith("https://"):
+                errs.append(f"{k}: source must be https: {u}")
+            if host in ("x.com", "twitter.com") or host.endswith((".x.com", ".twitter.com")):
+                errs.append(f"{k}: research uses web pages only, no X reads: {u}")
+        try:
+            wd = datetime.date.fromisoformat(n.get("date", "")).strftime("%A")
+            if days.get(n.get("role")) != wd:
+                errs.append(f"{k}: {n.get('role')} researches on {days.get(n.get('role'), 'no day')}, not {wd}")
+        except ValueError:
+            errs.append(f"{k}: bad date")
+        if n.get("pitch") and n["pitch"] not in idea_ids:
+            errs.append(f"{k}: pitch {n['pitch']} isn't in data/ideas.json")
     return errs
 
 
@@ -402,6 +433,7 @@ def run_repo():
             errs += [f"{f}: personal data ({n}: {s})" for n, s in pii_hits(text)]
     errs += idea_errors(data.get("ideas", []))
     errs += chat_errors(data.get("chat", []), data.get("ideas", []))
+    errs += research_errors(data.get("research", []), data.get("schedule", {}), data.get("ideas", []))
     css = sum((ROOT / f).stat().st_size for f in files if f.startswith("site/") and f.endswith(".css"))
     for f in files:
         if f.startswith("site/") and f.endswith(".html"):
