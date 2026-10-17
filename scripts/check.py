@@ -22,6 +22,7 @@ DATA_FILES += ["standup", "ideas"]
 DATA_FILES += ["wins"]
 DATA_FILES += ["research"]
 DATA_FILES += ["alumni"]
+DATA_FILES += ["arena", "cases", "challenges"]  # showcase data (i22), added in sprint PR 8
 ALIASES = {"verify": "Lens", "scout": "Sketch", "publish": "Forge", "privacy": "Shield"}
 
 
@@ -438,6 +439,65 @@ def block_count(comments, role=None):
     return n
 
 
+# ---------- showcase (i22): additions only, these only tighten ----------
+SHOWCASE_PAGES = ["site/index.html", "site/arena/index.html", "site/cases/index.html", "site/challenges/index.html", "site/team/index.html"]
+SHOWCASE_LINK = re.compile(r"^(\.\./(chat|arena|cases|challenges)/#[a-z0-9-]+|https://github\.com/slopryno/slopworks/pull/\d+)$")
+LIVE_WORDING = re.compile(r"\b(live now|happening now|real-time|in real time|right now)\b", re.I)
+DEMO_NOTE = "not advice, not a quote, and not client work"
+
+
+def anchor_missing(link, root=None):
+    """True when a ../page/#id link points at an id the built page does not have."""
+    m = re.match(r"^\.\./([a-z]+)/#([a-z0-9-]+)$", link)
+    if not m:
+        return False
+    page = (root or ROOT) / f"site/{m.group(1)}/index.html"
+    return not page.exists() or f'id="{m.group(2)}"' not in page.read_text()
+
+
+def showcase_errors(data, root=None):
+    errs = []
+    research = {r["id"]: r for r in data.get("research", [])}
+    for c in data.get("cases", []):
+        for s in c.get("steps", []):
+            link = s.get("link")
+            if link and not SHOWCASE_LINK.match(link):
+                errs.append(f"data/cases.json {c['id']}: link {link} is not a merged PR, chat, arena, case, or challenge link")
+            elif link and anchor_missing(link, root):
+                errs.append(f"data/cases.json {c['id']}: link {link} points at nothing on the built site")
+    for a in data.get("arena", []):
+        for rid in a.get("reports", []):
+            if rid not in research:
+                errs.append(f"data/arena.json {a['id']}: report {rid} is not in data/research.json")
+    used = set()
+    for c in data.get("challenges", []):
+        if c.get("demo") is not True:
+            errs.append(f"data/challenges.json {c.get('id')}: every challenge must be demo: true")
+        for sec in c.get("sections", []):
+            for x in sec.get("items", []):
+                used.add(x["research"])
+                if x["research"] not in research:
+                    errs.append(f"data/challenges.json {c.get('id')}: research {x['research']} is not in data/research.json")
+                elif not research[x["research"]]["question"].startswith("Demo challenge"):
+                    errs.append(f"data/challenges.json {c.get('id')}: {x['research']} is real research, not a demo report")
+    for rid, r in research.items():
+        if r["question"].startswith("Demo challenge") and rid not in used:
+            errs.append(f"data/research.json {rid}: demo research must belong to a challenge so it is shown labeled Demo")
+    page = (root or ROOT) / "site/challenges/index.html"
+    if data.get("challenges") and page.exists():
+        doc = page.read_text()
+        for c in data["challenges"]:
+            if f'id="{c["id"]}"' not in doc:
+                errs.append(f"site/challenges: {c['id']} missing")
+        if "lbl-demo" not in doc or DEMO_NOTE not in doc:
+            errs.append("site/challenges: every challenge must show the Demo label and the not-advice note")
+    for f in SHOWCASE_PAGES:
+        fp = (root or ROOT) / f
+        if fp.exists():
+            errs += [f"{f}: showcase pages must not claim live activity ('{m}')" for m in sorted({m.group(0) for m in LIVE_WORDING.finditer(fp.read_text())})]
+    return errs
+
+
 # ---------- guardrail gate ----------
 def loosening(path, added, removed):
     real = lambda lines: [l for l in lines if l.strip() and not l.strip().startswith(("#", "//", '"_note"'))]
@@ -506,6 +566,7 @@ def run_repo():
     errs += chat_errors(data.get("chat", []), data.get("ideas", []))
     errs += alumni_errors(data.get("alumni", []), data.get("schedule", {}))
     errs += research_errors(data.get("research", []), data.get("schedule", {}), data.get("ideas", []))
+    errs += showcase_errors(data)
     css = sum((ROOT / f).stat().st_size for f in files if f.startswith("site/") and f.endswith(".css"))
     for f in files:
         if f.startswith("site/") and f.endswith(".html"):
