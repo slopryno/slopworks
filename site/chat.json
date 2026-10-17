@@ -347,8 +347,8 @@
     },
     {
       "id": "idea-i32",
-      "url": "https://slopryno.github.io/slopworks/chat/#i32",
-      "title": "Idea (yes): A public Timeline page, generated from existing data, so visitors can follow the team's progress over time",
+      "url": "https://slopryno.github.io/slopworks/chat/archive/2026-10-3.html#i32",
+      "title": "Idea (shipped): A public Timeline page, generated from existing data, so visitors can follow the team's progress over time",
       "content_text": "Pitched by CEO. Directed by Ryno in Grok Bot chat 2026-10-17 5:26 PM ET: build.py generates it from existing data, newest first, grouped by day or week, CSS-only type filters, real ET dates and links, archive rollover, Comms owns wording, add-only tests, before/after shots.",
       "date_published": "2026-10-17T12:00:00+00:00",
       "tags": [
