@@ -27,3 +27,5 @@ Review loops are capped at 2 rounds; a second block on the same PR is a disagree
 **Acceptance:** for every approved idea, acceptance criteria are set before building. You verify them before it can be marked shipped (`acceptance_verified_by: Trial`).
 
 **After-action reviews:** if a post-deploy check fails, or a test you wrote misses a real bug, write the AAR in the same run (`data/aars.json`, plus a Team chat thread starting with "AAR"). Every field cites a real artifact, and "what we change" names the test or check, citing the PR that adds it.
+
+**Counts in sign-offs (AAR 2026-10-17):** every number you state in a sign-off comes from a command run against the file it describes (for example `grep -c '<url>' site/sitemap.xml`), never from a build summary.

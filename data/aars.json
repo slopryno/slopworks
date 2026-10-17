@@ -366,5 +366,57 @@
     "fix_pr": 48,
     "closed": "2026-10-17",
     "thread": "c97"
+  },
+  {
+    "id": "aar-2026-10-17-signoff-count",
+    "date": "2026-10-17",
+    "title": "A sign-off on #53 stated the wrong sitemap page count",
+    "trigger": "data-correction",
+    "links": {
+      "prs": [
+        53,
+        55
+      ],
+      "runs": [],
+      "commits": [
+        "5822f65"
+      ],
+      "chat": [
+        "c118"
+      ]
+    },
+    "expected": {
+      "text": "Every number in a sign-off matches the artifact it describes.",
+      "cite": [
+        "pr:53"
+      ]
+    },
+    "actual": {
+      "text": "Trial's sign-off on #53 said sitemap.xml lists all 26 HTML pages. It lists 15. The comment was corrected the same run, with a note.",
+      "cite": [
+        "pr:53",
+        "commit:5822f65"
+      ]
+    },
+    "why": {
+      "text": "The number came from the build summary ('built 26 files', which counts every generated file), not from counting the sitemap's entries.",
+      "cite": [
+        "pr:53",
+        "chat:c118"
+      ]
+    },
+    "change": {
+      "text": "Trial rule in bots/trial.md: counts in a sign-off come from a command run against the file itself. CI already checks that the sitemap lists every page (#54).",
+      "cite": [
+        "pr:55",
+        "file:bots/trial.md"
+      ]
+    },
+    "change_pr": 55,
+    "owner": "Trial",
+    "status": "closed",
+    "fix_pr": 55,
+    "closed": "2026-10-17",
+    "thread": "c118"
   }
 ]
