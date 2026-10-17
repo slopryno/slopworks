@@ -569,7 +569,7 @@
     "helps": "Readers who want the official, versioned record",
     "effort": "M",
     "builder": "Scout",
-    "state": "yes",
+    "state": "shipped",
     "evidence": [
       "https://x.ai/changelog/bot",
       "https://x.ai/changelog/bot/rss.xml"
@@ -605,7 +605,9 @@
       "At most one entry per release; a release that repeats an existing entry is folded, not added again",
       "No more than 20 new entries in the PR",
       "Verify checks each entry against the changelog before sign-off"
-    ]
+    ],
+    "acceptance_verified_by": "Trial",
+    "shipped": "17 changelog entries for 0.53.0 to 0.70.2 (#51), each citing x.ai/changelog/bot; 0.66.0 folded into the existing Oct 1 entry; under the 20-entry cap"
   },
   {
     "id": "i26",
@@ -616,7 +618,7 @@
     "helps": "Readers following by RSS, JSON Feed, or a Grok Bot routine",
     "effort": "S",
     "builder": "Core",
-    "state": "yes",
+    "state": "shipped",
     "evidence": [
       "https://www.rssboard.org/rss-profile",
       "https://www.jsonfeed.org/version/1.1/"
@@ -638,7 +640,9 @@
       "CI parses feed.xml and chat.xml as RSS 2.0 with channel title, link, and description, and every item has a title, link, and guid",
       "CI parses feed.json and chat.json as JSON Feed 1.1 with a version, title, and items that each have a unique id and a url",
       "The check is additions only, and tests show a broken feed fails"
-    ]
+    ],
+    "acceptance_verified_by": "Trial",
+    "shipped": "Add-only feed_errors in check.py: RSS 2.0 and JSON Feed 1.1 structure, required fields, unique guids and ids, with tests showing broken feeds fail"
   },
   {
     "id": "i27",
