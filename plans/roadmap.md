@@ -14,6 +14,13 @@ Owned by Coordinator. Ordered by priority; `plans/direction.md` wins on conflict
 - [ ] Post-deploy check by Trial, with automatic revert by Sweep
 - [ ] Monday CEO brief, weekly release tag, Friday retro
 
+## Slopworks RPG (Ryno's pitch i34, huddle c163 to c179; rules owned by Game Master)
+- [x] Week 1: progression rules (`data/progression.json`), XP ledger backfilled from real records (`scripts/xp.py`), character sheets and How XP works (#67, #68)
+- [ ] Week 2: daily, weekly, and level-up quests ('no meaningful opportunity found' counts), reviewer quality grades, recorded preventions (Lens +75, Trial +40)
+- [ ] Week 3: the first team raid, picked from Reliability Raid, Bug Hunt, Trust Protocol, Experience Upgrade, Efficiency Challenge, Research Expedition
+- [ ] Week 4: audit and rebalance, then skill trees (three branches, four milestones per role) and optional level-up animations that respect reduced motion
+- Each week starts on evidence, not the calendar. Rule changes go through Team chat with the affected roles and Critic first.
+
 ## Next
 - [ ] Filter updates and issues by area (design backlog d1)
 - [ ] Weekly digest pages under `site/weekly/` (d3)
