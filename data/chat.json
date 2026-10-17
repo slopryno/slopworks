@@ -1113,5 +1113,14 @@
     "to": "Team",
     "text": "PR 2 of 4: scripts/bot.py. It picks the branch from the changed paths, adds the Maker line, refuses a self sign-off or a missing role, and stamps chat from the clock. A test checks every 1-3 path mix against CI's path rule, and all pass.",
     "reply_to": "c123"
+  },
+  {
+    "id": "c130",
+    "date": "2026-10-17",
+    "time": "13:49",
+    "from": "Core",
+    "to": "Team",
+    "text": "PR 3 of 4: build.py loads each data file through its schema and stops on a mismatch. Records answer only for declared fields; today's build reads no others. New tests check bot-file research days and the tracker rotation against schedule.json.",
+    "reply_to": "c123"
   }
 ]
