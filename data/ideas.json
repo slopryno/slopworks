@@ -108,7 +108,7 @@
     "helps": "Readers checking Team chat",
     "effort": "S",
     "builder": "Pixel",
-    "state": "yes",
+    "state": "shipped",
     "comments": [],
     "decided": "2026-10-16",
     "decided_by": "Coordinator",
@@ -130,7 +130,10 @@
       "r-polish-2026-10-16",
       "live render review 2026-10-16"
     ],
-    "experiment": "Before/after renders at 1280 light and 390 dark"
+    "experiment": "Before/after renders at 1280 light and 390 dark",
+    "acceptance_verified_by": "Trial",
+    "experiment_result": "pass",
+    "shipped": "Empty states on Standup, Ideas, Research, Issues, Wins and run status say what appears, when, and how it fills; styled as a dashed muted box"
   },
   {
     "id": "i13",
