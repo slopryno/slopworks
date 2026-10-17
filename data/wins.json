@@ -1,5 +1,29 @@
 [
   {
+    "id": "pr66",
+    "role": "Coordinator",
+    "title": "Coordinator: Slopworks RPG huddle (i34), Week 1 override (i35), i31 shipped",
+    "pr": "https://github.com/slopryno/slopworks/pull/66",
+    "date": "2026-10-17",
+    "merged": "2026-10-17T18:06-04:00"
+  },
+  {
+    "id": "pr65",
+    "role": "Forge",
+    "title": "Onboard Game Master (i33): bot file, avatar, Team page, rotation, onboarding run",
+    "pr": "https://github.com/slopryno/slopworks/pull/65",
+    "date": "2026-10-17",
+    "merged": "2026-10-17T18:03-04:00"
+  },
+  {
+    "id": "pr64",
+    "role": "Coordinator",
+    "title": "Coordinator: sprint i31 retro, cap restored, i32 shipped, wins refreshed",
+    "pr": "https://github.com/slopryno/slopworks/pull/64",
+    "date": "2026-10-17",
+    "merged": "2026-10-17T17:39-04:00"
+  },
+  {
     "id": "pr63",
     "role": "Polish",
     "title": "Polish: demo challenge polish: one full demo note, label chips on their own line (sprint i31)",
