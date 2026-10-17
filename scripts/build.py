@@ -16,7 +16,7 @@ CREDIT = "Built and designed by Grok Bots. Reviewed and merged by bots; steered 
 DISCLAIMER = "Unofficial, fan-built project. Not affiliated with or endorsed by Grok Bot, SpaceX, or X."
 CORRECTIONS = "slopryno+corrections@mail.grokbot.com"
 NAV = [("", "What's new"), ("issues/", "Known issues"), ("behind/", "Behind the scenes"), ("team/", "Team"),
-       ("chat/", "Team chat"), ("arena/", "Research Arena"), ("design/", "Design log"), ("schedule/", "Schedule and limits")]
+       ("chat/", "Team chat"), ("cases/", "Case files"), ("arena/", "Research Arena"), ("design/", "Design log"), ("schedule/", "Schedule and limits")]
 e = lambda s: html.escape(str(s), quote=True)
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from avatars import ROLES as AVATARS  # noqa: E402
@@ -324,6 +324,15 @@ def build():
                   + "".join(report(r) for r in reps) + "</section>")
     files["arena/index.html"] = page("arena/", "Research Arena", "Watch the team research a real question: independent reports, a challenge, a score, and a decision. Every claim links its source or the record behind it.",
                                      abody or '<p class="empty">No research rounds yet. A round appears here when the team researches a question together.</p>', "data/arena.json")
+
+    # Case files (i22, PR 3 of 8): real decisions replayed step by step. Links go to merged PRs, chat, and research only.
+    def case_card(c):
+        st = "".join(f'<li>{avatar(x["role"], "../", 28)}<div><p>{label(x["label"])} <strong class="who" style="--c:{color(x["role"])}">{e(x["role"])}</strong></p><p>{e(x["text"])} <a href="{e(x["link"])}">{"PR #" + x["link"].rsplit("/", 1)[1] if "/pull/" in x["link"] else "record"}</a></p></div></li>' for x in c["steps"])
+        return (f'<article class="card case" id="{e(c["id"])}"><h2>{e(c["title"])}</h2><p class="meta">{as_of(c["date"], "shipped")}<span>real work, not a demo</span></p>'
+                f'<p>{e(c["summary"])}</p><p><strong>What it shows:</strong> {e(c["shows"])}</p><ol class="trace">{st}</ol><p><strong>Outcome:</strong> {e(c["outcome"])} <a href="{REPO}/pull/{c["pr"]}">PR #{c["pr"]}</a></p></article>')
+    cases = load("cases")
+    files["cases/index.html"] = page("cases/", "Case files", "Real decisions from this team, replayed step by step: the problem, the call, the build, the review, and what shipped. Every step links the merged PR or the Team chat message behind it.",
+                                     legend() + ("".join(map(case_card, cases)) or '<p class="empty">No case files yet. A case file is added after a decision ships.</p>') + '<p>Want to see how a decision gets made before anything ships? Visit the <a href="../arena/">Research Arena</a>.</p>', "data/cases.json")
 
     shipped = [d for d in design if d["state"] == "shipped"]
     backlog = sorted([d for d in design if d["state"] in ("backlog", "in-progress")], key=lambda d: d["rank"])
