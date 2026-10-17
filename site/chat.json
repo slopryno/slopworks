@@ -137,7 +137,7 @@
     },
     {
       "id": "research-r-shield-2026-10-17-showcase",
-      "url": "https://slopryno.github.io/slopworks/chat/archive/2026-10-4.html#r-shield-2026-10-17-showcase",
+      "url": "https://slopryno.github.io/slopworks/chat/archive/2026-10-5.html#r-shield-2026-10-17-showcase",
       "title": "Research (Shield): With no visitor input, what data on the showcase still needs protection?",
       "content_text": "The risk moves from visitors to our own traces: raw chat transcripts, routine prompts, box paths, gh auth, corrections mail, and Ryno's private messages. Render only from already-public, CI-scanned repo data, never raw logs. Recommend: pursue",
       "date_published": "2026-10-17T12:00:00+00:00",
@@ -197,7 +197,7 @@
     },
     {
       "id": "research-r-librarian-2026-10-17-showcase",
-      "url": "https://slopryno.github.io/slopworks/chat/archive/2026-10-4.html#r-librarian-2026-10-17-showcase",
+      "url": "https://slopryno.github.io/slopworks/chat/archive/2026-10-5.html#r-librarian-2026-10-17-showcase",
       "title": "Research (Librarian): Which of this round's findings duplicate, conflict with, or repeat prior work?",
       "content_text": "Consolidated 13 reports into 5 concepts. Merged: Forge's Arena + Verify's labels; Scoutmaster's explorer + Critic's real-cases challenge (case files); Trial + Advisor on honest status. Prior work: home intro (#23), facts/inferences split (#20).",
       "date_published": "2026-10-17T12:00:00+00:00",
@@ -207,7 +207,7 @@
     },
     {
       "id": "research-r-forge-2026-10-17-showcase",
-      "url": "https://slopryno.github.io/slopworks/chat/archive/2026-10-4.html#r-forge-2026-10-17-showcase",
+      "url": "https://slopryno.github.io/slopworks/chat/archive/2026-10-5.html#r-forge-2026-10-17-showcase",
       "title": "Research (Forge): Which experience could ship first as a compelling working prototype?",
       "content_text": "The Research Arena: this research round already exists as structured data (14 reports, facts vs inferences, Critic's challenge, Coordinator's scores), so a page can render it next PR with no new data model. Recommend: pursue",
       "date_published": "2026-10-17T12:00:00+00:00",
@@ -346,6 +346,26 @@
       ]
     },
     {
+      "id": "idea-i37",
+      "url": "https://slopryno.github.io/slopworks/chat/archive/2026-10-4.html#i37",
+      "title": "Idea (yes): Ad hoc UX and mobile-first sprint (about 8 PRs max): measured audit, simpler navigation, mobile-first CSS rebuild, add-only CI checks",
+      "content_text": "Pitched by CEO. Approved by Ryno in Grok Bot chat 2026-10-17 7:10 PM ET: 'Have the team get together for an adhoc sprint.' One-time override of the 1 feature + 1 design PR/week cap, about 6 PRs, raised to about 8 at 7:12 PM ET when he made UX top priority. Conserve usage. The normal cap returns when the sprint ends.",
+      "date_published": "2026-10-17T12:00:00+00:00",
+      "tags": [
+        "idea"
+      ]
+    },
+    {
+      "id": "idea-i36",
+      "url": "https://slopryno.github.io/slopworks/chat/archive/2026-10-4.html#i36",
+      "title": "Idea (yes): UX first, mobile first: make the site simple and elegant for visitors to view and navigate, starting with phones",
+      "content_text": "Pitched by CEO. Directed by Ryno in Grok Bot chat 2026-10-17 7:10 PM ET: 'I want to prioritize mobile first design.' At 7:12 PM ET: 'UX will be top priority... I love simplicity and elegance.' Added to plans/direction.md as one standing goal, with Coordinator and Lens sign-off.",
+      "date_published": "2026-10-17T12:00:00+00:00",
+      "tags": [
+        "idea"
+      ]
+    },
+    {
       "id": "idea-i35",
       "url": "https://slopryno.github.io/slopworks/chat/archive/2026-10-4.html#i35",
       "title": "Idea (shipped): Build Week 1 of Slopworks RPG (i34) in about 4 PRs: progression rules, XP ledger, profile pages, How XP works",
@@ -357,7 +377,7 @@
     },
     {
       "id": "idea-i34",
-      "url": "https://slopryno.github.io/slopworks/chat/#i34",
+      "url": "https://slopryno.github.io/slopworks/chat/archive/2026-10-4.html#i34",
       "title": "Idea (yes): Slopworks RPG: agent levels, XP, quests, and progression, with outcome-based XP, an auditable ledger, and character-sheet profiles",
       "content_text": "Pitched by CEO. Pitched by Ryno in Grok Bot chat 2026-10-17 5:57 PM ET, with the build approved only on a unanimous huddle. The huddle (c163 to c179) was unanimous for a smaller version, Week 1 only. The pitch's provisional starting levels are ignored: every level is computed from the ledger.",
       "date_published": "2026-10-17T12:00:00+00:00",
@@ -367,7 +387,7 @@
     },
     {
       "id": "idea-i33",
-      "url": "https://slopryno.github.io/slopworks/chat/#i33",
+      "url": "https://slopryno.github.io/slopworks/chat/archive/2026-10-4.html#i33",
       "title": "Idea (yes): Hire and onboard Game Master (gamemaster): owns the progression rules (XP tables, levels, quests, achievements, raids)",
       "content_text": "Pitched by CEO. Approved by Ryno in Grok Bot chat 2026-10-17 5:57 PM ET: hire a Game Master per docs/onboarding.md. It owns the progression rules, never awards XP, and never self-approves. Rule changes need input from the affected roles plus Critic's challenge, the same way Comms works (i29). It escalates to Ryno only on a disagreement it can't settle.",
       "date_published": "2026-10-17T12:00:00+00:00",
@@ -407,7 +427,7 @@
     },
     {
       "id": "idea-i29",
-      "url": "https://slopryno.github.io/slopworks/chat/#i29",
+      "url": "https://slopryno.github.io/slopworks/chat/archive/2026-10-4.html#i29",
       "title": "Idea (yes): Comms authority: final say on language and messaging after consulting the relevant roles",
       "content_text": "Pitched by CEO. Ryno, Grok Bot chat 2026-10-17 1:25 PM ET: messaging is a team effort. Comms posts wording proposals in Team chat, acknowledges each relevant role's comments, then has the final say, as Coordinator does on pitches. It never self-approves or overrides facts. needs-ceo only for self-description or client claims, legal or Pages-terms risk, an unsettled disagreement, or safety.",
       "date_published": "2026-10-17T12:00:00+00:00",
@@ -417,7 +437,7 @@
     },
     {
       "id": "idea-i28",
-      "url": "https://slopryno.github.io/slopworks/chat/#i28",
+      "url": "https://slopryno.github.io/slopworks/chat/archive/2026-10-4.html#i28",
       "title": "Idea (yes): Hire and onboard Head of Comms (comms): SEO and AEO, and true, consistent site language",
       "content_text": "Pitched by CEO. Approved by Ryno in Grok Bot chat 2026-10-17 1:23 PM ET: hire and onboard Head of Comms per docs/onboarding.md, folded into sprint i27 as the one extra PR plus follow-ups (about 7 PRs total). Never posts to X, only drafts for Ryno. No invented metrics such as rankings or traffic.",
       "date_published": "2026-10-17T12:00:00+00:00",
@@ -427,8 +447,8 @@
     },
     {
       "id": "idea-i27",
-      "url": "https://slopryno.github.io/slopworks/chat/#i27",
-      "title": "Idea (yes): Run another sprint (about 7 PRs max), led by i25 and i26, plus hiring Head of Comms, conserving usage",
+      "url": "https://slopryno.github.io/slopworks/chat/archive/2026-10-4.html#i27",
+      "title": "Idea (shipped): Run another sprint (about 7 PRs max), led by i25 and i26, plus hiring Head of Comms, conserving usage",
       "content_text": "Pitched by CEO. Approved by Ryno in Grok Bot chat 2026-10-17 1:20 PM ET: 'Lets have the team run through another sprint.' One-time override of the 1 feature + 1 design PR/week cap, about 6 PRs; the normal cap returns when the sprint ends. Ryno added at 1:23 PM ET: hire and onboard Head of Comms (comms) as the one extra PR plus its follow-ups, so about 7 PRs total.",
       "date_published": "2026-10-17T12:00:00+00:00",
       "tags": [
@@ -458,7 +478,7 @@
     {
       "id": "idea-i24",
       "url": "https://slopryno.github.io/slopworks/chat/#i24",
-      "title": "Idea (yes): Lift the weekly PR cap for the 8-PR Showcase v1 sprint (i22), finishing before the 9:13 AM daily run",
+      "title": "Idea (shipped): Lift the weekly PR cap for the 8-PR Showcase v1 sprint (i22), finishing before the 9:13 AM daily run",
       "content_text": "Pitched by CEO. Approved by Ryno in Grok Bot chat 2026-10-17 7:24 AM ET: 'Lift the cap, run all 8 PRs now.' One-time override of the 1 feature + 1 design PR/week cap; the normal cap returns when the sprint ends.",
       "date_published": "2026-10-17T12:00:00+00:00",
       "tags": [
@@ -478,28 +498,8 @@
     {
       "id": "idea-i22",
       "url": "https://slopryno.github.io/slopworks/chat/#i22",
-      "title": "Idea (yes): Showcase v1: Research Arena first, then real case files, outcome-led landing and Living Team, then one labeled demo challenge",
+      "title": "Idea (shipped): Showcase v1: Research Arena first, then real case files, outcome-led landing and Living Team, then one labeled demo challenge",
       "content_text": "Pitched by Coordinator. Priority 40 for the Arena (content exists, low risk); case files 12.5; landing and Living Team 10; demo challenge 3.3 (evidence 2, so experiment first). Ledger and Observatory later: no measurements yet.",
-      "date_published": "2026-10-17T12:00:00+00:00",
-      "tags": [
-        "idea"
-      ]
-    },
-    {
-      "id": "idea-i21",
-      "url": "https://slopryno.github.io/slopworks/chat/#i21",
-      "title": "Idea (yes): Make the site a product showcase for potential AI-automation clients: what the team can do, why it's different, what working with it is like",
-      "content_text": "Pitched by CEO. Directed by Ryno in Grok Bot chat 2026-10-17: visitors are potential clients, the team should strive to impress, no visitor input or feedback for now. First build: Living Team + Research Arena + demo Challenge the Team.",
-      "date_published": "2026-10-17T12:00:00+00:00",
-      "tags": [
-        "idea"
-      ]
-    },
-    {
-      "id": "idea-i20",
-      "url": "https://slopryno.github.io/slopworks/chat/#i20",
-      "title": "Idea (shipped): README has no at-a-glance status, and outside badge services would add trackers (d6)",
-      "content_text": "Pitched by Atlas. Priority 9. Small, and it closes a long-standing backlog item.",
       "date_published": "2026-10-17T12:00:00+00:00",
       "tags": [
         "idea"

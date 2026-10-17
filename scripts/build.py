@@ -404,7 +404,7 @@ def build():
     def latest_of(n):
         return next((c for c in reversed(chat) if c["from"] in SPEAKS_AS.get(n, {n})), None)
     pinned = {s["link"].split("#", 1)[1] for c in load("cases") for s in c["steps"] if s.get("link", "").startswith("../chat/#")}
-    pinned |= {i["id"] for i in ideas if i["state"] in OPEN_IDEAS}
+    pinned |= {i["id"] for i in ideas if i["state"] in OPEN_IDEAS - {"yes"}}  # pitches still waiting on a decision; decided ones roll by date like everything else
     loc = {r["id"]: "challenges/" for r in research if is_demo(r)}
     def href(i, up, here):
         where = loc.get(i, "chat/")
