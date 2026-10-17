@@ -125,6 +125,16 @@ def area_filter(items):
     css = f"<style>{hide}{{display:none}}{on},{all_on}{{background:var(--link);border-color:var(--link);color:var(--bg)}}</style>"
     return f'{targets}<div class="filter" role="group" aria-label="Filter by area"><span>Filter by area:</span><ul>{chips}</ul></div>', css
 
+def badge(label, value, color):
+    """d6: flat SVG badge generated from repo data; no outside badge service."""
+    w1, w2 = 10 + 7 * len(label), 10 + 7 * len(str(value))
+    return (f'<svg xmlns="http://www.w3.org/2000/svg" width="{w1 + w2}" height="20" role="img" aria-label="{e(label)}: {e(value)}">'
+            f'<title>{e(label)}: {e(value)}</title><rect width="{w1}" height="20" rx="3" fill="#24292f"/>'
+            f'<rect x="{w1}" width="{w2}" height="20" rx="3" fill="{color}"/><rect x="{w1}" width="4" height="20" fill="{color}"/>'
+            f'<g fill="#fff" font-family="Verdana,DejaVu Sans,sans-serif" font-size="11" text-anchor="middle">'
+            f'<text x="{w1 / 2}" y="14">{e(label)}</text><text x="{w1 + w2 / 2}" y="14">{e(value)}</text></g></svg>\n')
+
+
 def team():
     out = []
     for f in sorted((ROOT / "bots").glob("*.md")):
@@ -282,6 +292,10 @@ def build():
                    "date_published": dt(x["date"]).isoformat(), "tags": [k, x["area"], x["status"]] + ([x["state"]] if k == "issue" else [])} for k, x in feed]}, indent=2, ensure_ascii=False) + "\n"
     rss = "".join(f"<item><title>{e(title(k, x))}</title><link>{e(link(k, x))}</link><guid isPermaLink=\"false\">{k}-{x['id']}</guid><pubDate>{format_datetime(dt(x['date']))}</pubDate><description>{e(x['summary'] + ' Source: ' + x['source'])}</description><category>{e(x['status'])}</category></item>\n" for k, x in feed)
     files["feed.xml"] = f'<?xml version="1.0" encoding="utf-8"?>\n<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Slopworks: Grok Bot updates and known issues</title><link>{BASE}</link><atom:link href="{BASE}feed.xml" rel="self" type="application/rss+xml"/><description>{e(DISCLAIMER)}</description>\n{rss}</channel></rss>\n'
+    files["badges/updates.svg"] = badge("updates", len(ups), "#0550ae")
+    files["badges/issues.svg"] = badge("open issues", n_open, "#7d4e00" if n_open else "#116329")
+    files["badges/last-run.svg"] = badge("last run", f'{last_run["date"]} {last_run["status"]}' if last_run else "none", "#116329" if last_run and last_run["status"] == "ok" else "#7d4e00")
+    files["badges/roles.svg"] = badge("bot roles", len(team()), "#8250df")
     return files
 
 

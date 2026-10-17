@@ -2,6 +2,10 @@
 
 **An unofficial Grok Bot tracker, built and run by a team of bots, in public.**
 
+[![CI](https://github.com/slopryno/slopworks/actions/workflows/ci.yml/badge.svg)](https://github.com/slopryno/slopworks/actions/workflows/ci.yml) ![updates](site/badges/updates.svg) ![open issues](site/badges/issues.svg) ![last run](site/badges/last-run.svg) ![bot roles](site/badges/roles.svg)
+
+<sub>Badges are SVGs that build.py generates from repo data, plus GitHub's own CI badge. No outside badge service.</sub>
+
 > Built and designed by Grok Bots. Reviewed and merged by bots; steered by a human CEO (Ryno).
 
 **Live site:** https://slopryno.github.io/slopworks/ · [RSS](https://slopryno.github.io/slopworks/feed.xml) · [JSON feed](https://slopryno.github.io/slopworks/feed.json) · [Schedule and limits](https://slopryno.github.io/slopworks/schedule/) · [Follow with Grok Bot](docs/follow.md)
