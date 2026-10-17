@@ -82,15 +82,23 @@ Ryno is CEO: he sets direction and steps in only for disagreements and safety ca
 
 **X drafts (bots never post to X):** on a notable event (an approved pitch ships, a big Grok Bot update, or a weekly milestone), Coordinator writes a short X post draft in Ryno's style and includes it in the run report to Ryno. The style is lowercase, 1 to 2 short sentences, "..." to join thoughts, at most one emoji, no hashtags, no claims beyond what shipped, and a link to the site. `check.py x-draft "<text>"` checks the style.
 
+## New hires (2026-10-16, CEO-approved)
+- **Scoutmaster** (Leadership and Strategy): what we could do about what changed. Returns 3-5 opportunities in the 8-field format. Sketch stays on "what changed."
+- **Critic** (Quality and Governance): an independent challenger for the strongest proposals. Writes a challenge report ending in proceed, investigate, or reject. It advises only, has no veto, and skips trivial maintenance.
+- **User Advocate** (`Advocate`, Research and Intelligence): the user problem and its evidence. Demand claims are `hypothesis` until real reader feedback exists.
+- **Research Librarian** (`Librarian`, Research and Intelligence): keeps the knowledge and decision record, and checks for duplicates and prior work before planning.
+- **Team page groups:** Leadership and Strategy (Coordinator, Scoutmaster); Research and Intelligence (Sketch/Scout, User Advocate, Research Librarian); Architecture and Development (Atlas, Forge, Polish; Pixel and Core under Forge); Quality and Governance (Lens, Trial, Shield, Critic, Advisor); Operations and Measurement (Sweep, Analyst).
+- **Onboarding:** follows `docs/onboarding.md`. The first run is shown in Team chat as labeled threads (c23-c34).
+
 ## Weekly research (every role brings ideas)
 - **Rotation:** set in `data/schedule.json` (`research`) and shown on the public schedule page. One or two roles research each day, so every role researches once a week:
-  - Monday: Coordinator, Analyst
-  - Tuesday: Polish, Pixel
-  - Wednesday: Shield, Trial
+  - Monday: Coordinator, Analyst, Scoutmaster
+  - Tuesday: Polish, Pixel, Advocate
+  - Wednesday: Shield, Trial, Critic
   - Thursday: Scout, Verify
   - Friday: Atlas, Core
   - Saturday: Sweep, Forge
-  - Sunday: Advisor
+  - Sunday: Advisor, Librarian
 - **Focus areas:** each role covers its own area. Polish studies elegant static-site UI/UX: well-designed static sites, design write-ups, and accessibility, typography, and layout patterns.
 - **Budget:** public web pages only (no X reads), at most about 5 pages per role per session, and a short time box. Sweep logs it in runs.json, and research is the first optional work cut if usage rises.
 - **Output:** a note in `data/research.json` with the topic, 2-3 takeaways in the role's own words, the source URLs it actually fetched (1 to 5), and an idea if it has one. Quote at most a short line, never copy designs or code wholesale, respect licenses, and use public sources only. An idea becomes a pitch in the next standup (`pitch` links the idea id).
@@ -271,6 +279,7 @@ Every change, including data, site code, design, features, bot instructions, pla
 | CEO time | A few minutes a week | One Monday brief to read, plus pings only for disagreements |
 | Sources | Public only | No private accounts, no logins on readers' behalf |
 | Weekly research | Web reads only, about 5 pages per role per session, short time box | 1-2 roles a day; no X reads; Sweep logs it; first optional work cut if usage rises |
+| New roles (Scoutmaster, Critic, User Advocate, Research Librarian) | Web reads only, inside the research cap; no X reads | They run inside the same daily session. Critic only challenges the top proposals. If usage rises they're cut along with research |
 | Box | One shared computer | If it's down, the day is skipped and reported, not faked |
 
 Sweep logs reads, run time, and deploys in `data/runs.json`. If usage rises two weeks in a row, it drops the optional work first, in this order: weekly research, then the deep Polish audit, then feature work, then the monthly page. The daily tracker stays running.
