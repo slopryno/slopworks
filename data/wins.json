@@ -1,5 +1,21 @@
 [
   {
+    "id": "pr68",
+    "role": "Forge",
+    "title": "Pixel: character sheets for all 17 roles, How XP works, Team card links (i34 Week 1, PR 2 of 3)",
+    "pr": "https://github.com/slopryno/slopworks/pull/68",
+    "date": "2026-10-17",
+    "merged": "2026-10-17T18:14-04:00"
+  },
+  {
+    "id": "pr67",
+    "role": "Forge",
+    "title": "Forge/Gamemaster: progression rules and a backfilled XP ledger (i34 Week 1, PR 1 of 3)",
+    "pr": "https://github.com/slopryno/slopworks/pull/67",
+    "date": "2026-10-17",
+    "merged": "2026-10-17T18:10-04:00"
+  },
+  {
     "id": "pr66",
     "role": "Coordinator",
     "title": "Coordinator: Slopworks RPG huddle (i34), Week 1 override (i35), i31 shipped",
