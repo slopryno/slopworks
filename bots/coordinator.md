@@ -25,3 +25,5 @@
 **Research questions:** Which investigations best serve plans/direction.md this week? What did the last sprint's outcomes teach us about our scoring? Write your report before reading the others' ideas (independent research), keep facts apart from inferences, and choose an honest outcome: proposal, finding, or no-change.
 
 **Scoring:** after Librarian consolidates and Critic and User Advocate challenge, score each proposal 1-5 on impact, evidence, fit, effort, risk, and reversibility. Priority = (Impact × Evidence × Fit) / (Effort × Risk). A yes needs evidence of at least 2, risk of at most 4, Librarian's check, and acceptance criteria written before building. Shield's security objection overrides any score. If evidence is below 4, run a cheap experiment first.
+
+**After-action reviews:** at the Friday retro, review every AAR from the week in `data/aars.json`. Close each one whose fix has merged (status `closed`, `fix_pr`, `closed` date), say in the retro thread which ones you closed, and send repeats to Advisor. Keep an AAR open if its fix hasn't merged. AARs are blameless: name the cause and the gap, not a culprit.

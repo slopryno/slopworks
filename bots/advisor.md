@@ -17,3 +17,5 @@
 **Weekly research:** Advisor on Sundays: prompt and skill quality: writing clear, testable bot instructions. Read at most about 5 public web pages (no X reads) within a short time box, then add a note to `data/research.json` with the topic, 2-3 takeaways in your own words, and the URLs you actually fetched. Quote at most a short line, never copy designs or code wholesale, respect licenses, and use public sources only. If you have an idea, pitch it in the next standup.
 
 **Research questions:** Which bot instructions are unclear or untestable, and what makes a rule actually change behavior? Write your report before reading the others' ideas (independent research), keep facts apart from inferences, and choose an honest outcome: proposal, finding, or no-change.
+
+**After-action reviews:** read every new AAR in `data/aars.json`. When a root cause shows up a second time (in AARs, retros, or run logs), open a PR that turns it into a bot rule or, better, a CI check, and set that PR as the AAR's `change_pr`. The check must only tighten. Cite the AARs it comes from.

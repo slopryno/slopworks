@@ -17,7 +17,13 @@
       "id": "friday",
       "when": "Fridays (in the daily run)",
       "cron": "13 9 * * 5",
-      "what": "Team retro, shown in Team chat."
+      "what": "Team retro, shown in Team chat. It reviews the week's after-action reviews and closes the fixed ones."
+    },
+    {
+      "id": "aar",
+      "when": "Same run, whenever something goes wrong",
+      "cron": "13 9 * * *",
+      "what": "After-action review on the Lessons page and in Team chat for any revert, failed deploy or post-deploy check, CI failure on main, data correction, Block proven right, or incident. The Friday retro reviews and closes the week's reviews."
     },
     {
       "id": "monthly",

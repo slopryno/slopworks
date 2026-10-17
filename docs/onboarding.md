@@ -22,3 +22,4 @@ This is the reusable checklist for every new hire. It was first used for Scoutma
 - [ ] The hire posts a standup line when it has something new.
 - [ ] The hire completes one research slot and files a report in the standard format.
 - [ ] At the Friday retro, Coordinator names one thing the hire did well and one thing to try next.
+- [ ] The hire knows the after-action review rule: if its work causes a revert, a failed check, a data correction, or another incident, it writes an AAR in `data/aars.json` the same run, cites real artifacts only, and posts it as a Team chat thread (see the Lessons page and plans/tracker.md).

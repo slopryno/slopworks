@@ -15,7 +15,7 @@ REPO = "https://github.com/slopryno/slopworks"
 CREDIT = "Built and designed by Grok Bots. Reviewed and merged by bots; steered by a human CEO (Ryno)."
 DISCLAIMER = "Unofficial, fan-built project. Not affiliated with or endorsed by Grok Bot, SpaceX, or X."
 CORRECTIONS = "slopryno+corrections@mail.grokbot.com"
-NAV = [("", "Home"), ("cases/", "Case files"), ("arena/", "Research Arena"), ("challenges/", "Demo challenge"), ("team/", "Team"), ("chat/", "Team chat")]
+NAV = [("", "Home"), ("cases/", "Case files"), ("lessons/", "Lessons"), ("arena/", "Research Arena"), ("challenges/", "Demo challenge"), ("team/", "Team"), ("chat/", "Team chat")]
 OPS = [("updates/", "What's new"), ("issues/", "Known issues"), ("behind/", "Behind the scenes"), ("design/", "Design log"), ("schedule/", "Schedule and limits")]
 e = lambda s: html.escape(str(s), quote=True)
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -240,7 +240,7 @@ def build():
     for r in runs:
         counts = "".join(f"<tr><th scope=\"row\">{e(k.replace('_', ' '))}</th><td>{v}</td></tr>" for k, v in r["counts"].items())
         notes = "".join(f"<li>{e(n)}</li>" for n in r.get("notes", []))
-        body += (f'<article class="card"><h3>{e(r["date"])} · {e(r["kind"])} run · {e(r["status"])}</h3>'
+        body += (f'<article class="card" id="run-{e(r["id"])}"><h3>{e(r["date"])} · {e(r["kind"])} run · {e(r["status"])}</h3>'
                  f'<table><tbody>{counts}<tr><th scope="row">X reads</th><td>{r.get("x_reads", 0)}</td></tr></tbody></table><ul>{notes}</ul></article>')
     files["behind/index.html"] = page("behind/", "Behind the scenes", f"What each role found, dropped, or stripped in every run. Auto-merge is <strong>{e(state['auto_merge'])}</strong>. These are roles played in one daily routine, not separate live bots.", body, "data/runs.json")
 
@@ -417,6 +417,36 @@ def build():
                                     "".join(f'<h2 class="group">{e(g)}</h2><div class="grid">' + "".join(tcard(*x) for x in team() if x[0] in members) + "</div>" for g, members in GROUPS) + alumni_html, "bots")
 
 
+    # Lessons: same-day after-action reviews (AARs), approved by Ryno 2026-10-17. Blameless, and every field cites a real artifact.
+    TRIGGERS = {"revert": "Revert", "failed-deploy": "Failed deploy", "post-deploy-check": "Failed post-deploy check", "ci-main": "CI failure on main",
+                "ci-pr": "CI failure on a PR", "data-correction": "Published-data correction", "block-upheld": "Block proven right", "incident": "Incident"}
+    def cite(ref):
+        k, v = ref.split(":", 1)
+        if k == "pr":
+            return f'<a href="{REPO}/pull/{e(v)}">#{e(v)}</a>'
+        if k == "run":
+            return f'<a href="{REPO}/actions/runs/{e(v)}">CI run</a>'
+        if k == "commit":
+            return f'<a href="{REPO}/commit/{e(v)}">commit {e(v[:7])}</a>'
+        if k == "chat":
+            return f'<a href="{href(v, "../", "lessons/")}">chat {e(v)}</a>'
+        if k == "runlog":
+            return f'<a href="../behind/#run-{e(v)}">run log {e(v)}</a>'
+        return f'<a href="{REPO}/blob/main/{e(v)}">{e(v)}</a>'
+    def aar(a):
+        rows = "".join(f'<dt>{t}</dt><dd>{e(a[k]["text"])} <span class="meta">' + " · ".join(cite(c) for c in a[k]["cite"]) + "</span></dd>"
+                       for k, t in (("expected", "What was supposed to happen"), ("actual", "What actually happened"), ("why", "Why (blameless, with evidence)"), ("change", "What we change")))
+        st = (f'closed {e(a["closed"])} · fix <a href="{REPO}/pull/{a["fix_pr"]}">#{a["fix_pr"]}</a>' if a["status"] == "closed" else "open")
+        return (f'<article class="card aar" id="{e(a["id"])}"><h2>{e(a["title"])}</h2><p class="meta">{as_of(a["date"], "happened")}<span class="tag">{e(TRIGGERS[a["trigger"]])}</span>'
+                f'<span class="tag">{st}</span><span>owner {e(a["owner"])}</span><a href="{href(a["thread"], "../", "lessons/")}">Team chat thread</a></p><dl>{rows}</dl></article>')
+    aars = sorted(load("aars"), key=lambda a: (a["date"], a["id"]), reverse=True)
+    n_open = sum(a["status"] == "open" for a in aars)
+    files["lessons/index.html"] = page("lessons/", "Lessons",
+        "When something goes wrong, the team writes an after-action review the same run: what was supposed to happen, what actually happened, why (blameless, with evidence), and what changes. "
+        "The Friday retro reviews the week's reviews and closes them, and Advisor turns repeats into rules or CI checks. Every line links the PR, CI run, commit, or Team chat message behind it.",
+        f'<p class="meta"><span>{len(aars)} reviews</span><span>{n_open} open</span><span>newest first</span></p>'
+        + ("".join(map(aar, aars)) or '<p class="empty">No after-action reviews yet. One appears here the same day something goes wrong.</p>'), "data/aars.json")
+
     # Research Arena (i22, PR 2 of 8): one question, independent reports, challenge, scores, decision. Real records only.
     rmap = {r["id"]: r for r in load("research")}
     imap = {i["id"]: i for i in load("ideas")}
@@ -495,7 +525,7 @@ def build():
     last = runs[0] if runs else None
     status = f'Last run: <strong>{e(last["date"])}</strong> ({e(last["kind"])}), status <strong>{e(last["status"])}</strong>. Next: the daily run, around 9:15 AM ET.' if last else '<span class="empty">No runs yet. The first daily run is around 9:15 AM ET.</span>'
     files["schedule/index.html"] = page("schedule/", "Schedule and limits", "What to expect and when. Generated from the same schedule file the routines use.",
-                                        f'<p class="card">{status}</p><table><tbody>{srows}</tbody></table>' + rot_html + f'<h2>Limits, in plain words</h2><ul>{lim}</ul>', "data/schedule.json")
+                                        f'<p class="card">{status}</p><table><tbody>{srows}</tbody></table><p>When something goes wrong, the after-action review is on the <a href="../lessons/">Lessons</a> page the same day.</p>' + rot_html + f'<h2>Limits, in plain words</h2><ul>{lim}</ul>', "data/schedule.json")
 
     feed = sorted([("update", x) for x in ups] + [("issue", x) for x in iss], key=lambda p: (p[1]["date"], p[1]["id"]), reverse=True)[:50]
     link = lambda k, x: f'{BASE}{"issues/" if k == "issue" else "updates/"}#e{x["id"]}'

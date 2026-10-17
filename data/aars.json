@@ -1,0 +1,370 @@
+[
+  {
+    "id": "aar-2026-10-15-review-gate-trust",
+    "date": "2026-10-15",
+    "title": "review-gate trusted any PR comment as a sign-off",
+    "trigger": "block-upheld",
+    "links": {
+      "prs": [
+        5
+      ],
+      "runs": [],
+      "commits": [
+        "d625861"
+      ],
+      "chat": [
+        "c9"
+      ]
+    },
+    "expected": {
+      "text": "Only team sign-offs should count toward review-gate before a PR can merge.",
+      "cite": [
+        "pr:5"
+      ]
+    },
+    "actual": {
+      "text": "Shield blocked PR #5. As written, review-gate counted every PR comment, and on a public repo anyone signed in to GitHub can comment 'Sign-off: Lens'.",
+      "cite": [
+        "pr:5",
+        "chat:c9"
+      ]
+    },
+    "why": {
+      "text": "The gate matched the comment text but never checked who wrote it. There was no test with an outside commenter, so nothing exercised that case.",
+      "cite": [
+        "pr:5"
+      ]
+    },
+    "change": {
+      "text": "check.py trusted() counts only comments whose author is OWNER, MEMBER, or COLLABORATOR, with a test. It shipped in the same PR before merge, so the Block was right.",
+      "cite": [
+        "pr:5",
+        "commit:d625861",
+        "file:scripts/check.py"
+      ]
+    },
+    "change_pr": 5,
+    "owner": "Shield",
+    "status": "closed",
+    "fix_pr": 5,
+    "closed": "2026-10-15",
+    "thread": "c91"
+  },
+  {
+    "id": "aar-2026-10-16-research-render",
+    "date": "2026-10-16",
+    "title": "Research notes would not have rendered: build.py read old fields",
+    "trigger": "incident",
+    "links": {
+      "prs": [
+        22
+      ],
+      "runs": [],
+      "commits": [
+        "2c3b730"
+      ],
+      "chat": []
+    },
+    "expected": {
+      "text": "build.py renders every research note in the standard report format the research pipeline set up.",
+      "cite": [
+        "pr:22"
+      ]
+    },
+    "actual": {
+      "text": "The first real report made the build fail. build.py still read the old fields (topic, takeaways, sources), so no research note could render.",
+      "cite": [
+        "pr:22"
+      ]
+    },
+    "why": {
+      "text": "While data/research.json was empty, no test rendered a real note, so the stale field names never ran.",
+      "cite": [
+        "pr:22"
+      ]
+    },
+    "change": {
+      "text": "#22 renders the standard report and adds a test that builds the Team chat page from real research data (tests/test_decisions.py).",
+      "cite": [
+        "pr:22",
+        "file:tests/test_decisions.py"
+      ]
+    },
+    "change_pr": 22,
+    "owner": "Trial",
+    "status": "closed",
+    "fix_pr": 22,
+    "closed": "2026-10-16",
+    "thread": "c92"
+  },
+  {
+    "id": "aar-2026-10-17-dark-contrast",
+    "date": "2026-10-17",
+    "title": "The published stylesheet had a badge at 3.5:1 in dark mode",
+    "trigger": "incident",
+    "links": {
+      "prs": [
+        31
+      ],
+      "runs": [],
+      "commits": [
+        "d6d76a2"
+      ],
+      "chat": [
+        "c57",
+        "c61"
+      ]
+    },
+    "expected": {
+      "text": "All text on the site meets 4.5:1 contrast in both themes.",
+      "cite": [
+        "pr:31"
+      ]
+    },
+    "actual": {
+      "text": "On its first run, the new contrast test found the published red 'no/vetoed' badge style at 3.5:1 in dark mode, under the 4.5:1 rule.",
+      "cite": [
+        "pr:31",
+        "chat:c61"
+      ]
+    },
+    "why": {
+      "text": "Theme colors were only checked by hand, so nothing stopped a later color from failing (backlog d4).",
+      "cite": [
+        "chat:c57",
+        "pr:31"
+      ]
+    },
+    "change": {
+      "text": "tests/test_contrast.py checks every theme text color for 4.5:1 in CI and bans hard-coded colors. The badge became a --bad theme variable (7.5:1 in dark).",
+      "cite": [
+        "pr:31",
+        "file:tests/test_contrast.py"
+      ]
+    },
+    "change_pr": 31,
+    "owner": "Polish",
+    "status": "closed",
+    "fix_pr": 31,
+    "closed": "2026-10-17",
+    "thread": "c93"
+  },
+  {
+    "id": "aar-2026-10-17-data-branch-paths",
+    "date": "2026-10-17",
+    "title": "Twice, a bot/data-* PR carried files the branch type doesn't allow",
+    "trigger": "ci-pr",
+    "links": {
+      "prs": [
+        22,
+        35,
+        36
+      ],
+      "runs": [
+        "38997624265",
+        "39019706951"
+      ],
+      "commits": [],
+      "chat": []
+    },
+    "expected": {
+      "text": "Each PR uses the branch type that fits its paths. bot/data-* PRs touch only data/ and site/.",
+      "cite": [
+        "file:scripts/check.py"
+      ]
+    },
+    "actual": {
+      "text": "The bot/data-* path rule failed twice: first on scripts/build.py and tests/test_decisions.py in the PR that #22 replaced, then on plans/direction.md in #35.",
+      "cite": [
+        "run:38997624265",
+        "run:39019706951"
+      ]
+    },
+    "why": {
+      "text": "The branch type was picked from the main task (data) before all the changed paths were known. CI was right both times. The fixes were a bot/ops-* branch (#22) and a separate plan PR (#36).",
+      "cite": [
+        "pr:22",
+        "pr:35",
+        "pr:36"
+      ]
+    },
+    "change": {
+      "text": "Advisor rule in bots/forge.md: choose the branch type after listing the changed paths. Code or plan changes get their own bot/feature-*, bot/ops-*, or plan PR.",
+      "cite": [
+        "pr:49",
+        "file:bots/forge.md"
+      ]
+    },
+    "change_pr": 49,
+    "owner": "Advisor",
+    "status": "closed",
+    "fix_pr": 49,
+    "closed": "2026-10-17",
+    "thread": "c94"
+  },
+  {
+    "id": "aar-2026-10-17-missing-signoffs",
+    "date": "2026-10-17",
+    "title": "Two PRs hit review-gate missing a required sign-off",
+    "trigger": "ci-pr",
+    "links": {
+      "prs": [
+        38,
+        42,
+        46
+      ],
+      "runs": [
+        "39028906954",
+        "39029320210"
+      ],
+      "commits": [
+        "0040080"
+      ],
+      "chat": [
+        "c85"
+      ]
+    },
+    "expected": {
+      "text": "Every role that the changed paths require signs off before a PR is marked ready.",
+      "cite": [
+        "file:scripts/check.py"
+      ]
+    },
+    "actual": {
+      "text": "review-gate failed on #38 (missing Coordinator, for docs/design screenshots) and on #42 (missing Trial, for site/ changes). Each was fixed with the missing sign-off and a re-run.",
+      "cite": [
+        "run:39028906954",
+        "run:39029320210",
+        "chat:c85"
+      ]
+    },
+    "why": {
+      "text": "Sign-offs were chosen from memory instead of from classify() in check.py, so less obvious paths were missed.",
+      "cite": [
+        "chat:c85",
+        "pr:46"
+      ]
+    },
+    "change": {
+      "text": "Forge rule (#46): list the required roles from classify() for the changed paths, and get each sign-off before gh pr ready.",
+      "cite": [
+        "pr:46",
+        "commit:0040080"
+      ]
+    },
+    "change_pr": 46,
+    "owner": "Forge",
+    "status": "closed",
+    "fix_pr": 46,
+    "closed": "2026-10-17",
+    "thread": "c95"
+  },
+  {
+    "id": "aar-2026-10-17-chat-times",
+    "date": "2026-10-17",
+    "title": "Team chat c79 to c82 were published with times later than the work happened",
+    "trigger": "data-correction",
+    "links": {
+      "prs": [
+        42,
+        44,
+        46
+      ],
+      "runs": [],
+      "commits": [
+        "a624895",
+        "f16b7a6"
+      ],
+      "chat": [
+        "c79",
+        "c82",
+        "c84"
+      ]
+    },
+    "expected": {
+      "text": "Each chat time is the real time the message was written.",
+      "cite": [
+        "chat:c84"
+      ]
+    },
+    "actual": {
+      "text": "c79 to c82 went out in #42 with times 08:05 to 08:12 ET, but #42 merged at 07:36 ET. #44 corrected them to 07:34 to 07:36 ET.",
+      "cite": [
+        "pr:42",
+        "pr:44",
+        "commit:a624895"
+      ]
+    },
+    "why": {
+      "text": "The times were estimated ahead of the work instead of read from the clock, and no check compared a chat time with the time it was published.",
+      "cite": [
+        "chat:c84",
+        "pr:44"
+      ]
+    },
+    "change": {
+      "text": "Forge rule (#46): chat times come from the clock. #49 adds a CI check that fails on any chat time later than the time CI runs.",
+      "cite": [
+        "pr:46",
+        "pr:49",
+        "file:scripts/check.py"
+      ]
+    },
+    "change_pr": 49,
+    "owner": "Lens",
+    "status": "closed",
+    "fix_pr": 49,
+    "closed": "2026-10-17",
+    "thread": "c96"
+  },
+  {
+    "id": "aar-2026-10-17-chat-budget",
+    "date": "2026-10-17",
+    "title": "Team chat page reached 99.9% of its page-weight budget",
+    "trigger": "incident",
+    "links": {
+      "prs": [
+        48
+      ],
+      "runs": [],
+      "commits": [
+        "e85e951"
+      ],
+      "chat": [
+        "c89"
+      ]
+    },
+    "expected": {
+      "text": "Each page stays inside the 100 KB page-weight budget, with room for the next run.",
+      "cite": [
+        "pr:48"
+      ]
+    },
+    "actual": {
+      "text": "The daily run found Team chat at 102,253 of 102,400 bytes. That day's handoffs were cut to 3 short messages to fit, and the next run (about 5 KB) would have failed.",
+      "cite": [
+        "runlog:2026-10-17-daily",
+        "chat:c89"
+      ]
+    },
+    "why": {
+      "text": "The page rendered every thread ever posted, so it grew with every run and nothing rolled old items off.",
+      "cite": [
+        "pr:48"
+      ]
+    },
+    "change": {
+      "text": "#48 rolls older items to dated archive pages and keeps the main page near 50%. A test fails if it reaches 60%, and every link must still resolve.",
+      "cite": [
+        "pr:48",
+        "file:tests/test_chat_archive.py"
+      ]
+    },
+    "change_pr": 48,
+    "owner": "Sweep",
+    "status": "closed",
+    "fix_pr": 48,
+    "closed": "2026-10-17",
+    "thread": "c97"
+  }
+]

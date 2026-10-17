@@ -63,7 +63,7 @@ Ryno is CEO: he sets direction and steps in only for disagreements and safety ca
 
 **Cadence**
 - Daily: the run (below), with its log as the standup.
-- Weekly: Monday planning by Coordinator (sprint picked from the roadmap and backlogs, capped at what can actually ship), the CEO brief, the release, and the Polish audit. Friday retro, where each mistake gets a rule.
+- Weekly: Monday planning by Coordinator (sprint picked from the roadmap and backlogs, capped at what can actually ship), the CEO brief, the release, and the Polish audit. Friday retro, where each mistake gets a rule and the week's after-action reviews are reviewed and closed.
 - Monthly: roadmap review, Atlas's architecture review, and a "state of Slopworks" page on the site.
 
 ## Standup, pitches, and the idea log
@@ -141,6 +141,15 @@ One daily routine run by Slopbot plays each role in order, with separate instruc
 5. **Advisor:** compares new entries to each bot's instructions in `bots/` and opens a **separate PR** with suggested skill updates, each citing its entry. Lens reviews them, and they merge once Lens approves (see How merging works).
 6. **Design review (Polish):** looks over the live site on desktop and mobile and checks the layout, readability, accessibility (contrast, headings, alt text, keyboard use), speed, empty or confusing sections, and what readers would expect but can't find. It keeps a ranked backlog in `data/design_backlog.json` with each idea, why it matters, and how much effort it takes. At most **one small design PR a week** (on a `bot/design-*` branch) goes out with before and after screenshots, is reviewed by Lens and Trial, and merges once they approve. Bigger ideas stay in the backlog for a monthly roundup.
 7. **Report:** a short summary to Ryno only if something notable happened: a big update, a new bug, a skill-update PR waiting, or a failure. Quiet days stay quiet.
+8. **After-action reviews (same run):** if anything below happened in this run, the owning role writes an AAR in `data/aars.json` before the run ends and posts it as a Team chat thread that starts with "AAR". Triggers: a revert, a failed deploy or failed post-deploy Trial check, a CI failure on main, a published-data correction (wrong time, wrong fact, or a dropped or removed entry), a Block that proved right after merge, or any other incident. Nothing waits for Friday.
+
+## After-action reviews (2026-10-17, approved by Ryno)
+Mistakes are written up the same day they happen, in public, and blameless.
+- **Format (`data/aars.json`, schema in `data/schema/aars.schema.json`):** id, date, trigger, links (PRs, CI runs, commits, Team chat), what was supposed to happen, what actually happened, why (root cause with evidence), what we change (a concrete rule, test, or CI check, citing the PR that adds it), owner role, and status (open, or closed with the fix PR and date).
+- **No invented facts:** every field cites at least one real artifact (`pr:`, `run:`, `commit:`, `chat:`, `runlog:`, or `file:`). CI checks that each cited PR, run, and commit is in the review's links, that chat ids, run logs, and files exist, that closed reviews have a fix PR, and that the thread is a Team chat root starting with "AAR". A failed run in `data/runs.json` needs a same-day AAR. Team chat times can't be later than the time CI runs.
+- **Where it shows:** the Lessons page (`site/lessons/`, in the nav and linked from the schedule page), newest first, and a Team chat thread for each review.
+- **Closing:** the Friday retro reviews the week's AARs and closes those whose fix has merged. Advisor turns any cause that repeats into a bot rule or a CI check, and that becomes the AAR's "what we change".
+- **Backfill:** the first 7 AARs were written from real history on 2026-10-17. Nothing was staged.
 
 ## Feedback loop
 Bots handle every step, including merging changes to bot instructions after review. One decision stays with Ryno: replying to any real person.
@@ -301,6 +310,7 @@ Readers see exactly what to expect:
 - **Daily, around 9:15 AM ET:** new updates and issues. Quiet days post nothing, so there are no filler entries.
 - **Mondays:** the weekly digest, the GitHub release, the design audit score, and the sprint plan.
 - **Fridays:** the team retro, shown in Team chat.
+- **Same run, whenever something goes wrong:** an after-action review on the Lessons page.
 - **Monthly:** a State of Slopworks page, the roadmap review, and the architecture review.
 - **Limits, in plain words:** public sources only, so quiet fixes won't show up. Entries may lag by up to a day. Items are labeled confirmed or reported. A missed run shows as missed. Free-tier hosting. Unofficial project.
 - **Live status:** the time of the last run, the next scheduled run, and whether the last run was OK, skipped, or failed. This is generated from `data/runs.json`.
