@@ -808,5 +808,39 @@
     "experiment": "Prototype questions are answered in the PRs' tests",
     "success_metric": "All four merge with CI green and no guardrail line removed",
     "recommendation": "pursue"
+  },
+  {
+    "id": "r-polish-2026-10-17-mobile",
+    "date": "2026-10-17",
+    "role": "Polish",
+    "kind": "focused",
+    "confidence": "high",
+    "status": "verified",
+    "fresh_until": "2026-11-17",
+    "question": "Mobile and UX audit: what breaks on phones and tablets, measured at 360, 390, 414, 768, and 1280?",
+    "outcome": "proposal",
+    "finding": "At 360 px, 3 of 37 pages scroll sideways and there are 622 tap targets under 44 px (481 of them in the 13-link header nav). Contrast, tiny text, and table scrolling already pass. The CSS is desktop-first (3 max-width queries, 0 min-width).",
+    "facts": [
+      "Measured with headless Chrome on the built site at #70 (docs/design/mobile/before.json).",
+      "Overflow at 360: challenges 79 px, updates 50 px, issues 15 px.",
+      "The header is 211 px tall on phones and holds 13 nav links, each 34 px tall.",
+      "0 text elements under 4.5:1 in light or forced dark mode, and no text under 12 px."
+    ],
+    "inferences": [
+      "A 4 or 5 item nav fits one row on phones and frees about a quarter of the first screen.",
+      "Most content targets are toggles and chips that only need padding."
+    ],
+    "evidence": [
+      "https://www.w3.org/WAI/WCAG22/Understanding/target-size-enhanced.html",
+      "https://raw.githubusercontent.com/actions/runner-images/main/images/ubuntu/Ubuntu2404-Readme.md"
+    ],
+    "existing_work": "i11 mobile nav fix (#24), d4 contrast test, the CSS-only filters (#33)",
+    "opportunity": "Simpler nav and hubs, a sharper landing page, mobile-first CSS, and a 360 px check in CI",
+    "alternatives": "Patch only the 3 overflowing pages (leaves 622 small targets and the desktop-first CSS)",
+    "effort": "M",
+    "risks": "Desktop regressions (measured at 1280 before and after); URL breakage (no URL moves)",
+    "experiment": "Re-run the same audit after each PR and compare",
+    "success_metric": "0 overflowing pages and 0 undersized non-inline targets at 360, no new overflow at 1280",
+    "recommendation": "pursue"
   }
 ]
