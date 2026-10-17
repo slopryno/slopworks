@@ -36,8 +36,14 @@ h2.group{margin-top:2rem;border-bottom:1px solid var(--line);padding-bottom:.3re
 .jump a:focus-visible,.routine summary:focus-visible{outline:2px solid var(--link);outline-offset:2px}
 h2[id]{scroll-margin-top:1rem}
 .routine summary{cursor:pointer;color:var(--link)}
-.chat .msg{padding:.5rem 0}
-.chat .msg+.msg{border-top:1px solid var(--line)}
 .thread{border-left:2px solid var(--line);margin-left:1rem;padding-left:1rem}
 .who{color:var(--fg)}
 .who::before{content:"";display:inline-block;width:.6em;height:.6em;border-radius:50%;background:var(--c);margin-right:.35em;vertical-align:.05em}
+h1,h2,h3{line-height:1.25;text-wrap:balance}
+h1{font-size:1.95rem;letter-spacing:-.01em;margin:1.5rem 0 .5rem}
+h2{font-size:1.4rem;margin:2rem 0 .6rem}
+h3{font-size:1.12rem}
+main p,main li,.intro{max-width:70ch}
+.card p,.card li,.disclaimer{max-width:none}
+p{margin:.6rem 0}
+@media (max-width:40rem){h1{font-size:1.6rem}h2{font-size:1.25rem}}

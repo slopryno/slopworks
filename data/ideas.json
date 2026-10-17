@@ -217,7 +217,7 @@
     "helps": "All readers",
     "effort": "S",
     "builder": "Pixel",
-    "state": "yes",
+    "state": "shipped",
     "comments": [],
     "decided": "2026-10-16",
     "decided_by": "Coordinator",
@@ -240,6 +240,9 @@
       "r-polish-2026-10-16",
       "live render review 2026-10-16"
     ],
-    "experiment": "Before/after renders at 1280 light and 390 dark"
+    "experiment": "Before/after renders at 1280 light and 390 dark",
+    "acceptance_verified_by": "Trial",
+    "experiment_result": "pass",
+    "shipped": "Consistent heading scale (1.95/1.4/1.12rem, smaller on mobile), 1.25 heading line-height with balanced wrapping, about 70ch prose measure; system fonts only"
   }
 ]
