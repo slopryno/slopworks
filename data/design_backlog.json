@@ -5,7 +5,8 @@
     "why": "Readers usually care about one area, like email or connectors.",
     "effort": "M",
     "rank": 1,
-    "state": "backlog"
+    "state": "shipped",
+    "shipped": "2026-10-17"
   },
   {
     "id": "d2",
