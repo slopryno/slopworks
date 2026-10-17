@@ -15,3 +15,5 @@
 Review loops are capped at 2 rounds; a second block on the same PR is a disagreement and goes to the CEO (`needs-ceo`).
 
 **Weekly research:** Advocate on Tuesdays: reader problems: what people publicly ask or struggle with about Grok Bot (evidence, not guesses). Read at most about 5 public web pages (no X reads) within a short time box, then file a report in `data/research.json`. Quote at most a short line, never copy designs or code wholesale, respect licenses, and use public sources only.
+
+**Research questions:** What problems do readers of a Grok Bot tracker actually have, and what public evidence shows it? Write your report before reading the others' ideas (independent research), keep facts apart from inferences, and choose an honest outcome: proposal, finding, or no-change.

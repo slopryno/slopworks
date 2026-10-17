@@ -122,6 +122,49 @@ def idea_errors(ideas):
         if i.get("repitch_of") and not i.get("evidence"):
             errs.append(f"idea {n}: a re-pitch needs new evidence")
         errs += ceo_pitch_errors(i)
+        errs += decision_errors(i)
+    return errs
+
+
+SCORE_KEYS = ("impact", "evidence", "fit", "effort", "risk", "reversibility")
+MIN_EVIDENCE, MAX_RISK = 2, 4
+
+
+def priority(s):
+    """Priority = (Impact x Evidence x Fit) / (Effort x Risk), each scored 1-5."""
+    return round(s["impact"] * s["evidence"] * s["fit"] / (s["effort"] * s["risk"]), 2)
+
+
+def decision_errors(i):
+    """Decision record gates for team pitches: scored, checked by Librarian, acceptance criteria set before building,
+    security overrides any score, Critic only advises, Trial verifies, uncertain ideas need a passing experiment."""
+    n, st, errs = i.get("id"), i.get("state"), []
+    s = i.get("scores")
+    if s and any(not isinstance(s.get(k), int) or not 1 <= s[k] <= 5 for k in SCORE_KEYS):
+        errs.append(f"idea {n}: scores must be 1-5 for {', '.join(SCORE_KEYS)}")
+        s = None
+    if i.get("challenge") and i["challenge"].get("by") != "Critic":
+        errs.append(f"idea {n}: challenge reports come from Critic")
+    if i.get("source") == "ceo" or st not in ("yes", "shipped"):
+        return errs
+    if not s:
+        errs.append(f"idea {n}: a yes needs Coordinator's 1-5 scores")
+    else:
+        if s["evidence"] < MIN_EVIDENCE:
+            errs.append(f"idea {n}: evidence score below the minimum ({MIN_EVIDENCE})")
+        if s["risk"] > MAX_RISK:
+            errs.append(f"idea {n}: risk score above the maximum ({MAX_RISK})")
+    if not i.get("librarian_checked"):
+        errs.append(f"idea {n}: Librarian must check duplicates and prior work first")
+    if not i.get("acceptance_criteria"):
+        errs.append(f"idea {n}: set acceptance criteria before building")
+    if any(c.get("role") == "Shield" and c.get("stance") == "oppose" for c in i.get("comments", [])):
+        errs.append(f"idea {n}: Shield opposes on security, which overrides any score")
+    if st == "shipped":
+        if i.get("acceptance_verified_by") != "Trial" or not i.get("shipped"):
+            errs.append(f"idea {n}: shipped needs what shipped and Trial's acceptance check")
+        if s and s["evidence"] < 4 and i.get("experiment_result") != "pass":
+            errs.append(f"idea {n}: uncertain (evidence < 4), so it needs a passing experiment before building")
     return errs
 
 
@@ -170,30 +213,40 @@ def chat_errors(chat, ideas=None):
 
 
 def research_errors(notes, schedule, ideas):
-    """Weekly research notes: 2-3 takeaways in own words, 1-5 fetched public web pages (no X reads), on the role's rotation day."""
+    """Standard research reports: facts kept apart from inferences, 1-5 fetched public web pages (no X reads),
+    rotation reports on the role's day, proposals carry the full report, demand claims stay hypothesis without real feedback."""
     import datetime
     days = {r["role"]: d["day"] for d in schedule.get("research", []) for r in d["roles"]}
     idea_ids = {i["id"] for i in ideas}
     errs = []
     for n in notes:
         k = f"research {n.get('id')}"
-        if not 2 <= len(n.get("takeaways", [])) <= 3:
-            errs.append(f"{k}: needs 2-3 takeaways")
-        src = n.get("sources", [])
+        src = n.get("evidence", [])
         if not 1 <= len(src) <= 5:
-            errs.append(f"{k}: needs 1-5 sources (about 5 pages max per session)")
+            errs.append(f"{k}: needs 1-5 evidence URLs that were actually fetched")
         for u in src:
             host = (urllib.parse.urlparse(u).hostname or "").lower()
             if not u.startswith("https://"):
-                errs.append(f"{k}: source must be https: {u}")
+                errs.append(f"{k}: evidence must be https: {u}")
             if host in ("x.com", "twitter.com") or host.endswith((".x.com", ".twitter.com")):
                 errs.append(f"{k}: research uses web pages only, no X reads: {u}")
-        try:
-            wd = datetime.date.fromisoformat(n.get("date", "")).strftime("%A")
-            if days.get(n.get("role")) != wd:
-                errs.append(f"{k}: {n.get('role')} researches on {days.get(n.get('role'), 'no day')}, not {wd}")
-        except ValueError:
-            errs.append(f"{k}: bad date")
+        if n.get("kind", "rotation") == "rotation":
+            try:
+                wd = datetime.date.fromisoformat(n.get("date", "")).strftime("%A")
+                if days.get(n.get("role")) != wd:
+                    errs.append(f"{k}: {n.get('role')} researches on {days.get(n.get('role'), 'no day')}, not {wd}")
+            except ValueError:
+                errs.append(f"{k}: bad date")
+        if n.get("status") == "verified" and not n.get("facts"):
+            errs.append(f"{k}: a verified report lists its facts (separate from inferences)")
+        if n.get("outcome") == "proposal":
+            missing = [f for f in ("existing_work", "opportunity", "alternatives", "effort", "risks", "experiment", "success_metric", "recommendation") if not n.get(f)]
+            if missing:
+                errs.append(f"{k}: a proposal needs {', '.join(missing)}")
+        if n.get("role") == "Advocate" and n.get("status") not in ("hypothesis", "disproved", "stale") and not n.get("reader_feedback"):
+            errs.append(f"{k}: demand claims stay hypothesis until real reader feedback exists")
+        if not n.get("fresh_until") and n.get("status") != "stale":
+            errs.append(f"{k}: set fresh_until (or mark it stale)")
         if n.get("pitch") and n["pitch"] not in idea_ids:
             errs.append(f"{k}: pitch {n['pitch']} isn't in data/ideas.json")
     return errs

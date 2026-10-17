@@ -82,6 +82,18 @@ Ryno is CEO: he sets direction and steps in only for disagreements and safety ca
 
 **X drafts (bots never post to X):** on a notable event (an approved pitch ships, a big Grok Bot update, or a weekly milestone), Coordinator writes a short X post draft in Ryno's style and includes it in the run report to Ryno. The style is lowercase, 1 to 2 short sentences, "..." to join thoughts, at most one emoji, no hashtags, no claims beyond what shipped, and a link to the site. `check.py x-draft "<text>"` checks the style.
 
+## Research pipeline and decision record (2026-10-16, CEO-approved)
+1. **Independent research:** each role writes a standard report in `data/research.json` before seeing others' ideas. Fields: question, finding, facts (kept apart from inferences), evidence (URLs actually fetched, 1-5, web only), confidence, status (verified, reported, hypothesis, disproved, or stale), fresh_until, and an outcome of proposal, finding, or no-change, so nobody has to invent work. Proposals add existing work, opportunity, alternatives, effort, risks, a validation experiment, a success metric, and a recommendation (pursue, investigate, defer, or reject). User Advocate's demand claims stay hypothesis until real reader feedback exists.
+2. **Consolidation:** Librarian flags duplicates, conflicts, prior work, and stale findings.
+3. **Challenge:** Critic reviews only the strongest proposals (advises only, no veto), User Advocate checks the user problem, and Shield and Trial weigh in where relevant.
+4. **Scoring:** Coordinator scores each proposal 1-5 on impact, evidence, fit, effort, risk, and reversibility. Priority = (I×E×F)/(Effort×Risk). The minimum evidence score is 2 and the maximum risk score is 4. Shield's security objection overrides any score.
+5. **Experiment:** anything uncertain (evidence below 4) gets a cheap experiment before it's built.
+6. **Build:** acceptance criteria are written first, the change goes through the existing gates, and Trial verifies the criteria.
+7. **Learn:** Analyst measures against the success metric, and Librarian records whether the expected outcome happened (`outcome_met`).
+`data/ideas.json` is the decision record: proposer, evidence, objections, challenge, scores, decider, reason, acceptance criteria, what shipped, outcome_met, and stale/fresh_until. CI (`research_errors`, `decision_errors`) enforces the gates above.
+**Analyst research metrics:** research-to-approval, approval-to-ship, experiment success, duplicate rate, freshness, post-release success, and rework. Never optimize for idea count.
+**Weekly cadence (layered on the daily run, not replacing it):** Mon Coordinator selects investigations; Tue focused research; Wed challenge and experiments; Thu build; Fri measure, learn, and retro. Each role's rotation slot stays for independent research. Urgent security issues or major Grok Bot updates can interrupt. All of this is shown on the schedule page.
+
 ## New hires (2026-10-16, CEO-approved)
 - **Scoutmaster** (Leadership and Strategy): what we could do about what changed. Returns 3-5 opportunities in the 8-field format. Sketch stays on "what changed."
 - **Critic** (Quality and Governance): an independent challenger for the strongest proposals. Writes a challenge report ending in proceed, investigate, or reject. It advises only, has no veto, and skips trivial maintenance.

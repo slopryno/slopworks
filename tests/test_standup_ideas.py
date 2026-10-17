@@ -6,6 +6,8 @@ import check, build  # noqa: E402
 
 IDEA = {"id": "i1", "date": "2026-10-16", "by": "Polish", "problem": "P", "helps": "Readers", "effort": "S",
         "builder": "Pixel", "state": "pitched", "comments": []}
+GATES = {"scores": {"impact": 3, "evidence": 3, "fit": 3, "effort": 2, "risk": 2, "reversibility": 3},
+         "librarian_checked": True, "acceptance_criteria": ["a"]}  # decision-record gates (2026-10-16)
 LINE = {"id": "s1", "date": "2026-10-16", "role": "Scout", "did": "a", "doing": "b", "blockers": "none"}
 
 
@@ -30,7 +32,7 @@ class IdeaRules(unittest.TestCase):
 
     def test_decision_needs_reason_from_coordinator(self):
         self.assertTrue(check.idea_errors([dict(IDEA, state="yes")]))
-        self.assertEqual(check.idea_errors([dict(IDEA, state="yes", decided="2026-10-19", decided_by="Coordinator", reason="fits")]), [])
+        self.assertEqual(check.idea_errors([dict(IDEA, state="yes", decided="2026-10-19", decided_by="Coordinator", reason="fits", **GATES)]), [])
         self.assertTrue(check.idea_errors([dict(IDEA, state="yes", decided="2026-10-19", decided_by="Forge", reason="fits")]))
 
     def test_only_shield_vetoes(self):
@@ -40,7 +42,7 @@ class IdeaRules(unittest.TestCase):
 
     def test_two_strong_objections_escalate(self):
         c = [{"date": "2026-10-19", "role": r, "stance": "oppose", "strong": True, "text": "no"} for r in ("Atlas", "Trial")]
-        d = dict(IDEA, state="yes", decided="2026-10-19", decided_by="Coordinator", reason="fits", comments=c)
+        d = dict(IDEA, state="yes", decided="2026-10-19", decided_by="Coordinator", reason="fits", comments=c, **GATES)
         self.assertTrue(check.idea_errors([d]))  # must be needs-ceo
         self.assertEqual(check.idea_errors([dict(d, state="needs-ceo")]), [])
         one = dict(d, comments=c[:1])
