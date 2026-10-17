@@ -79,6 +79,18 @@ def legend():
             + "".join(f"<li>{label(k)} {e(t)}</li>" for k, (_, _, t) in LABELS.items()) + "</ul></details>")
 
 
+def trim_legend(body):
+    """Explain only the labels a page actually shows, and drop the legend when it shows one kind or none (Critic, c212)."""
+    if '<details class="legend">' not in body:
+        return body
+    full = re.search(r'<details class="legend">.*?</details>', body, re.S).group(0)
+    rest = body.replace(full, "")
+    kinds = [k for k in LABELS if f"lbl-{k}" in rest]
+    keep = ('<details class="legend"><summary>How to read the labels</summary><ul>'
+            + "".join(f"<li>{label(k)} {e(LABELS[k][2])}</li>" for k in kinds) + "</ul></details>") if len(kinds) > 1 else ""
+    return body.replace(full, keep)
+
+
 def avatar_of(name):
     n = name.lower()
     n = ALIAS.get(n, n)
@@ -228,7 +240,7 @@ def page(slug, title, lede, body, source):
 {back_link(slug, up)}<p class="disclaimer">{e(DISCLAIMER)}</p>
 <h1>{e(title)}</h1>
 <p class="lede">{lede}</p>
-{body}
+{trim_legend(body)}
 </main>
 <footer><div class="wrap">
 {sitemap}
@@ -429,11 +441,14 @@ def build():
         where = loc.get(i, "chat/")
         return f"#{e(i)}" if where == here else f"{up}{where}#{e(i)}"
 
+    by_id = {c["id"]: c for c in chat}
+
     def msg(c, up, here, cls="msg"):
         ref = f' <a href="{e(c["ref"])}">ref</a>' if c.get("ref") else ""
         when = f'{c["date"]} {c["time"]} ET' if c.get("time") else c["date"]
         badge = ""
-        if c.get("idea") in idea_state:
+        parent = by_id.get(c.get("reply_to"), {})
+        if c.get("idea") in idea_state and parent.get("idea") != c["idea"]:  # badge once per thread, not on every reply (Critic, c212)
             st = idea_state[c["idea"]]
             badge = f' <a class="badge b-{BADGE.get(st, st)}" href="{href(c["idea"], up, here)}">pitch: {e(BADGE.get(st, st))}</a>'
         return (f'<li class="{cls}" id="{e(c["id"])}">{avatar(c["from"], up)}<div><p class="hd"><strong class="who" style="--c:{color(c["from"])}">{e(c["from"])}</strong>'
@@ -647,7 +662,7 @@ def build():
              f'<h2>Every character sheet</h2><p class="meta">In name order. Levels describe each role\'s own record.</p><ul>{roster}</ul>'
              f'<p>Rules: <a href="{REPO}/blob/main/data/progression.json">data/progression.json</a> (owned by Game Master). Ledger: <a href="{REPO}/blob/main/data/xp_ledger.json">data/xp_ledger.json</a>, written by <a href="{REPO}/blob/main/scripts/xp.py">scripts/xp.py</a>. Decided in <a href="{href(prog["thread"], "../../", "team/xp/")}">Team chat</a>.</p>')
     files["team/xp/index.html"] = page("team/xp/", "How XP works", f"Each role earns XP from {len([y for y in ledger_all if y['status'] == 'approved'])} verified pieces of work so far: merged PRs, reviews, Blocks proven right, after-action reviews, research behind accepted decisions, and shipped pitches. Every point links its evidence.", xbody, "data/progression.json")
-    files["team/index.html"] = page("team/", "The team", e(CREDIT) + " Each card comes from the bot's own instruction file, and the bios are written by the bots in their own words. The latest handoff is the role's most recent real Team chat message, with its date. One daily routine plays every role in turn, so these are roles, not separate accounts. Recent wins are the merged PRs each role made. Pixel and Core work under Forge. Each card links a character sheet with the role's level and verified work (<a href=\"xp/\">how XP works</a>).",
+    files["team/index.html"] = page("team/", "The team", f"{len(team())} Grok Bot roles in five groups, played by one daily routine. Each card shows the role's own bio, its latest real handoff, recent wins, and a character sheet with verified XP (<a href=\"xp/\">how XP works</a>).",
                                     "".join(f'<h2 class="group">{e(g)}</h2><div class="grid">' + "".join(tcard(*x) for x in team() if x[0] in members) + "</div>" for g, members in GROUPS) + alumni_html, "bots")
 
 
