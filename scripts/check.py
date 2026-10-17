@@ -573,6 +573,86 @@ def chat_future_errors(chat, now=None, grace_minutes=10):
     return errs
 
 
+# ---------- feeds (i26) and Comms page checks (i28): additions only, these only tighten ----------
+HYPE = re.compile(r"\b(revolutionary|game[- ]changing|game changer|world[- ]class|best[- ]in[- ]class|industry[- ]leading|cutting[- ]edge|state[- ]of[- ]the[- ]art|"
+                  r"unparalleled|unmatched|guaranteed|10x|number one|blazing[- ]fast|next[- ]gen|groundbreaking)\b|(?<!PR )(?<![#\w])#1(?![\d\w-])", re.I)
+
+
+def feed_errors(name, text):
+    """RSS 2.0 (feed.xml, chat.xml) and JSON Feed 1.1 (feed.json, chat.json) stay valid for readers and routines."""
+    errs = []
+    if name.endswith(".xml"):
+        import xml.etree.ElementTree as ET
+        try:
+            root = ET.fromstring(text)
+        except ET.ParseError as x:
+            return [f"{name}: not well-formed XML ({x})"]
+        ch = root.find("channel")
+        if root.tag != "rss" or root.get("version") != "2.0" or ch is None:
+            return [f"{name}: must be RSS 2.0 with a channel"]
+        errs += [f"{name}: channel needs {k}" for k in ("title", "link", "description") if not (ch.findtext(k) or "").strip()]
+        guids = []
+        for n, it in enumerate(ch.findall("item")):
+            errs += [f"{name}: item {n} needs {k}" for k in ("title", "link", "guid") if not (it.findtext(k) or "").strip()]
+            guids.append(it.findtext("guid"))
+        if len(guids) != len(set(guids)):
+            errs.append(f"{name}: duplicate guid")
+    else:
+        try:
+            f = json.loads(text)
+        except ValueError as x:
+            return [f"{name}: not valid JSON ({x})"]
+        if f.get("version") != "https://jsonfeed.org/version/1.1" or not f.get("title") or not isinstance(f.get("items"), list):
+            return [f"{name}: must be JSON Feed 1.1 with a title and items"]
+        ids = [i.get("id") for i in f["items"]]
+        errs += [f"{name}: item {n} needs an id and a url" for n, i in enumerate(f["items"]) if not i.get("id") or not i.get("url")]
+        if len(ids) != len(set(ids)):
+            errs.append(f"{name}: duplicate item id")
+    return errs
+
+
+def page_meta_errors(name, doc):
+    errs = []
+    t = re.search(r"<title>([^<]*)</title>", doc)
+    d = re.search(r'<meta name="description" content="([^"]*)">', doc)
+    if not t or not t.group(1).strip():
+        errs.append(f"{name}: needs a <title>")
+    if not d or not d.group(1).strip():
+        errs.append(f"{name}: needs a meta description")
+    return errs
+
+
+def hype_hits(doc):
+    """Clear hype only: visible text, with quoted text skipped (official wording is quoted as written)."""
+    text = re.sub(r"<[^>]+>", " ", re.sub(r"<(style|script)[^>]*>.*?</\1>", " ", doc, flags=re.S))
+    text = re.sub(r"\u201c[^\u201d]*\u201d|&quot;[^&]*&quot;|\"[^\"]*\"|&#x27;[^&]*?&#x27;", " ", text)
+    return sorted({m.group(0).lower() for m in HYPE.finditer(text)})
+
+
+def sitemap_errors(files, root=None):
+    sm = (root or ROOT) / "site/sitemap.xml"
+    pages = [f for f in files if f.startswith("site/") and f.endswith(".html")]
+    if not sm.exists():
+        return ["site/sitemap.xml is missing"] if pages else []
+    locs = set(re.findall(r"<loc>([^<]+)</loc>", sm.read_text()))
+    base = "https://slopryno.github.io/slopworks/"
+    want = {base + (f[5:-len("index.html")] if f.endswith("index.html") else f[5:]) for f in pages}
+    return [f"site/sitemap.xml: missing {u}" for u in sorted(want - locs)] + [f"site/sitemap.xml: lists {u}, which isn't a page" for u in sorted(locs - want)]
+
+
+def comms_feed_errors(files, root=None):
+    errs = sitemap_errors(files, root)
+    for f in files:
+        p = (root or ROOT) / f
+        if f in ("site/feed.xml", "site/chat.xml", "site/feed.json", "site/chat.json"):
+            errs += feed_errors(f, p.read_text())
+        elif f.startswith("site/") and f.endswith(".html"):
+            doc = p.read_text()
+            errs += page_meta_errors(f, doc)
+            errs += [f"{f}: hype word '{w}' (see docs/style-guide.md)" for w in hype_hits(doc)]
+    return errs
+
+
 # ---------- guardrail gate ----------
 def loosening(path, added, removed):
     real = lambda lines: [l for l in lines if l.strip() and not l.strip().startswith(("#", "//", '"_note"'))]
@@ -644,6 +724,7 @@ def run_repo():
     errs += showcase_errors(data)
     errs += aar_errors(data.get("aars", []), data.get("chat", []), data.get("runs", []))
     errs += chat_future_errors(data.get("chat", []))
+    errs += comms_feed_errors(files)
     css = sum((ROOT / f).stat().st_size for f in files if f.startswith("site/") and f.endswith(".css"))
     for f in files:
         if f.startswith("site/") and f.endswith(".html"):
