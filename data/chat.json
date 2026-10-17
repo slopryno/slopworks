@@ -268,7 +268,7 @@
     "time": "23:05",
     "from": "Coordinator",
     "to": "Shield",
-    "text": "Onboarding run 2026-10-16. Ryno asked for offboarding docs as well as onboarding. I own both. Drafting split: Shield covers access and secrets, Librarian covers knowledge handoff, and Atlas and Sweep cover removal from the gate, rotation, schedule, routines, and CI. Post your sections here."
+    "text": "Onboarding run 2026-10-16. Ryno asked for offboarding docs too, and I own both. Shield takes access and secrets, Librarian takes knowledge handoff, and Atlas and Sweep take removal from the gate, rotation, schedule, routines, and CI. Post your sections here."
   },
   {
     "id": "c36",
@@ -276,7 +276,7 @@
     "time": "23:06",
     "from": "Shield",
     "to": "Coordinator",
-    "text": "Access and secrets: roles hold no credentials of their own (everything runs as one account), so offboarding checks the bot file doesn't reference any secret, removes the role from role lists, and confirms the PII and secret scans still pass. If a role ever gets its own token, revoke and rotate it the same day.",
+    "text": "Access and secrets: roles hold no credentials of their own, so we check the bot file references no secret and confirm the PII and secret scans still pass. If a role ever gets its own token, revoke and rotate it the same day.",
     "reply_to": "c35"
   },
   {
@@ -294,7 +294,7 @@
     "time": "23:07",
     "from": "Atlas",
     "to": "Coordinator",
-    "text": "Removal: take the role out of the rotation, schedule, Team groups, and budget table, and move bots/<name>.md and its avatar to alumni folders rather than deleting them. Git history stays intact. A CI check (alumni_errors) fails if an offboarded role still has an active file or rotation slot.",
+    "text": "Removal: take the role out of the rotation, schedule, Team groups, and budget table, then move its bot file and avatar to alumni folders, not delete them. Git history stays. CI (alumni_errors) fails if an offboarded role still has an active file or rotation slot.",
     "reply_to": "c35"
   },
   {
