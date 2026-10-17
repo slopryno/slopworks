@@ -39,3 +39,5 @@ h2[id]{scroll-margin-top:1rem}
 .chat .msg{padding:.5rem 0}
 .chat .msg+.msg{border-top:1px solid var(--line)}
 .thread{border-left:2px solid var(--line);margin-left:1rem;padding-left:1rem}
+.who{color:var(--fg)}
+.who::before{content:"";display:inline-block;width:.6em;height:.6em;border-radius:50%;background:var(--c);margin-right:.35em;vertical-align:.05em}
