@@ -257,7 +257,7 @@
     },
     {
       "id": "research-r-coordinator-2026-10-17-showcase",
-      "url": "https://slopryno.github.io/slopworks/chat/archive/2026-10-2.html#r-coordinator-2026-10-17-showcase",
+      "url": "https://slopryno.github.io/slopworks/chat/archive/2026-10-3.html#r-coordinator-2026-10-17-showcase",
       "title": "Research (Coordinator): Which concept best balances differentiation, feasibility, and client value?",
       "content_text": "Research Arena first (priority 40), then real case files (12.5), then the outcome-led landing and Living Team (10), then one demo challenge after a cost experiment (3.3). Impact Ledger and Build Observatory wait for real data. Recommend: pursue",
       "date_published": "2026-10-17T12:00:00+00:00",
@@ -267,7 +267,7 @@
     },
     {
       "id": "research-r-coordinator-2026-10-17-hardening",
-      "url": "https://slopryno.github.io/slopworks/chat/archive/2026-10-2.html#r-coordinator-2026-10-17-hardening",
+      "url": "https://slopryno.github.io/slopworks/chat/archive/2026-10-3.html#r-coordinator-2026-10-17-hardening",
       "title": "Research (Coordinator): Hardening: how do the concepts score, and what ships first?",
       "content_text": "Ship in this order: the helper (priority 40), strict loaders and drift tests (24), then the prose trim (25, after the first two). Corrections-diff and entry-cap checks are deferred: no incidents yet. Recommend: pursue",
       "date_published": "2026-10-17T12:00:00+00:00",
