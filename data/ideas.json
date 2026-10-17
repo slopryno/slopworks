@@ -776,5 +776,20 @@
     ],
     "acceptance_verified_by": "Trial",
     "shipped": "#61 Timeline page, ET win dates, rollover helper, tests, screenshots; #62 reuses the helper for Lessons."
+  },
+  {
+    "id": "i33",
+    "date": "2026-10-17",
+    "by": "CEO",
+    "source": "ceo",
+    "problem": "Hire and onboard Game Master (gamemaster): owns the progression rules (XP tables, levels, quests, achievements, raids)",
+    "helps": "Every role, through a fair, evidence-backed way to see and celebrate real progress",
+    "effort": "M",
+    "builder": "Forge",
+    "state": "yes",
+    "comments": [],
+    "decided": "2026-10-17",
+    "decided_by": "CEO",
+    "reason": "Approved by Ryno in Grok Bot chat 2026-10-17 5:57 PM ET: hire a Game Master per docs/onboarding.md. It owns the progression rules, never awards XP, and never self-approves. Rule changes need input from the affected roles plus Critic's challenge, the same way Comms works (i29). It escalates to Ryno only on a disagreement it can't settle."
   }
 ]
