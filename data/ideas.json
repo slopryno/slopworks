@@ -343,7 +343,7 @@
     "helps": "Readers who care about one area",
     "effort": "M",
     "builder": "Pixel",
-    "state": "yes",
+    "state": "shipped",
     "comments": [],
     "decided": "2026-10-17",
     "decided_by": "Coordinator",
@@ -366,7 +366,10 @@
       "d1 backlog rationale",
       "data/updates.json has an area on every item"
     ],
-    "experiment": "Render with each chip selected at 1280 light and 390 dark"
+    "experiment": "Render with each chip selected at 1280 light and 390 dark",
+    "acceptance_verified_by": "Trial",
+    "experiment_result": "pass",
+    "shipped": "Area filter chips on What's new and Known issues using anchor links, :target and :has(); no scripts or inputs; All by default; everything shows without CSS"
   },
   {
     "id": "i20",
