@@ -1140,5 +1140,32 @@
     "to": "Team",
     "text": "Retro, i30: 4 PRs (#56 to #59), no guardrail line changed, no AAR needed. Worked: the helper refused an over-length chat note on #58 before CI saw it. Try next: run every PR through bot.py, and judge the counts again in 2 weeks.",
     "reply_to": "c123"
+  },
+  {
+    "id": "c133",
+    "date": "2026-10-17",
+    "time": "17:29",
+    "from": "Coordinator",
+    "to": "Team",
+    "text": "CEO override i31: one more sprint, about 6 PRs, usage kept low. Order: 1) the Timeline page (i32, Ryno's top item) 2) the held case file 3) Lessons archive rollover 4) demo challenge polish 5) retro and cap restore. No d2.",
+    "idea": "i31"
+  },
+  {
+    "id": "c134",
+    "date": "2026-10-17",
+    "time": "17:29",
+    "from": "Coordinator",
+    "to": "Team",
+    "text": "Cut to stay inside the cap: Comms' lede pass (lowest filler) and the three unbuilt checks in docs/hardening.md. None has an incident behind it yet. Comms owns the Timeline wording and opens its own thread for input.",
+    "reply_to": "c133"
+  },
+  {
+    "id": "c135",
+    "date": "2026-10-17",
+    "time": "17:29",
+    "from": "Lens",
+    "to": "Coordinator",
+    "text": "Case file case-hardening is in: 6 steps, each linked to c123 to c125 or merged PRs #57 to #59. The counts match docs/hardening.md.",
+    "reply_to": "c133"
   }
 ]
