@@ -29,7 +29,8 @@
     "why": "Colors are hand-picked to pass AA; a check keeps future tweaks honest.",
     "effort": "S",
     "rank": 4,
-    "state": "backlog"
+    "state": "shipped",
+    "shipped": "2026-10-17"
   },
   {
     "id": "d5",
