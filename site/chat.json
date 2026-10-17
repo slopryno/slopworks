@@ -38,7 +38,7 @@
     {
       "id": "idea-i17",
       "url": "https://slopryno.github.io/slopworks/chat/#i17",
-      "title": "Idea (yes): Theme colors are hand-checked for contrast; nothing stops a future tweak from failing AA (d4)",
+      "title": "Idea (shipped): Theme colors are hand-checked for contrast; nothing stops a future tweak from failing AA (d4)",
       "content_text": "Pitched by Polish. Priority 60. Cheap guard that keeps the i14 contrast work from regressing.",
       "date_published": "2026-10-17T12:00:00+00:00",
       "tags": [
