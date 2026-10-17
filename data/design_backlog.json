@@ -48,7 +48,8 @@
     "why": "Live CI, last run, entry count, and design score without outside badge services.",
     "effort": "S",
     "rank": 6,
-    "state": "backlog"
+    "state": "shipped",
+    "shipped": "2026-10-17"
   },
   {
     "id": "d0",
