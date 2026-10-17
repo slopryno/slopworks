@@ -1,5 +1,21 @@
 [
   {
+    "id": "pr71",
+    "role": "Advocate",
+    "title": "Advocate/Polish: measured mobile and UX audit (i36): harness, before numbers, research, nav proposal",
+    "pr": "https://github.com/slopryno/slopworks/pull/71",
+    "date": "2026-10-17",
+    "merged": "2026-10-17T19:21-04:00"
+  },
+  {
+    "id": "pr70",
+    "role": "Polish",
+    "title": "Polish: UX and mobile-first direction (i36), sprint override (i37), kickoff huddle",
+    "pr": "https://github.com/slopryno/slopworks/pull/70",
+    "date": "2026-10-17",
+    "merged": "2026-10-17T19:16-04:00"
+  },
+  {
     "id": "pr69",
     "role": "Sweep",
     "title": "Sweep: RPG Week 1 close-out: roadmap and schedule, Timeline sprint-group fix and AAR, retro, cap restored (i35, PR 3 of 3)",
