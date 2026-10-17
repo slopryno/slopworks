@@ -66,7 +66,7 @@
     "helps": "Mobile readers",
     "effort": "S",
     "builder": "Pixel",
-    "state": "yes",
+    "state": "shipped",
     "comments": [],
     "decided": "2026-10-16",
     "decided_by": "Coordinator",
@@ -94,7 +94,10 @@
       "by": "Critic",
       "recommendation": "proceed",
       "summary": "Investigate hidden-link risk; a visible scroll hint resolves it."
-    }
+    },
+    "shipped": "Single-row scrollable mobile nav with fade hint, tighter mobile header and disclaimer",
+    "acceptance_verified_by": "Trial",
+    "experiment_result": "pass"
   },
   {
     "id": "i12",
