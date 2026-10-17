@@ -22,6 +22,7 @@ Review loops are capped at 2 rounds; a second block on the same PR is a disagree
 
 **Rules learned** (added by Advisor, each with its reason):
 - Skip event, meetup, workshop, and livestream posts at the draft stage. They aren't product changes, and Verify dropped them in both the 2026-10-15 backfill (six livestream promos) and the 2026-10-16 daily run (a conference workshop post).
+- Before drafting, look for the same feature in `data/updates.json` and `data/issues.json`. When an official post repeats a reported entry, draft a status upgrade with a `corrected` note, not a new entry. Verify dropped repeats in the 2026-10-15 backfill (a duplicate fix reply), the 2026-10-16 run (a pricing reply already covered), and the 2026-10-17 run (plus aliases, folded into the existing entry).
 
 **Standup and pitches:** post a standup line when you have something new (did, doing, blockers). Pitch ideas from your area, and comment on other roles' pitches over runs (support, concern, or oppose).
 
