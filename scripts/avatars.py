@@ -1,71 +1,90 @@
 #!/usr/bin/env python3
-"""Each role's self-designed avatar: one shared stylized-robot style, varied by role. Plain SVG, no scripts, no logos.
-Changes go through Polish (design) and Shield (safety) review."""
+"""Each role's avatar (v2): a soft single-color blob with two slanted pill eyes and a tiny job badge.
+Transparent, flat, animated with inline CSS only (idle squish, staggered blinks), static under
+prefers-reduced-motion. Inspired by the Grok Bot app style, not copied. Changes need Polish + Shield review."""
+import math
 from pathlib import Path
 
 OUT = Path(__file__).resolve().parent.parent / "site/assets/avatars"
-# role: (color, head shape, eyes, antenna, emblem, why)
+# role: (color, shape, params, badge, why)
 ROLES = {
-    "coordinator": ("#8250df", "round", "dots", "flag", "compass", "Points the team in one direction"),
-    "sketch": ("#0969da", "square", "dots", "pencil", "grid", "Scout: drafts and maps what's new"),
-    "lens": ("#1a7f37", "round", "lens", "dot", "check", "Verify: one big magnifying eye"),
-    "shield": ("#cf222e", "square", "visor", "dot", "shieldshape", "Guards secrets and personal data"),
-    "forge": ("#bc4c00", "square", "dots", "bolt", "wrench", "Builds and publishes"),
-    "pixel": ("#d63384", "round", "square", "dot", "pixels", "Front-end specialist"),
-    "core": ("#57606a", "square", "dots", "bolt", "gear", "Data and build specialist"),
-    "trial": ("#9a6700", "round", "dots", "dot", "flask", "Tests before code"),
-    "polish": ("#bf3989", "round", "smile", "sparkle", "brush", "Makes it nicer every week"),
-    "advisor": ("#4e5ba6", "round", "glasses", "dot", "book", "Turns lessons into rules"),
-    "atlas": ("#116329", "square", "dots", "flag", "globe", "Keeps the structure sound"),
-    "sweep": ("#0550ae", "square", "dots", "dot", "broom", "Keeps it running and on budget"),
-    "analyst": ("#6639ba", "round", "dots", "dot", "bars", "Weekly numbers"),
-    "ceo": ("#24292f", "round", "dots", "star", "star", "The human CEO's placeholder, not a photo"),
+    "coordinator": ("#8250df", "wave", (5, .13), "arrow", "a five-point star blob that points the way"),
+    "sketch": ("#0969da", "drop", (-2.3,), "pencil", "Scout: a droplet that leans forward"),
+    "lens": ("#1a7f37", "wave", (0, 0), "check", "Verify: a calm round blob"),
+    "shield": ("#cf222e", "squircle", (4,), "shield", "a sturdy squircle"),
+    "forge": ("#bc4c00", "wave", (7, .07), "bolt", "a cookie-edged builder"),
+    "pixel": ("#d63384", "cloud", (4,), "square", "a four-puff cloud"),
+    "core": ("#6e7781", "wave", (2, .09), "ring", "a bean-shaped data blob"),
+    "trial": ("#bf8700", "wave", (8, .05), "flask", "a puffy, careful tester"),
+    "polish": ("#bf3989", "cloud", (5,), "sparkle", "a flower-ish puff"),
+    "advisor": ("#4e5ba6", "egg", (.12,), "book", "an egg that's seen it all"),
+    "atlas": ("#1b7c83", "wave", (6, .11), "globe", "a six-bump cookie"),
+    "sweep": ("#218bff", "squircle", (2.6,), "wave", "a soft rounded square"),
+    "analyst": ("#a371f7", "wave", (4, .1), "bars", "a four-lobe clover"),
+    "ceo": ("#d4a72c", "drop", (-0.8,), "star", "a gold droplet placeholder for the CEO, not a photo"),
 }
-EMBLEM = {
-    "compass": '<circle cx="50" cy="80" r="7" fill="none" stroke="#fff" stroke-width="2"/><path d="M50 74l3 6-3 6-3-6z" fill="#fff"/>',
-    "grid": '<path d="M43 74h14M43 80h14M43 86h14M46 72v16M54 72v16" stroke="#fff" stroke-width="1.6"/>',
-    "check": '<path d="M43 80l5 5 9-10" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/>',
-    "shieldshape": '<path d="M50 72l8 3v5c0 5-4 8-8 9-4-1-8-4-8-9v-5z" fill="#fff"/>',
-    "wrench": '<path d="M44 86l9-9m2-3a4 4 0 1 0 3 3" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round"/>',
-    "pixels": '<rect x="43" y="73" width="5" height="5" fill="#fff"/><rect x="52" y="73" width="5" height="5" fill="#fff"/><rect x="47" y="81" width="6" height="5" fill="#fff"/>',
-    "gear": '<circle cx="50" cy="80" r="6" fill="none" stroke="#fff" stroke-width="3" stroke-dasharray="3 2"/><circle cx="50" cy="80" r="2" fill="#fff"/>',
-    "flask": '<path d="M47 72h6M48 72v5l-5 9h14l-5-9v-5" fill="none" stroke="#fff" stroke-width="2" stroke-linejoin="round"/>',
-    "brush": '<path d="M56 72l-8 9" stroke="#fff" stroke-width="3" stroke-linecap="round"/><circle cx="46" cy="84" r="3" fill="#fff"/>',
-    "book": '<path d="M42 74h7v12h-7zM51 74h7v12h-7z" fill="none" stroke="#fff" stroke-width="2"/>',
-    "globe": '<circle cx="50" cy="80" r="7" fill="none" stroke="#fff" stroke-width="2"/><path d="M43 80h14M50 73c-4 4-4 10 0 14c4-4 4-10 0-14" fill="none" stroke="#fff" stroke-width="1.5"/>',
-    "broom": '<path d="M55 71l-6 9M44 88l5-8 4 2-3 6z" stroke="#fff" stroke-width="2" fill="#fff"/>',
-    "bars": '<path d="M44 87v-5M50 87v-11M56 87v-8" stroke="#fff" stroke-width="3" stroke-linecap="round"/>',
-    "star": '<path d="M50 72l2.4 5 5.6.6-4.2 3.8 1.2 5.6-5-2.9-5 2.9 1.2-5.6-4.2-3.8 5.6-.6z" fill="#fff"/>',
+BADGE = {
+    "arrow": "M0-5l4 9-4-2-4 2z", "pencil": "M-4 4l1-4 6-6 3 3-6 6z", "check": "M-4 0l3 3 5-6",
+    "shield": "M0-5l5 2v2c0 4-3 6-5 7-2-1-5-3-5-7v-2z", "bolt": "M1-6l-5 7h4l-1 5 5-7h-4z",
+    "square": "M-4-4h8v8h-8z", "ring": "M-4 0a4 4 0 1 0 8 0a4 4 0 1 0-8 0", "flask": "M-2-5h4M-1-5v3l-4 7h10l-4-7v-3",
+    "sparkle": "M0-6l1.5 4.5L6 0l-4.5 1.5L0 6l-1.5-4.5L-6 0l4.5-1.5z", "book": "M-5-4h4v8h-4zM1-4h4v8h-4z",
+    "globe": "M-5 0h10M0-5c-3 3-3 7 0 10c3-3 3-7 0-10", "wave": "M-5 1q2.5-4 5 0t5 0", "bars": "M-3 4v-3M0 4v-8M3 4v-5",
+    "star": "M0-5.5l1.6 3.4 3.7.4-2.8 2.5.8 3.7L0 2.6-3.3 4.5l.8-3.7-2.8-2.5 3.7-.4z",
 }
-EYES = {
-    "dots": '<circle cx="40" cy="45" r="5" fill="#1b1f24"/><circle cx="60" cy="45" r="5" fill="#1b1f24"/>',
-    "lens": '<circle cx="40" cy="45" r="4" fill="#1b1f24"/><circle cx="60" cy="45" r="9" fill="none" stroke="#1b1f24" stroke-width="3"/><circle cx="60" cy="45" r="3" fill="#1b1f24"/>',
-    "visor": '<rect x="30" y="40" width="40" height="10" rx="5" fill="#1b1f24"/><rect x="34" y="43" width="12" height="4" rx="2" fill="#fff"/>',
-    "square": '<rect x="35" y="40" width="10" height="10" fill="#1b1f24"/><rect x="55" y="40" width="10" height="10" fill="#1b1f24"/>',
-    "smile": '<path d="M35 46q5-6 10 0M55 46q5-6 10 0" fill="none" stroke="#1b1f24" stroke-width="3" stroke-linecap="round"/>',
-    "glasses": '<circle cx="40" cy="45" r="7" fill="none" stroke="#1b1f24" stroke-width="2.5"/><circle cx="60" cy="45" r="7" fill="none" stroke="#1b1f24" stroke-width="2.5"/><path d="M47 45h6" stroke="#1b1f24" stroke-width="2.5"/><circle cx="40" cy="45" r="2.5"/><circle cx="60" cy="45" r="2.5"/>',
-}
-ANT = {
-    "dot": '<path d="M50 24V14" stroke="#fff" stroke-width="3"/><circle cx="50" cy="12" r="4" fill="#fff"/>',
-    "flag": '<path d="M50 24V10" stroke="#fff" stroke-width="3"/><path d="M50 10h10l-3 4 3 4H50z" fill="#fff"/>',
-    "pencil": '<path d="M50 24l-4-12h8z" fill="#fff"/>',
-    "bolt": '<path d="M52 8l-6 9h5l-3 8 8-11h-5z" fill="#fff"/>',
-    "sparkle": '<path d="M50 6l2 6 6 2-6 2-2 6-2-6-6-2 6-2z" fill="#fff"/>',
-    "star": '<path d="M50 6l2.4 5 5.6.6-4.2 3.8 1.2 5.6-5-2.9-5 2.9 1.2-5.6-4.2-3.8 5.6-.6z" fill="#fff"/>',
-}
+STROKED = {"ring", "check", "flask", "globe", "wave", "bars"}
 
 
-def svg(name, color, head, eyes, ant, emblem, why):
-    rx = 20 if head == "round" else 6
-    return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="{name.capitalize()} avatar: {why}">'
-            f'<rect width="100" height="100" rx="22" fill="{color}"/>{ANT[ant]}'
-            f'<rect x="24" y="24" width="52" height="40" rx="{rx}" fill="#f6f8fa"/>{EYES[eyes]}'
-            f'<rect x="20" y="38" width="5" height="12" rx="2" fill="#f6f8fa"/><rect x="75" y="38" width="5" height="12" rx="2" fill="#f6f8fa"/>'
-            f'<path d="M42 57h16" stroke="#1b1f24" stroke-width="2.5" stroke-linecap="round"/>{EMBLEM[emblem]}</svg>\n')
+def radius(shape, p, t):
+    if shape == "wave":
+        k, a = p
+        return 1 + a * math.cos(k * t - math.pi / 2)
+    if shape == "drop":
+        return 1 + .3 * max(0, math.cos(t - p[0])) ** 3
+    if shape == "cloud":
+        return .86 + .16 * abs(math.cos(p[0] * t / 2))
+    if shape == "egg":
+        return 1 - p[0] * math.sin(t)
+    if shape == "squircle":
+        n = p[0]
+        return 1 / (abs(math.cos(t)) ** n + abs(math.sin(t)) ** n) ** (1 / n) * .92
+
+
+def blob(shape, p, cx=50, cy=56, R=34, n=28):
+    pts = [(cx + R * radius(shape, p, 2 * math.pi * i / n) * math.cos(2 * math.pi * i / n),
+            cy + R * radius(shape, p, 2 * math.pi * i / n) * math.sin(2 * math.pi * i / n)) for i in range(n)]
+    f = lambda v: f"{v:.0f}"
+    d = f"M{f(pts[0][0])} {f(pts[0][1])}"
+    for i in range(n):  # Catmull-Rom to cubic Bezier, closed
+        p0, p1, p2, p3 = pts[i - 1], pts[i], pts[(i + 1) % n], pts[(i + 2) % n]
+        c1 = (p1[0] + (p2[0] - p0[0]) / 6, p1[1] + (p2[1] - p0[1]) / 6)
+        c2 = (p2[0] - (p3[0] - p1[0]) / 6, p2[1] - (p3[1] - p1[1]) / 6)
+        d += f"C{f(c1[0])} {f(c1[1])} {f(c2[0])} {f(c2[1])} {f(p2[0])} {f(p2[1])}"
+    return d + "Z"
+
+
+def shade(hexc, k=.72):
+    r, g, b = (int(hexc[i:i + 2], 16) for i in (1, 3, 5))
+    return "#%02x%02x%02x" % (int(r * k), int(g * k), int(b * k))
+
+
+def svg(i, name, color, shape, p, badge, why):
+    bob, blink, delay = 3.6 + (i % 4) * .5, 4 + (i % 3), (i * .7) % 4
+    glyph = (f'<path d="{BADGE[badge]}" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>'
+             if badge in STROKED else f'<path d="{BADGE[badge]}" fill="#fff"/>')
+    return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="{name.capitalize()}: {why}">'
+            f'<style>.b{{animation:q {bob}s ease-in-out infinite;transform-origin:50px 90px}}'
+            f'.e{{animation:k {blink}s {delay:.1f}s infinite;transform-box:fill-box;transform-origin:center}}'
+            f'@keyframes q{{50%{{transform:translateY(-3px) scale(1.03,.97)}}}}'
+            f'@keyframes k{{0%,92%,100%{{transform:scaleY(1)}}96%{{transform:scaleY(.15)}}}}'
+            f'@media(prefers-reduced-motion:reduce){{.b,.e{{animation:none}}}}</style>'
+            f'<g class="b"><path d="{blob(shape, p)}" fill="{color}"/>'
+            f'<g transform="rotate(-18 44 40)"><rect class="e" x="41" y="33" width="6" height="13" rx="3" fill="#1b1f24"/></g>'
+            f'<g transform="rotate(-18 60 40)"><rect class="e" x="57" y="33" width="6" height="13" rx="3" fill="#1b1f24"/></g>'
+            f'<g transform="translate(80 82)"><circle r="10" fill="{shade(color)}"/>{glyph}</g></g></svg>\n')
 
 
 if __name__ == "__main__":
     OUT.mkdir(parents=True, exist_ok=True)
-    for n, spec in ROLES.items():
-        (OUT / f"{n}.svg").write_text(svg(n, *spec))
-    print(f"wrote {len(ROLES)} avatars")
+    for i, (n, spec) in enumerate(ROLES.items()):
+        (OUT / f"{n}.svg").write_text(svg(i, n, *spec))
+    print(f"wrote {len(ROLES)} avatars, max {max(f.stat().st_size for f in OUT.glob('*.svg'))} bytes")
