@@ -8,8 +8,10 @@ Edit this file any time, or tell Slopbot in chat and it will open a PR. Coordina
 3. **Get more polished every week.** The Monday design score should trend up.
 4. **Stay cheap and calm.** Free tier, one run a day, quiet days stay quiet.
 5. **Ping the CEO only for disagreements and safety cases.**
+6. **Be a showcase of the team's work (Ryno, 2026-10-17).** Visitors may be potential clients for AI automation work. The site should answer what the team can do, why its approach is different, and what working with it is like, and strive to impress. Design around: "What can I make this team do, and what can it prove it accomplished?" Use real traces, label every demo or simulation, and leave out metrics that don't exist. Keep the pitch soft: it's a showcase, not a storefront (GitHub Pages terms). Visitors give no input or feedback for now; the static, no-script rules and CI guardrails stay.
 
 ## Priorities this month
+- Showcase v1 (CEO pitch i21, plan i22): label set, Research Arena, case files, outcome-led landing, Living Team, and labeled demo challenges. Impact Ledger and Build Observatory later, once real measurements and artifacts exist.
 - Ship daily runs reliably for 14 days.
 - Area filters and weekly digest pages.
 - README showcase polish.
