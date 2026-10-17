@@ -244,5 +244,156 @@
     "acceptance_verified_by": "Trial",
     "experiment_result": "pass",
     "shipped": "Consistent heading scale (1.95/1.4/1.12rem, smaller on mobile), 1.25 heading line-height with balanced wrapping, about 70ch prose measure; system fonts only"
+  },
+  {
+    "id": "i16",
+    "date": "2026-10-17",
+    "by": "CEO",
+    "source": "ceo",
+    "problem": "Mini-sprint: clear a few backlog items (about 5 PRs max), finishing before the 9:13 AM daily run",
+    "helps": "Readers and the team, via a faster backlog pass",
+    "effort": "M",
+    "builder": "Pixel",
+    "state": "yes",
+    "comments": [],
+    "decided": "2026-10-17",
+    "decided_by": "CEO",
+    "reason": "Approved by Ryno in Grok Bot chat 2026-10-17 4:32 AM ET: 'let's have the team knock a few things off their plate.' One-time override of the 1-design-PR/week cap; done or paused by 8:45 AM ET."
+  },
+  {
+    "id": "i17",
+    "date": "2026-10-17",
+    "by": "Polish",
+    "source": "team",
+    "problem": "Theme colors are hand-checked for contrast; nothing stops a future tweak from failing AA (d4)",
+    "helps": "All readers, especially low vision",
+    "effort": "S",
+    "builder": "Pixel",
+    "state": "yes",
+    "comments": [],
+    "decided": "2026-10-17",
+    "decided_by": "Coordinator",
+    "reason": "Priority 60. Cheap guard that keeps the i14 contrast work from regressing.",
+    "scores": {
+      "impact": 3,
+      "evidence": 4,
+      "fit": 5,
+      "effort": 1,
+      "risk": 1,
+      "reversibility": 5
+    },
+    "librarian_checked": true,
+    "acceptance_criteria": [
+      "A unit test run in CI computes WCAG contrast for every text color pair in both themes",
+      "Text pairs must be at least 4.5:1, and the test fails CI otherwise",
+      "Any failing pair found is fixed in the same PR"
+    ],
+    "evidence": [
+      "WCAG 2.2 SC 1.4.3 (https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html)",
+      "site/style.css theme variables"
+    ],
+    "experiment": "Run the test against current colors, then against a deliberately bad color"
+  },
+  {
+    "id": "i18",
+    "date": "2026-10-17",
+    "by": "Advocate",
+    "source": "team",
+    "problem": "Keyboard focus is only styled on the new jump links; other links, summaries and chips use browser defaults that are faint in dark mode",
+    "helps": "Keyboard and switch users",
+    "effort": "S",
+    "builder": "Pixel",
+    "state": "yes",
+    "comments": [],
+    "decided": "2026-10-17",
+    "decided_by": "Coordinator",
+    "reason": "Priority 32. Accessibility gap found in the sprint retro.",
+    "scores": {
+      "impact": 4,
+      "evidence": 4,
+      "fit": 4,
+      "effort": 2,
+      "risk": 1,
+      "reversibility": 5
+    },
+    "librarian_checked": true,
+    "acceptance_criteria": [
+      "Every interactive element (links, summary, nav, filter chips) shows a 2px focus ring in both themes via :focus-visible",
+      "No focus outline appears on mouse click",
+      "Audit covers all 11 built pages"
+    ],
+    "evidence": [
+      "WCAG 2.2 SC 2.4.7 and 2.4.11 (https://www.w3.org/WAI/WCAG22/Understanding/focus-visible.html)",
+      "live keyboard pass 2026-10-17"
+    ],
+    "experiment": "Tab through each page in both themes; screenshot a focused link"
+  },
+  {
+    "id": "i19",
+    "date": "2026-10-17",
+    "by": "Advocate",
+    "source": "team",
+    "problem": "What's new and Known issues can't be narrowed to one area like email or connectors (d1)",
+    "helps": "Readers who care about one area",
+    "effort": "M",
+    "builder": "Pixel",
+    "state": "yes",
+    "comments": [],
+    "decided": "2026-10-17",
+    "decided_by": "Coordinator",
+    "reason": "Priority 8. Top-ranked backlog item; CSS :has() keeps it script-free.",
+    "scores": {
+      "impact": 4,
+      "evidence": 3,
+      "fit": 4,
+      "effort": 3,
+      "risk": 2,
+      "reversibility": 5
+    },
+    "librarian_checked": true,
+    "acceptance_criteria": [
+      "Area filter chips on What's new and Known issues, CSS only (no scripts; check.py bans them)",
+      "'All' is the default and shows everything; with CSS off every item still shows",
+      "Chips work by keyboard and show which one is active"
+    ],
+    "evidence": [
+      "d1 backlog rationale",
+      "data/updates.json has an area on every item"
+    ],
+    "experiment": "Render with each chip selected at 1280 light and 390 dark"
+  },
+  {
+    "id": "i20",
+    "date": "2026-10-17",
+    "by": "Atlas",
+    "source": "team",
+    "problem": "README has no at-a-glance status, and outside badge services would add trackers (d6)",
+    "helps": "Repo visitors",
+    "effort": "S",
+    "builder": "Pixel",
+    "state": "yes",
+    "comments": [],
+    "decided": "2026-10-17",
+    "decided_by": "Coordinator",
+    "reason": "Priority 9. Small, and it closes a long-standing backlog item.",
+    "scores": {
+      "impact": 2,
+      "evidence": 3,
+      "fit": 3,
+      "effort": 2,
+      "risk": 1,
+      "reversibility": 5
+    },
+    "librarian_checked": true,
+    "acceptance_criteria": [
+      "Badges are SVGs generated by build.py from repo data (updates count, open issues, last run), committed under site/badges/",
+      "README shows them with no external badge service",
+      "build --check keeps them in sync"
+    ],
+    "evidence": [
+      "d6 backlog rationale",
+      "shields.io-style badges load from a third party"
+    ],
+    "experiment": "Rebuild and confirm the SVGs change when data changes"
   }
 ]
