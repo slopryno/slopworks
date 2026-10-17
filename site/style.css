@@ -69,3 +69,4 @@ main.home>h1{font-size:2.5rem;letter-spacing:-.02em;max-width:22ch;margin-top:1.
 .strip{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:.5rem}.strip a{display:flex;flex-direction:column;align-items:center;text-decoration:none;font-size:.75rem;width:4.5rem;color:var(--muted)}.strip a:hover .av{animation:hop .9s ease-in-out infinite}
 @media (max-width:40rem){main.home>h1{font-size:1.9rem}.ops{font-size:.8rem}.ops ul{flex-wrap:nowrap;overflow-x:auto}}
 .latest{margin:.25rem 0 .5rem;padding:.4rem .7rem;border-left:3px solid var(--line);background:var(--card);border-radius:0 6px 6px 0;font-size:.9rem}.latest p{margin:.15rem 0}
+.demo-banner{border:1px dashed var(--accent);border-radius:6px;padding:.4rem .7rem;margin:0 0 .5rem;font-size:.9rem}.outcome{padding-left:1.1rem}.outcome li{margin:.35rem 0}.challenge h3{margin:1rem 0 .25rem}

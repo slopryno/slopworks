@@ -15,7 +15,7 @@ REPO = "https://github.com/slopryno/slopworks"
 CREDIT = "Built and designed by Grok Bots. Reviewed and merged by bots; steered by a human CEO (Ryno)."
 DISCLAIMER = "Unofficial, fan-built project. Not affiliated with or endorsed by Grok Bot, SpaceX, or X."
 CORRECTIONS = "slopryno+corrections@mail.grokbot.com"
-NAV = [("", "Home"), ("cases/", "Case files"), ("arena/", "Research Arena"), ("team/", "Team"), ("chat/", "Team chat")]
+NAV = [("", "Home"), ("cases/", "Case files"), ("arena/", "Research Arena"), ("challenges/", "Demo challenge"), ("team/", "Team"), ("chat/", "Team chat")]
 OPS = [("updates/", "What's new"), ("issues/", "Known issues"), ("behind/", "Behind the scenes"), ("design/", "Design log"), ("schedule/", "Schedule and limits")]
 e = lambda s: html.escape(str(s), quote=True)
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -204,7 +204,7 @@ def build():
          ("Why is the approach different?", "Every claim links a source, every change is reviewed by a different role, and the guardrails live in CI, where nobody, bots included, can quietly switch them off. Mistakes are shown, not hidden.",
           [("cases/#case-filters", "When a design hit our own guardrail"), ("behind/", "Behind the scenes")]),
          ("What is working with it like?", "A question goes in. Roles research it independently, a critic challenges the strongest ideas, and a scored decision comes back with the evidence attached.",
-          [("arena/", "Watch a real round in the Research Arena")])]
+          [("arena/", "Watch a real round in the Research Arena"), ("challenges/", "See a demo challenge")])]
     catches = [(f"Verify dropped {dropped} of {screened} candidate entries that weren't product changes or couldn't be sourced.", "behind/"),
                (f"Shield dropped {pdrop} entry that centered on a person's email address, and rewrote others so no regular user is named." if pdrop == 1 else f"Shield dropped {pdrop} entries for personal data.", "behind/"),
                ("A new contrast test caught a hard-to-read dark-mode badge on its first run.", "cases/#case-contrast"),
@@ -305,14 +305,16 @@ def build():
     research = sorted(load("research"), key=lambda r: r["date"], reverse=True)
     latest = {}
     for r in research:
-        latest.setdefault(r["role"], r)
+        if not r["question"].startswith("Demo challenge"):  # demo reports live on challenges/
+            latest.setdefault(r["role"], r)
     def rnote(r):
         tk = f'<p>{e(r["finding"])}</p>' + (f"<p>{label('verified')} <strong>Facts</strong></p><ul>" + "".join(f"<li>{e(t)}</li>" for t in r.get("facts", [])) + "</ul>" if r.get("facts") else "") \
             + (f"<p>{label('hypothesis')} <strong>Inferences</strong></p><ul>" + "".join(f"<li>{e(t)}</li>" for t in r.get("inferences", [])) + "</ul>" if r.get("inferences") else "")
         tk = f'<p class="meta"><span class="tag">{e(r["outcome"])}</span><span class="tag">{e(r["status"])}</span><span>confidence {e(r["confidence"])}</span>' + (f'<span>recommend {e(r["recommendation"])}</span>' if r.get("recommendation") else "") + "</p>" + tk
         src = " · ".join(f'<a href="{e(u)}">source {k + 1}</a>' for k, u in enumerate(r["evidence"]))
         idea = (f'<p>{label("recommendation")} <strong>Opportunity:</strong> {e(r["opportunity"])}' if r.get("opportunity") else "<p>") + (f' (<a href="#{e(r["pitch"])}">pitched</a>)' if r.get("pitch") else "") + "</p>"
-        return (f'<article class="card" id="{e(r["id"])}"><p class="hd">{avatar(r["role"], "../", 32)} <strong class="who" style="--c:{color(r["role"])}">{e(r["role"])}</strong>'
+        demo = f' {label("demo")}' if r["question"].startswith("Demo challenge") else ""
+        return (f'<article class="card" id="{e(r["id"])}"><p class="hd">{avatar(r["role"], "../", 32)} <strong class="who" style="--c:{color(r["role"])}">{e(r["role"])}</strong>{demo}'
                 f' <span class="meta"><time datetime="{r["date"]}">{r["date"]}</time></span></p><h3>{e(r["question"])}</h3>{tk}{idea}<p class="meta">{src}</p></article>')
     rbody = ("<h2 id=\"research\">Research</h2><p>Each role researches its own area once a week (see the <a href=\"../schedule/\">rotation</a>), reading public web pages only, and writes the takeaways in its own words. Ideas go through the pitch flow.</p>" + legend()
              + ("".join(rnote(r) for r in sorted(latest.values(), key=lambda r: r["date"], reverse=True)) or '<p class="empty">No research notes yet. Each role adds one through the weekly rotation; urgent questions can add more.</p>'))
@@ -321,7 +323,7 @@ def build():
     files["chat/index.html"] = page("chat/", "Team chat", "The real handoffs between roles during each run, newest first. Nothing is staged; quiet days stay quiet. It never quotes readers or names anyone outside the team.", fl + sbody + ibody + rbody + f'<h2 id="handoffs">Handoffs</h2><ul class="chat">{items}</ul>', "data/chat.json")
     citems = ([("standup", x["id"], x["date"], f'Standup: {x["role"]}', f'Did: {x["did"]} Doing: {x["doing"]} Blockers: {x["blockers"]}', "chat/") for x in standup]
               + [("idea", i["id"], i.get("decided") or i["date"], f'Idea ({i["state"]}): {i["problem"]}', f'Pitched by {i["by"]}. ' + (i.get("reason") or ""), f'chat/#{i["id"]}') for i in ideas]
-              + [("research", r["id"], r["date"], f'Research ({r["role"]}): {r["question"]}', r["finding"] + (" Recommend: " + r["recommendation"] if r.get("recommendation") else ""), f'chat/#{r["id"]}') for r in research]
+              + [("research", r["id"], r["date"], f'Research ({r["role"]}): {r["question"]}', r["finding"] + (" Recommend: " + r["recommendation"] if r.get("recommendation") else ""), f'challenges/#{r["id"]}' if r["question"].startswith("Demo challenge") else f'chat/#{r["id"]}') for r in research]
               + [("chat", c["id"], c["date"], f'{c["from"]} to {c["to"]}', c["text"], "chat/") for c in chat])
     citems = sorted(citems, key=lambda t: (t[2], t[1]), reverse=True)[:50]
     cdt = lambda d: datetime.fromisoformat(d).replace(hour=12, tzinfo=timezone.utc)
@@ -378,6 +380,23 @@ def build():
     cases = load("cases")
     files["cases/index.html"] = page("cases/", "Case files", "Real decisions from this team, replayed step by step: the problem, the call, the build, the review, and what shipped. Every step links the merged PR or the Team chat message behind it.",
                                      legend() + ("".join(map(case_card, cases)) or '<p class="empty">No case files yet. A case file is added after a decision ships.</p>') + '<p>Want to see how a decision gets made before anything ships? Visit the <a href="../arena/">Research Arena</a>.</p>', "data/cases.json")
+
+    # Demo challenges (i22, PR 7 of 8): worked examples on fictional briefs, labeled Demo everywhere. Not advice, quotes, or client work.
+    DEMO_NOTE = "Demo: a worked example the team researched on a fictional brief. It is not advice, not a quote, and not client work."
+    def challenge(c):
+        secs = "".join(f'<section><h3>{e(s["name"])}</h3><ul class="outcome">' + "".join(
+            f'<li>{label({"Problem definition": "demo", "Expected benefits": "hypothesis"}.get(s["name"], "recommendation"))} {e(x["text"])} <span class="meta">{e(x["role"])} · <a href="#{e(x["research"])}">report</a></span></li>' for x in s["items"]) + "</ul></section>" for s in c["sections"])
+        reps = [rmap[x] for x in sorted({x["research"] for s in c["sections"] for x in s["items"]}) if x in rmap]
+        srcs = sorted({u for rr in reps for u in rr["evidence"]})
+        return (f'<article class="card challenge" id="{e(c["id"])}"><p class="demo-banner">{label("demo")} {e(DEMO_NOTE)}</p><h2>{label("demo")} {e(c["title"])}</h2>'
+                f'<p class="meta">{as_of(c["date"], "researched")}<span>{len(c["roles"])} roles: {e(", ".join(c["roles"]))}</span><span>{len(srcs)} public sources</span></p>'
+                f'<p><strong>The brief (fictional):</strong> {e(c["brief"])}</p>{secs}'
+                f'<h3>The {len(reps)} research reports</h3>' + "".join(rnote(rr) for rr in reps) +
+                f'<h3>Sources</h3><ul class="meta">' + "".join(f'<li><a href="{e(u)}">{e(u)}</a></li>' for u in srcs) + "</ul>"
+                f'<p>How it was run: <a href="../chat/#{e(c["thread"])}">Team chat thread</a> · <a href="{REPO}/pull/{c["pr"]}">research PR #{c["pr"]}</a></p></article>')
+    chs = load("challenges")
+    files["challenges/index.html"] = page("challenges/", "Demo challenge", "What working with this team looks like: a brief goes in, roles research it independently, a critic challenges it, and a structured outcome comes back. " + e(DEMO_NOTE),
+                                          legend() + ("".join(map(challenge, chs)) or '<p class="empty">No demo challenges yet. Each one is researched by the team and labeled Demo.</p>'), "data/challenges.json")
 
     shipped = [d for d in design if d["state"] == "shipped"]
     backlog = sorted([d for d in design if d["state"] in ("backlog", "in-progress")], key=lambda d: d["rank"])
