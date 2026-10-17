@@ -31,5 +31,469 @@
     "success_metric": "Empty sections explain themselves; line length at most about 75ch",
     "recommendation": "pursue",
     "pitch": "i12"
+  },
+  {
+    "id": "r-scout-2026-10-17-showcase",
+    "date": "2026-10-17",
+    "role": "Scout",
+    "kind": "focused",
+    "question": "Which interface patterns and capabilities are emerging in leading AI products?",
+    "outcome": "proposal",
+    "finding": "Leading AI products are converging on 'governor' patterns that show the work: an action plan before acting, inline citations, branches, and a gallery of real examples. Slopworks already has the raw material for all four.",
+    "facts": [
+      "The Shape of AI pattern library groups 'Governors' (human-in-the-loop) patterns: Action plan, Branches, Citations.",
+      "It lists 'Example gallery' (share sample generations and prompts) and 'Prompt details' (show what is actually happening behind the scenes) as wayfinders."
+    ],
+    "inferences": [
+      "Our ideas.json (plan), research.json (citations) and chat threads (branches) map onto these patterns without new data.",
+      "An example gallery of worked challenges answers 'what can this team do' faster than a role list."
+    ],
+    "evidence": [
+      "https://www.shapeof.ai/"
+    ],
+    "confidence": "medium",
+    "status": "verified",
+    "fresh_until": "2027-01-17",
+    "existing_work": "Team chat threads, research notes with sources, decision record i9-i20",
+    "opportunity": "Lead the showcase with an example gallery of worked challenges, each showing plan, citations, and outcome",
+    "alternatives": "Keep the role-list home page and add marketing copy",
+    "effort": "M",
+    "risks": "Gallery could look staged if examples are not real traces",
+    "experiment": "Mock one gallery card from the d4 contrast-check history and see if it answers 'what did they do' in one screen",
+    "success_metric": "Each gallery card links a real plan, at least one source, and a shipped PR",
+    "recommendation": "pursue"
+  },
+  {
+    "id": "r-polish-2026-10-17-showcase",
+    "date": "2026-10-17",
+    "role": "Polish",
+    "kind": "focused",
+    "question": "Which no-JS interaction patterns would make Slopworks feel distinctive, intuitive, and polished?",
+    "outcome": "proposal",
+    "finding": "Three platform features give app-like polish with zero scripts: exclusive accordions via details name=, :target step views (already used for filters), and cross-document view transitions opted into with one CSS at-rule. All degrade to plain pages.",
+    "facts": [
+      "MDN: details elements sharing a name attribute form a group where only one is open, giving accordions without scripting.",
+      "Chrome docs: cross-document view transitions are opt-in with one CSS at-rule (view-transition, navigation: auto) on same-origin pages; supported in Chrome 126+ and Safari 18.2, not Firefox.",
+      "NN/g: motion should be brief and used for feedback, state change, and spatial navigation, not to entertain."
+    ],
+    "inferences": [
+      "A Research Arena can show one role's report at a time with details name=, no JS.",
+      "View transitions are a safe progressive enhancement: Firefox users get a normal page load."
+    ],
+    "evidence": [
+      "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/details",
+      "https://developer.chrome.com/docs/web-platform/view-transitions/cross-document",
+      "https://www.nngroup.com/articles/animation-purpose-ux/"
+    ],
+    "confidence": "high",
+    "status": "verified",
+    "fresh_until": "2027-04-17",
+    "existing_work": "CSS :target/:has() filter chips (#33), focus rings and reduced motion (#32)",
+    "opportunity": "One interaction kit for the showcase: exclusive accordions, :target steps, page-to-page transitions, all reduced-motion aware",
+    "alternatives": "Add JS for tabs and animations (blocked by check.py, and that ban stays)",
+    "effort": "S",
+    "risks": "details name= is newer than details itself; older browsers open several at once, which is harmless",
+    "experiment": "Prototype an exclusive accordion and the view-transition at-rule on two pages; check Firefox fallback and reduced motion",
+    "success_metric": "No scripts; every pattern works by keyboard and degrades to a readable page",
+    "recommendation": "pursue"
+  },
+  {
+    "id": "r-advocate-2026-10-17-showcase",
+    "date": "2026-10-17",
+    "role": "Advocate",
+    "kind": "focused",
+    "question": "What would prospective clients need to understand before trusting an AI automation team?",
+    "outcome": "proposal",
+    "finding": "Hypothesis: clients calibrate trust on ability, reliability, and benevolence, and want limits and data sources stated up front. Our strongest trust asset is visible error-catching, not polish.",
+    "facts": [
+      "Google PAIR: trust factors are ability, reliability, and benevolence; communicate capabilities and limitations early; articulate data sources.",
+      "PAIR: indicating a prediction could be wrong may lower trust in that output but raise long-term reliance."
+    ],
+    "inferences": [
+      "Our runs already show Verify dropping 10 of 30 backfill candidates and Shield dropping 1 for personal data; that is reliability evidence clients rarely see.",
+      "A 'what we can and can't do' block would answer the client's first question honestly."
+    ],
+    "evidence": [
+      "https://pair.withgoogle.com/chapter/explainability-trust/"
+    ],
+    "confidence": "medium",
+    "status": "hypothesis",
+    "fresh_until": "2027-01-17",
+    "existing_work": "Schedule page limits section; Behind the scenes run counts",
+    "opportunity": "Landing block: can / can't / how we catch our own mistakes, each linking a real trace",
+    "alternatives": "Testimonials (we have none, and inventing them is out)",
+    "effort": "S",
+    "risks": "Demand claim is untested; no client or reader feedback exists",
+    "experiment": "Ryno reads a draft landing and answers the three CEO questions in under 30 seconds",
+    "success_metric": "CEO proxy test answers all three questions from the landing alone",
+    "recommendation": "pursue"
+  },
+  {
+    "id": "r-scoutmaster-2026-10-17-showcase",
+    "date": "2026-10-17",
+    "role": "Scoutmaster",
+    "kind": "focused",
+    "question": "What interactive experience could set Slopworks apart from conventional agent dashboards?",
+    "outcome": "proposal",
+    "finding": "A 'follow one decision' explorer: pick a shipped change and step through pitch, research, challenge, score, PR sign-offs, and Trial's check, every step a real link. Dashboards show status; this shows reasoning.",
+    "facts": [
+      "Explorable Explanations describes itself as a hub for learning through play, built by people reuniting play and learning.",
+      "PAIR lists 'explanation via interaction' (let users ask 'what if?') as a way to build mental models and trust."
+    ],
+    "inferences": [
+      "Most agent dashboards show live status; few let a visitor replay why a decision was made.",
+      ":target steps make a stepper possible with no JS."
+    ],
+    "evidence": [
+      "https://explorabl.es/",
+      "https://pair.withgoogle.com/chapter/explainability-trust/"
+    ],
+    "confidence": "medium",
+    "status": "hypothesis",
+    "fresh_until": "2027-01-17",
+    "existing_work": "ideas.json decision record links research, scores, and Trial checks; PR comments hold sign-offs",
+    "opportunity": "Case files: 2 real decisions (d4 contrast check, d1 filters vs the input ban) as step-through stories",
+    "alternatives": "A simulated multi-agent playback (rejected: staged)",
+    "effort": "M",
+    "risks": "Thin cases feel padded; only use decisions with real friction",
+    "experiment": "Write one case file as plain Markdown first and count how many steps have a real link",
+    "success_metric": "Every step in a case file links a commit, PR comment, chat message, or research note",
+    "recommendation": "pursue"
+  },
+  {
+    "id": "r-critic-2026-10-17-showcase",
+    "date": "2026-10-17",
+    "role": "Critic",
+    "kind": "focused",
+    "question": "Which proposed experiences look impressive but add little practical value?",
+    "outcome": "proposal",
+    "finding": "Cut: a pulsing 'live' activity view (we run once a day), simulated agent playback, numeric confidence percentages, and an Impact Ledger with no measurements. Challenge: demo challenges invented by the team prove less than replaying real work.",
+    "facts": [
+      "NN/g: motion attracts attention whether meaningful or not; gratuitous animation distracts, and attention hijacking is a dark pattern.",
+      "PAIR: numeric confidence presumes users understand probability and can be misleading; categorical buckets are an alternative."
+    ],
+    "inferences": [
+      "A 'live' feed on a once-a-day routine would be misleading on 23 hours of every day.",
+      "Real case files (contrast catch, input-ban workaround) beat invented demos as proof; demos should come second."
+    ],
+    "evidence": [
+      "https://www.nngroup.com/articles/animation-purpose-ux/",
+      "https://pair.withgoogle.com/chapter/explainability-trust/"
+    ],
+    "confidence": "high",
+    "status": "verified",
+    "fresh_until": "2027-01-17",
+    "existing_work": "Avatar idle animation already respects reduced motion (#17, #32)",
+    "opportunity": "Ship real case files before the first demo challenge; drop live-activity and ledger ideas until data exists",
+    "alternatives": "Build all five experiences at once (rejected by CEO brief too)",
+    "effort": "S",
+    "risks": "Cutting too much could leave the landing flat; keep one strong visual",
+    "experiment": "Score each cut against 'what can it prove it accomplished?'; anything with no real artifact stays cut",
+    "success_metric": "Nothing on the showcase claims liveness, metrics, or outcomes without a linked artifact",
+    "recommendation": "investigate"
+  },
+  {
+    "id": "r-atlas-2026-10-17-showcase",
+    "date": "2026-10-17",
+    "role": "Atlas",
+    "kind": "focused",
+    "question": "Which concepts fit the static architecture, and which would need new infrastructure?",
+    "outcome": "proposal",
+    "finding": "Living Team, Research Arena, case files, and demo challenges all fit: build.py renders them from JSON. Live activity, visitor challenges, and analytics need servers or input and stay out. Pages terms on commercial sites need Ryno's read.",
+    "facts": [
+      "GitHub Pages limits: published sites up to 1 GB, soft 100 GB/month bandwidth, soft 10 builds/hour.",
+      "GitHub Pages is not intended to run an online business or a site primarily directed at commercial transactions or SaaS."
+    ],
+    "inferences": [
+      "A showcase that describes the team's work is not a transaction site, but pitching for clients moves closer to that line.",
+      "One new data file (cases/challenges) plus schema is the only data-model change needed."
+    ],
+    "evidence": [
+      "https://docs.github.com/en/pages/getting-started-with-github-pages/github-pages-limits"
+    ],
+    "confidence": "high",
+    "status": "verified",
+    "fresh_until": "2027-04-17",
+    "existing_work": "build.py renders 15 static files from data/*.json; schemas in data/schema",
+    "opportunity": "Add data/cases.json (real case files and labeled demos) with a schema linking research ids, chat ids, and PR numbers",
+    "alternatives": "A JS framework or backend (breaks free-tier and no-script rules)",
+    "effort": "M",
+    "risks": "Commercial framing vs Pages terms; page weight as pages grow",
+    "experiment": "Draft the cases schema and validate one case file in CI",
+    "success_metric": "Every new page builds from repo data with build --check green and under the page-weight budget",
+    "recommendation": "pursue"
+  },
+  {
+    "id": "r-forge-2026-10-17-showcase",
+    "date": "2026-10-17",
+    "role": "Forge",
+    "kind": "focused",
+    "question": "Which experience could ship first as a compelling working prototype?",
+    "outcome": "proposal",
+    "finding": "The Research Arena: this research round already exists as structured data (14 reports, facts vs inferences, Critic's challenge, Coordinator's scores), so a page can render it next PR with no new data model.",
+    "facts": [
+      "MDN: details/summary is baseline widely available since January 2020 and needs no script.",
+      "data/research.json already separates facts, inferences, evidence, confidence, and status per report."
+    ],
+    "inferences": [
+      "The Arena is the only concept where the content is done and only rendering remains.",
+      "Shipping it first gives later pages (case files, challenges) a reusable card and label system."
+    ],
+    "evidence": [
+      "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/details"
+    ],
+    "confidence": "high",
+    "status": "verified",
+    "fresh_until": "2027-04-17",
+    "existing_work": "Team chat Research section renders the latest note per role",
+    "opportunity": "An /arena/ page for this round: question, each role's answer, the challenge, the scores, the decision",
+    "alternatives": "Start with the landing (needs proof content to link to first)",
+    "effort": "S",
+    "risks": "Page weight with 14 reports; keep reports collapsed by default",
+    "experiment": "Render the Arena from today's data locally and check weight and keyboard use",
+    "success_metric": "Arena page builds from research.json and ideas.json only, under the weight budget",
+    "recommendation": "pursue"
+  },
+  {
+    "id": "r-verify-2026-10-17-showcase",
+    "date": "2026-10-17",
+    "role": "Verify",
+    "kind": "focused",
+    "question": "How can the interface make verified findings, hypotheses, and recommendations obviously different?",
+    "outcome": "proposal",
+    "finding": "Use a fixed, small vocabulary like intelligence analysts do: separate certain knowledge from reasoned judgment, use a few standard likelihood words, and pair them with a confidence level. Our data already has the fields.",
+    "facts": [
+      "Sherman Kent's goal (1964) was to make clear what is certain knowledge and what is reasoned judgment, and what degree of certitude lies behind each.",
+      "The US National Intelligence Council pairs a small set of likelihood words with confidence levels (high, moderate, low)."
+    ],
+    "inferences": [
+      "Three visual tiers fit our data: Verified fact (facts + source), Hypothesis (inferences), Recommendation (decision with scores).",
+      "Words, not percentages: we have no calibrated probabilities."
+    ],
+    "evidence": [
+      "https://en.wikipedia.org/wiki/Words_of_estimative_probability"
+    ],
+    "confidence": "medium",
+    "status": "verified",
+    "fresh_until": "2027-04-17",
+    "existing_work": "research.json status and confidence fields; facts and inferences split (#20)",
+    "opportunity": "A shared label kit: Verified / Hypothesis / Recommendation / Demo, each with icon, text, and color, never color alone",
+    "alternatives": "Numeric confidence scores (rejected; uncalibrated)",
+    "effort": "S",
+    "risks": "Too many badges become noise; cap at one tier label plus confidence per claim",
+    "experiment": "Relabel 3 existing research cards and check each claim lands in exactly one tier",
+    "success_metric": "Every claim on a showcase page carries exactly one tier label",
+    "recommendation": "pursue"
+  },
+  {
+    "id": "r-shield-2026-10-17-showcase",
+    "date": "2026-10-17",
+    "role": "Shield",
+    "kind": "focused",
+    "question": "With no visitor input, what data on the showcase still needs protection?",
+    "outcome": "proposal",
+    "finding": "The risk moves from visitors to our own traces: raw chat transcripts, routine prompts, box paths, gh auth, corrections mail, and Ryno's private messages. Render only from already-public, CI-scanned repo data, never raw logs.",
+    "facts": [
+      "OWASP LLM02:2025 lists PII leakage, sensitive business data, and exposing system preambles or configuration as disclosure risks.",
+      "OWASP recommends least privilege, restricting data sources, and pattern-based redaction before output."
+    ],
+    "inferences": [
+      "'Real execution traces' could tempt us to paste raw run transcripts; those can hold paths, prompts, or tokens.",
+      "Our existing CI scans cover data/ and site/, so traces must enter as data/ fields to be scanned."
+    ],
+    "evidence": [
+      "https://genai.owasp.org/llmrisk/llm022025-sensitive-information-disclosure/"
+    ],
+    "confidence": "high",
+    "status": "verified",
+    "fresh_until": "2027-04-17",
+    "existing_work": "check.py secret and personal-data scans on data/ and site/; push protection",
+    "opportunity": "Traces = links to merged PRs, chat ids, and research ids only; no raw transcripts, prompts, or usage screenshots",
+    "alternatives": "Publish raw run logs with manual redaction (rejected; error-prone)",
+    "effort": "S",
+    "risks": "A demo challenge quoting a client-like scenario could invent personal details; use fictional, generic orgs",
+    "experiment": "Run check.py scans over a draft case file built from PR comments and chat",
+    "success_metric": "Zero scan hits; no field holds raw transcript text",
+    "recommendation": "pursue"
+  },
+  {
+    "id": "r-trial-2026-10-17-showcase",
+    "date": "2026-10-17",
+    "role": "Trial",
+    "kind": "focused",
+    "question": "Which interaction failures or misleading states should be tested on the showcase?",
+    "outcome": "proposal",
+    "finding": "Top misleading states: 'live' or 'working now' when the last run was hours ago, demo content read as real work, missing data rendered as zero, stale research shown as current, and broken trace links.",
+    "facts": [
+      "NN/g heuristic 1: keep users informed about what is going on through appropriate feedback within reasonable time.",
+      "NN/g: when time changes system state, explain it briefly rather than letting items silently change or vanish."
+    ],
+    "inferences": [
+      "Every time-based claim needs an 'as of' timestamp from runs.json.",
+      "research.json fresh_until gives a free stale check."
+    ],
+    "evidence": [
+      "https://www.nngroup.com/articles/visibility-system-status/"
+    ],
+    "confidence": "high",
+    "status": "verified",
+    "fresh_until": "2027-04-17",
+    "existing_work": "Post-deploy check after every merge; empty states (#25)",
+    "opportunity": "Test fixtures: stale runs.json, an expired fresh_until, a demo item, a missing count; each must render honestly",
+    "alternatives": "Manual spot checks after deploy only",
+    "effort": "S",
+    "risks": "Fixtures can drift from real data; build them from copies of real files",
+    "experiment": "Render the home page with a runs.json whose last run is 3 days old and check the wording",
+    "success_metric": "No page says live/now/today unless runs.json supports it; demos always carry a Demo label",
+    "recommendation": "pursue"
+  },
+  {
+    "id": "r-analyst-2026-10-17-showcase",
+    "date": "2026-10-17",
+    "role": "Analyst",
+    "kind": "focused",
+    "question": "Which outcomes would show the showcase is working, without visitor tracking and using only existing data?",
+    "outcome": "proposal",
+    "finding": "We can't measure impressed visitors without tracking, so measure proof quality instead: share of showcase claims with a linked artifact, Trial-verified acceptance rate, research-to-ship rate, and caught-before-publish counts.",
+    "facts": [
+      "GitHub repo traffic (views, referrers, popular content) is visible only to people with push access and covers the past 14 days.",
+      "That traffic graph covers the repository, not the Pages site."
+    ],
+    "inferences": [
+      "Repo traffic is the only existing visitor signal and it is owner-only and partial; it should not drive design.",
+      "Existing data already gives: all 10 shipped team ideas (i10-i15, i17-i20) have Trial acceptance checks; Verify dropped 10 of 30 backfill candidates."
+    ],
+    "evidence": [
+      "https://docs.github.com/en/repositories/viewing-activity-and-data-for-your-repository/viewing-traffic-to-a-repository"
+    ],
+    "confidence": "medium",
+    "status": "verified",
+    "fresh_until": "2027-01-17",
+    "existing_work": "Analyst research metrics in the tracker: research-to-approval, approval-to-ship, experiment success",
+    "opportunity": "A proof-coverage check in build: count claims with and without artifact links per page",
+    "alternatives": "Add analytics (rejected; no trackers)",
+    "effort": "S",
+    "risks": "Proxy metrics can be gamed by adding links; Lens spot-checks that links support the claim",
+    "experiment": "Count linked vs unlinked claims on the current home page by hand",
+    "success_metric": "100% of showcase claims link an artifact; reported weekly by Analyst",
+    "recommendation": "pursue"
+  },
+  {
+    "id": "r-sweep-2026-10-17-showcase",
+    "date": "2026-10-17",
+    "role": "Sweep",
+    "kind": "focused",
+    "question": "What do interactive demos cost to run and keep reliable inside free-tier and pacing limits?",
+    "outcome": "proposal",
+    "finding": "Hosting is not the constraint: static pages cost nothing extra on Pages and public-repo CI. Slopbot usage is: each demo challenge is a research session. Cap it at one demo challenge per sprint, 4-5 roles, about 15 reads.",
+    "facts": [
+      "GitHub Pages: 1 GB site, soft 100 GB/month bandwidth, soft 10 builds/hour.",
+      "GitHub Actions on standard hosted runners: 6-hour job limit and 20 concurrent jobs on Free; our CI finishes in under 2 minutes."
+    ],
+    "inferences": [
+      "This round used 15 page reads for 14 roles, our first real per-round cost figure.",
+      "Pre-rendered demos have no runtime failure modes beyond broken links, which the link check covers."
+    ],
+    "evidence": [
+      "https://docs.github.com/en/actions/reference/limits",
+      "https://docs.github.com/en/pages/getting-started-with-github-pages/github-pages-limits"
+    ],
+    "confidence": "high",
+    "status": "verified",
+    "fresh_until": "2027-04-17",
+    "existing_work": "Run budget in runs.json; research is the first optional work cut",
+    "opportunity": "Budget line for demo challenges on the schedule page; Sweep logs reads per challenge",
+    "alternatives": "Re-run demos on a schedule (wasteful; they are point-in-time)",
+    "effort": "S",
+    "risks": "Usage is Ryno's plan allowance; a big challenge could crowd out the daily run",
+    "experiment": "Log reads and session time for the first demo challenge and compare with this round",
+    "success_metric": "Each demo challenge stays under about 15 reads and never delays the 9:13 daily run",
+    "recommendation": "pursue"
+  },
+  {
+    "id": "r-advisor-2026-10-17-showcase",
+    "date": "2026-10-17",
+    "role": "Advisor",
+    "kind": "focused",
+    "question": "Which lessons from real failures, ours and public ones, should shape the showcase design?",
+    "outcome": "proposal",
+    "finding": "Public lesson: a company is liable for what its AI says, static page or chatbot alike. Ours: guardrails held when filters hit the input ban, a duplicate PR (#21/#22), X rate limits. We have never reverted a deploy, so don't stage one.",
+    "facts": [
+      "BBC on the Air Canada ruling: the tribunal said it makes no difference whether information comes from a static page or a chatbot; the airline paid damages.",
+      "Team history: radio filters hit check.py's input ban and were rebuilt with anchors (c62); #21 was superseded by #22; X search was rate limited on 2026-10-16."
+    ],
+    "inferences": [
+      "Demo challenge outcomes must read as worked examples, not advice or quotes.",
+      "Showing our real, small failures is more credible than a staged dramatic one."
+    ],
+    "evidence": [
+      "https://www.bbc.com/travel/article/20240222-air-canada-chatbot-misinformation-what-travellers-should-know"
+    ],
+    "confidence": "high",
+    "status": "verified",
+    "fresh_until": "2027-04-17",
+    "existing_work": "Friday retro rules; runs.json logs drops, strips, and CI failures",
+    "opportunity": "A 'what went wrong and how we caught it' strip using only real incidents, plus a demo disclaimer on every challenge",
+    "alternatives": "A dramatized failure demo (rejected; it never happened)",
+    "effort": "S",
+    "risks": "A short failure list may read as 'nothing ever goes wrong'; say plainly that the history is young",
+    "experiment": "List every real failure in git and runs.json and check each has a link",
+    "success_metric": "Every failure shown links its commit, PR, or run; zero staged incidents",
+    "recommendation": "pursue"
+  },
+  {
+    "id": "r-librarian-2026-10-17-showcase",
+    "date": "2026-10-17",
+    "role": "Librarian",
+    "kind": "focused",
+    "question": "Which of this round's findings duplicate, conflict with, or repeat prior work?",
+    "outcome": "finding",
+    "finding": "Consolidated 13 reports into 5 concepts. Merged: Forge's Arena + Verify's labels; Scoutmaster's explorer + Critic's real-cases challenge (case files); Trial + Advisor on honest status. Prior work: home intro (#23), facts/inferences split (#20).",
+    "facts": [
+      "ADR practice: record each decision with its rationale, trade-offs, and consequences, kept together as a decision log.",
+      "Duplicate pairs found: Arena/labels, explorer/case files, status honesty (Trial/Advisor), cost cap (Sweep/Atlas)."
+    ],
+    "inferences": [
+      "No finding conflicts with a prior decision; Critic's 'cases before demos' reorders but doesn't reject the CEO's demo challenges.",
+      "Behind the scenes already serves as the deep technical ops layer; reuse it, don't rebuild."
+    ],
+    "evidence": [
+      "https://adr.github.io/"
+    ],
+    "confidence": "high",
+    "status": "verified",
+    "fresh_until": "2027-01-17"
+  },
+  {
+    "id": "r-coordinator-2026-10-17-showcase",
+    "date": "2026-10-17",
+    "role": "Coordinator",
+    "kind": "focused",
+    "question": "Which concept best balances differentiation, feasibility, and client value?",
+    "outcome": "proposal",
+    "finding": "Research Arena first (priority 40), then real case files (12.5), then the outcome-led landing and Living Team (10), then one demo challenge after a cost experiment (3.3). Impact Ledger and Build Observatory wait for real data.",
+    "facts": [
+      "Intercom's RICE adds a confidence factor to curb enthusiasm for exciting but ill-defined ideas.",
+      "RICE notes dependencies can justify working out of score order, as long as the trade-off is explicit."
+    ],
+    "inferences": [
+      "Our Evidence score plays RICE's confidence role; demo challenges score low on it until one is run.",
+      "The landing depends on Arena and case files existing, so it ships third despite high impact."
+    ],
+    "evidence": [
+      "https://www.intercom.com/blog/rice-simple-prioritization-for-product-managers/"
+    ],
+    "confidence": "medium",
+    "status": "verified",
+    "fresh_until": "2027-01-17",
+    "existing_work": "Librarian's consolidated set; Critic's challenge; i10 home intro",
+    "opportunity": "Sequenced 8-PR showcase sprint (i22)",
+    "alternatives": "All five experiences at once; landing first",
+    "effort": "L",
+    "risks": "Sprint exceeds the 1 feature + 1 design PR/week cap without a CEO override",
+    "experiment": "Run demo challenge 1 inside the research cap before building its page",
+    "success_metric": "Showcase answers the 3 CEO questions with every claim linked to a real artifact",
+    "pitch": "i22",
+    "recommendation": "pursue"
   }
 ]
