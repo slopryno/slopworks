@@ -200,8 +200,11 @@
         "maxLength": 400
       },
       "evidence": {
-        "type": "string",
-        "maxLength": 280
+        "type": "array",
+        "items": {
+          "type": "string",
+          "maxLength": 200
+        }
       },
       "repitch_of": {
         "type": "string"
@@ -243,6 +246,161 @@
       "target_sprint": {
         "type": "string",
         "maxLength": 20
+      },
+      "objections": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "maxLength": 280
+        }
+      },
+      "shipped": {
+        "type": "string",
+        "maxLength": 200
+      },
+      "outcome_met": {
+        "type": [
+          "boolean",
+          "null"
+        ]
+      },
+      "acceptance_criteria": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "maxLength": 200
+        }
+      },
+      "acceptance_verified_by": {
+        "type": "string"
+      },
+      "scores": {
+        "type": [
+          "object",
+          "null"
+        ],
+        "additionalProperties": false,
+        "required": [
+          "impact",
+          "evidence",
+          "fit",
+          "effort",
+          "risk",
+          "reversibility"
+        ],
+        "properties": {
+          "impact": {
+            "type": "integer",
+            "enum": [
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
+          },
+          "evidence": {
+            "type": "integer",
+            "enum": [
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
+          },
+          "fit": {
+            "type": "integer",
+            "enum": [
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
+          },
+          "effort": {
+            "type": "integer",
+            "enum": [
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
+          },
+          "risk": {
+            "type": "integer",
+            "enum": [
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
+          },
+          "reversibility": {
+            "type": "integer",
+            "enum": [
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
+          }
+        }
+      },
+      "experiment": {
+        "type": "string",
+        "maxLength": 280
+      },
+      "experiment_result": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "enum": [
+          "pass",
+          "fail",
+          null
+        ]
+      },
+      "librarian_checked": {
+        "type": "boolean"
+      },
+      "stale": {
+        "type": "boolean"
+      },
+      "fresh_until": {
+        "type": "string",
+        "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+      },
+      "challenge": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "by",
+          "recommendation",
+          "summary"
+        ],
+        "properties": {
+          "by": {
+            "type": "string"
+          },
+          "recommendation": {
+            "type": "string",
+            "enum": [
+              "proceed",
+              "investigate",
+              "reject"
+            ]
+          },
+          "summary": {
+            "type": "string",
+            "maxLength": 400
+          }
+        }
       }
     }
   }

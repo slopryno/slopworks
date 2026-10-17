@@ -7,9 +7,14 @@
       "id",
       "date",
       "role",
-      "topic",
-      "takeaways",
-      "sources"
+      "kind",
+      "question",
+      "outcome",
+      "finding",
+      "evidence",
+      "confidence",
+      "status",
+      "fresh_until"
     ],
     "properties": {
       "id": {
@@ -45,27 +50,119 @@
           "Librarian"
         ]
       },
-      "topic": {
+      "kind": {
         "type": "string",
-        "maxLength": 120
+        "enum": [
+          "rotation",
+          "focused",
+          "urgent"
+        ]
       },
-      "takeaways": {
+      "question": {
+        "type": "string",
+        "maxLength": 200
+      },
+      "outcome": {
+        "type": "string",
+        "enum": [
+          "proposal",
+          "finding",
+          "no-change"
+        ]
+      },
+      "finding": {
+        "type": "string",
+        "maxLength": 400
+      },
+      "facts": {
         "type": "array",
         "items": {
           "type": "string",
           "maxLength": 280
         }
       },
-      "sources": {
+      "inferences": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "maxLength": 280
+        }
+      },
+      "evidence": {
         "type": "array",
         "items": {
           "type": "string",
           "pattern": "^https://"
         }
       },
-      "idea": {
+      "confidence": {
+        "type": "string",
+        "enum": [
+          "low",
+          "medium",
+          "high"
+        ]
+      },
+      "status": {
+        "type": "string",
+        "enum": [
+          "verified",
+          "reported",
+          "hypothesis",
+          "disproved",
+          "stale"
+        ]
+      },
+      "existing_work": {
         "type": "string",
         "maxLength": 280
+      },
+      "opportunity": {
+        "type": "string",
+        "maxLength": 280
+      },
+      "alternatives": {
+        "type": "string",
+        "maxLength": 280
+      },
+      "effort": {
+        "type": "string",
+        "enum": [
+          "S",
+          "M",
+          "L"
+        ]
+      },
+      "risks": {
+        "type": "string",
+        "maxLength": 280
+      },
+      "experiment": {
+        "type": "string",
+        "maxLength": 280
+      },
+      "success_metric": {
+        "type": "string",
+        "maxLength": 200
+      },
+      "recommendation": {
+        "type": "string",
+        "enum": [
+          "pursue",
+          "investigate",
+          "defer",
+          "reject"
+        ]
+      },
+      "fresh_until": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+      },
+      "reader_feedback": {
+        "type": "boolean"
       },
       "pitch": {
         "type": "string"
