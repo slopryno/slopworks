@@ -38,6 +38,9 @@ function measure(frame, job){
   const w = frame.contentWindow, d = frame.contentDocument; W0 = w;
   const vw = d.documentElement.clientWidth, r = {page: job.page, width: job.width};
   r.overflow_px = Math.max(0, d.documentElement.scrollWidth - vw);
+  r.overflow_by = []; if (r.overflow_px) d.querySelectorAll('body *').forEach(el => { const b = el.getBoundingClientRect();
+    if ((b.right > vw + 1 || (el.scrollWidth > el.clientWidth + 1 && w.getComputedStyle(el).overflowX === 'visible' && el.children.length === 0)) && r.overflow_by.length < 5)
+      r.overflow_by.push(el.tagName.toLowerCase() + (el.className ? '.' + String(el.className).split(' ')[0] : '') + ' ' + (el.textContent||'').trim().slice(0, 30) + ' ' + Math.round(b.right)); });
   let small = [], inl = 0, total = 0, area = {header: 0, main: 0, footer: 0};
   d.querySelectorAll('a[href], button, summary, label, input, select, [role=button]').forEach(el => {
     const b = el.getBoundingClientRect(); if (b.width === 0 || b.height === 0 || w.getComputedStyle(el).visibility === 'hidden') return;
