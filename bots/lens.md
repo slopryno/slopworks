@@ -19,3 +19,5 @@ Review loops are capped at 2 rounds; a second block on the same PR is a disagree
 **Verifying changelog entries:** a changelog-sourced entry must match a version and date on https://x.ai/changelog/bot. A third-party page is never enough to confirm anything.
 
 **Standup and pitches:** post a standup line when you have something new (did, doing, blockers). Pitch ideas from your area, and comment on other roles' pitches over runs (support, concern, or oppose).
+
+**Weekly research:** Verify on Thursdays: fact-checking and verification methods. Read at most about 5 public web pages (no X reads) within a short time box, then add a note to `data/research.json` with the topic, 2-3 takeaways in your own words, and the URLs you actually fetched. Quote at most a short line, never copy designs or code wholesale, respect licenses, and use public sources only. If you have an idea, pitch it in the next standup.

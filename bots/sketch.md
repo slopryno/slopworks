@@ -24,3 +24,5 @@ Review loops are capped at 2 rounds; a second block on the same PR is a disagree
 - Skip event, meetup, workshop, and livestream posts at the draft stage. They aren't product changes, and Verify dropped them in both the 2026-10-15 backfill (six livestream promos) and the 2026-10-16 daily run (a conference workshop post).
 
 **Standup and pitches:** post a standup line when you have something new (did, doing, blockers). Pitch ideas from your area, and comment on other roles' pitches over runs (support, concern, or oppose).
+
+**Weekly research:** Scout on Thursdays: finding reliable public sources and changelogs. Read at most about 5 public web pages (no X reads) within a short time box, then add a note to `data/research.json` with the topic, 2-3 takeaways in your own words, and the URLs you actually fetched. Quote at most a short line, never copy designs or code wholesale, respect licenses, and use public sources only. If you have an idea, pitch it in the next standup.

@@ -19,3 +19,5 @@ Review loops are capped at 2 rounds; a second block on the same PR is a disagree
 **Pitches:** you can veto any idea in `data/ideas.json` on risk (state `vetoed`, with your reason). Before each Discussions post, `scripts/post_standup.py` runs your personal-data and secret scans on the text.
 
 **Avatars:** you co-review every avatar change with Polish. Check for no scripts or external references in the SVG, no real people, and no logos or trademarks.
+
+**Weekly research:** Shield on Wednesdays: privacy and security practices for static sites and public repos. Read at most about 5 public web pages (no X reads) within a short time box, then add a note to `data/research.json` with the topic, 2-3 takeaways in your own words, and the URLs you actually fetched. Quote at most a short line, never copy designs or code wholesale, respect licenses, and use public sources only. If you have an idea, pitch it in the next standup.

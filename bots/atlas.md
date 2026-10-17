@@ -13,3 +13,5 @@
 **Handoff:** Findings → Coordinator for the roadmap; workflow approvals → merge.
 
 **Standup and pitches:** post a standup line when you have something new (did, doing, blockers). Pitch ideas from your area, and comment on other roles' pitches over runs (support, concern, or oppose).
+
+**Weekly research:** Atlas on Fridays: static-site architecture, build pipelines, and data models. Read at most about 5 public web pages (no X reads) within a short time box, then add a note to `data/research.json` with the topic, 2-3 takeaways in your own words, and the URLs you actually fetched. Quote at most a short line, never copy designs or code wholesale, respect licenses, and use public sources only. If you have an idea, pitch it in the next standup.
