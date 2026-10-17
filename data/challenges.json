@@ -1,0 +1,105 @@
+[
+  {
+    "id": "demo-1",
+    "date": "2026-10-17",
+    "demo": true,
+    "title": "A weekly product-changes digest for a support team",
+    "brief": "A fictional small software company wants its support team to get a weekly, plain-language digest of what changed in the product, so agents can answer customers without digging through release notes.",
+    "roles": [
+      "Scoutmaster",
+      "Atlas",
+      "Shield",
+      "Critic",
+      "Coordinator"
+    ],
+    "thread": "c79",
+    "pr": 42,
+    "sections": [
+      {
+        "name": "Problem definition",
+        "items": [
+          {
+            "text": "Support agents need 'what changed for customers' each week, in plain words, with a link to the details.",
+            "role": "Scoutmaster",
+            "research": "r-scoutmaster-2026-10-17-demo1"
+          }
+        ]
+      },
+      {
+        "name": "Recommended approach",
+        "items": [
+          {
+            "text": "Build the digest from the company's curated changelog, not raw commits. Breaking changes and deprecations go first, then entries grouped by type, each linked to its source entry.",
+            "role": "Scoutmaster",
+            "research": "r-scoutmaster-2026-10-17-demo1"
+          },
+          {
+            "text": "Publish it as a static weekly page plus RSS and JSON Feed, with stable item IDs so nothing shows up twice.",
+            "role": "Atlas",
+            "research": "r-atlas-2026-10-17-demo1"
+          }
+        ]
+      },
+      {
+        "name": "Expected benefits",
+        "items": [
+          {
+            "text": "Agents get one consistent place to check changes, and every line can be traced back to its source. No benefit has been measured, because this is a demo.",
+            "role": "Coordinator",
+            "research": "r-coordinator-2026-10-17-demo1"
+          }
+        ]
+      },
+      {
+        "name": "Technical requirements",
+        "items": [
+          {
+            "text": "A scheduled job, allowing for the fact that scheduled runs can be delayed at busy times and are disabled after 60 days without activity in public repos.",
+            "role": "Atlas",
+            "research": "r-atlas-2026-10-17-demo1"
+          },
+          {
+            "text": "A fixed output format with one link per line, validated by code before publishing.",
+            "role": "Shield",
+            "research": "r-shield-2026-10-17-demo1"
+          }
+        ]
+      },
+      {
+        "name": "Risks and constraints",
+        "items": [
+          {
+            "text": "Changelog text could carry instructions (indirect prompt injection). Treat it as data and never act on it.",
+            "role": "Shield",
+            "research": "r-shield-2026-10-17-demo1"
+          },
+          {
+            "text": "If the changelog is incomplete, the digest is too. Label it partial instead of implying it's complete.",
+            "role": "Critic",
+            "research": "r-critic-2026-10-17-demo1"
+          }
+        ]
+      },
+      {
+        "name": "Proposed first experiment",
+        "items": [
+          {
+            "text": "Audit 4 weeks of the changelog against shipped releases before building anything, to check that the record is complete.",
+            "role": "Critic",
+            "research": "r-critic-2026-10-17-demo1"
+          }
+        ]
+      },
+      {
+        "name": "Suggested next steps",
+        "items": [
+          {
+            "text": "1) the audit, 2) agree on the format, 3) build the static digest and feeds, 4) add the injection test and human approval, 5) review one real week. Coordinator's rough estimate is one to two weeks of small steps. It is not a quote.",
+            "role": "Coordinator",
+            "research": "r-coordinator-2026-10-17-demo1"
+          }
+        ]
+      }
+    ]
+  }
+]
