@@ -1,1 +1,35 @@
-[]
+[
+  {
+    "id": "r-polish-2026-10-16",
+    "date": "2026-10-16",
+    "role": "Polish",
+    "kind": "focused",
+    "question": "Which typography and empty-state practices would most improve our static pages?",
+    "outcome": "proposal",
+    "finding": "Our body size and line spacing are fine, but line length and empty states need work.",
+    "facts": [
+      "Practical Typography recommends 15-25px body text, 120-145% line spacing, and 45-90 characters per line.",
+      "NN/g says empty states should communicate status, teach what will appear, and link to the next step."
+    ],
+    "inferences": [
+      "Our 16px/1.55 body is within range, so the gain is in line length and rhythm.",
+      "Our empty Ideas and Research sections fail all three NN/g goals."
+    ],
+    "evidence": [
+      "https://practicaltypography.com/summary-of-key-rules.html",
+      "https://www.nngroup.com/articles/empty-state-interface-design/"
+    ],
+    "confidence": "high",
+    "status": "verified",
+    "fresh_until": "2027-04-16",
+    "existing_work": "Design backlog d1-d6 (filters, digest, badges, contrast check)",
+    "opportunity": "Fix empty states and line length in this sprint",
+    "alternatives": "Wait for content to fill the sections",
+    "effort": "S",
+    "risks": "Low; CSS and build.py only",
+    "experiment": "Before/after renders",
+    "success_metric": "Empty sections explain themselves; line length at most about 75ch",
+    "recommendation": "pursue",
+    "pitch": "i12"
+  }
+]
