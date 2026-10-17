@@ -821,8 +821,7 @@
     "outcome": "proposal",
     "finding": "At 360 px, 3 of 37 pages scroll sideways and there are 622 tap targets under 44 px (481 of them in the 13-link header nav). Contrast, tiny text, and table scrolling already pass. The CSS is desktop-first (3 max-width queries, 0 min-width).",
     "facts": [
-      "Measured with headless Chrome on the built site at #70 (docs/design/mobile/before.json).",
-      "Overflow at 360: challenges 79 px, updates 50 px, issues 15 px.",
+      "Measured with headless Chrome on the built site at #70 (docs/design/mobile/before.json). Overflow at 360: challenges 79 px, updates 50 px, issues 15 px.",
       "The header is 211 px tall on phones and holds 13 nav links, each 34 px tall.",
       "0 text elements under 4.5:1 in light or forced dark mode, and no text under 12 px."
     ],
@@ -831,8 +830,8 @@
       "Most content targets are toggles and chips that only need padding."
     ],
     "evidence": [
-      "https://www.w3.org/WAI/WCAG22/Understanding/target-size-enhanced.html",
-      "https://raw.githubusercontent.com/actions/runner-images/main/images/ubuntu/Ubuntu2404-Readme.md"
+      "https://www.w3.org/TR/WCAG22/#target-size-enhanced",
+      "https://slopryno.github.io/slopworks/"
     ],
     "existing_work": "i11 mobile nav fix (#24), d4 contrast test, the CSS-only filters (#33)",
     "opportunity": "Simpler nav and hubs, a sharper landing page, mobile-first CSS, and a 360 px check in CI",
