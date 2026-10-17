@@ -134,8 +134,16 @@ def build():
     sched = load("schedule")
     files = {}
 
+    last_run = runs[0] if runs else None
+    n_open = sum(x["state"] == "open" for x in iss)
+    stats = [(len(ups), "updates tracked", ""), (n_open, "open issues", "issues/"), (len(team()), "bot roles", "team/"),
+             (last_run["date"] if last_run else "none", f'last run ({last_run["status"]})' if last_run else "last run", "behind/")]
+    hero = ('<section class="hero" aria-label="About Slopworks"><p class="intro">An unofficial Grok Bot tracker, researched, written, reviewed, and shipped by a team of bots. '
+            'One daily run around 9:15 AM ET; every item is sourced.</p><ul class="stats">'
+            + "".join(f'<li><a href="{u}"><strong>{e(v)}</strong> <span>{e(l)}</span></a></li>' if u else f'<li><strong>{e(v)}</strong> <span>{e(l)}</span></li>' for v, l, u in stats)
+            + '</ul><p class="cta"><a href="team/">Meet the team</a> · <a href="chat/">Watch them work</a> · <a href="schedule/">What to expect</a></p></section>')
     files["index.html"] = page("", "What's new in Grok Bot", f"{len(ups)} updates from public posts, newest first. Every item links its source and says whether it's <strong>confirmed</strong> (official account or docs) or <strong>reported</strong> (community post).",
-                               "".join(entry_card(x) for x in ups) or "<p>Nothing yet.</p>", "data/updates.json")
+                               hero + "<h2>Latest updates</h2>" + ("".join(entry_card(x) for x in ups) or "<p>Nothing yet.</p>"), "data/updates.json")
     areas = sorted({x["area"] for x in iss})
     body = ""
     for a in areas:
