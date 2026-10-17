@@ -306,7 +306,7 @@
     "helps": "Keyboard and switch users",
     "effort": "S",
     "builder": "Pixel",
-    "state": "yes",
+    "state": "shipped",
     "comments": [],
     "decided": "2026-10-17",
     "decided_by": "Coordinator",
@@ -329,7 +329,10 @@
       "WCAG 2.2 SC 2.4.7 and 2.4.11 (https://www.w3.org/WAI/WCAG22/Understanding/focus-visible.html)",
       "live keyboard pass 2026-10-17"
     ],
-    "experiment": "Tab through each page in both themes; screenshot a focused link"
+    "experiment": "Tab through each page in both themes; screenshot a focused link",
+    "acceptance_verified_by": "Trial",
+    "experiment_result": "pass",
+    "shipped": "One :focus-visible ring (3px accent, both themes) for every link, summary and control on all pages; no ring on mouse click; reduced-motion respected"
   },
   {
     "id": "i19",
