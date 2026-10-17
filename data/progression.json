@@ -1,0 +1,216 @@
+{
+  "owner": "Gamemaster",
+  "decision": "i34",
+  "thread": "c163",
+  "note": "Week 1 rules (Ryno's pitch i34, huddle c163 to c179). Game Master owns these rules and changes them only after the affected roles comment and Critic challenges in Team chat. Game Master never awards XP: scripts/xp.py records real events, and each entry names a reviewer who isn't the earner.",
+  "levels": [
+    {
+      "name": "Recruit",
+      "xp": 0
+    },
+    {
+      "name": "Apprentice",
+      "xp": 100
+    },
+    {
+      "name": "Specialist",
+      "xp": 250
+    },
+    {
+      "name": "Operator",
+      "xp": 500
+    },
+    {
+      "name": "Expert",
+      "xp": 850
+    },
+    {
+      "name": "Veteran",
+      "xp": 1300
+    },
+    {
+      "name": "Elite",
+      "xp": 1850
+    },
+    {
+      "name": "Master",
+      "xp": 2500
+    },
+    {
+      "name": "Grandmaster",
+      "xp": 3300
+    },
+    {
+      "name": "Legend",
+      "xp": 4300
+    }
+  ],
+  "events": {
+    "pr_merged": {
+      "label": "Merged PR",
+      "who": "The PR's maker (from its Maker line)",
+      "reviewer": "The first required reviewer who signed off",
+      "evidence": "The merged PR"
+    },
+    "signoff": {
+      "label": "Review sign-off",
+      "who": "Each role that signed off a PR that merged (once per PR)",
+      "reviewer": "The PR's maker, who took the review",
+      "evidence": "The sign-off comment",
+      "cap_per_day": 6
+    },
+    "block_upheld": {
+      "label": "Block proven right",
+      "who": "The role whose Block an after-action review upheld",
+      "reviewer": "The maker who accepted the Block and fixed it",
+      "evidence": "The Block comment"
+    },
+    "deploy_check": {
+      "label": "Deploy check",
+      "who": "Trial, for a posted check of the live site after a merge",
+      "reviewer": "The PR's maker",
+      "evidence": "The deploy-check comment"
+    },
+    "ci_test_added": {
+      "label": "New CI test file",
+      "who": "The role that wrote a new tests/ file that still runs in CI (Trial when the file says it's Trial's tests, else the PR's maker)",
+      "reviewer": "A reviewer who signed off that PR, other than the earner",
+      "evidence": "The merged PR that added it"
+    },
+    "aar_written": {
+      "label": "After-action review",
+      "who": "The owner of a closed AAR. Honest failure earns XP; it's never punished",
+      "reviewer": "Lens, or Coordinator when Lens owns it",
+      "evidence": "The review on the Lessons page"
+    },
+    "aar_fix": {
+      "label": "AAR fix shipped",
+      "who": "The maker of the PR that fixed what an AAR found",
+      "reviewer": "The AAR's owner, or Lens when they're the same role",
+      "evidence": "The fix PR"
+    },
+    "research_accepted": {
+      "label": "Research behind an accepted decision",
+      "who": "The author of a research report in an Arena round, or linked to a pitch, whose decision was accepted",
+      "reviewer": "Whoever made the decision (Coordinator or the CEO)",
+      "evidence": "The research report"
+    },
+    "pitch_shipped": {
+      "label": "Pitch shipped",
+      "who": "The role that pitched an idea that shipped",
+      "reviewer": "Trial, who checked its acceptance criteria",
+      "evidence": "The idea in Team chat"
+    },
+    "error_prevented": {
+      "label": "Consequential error caught",
+      "who": "Lens, for an error caught before it published, once Week 2 records these",
+      "reviewer": "The maker of the PR it was caught in",
+      "evidence": "The Block or correction"
+    },
+    "regression_prevented": {
+      "label": "Regression prevented",
+      "who": "Trial, for a test that failed on a real regression before merge, once Week 2 records these",
+      "reviewer": "The maker of the PR it caught",
+      "evidence": "The failing CI run"
+    }
+  },
+  "tables": {
+    "default": {
+      "pr_merged": 25,
+      "signoff": 5,
+      "block_upheld": 50,
+      "ci_test_added": 15,
+      "aar_written": 30,
+      "aar_fix": 20,
+      "research_accepted": 30,
+      "pitch_shipped": 50
+    },
+    "Lens": {
+      "block_upheld": 75,
+      "error_prevented": 75
+    },
+    "Trial": {
+      "deploy_check": 10,
+      "regression_prevented": 40,
+      "ci_test_added": 15
+    },
+    "Shield": {
+      "block_upheld": 60
+    }
+  },
+  "quality": {
+    "default_pct": 100,
+    "note": "Backfilled entries use 100%: the record has no quality grades yet. From Week 2 a reviewer can set 50% to 150%, with a reason."
+  },
+  "statuses": {
+    "pending": "Recorded, not yet reviewed: no XP",
+    "approved": "Counts toward the total",
+    "rejected": "Doesn't count (for example, over the daily sign-off cap). Kept so attempts stay visible",
+    "reversed": "Counted once, then undone because the result was invalidated. Kept, never deleted"
+  },
+  "achievements": [
+    {
+      "id": "first-blood",
+      "name": "First Blood",
+      "rule": "First merged PR as maker",
+      "event": "pr_merged"
+    },
+    {
+      "id": "source-of-truth",
+      "name": "Source of Truth",
+      "rule": "First research report behind an accepted decision",
+      "event": "research_accepted"
+    },
+    {
+      "id": "guardian-angel",
+      "name": "Guardian Angel",
+      "rule": "First Block proven right",
+      "event": "block_upheld"
+    },
+    {
+      "id": "ship-it",
+      "name": "Ship It",
+      "rule": "First pitch that shipped",
+      "event": "pitch_shipped"
+    },
+    {
+      "id": "lessons-learned",
+      "name": "Lessons Learned",
+      "rule": "First after-action review closed",
+      "event": "aar_written"
+    }
+  ],
+  "anti_gaming": [
+    "Outcomes over activity: no XP for chat, commits, page views, or PR size (Critic, c168).",
+    "Evidence required: every entry links a real artifact, or it doesn't count.",
+    "Completion is separate from quality: XP for finishing, and a reviewer-set quality modifier from Week 2.",
+    "No self-approval: every entry's reviewer is a different role from the earner.",
+    "Reward prevention: Blocks proven right and errors caught pay more than shipping.",
+    "Don't punish honest failure: writing an AAR earns XP, and 'no meaningful opportunity found' completes a quest."
+  ],
+  "quests": {
+    "default": "Ship one merged PR whose sign-offs hold, or file research that leads to an accepted decision.",
+    "Coordinator": "Turn a research round into a decision the team ships.",
+    "Scoutmaster": "File research behind an accepted decision.",
+    "Comms": "Ship a wording change that Lens and the affected roles sign off.",
+    "Sketch": "Pitch an idea from your research that ships.",
+    "Advocate": "Pitch a reader fix that ships, with its evidence labeled.",
+    "Librarian": "Find prior work that changes a plan, and link it in the decision.",
+    "Atlas": "Land an architecture change with a test that guards it.",
+    "Forge": "Ship a fix for something an AAR found.",
+    "Polish": "Ship a design fix with before and after screenshots.",
+    "Lens": "Catch a consequential error before it publishes (+75, recorded from Week 2).",
+    "Trial": "Write a test that stops a real regression before merge (+40, recorded from Week 2).",
+    "Shield": "Block a risky change, and see the Block proven right.",
+    "Critic": "Challenge a proposal so it changes before it ships, and see the change hold.",
+    "Advisor": "Turn a repeat mistake into a check that ships.",
+    "Sweep": "Ship an ops fix with a deploy check that proves it.",
+    "Analyst": "File research behind an accepted decision.",
+    "Gamemaster": "Earn XP the same way as everyone else: ship a rules change that another role reviews and merges."
+  },
+  "later_weeks": {
+    "week2": "Daily, weekly, and level-up quests ('no meaningful opportunity found' counts), reviewer quality grades, and recorded preventions.",
+    "week3": "The first team raid, from the pitch's six: Reliability Raid, Bug Hunt, Trust Protocol, Experience Upgrade, Efficiency Challenge, Research Expedition.",
+    "week4": "Audit and rebalance, then skill trees (three branches with four milestones per role) and optional level-up animations that respect reduced motion. Promotion follows evidence, not the calendar."
+  }
+}

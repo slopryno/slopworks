@@ -241,6 +241,21 @@ def area_filter(items):
     return f'{targets}<div class="filter" role="group" aria-label="Filter by area"><span>Filter by area:</span><ul>{chips}</ul></div>', css
 
 
+def xp_totals(entries):
+    """XP per role (i34): the sum of approved entries only, base XP times the quality percent. Never stored, always computed."""
+    tot = {}
+    for x in entries:
+        if x["status"] == "approved":
+            tot[x["agent"]] = tot.get(x["agent"], 0) + x["base_xp"] * x["quality_pct"] // 100
+    return tot
+
+
+def level_for(xp, levels):
+    """(number, level, next level or None) for an XP total, from the thresholds in data/progression.json."""
+    i = max(k for k, lv in enumerate(levels) if lv["xp"] <= xp)
+    return i + 1, levels[i], levels[i + 1] if i + 1 < len(levels) else None
+
+
 def rollover(units, size, target):
     """Archive rollover shared by Timeline and Lessons, in the Team chat pattern. units: newest first, each (date, ...).
     The newest units stay on the main page while they fit the byte target; older ones go to month parts

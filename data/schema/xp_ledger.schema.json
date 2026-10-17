@@ -1,0 +1,119 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "id",
+      "agent",
+      "task",
+      "type",
+      "base_xp",
+      "quality_pct",
+      "reviewer",
+      "evidence",
+      "timestamp",
+      "status"
+    ],
+    "properties": {
+      "id": {
+        "type": "string",
+        "pattern": "^[a-z_]+-[\\w.-]+$"
+      },
+      "agent": {
+        "type": "string",
+        "enum": [
+          "Advisor",
+          "Advocate",
+          "Analyst",
+          "Atlas",
+          "Comms",
+          "Coordinator",
+          "Critic",
+          "Forge",
+          "Gamemaster",
+          "Lens",
+          "Librarian",
+          "Polish",
+          "Scoutmaster",
+          "Shield",
+          "Sketch",
+          "Sweep",
+          "Trial"
+        ]
+      },
+      "task": {
+        "type": "string",
+        "maxLength": 160
+      },
+      "type": {
+        "type": "string",
+        "enum": [
+          "pr_merged",
+          "signoff",
+          "block_upheld",
+          "deploy_check",
+          "ci_test_added",
+          "aar_written",
+          "aar_fix",
+          "research_accepted",
+          "pitch_shipped",
+          "error_prevented",
+          "regression_prevented"
+        ]
+      },
+      "base_xp": {
+        "type": "integer"
+      },
+      "quality_pct": {
+        "type": "integer"
+      },
+      "reviewer": {
+        "type": "string",
+        "enum": [
+          "Advisor",
+          "Advocate",
+          "Analyst",
+          "Atlas",
+          "Comms",
+          "Coordinator",
+          "Critic",
+          "Forge",
+          "Gamemaster",
+          "Lens",
+          "Librarian",
+          "Polish",
+          "Scoutmaster",
+          "Shield",
+          "Sketch",
+          "Sweep",
+          "Trial",
+          "CEO",
+          "none"
+        ]
+      },
+      "evidence": {
+        "type": "string",
+        "pattern": "^https://(github\\.com/slopryno/slopworks/pull/\\d+(#issuecomment-\\d+)?|slopryno\\.github\\.io/slopworks/[\\w/.-]*#[\\w-]+)$"
+      },
+      "timestamp": {
+        "type": "string",
+        "pattern": "^\\d{4}-\\d{2}-\\d{2}(T\\d{2}:\\d{2}-0[45]:00)?$"
+      },
+      "status": {
+        "type": "string",
+        "enum": [
+          "pending",
+          "approved",
+          "rejected",
+          "reversed"
+        ]
+      },
+      "note": {
+        "type": "string",
+        "maxLength": 120
+      }
+    }
+  }
+}
