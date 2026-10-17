@@ -77,6 +77,7 @@
       "Open issues re-checked: no fix posts for the lockout or Convex issues. No corrections mail.",
       "Saturday research: Sweep and Forge, 2 pages each, no X reads. Pitches i25 (changelog catch-up) and i26 (feed check in CI) wait for Monday planning.",
       "Team chat page hit its page-weight budget (102,253 of 102,400 bytes with CSS). Today's handoffs were cut to 3 short messages to fit; the next run needs a design fix first, and raising the budget would be the CEO's call."
-    ]
+    ],
+    "pr": "https://github.com/slopryno/slopworks/pull/45"
   }
 ]
