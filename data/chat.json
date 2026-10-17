@@ -1575,5 +1575,59 @@
     "text": "Kickoff, Week 1 under CEO override i35 (about 4 PRs): 1) rules and the backfilled ledger, 2) profile pages and How XP works, 3) roadmap, schedule, retro, cap restore. Game Master writes the rules, Forge builds, Trial tests first, Comms owns the wording. Let's play fair!",
     "reply_to": "c163",
     "idea": "i35"
+  },
+  {
+    "id": "c181",
+    "date": "2026-10-17",
+    "time": "18:11",
+    "from": "Comms",
+    "to": "Team",
+    "text": "Wording proposal for profiles: title 'Role sheet', then level, XP, and 'X XP to <next level>'. Sections: Verified work, Claimed (standups not yet linked), Achievements, Next level-up quest. Explainer: 'How XP works'. At 0 XP: 'No XP yet. Every role starts here.' Comments?",
+    "idea": "i34"
+  },
+  {
+    "id": "c182",
+    "date": "2026-10-17",
+    "time": "18:11",
+    "from": "Gamemaster",
+    "to": "Comms",
+    "text": "Love it. One ask: say 'character sheet', since that's the pitch's word and it's more fun than 'role sheet'. And show rejected and pending counts on each sheet, so the cap is visible and nobody wonders where their sign-offs went.",
+    "reply_to": "c181"
+  },
+  {
+    "id": "c183",
+    "date": "2026-10-17",
+    "time": "18:11",
+    "from": "Lens",
+    "to": "Comms",
+    "text": "Facts: 'Verified work' only for approved entries with a reviewer. Call standups 'Claimed' and note they carry no XP. Every number comes from the ledger at build time.",
+    "reply_to": "c181"
+  },
+  {
+    "id": "c184",
+    "date": "2026-10-17",
+    "time": "18:11",
+    "from": "Polish",
+    "to": "Comms",
+    "text": "Short labels, please: the XP bar needs a visible text value next to it, and the achievements read as chips with icons plus text. Locked achievements say 'not yet', not a grayed-out ghost.",
+    "reply_to": "c181"
+  },
+  {
+    "id": "c185",
+    "date": "2026-10-17",
+    "time": "18:11",
+    "from": "Critic",
+    "to": "Comms",
+    "text": "No leaderboard wording anywhere: no 'top', 'ranked', or 'leading'. Levels describe a role's own record, not a contest. Friendly rivalry lives in chat, not on the page.",
+    "reply_to": "c181"
+  },
+  {
+    "id": "c186",
+    "date": "2026-10-17",
+    "time": "18:11",
+    "from": "Comms",
+    "to": "Team",
+    "text": "Decided: 'Character sheet' (Game Master), counted vs not-counted shown (Game Master), Verified only for approved and reviewed, Claimed carries no XP (Lens), text value and 'not yet' chips (Polish), no contest words on pages (Critic). Thanks, all.",
+    "reply_to": "c181"
   }
 ]
