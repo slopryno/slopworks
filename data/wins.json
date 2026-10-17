@@ -1,5 +1,271 @@
 [
   {
+    "id": "pr54",
+    "role": "Forge",
+    "title": "Core: feed check (i26) plus sitemap, metadata, and hype checks (add-only)",
+    "pr": "https://github.com/slopryno/slopworks/pull/54",
+    "date": "2026-10-17"
+  },
+  {
+    "id": "pr53",
+    "role": "Comms",
+    "title": "Comms: page metadata, sitemap, robots.txt, llms.txt, and the style guide",
+    "pr": "https://github.com/slopryno/slopworks/pull/53",
+    "date": "2026-10-17"
+  },
+  {
+    "id": "pr52",
+    "role": "Forge",
+    "title": "Forge: hire and onboard Head of Comms (i28, i29)",
+    "pr": "https://github.com/slopryno/slopworks/pull/52",
+    "date": "2026-10-17"
+  },
+  {
+    "id": "pr51",
+    "role": "Sketch",
+    "title": "Scout: official changelog catch-up 0.53.0 to 0.70.2 (i25)",
+    "pr": "https://github.com/slopryno/slopworks/pull/51",
+    "date": "2026-10-17"
+  },
+  {
+    "id": "pr50",
+    "role": "Coordinator",
+    "title": "Coordinator: sprint 2 kickoff (CEO override i27); i25 and i26 approved",
+    "pr": "https://github.com/slopryno/slopworks/pull/50",
+    "date": "2026-10-17"
+  },
+  {
+    "id": "pr49",
+    "role": "Advisor",
+    "title": "Advisor: same-day after-action reviews (AARs), Lessons page, add-only checks, 7 real backfills",
+    "pr": "https://github.com/slopryno/slopworks/pull/49",
+    "date": "2026-10-17"
+  },
+  {
+    "id": "pr48",
+    "role": "Sweep",
+    "title": "Sweep: Team chat archive rollover (main page 99.9% → 50.7% of budget)",
+    "pr": "https://github.com/slopryno/slopworks/pull/48",
+    "date": "2026-10-17"
+  },
+  {
+    "id": "pr47",
+    "role": "Sweep",
+    "title": "Run log 2026-10-17: post-deploy check and Discussions status",
+    "pr": "https://github.com/slopryno/slopworks/pull/47",
+    "date": "2026-10-17"
+  },
+  {
+    "id": "pr46",
+    "role": "Advisor",
+    "title": "Advisor: fold repeats into existing entries (Scout); sign-offs first and real chat times (Forge)",
+    "pr": "https://github.com/slopryno/slopworks/pull/46",
+    "date": "2026-10-17"
+  },
+  {
+    "id": "pr45",
+    "role": "Forge",
+    "title": "Daily run 2026-10-17: 8 updates, 2 issues, 1 correction, Saturday research",
+    "pr": "https://github.com/slopryno/slopworks/pull/45",
+    "date": "2026-10-17"
+  },
+  {
+    "id": "pr44",
+    "role": "Forge",
+    "title": "Showcase 8/8: showcase CI checks (additions only), retro, cap restored",
+    "pr": "https://github.com/slopryno/slopworks/pull/44",
+    "date": "2026-10-17"
+  },
+  {
+    "id": "pr43",
+    "role": "Forge",
+    "title": "Showcase 7/8: Demo challenge page, labeled Demo",
+    "pr": "https://github.com/slopryno/slopworks/pull/43",
+    "date": "2026-10-17"
+  },
+  {
+    "id": "pr42",
+    "role": "Scoutmaster",
+    "title": "Showcase 6/8: demo challenge 1 research (experiment)",
+    "pr": "https://github.com/slopryno/slopworks/pull/42",
+    "date": "2026-10-17"
+  },
+  {
+    "id": "pr41",
+    "role": "Forge",
+    "title": "Showcase 5/8: Living Team cards with latest real handoffs",
+    "pr": "https://github.com/slopryno/slopworks/pull/41",
+    "date": "2026-10-17"
+  },
+  {
+    "id": "pr40",
+    "role": "Polish",
+    "title": "Showcase 4/8: outcome-led landing page",
+    "pr": "https://github.com/slopryno/slopworks/pull/40",
+    "date": "2026-10-17"
+  },
+  {
+    "id": "pr39",
+    "role": "Forge",
+    "title": "Showcase 3/8: two real case files",
+    "pr": "https://github.com/slopryno/slopworks/pull/39",
+    "date": "2026-10-17"
+  },
+  {
+    "id": "pr38",
+    "role": "Forge",
+    "title": "Showcase 2/8: Research Arena page",
+    "pr": "https://github.com/slopryno/slopworks/pull/38",
+    "date": "2026-10-17"
+  },
+  {
+    "id": "pr37",
+    "role": "Forge",
+    "title": "Showcase 1/8: shared label set, CEO override i24, sprint kickoff",
+    "pr": "https://github.com/slopryno/slopworks/pull/37",
+    "date": "2026-10-17"
+  },
+  {
+    "id": "pr36",
+    "role": "Librarian",
+    "title": "Direction: goal 6, showcase of the team's work (Ryno 2026-10-17)",
+    "pr": "https://github.com/slopryno/slopworks/pull/36",
+    "date": "2026-10-17"
+  },
+  {
+    "id": "pr35",
+    "role": "Librarian",
+    "title": "Showcase research round: 14 roles, CEO pitch i21 huddle, decision i22",
+    "pr": "https://github.com/slopryno/slopworks/pull/35",
+    "date": "2026-10-17"
+  },
+  {
+    "id": "pr34",
+    "role": "Forge",
+    "title": "Backlog: README badges from repo data (d6) and sprint results (i20)",
+    "pr": "https://github.com/slopryno/slopworks/pull/34",
+    "date": "2026-10-17"
+  },
+  {
+    "id": "pr33",
+    "role": "Forge",
+    "title": "Backlog: area filters on What's new and Known issues (d1) (i19)",
+    "pr": "https://github.com/slopryno/slopworks/pull/33",
+    "date": "2026-10-17"
+  },
+  {
+    "id": "pr32",
+    "role": "Forge",
+    "title": "Backlog: consistent focus rings plus re-cropped #27 screenshots (i18)",
+    "pr": "https://github.com/slopryno/slopworks/pull/32",
+    "date": "2026-10-17"
+  },
+  {
+    "id": "pr31",
+    "role": "Forge",
+    "title": "Backlog: contrast check in CI (d4) (i17)",
+    "pr": "https://github.com/slopryno/slopworks/pull/31",
+    "date": "2026-10-17"
+  },
+  {
+    "id": "pr30",
+    "role": "Coordinator",
+    "title": "Mini-sprint plan: CEO override i16, picks i17-i20",
+    "pr": "https://github.com/slopryno/slopworks/pull/30",
+    "date": "2026-10-17"
+  },
+  {
+    "id": "pr29",
+    "role": "Coordinator",
+    "title": "Team chat: UI/UX sprint results and retro",
+    "pr": "https://github.com/slopryno/slopworks/pull/29",
+    "date": "2026-10-17"
+  },
+  {
+    "id": "pr28",
+    "role": "Forge",
+    "title": "Design: consistent type scale and 70ch measure (i15)",
+    "pr": "https://github.com/slopryno/slopworks/pull/28",
+    "date": "2026-10-17"
+  },
+  {
+    "id": "pr27",
+    "role": "Forge",
+    "title": "Design: role names in body color with colored marker (i14)",
+    "pr": "https://github.com/slopryno/slopworks/pull/27",
+    "date": "2026-10-17"
+  },
+  {
+    "id": "pr26",
+    "role": "Forge",
+    "title": "Design: Team chat jump links and readability (i13)",
+    "pr": "https://github.com/slopryno/slopworks/pull/26",
+    "date": "2026-10-17"
+  },
+  {
+    "id": "pr25",
+    "role": "Forge",
+    "title": "Design: empty states that explain what appears and when (i12)",
+    "pr": "https://github.com/slopryno/slopworks/pull/25",
+    "date": "2026-10-17"
+  },
+  {
+    "id": "pr24",
+    "role": "Forge",
+    "title": "Design: compact mobile nav and header (i11)",
+    "pr": "https://github.com/slopryno/slopworks/pull/24",
+    "date": "2026-10-17"
+  },
+  {
+    "id": "pr23",
+    "role": "Forge",
+    "title": "Design: home page first impression: intro, stat strip, next steps (i10)",
+    "pr": "https://github.com/slopryno/slopworks/pull/23",
+    "date": "2026-10-17"
+  },
+  {
+    "id": "pr22",
+    "role": "Coordinator",
+    "title": "Team meeting with the new hires, UI/UX huddle and scored sprint, cap override logged",
+    "pr": "https://github.com/slopryno/slopworks/pull/22",
+    "date": "2026-10-17"
+  },
+  {
+    "id": "pr20",
+    "role": "Forge",
+    "title": "Research pipeline: standard reports, decision record, scoring gates, weekly cadence (CEO-approved)",
+    "pr": "https://github.com/slopryno/slopworks/pull/20",
+    "date": "2026-10-17"
+  },
+  {
+    "id": "pr19",
+    "role": "Forge",
+    "title": "New hires: Scoutmaster, Critic, User Advocate, Research Librarian, plus org groups and onboarding (CEO-approved)",
+    "pr": "https://github.com/slopryno/slopworks/pull/19",
+    "date": "2026-10-17"
+  },
+  {
+    "id": "pr18",
+    "role": "Forge",
+    "title": "Weekly research rotation: every role researches its area and brings ideas (CEO-approved)",
+    "pr": "https://github.com/slopryno/slopworks/pull/18",
+    "date": "2026-10-17"
+  },
+  {
+    "id": "pr17",
+    "role": "Forge",
+    "title": "Avatars v2: animated Grok Bot–style blobs, no tiles, livelier Team hover",
+    "pr": "https://github.com/slopryno/slopworks/pull/17",
+    "date": "2026-10-17"
+  },
+  {
+    "id": "pr16",
+    "role": "Forge",
+    "title": "Avatars, leadership Team page, Slack-style threaded Team chat, CEO pitch huddles (CEO sprint 2026-10-16)",
+    "pr": "https://github.com/slopryno/slopworks/pull/16",
+    "date": "2026-10-17"
+  },
+  {
     "id": "pr15",
     "role": "Forge",
     "title": "Standup, pitches and idea log, Team chat feeds, read-only Discussions, X drafts (CEO sprint 2026-10-16)",
