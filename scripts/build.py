@@ -146,11 +146,20 @@ def build():
     files["behind/index.html"] = page("behind/", "Behind the scenes", f"What each role found, dropped, or stripped in every run. Auto-merge is <strong>{e(state['auto_merge'])}</strong>. These are roles played in one daily routine, not separate live bots.", body, "data/runs.json")
 
     wins = load("wins")
+    research = sorted(load("research"), key=lambda r: r["date"], reverse=True)
+    rot = {r["role"]: (d["day"], r["focus"]) for d in sched.get("research", []) for r in d["roles"]}
+    TEAM_ROLE = {"Sketch": "Scout", "Lens": "Verify"}
+    def researched(n):
+        r = TEAM_ROLE.get(n, n)
+        day, focus = rot.get(r, ("", ""))
+        last = next((x for x in research if x["role"] == r), None)
+        lt = f' Last: <a href="../chat/#{e(last["id"])}">{e(last["topic"])}</a> ({last["date"]}).' if last else " No notes yet."
+        return f'<p><strong>Researches</strong> ({e(day)}s): {e(focus)}.{lt}</p>' if day else ""
     def tcard(n, t, r, o, f):
         w = [x for x in wins if x["role"] == n][:3]
         wl = "".join(f'<li><a href="{e(x["pr"])}">{e(x["title"])}</a> <time datetime="{x["date"]}">{x["date"]}</time></li>' for x in w) or "<li>No merged PRs yet.</li>"
         return (f'<article class="card lead" style="border-top:4px solid {color(n)}">{avatar(n, "../", 72)}<h2><a href="{REPO}/blob/main/bots/{f}">{e(n)}</a></h2>'
-                f'<p class="title">{e(t)}</p><p>{e(bio(n))}</p><p><strong>Owns:</strong> {e(o)}</p><h3>Recent wins</h3><ul>{wl}</ul></article>')
+                f'<p class="title">{e(t)}</p><p>{e(bio(n))}</p><p><strong>Owns:</strong> {e(o)}</p>{researched(n)}<h3>Recent wins</h3><ul>{wl}</ul></article>')
     files["team/index.html"] = page("team/", "The team", e(CREDIT) + " Each card comes from the bot's own instruction file, and the bios are written by the bots in their own words. One daily routine plays every role in turn, so these are roles, not separate accounts. Recent wins are the merged PRs each role made.",
                                     '<div class="grid">' + "".join(tcard(*x) for x in team()) + "</div>", "bots")
 
@@ -186,10 +195,23 @@ def build():
         return (f'<article class="card" id="{e(i["id"])}"><h3>{e(i["problem"])}</h3><p>Helps: {e(i["helps"])} · effort {e(i["effort"])} · builds: {e(i["builder"])}</p>{dec}'
                 f'{"<ul>" + cm + "</ul>" if cm else ""}<p class="meta"><span class="tag">{e(i["state"])}</span><span>pitched {e(i["date"])} by {e(i["by"])}</span></p></article>')
     ibody = "<h2>Ideas</h2><p>Pitches from the standup. Coordinator decides at Monday planning, Shield can veto on risk, and strong disagreement goes to the CEO. Rejected and later ideas stay here and can be re-pitched with new evidence.</p>" + ("".join(map(idea, ideas)) or "<p>No pitches yet.</p>")
+    research = sorted(load("research"), key=lambda r: r["date"], reverse=True)
+    latest = {}
+    for r in research:
+        latest.setdefault(r["role"], r)
+    def rnote(r):
+        tk = "".join(f"<li>{e(t)}</li>" for t in r["takeaways"])
+        src = " · ".join(f'<a href="{e(u)}">source {k + 1}</a>' for k, u in enumerate(r["sources"]))
+        idea = f'<p><strong>Idea:</strong> {e(r["idea"])}' + (f' (<a href="#{e(r["pitch"])}">pitched</a>)' if r.get("pitch") else "") + "</p>" if r.get("idea") else ""
+        return (f'<article class="card" id="{e(r["id"])}"><p class="hd">{avatar(r["role"], "../", 32)} <strong style="color:{color(r["role"])}">{e(r["role"])}</strong>'
+                f' <span class="meta"><time datetime="{r["date"]}">{r["date"]}</time></span></p><h3>{e(r["topic"])}</h3><ul>{tk}</ul>{idea}<p class="meta">{src}</p></article>')
+    rbody = ("<h2>Research</h2><p>Each role researches its own area once a week (see the <a href=\"../schedule/\">rotation</a>), reading public web pages only, and writes the takeaways in its own words. Ideas go through the pitch flow.</p>"
+             + ("".join(rnote(r) for r in sorted(latest.values(), key=lambda r: r["date"], reverse=True)) or "<p>No research notes yet.</p>"))
     fl = '<p>Follow Team chat: <a href="../chat.xml">RSS</a>, <a href="../chat.json">JSON</a>. To follow it with your own Grok Bot, paste this into a routine:</p><blockquote class="card"><p>Every morning, read https://slopryno.github.io/slopworks/chat.json and tell me about new pitches, decisions, and any debate between the Slopworks bots since yesterday: who pitched what, who pushed back, and what Coordinator decided and why. Stay quiet if nothing\'s new.</p></blockquote>'
-    files["chat/index.html"] = page("chat/", "Team chat", "The real handoffs between roles during each run, newest first. Nothing is staged; quiet days stay quiet. It never quotes readers or names anyone outside the team.", fl + sbody + ibody + f'<h2>Handoffs</h2><ul class="chat">{items}</ul>', "data/chat.json")
+    files["chat/index.html"] = page("chat/", "Team chat", "The real handoffs between roles during each run, newest first. Nothing is staged; quiet days stay quiet. It never quotes readers or names anyone outside the team.", fl + sbody + ibody + rbody + f'<h2>Handoffs</h2><ul class="chat">{items}</ul>', "data/chat.json")
     citems = ([("standup", x["id"], x["date"], f'Standup: {x["role"]}', f'Did: {x["did"]} Doing: {x["doing"]} Blockers: {x["blockers"]}', "chat/") for x in standup]
               + [("idea", i["id"], i.get("decided") or i["date"], f'Idea ({i["state"]}): {i["problem"]}', f'Pitched by {i["by"]}. ' + (i.get("reason") or ""), f'chat/#{i["id"]}') for i in ideas]
+              + [("research", r["id"], r["date"], f'Research ({r["role"]}): {r["topic"]}', " ".join(r["takeaways"]) + (" Idea: " + r["idea"] if r.get("idea") else ""), f'chat/#{r["id"]}') for r in research]
               + [("chat", c["id"], c["date"], f'{c["from"]} to {c["to"]}', c["text"], "chat/") for c in chat])
     citems = sorted(citems, key=lambda t: (t[2], t[1]), reverse=True)[:50]
     cdt = lambda d: datetime.fromisoformat(d).replace(hour=12, tzinfo=timezone.utc)
@@ -206,11 +228,13 @@ def build():
                                       "<h2>Shipped</h2>" + "".join(map(card, shipped)) + "<h2>Up next (ranked)</h2>" + "".join(map(card, backlog)), "data/design_backlog.json")
 
     srows = "".join(f'<tr><th scope="row">{e(i["when"])}</th><td>{e(i["what"])}</td></tr>' for i in sched["items"])
+    rot_html = "<h2>Research rotation</h2><p>Each role researches its own area once a week, using public web pages only (about 5 pages max, no X reads).</p><table><tbody>" + "".join(
+        f'<tr><th scope="row">{e(d["day"])}</th><td>' + "<br>".join(f'<strong>{e(r["role"])}</strong>: {e(r["focus"])}' for r in d["roles"]) + "</td></tr>" for d in sched.get("research", [])) + "</tbody></table>"
     lim = "".join(f"<li>{e(l)}</li>" for l in sched["limits"])
     last = runs[0] if runs else None
     status = f'Last run: <strong>{e(last["date"])}</strong> ({e(last["kind"])}), status <strong>{e(last["status"])}</strong>. Next: the daily run, around 9:15 AM ET.' if last else "No runs yet."
     files["schedule/index.html"] = page("schedule/", "Schedule and limits", "What to expect and when. Generated from the same schedule file the routines use.",
-                                        f'<p class="card">{status}</p><table><tbody>{srows}</tbody></table><h2>Limits, in plain words</h2><ul>{lim}</ul>', "data/schedule.json")
+                                        f'<p class="card">{status}</p><table><tbody>{srows}</tbody></table>' + rot_html + f'<h2>Limits, in plain words</h2><ul>{lim}</ul>', "data/schedule.json")
 
     feed = sorted([("update", x) for x in ups] + [("issue", x) for x in iss], key=lambda p: (p[1]["date"], p[1]["id"]), reverse=True)[:50]
     link = lambda k, x: f'{BASE}{"issues/" if k == "issue" else ""}#e{x["id"]}'
