@@ -6,8 +6,11 @@ sys.path.insert(0, str(ROOT / "scripts"))
 import check, build  # noqa: E402
 
 SCHED = json.loads((ROOT / "data/schedule.json").read_text())
-N = {"id": "r1", "date": "2026-10-20", "role": "Polish", "topic": "Type scales on static sites",
-     "takeaways": ["a", "b"], "sources": ["https://example.org/post"]}  # 2026-10-20 is a Tuesday
+N = {"id": "r1", "date": "2026-10-20", "role": "Polish", "kind": "rotation", "question": "What type scale reads best on mobile?",
+     "outcome": "finding", "finding": "F", "facts": ["a"], "inferences": ["b"], "evidence": ["https://example.org/post"],
+     "confidence": "medium", "status": "verified", "fresh_until": "2027-01-20"}  # 2026-10-20 is a Tuesday
+P = dict(N, outcome="proposal", existing_work="none", opportunity="o", alternatives="a", effort="S", risks="r",
+         experiment="e", success_metric="m", recommendation="investigate")
 
 
 class Rotation(unittest.TestCase):
@@ -28,18 +31,21 @@ class Rotation(unittest.TestCase):
 
 class Notes(unittest.TestCase):
     def test_valid(self):
-        self.assertEqual(check.validate([N], check.load_schema("research")), [])
-        self.assertEqual(check.research_errors([N], SCHED, []), [])
+        for n in (N, P, dict(N, outcome="no-change")):
+            self.assertEqual(check.validate([n], check.load_schema("research")), [])
+            self.assertEqual(check.research_errors([n], SCHED, []), [])
 
     def test_rules(self):
-        self.assertTrue(check.research_errors([dict(N, takeaways=["a"])], SCHED, []))
-        self.assertTrue(check.research_errors([dict(N, takeaways=["a", "b", "c", "d"])], SCHED, []))
-        self.assertTrue(check.research_errors([dict(N, sources=[])], SCHED, []))
-        self.assertTrue(check.research_errors([dict(N, sources=["https://e.org/%d" % i for i in range(6)])], SCHED, []))
-        self.assertTrue(check.research_errors([dict(N, sources=["http://e.org"])], SCHED, []))
-        self.assertTrue(check.research_errors([dict(N, sources=["https://x.com/a/status/1"])], SCHED, []))  # web only, no X reads
-        self.assertTrue(check.research_errors([dict(N, date="2026-10-21")], SCHED, []))  # not Polish's day
-        self.assertTrue(check.research_errors([dict(N, pitch="i404")], SCHED, []))
+        bad = [dict(N, evidence=[]), dict(N, evidence=["https://e.org/%d" % i for i in range(6)]), dict(N, evidence=["http://e.org"]),
+               dict(N, evidence=["https://x.com/a/status/1"]), dict(N, date="2026-10-21"), dict(N, pitch="i404"),
+               dict(N, facts=[]),  # verified needs facts, kept apart from inferences
+               dict(P, success_metric=""),  # proposals need the full report
+               dict(N, role="Advocate", date="2026-10-20"),  # demand claims are hypothesis until real feedback
+               dict(N, fresh_until=None)]
+        for b in bad:
+            self.assertTrue(check.research_errors([b], SCHED, []), b)
+        self.assertEqual(check.research_errors([dict(N, kind="focused", date="2026-10-21")], SCHED, []), [])  # focused any day
+        self.assertEqual(check.research_errors([dict(N, role="Advocate", status="hypothesis")], SCHED, []), [])
         self.assertEqual(check.research_errors([dict(N, pitch="i1")], SCHED, [{"id": "i1"}]), [])
         self.assertIn("research", check.DATA_FILES)
 

@@ -27,9 +27,39 @@
     },
     {
       "id": "research",
-      "when": "One or two roles a day, all week (in the daily run)",
+      "when": "One to three roles a day, all week (in the daily run)",
       "cron": "13 9 * * *",
       "what": "Weekly research rotation: each role reads up to about 5 public web pages in its own area and posts a short note. Ideas become pitches in the next standup."
+    },
+    {
+      "id": "week-mon",
+      "when": "Mondays: investigations",
+      "cron": "13 9 * * 1",
+      "what": "Coordinator: select the week's investigations from the consolidated research (on top of the daily run)."
+    },
+    {
+      "id": "week-tue",
+      "when": "Tuesdays: focused research",
+      "cron": "13 9 * * 2",
+      "what": "Assigned roles research the selected questions. Each role's own rotation slot keeps running for independent research."
+    },
+    {
+      "id": "week-wed",
+      "when": "Wednesdays: challenge and experiments",
+      "cron": "13 9 * * 3",
+      "what": "Critic challenges the strongest proposals, User Advocate checks the user problem, Shield and Trial weigh in as relevant, and cheap experiments run."
+    },
+    {
+      "id": "week-thu",
+      "when": "Thursdays: build",
+      "cron": "13 9 * * 4",
+      "what": "Approved, scored ideas with acceptance criteria are built through the usual review gates."
+    },
+    {
+      "id": "week-fri",
+      "when": "Fridays: measure and learn",
+      "cron": "13 9 * * 5",
+      "what": "Analyst measures against each success metric, Librarian records outcomes, and the team retro runs. Urgent security issues or major Grok Bot updates can interrupt any day."
     }
   ],
   "limits": [
