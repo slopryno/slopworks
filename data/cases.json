@@ -96,5 +96,54 @@
     "outcome": "Merged as PR #33 with the limit noted in the review.",
     "pr": 33,
     "idea": "i19"
+  },
+  {
+    "id": "case-hardening",
+    "date": "2026-10-17",
+    "kind": "real",
+    "title": "Moving the team's rules from prose into code",
+    "summary": "After Ryno shared @poteto's post on trusting agents, the team counted its own mistakes, built a helper so the right path is the default, and cut the rules the helper and CI now enforce.",
+    "shows": "Mistakes are counted from real records, then fixed in tools instead of more instructions.",
+    "steps": [
+      {
+        "label": "verified",
+        "role": "Coordinator",
+        "text": "Ryno's pitch i30: code first, then CI, minimal prose, least human review. Atlas leads the audit, Critic challenges it, Coordinator scores it.",
+        "link": "../chat/#c123"
+      },
+      {
+        "label": "verified",
+        "role": "Atlas",
+        "text": "31 of 247 CI runs had failed. Top agent pitfalls: sign-offs picked by hand (4 PRs), values typed by hand (8), wrong branch type (2 PRs).",
+        "link": "../chat/#c124"
+      },
+      {
+        "label": "hypothesis",
+        "role": "Critic",
+        "text": "Weakest assumption: that the bots will use the helper. Cut prose only where CI or the helper enforces the rule.",
+        "link": "../chat/#c125"
+      },
+      {
+        "label": "verified",
+        "role": "Core",
+        "text": "Built scripts/bot.py. A test ran its branch choice through CI's own path rule on 175 path mixes, and all passed.",
+        "link": "https://github.com/slopryno/slopworks/pull/57"
+      },
+      {
+        "label": "verified",
+        "role": "Core",
+        "text": "Schema-checked loaders in build.py. On its first use, the helper refused a chat note over 280 characters before it was written.",
+        "link": "https://github.com/slopryno/slopworks/pull/58"
+      },
+      {
+        "label": "verified",
+        "role": "Advisor",
+        "text": "Cut 7 prose rule passages that code or CI now enforces. Judgment calls stayed in prose.",
+        "link": "https://github.com/slopryno/slopworks/pull/59"
+      }
+    ],
+    "outcome": "Merged as #56 to #59. Every PR since has been opened with scripts/bot.py.",
+    "pr": 57,
+    "idea": "i30"
   }
 ]
