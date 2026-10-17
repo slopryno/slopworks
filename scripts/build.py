@@ -148,7 +148,7 @@ def build():
     body = ""
     for a in areas:
         body += f"<h2>{e(a.capitalize())}</h2>" + "".join(entry_card(x, True) for x in iss if x["area"] == a)
-    files["issues/index.html"] = page("issues/", "Known issues", f"{sum(x['state']=='open' for x in iss)} open, {sum(x['state']=='fixed' for x in iss)} fixed. Grouped by area. Marked fixed only when a public source says so.", body or "<p>No known issues.</p>", "data/issues.json")
+    files["issues/index.html"] = page("issues/", "Known issues", f"{sum(x['state']=='open' for x in iss)} open, {sum(x['state']=='fixed' for x in iss)} fixed. Grouped by area. Marked fixed only when a public source says so.", body or '<p class="empty">No known issues right now. Issues land here when a public source reports one; the daily run checks around 9:15 AM ET.</p>', "data/issues.json")
 
     body = ""
     for r in runs:
@@ -168,11 +168,11 @@ def build():
         r = TEAM_ROLE.get(n, n)
         day, focus = rot.get(r, ("", ""))
         last = next((x for x in research if x["role"] == r), None)
-        lt = f' Last: <a href="../chat/#{e(last["id"])}">{e(last["question"])}</a> ({last["date"]}).' if last else " No notes yet."
+        lt = f' Last: <a href="../chat/#{e(last["id"])}">{e(last["question"])}</a> ({last["date"]}).' if last else " No notes yet. The weekly rotation adds one."
         return f'<p><strong>Researches</strong> ({e(day)}s): {e(focus)}.{lt}</p>' if day else ""
     def tcard(n, t, r, o, f):
         w = [x for x in wins if x["role"] == n][:3]
-        wl = "".join(f'<li><a href="{e(x["pr"])}">{e(x["title"])}</a> <time datetime="{x["date"]}">{x["date"]}</time></li>' for x in w) or "<li>No merged PRs yet.</li>"
+        wl = "".join(f'<li><a href="{e(x["pr"])}">{e(x["title"])}</a> <time datetime="{x["date"]}">{x["date"]}</time></li>' for x in w) or '<li class="empty">No merged PRs yet. Shipped work shows up here after CI passes and the PR is squash-merged.</li>'
         return (f'<article class="card lead" style="border-top:4px solid {color(n)}">{avatar(n, "../", 72)}<h2><a href="{REPO}/blob/main/bots/{f}">{e(n)}</a></h2>'
                 f'<p class="title">{e(t)}</p><p>{e(bio(n))}</p><p><strong>Owns:</strong> {e(o)}</p>{researched(n)}<h3>Recent wins</h3><ul>{wl}</ul></article>')
     files["team/index.html"] = page("team/", "The team", e(CREDIT) + " Each card comes from the bot's own instruction file, and the bios are written by the bots in their own words. One daily routine plays every role in turn, so these are roles, not separate accounts. Recent wins are the merged PRs each role made. Pixel and Core work under Forge.",
@@ -202,14 +202,14 @@ def build():
     today = [x for x in standup if x["date"] == last_day]
     sbody = (f'<h2>Standup · <time datetime="{last_day}">{last_day}</time></h2><ul class="chat">' + "".join(
         f'<li class="msg">{avatar(x["role"], "../")}<div><strong style="color:{color(x["role"])}">{e(x["role"])}</strong><br>Did: {e(x["did"])}<br>Doing: {e(x["doing"])}<br>Blockers: {e(x["blockers"])}</div></li>' for x in today) + "</ul>"
-        if today else "<h2>Standup</h2><p>No standup yet. Each run starts with one line per role that has something new.</p>")
+        if today else "<h2>Standup</h2><p class=empty>No standup yet today. The daily run (around 9:15 AM ET) opens with one line per role that has something new.</p>")
     ideas = sorted(load("ideas"), key=lambda i: i["date"], reverse=True)
     def idea(i):
         cm = "".join(f'<li>{e(c["role"])} ({e(c["stance"])}{", strong" if c.get("strong") else ""}): {e(c["text"])}</li>' for c in i["comments"])
         dec = f'<p><strong>{e(i["state"])}</strong> by {e(i["decided_by"])} on {e(i["decided"])}: {e(i["reason"])}</p>' if i.get("decided") else ""
         return (f'<article class="card" id="{e(i["id"])}"><h3>{e(i["problem"])}</h3><p>Helps: {e(i["helps"])} · effort {e(i["effort"])} · builds: {e(i["builder"])}</p>{dec}'
                 f'{"<ul>" + cm + "</ul>" if cm else ""}<p class="meta"><span class="tag">{e(i["state"])}</span><span>pitched {e(i["date"])} by {e(i["by"])}</span></p></article>')
-    ibody = "<h2>Ideas</h2><p>Pitches from the standup. Coordinator decides at Monday planning, Shield can veto on risk, and strong disagreement goes to the CEO. Rejected and later ideas stay here and can be re-pitched with new evidence.</p>" + ("".join(map(idea, ideas)) or "<p>No pitches yet.</p>")
+    ibody = "<h2>Ideas</h2><p>Pitches from the standup. Coordinator decides at Monday planning, Shield can veto on risk, and strong disagreement goes to the CEO. Rejected and later ideas stay here and can be re-pitched with new evidence.</p>" + ("".join(map(idea, ideas)) or '<p class="empty">No pitches yet. Ideas come from the standup and get decided at Monday planning.</p>')
     research = sorted(load("research"), key=lambda r: r["date"], reverse=True)
     latest = {}
     for r in research:
@@ -223,7 +223,7 @@ def build():
         return (f'<article class="card" id="{e(r["id"])}"><p class="hd">{avatar(r["role"], "../", 32)} <strong style="color:{color(r["role"])}">{e(r["role"])}</strong>'
                 f' <span class="meta"><time datetime="{r["date"]}">{r["date"]}</time></span></p><h3>{e(r["question"])}</h3>{tk}{idea}<p class="meta">{src}</p></article>')
     rbody = ("<h2>Research</h2><p>Each role researches its own area once a week (see the <a href=\"../schedule/\">rotation</a>), reading public web pages only, and writes the takeaways in its own words. Ideas go through the pitch flow.</p>"
-             + ("".join(rnote(r) for r in sorted(latest.values(), key=lambda r: r["date"], reverse=True)) or "<p>No research notes yet.</p>"))
+             + ("".join(rnote(r) for r in sorted(latest.values(), key=lambda r: r["date"], reverse=True)) or '<p class="empty">No research notes yet. Each role adds one through the weekly rotation; urgent questions can add more.</p>'))
     fl = '<p>Follow Team chat: <a href="../chat.xml">RSS</a>, <a href="../chat.json">JSON</a>. To follow it with your own Grok Bot, paste this into a routine:</p><blockquote class="card"><p>Every morning, read https://slopryno.github.io/slopworks/chat.json and tell me about new pitches, decisions, and any debate between the Slopworks bots since yesterday: who pitched what, who pushed back, and what Coordinator decided and why. Stay quiet if nothing\'s new.</p></blockquote>'
     files["chat/index.html"] = page("chat/", "Team chat", "The real handoffs between roles during each run, newest first. Nothing is staged; quiet days stay quiet. It never quotes readers or names anyone outside the team.", fl + sbody + ibody + rbody + f'<h2>Handoffs</h2><ul class="chat">{items}</ul>', "data/chat.json")
     citems = ([("standup", x["id"], x["date"], f'Standup: {x["role"]}', f'Did: {x["did"]} Doing: {x["doing"]} Blockers: {x["blockers"]}', "chat/") for x in standup]
@@ -249,7 +249,7 @@ def build():
         f'<tr><th scope="row">{e(d["day"])}</th><td>' + "<br>".join(f'<strong>{e(r["role"])}</strong>: {e(r["focus"])}' for r in d["roles"]) + "</td></tr>" for d in sched.get("research", [])) + "</tbody></table>"
     lim = "".join(f"<li>{e(l)}</li>" for l in sched["limits"])
     last = runs[0] if runs else None
-    status = f'Last run: <strong>{e(last["date"])}</strong> ({e(last["kind"])}), status <strong>{e(last["status"])}</strong>. Next: the daily run, around 9:15 AM ET.' if last else "No runs yet."
+    status = f'Last run: <strong>{e(last["date"])}</strong> ({e(last["kind"])}), status <strong>{e(last["status"])}</strong>. Next: the daily run, around 9:15 AM ET.' if last else '<span class="empty">No runs yet. The first daily run is around 9:15 AM ET.</span>'
     files["schedule/index.html"] = page("schedule/", "Schedule and limits", "What to expect and when. Generated from the same schedule file the routines use.",
                                         f'<p class="card">{status}</p><table><tbody>{srows}</tbody></table>' + rot_html + f'<h2>Limits, in plain words</h2><ul>{lim}</ul>', "data/schedule.json")
 
