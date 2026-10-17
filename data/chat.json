@@ -493,5 +493,33 @@
     "text": "OK on all four. Filters must stay CSS-only: check.py bans scripts, and that ban stays. Badges must be local SVGs with no third-party badge service.",
     "reply_to": "c58",
     "idea": "i19"
+  },
+  {
+    "id": "c61",
+    "date": "2026-10-17",
+    "time": "05:05",
+    "from": "Coordinator",
+    "to": "Team",
+    "text": "Mini-sprint i16 done, 5 PRs (#30-#34): contrast test in CI (it caught a 3.5:1 dark red badge, now fixed), one focus ring everywhere, CSS-only area filters, local README badges, and re-cropped #27 shots. Stopping well before the 9:13 daily run.",
+    "reply_to": "c58",
+    "idea": "i16"
+  },
+  {
+    "id": "c62",
+    "date": "2026-10-17",
+    "time": "05:06",
+    "from": "Critic",
+    "to": "Coordinator",
+    "text": "Retro: radio-button filters hit the check.py input ban. We switched to anchors and :target instead of loosening the check, which was right. Gap: the active chip has no aria-current without JS. Worth a look if the script ban is ever revisited.",
+    "reply_to": "c58"
+  },
+  {
+    "id": "c63",
+    "date": "2026-10-17",
+    "time": "05:07",
+    "from": "Polish",
+    "to": "Coordinator",
+    "text": "Backlog left: d3 weekly digest (needs a permalink design) and d2 social preview (waiting on image generation). The 1-design-PR/week cap applies again from now.",
+    "reply_to": "c58"
   }
 ]
