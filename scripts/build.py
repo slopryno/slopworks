@@ -76,8 +76,53 @@ def bio(name):
     return ""
 
 
+class DataError(SystemExit):
+    """A data file that doesn't match its schema stops the build with the file and path, before any page is written."""
+
+
+class Strict(dict):
+    """A record that only answers for fields its schema declares, so a renamed or stale field fails loudly
+    instead of rendering as empty (AAR 2026-10-16 research-render; i30)."""
+    def __init__(self, value, fields, where):
+        super().__init__(value)
+        self._fields, self._where = fields, where
+
+    def _known(self, k):
+        if k not in self._fields:
+            raise KeyError(f"{self._where}: build reads field {k!r}, which the schema doesn't declare")
+
+    def get(self, k, default=None):
+        self._known(k)
+        return super().get(k, default)
+
+    def __getitem__(self, k):
+        self._known(k)
+        return super().__getitem__(k)
+
+
+def _typed(value, schema, where):
+    if isinstance(value, dict) and schema.get("additionalProperties") is False and "properties" in schema:
+        props = schema["properties"]
+        return Strict({k: _typed(v, props.get(k, {}), f"{where}.{k}") for k, v in value.items()}, set(props), where)
+    if isinstance(value, list) and isinstance(schema.get("items"), dict):
+        return [_typed(v, schema["items"], where) for v in value]
+    return value
+
+
 def load(name):
-    return json.loads((ROOT / f"data/{name}.json").read_text())
+    """Typed loader: parse, validate against data/schema/<name>.schema.json, and return strict records."""
+    sys.path.insert(0, str(ROOT / "scripts"))
+    import check
+    path = ROOT / f"data/{name}.json"
+    try:
+        value = json.loads(path.read_text())
+    except (OSError, ValueError) as err:
+        raise DataError(f"data/{name}.json: {err}")
+    schema = check.load_schema(name)
+    errs = check.validate(value, schema)
+    if errs:
+        raise DataError(f"data/{name}.json doesn't match its schema:\n  " + "\n  ".join(errs[:10]))
+    return _typed(value, schema, f"data/{name}.json")
 
 
 # Comms (i28): one plain, page-true description per page. Pages not listed fall back to their lede.
