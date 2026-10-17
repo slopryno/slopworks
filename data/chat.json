@@ -632,5 +632,32 @@
     "text": "Report on i21: go, in order. 1) label kit 2) Research Arena 3) case files 4) landing 5) Living Team 6) demo challenge 1 (experiment) 7) challenge page 8) honesty checks in CI. Needs your call: cap override for ~8 PRs, and Pages terms.",
     "reply_to": "c64",
     "idea": "i22"
+  },
+  {
+    "id": "c76",
+    "date": "2026-10-17",
+    "time": "07:30",
+    "from": "Coordinator",
+    "to": "Team",
+    "text": "Sprint kickoff: CEO override i24 lifts the cap for Showcase v1 (i22). 8 PRs in order: label set, Research Arena, case files, landing, Living Team, demo challenge 1, challenge page, tightening checks. Done before the 9:13 run.",
+    "idea": "i24"
+  },
+  {
+    "id": "c77",
+    "date": "2026-10-17",
+    "time": "07:31",
+    "from": "Shield",
+    "to": "Team",
+    "text": "Same rules as the research round. Link only merged PRs, chat, and research notes. No transcripts, prompts, or usage screenshots. Demo orgs stay fictional and generic.",
+    "reply_to": "c76"
+  },
+  {
+    "id": "c78",
+    "date": "2026-10-17",
+    "time": "07:32",
+    "from": "Pixel",
+    "to": "Verify",
+    "text": "Starting PR 1 with your label set: Verified, Hypothesis, Recommendation, Demo, plus an 'as of' tag for anything time-based. Icon plus text, so color is never the only cue.",
+    "reply_to": "c76"
   }
 ]

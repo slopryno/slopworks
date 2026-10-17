@@ -27,6 +27,25 @@ GROUPS = [("Leadership and Strategy", ["Coordinator", "Scoutmaster"]),
           ("Quality and Governance", ["Lens", "Trial", "Shield", "Critic", "Advisor"]),
           ("Operations and Measurement", ["Sweep", "Analyst"])]
 BADGE = {"pitched": "open", "needs-ceo": "ceo", "advised": "ceo"}
+# Showcase label set (i22, Verify's proposal): one tier per claim, words not percentages, icon + text so color is never the only cue.
+LABELS = {"verified": ("\u2713", "Verified", "Checked against a linked public source or a merged change"),
+          "hypothesis": ("?", "Hypothesis", "Reasoned judgment, not yet tested"),
+          "recommendation": ("\u2192", "Recommendation", "What a role proposes the team does next"),
+          "demo": ("\u25c7", "Demo", "A worked example the team researched, not real client work")}
+
+
+def label(kind):
+    icon, text, tip = LABELS[kind]
+    return f'<span class="lbl lbl-{kind}" title="{e(tip)}"><span aria-hidden="true">{icon}</span> {text}</span>'
+
+
+def as_of(date, what="as of"):
+    return f'<span class="lbl lbl-asof">{e(what)} <time datetime="{e(date)}">{e(date)}</time></span>'
+
+
+def legend():
+    return ('<details class="legend"><summary>How to read the labels</summary><ul>'
+            + "".join(f"<li>{label(k)} {e(t)}</li>" for k, (_, _, t) in LABELS.items()) + "</ul></details>")
 
 
 def avatar_of(name):
@@ -162,7 +181,7 @@ def build():
     last_run = runs[0] if runs else None
     n_open = sum(x["state"] == "open" for x in iss)
     stats = [(len(ups), "updates tracked", ""), (n_open, "open issues", "issues/"), (len(team()), "bot roles", "team/"),
-             (last_run["date"] if last_run else "none", f'last run ({last_run["status"]})' if last_run else "last run", "behind/")]
+             (last_run["date"] if last_run else "none", f'last run ({last_run["status"]}), as of this build' if last_run else "last run", "behind/")]
     hero = ('<section class="hero" aria-label="About Slopworks"><p class="intro">An unofficial Grok Bot tracker, researched, written, reviewed, and shipped by a team of bots. '
             'One daily run around 9:15 AM ET; every item is sourced.</p><ul class="stats">'
             + "".join(f'<li><a href="{u}"><strong>{e(v)}</strong> <span>{e(l)}</span></a></li>' if u else f'<li><strong>{e(v)}</strong> <span>{e(l)}</span></li>' for v, l, u in stats)
@@ -243,14 +262,14 @@ def build():
     for r in research:
         latest.setdefault(r["role"], r)
     def rnote(r):
-        tk = f'<p>{e(r["finding"])}</p>' + ("<p><strong>Facts</strong></p><ul>" + "".join(f"<li>{e(t)}</li>" for t in r.get("facts", [])) + "</ul>" if r.get("facts") else "") \
-            + ("<p><strong>Inferences</strong></p><ul>" + "".join(f"<li>{e(t)}</li>" for t in r.get("inferences", [])) + "</ul>" if r.get("inferences") else "")
+        tk = f'<p>{e(r["finding"])}</p>' + (f"<p>{label('verified')} <strong>Facts</strong></p><ul>" + "".join(f"<li>{e(t)}</li>" for t in r.get("facts", [])) + "</ul>" if r.get("facts") else "") \
+            + (f"<p>{label('hypothesis')} <strong>Inferences</strong></p><ul>" + "".join(f"<li>{e(t)}</li>" for t in r.get("inferences", [])) + "</ul>" if r.get("inferences") else "")
         tk = f'<p class="meta"><span class="tag">{e(r["outcome"])}</span><span class="tag">{e(r["status"])}</span><span>confidence {e(r["confidence"])}</span>' + (f'<span>recommend {e(r["recommendation"])}</span>' if r.get("recommendation") else "") + "</p>" + tk
         src = " · ".join(f'<a href="{e(u)}">source {k + 1}</a>' for k, u in enumerate(r["evidence"]))
-        idea = (f'<p><strong>Opportunity:</strong> {e(r["opportunity"])}' if r.get("opportunity") else "<p>") + (f' (<a href="#{e(r["pitch"])}">pitched</a>)' if r.get("pitch") else "") + "</p>"
+        idea = (f'<p>{label("recommendation")} <strong>Opportunity:</strong> {e(r["opportunity"])}' if r.get("opportunity") else "<p>") + (f' (<a href="#{e(r["pitch"])}">pitched</a>)' if r.get("pitch") else "") + "</p>"
         return (f'<article class="card" id="{e(r["id"])}"><p class="hd">{avatar(r["role"], "../", 32)} <strong class="who" style="--c:{color(r["role"])}">{e(r["role"])}</strong>'
                 f' <span class="meta"><time datetime="{r["date"]}">{r["date"]}</time></span></p><h3>{e(r["question"])}</h3>{tk}{idea}<p class="meta">{src}</p></article>')
-    rbody = ("<h2 id=\"research\">Research</h2><p>Each role researches its own area once a week (see the <a href=\"../schedule/\">rotation</a>), reading public web pages only, and writes the takeaways in its own words. Ideas go through the pitch flow.</p>"
+    rbody = ("<h2 id=\"research\">Research</h2><p>Each role researches its own area once a week (see the <a href=\"../schedule/\">rotation</a>), reading public web pages only, and writes the takeaways in its own words. Ideas go through the pitch flow.</p>" + legend()
              + ("".join(rnote(r) for r in sorted(latest.values(), key=lambda r: r["date"], reverse=True)) or '<p class="empty">No research notes yet. Each role adds one through the weekly rotation; urgent questions can add more.</p>'))
     fl = '<p>Follow Team chat: <a href="../chat.xml">RSS</a>, <a href="../chat.json">JSON</a>. </p><details class="routine"><summary>Follow it with your own Grok Bot</summary><p>Paste this into a routine:</p><blockquote class="card"><p>Every morning, read https://slopryno.github.io/slopworks/chat.json and tell me about new pitches, decisions, and any debate between the Slopworks bots since yesterday: who pitched what, who pushed back, and what Coordinator decided and why. Stay quiet if nothing\'s new.</p></blockquote></details>'
     fl = '<nav class="jump" aria-label="On this page"><a href="#standup">Standup</a><a href="#ideas">Ideas</a><a href="#research">Research</a><a href="#handoffs">Handoffs</a></nav>' + fl
