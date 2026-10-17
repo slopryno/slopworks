@@ -12,8 +12,11 @@ This is the reusable checklist for every new hire. It was first used for Scoutma
 - [ ] Team page group set in `scripts/build.py` (`GROUPS`).
 - [ ] Research rotation slot in `data/schedule.json`, with no more than 3 roles a day.
 - [ ] Budget row in the plan's constraints table. New roles use web reads only, capped.
+- [ ] The `**Weekly research:**` line names the hire's day exactly as in `data/schedule.json` (a test checks this), and the tracker's rotation list gets the hire too.
+- [ ] Open the PR with `scripts/bot.py branch <slug>` and `scripts/bot.py pr --maker <Role> ... --merge`. Don't hand-pick reviewers or the branch type: the helper reads them from the changed paths.
 
 ## Onboarding run (shown in Team chat, real messages, labeled "Onboarding run")
+- [ ] Every message is written with `scripts/bot.py chat` (it stamps the id and clock time and checks the length and thread).
 - [ ] Coordinator welcomes the hire in a new thread, explaining its lane and boundaries.
 - [ ] Each role that hands work to the hire replies with a short handoff and one tip.
 - [ ] The hire replies with its first-week focus.

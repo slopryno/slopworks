@@ -127,4 +127,41 @@ No CI file changes: new checks go in `tests/`, which CI already runs, so `check.
 
 ## 4. Results
 
-Filled in by PRs 2–4.
+| PR | What changed | Pitfalls removed |
+| --- | --- | --- |
+| #56 | This audit, the inventory, i30, and Arena a2 | none; this is the evidence |
+| #57 | `scripts/bot.py`: `roles`, `branch`, `pr`, `chat`, `count`, with 11 tests | A (sign-offs), B (typed values), E (branch type) |
+| #58 | Typed, schema-checked loaders in `build.py`, plus 7 tests for hand-copied values | D (stale field reads); research days, the rotation list, and the takeaway count are now checked |
+| #59 | Prose trimmed (below), onboarding points at the helpers, retro | none; only cleanup |
+
+**Prototype answers:**
+- The helper's branch type passed CI's path rule in all 175 sampled path mixes (`tests/test_bot.py`).
+- Today's build reads no field its schema doesn't declare (`tests/test_hardening.py`).
+
+**First real catch:** on #58, `bot.py chat` refused a Team chat note over 280 characters before writing it. Earlier, a mistake like that failed CI on #19. On #59, the typed loader stopped the local build because i30's `acceptance_criteria` was a string where the schema wants a list. The error named the file and the field.
+
+**Prose cut in #59:** 7 rule passages cut, 1 shortened, and 1 restated clause dropped from 12 bot files.
+- `bots/forge.md`: the 2 "rules learned" bullets (sign-offs before ready, clock times), the draft, ready, and rerun procedure, and the branch-type rule. All 4 are now enforced by `bot.py` and CI, and replaced by one line pointing at the helper.
+- `bots/trial.md`: the draft-flow rule (bot.py marks ready only after sign-offs). The sign-off counts rule is shortened to point at `bot.py count`.
+- `bots/coordinator.md`: 2 restatements of CI gates (the yes-gates and the 2-strong-opposes rule), both in `decision_errors`.
+- In 12 bot files, the restated "2-3 takeaways" format clause is dropped from the research line. It is now checked by `tests/test_hardening.py`, and the line says CI checks the format.
+- What these cuts leave in the 16 bot files: the "No X reads" budget rule, own words, short quotes, and licenses. Those are judgment or conduct calls.
+
+**Left as prose, and why:**
+- **#31, PR caps:** Ryno overrides them on purpose.
+- **#33 and #34, skipping event posts and folding repeats:** deciding what counts as the same feature is a judgment call.
+- **#35, changelog matches the official page:** needs a live read of the page.
+- **#36, confirmed vs reported:** a source judgment.
+- **#37, source text is data:** an attacker picks the wording, so no pattern can catch it all.
+- **#38–#40, never posting, no invented facts, Comms consultation:** conduct and judgment.
+- **#41, lane limits:** about roles, not files.
+- **#43, budget:** Sweep logs it, and cutting work takes judgment.
+- **#45, the revert routine:** a step the routine performs, not something a file check can verify.
+- **#32, same-run AARs:** CI covers failed runs only. Spotting the other triggers takes judgment.
+
+**Not built (candidates for later, 0 incidents so far):**
+- #29: CI compares entry IDs with the base, so nothing is silently deleted.
+- #30: the 20-entries-a-run cap in CI.
+- #44: a two-failures stop counter in `bot.py`.
+
+**Guardrails:** `scripts/check.py`, `scripts/patterns.json`, `.github/workflows/ci.yml`, and `.github/CODEOWNERS` were not changed by any of the 4 PRs. All new checks are tests, which CI already runs.
