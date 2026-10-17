@@ -4712,5 +4712,43 @@
     "timestamp": "2026-10-17T19:30-04:00",
     "status": "rejected",
     "note": "over the daily sign-off cap (6)"
+  },
+  {
+    "id": "pr_merged-pr75",
+    "agent": "Critic",
+    "task": "#75: Critic: cut noise (i36): one pitch badge per thread, legends only where needed, shorter Team intro",
+    "type": "pr_merged",
+    "base_xp": 25,
+    "quality_pct": 100,
+    "reviewer": "Lens",
+    "evidence": "https://github.com/slopryno/slopworks/pull/75",
+    "timestamp": "2026-10-17T19:32-04:00",
+    "status": "approved"
+  },
+  {
+    "id": "signoff-pr75-lens",
+    "agent": "Lens",
+    "task": "Signed off #75: Critic: cut noise (i36): one pitch badge per thread, legends only where needed, shorter Team intro",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Critic",
+    "evidence": "https://github.com/slopryno/slopworks/pull/75#issuecomment-6243117187",
+    "timestamp": "2026-10-17T19:32-04:00",
+    "status": "rejected",
+    "note": "over the daily sign-off cap (6)"
+  },
+  {
+    "id": "signoff-pr75-trial",
+    "agent": "Trial",
+    "task": "Signed off #75: Critic: cut noise (i36): one pitch badge per thread, legends only where needed, shorter Team intro",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Critic",
+    "evidence": "https://github.com/slopryno/slopworks/pull/75#issuecomment-6243117373",
+    "timestamp": "2026-10-17T19:32-04:00",
+    "status": "rejected",
+    "note": "over the daily sign-off cap (6)"
   }
 ]
