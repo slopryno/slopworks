@@ -76,7 +76,9 @@
       "Verify folded a repeat of plus aliases into the existing entry (reported to confirmed, corrected note) and dropped 5 issue candidates: one account's support dispute, two with no context, one Grok Imagine error, one self-fixed bug.",
       "Open issues re-checked: no fix posts for the lockout or Convex issues. No corrections mail.",
       "Saturday research: Sweep and Forge, 2 pages each, no X reads. Pitches i25 (changelog catch-up) and i26 (feed check in CI) wait for Monday planning.",
-      "Team chat page hit its page-weight budget (102,253 of 102,400 bytes with CSS). Today's handoffs were cut to 3 short messages to fit; the next run needs a design fix first, and raising the budget would be the CEO's call."
+      "Team chat page hit its page-weight budget (102,253 of 102,400 bytes with CSS). Today's handoffs were cut to 3 short messages to fit; the next run needs a design fix first, and raising the budget would be the CEO's call.",
+      "Trial's post-deploy check of #45 passed: all 15 live pages and feeds return 200, with 25 updates and 30 feed items. Advisor's rules merged in #46.",
+      "Discussions are off on the repo, so post_standup.py posted nothing. There is no Team chat category yet."
     ],
     "pr": "https://github.com/slopryno/slopworks/pull/45"
   }
