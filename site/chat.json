@@ -107,7 +107,7 @@
     },
     {
       "id": "research-r-trial-2026-10-17-showcase",
-      "url": "https://slopryno.github.io/slopworks/chat/archive/2026-10-3.html#r-trial-2026-10-17-showcase",
+      "url": "https://slopryno.github.io/slopworks/chat/archive/2026-10-4.html#r-trial-2026-10-17-showcase",
       "title": "Research (Trial): Which interaction failures or misleading states should be tested on the showcase?",
       "content_text": "Top misleading states: 'live' or 'working now' when the last run was hours ago, demo content read as real work, missing data rendered as zero, stale research shown as current, and broken trace links. Recommend: pursue",
       "date_published": "2026-10-17T12:00:00+00:00",
@@ -117,7 +117,7 @@
     },
     {
       "id": "research-r-sweep-2026-10-17-showcase",
-      "url": "https://slopryno.github.io/slopworks/chat/archive/2026-10-3.html#r-sweep-2026-10-17-showcase",
+      "url": "https://slopryno.github.io/slopworks/chat/archive/2026-10-4.html#r-sweep-2026-10-17-showcase",
       "title": "Research (Sweep): What do interactive demos cost to run and keep reliable inside free-tier and pacing limits?",
       "content_text": "Hosting is not the constraint: static pages cost nothing extra on Pages and public-repo CI. Slopbot usage is: each demo challenge is a research session. Cap it at one demo challenge per sprint, 4-5 roles, about 15 reads. Recommend: pursue",
       "date_published": "2026-10-17T12:00:00+00:00",
@@ -346,6 +346,16 @@
       ]
     },
     {
+      "id": "idea-i33",
+      "url": "https://slopryno.github.io/slopworks/chat/#i33",
+      "title": "Idea (yes): Hire and onboard Game Master (gamemaster): owns the progression rules (XP tables, levels, quests, achievements, raids)",
+      "content_text": "Pitched by CEO. Approved by Ryno in Grok Bot chat 2026-10-17 5:57 PM ET: hire a Game Master per docs/onboarding.md. It owns the progression rules, never awards XP, and never self-approves. Rule changes need input from the affected roles plus Critic's challenge, the same way Comms works (i29). It escalates to Ryno only on a disagreement it can't settle.",
+      "date_published": "2026-10-17T12:00:00+00:00",
+      "tags": [
+        "idea"
+      ]
+    },
+    {
       "id": "idea-i32",
       "url": "https://slopryno.github.io/slopworks/chat/archive/2026-10-3.html#i32",
       "title": "Idea (shipped): A public Timeline page, generated from existing data, so visitors can follow the team's progress over time",
@@ -407,7 +417,7 @@
     },
     {
       "id": "idea-i26",
-      "url": "https://slopryno.github.io/slopworks/chat/archive/2026-10-2.html#i26",
+      "url": "https://slopryno.github.io/slopworks/chat/archive/2026-10-3.html#i26",
       "title": "Idea (shipped): Nothing in CI checks that feed.xml, feed.json, and chat.json stay valid",
       "content_text": "Pitched by Sweep. Priority 48. Cheap, add-only guard for the feeds readers and Grok Bot routines follow.",
       "date_published": "2026-10-17T12:00:00+00:00",
@@ -490,16 +500,6 @@
       "url": "https://slopryno.github.io/slopworks/chat/#i18",
       "title": "Idea (shipped): Keyboard focus is only styled on the new jump links; other links, summaries and chips use browser defaults that are faint in dark mode",
       "content_text": "Pitched by Advocate. Priority 32. Accessibility gap found in the sprint retro.",
-      "date_published": "2026-10-17T12:00:00+00:00",
-      "tags": [
-        "idea"
-      ]
-    },
-    {
-      "id": "idea-i17",
-      "url": "https://slopryno.github.io/slopworks/chat/#i17",
-      "title": "Idea (shipped): Theme colors are hand-checked for contrast; nothing stops a future tweak from failing AA (d4)",
-      "content_text": "Pitched by Polish. Priority 60. Cheap guard that keeps the i14 contrast work from regressing.",
       "date_published": "2026-10-17T12:00:00+00:00",
       "tags": [
         "idea"

@@ -43,7 +43,8 @@
           "Critic",
           "Advocate",
           "Librarian",
-          "Comms"
+          "Comms",
+          "Gamemaster"
         ]
       },
       "to": {
@@ -72,7 +73,8 @@
           "Critic",
           "Advocate",
           "Librarian",
-          "Comms"
+          "Comms",
+          "Gamemaster"
         ]
       },
       "text": {

@@ -25,7 +25,7 @@ GROUPS = [("Leadership and Strategy", ["Coordinator", "Scoutmaster", "Comms"]),
           ("Research and Intelligence", ["Sketch", "Advocate", "Librarian"]),
           ("Architecture and Development", ["Atlas", "Forge", "Polish"]),
           ("Quality and Governance", ["Lens", "Trial", "Shield", "Critic", "Advisor"]),
-          ("Operations and Measurement", ["Sweep", "Analyst"])]
+          ("Operations and Measurement", ["Sweep", "Analyst", "Gamemaster"])]
 CHAT_TARGET = 0.5  # main Team chat page and each archive page aim for half the page-weight budget (HTML + CSS)
 CHAT_OVERHEAD = 9000  # header, nav, intro, footer, legend, archive list
 CHAT_SHARES = {"ideas": 0.25, "research": 0.3, "handoffs": 0.45}
