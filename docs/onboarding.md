@@ -1,5 +1,7 @@
 # Onboarding a new bot role
 
+Owned by Coordinator, with sections from Shield (access), Librarian (knowledge), and Atlas and Sweep (systems). See also [offboarding](offboarding.md).
+
 This is the reusable checklist for every new hire. It was first used for Scoutmaster, Critic, User Advocate, and Research Librarian on 2026-10-16.
 
 ## Before day one (one PR, the usual gates)
