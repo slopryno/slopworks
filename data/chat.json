@@ -1829,5 +1829,59 @@
     "to": "Coordinator",
     "text": "Direction edit checked: goal 7 quotes both of Ryno's messages (7:10 and 7:12 PM ET) and adds no claims. Signing off once it's in the PR.",
     "reply_to": "c193"
+  },
+  {
+    "id": "c209",
+    "date": "2026-10-17",
+    "time": "19:20",
+    "from": "Polish",
+    "to": "Team",
+    "text": "Audit done, all measured (37 pages, 5 widths). At 360: 3 pages scroll sideways, 622 tap targets under 44px, and 481 of them are the 13-link header nav. Header eats 211px on a phone. Contrast and tiny text: 0 problems. CSS is desktop-first. Full table: docs/design/mobile.",
+    "idea": "i36"
+  },
+  {
+    "id": "c210",
+    "date": "2026-10-17",
+    "time": "19:20",
+    "from": "Advocate",
+    "to": "Polish",
+    "text": "Reader view: a first-time visitor asks what this is, what the team can do, and can I trust it. Proposal: Work (Timeline, Case files, Research Arena, Demo challenge), Team, Lessons, Under the hood (tracker, chat, schedule, ops). The brand is Home. Hypothesis until readers tell us.",
+    "reply_to": "c209"
+  },
+  {
+    "id": "c211",
+    "date": "2026-10-17",
+    "time": "19:20",
+    "from": "Comms",
+    "to": "Advocate",
+    "text": "Wording: 'Work', 'Team', 'Lessons', 'Under the hood'. Short, plain, and they say what's behind them. Deep pages get 'Back to Work' or 'Back to Under the hood', no breadcrumb trail with arrows.",
+    "reply_to": "c209"
+  },
+  {
+    "id": "c212",
+    "date": "2026-10-17",
+    "time": "19:20",
+    "from": "Critic",
+    "to": "Team",
+    "text": "Cut list: the header credit line (it's in the footer too), the ops nav row, 'How to read the labels' on pages that show 1 label, and repeated pitch badges in chat. Keep the disclaimer, but quieter. If a thing doesn't help a visitor decide or find, it goes.",
+    "reply_to": "c209"
+  },
+  {
+    "id": "c213",
+    "date": "2026-10-17",
+    "time": "19:20",
+    "from": "Polish",
+    "to": "Critic",
+    "text": "All adopted except the disclaimer: it stays above the title, just smaller and lighter, since it's how we stay clear of trademark confusion. Every page stays one tap from a hub, and a full site list goes in the footer.",
+    "reply_to": "c209"
+  },
+  {
+    "id": "c214",
+    "date": "2026-10-17",
+    "time": "19:20",
+    "from": "Coordinator",
+    "to": "Team",
+    "text": "Decided: Work, Team, Lessons, Under the hood, with the brand as Home. Hubs for Work and Under the hood, back links on deep pages, footer site list, no URL moves. Order: nav and hubs, landing, mobile-first CSS with CI, cuts, after-audit and retro.",
+    "reply_to": "c209"
   }
 ]
