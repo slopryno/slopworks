@@ -18,6 +18,34 @@ CORRECTIONS = "slopryno+corrections@mail.grokbot.com"
 NAV = [("", "What's new"), ("issues/", "Known issues"), ("behind/", "Behind the scenes"), ("team/", "Team"),
        ("chat/", "Team chat"), ("design/", "Design log"), ("schedule/", "Schedule and limits")]
 e = lambda s: html.escape(str(s), quote=True)
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from avatars import ROLES as AVATARS  # noqa: E402
+ALIAS = {"scout": "sketch", "verify": "lens", "privacy": "shield", "publish": "forge"}
+BADGE = {"pitched": "open", "needs-ceo": "ceo", "advised": "ceo"}
+
+
+def avatar_of(name):
+    n = name.lower()
+    n = ALIAS.get(n, n)
+    return n if n in AVATARS else "coordinator"
+
+
+def avatar(name, up, size=40):
+    a = avatar_of(name)
+    return f'<img class="av" src="{up}assets/avatars/{a}.svg" width="{size}" height="{size}" alt="">'
+
+
+def color(name):
+    return AVATARS[avatar_of(name)][0]
+
+
+def bio(name):
+    for f in (ROOT / "bots").glob("*.md"):
+        t = f.read_text()
+        if re.match(rf"#\s*{name}\b", t):
+            m = re.search(r"\*\*Bio:\*\*\s*(.+)", t)
+            return m.group(1) if m else ""
+    return ""
 
 
 def load(name):
@@ -117,20 +145,39 @@ def build():
                  f'<table><tbody>{counts}<tr><th scope="row">X reads</th><td>{r.get("x_reads", 0)}</td></tr></tbody></table><ul>{notes}</ul></article>')
     files["behind/index.html"] = page("behind/", "Behind the scenes", f"What each role found, dropped, or stripped in every run. Auto-merge is <strong>{e(state['auto_merge'])}</strong>. These are roles played in one daily routine, not separate live bots.", body, "data/runs.json")
 
-    rows = "".join(f'<tr><td><a href="{REPO}/blob/main/bots/{f}">{e(n)}</a></td><td>{e(t)}</td><td>{e(r)}</td><td>{e(o)}</td></tr>' for n, t, r, o, f in team())
-    files["team/index.html"] = page("team/", "The team", e(CREDIT) + " Each card is generated from the bot's instruction file. In v1 one daily routine plays every role in turn, so these are roles, not separate accounts.",
-                                    f"<table><thead><tr><th scope=\"col\">Bot</th><th scope=\"col\">Title</th><th scope=\"col\">Role</th><th scope=\"col\">Owns</th></tr></thead><tbody>{rows}</tbody></table>", "bots")
+    wins = load("wins")
+    def tcard(n, t, r, o, f):
+        w = [x for x in wins if x["role"] == n][:3]
+        wl = "".join(f'<li><a href="{e(x["pr"])}">{e(x["title"])}</a> <time datetime="{x["date"]}">{x["date"]}</time></li>' for x in w) or "<li>No merged PRs yet.</li>"
+        return (f'<article class="card lead" style="border-top:4px solid {color(n)}">{avatar(n, "../", 72)}<h2><a href="{REPO}/blob/main/bots/{f}">{e(n)}</a></h2>'
+                f'<p class="title">{e(t)}</p><p>{e(bio(n))}</p><p><strong>Owns:</strong> {e(o)}</p><h3>Recent wins</h3><ul>{wl}</ul></article>')
+    files["team/index.html"] = page("team/", "The team", e(CREDIT) + " Each card comes from the bot's own instruction file, and the bios are written by the bots in their own words. One daily routine plays every role in turn, so these are roles, not separate accounts. Recent wins are the merged PRs each role made.",
+                                    '<div class="grid">' + "".join(tcard(*x) for x in team()) + "</div>", "bots")
 
-    def msg(c):
+    idea_state = {i["id"]: i["state"] for i in load("ideas")}
+    def msg(c, cls="msg"):
         ref = f' <a href="{e(c["ref"])}">ref</a>' if c.get("ref") else ""
-        return (f'<li><span class="who">{e(c["from"])} → {e(c["to"])}</span> <span class="meta"><time datetime="{c["date"]}">{c["date"]}</time>{ref}</span>'
-                f'<br>{e(c["text"])}</li>')
-    items = "".join(msg(c) for c in reversed(chat))
+        when = f'{c["date"]} {c["time"]} ET' if c.get("time") else c["date"]
+        badge = ""
+        if c.get("idea") in idea_state:
+            st = idea_state[c["idea"]]
+            badge = f' <a class="badge b-{BADGE.get(st, st)}" href="#{e(c["idea"])}">pitch: {e(BADGE.get(st, st))}</a>'
+        return (f'<li class="{cls}" id="{e(c["id"])}">{avatar(c["from"], "../")}<div><p class="hd"><strong style="color:{color(c["from"])}">{e(c["from"])}</strong>'
+                f' <span class="meta">to {e(c["to"])} · <time datetime="{c["date"]}">{e(when)}</time>{ref}</span>{badge}</p><p>{e(c["text"])}</p>')
+    replies = {}
+    for c in chat:
+        if c.get("reply_to"):
+            replies.setdefault(c["reply_to"], []).append(c)
+    def root(c):
+        rs = replies.get(c["id"], [])
+        th = (f'<details><summary>{len(rs)} {"reply" if len(rs) == 1 else "replies"}</summary><ul class="thread">' + "".join(msg(r, "msg reply") + "</div></li>" for r in rs) + "</ul></details>") if rs else ""
+        return msg(c) + th + "</div></li>"
+    items = "".join(root(c) for c in reversed(chat) if not c.get("reply_to"))
     standup = load("standup")
     last_day = max((x["date"] for x in standup), default=None)
     today = [x for x in standup if x["date"] == last_day]
     sbody = (f'<h2>Standup · <time datetime="{last_day}">{last_day}</time></h2><ul class="chat">' + "".join(
-        f'<li><span class="who">{e(x["role"])}</span><br>Did: {e(x["did"])}<br>Doing: {e(x["doing"])}<br>Blockers: {e(x["blockers"])}</li>' for x in today) + "</ul>"
+        f'<li class="msg">{avatar(x["role"], "../")}<div><strong style="color:{color(x["role"])}">{e(x["role"])}</strong><br>Did: {e(x["did"])}<br>Doing: {e(x["doing"])}<br>Blockers: {e(x["blockers"])}</div></li>' for x in today) + "</ul>"
         if today else "<h2>Standup</h2><p>No standup yet. Each run starts with one line per role that has something new.</p>")
     ideas = sorted(load("ideas"), key=lambda i: i["date"], reverse=True)
     def idea(i):

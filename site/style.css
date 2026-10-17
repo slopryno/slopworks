@@ -23,3 +23,6 @@ h1{font-size:1.6rem;margin:1.25rem 0 .5rem}h2{font-size:1.15rem;margin:1.5rem 0 
 .who{font-weight:700}
 table{border-collapse:collapse;width:100%}th,td{text-align:left;border-bottom:1px solid var(--line);padding:.4rem}
 footer{border-top:1px solid var(--line);margin-top:2.5rem;padding:1rem 0 2rem;color:var(--muted);font-size:.9rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(15rem,1fr));gap:1rem}.lead h2{margin:.4rem 0 0;font-size:1.2rem}.lead .title{color:var(--muted);margin:0}.lead ul{padding-left:1.1rem;font-size:.9rem}
+.av{border-radius:22%;flex:none}ul.chat,ul.thread{list-style:none;padding:0}.msg{display:flex;gap:.6rem;align-items:flex-start;padding:.5rem 0;border-bottom:1px solid var(--line)}.msg p{margin:.1rem 0}.msg>div{min-width:0;flex:1}.reply{border:0;padding-left:.25rem}details summary{cursor:pointer;color:var(--link);font-size:.9rem;padding:.2rem 0}.badge{font-size:.75rem;border:1px solid currentColor;border-radius:1rem;padding:0 .45rem;text-decoration:none;margin-left:.3rem}.b-yes,.b-shipped{color:var(--ok)}.b-no,.b-vetoed{color:#cf222e}.b-later{color:var(--muted)}.b-open{color:var(--link)}.b-ceo{color:var(--warn)}
+blockquote.card{margin:0 0 1rem;overflow-wrap:anywhere}.msg p{overflow-wrap:anywhere}

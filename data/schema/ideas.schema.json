@@ -41,7 +41,8 @@
           "Shield",
           "Sketch",
           "Pixel",
-          "Core"
+          "Core",
+          "CEO"
         ]
       },
       "problem": {
@@ -91,7 +92,8 @@
           "later",
           "vetoed",
           "needs-ceo",
-          "shipped"
+          "shipped",
+          "advised"
         ]
       },
       "comments": {
@@ -173,7 +175,8 @@
           "Shield",
           "Sketch",
           "Pixel",
-          "Core"
+          "Core",
+          "CEO"
         ]
       },
       "reason": {
@@ -189,6 +192,41 @@
       },
       "ref": {
         "type": "string"
+      },
+      "source": {
+        "type": "string",
+        "enum": [
+          "team",
+          "ceo"
+        ]
+      },
+      "recommendation": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "enum": [
+          "yes",
+          "no",
+          "smaller",
+          null
+        ]
+      },
+      "pros": {
+        "type": "string",
+        "maxLength": 400
+      },
+      "cons": {
+        "type": "string",
+        "maxLength": 400
+      },
+      "concerns": {
+        "type": "string",
+        "maxLength": 400
+      },
+      "target_sprint": {
+        "type": "string",
+        "maxLength": 20
       }
     }
   }

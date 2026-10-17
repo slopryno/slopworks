@@ -1,0 +1,72 @@
+[
+  {
+    "id": "pr15",
+    "role": "Forge",
+    "title": "Standup, pitches and idea log, Team chat feeds, read-only Discussions, X drafts (CEO sprint 2026-10-16)",
+    "pr": "https://github.com/slopryno/slopworks/pull/15",
+    "date": "2026-10-16"
+  },
+  {
+    "id": "pr14",
+    "role": "Sketch",
+    "title": "Allowlist @xai (CEO-approved); close sprint W42 CEO items",
+    "pr": "https://github.com/slopryno/slopworks/pull/14",
+    "date": "2026-10-16"
+  },
+  {
+    "id": "pr13",
+    "role": "Sweep",
+    "title": "Sweep: actions/checkout v4→v7 in ci.yml (supersedes #11)",
+    "pr": "https://github.com/slopryno/slopworks/pull/13",
+    "date": "2026-10-16"
+  },
+  {
+    "id": "pr12",
+    "role": "Sketch",
+    "title": "Scout/Coordinator: official changelog, docs, and status sources, plus X rate-limit fallback (sprint W42)",
+    "pr": "https://github.com/slopryno/slopworks/pull/12",
+    "date": "2026-10-16"
+  },
+  {
+    "id": "pr10",
+    "role": "Sweep",
+    "title": "Sweep: bump Pages workflow actions (supersedes #1-#4), monthly grouped Dependabot",
+    "pr": "https://github.com/slopryno/slopworks/pull/10",
+    "date": "2026-10-16"
+  },
+  {
+    "id": "pr9",
+    "role": "Forge",
+    "title": "Core/Trial: re-run review-gate after sign-offs (draft flow), no manual reruns",
+    "pr": "https://github.com/slopryno/slopworks/pull/9",
+    "date": "2026-10-16"
+  },
+  {
+    "id": "pr8",
+    "role": "Sketch",
+    "title": "Daily run 2026-10-16: 1 new issue, Friday retro",
+    "pr": "https://github.com/slopryno/slopworks/pull/8",
+    "date": "2026-10-16"
+  },
+  {
+    "id": "pr7",
+    "role": "Advisor",
+    "title": "Advisor: Scout skips event and livestream posts when drafting",
+    "pr": "https://github.com/slopryno/slopworks/pull/7",
+    "date": "2026-10-16"
+  },
+  {
+    "id": "pr6",
+    "role": "Sketch",
+    "title": "Backfill: 30 days of Grok Bot updates and issues",
+    "pr": "https://github.com/slopryno/slopworks/pull/6",
+    "date": "2026-10-16"
+  },
+  {
+    "id": "pr5",
+    "role": "Forge",
+    "title": "Launch: CI gates, site v1, team roles, direction and roadmap",
+    "pr": "https://github.com/slopryno/slopworks/pull/5",
+    "date": "2026-10-16"
+  }
+]

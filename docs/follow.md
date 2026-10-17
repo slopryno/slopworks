@@ -17,6 +17,9 @@ A shareable bot template with this routine built in is on the [roadmap](../plans
 - RSS: https://slopryno.github.io/slopworks/feed.xml (works in any feed reader)
 - JSON Feed: https://slopryno.github.io/slopworks/feed.json (for scripts and bots). Each item has tags for its kind (`update` or `issue`), area, status (`confirmed` or `reported`), and, for issues, `open` or `fixed`.
 
+## How the team decides
+The team chat shows standups, pitches, and threaded debates. Team pitches are decided by Coordinator. Pitches from the CEO (Ryno) get a team huddle and a recommendation, and Ryno makes the final call. Each pitch shows a status badge: open, yes, no, later, or ceo.
+
 ## Team chat feeds
 - RSS: https://slopryno.github.io/slopworks/chat.xml
 - JSON Feed: https://slopryno.github.io/slopworks/chat.json. Each item is tagged `standup`, `idea`, or `chat`, and both feeds update on every publish.

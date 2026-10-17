@@ -19,6 +19,7 @@ CSS_AT_RULES = {"media", "font", "keyframes", "import", "supports", "charset", "
 SOURCE_HOSTS = ("x.com", "github.com", "grokbot.com", "grok.com", "x.ai")
 DATA_FILES = ["updates", "issues", "runs", "chat", "design_backlog", "state", "schedule"]
 DATA_FILES += ["standup", "ideas"]
+DATA_FILES += ["wins"]
 ALIASES = {"verify": "Lens", "scout": "Sketch", "publish": "Forge", "privacy": "Shield"}
 
 
@@ -111,13 +112,58 @@ def idea_errors(ideas):
             errs.append(f"idea {n}: a {st} decision needs decided, decided_by, and reason")
         if st == "vetoed" and i.get("decided_by") != "Shield":
             errs.append(f"idea {n}: only Shield can veto")
-        if st in ("yes", "no", "later") and i.get("decided_by") != "Coordinator":
+        if st in ("yes", "no", "later") and i.get("decided_by") != "Coordinator" and i.get("source") != "ceo":
             errs.append(f"idea {n}: only Coordinator decides yes/no/later")
         strong = {c["role"] for c in i.get("comments", []) if c.get("stance") == "oppose" and c.get("strong") and c["role"] != "Coordinator"}
         if st in ("yes", "no", "later") and len(strong) >= 2:
             errs.append(f"idea {n}: {len(strong)} roles strongly disagree, so it must be needs-ceo")
         if i.get("repitch_of") and not i.get("evidence"):
             errs.append(f"idea {n}: a re-pitch needs new evidence")
+        errs += ceo_pitch_errors(i)
+    return errs
+
+
+def ceo_pitch_errors(i):
+    """CEO pitches: the team only advises and Ryno decides, except a unanimous yes, which goes straight into the next sprint."""
+    n, st, ceo = i.get("id"), i.get("state"), i.get("source") == "ceo"
+    errs = []
+    if (i.get("by") == "CEO") != ceo:
+        errs.append(f"idea {n}: by CEO and source ceo go together")
+    if not ceo:
+        return errs
+    if st == "vetoed":
+        errs.append(f"idea {n}: CEO pitches can't be vetoed; Shield advises and Ryno decides")
+    if st in ("advised", "yes", "no", "later") and i.get("decided_by") != "CEO":
+        if not all(i.get(k) for k in ("recommendation", "pros", "cons", "target_sprint")) or not i.get("comments"):
+            errs.append(f"idea {n}: the huddle report needs comments, recommendation, pros, cons, and target_sprint")
+    if st in ("yes", "no", "later") and i.get("decided_by") != "CEO":
+        roles = {c["role"] for c in i.get("comments", [])}
+        unanimous = st == "yes" and i.get("decided_by") == "Coordinator" and i.get("recommendation") == "yes" \
+            and len(roles) >= 2 and all(c.get("stance") == "support" for c in i.get("comments", []))
+        if not unanimous:
+            errs.append(f"idea {n}: only Ryno decides a CEO pitch, unless the team is unanimous in favor (2+ roles, all support)")
+    return errs
+
+
+def chat_errors(chat, ideas=None):
+    """Threads are flat: a reply points at an earlier root message. Times are HH:MM ET."""
+    errs, seen = [], {}
+    idea_ids = {i["id"] for i in ideas} if ideas is not None else None
+    for c in chat:
+        r = c.get("reply_to")
+        if r is not None:
+            if r == c.get("id"):
+                errs.append(f"chat {c.get('id')}: can't reply to itself")
+            elif r not in seen:
+                errs.append(f"chat {c.get('id')}: reply_to {r} isn't an earlier message")
+            elif seen[r].get("reply_to"):
+                errs.append(f"chat {c.get('id')}: reply to the thread root, not to a reply")
+        t = c.get("time")
+        if t is not None and not (re.fullmatch(r"\d{2}:\d{2}", t) and int(t[:2]) < 24 and int(t[3:]) < 60):
+            errs.append(f"chat {c.get('id')}: time must be HH:MM (ET)")
+        if c.get("idea") and idea_ids is not None and c["idea"] not in idea_ids:
+            errs.append(f"chat {c.get('id')}: idea {c['idea']} isn't in data/ideas.json")
+        seen[c.get("id")] = c
     return errs
 
 
@@ -228,6 +274,8 @@ def a11y_issues(doc):
 
 # ---------- review gate ----------
 def classify(path):
+    if path.startswith("site/assets/avatars/") or path == "scripts/avatars.py":
+        return {"Polish", "Shield"}  # avatar changes: design and safety review
     if path.startswith(".github/") or path in ("scripts/patterns.json", "scripts/check.py", "data/schema/allowed_handles.json"):
         return {"Shield", "Atlas"}
     if path.startswith(("bots/", "plans/", "docs/")) or path in ("README.md", "CONTRIBUTING.md", "SECURITY.md", "LICENSE"):
@@ -353,6 +401,7 @@ def run_repo():
         if f.startswith(("data/", "site/")) and f != "data/schema/allowed_handles.json":
             errs += [f"{f}: personal data ({n}: {s})" for n, s in pii_hits(text)]
     errs += idea_errors(data.get("ideas", []))
+    errs += chat_errors(data.get("chat", []), data.get("ideas", []))
     css = sum((ROOT / f).stat().st_size for f in files if f.startswith("site/") and f.endswith(".css"))
     for f in files:
         if f.startswith("site/") and f.endswith(".html"):
