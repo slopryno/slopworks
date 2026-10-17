@@ -559,5 +559,49 @@
     "decided": "2026-10-17",
     "decided_by": "CEO",
     "reason": "Approved by Ryno in Grok Bot chat 2026-10-17 7:24 AM ET: 'Lift the cap, run all 8 PRs now.' One-time override of the 1 feature + 1 design PR/week cap; the normal cap returns when the sprint ends."
+  },
+  {
+    "id": "i25",
+    "date": "2026-10-17",
+    "by": "Scout",
+    "source": "team",
+    "problem": "No entry cites the official changelog; 19 versions (0.53.0 to 0.70.2) in our backfill window were never diffed in",
+    "helps": "Readers who want the official, versioned record",
+    "effort": "M",
+    "builder": "Scout",
+    "state": "pitched",
+    "evidence": [
+      "https://x.ai/changelog/bot",
+      "https://x.ai/changelog/bot/rss.xml"
+    ],
+    "comments": [
+      {
+        "date": "2026-10-17",
+        "role": "Verify",
+        "stance": "support",
+        "text": "Only if each entry matches a version and date on the changelog, and repeats get a corrected note instead of a second entry."
+      },
+      {
+        "date": "2026-10-17",
+        "role": "Sweep",
+        "stance": "concern",
+        "text": "19 is just under the 20-entry cap; give it its own PR on a quiet day."
+      }
+    ]
+  },
+  {
+    "id": "i26",
+    "date": "2026-10-17",
+    "by": "Sweep",
+    "source": "team",
+    "problem": "Nothing in CI checks that feed.xml, feed.json, and chat.json stay valid",
+    "helps": "Readers following by RSS, JSON Feed, or a Grok Bot routine",
+    "effort": "S",
+    "builder": "Core",
+    "state": "pitched",
+    "evidence": [
+      "https://www.rssboard.org/rss-profile"
+    ],
+    "comments": []
   }
 ]

@@ -1,5 +1,93 @@
 [
   {
+    "id": "2111184270819803351",
+    "date": "2026-10-16",
+    "added": "2026-10-17",
+    "added_by": "Scout",
+    "status": "confirmed",
+    "area": "app",
+    "title": "Redesigned chat cards",
+    "summary": "Cards in Grok Bot chats have a new design with a cleaner layout, part of an update the team says improves quality, polish, and speed.",
+    "source": "https://x.com/bot/status/2111184270819803351"
+  },
+  {
+    "id": "2111184272933748980",
+    "date": "2026-10-16",
+    "added": "2026-10-17",
+    "added_by": "Scout",
+    "status": "confirmed",
+    "area": "app",
+    "title": "Refreshed look with a new typeface and themes",
+    "summary": "Grok Bot has a refreshed look, with a new typeface and themes.",
+    "source": "https://x.com/bot/status/2111184272933748980"
+  },
+  {
+    "id": "2111184275374813362",
+    "date": "2026-10-16",
+    "added": "2026-10-17",
+    "added_by": "Scout",
+    "status": "confirmed",
+    "area": "app",
+    "title": "Grok Bot is much faster",
+    "summary": "The Grok Bot team says computer tasks now finish 3x sooner on average, and replies to everything else arrive in less than half the time.",
+    "source": "https://x.com/bot/status/2111184275374813362"
+  },
+  {
+    "id": "2111184276662481202",
+    "date": "2026-10-16",
+    "added": "2026-10-17",
+    "added_by": "Scout",
+    "status": "confirmed",
+    "area": "voice",
+    "title": "Faster, more reliable voice calls",
+    "summary": "Voice calls with Grok Bot are faster, more reliable, and better at remembering past conversations.",
+    "source": "https://x.com/bot/status/2111184276662481202"
+  },
+  {
+    "id": "2111184279938240959",
+    "date": "2026-10-16",
+    "added": "2026-10-17",
+    "added_by": "Scout",
+    "status": "confirmed",
+    "area": "x",
+    "title": "Tag @bot on X to start a task",
+    "summary": "Tag @bot in a post on X and Grok Bot gets to work on it.",
+    "source": "https://x.com/bot/status/2111184279938240959"
+  },
+  {
+    "id": "2111184281636909233",
+    "date": "2026-10-16",
+    "added": "2026-10-17",
+    "added_by": "Scout",
+    "status": "confirmed",
+    "area": "app",
+    "title": "Notifications only on the device you're using",
+    "summary": "Grok Bot notifications now go only to the device you're using.",
+    "source": "https://x.com/bot/status/2111184281636909233"
+  },
+  {
+    "id": "2111184282903523440",
+    "date": "2026-10-16",
+    "added": "2026-10-17",
+    "added_by": "Scout",
+    "status": "confirmed",
+    "area": "x",
+    "title": "Grok Bot can read X Chat",
+    "summary": "Grok Bot can now read X Chat. Connect X, then ask it to work across your messages.",
+    "source": "https://x.com/bot/status/2111184282903523440"
+  },
+  {
+    "id": "2111184284786802881",
+    "date": "2026-10-16",
+    "added": "2026-10-17",
+    "added_by": "Scout",
+    "status": "confirmed",
+    "area": "connectors",
+    "title": "Robinhood, Coinbase, Trello, and more connectors",
+    "summary": "Grok Bot now connects to Robinhood, Coinbase, Trello, PostHog, beehiiv, eToro, and more. Teams can also now submit connectors to the Grok Bot marketplace.",
+    "source": "https://x.com/bot/status/2111184284786802881"
+  },
+  {
     "id": "2110840796954202186",
     "date": "2026-10-15",
     "added": "2026-10-15",
@@ -15,11 +103,12 @@
     "date": "2026-10-14",
     "added": "2026-10-15",
     "added_by": "Scout",
-    "status": "reported",
+    "status": "confirmed",
     "area": "email",
     "title": "Plus aliases for Grok Bot email",
     "summary": "Grok Bot email supports plus aliases: send and receive with dedicated aliases, or set routines that trigger only for mail sent to one alias.",
-    "source": "https://x.com/i/status/2110496237241667621"
+    "source": "https://x.com/i/status/2110496237241667621",
+    "corrected": "2026-10-17: confirmed by the official @bot account (https://x.com/bot/status/2111184278377857410), so the status changed from reported to confirmed."
   },
   {
     "id": "2110469724660441365",

@@ -655,5 +655,62 @@
     "experiment": "The audit itself is step one",
     "success_metric": "A reader can follow every step back to a cited report",
     "recommendation": "pursue"
+  },
+  {
+    "id": "r-sweep-2026-10-17",
+    "date": "2026-10-17",
+    "role": "Sweep",
+    "kind": "rotation",
+    "question": "What Pages deploy and feed failures could hit us silently, and do we catch them early?",
+    "outcome": "proposal",
+    "finding": "Our feed already follows the RSS profile basics, and our deploy job is simple, but no check stops a future build change from breaking the feeds. A small feed check in CI closes that gap.",
+    "facts": [
+      "GitHub docs: a deploy-pages job needs pages: write and id-token: write, and a deploy job that doesn't name its build job in needs may wait for an artifact that was never made.",
+      "RSS Best Practices Profile: a feed should name its own URL with atom:link rel=self, give every item a guid, use RFC 822 dates (UTC forms worked in every tested reader), and never use relative URLs in link elements."
+    ],
+    "inferences": [
+      "site/feed.xml has a self link, a guid per item, and +0000 dates today, so it passes those rules now.",
+      "Our Pages workflow is a single deploy job with no build step, so the needs rule doesn't apply; Trial's live check stays the post-deploy catch."
+    ],
+    "evidence": [
+      "https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages",
+      "https://www.rssboard.org/rss-profile"
+    ],
+    "confidence": "high",
+    "status": "verified",
+    "fresh_until": "2027-04-17",
+    "existing_work": "Link check on sources and build.py --check in CI; Trial's post-deploy load of the live site",
+    "opportunity": "Add a feed check to check.py: feed.xml parses, guids are unique, links are absolute https, dates are RFC 822; feed.json and chat.json parse as JSON Feed 1.1 with unique ids",
+    "alternatives": "Validate by hand with the W3C feed validator after each deploy (manual, easy to skip)",
+    "effort": "S",
+    "risks": "Low: it only tightens CI; a too-strict date rule could fail a valid feed, so test against today's feeds first",
+    "experiment": "Run the check on today's feeds (should pass) and on a copy with a duplicate guid and a relative link (should fail)",
+    "success_metric": "CI fails on a broken feed fixture and passes on the real feeds, with no false failures in the first two weeks",
+    "recommendation": "pursue",
+    "pitch": "i26"
+  },
+  {
+    "id": "r-forge-2026-10-17",
+    "date": "2026-10-17",
+    "role": "Forge",
+    "kind": "rotation",
+    "question": "How should we cut the Monday weekly release so its notes stay readable with little effort?",
+    "outcome": "finding",
+    "finding": "GitHub can generate release notes from merged PRs and group them by label. Our PRs carry their kind in the branch name, not a label, so generated notes would be one flat list. Cut the first weekly tag as-is on Monday and judge it before adding labels or config.",
+    "facts": [
+      "GitHub docs: generated release notes list merged PRs, contributors, and a full-changelog link, and a .github/release.yml can group PRs into categories by label and exclude labels or authors.",
+      "GitHub docs: releases are based on git tags, and people can watch a repo for releases only."
+    ],
+    "inferences": [
+      "No release exists yet (gh release list is empty), so the first weekly-2026-10-19 tag is the natural test.",
+      "Grouping by data, design, feature, and ops would need a label per PR, which touches .github/ and so needs Shield and Atlas."
+    ],
+    "evidence": [
+      "https://docs.github.com/en/repositories/releasing-projects-on-github/automatically-generated-release-notes",
+      "https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases"
+    ],
+    "confidence": "high",
+    "status": "verified",
+    "fresh_until": "2027-04-17"
   }
 ]
