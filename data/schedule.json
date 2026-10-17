@@ -156,6 +156,10 @@
         {
           "role": "Core",
           "focus": "build scripts, data generation, and feed formats"
+        },
+        {
+          "role": "Gamemaster",
+          "focus": "Fair incentive design: how points, levels, and badges change behavior, and how they get gamed"
         }
       ]
     },

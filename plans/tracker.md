@@ -46,6 +46,7 @@ Ryno is CEO: he sets direction and steps in only for disagreements and safety ca
 | Ops and release | Sweep | Uptime, broken links, feed health, the weekly release, the run budget |
 | Analytics | Analyst | Weekly metrics: coverage, accuracy, speed to publish, design score |
 | Comms | Comms (Head of Comms) | SEO and AEO (titles, descriptions, structured data, sitemap, llms.txt), the style guide, and the final say on site language after consulting the relevant roles (i29). Can't override facts, never posts to X, escalates self-description, client-claim, legal, or Pages-terms wording to Ryno |
+| Progression | Gamemaster (Game Master) | XP tables, levels, quests, achievements, and raids in `data/progression.json`, with the final say on the rules after consulting the affected roles and Critic (i33). Never awards XP or self-approves, and escalates to Ryno only on a disagreement it can't settle |
 
 **How the team works together**
 - **Handoffs are messages.** Each role's output to the next is written as a short note in `data/chat.json` covering what it did, what it needs, and a tip for the next one. The Team chat page shows that file. Since it's the real handoff, nothing is staged.
@@ -101,7 +102,8 @@ Ryno is CEO: he sets direction and steps in only for disagreements and safety ca
 - **User Advocate** (`Advocate`, Research and Intelligence): the user problem and its evidence. Demand claims are `hypothesis` until real reader feedback exists.
 - **Research Librarian** (`Librarian`, Research and Intelligence): keeps the knowledge and decision record, and checks for duplicates and prior work before planning.
 - **Head of Comms** (`Comms`, Leadership and Strategy, hired 2026-10-17, i28): helps visitors find the site through search and answer engines and keeps the language true and consistent. Final say on wording after it posts the proposal in Team chat and acknowledges each relevant role's comments (i29). It never self-approves, never posts to X, and can't override Lens's facts or Shield's privacy checks.
-- **Team page groups:** Leadership and Strategy (Coordinator, Scoutmaster, Comms); Research and Intelligence (Sketch/Scout, User Advocate, Research Librarian); Architecture and Development (Atlas, Forge, Polish; Pixel and Core under Forge); Quality and Governance (Lens, Trial, Shield, Critic, Advisor); Operations and Measurement (Sweep, Analyst).
+- **Game Master** (`Gamemaster`, Operations and Measurement, hired 2026-10-17, i33): owns the progression rules. It posts each rule change in Team chat, takes comments from the roles it affects and a challenge from Critic, and answers each one before deciding. It never awards XP, never self-approves, and escalates to Ryno only on a disagreement it can't settle.
+- **Team page groups:** Leadership and Strategy (Coordinator, Scoutmaster, Comms); Research and Intelligence (Sketch/Scout, User Advocate, Research Librarian); Architecture and Development (Atlas, Forge, Polish; Pixel and Core under Forge); Quality and Governance (Lens, Trial, Shield, Critic, Advisor); Operations and Measurement (Sweep, Analyst, Game Master).
 - **Onboarding:** follows `docs/onboarding.md`. The first run is shown in Team chat as labeled threads (c23-c34).
 
 ## Weekly research (every role brings ideas)
@@ -110,7 +112,7 @@ Ryno is CEO: he sets direction and steps in only for disagreements and safety ca
   - Tuesday: Polish, Pixel, Advocate
   - Wednesday: Shield, Trial, Critic
   - Thursday: Scout, Verify, Comms
-  - Friday: Atlas, Core
+  - Friday: Atlas, Core, Gamemaster
   - Saturday: Sweep, Forge
   - Sunday: Advisor, Librarian
 - **Focus areas:** each role covers its own area. Polish studies elegant static-site UI/UX: well-designed static sites, design write-ups, and accessibility, typography, and layout patterns.
@@ -302,7 +304,7 @@ Every change, including data, site code, design, features, bot instructions, pla
 | CEO time | A few minutes a week | One Monday brief to read, plus pings only for disagreements |
 | Sources | Public only | No private accounts, no logins on readers' behalf |
 | Weekly research | Web reads only, about 5 pages per role per session, short time box | 1-2 roles a day; no X reads; Sweep logs it; first optional work cut if usage rises |
-| New roles (Scoutmaster, Critic, User Advocate, Research Librarian, Comms) | Web reads only, inside the research cap; no X reads | They run inside the same daily session. Critic only challenges the top proposals. If usage rises they're cut along with research |
+| New roles (Scoutmaster, Critic, User Advocate, Research Librarian, Comms, Game Master) | Web reads only, inside the research cap; no X reads | They run inside the same daily session. Critic only challenges the top proposals. If usage rises they're cut along with research |
 | Box | One shared computer | If it's down, the day is skipped and reported, not faked |
 
 Sweep logs reads, run time, and deploys in `data/runs.json`. If usage rises two weeks in a row, it drops the optional work first, in this order: weekly research, then the deep Polish audit, then feature work, then the monthly page. The daily tracker stays running.
