@@ -1,0 +1,100 @@
+[
+  {
+    "id": "case-contrast",
+    "date": "2026-10-17",
+    "kind": "real",
+    "title": "A contrast test that caught a real bug on its first run",
+    "summary": "The team turned a hand-checked design rule into a CI test. Its first run found a badge that was hard to read in dark mode, and the same PR fixed it.",
+    "shows": "Rules become automated checks, and checks catch real problems before readers do.",
+    "steps": [
+      {
+        "label": "verified",
+        "role": "Polish",
+        "text": "Theme colors were checked by hand, so nothing stopped a later tweak from failing contrast (backlog d4).",
+        "link": "../chat/#c57"
+      },
+      {
+        "label": "recommendation",
+        "role": "Coordinator",
+        "text": "Picked first in the CEO's mini-sprint at priority 60: cheap, low risk, protects earlier contrast work.",
+        "link": "../chat/#c58"
+      },
+      {
+        "label": "verified",
+        "role": "Coordinator",
+        "text": "Acceptance criteria written before building: every text color pair in both themes, 4.5:1 minimum, fix any failure in the same PR.",
+        "link": "../chat/#i17"
+      },
+      {
+        "label": "verified",
+        "role": "Pixel",
+        "text": "Built a unit test that computes contrast for every theme text color and fails CI below 4.5:1.",
+        "link": "https://github.com/slopryno/slopworks/pull/31"
+      },
+      {
+        "label": "verified",
+        "role": "Pixel",
+        "text": "The test's first run flagged the dark-mode red badge at 3.5:1. It was fixed to 7.5:1 in the same PR.",
+        "link": "../chat/#c61"
+      },
+      {
+        "label": "verified",
+        "role": "Trial",
+        "text": "Polish, Shield, Lens, Trial, and Coordinator signed off. Trial confirmed a deliberately bad color makes the test fail.",
+        "link": "https://github.com/slopryno/slopworks/pull/31"
+      }
+    ],
+    "outcome": "Merged as PR #31. The test now runs on every pull request.",
+    "pr": 31,
+    "idea": "i17"
+  },
+  {
+    "id": "case-filters",
+    "date": "2026-10-17",
+    "kind": "real",
+    "title": "Filters without scripts: when the first design hit our own guardrail",
+    "summary": "The first filter design used form inputs, which the team's own CI bans. Instead of loosening the check, the team rebuilt the filters with plain links.",
+    "shows": "Guardrails hold even when they slow the team down, and limits are written down, not hidden.",
+    "steps": [
+      {
+        "label": "verified",
+        "role": "Advocate",
+        "text": "What's new and Known issues couldn't be narrowed to one area like email (backlog d1).",
+        "link": "../chat/#c57"
+      },
+      {
+        "label": "verified",
+        "role": "Shield",
+        "text": "Set the constraint up front: filters stay CSS-only, because check.py bans scripts and that ban stays.",
+        "link": "../chat/#c60"
+      },
+      {
+        "label": "verified",
+        "role": "Critic",
+        "text": "The first design used radio buttons and hit check.py's ban on form inputs.",
+        "link": "../chat/#c62"
+      },
+      {
+        "label": "recommendation",
+        "role": "Pixel",
+        "text": "Rebuilt with anchor links, :target, and :has() instead of loosening the check.",
+        "link": "../chat/#c62"
+      },
+      {
+        "label": "verified",
+        "role": "Trial",
+        "text": "Checked the email filter shows only email items, the default shows all 17, and every chip works by keyboard.",
+        "link": "https://github.com/slopryno/slopworks/pull/33"
+      },
+      {
+        "label": "hypothesis",
+        "role": "Critic",
+        "text": "Known gap: screen readers aren't told which chip is active. Worth revisiting only if the script ban ever changes.",
+        "link": "../chat/#c62"
+      }
+    ],
+    "outcome": "Merged as PR #33 with the limit noted in the review.",
+    "pr": 33,
+    "idea": "i19"
+  }
+]
