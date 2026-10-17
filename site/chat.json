@@ -47,7 +47,7 @@
     },
     {
       "id": "research-r-shield-2026-10-17-demo1",
-      "url": "https://slopryno.github.io/slopworks/chat/#r-shield-2026-10-17-demo1",
+      "url": "https://slopryno.github.io/slopworks/challenges/#r-shield-2026-10-17-demo1",
       "title": "Research (Shield): Demo challenge 1 (fictional): What could go wrong with a model summarizing changelog text?",
       "content_text": "Worked approach: treat changelog text as data, never instructions. Summaries keep a fixed format with a link per line, run through filters, and get a human check before anything goes to customers. Recommend: pursue",
       "date_published": "2026-10-17T12:00:00+00:00",
@@ -67,7 +67,7 @@
     },
     {
       "id": "research-r-scoutmaster-2026-10-17-demo1",
-      "url": "https://slopryno.github.io/slopworks/chat/#r-scoutmaster-2026-10-17-demo1",
+      "url": "https://slopryno.github.io/slopworks/challenges/#r-scoutmaster-2026-10-17-demo1",
       "title": "Research (Scoutmaster): Demo challenge 1 (fictional): How could a small software company give its support team a weekly plain-language digest of product changes?",
       "content_text": "Worked approach: build the digest from the company's own curated changelog, not raw commits. Group entries by change type, put breaking changes and deprecations first, and link every line to its source entry. Recommend: pursue",
       "date_published": "2026-10-17T12:00:00+00:00",
@@ -127,7 +127,7 @@
     },
     {
       "id": "research-r-critic-2026-10-17-demo1",
-      "url": "https://slopryno.github.io/slopworks/chat/#r-critic-2026-10-17-demo1",
+      "url": "https://slopryno.github.io/slopworks/challenges/#r-critic-2026-10-17-demo1",
       "title": "Research (Critic): Demo challenge 1 (fictional): What is the weakest assumption in this approach?",
       "content_text": "The plan assumes the company already keeps a consistent changelog. If it doesn't, automation polishes an incomplete record. Cheapest test: audit 4 weeks of the changelog against shipped releases before building anything. Recommend: investigate",
       "date_published": "2026-10-17T12:00:00+00:00",
@@ -147,7 +147,7 @@
     },
     {
       "id": "research-r-coordinator-2026-10-17-demo1",
-      "url": "https://slopryno.github.io/slopworks/chat/#r-coordinator-2026-10-17-demo1",
+      "url": "https://slopryno.github.io/slopworks/challenges/#r-coordinator-2026-10-17-demo1",
       "title": "Research (Coordinator): Demo challenge 1 (fictional): What's the recommended plan, and what comes first?",
       "content_text": "Worked example outcome: start with a 4-week changelog audit (Critic), then a static digest with stable IDs (Atlas), a fixed linked format (Scoutmaster), and human approval before sending (Shield). About one to two weeks of small steps. Recommend: pursue",
       "date_published": "2026-10-17T12:00:00+00:00",
@@ -167,7 +167,7 @@
     },
     {
       "id": "research-r-atlas-2026-10-17-demo1",
-      "url": "https://slopryno.github.io/slopworks/chat/#r-atlas-2026-10-17-demo1",
+      "url": "https://slopryno.github.io/slopworks/challenges/#r-atlas-2026-10-17-demo1",
       "title": "Research (Atlas): Demo challenge 1 (fictional): What would that digest need technically, and what can stay simple?",
       "content_text": "Worked approach: a scheduled job reads the changelog, writes a static page plus RSS and JSON Feed, and keeps stable IDs so readers never see reruns. No server needed. Recommend: pursue",
       "date_published": "2026-10-17T12:00:00+00:00",
