@@ -1,5 +1,13 @@
 [
   {
+    "id": "pr73",
+    "role": "Polish",
+    "title": "Comms/Polish: simpler landing (i36): one headline, three entry points, three short answers",
+    "pr": "https://github.com/slopryno/slopworks/pull/73",
+    "date": "2026-10-17",
+    "merged": "2026-10-17T19:26-04:00"
+  },
+  {
     "id": "pr72",
     "role": "Polish",
     "title": "Polish: simpler nav (i36): 4 top links, Work and Under the hood hubs, back links, footer list",
