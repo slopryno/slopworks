@@ -23,6 +23,7 @@ DATA_FILES += ["wins"]
 DATA_FILES += ["research"]
 DATA_FILES += ["alumni"]
 DATA_FILES += ["arena", "cases", "challenges"]  # showcase data (i22), added in sprint PR 8
+DATA_FILES += ["aars"]  # same-day after-action reviews (Ryno, 2026-10-17)
 ALIASES = {"verify": "Lens", "scout": "Sketch", "publish": "Forge", "privacy": "Shield"}
 
 
@@ -498,6 +499,80 @@ def showcase_errors(data, root=None):
     return errs
 
 
+# ---------- after-action reviews (Ryno, 2026-10-17): additions only, these only tighten ----------
+SHOWCASE_PAGES += ["site/lessons/index.html"]
+AAR_FIELDS = ("expected", "actual", "why", "change")
+
+
+def aar_errors(aars, chat, runs, root=None):
+    errs = []
+    chat_ids = {c["id"]: c for c in chat}
+    run_ids = {r["id"] for r in runs}
+    dated = {a["date"] for a in aars}
+    for a in aars:
+        where = f"data/aars.json {a.get('id')}"
+        links = a.get("links", {})
+        known = {f"pr:{n}" for n in links.get("prs", [])} | {f"run:{n}" for n in links.get("runs", [])} | {f"commit:{n}" for n in links.get("commits", [])}
+        for cid in links.get("chat", []) + [a.get("thread", "")]:
+            if cid not in chat_ids:
+                errs.append(f"{where}: chat {cid} is not in data/chat.json")
+            known.add(f"chat:{cid}")
+        known.add(f"pr:{a.get('change_pr')}")
+        for k in AAR_FIELDS:
+            if not a.get(k, {}).get("cite") or len(a.get(k, {}).get("text", "")) < 10:
+                errs.append(f"{where}: '{k}' needs text and at least one cited artifact")
+            for ref in a.get(k, {}).get("cite", []):
+                kind, _, val = ref.partition(":")
+                if kind == "runlog":
+                    if val not in run_ids:
+                        errs.append(f"{where}: {k} cites run log {val}, which is not in data/runs.json")
+                elif kind == "file":
+                    if ".." in val or not ((root or ROOT) / val).exists():
+                        errs.append(f"{where}: {k} cites missing file {val}")
+                elif ref not in known:
+                    errs.append(f"{where}: {k} cites {ref}, which is not in its links")
+        if f"pr:{a.get('change_pr')}" not in a.get("change", {}).get("cite", []):
+            errs.append(f"{where}: 'what we change' must cite the PR that adds the rule, test, or check")
+        th = chat_ids.get(a.get("thread"))
+        if th and (th.get("reply_to") or not th["text"].startswith("AAR")):
+            errs.append(f"{where}: thread {a.get('thread')} must be a Team chat root message that starts with 'AAR'")
+        if a.get("status") == "closed":
+            if not a.get("fix_pr") or not a.get("closed"):
+                errs.append(f"{where}: a closed review needs fix_pr and a closed date")
+            elif a["closed"] < a["date"]:
+                errs.append(f"{where}: closed before it happened")
+            elif a["fix_pr"] not in links.get("prs", []) and a["fix_pr"] != a.get("change_pr"):
+                errs.append(f"{where}: fix_pr must be one of its linked PRs")
+        elif a.get("closed"):
+            errs.append(f"{where}: an open review can't have a closed date")
+    for r in runs:
+        if r.get("status") not in ("ok", "skipped") and r.get("date") not in dated:
+            errs.append(f"data/runs.json {r.get('id')}: a {r.get('status')} run needs a same-day after-action review in data/aars.json")
+    return errs
+
+
+def chat_future_errors(chat, now=None, grace_minutes=10):
+    """A Team chat time can't be later than when CI sees it (times are ET, from the clock when written)."""
+    import datetime as dt
+    try:
+        from zoneinfo import ZoneInfo
+        et = ZoneInfo("America/New_York")
+    except Exception:
+        et = dt.timezone(dt.timedelta(hours=-4))
+    now = now or dt.datetime.now(et)
+    errs = []
+    for c in chat:
+        if not c.get("time") or not re.match(r"^\d{4}-\d{2}-\d{2}$", c.get("date", "")) or not re.match(r"^\d{2}:\d{2}$", c["time"]):
+            continue
+        try:
+            when = dt.datetime.fromisoformat(f"{c['date']}T{c['time']}").replace(tzinfo=et)
+        except ValueError:
+            continue
+        if when > now + dt.timedelta(minutes=grace_minutes):
+            errs.append(f"data/chat.json {c['id']}: time {c['date']} {c['time']} ET is later than now; use the clock when the message is written")
+    return errs
+
+
 # ---------- guardrail gate ----------
 def loosening(path, added, removed):
     real = lambda lines: [l for l in lines if l.strip() and not l.strip().startswith(("#", "//", '"_note"'))]
@@ -567,6 +642,8 @@ def run_repo():
     errs += alumni_errors(data.get("alumni", []), data.get("schedule", {}))
     errs += research_errors(data.get("research", []), data.get("schedule", {}), data.get("ideas", []))
     errs += showcase_errors(data)
+    errs += aar_errors(data.get("aars", []), data.get("chat", []), data.get("runs", []))
+    errs += chat_future_errors(data.get("chat", []))
     css = sum((ROOT / f).stat().st_size for f in files if f.startswith("site/") and f.endswith(".css"))
     for f in files:
         if f.startswith("site/") and f.endswith(".html"):

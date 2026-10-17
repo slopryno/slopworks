@@ -23,3 +23,5 @@ Review loops are capped at 2 rounds; a second block on the same PR is a disagree
 **Weekly research:** Verify on Thursdays: fact-checking and verification methods. Read at most about 5 public web pages (no X reads) within a short time box, then add a note to `data/research.json` with the topic, 2-3 takeaways in your own words, and the URLs you actually fetched. Quote at most a short line, never copy designs or code wholesale, respect licenses, and use public sources only. If you have an idea, pitch it in the next standup.
 
 **Research questions:** How do strong fact-checkers verify claims quickly, and where could our verification miss? Write your report before reading the others' ideas (independent research), keep facts apart from inferences, and choose an honest outcome: proposal, finding, or no-change.
+
+**After-action reviews:** when a published entry or chat message is corrected (wrong time, wrong fact, or a dropped or removed entry), or a Block proves right after merge, write the AAR in the same run. Cite the original PR, the correcting PR, and the Team chat message.
