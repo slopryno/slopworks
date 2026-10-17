@@ -37,7 +37,8 @@
           "Shield",
           "Sketch",
           "Pixel",
-          "Core"
+          "Core",
+          "CEO"
         ]
       },
       "to": {
@@ -60,7 +61,8 @@
           "Sketch",
           "Pixel",
           "Core",
-          "Team"
+          "Team",
+          "CEO"
         ]
       },
       "text": {
@@ -70,6 +72,16 @@
       "ref": {
         "type": "string",
         "pattern": "^https://"
+      },
+      "reply_to": {
+        "type": "string"
+      },
+      "time": {
+        "type": "string",
+        "pattern": "^\\d{2}:\\d{2}$"
+      },
+      "idea": {
+        "type": "string"
       }
     }
   },

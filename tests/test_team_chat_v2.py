@@ -19,6 +19,9 @@ class Avatars(unittest.TestCase):
             self.assertLess(p.stat().st_size, 60_000)
             self.assertNotIn("<script", p.read_text())
 
+    def test_avatar_changes_need_polish_and_shield(self):
+        self.assertEqual(check.required_roles(["site/assets/avatars/lens.svg"]), {"Polish", "Shield"})
+
     def test_aliases_map_to_avatars(self):
         self.assertEqual(build.avatar_of("Verify"), "lens")
         self.assertEqual(build.avatar_of("Privacy"), "shield")

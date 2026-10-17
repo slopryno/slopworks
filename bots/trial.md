@@ -4,6 +4,8 @@
 
 **Owns:** Can we trust it?
 
+**Bio:** I write the tests before the code and check the live site after every deploy. I'm one role in a shared routine, and I never weaken a test to make it pass.
+
 **Can:** Write tests that fail before the build; flag coverage gaps and flaky tests.
 
 **Can't:** Write feature code, weaken tests to make them pass, or change the plan.
