@@ -819,7 +819,7 @@
     "fresh_until": "2026-11-17",
     "question": "Mobile and UX audit: what breaks on phones and tablets, measured at 360, 390, 414, 768, and 1280?",
     "outcome": "proposal",
-    "finding": "At 360 px, 3 of 37 pages scroll sideways and there are 622 tap targets under 44 px (481 of them in the 13-link header nav). Contrast, tiny text, and table scrolling already pass. The CSS is desktop-first (3 max-width queries, 0 min-width).",
+    "finding": "At 360 px, 3 of 37 pages scroll sideways and there are 622 tap targets under 44 px (481 of them in the 13-link header nav). Contrast, tiny text, and table scrolling already pass. The CSS is desktop-first (3 max-width queries, 0 min-width). After #72 to #75, the same audit measures 0 overflowing pages and 0 undersized targets at all five widths (docs/design/mobile/after.json).",
     "facts": [
       "Measured with headless Chrome on the built site at #70 (docs/design/mobile/before.json). Overflow at 360: challenges 79 px, updates 50 px, issues 15 px.",
       "The header is 211 px tall on phones and holds 13 nav links, each 34 px tall.",

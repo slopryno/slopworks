@@ -37,3 +37,27 @@ Owned by Polish and User Advocate. Measured on 2026-10-17 with `scripts/mobile_a
 4. Mobile-first CSS: base styles for phones, `min-width` steps up, `clamp()` type and spacing, and tables that scroll in their own box. Fix the 3 overflowing pages.
 5. Bigger toggles and chips (44 px), and less repeated chrome (the header credit line, the label legend on every page).
 6. Add-only CI: a 360 px test for overflow and tap targets on every page, plus a lint for min-width-first CSS.
+
+## After (#72 to #75, measured on the #76 branch)
+
+Same harness, same widths. Raw numbers are in `after.json`. There are 40 pages now, up from 37: the Work and Under the hood hubs, plus one Team chat archive page that rolled over during the sprint.
+
+| Width | Pages overflowing | Undersized tap targets | Pages with any | Low contrast |
+|---|---|---|---|---|
+| 360 | 3 → 0 | 622 → 0 | 37 → 0 | 0 → 0 |
+| 390 | 2 → 0 | 626 → 0 | 37 → 0 | 0 → 0 (also 0 in forced dark) |
+| 414 | 1 → 0 | 629 → 0 | 37 → 0 | 0 → 0 |
+| 768 | 0 → 0 | 626 → 0 | 37 → 0 | 0 → 0 |
+| 1280 | 0 → 0 | 613 → 0 | 37 → 0 | 0 → 0 |
+
+- **Navigation:** 13 header links down to 4 (Work, Team, Lessons, Under the hood), plus the brand as Home. The header is 211 → 105 px on phones and 148 → 69 px from 768 up.
+- **Taps from home:** every top page is still 1 tap, through a home button, the header, or the footer's "All pages" list. A character sheet and How XP works are still 2. Every deep page has one "Back to" link. No URL moved.
+- **Words above the fold at 390:** home 137 → 106, Timeline 160 → 145, Team 166 → 149, Team chat 144 → 113, Case files 167 → 149, Research Arena 177 → 144, a character sheet 130 → 96.
+- **Home:** one headline, three entry buttons, three one-sentence answers, and the proof numbers. Home HTML is 13,748 → 5,664 bytes.
+- **Noise:** pitch badges in chat 48 → 30 (one per thread). The label legend lists only the kinds a page shows. The Team intro is 2 sentences, down from 5.
+- **Type and line length:** smallest text is still 12 px. The longest estimated line at 1280 is 113 → 110 characters, so desktop didn't get worse.
+- **CSS:** 10,700 → 11,261 bytes. Width queries went from 3 `max-width` and 0 `min-width` to 0 `max-width` and 1 `min-width`. h1, h2 and the home headline use `clamp()`. There are 3 animations, all covered by the reduced-motion rule, and still 0 avatar SVGs without reduced motion.
+- **Weight:** the heaviest page is still the Research Arena at 83,202 bytes (budget 102,400). The Team page avatars are unchanged at 24,330 bytes; the avatar strip on home was removed.
+- **CI:** `tests/test_mobile.py` runs this audit at 360 on every page on each PR, using Chrome on the runner, in about 2 s. It fails on any overflow or any non-inline target under 44 px, and lints min-width-only queries.
+
+**Correction:** the #73 description said the home page's can/can't lists were "still on the old cases and behind pages". That was wrong: they had only been on home. This PR puts their main point back, in one line on Under the hood: the site has no forms, scripts, or visitor input. Comms' wording is in Team chat.
