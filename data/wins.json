@@ -1,5 +1,13 @@
 [
   {
+    "id": "pr72",
+    "role": "Polish",
+    "title": "Polish: simpler nav (i36): 4 top links, Work and Under the hood hubs, back links, footer list",
+    "pr": "https://github.com/slopryno/slopworks/pull/72",
+    "date": "2026-10-17",
+    "merged": "2026-10-17T19:24-04:00"
+  },
+  {
     "id": "pr71",
     "role": "Advocate",
     "title": "Advocate/Polish: measured mobile and UX audit (i36): harness, before numbers, research, nav proposal",
