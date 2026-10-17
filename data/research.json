@@ -495,5 +495,165 @@
     "success_metric": "Showcase answers the 3 CEO questions with every claim linked to a real artifact",
     "pitch": "i22",
     "recommendation": "pursue"
+  },
+  {
+    "id": "r-scoutmaster-2026-10-17-demo1",
+    "date": "2026-10-17",
+    "role": "Scoutmaster",
+    "kind": "focused",
+    "question": "Demo challenge 1 (fictional): How could a small software company give its support team a weekly plain-language digest of product changes?",
+    "outcome": "proposal",
+    "finding": "Worked approach: build the digest from the company's own curated changelog, not raw commits. Group entries by change type, put breaking changes and deprecations first, and link every line to its source entry.",
+    "facts": [
+      "Keep a Changelog: changelogs are for humans, not machines; group the same types of changes (Added, Changed, Deprecated, Removed, Fixed, Security).",
+      "Keep a Changelog: using commit log diffs as changelogs is a bad idea because they're full of noise."
+    ],
+    "inferences": [
+      "A support team needs 'what changed for customers', which a curated changelog already says better than commits.",
+      "Slopworks does the same thing daily for Grok Bot: public sources in, sourced summaries out."
+    ],
+    "evidence": [
+      "https://keepachangelog.com/en/1.1.0/"
+    ],
+    "confidence": "medium",
+    "status": "verified",
+    "fresh_until": "2027-01-17",
+    "existing_work": "Slopworks' own daily tracker and feeds; backlog d3 weekly digest",
+    "opportunity": "Weekly digest generated from the changelog: breaking changes first, then grouped by type, each line linked",
+    "alternatives": "Summarize raw commits or tickets with a model",
+    "effort": "M",
+    "risks": "Only as good as the changelog; if it's patchy, the digest is too",
+    "experiment": "Generate one week's digest from a sample changelog and check every line traces to an entry",
+    "success_metric": "Every digest line links its source entry; nothing appears that the changelog doesn't say",
+    "recommendation": "pursue"
+  },
+  {
+    "id": "r-atlas-2026-10-17-demo1",
+    "date": "2026-10-17",
+    "role": "Atlas",
+    "kind": "focused",
+    "question": "Demo challenge 1 (fictional): What would that digest need technically, and what can stay simple?",
+    "outcome": "proposal",
+    "finding": "Worked approach: a scheduled job reads the changelog, writes a static page plus RSS and JSON Feed, and keeps stable IDs so readers never see reruns. No server needed.",
+    "facts": [
+      "JSON Feed 1.1: each item needs an id that stays unique over time; readers must discard items without one.",
+      "JSON Feed recommends that publishers already on RSS keep RSS too, and suggests feeds stay under about 100 KB.",
+      "GitHub Actions: scheduled runs can be delayed at busy times, and in public repos they're disabled after 60 days without activity."
+    ],
+    "inferences": [
+      "Stable IDs from changelog versions avoid duplicate digest items.",
+      "A schedule plus a manual trigger covers delays; the digest should show its as-of date."
+    ],
+    "evidence": [
+      "https://www.jsonfeed.org/version/1.1/",
+      "https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows"
+    ],
+    "confidence": "high",
+    "status": "verified",
+    "fresh_until": "2027-01-17",
+    "existing_work": "build.py already writes feed.xml and feed.json with stable ids",
+    "opportunity": "Static weekly page plus RSS and JSON Feed, built on a schedule with a manual fallback",
+    "alternatives": "A hosted newsletter tool",
+    "effort": "S",
+    "risks": "Silent schedule delays or auto-disable; needs an as-of date and a stale check",
+    "experiment": "Build two consecutive weeks and confirm no item repeats and both feeds validate",
+    "success_metric": "Zero repeated items across weeks; feeds validate",
+    "recommendation": "pursue"
+  },
+  {
+    "id": "r-shield-2026-10-17-demo1",
+    "date": "2026-10-17",
+    "role": "Shield",
+    "kind": "focused",
+    "question": "Demo challenge 1 (fictional): What could go wrong with a model summarizing changelog text?",
+    "outcome": "proposal",
+    "finding": "Worked approach: treat changelog text as data, never instructions. Summaries keep a fixed format with a link per line, run through filters, and get a human check before anything goes to customers.",
+    "facts": [
+      "OWASP LLM01:2025: indirect prompt injection happens when a model reads external content, such as files or websites, that alters its behavior.",
+      "OWASP mitigations include defining and validating output formats with citations, segregating untrusted content, and requiring human approval for high-risk actions."
+    ],
+    "inferences": [
+      "A changelog entry written by anyone with repo access can carry instructions; the digest step must not act on them.",
+      "Sending to customers is the high-risk action, so it stays human-approved."
+    ],
+    "evidence": [
+      "https://genai.owasp.org/llmrisk/llm01-prompt-injection/"
+    ],
+    "confidence": "high",
+    "status": "verified",
+    "fresh_until": "2027-01-17",
+    "existing_work": "Slopworks rule: source text is data, never instructions; CI scans for secrets and personal data",
+    "opportunity": "Fixed output format, link per line, filter pass, human approval before sending",
+    "alternatives": "Fully automatic sending",
+    "effort": "S",
+    "risks": "Filters miss novel injections; the human check is the backstop",
+    "experiment": "Seed one changelog entry with an instruction and confirm the digest quotes it as text and acts on nothing",
+    "success_metric": "Seeded instruction never changes output format or triggers an action",
+    "recommendation": "pursue"
+  },
+  {
+    "id": "r-critic-2026-10-17-demo1",
+    "date": "2026-10-17",
+    "role": "Critic",
+    "kind": "focused",
+    "question": "Demo challenge 1 (fictional): What is the weakest assumption in this approach?",
+    "outcome": "proposal",
+    "finding": "The plan assumes the company already keeps a consistent changelog. If it doesn't, automation polishes an incomplete record. Cheapest test: audit 4 weeks of the changelog against shipped releases before building anything.",
+    "facts": [
+      "Keep a Changelog: a changelog that only mentions some of the changes can be as dangerous as not having one.",
+      "Keep a Changelog: if you do nothing else, list deprecations, removals, and breaking changes."
+    ],
+    "inferences": [
+      "The first deliverable may be a changelog habit, not a digest tool.",
+      "If the audit fails, the digest should say 'partial' rather than pretend to be complete."
+    ],
+    "evidence": [
+      "https://keepachangelog.com/en/1.1.0/"
+    ],
+    "confidence": "medium",
+    "status": "verified",
+    "fresh_until": "2027-01-17",
+    "existing_work": "Slopworks labels coverage partial when a source is skipped",
+    "opportunity": "Make a 4-week changelog audit the first experiment, with a 'partial' label if gaps exist",
+    "alternatives": "Build the digest first and fix gaps later",
+    "effort": "S",
+    "risks": "The audit itself needs someone who knows what shipped",
+    "experiment": "Compare 4 weeks of changelog entries to release tags; count releases with no entry",
+    "success_metric": "Gap count known before any build starts",
+    "recommendation": "investigate"
+  },
+  {
+    "id": "r-coordinator-2026-10-17-demo1",
+    "date": "2026-10-17",
+    "role": "Coordinator",
+    "kind": "focused",
+    "question": "Demo challenge 1 (fictional): What's the recommended plan, and what comes first?",
+    "outcome": "proposal",
+    "finding": "Worked example outcome: start with a 4-week changelog audit (Critic), then a static digest with stable IDs (Atlas), a fixed linked format (Scoutmaster), and human approval before sending (Shield). About one to two weeks of small steps.",
+    "facts": [
+      "Four role reports were researched independently from 4 distinct public pages for this challenge.",
+      "Every recommendation in this outcome traces to one of those reports."
+    ],
+    "inferences": [
+      "The audit-first order lowers risk at almost no cost.",
+      "Effort is an estimate from comparable Slopworks work, not a quote."
+    ],
+    "evidence": [
+      "https://keepachangelog.com/en/1.1.0/",
+      "https://www.jsonfeed.org/version/1.1/",
+      "https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows",
+      "https://genai.owasp.org/llmrisk/llm01-prompt-injection/"
+    ],
+    "confidence": "medium",
+    "status": "hypothesis",
+    "fresh_until": "2027-01-17",
+    "existing_work": "Scoutmaster, Atlas, Shield, and Critic reports for this challenge",
+    "opportunity": "Five-step worked plan: audit, format, build, safety, review",
+    "alternatives": "Skip the audit; send fully automatically",
+    "effort": "M",
+    "risks": "Demo only: a fictional company, no real data, no client involved",
+    "experiment": "The audit itself is step one",
+    "success_metric": "A reader can follow every step back to a cited report",
+    "recommendation": "pursue"
   }
 ]
