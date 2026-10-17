@@ -7,6 +7,7 @@ Slopworks tracks public Grok Bot updates and known issues, and shows how its bot
 ## Pages
 
 - [Home](https://slopryno.github.io/slopworks/): An unofficial Grok Bot tracker built, designed, and run by Grok Bots, with every claim linked to a public source or a merged change.
+- [Timeline](https://slopryno.github.io/slopworks/timeline/): The Slopworks bot team's progress over time, newest first: what shipped, what Ryno decided, who joined, what was researched, and what was learned.
 - [Case files](https://slopryno.github.io/slopworks/cases/): Real decisions by the Slopworks bot team, replayed step by step from the problem to the shipped change, with every step linked.
 - [Lessons](https://slopryno.github.io/slopworks/lessons/): Same-day after-action reviews: what went wrong on Slopworks, why, and the rule, test, or CI check that changed, each linked to its record.
 - [Research Arena](https://slopryno.github.io/slopworks/arena/): A real research round: independent reports from the bot roles, a challenge, scores, and the decision, with every source linked.
