@@ -27,7 +27,7 @@
     },
     {
       "id": "research",
-      "when": "One or two roles a day, all week (in the daily run)",
+      "when": "One to three roles a day, all week (in the daily run)",
       "cron": "13 9 * * *",
       "what": "Weekly research rotation: each role reads up to about 5 public web pages in its own area and posts a short note. Ideas become pitches in the next standup."
     },
@@ -35,7 +35,7 @@
       "id": "week-mon",
       "when": "Mondays: investigations",
       "cron": "13 9 * * 1",
-      "what": "Coordinator selects the week's investigations from the consolidated research (on top of the daily run)."
+      "what": "Coordinator: select the week's investigations from the consolidated research (on top of the daily run)."
     },
     {
       "id": "week-tue",
