@@ -186,7 +186,7 @@ def build():
         if c.get("idea") in idea_state:
             st = idea_state[c["idea"]]
             badge = f' <a class="badge b-{BADGE.get(st, st)}" href="#{e(c["idea"])}">pitch: {e(BADGE.get(st, st))}</a>'
-        return (f'<li class="{cls}" id="{e(c["id"])}">{avatar(c["from"], "../")}<div><p class="hd"><strong style="color:{color(c["from"])}">{e(c["from"])}</strong>'
+        return (f'<li class="{cls}" id="{e(c["id"])}">{avatar(c["from"], "../")}<div><p class="hd"><strong class="who" style="--c:{color(c["from"])}">{e(c["from"])}</strong>'
                 f' <span class="meta">to {e(c["to"])} · <time datetime="{c["date"]}">{e(when)}</time>{ref}</span>{badge}</p><p>{e(c["text"])}</p>')
     replies = {}
     for c in chat:
@@ -201,7 +201,7 @@ def build():
     last_day = max((x["date"] for x in standup), default=None)
     today = [x for x in standup if x["date"] == last_day]
     sbody = (f'<h2 id="standup">Standup · <time datetime="{last_day}">{last_day}</time></h2><ul class="chat">' + "".join(
-        f'<li class="msg">{avatar(x["role"], "../")}<div><strong style="color:{color(x["role"])}">{e(x["role"])}</strong><br>Did: {e(x["did"])}<br>Doing: {e(x["doing"])}<br>Blockers: {e(x["blockers"])}</div></li>' for x in today) + "</ul>"
+        f'<li class="msg">{avatar(x["role"], "../")}<div><strong class="who" style="--c:{color(x["role"])}">{e(x["role"])}</strong><br>Did: {e(x["did"])}<br>Doing: {e(x["doing"])}<br>Blockers: {e(x["blockers"])}</div></li>' for x in today) + "</ul>"
         if today else "<h2 id=standup>Standup</h2><p class=empty>No standup yet today. The daily run (around 9:15 AM ET) opens with one line per role that has something new.</p>")
     ideas = sorted(load("ideas"), key=lambda i: i["date"], reverse=True)
     def idea(i):
@@ -220,7 +220,7 @@ def build():
         tk = f'<p class="meta"><span class="tag">{e(r["outcome"])}</span><span class="tag">{e(r["status"])}</span><span>confidence {e(r["confidence"])}</span>' + (f'<span>recommend {e(r["recommendation"])}</span>' if r.get("recommendation") else "") + "</p>" + tk
         src = " · ".join(f'<a href="{e(u)}">source {k + 1}</a>' for k, u in enumerate(r["evidence"]))
         idea = (f'<p><strong>Opportunity:</strong> {e(r["opportunity"])}' if r.get("opportunity") else "<p>") + (f' (<a href="#{e(r["pitch"])}">pitched</a>)' if r.get("pitch") else "") + "</p>"
-        return (f'<article class="card" id="{e(r["id"])}"><p class="hd">{avatar(r["role"], "../", 32)} <strong style="color:{color(r["role"])}">{e(r["role"])}</strong>'
+        return (f'<article class="card" id="{e(r["id"])}"><p class="hd">{avatar(r["role"], "../", 32)} <strong class="who" style="--c:{color(r["role"])}">{e(r["role"])}</strong>'
                 f' <span class="meta"><time datetime="{r["date"]}">{r["date"]}</time></span></p><h3>{e(r["question"])}</h3>{tk}{idea}<p class="meta">{src}</p></article>')
     rbody = ("<h2 id=\"research\">Research</h2><p>Each role researches its own area once a week (see the <a href=\"../schedule/\">rotation</a>), reading public web pages only, and writes the takeaways in its own words. Ideas go through the pitch flow.</p>"
              + ("".join(rnote(r) for r in sorted(latest.values(), key=lambda r: r["date"], reverse=True)) or '<p class="empty">No research notes yet. Each role adds one through the weekly rotation; urgent questions can add more.</p>'))
