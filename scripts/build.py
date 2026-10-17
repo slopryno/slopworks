@@ -15,8 +15,35 @@ REPO = "https://github.com/slopryno/slopworks"
 CREDIT = "Built and designed by Grok Bots. Reviewed and merged by bots; steered by a human CEO (Ryno)."
 DISCLAIMER = "Unofficial, fan-built project. Not affiliated with or endorsed by Grok Bot, SpaceX, or X."
 CORRECTIONS = "slopryno+corrections@mail.grokbot.com"
-NAV = [("", "Home"), ("timeline/", "Timeline"), ("cases/", "Case files"), ("lessons/", "Lessons"), ("arena/", "Research Arena"), ("challenges/", "Demo challenge"), ("team/", "Team"), ("chat/", "Team chat")]
-OPS = [("updates/", "What's new"), ("issues/", "Known issues"), ("behind/", "Behind the scenes"), ("design/", "Design log"), ("schedule/", "Schedule and limits")]
+# Information architecture (i36, Team chat c210 to c214): 4 top items plus the brand as Home. Deeper pages sit one tap
+# from their hub, every deep page has one "Back to" link, and the footer lists every page. No URL moved.
+WORK = [("timeline/", "Timeline"), ("cases/", "Case files"), ("arena/", "Research Arena"), ("challenges/", "Demo challenge")]
+HOOD = [("updates/", "What's new"), ("issues/", "Known issues"), ("chat/", "Team chat"), ("schedule/", "Schedule and limits"), ("behind/", "Behind the scenes"), ("design/", "Design log")]
+TOP = [("work/", "Work"), ("team/", "Team"), ("lessons/", "Lessons"), ("hood/", "Under the hood")]
+NAV = [("", "Home")] + WORK + [("team/", "Team"), ("lessons/", "Lessons")]  # every visitor page, for llms.txt and the footer
+OPS = HOOD
+
+
+def section(slug):
+    """(hub slug, hub title) a page belongs to, for the nav highlight and its Back link."""
+    for hub, pages in (("work/", WORK), ("hood/", HOOD)):
+        if any(slug.startswith(s) for s, _ in pages):
+            return hub, dict(TOP)[hub]
+    for s, title in TOP:
+        if slug.startswith(s):
+            return s, title
+    return None, None
+
+
+def back_link(slug, up):
+    """One 'Back to' link on deep pages (Comms, c211): archives go back to their page, sheets to Team, the rest to their hub."""
+    if slug in ("", "work/", "hood/", "team/", "lessons/"):
+        return ""
+    for base, title in (("chat/", "Team chat"), ("timeline/", "Timeline"), ("lessons/", "Lessons"), ("team/", "Team")):
+        if slug.startswith(base) and slug != base:
+            return f'<p class="back"><a href="{up}{base}">Back to {title}</a></p>'
+    hub, title = section(slug)
+    return f'<p class="back"><a href="{up}{hub}">Back to {title}</a></p>' if hub else ""
 e = lambda s: html.escape(str(s), quote=True)
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from avatars import ROLES as AVATARS  # noqa: E402
@@ -140,6 +167,8 @@ DESCRIPTIONS = {
     "behind/": "What each role found, dropped, or stripped in every Slopworks run, from the run log.",
     "design/": "What Polish, the design role, changed on Slopworks, and the ranked backlog of what's next.",
     "team/xp/": "How the Slopworks bot roles earn XP and levels: only from verified work, each point linked to its evidence and reviewed by another role.",
+    "work/": "What the Slopworks bot team has made and how it went: the timeline, case files, a research round, and a labeled demo.",
+    "hood/": "How Slopworks runs: the Grok Bot tracker, the bots' own chat, the schedule and limits, and the run and design logs.",
     "schedule/": "When Slopworks runs, what each run does, and the limits the bot team works within.",
 }
 
@@ -164,8 +193,11 @@ def page(slug, title, lede, body, source):
              + ('<span hidden itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><meta itemprop="name" content="Slopworks">'
                 f'<link itemprop="url" href="{BASE}"><link itemprop="sameAs" href="{REPO}"></span>' if slug == "" else
                 f'<span hidden itemprop="isPartOf" itemscope itemtype="https://schema.org/WebSite"><meta itemprop="name" content="Slopworks"><link itemprop="url" href="{BASE}"></span>'))
-    nav = "".join(f'<li><a href="{up}{s}"{" aria-current=\"page\"" if s == slug else ""}>{e(t)}</a></li>' for s, t in NAV)
-    ops = "".join(f'<li><a href="{up}{s}"{" aria-current=\"page\"" if s == slug else ""}>{e(t)}</a></li>' for s, t in OPS)
+    here = section(slug)[0]
+    cur = lambda s: ' aria-current="page"' if s == slug else (' aria-current="true"' if s == here else "")
+    nav = "".join(f'<li><a href="{up}{s}"{cur(s)}>{e(t)}</a></li>' for s, t in TOP)
+    sitemap = (f'<nav class="sitelist" aria-label="All pages"><ul><li><a href="{up}">Home</a></li>'
+               + "".join(f'<li><a href="{up}{s}">{e(t)}</a></li>' for s, t in WORK + [("team/", "Team"), ("lessons/", "Lessons")] + HOOD) + "</ul></nav>")
     return f"""<!doctype html>
 <html lang="en">
 <head>
@@ -189,18 +221,17 @@ def page(slug, title, lede, body, source):
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <header><div class="wrap">
-<a class="brand" href="{up}">Slopworks</a>
-<p class="credit">{e(CREDIT)}</p>
-<nav aria-label="Showcase"><ul>{nav}</ul></nav>
-<nav class="ops" aria-label="Tracker and operations"><span>Tracker and ops:</span><ul>{ops}</ul></nav>
+<a class="brand" href="{up}"{' aria-current="page"' if slug == "" else ""}>Slopworks</a>
+<nav aria-label="Main"><ul>{nav}</ul></nav>
 </div></header>
 <main id="main" class="wrap{" home" if slug == "" else ""}" itemscope itemtype="https://schema.org/{kind}">{micro}
-<p class="disclaimer">{e(DISCLAIMER)}</p>
+{back_link(slug, up)}<p class="disclaimer">{e(DISCLAIMER)}</p>
 <h1>{e(title)}</h1>
 <p class="lede">{lede}</p>
 {body}
 </main>
 <footer><div class="wrap">
+{sitemap}
 <p>{e(CREDIT)}</p>
 <p>Corrections: <a href="mailto:{CORRECTIONS}">{CORRECTIONS}</a> · Follow: <a href="{up}feed.xml">RSS</a>, <a href="{up}feed.json">JSON</a>, <a href="{REPO}/blob/main/docs/follow.md">how to follow with Grok Bot</a> · <a href="{REPO}">Source</a> · <a href="{REPO}/commits/main/{source}">History of this page's data</a></p>
 <p>{e(DISCLAIMER)}</p>
@@ -895,6 +926,11 @@ def build():
     shipped = [d for d in design if d["state"] == "shipped"]
     backlog = sorted([d for d in design if d["state"] in ("backlog", "in-progress")], key=lambda d: d["rank"])
     card = lambda d: f'<article class="card"><h3>{e(d["idea"])}</h3><p>{e(d["why"])}</p><p class="meta"><span class="tag">effort {d["effort"]}</span><span>{e(d["state"])}{" " + d["shipped"] if d.get("shipped") else ""}</span></p></article>'
+    # Hubs (i36): one tap from home to every section, one more to every page. Each row is a full-width link, easy to tap.
+    def hub(pages):
+        return '<ul class="hub">' + "".join(f'<li><a href="../{s}"><strong>{e(t)}</strong><span>{e(DESCRIPTIONS[s])}</span></a></li>' for s, t in pages) + "</ul>"
+    files["work/index.html"] = page("work/", "Work", "What the team has made, and how it went.", hub(WORK), "data/cases.json")
+    files["hood/index.html"] = page("hood/", "Under the hood", "How the site runs: the tracker, the team's chat, and the logs.", hub(HOOD), "data/runs.json")
     files["design/index.html"] = page("design/", "Design log", "What Polish, the design bot, changed and what's next. One small design change a week at most, each reviewed by Lens and Trial.",
                                       "<h2>Shipped</h2>" + "".join(map(card, shipped)) + "<h2>Up next (ranked)</h2>" + "".join(map(card, backlog)), "data/design_backlog.json")
 
@@ -927,7 +963,7 @@ def build():
     files["sitemap.xml"] = ('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
                             + "".join(f"<url><loc>{e(loc(k))}</loc></url>\n" for k in pages) + "</urlset>\n")
     files["robots.txt"] = f"User-agent: *\nAllow: /\nSitemap: {BASE}sitemap.xml\n"
-    main_pages = [("", "Home")] + [p for p in NAV if p[0]] + OPS + [("lessons/", "Lessons")] * ("lessons/" not in dict(NAV)) + [("team/xp/", "How XP works")]
+    main_pages = [("", "Home"), ("work/", "Work"), ("hood/", "Under the hood")] + [p for p in NAV if p[0]] + OPS + [("lessons/", "Lessons")] * ("lessons/" not in dict(NAV)) + [("team/xp/", "How XP works")]
     files["llms.txt"] = ("# Slopworks\n\n> " + DESCRIPTIONS[""] + " " + DISCLAIMER + "\n\n"
         "Slopworks tracks public Grok Bot updates and known issues, and shows how its bot team works: research rounds, decisions, case files, and after-action reviews. "
         "Every role is played by one daily routine and labeled as a role. Demo challenges are labeled Demo and are worked examples on fictional briefs, not advice or quotes. "
