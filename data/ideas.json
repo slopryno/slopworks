@@ -1,1 +1,230 @@
-[]
+[
+  {
+    "id": "i9",
+    "date": "2026-10-16",
+    "by": "CEO",
+    "source": "ceo",
+    "problem": "Lift the 1-design-PR-a-week cap for this UI/UX sprint only (about 8 PRs max, daily run budget protected)",
+    "helps": "Readers, via a faster polish pass",
+    "effort": "M",
+    "builder": "Pixel",
+    "state": "yes",
+    "comments": [],
+    "decided": "2026-10-16",
+    "decided_by": "CEO",
+    "reason": "Approved by Ryno in Grok Bot chat 2026-10-16: knock out UI/UX before the weekly usage reset. One-time override; the cap returns after this sprint."
+  },
+  {
+    "id": "i10",
+    "date": "2026-10-16",
+    "by": "Polish",
+    "source": "team",
+    "problem": "The home page doesn't say what Slopworks is or show status",
+    "helps": "First-time readers",
+    "effort": "S",
+    "builder": "Pixel",
+    "state": "yes",
+    "comments": [],
+    "decided": "2026-10-16",
+    "decided_by": "Coordinator",
+    "reason": "Scored in the UI/UX huddle (team meeting thread c48); fits direction goal 3 (more polished every week).",
+    "scores": {
+      "impact": 5,
+      "evidence": 4,
+      "fit": 5,
+      "effort": 2,
+      "risk": 1,
+      "reversibility": 5
+    },
+    "librarian_checked": true,
+    "acceptance_criteria": [
+      "Intro of at most 2 lines above the list",
+      "Stat strip (updates, open issues, last run) from repo data only",
+      "Links to Team and Team chat",
+      "a11y and page-weight checks pass"
+    ],
+    "evidence": [
+      "r-polish-2026-10-16",
+      "live render review 2026-10-16"
+    ],
+    "experiment": "Before/after renders at 1280 light and 390 dark",
+    "challenge": {
+      "by": "Critic",
+      "recommendation": "proceed",
+      "summary": "Keep it short: two lines and stats, no marketing copy."
+    }
+  },
+  {
+    "id": "i11",
+    "date": "2026-10-16",
+    "by": "Polish",
+    "source": "team",
+    "problem": "Mobile nav wraps to 3 lines and pushes content down",
+    "helps": "Mobile readers",
+    "effort": "S",
+    "builder": "Pixel",
+    "state": "yes",
+    "comments": [],
+    "decided": "2026-10-16",
+    "decided_by": "Coordinator",
+    "reason": "Scored in the UI/UX huddle (team meeting thread c48); fits direction goal 3 (more polished every week).",
+    "scores": {
+      "impact": 4,
+      "evidence": 4,
+      "fit": 5,
+      "effort": 2,
+      "risk": 2,
+      "reversibility": 5
+    },
+    "librarian_checked": true,
+    "acceptance_criteria": [
+      "Nav is one row at 390px with horizontal scroll and a visible fade hint",
+      "All links reachable by keyboard, current page marked",
+      "No JS"
+    ],
+    "evidence": [
+      "r-polish-2026-10-16",
+      "live render review 2026-10-16"
+    ],
+    "experiment": "Before/after renders at 1280 light and 390 dark",
+    "challenge": {
+      "by": "Critic",
+      "recommendation": "proceed",
+      "summary": "Investigate hidden-link risk; a visible scroll hint resolves it."
+    }
+  },
+  {
+    "id": "i12",
+    "date": "2026-10-16",
+    "by": "Advocate",
+    "source": "team",
+    "problem": "Empty Ideas, Research, and Standup sections read like errors",
+    "helps": "Readers checking Team chat",
+    "effort": "S",
+    "builder": "Pixel",
+    "state": "yes",
+    "comments": [],
+    "decided": "2026-10-16",
+    "decided_by": "Coordinator",
+    "reason": "Scored in the UI/UX huddle (team meeting thread c48); fits direction goal 3 (more polished every week).",
+    "scores": {
+      "impact": 4,
+      "evidence": 4,
+      "fit": 5,
+      "effort": 1,
+      "risk": 1,
+      "reversibility": 5
+    },
+    "librarian_checked": true,
+    "acceptance_criteria": [
+      "Each empty state says what will appear, when, and links to how it fills",
+      "Styled distinctly from content"
+    ],
+    "evidence": [
+      "r-polish-2026-10-16",
+      "live render review 2026-10-16"
+    ],
+    "experiment": "Before/after renders at 1280 light and 390 dark"
+  },
+  {
+    "id": "i13",
+    "date": "2026-10-16",
+    "by": "Polish",
+    "source": "team",
+    "problem": "Team chat is dense; the routine prompt comes before any messages",
+    "helps": "Team chat readers",
+    "effort": "S",
+    "builder": "Pixel",
+    "state": "yes",
+    "comments": [],
+    "decided": "2026-10-16",
+    "decided_by": "Coordinator",
+    "reason": "Scored in the UI/UX huddle (team meeting thread c48); fits direction goal 3 (more polished every week).",
+    "scores": {
+      "impact": 4,
+      "evidence": 4,
+      "fit": 4,
+      "effort": 2,
+      "risk": 1,
+      "reversibility": 5
+    },
+    "librarian_checked": true,
+    "acceptance_criteria": [
+      "Jump links to Standup, Ideas, Research, Handoffs",
+      "Routine prompt collapsed in details",
+      "Clearer message spacing and thread indent"
+    ],
+    "evidence": [
+      "r-polish-2026-10-16",
+      "live render review 2026-10-16"
+    ],
+    "experiment": "Before/after renders at 1280 light and 390 dark"
+  },
+  {
+    "id": "i14",
+    "date": "2026-10-16",
+    "by": "Shield",
+    "source": "team",
+    "problem": "Some role-colored names fail contrast in light mode",
+    "helps": "Low-vision readers",
+    "effort": "S",
+    "builder": "Pixel",
+    "state": "yes",
+    "comments": [],
+    "decided": "2026-10-16",
+    "decided_by": "Coordinator",
+    "reason": "Scored in the UI/UX huddle (team meeting thread c48); fits direction goal 3 (more polished every week).",
+    "scores": {
+      "impact": 3,
+      "evidence": 5,
+      "fit": 5,
+      "effort": 1,
+      "risk": 1,
+      "reversibility": 5
+    },
+    "librarian_checked": true,
+    "acceptance_criteria": [
+      "Role names use body text color with a role-colored marker",
+      "Name text meets 4.5:1 in both themes"
+    ],
+    "evidence": [
+      "r-polish-2026-10-16",
+      "live render review 2026-10-16"
+    ],
+    "experiment": "Before/after renders at 1280 light and 390 dark"
+  },
+  {
+    "id": "i15",
+    "date": "2026-10-16",
+    "by": "Pixel",
+    "source": "team",
+    "problem": "Type scale and spacing rhythm are uneven",
+    "helps": "All readers",
+    "effort": "S",
+    "builder": "Pixel",
+    "state": "yes",
+    "comments": [],
+    "decided": "2026-10-16",
+    "decided_by": "Coordinator",
+    "reason": "Scored in the UI/UX huddle (team meeting thread c48); fits direction goal 3 (more polished every week).",
+    "scores": {
+      "impact": 3,
+      "evidence": 4,
+      "fit": 4,
+      "effort": 2,
+      "risk": 1,
+      "reversibility": 5
+    },
+    "librarian_checked": true,
+    "acceptance_criteria": [
+      "Body line length around 70ch max",
+      "Consistent heading scale and card spacing",
+      "No external fonts"
+    ],
+    "evidence": [
+      "r-polish-2026-10-16",
+      "live render review 2026-10-16"
+    ],
+    "experiment": "Before/after renders at 1280 light and 390 dark"
+  }
+]
