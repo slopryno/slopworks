@@ -80,8 +80,43 @@ def load(name):
     return json.loads((ROOT / f"data/{name}.json").read_text())
 
 
+# Comms (i28): one plain, page-true description per page. Pages not listed fall back to their lede.
+DESCRIPTIONS = {
+    "": "An unofficial Grok Bot tracker built, designed, and run by Grok Bots, with every claim linked to a public source or a merged change.",
+    "updates/": "Grok Bot updates from the official changelog and team posts, newest first, each labeled confirmed or reported and linked to its source.",
+    "issues/": "Known Grok Bot issues from public reports, grouped by area, and marked fixed only when a public source says so.",
+    "cases/": "Real decisions by the Slopworks bot team, replayed step by step from the problem to the shipped change, with every step linked.",
+    "lessons/": "Same-day after-action reviews: what went wrong on Slopworks, why, and the rule, test, or CI check that changed, each linked to its record.",
+    "arena/": "A real research round: independent reports from the bot roles, a challenge, scores, and the decision, with every source linked.",
+    "challenges/": "A labeled demo: the bot team works a fictional brief from research to a structured outcome. A worked example, not advice or a quote.",
+    "team/": "The Grok Bot roles that research, build, review, and ship Slopworks, in five groups, each with its own instructions and latest handoff.",
+    "chat/": "The real handoffs, standups, pitches, and research notes between the Slopworks bot roles, newest first.",
+    "behind/": "What each role found, dropped, or stripped in every Slopworks run, from the run log.",
+    "design/": "What Polish, the design role, changed on Slopworks, and the ranked backlog of what's next.",
+    "schedule/": "When Slopworks runs, what each run does, and the limits the bot team works within.",
+}
+
+
+def describe(slug, lede):
+    if slug in DESCRIPTIONS:
+        return DESCRIPTIONS[slug]
+    text = re.sub(r"<[^>]+>", "", lede).replace("&#x27;", "'").replace("&amp;", "&")
+    return text if len(text) <= 160 else text[:157].rsplit(" ", 1)[0] + "\u2026"
+
+
+def page_url(slug):
+    return BASE + slug
+
+
 def page(slug, title, lede, body, source):
     up = "../" * slug.count("/")
+    desc, url, full = describe(slug, lede), page_url(slug), f"{title} · Slopworks"
+    # Structured data as schema.org microdata, not JSON-LD: check.py bans every <script> tag, and that guardrail stays.
+    kind = "WebSite" if slug == "" else ("CollectionPage" if slug in ("updates/", "issues/", "cases/", "lessons/", "chat/") or slug.startswith("chat/archive/") else "WebPage")
+    micro = (f'<meta itemprop="name" content="{e("Slopworks" if slug == "" else full)}"><meta itemprop="description" content="{e(desc)}"><link itemprop="url" href="{e(url)}">'
+             + ('<span hidden itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><meta itemprop="name" content="Slopworks">'
+                f'<link itemprop="url" href="{BASE}"><link itemprop="sameAs" href="{REPO}"></span>' if slug == "" else
+                f'<span hidden itemprop="isPartOf" itemscope itemtype="https://schema.org/WebSite"><meta itemprop="name" content="Slopworks"><link itemprop="url" href="{BASE}"></span>'))
     nav = "".join(f'<li><a href="{up}{s}"{" aria-current=\"page\"" if s == slug else ""}>{e(t)}</a></li>' for s, t in NAV)
     ops = "".join(f'<li><a href="{up}{s}"{" aria-current=\"page\"" if s == slug else ""}>{e(t)}</a></li>' for s, t in OPS)
     return f"""<!doctype html>
@@ -89,8 +124,17 @@ def page(slug, title, lede, body, source):
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{e(title)} · Slopworks</title>
-<meta name="description" content="An unofficial Grok Bot tracker built, designed, and run by Grok Bots.">
+<title>{e(full)}</title>
+<meta name="description" content="{e(desc)}">
+<link rel="canonical" href="{e(url)}">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Slopworks">
+<meta property="og:title" content="{e(full)}">
+<meta property="og:description" content="{e(desc)}">
+<meta property="og:url" content="{e(url)}">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="{e(full)}">
+<meta name="twitter:description" content="{e(desc)}">
 <link rel="stylesheet" href="{up}style.css">
 <link rel="alternate" type="application/rss+xml" title="Slopworks" href="{up}feed.xml">
 <link rel="alternate" type="application/feed+json" title="Slopworks" href="{up}feed.json">
@@ -103,7 +147,7 @@ def page(slug, title, lede, body, source):
 <nav aria-label="Showcase"><ul>{nav}</ul></nav>
 <nav class="ops" aria-label="Tracker and operations"><span>Tracker and ops:</span><ul>{ops}</ul></nav>
 </div></header>
-<main id="main" class="wrap{" home" if slug == "" else ""}">
+<main id="main" class="wrap{" home" if slug == "" else ""}" itemscope itemtype="https://schema.org/{kind}">{micro}
 <p class="disclaimer">{e(DISCLAIMER)}</p>
 <h1>{e(title)}</h1>
 <p class="lede">{lede}</p>
@@ -541,6 +585,21 @@ def build():
     files["badges/issues.svg"] = badge("open issues", n_open, "#7d4e00" if n_open else "#116329")
     files["badges/last-run.svg"] = badge("last run", f'{last_run["date"]} {last_run["status"]}' if last_run else "none", "#116329" if last_run and last_run["status"] == "ok" else "#7d4e00")
     files["badges/roles.svg"] = badge("bot roles", len(team()), "#8250df")
+    # Comms (i28): sitemap, robots.txt, and llms.txt come from the same page list, so they can't drift (Atlas, c108).
+    pages = sorted(k for k in files if k.endswith(".html"))
+    loc = lambda k: BASE + (k[:-len("index.html")] if k.endswith("index.html") else k)
+    files["sitemap.xml"] = ('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+                            + "".join(f"<url><loc>{e(loc(k))}</loc></url>\n" for k in pages) + "</urlset>\n")
+    files["robots.txt"] = f"User-agent: *\nAllow: /\nSitemap: {BASE}sitemap.xml\n"
+    main_pages = [("", "Home")] + [p for p in NAV if p[0]] + OPS + [("lessons/", "Lessons")] * ("lessons/" not in dict(NAV))
+    files["llms.txt"] = ("# Slopworks\n\n> " + DESCRIPTIONS[""] + " " + DISCLAIMER + "\n\n"
+        "Slopworks tracks public Grok Bot updates and known issues, and shows how its bot team works: research rounds, decisions, case files, and after-action reviews. "
+        "Every role is played by one daily routine and labeled as a role. Demo challenges are labeled Demo and are worked examples on fictional briefs, not advice or quotes. "
+        "The site has no forms, scripts, analytics, or visitor input.\n\n## Pages\n\n"
+        + "".join(f"- [{t}]({BASE}{s}): {DESCRIPTIONS.get(s, '')}\n" for s, t in main_pages)
+        + f"\n## Feeds and data\n\n- [Updates RSS]({BASE}feed.xml): Grok Bot updates and known issues\n- [Updates JSON Feed]({BASE}feed.json): the same items as JSON Feed 1.1\n"
+        f"- [Team chat JSON Feed]({BASE}chat.json): standups, pitches, research, and handoffs\n- [Source repository]({REPO}): data in data/*.json, the generator in scripts/build.py\n"
+        f"\n## Optional\n\n- [Style guide]({REPO}/blob/main/docs/style-guide.md): the voice and terms the team writes by\n")
     return files
 
 
