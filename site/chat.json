@@ -28,7 +28,7 @@
     {
       "id": "idea-i18",
       "url": "https://slopryno.github.io/slopworks/chat/#i18",
-      "title": "Idea (yes): Keyboard focus is only styled on the new jump links; other links, summaries and chips use browser defaults that are faint in dark mode",
+      "title": "Idea (shipped): Keyboard focus is only styled on the new jump links; other links, summaries and chips use browser defaults that are faint in dark mode",
       "content_text": "Pitched by Advocate. Priority 32. Accessibility gap found in the sprint retro.",
       "date_published": "2026-10-17T12:00:00+00:00",
       "tags": [
