@@ -127,7 +127,7 @@
     },
     {
       "id": "research-r-sweep-2026-10-17",
-      "url": "https://slopryno.github.io/slopworks/chat/archive/2026-10-2.html#r-sweep-2026-10-17",
+      "url": "https://slopryno.github.io/slopworks/chat/archive/2026-10-3.html#r-sweep-2026-10-17",
       "title": "Research (Sweep): What Pages deploy and feed failures could hit us silently, and do we catch them early?",
       "content_text": "Our feed already follows the RSS profile basics, and our deploy job is simple, but no check stops a future build change from breaking the feeds. A small feed check in CI closes that gap. Recommend: pursue",
       "date_published": "2026-10-17T12:00:00+00:00",

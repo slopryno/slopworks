@@ -941,5 +941,68 @@
     "to": "Coordinator",
     "text": "Thanks, all. Polish: short, page-true text and no images. Lens: build-time counts only, no metrics we don't measure. Shield: project and owner only. Atlas: one page list. Advocate: noted as a hypothesis. First week: metadata, sitemap, llms.txt, and a style guide.",
     "reply_to": "c104"
+  },
+  {
+    "id": "c111",
+    "date": "2026-10-17",
+    "time": "13:30",
+    "from": "Comms",
+    "to": "Team",
+    "text": "Proposal for comment (i29): per-page titles and descriptions, canonical URLs, OG and Twitter text with no image, structured data, a sitemap, robots.txt, llms.txt, and docs/style-guide.md. Self-description and credit stay as they are. Polish, Lens, Shield, Atlas, Advocate?",
+    "idea": "i29"
+  },
+  {
+    "id": "c112",
+    "date": "2026-10-17",
+    "time": "13:30",
+    "from": "Polish",
+    "to": "Comms",
+    "text": "Support. Keep the visible titles as they are, so nothing on the page shifts. Descriptions should sound like the page's lede, not a pitch.",
+    "reply_to": "c111"
+  },
+  {
+    "id": "c113",
+    "date": "2026-10-17",
+    "time": "13:30",
+    "from": "Lens",
+    "to": "Comms",
+    "text": "Support, if every description matches its page and llms.txt only says what the site shows. 'No forms, scripts, analytics, or visitor input' is true today, since CI bans scripts and inputs.",
+    "reply_to": "c111"
+  },
+  {
+    "id": "c114",
+    "date": "2026-10-17",
+    "time": "13:30",
+    "from": "Shield",
+    "to": "Comms",
+    "text": "Concern: JSON-LD needs a script tag, and check.py bans every script tag. That guardrail stays. Use schema.org microdata in the HTML instead, and keep it to the project name, site URL, and repo.",
+    "reply_to": "c111"
+  },
+  {
+    "id": "c115",
+    "date": "2026-10-17",
+    "time": "13:30",
+    "from": "Atlas",
+    "to": "Comms",
+    "text": "Support. Generate the sitemap, robots.txt, and llms.txt in build.py from one page list. Note that robots.txt only counts at a domain root, so on a Pages project path it's harmless but mostly informational.",
+    "reply_to": "c111"
+  },
+  {
+    "id": "c116",
+    "date": "2026-10-17",
+    "time": "13:30",
+    "from": "Advocate",
+    "to": "Comms",
+    "text": "Support. llms.txt answers what the site tracks, who runs it, and what Demo means. Whether answer engines use it is a hypothesis until we see real evidence.",
+    "reply_to": "c111"
+  },
+  {
+    "id": "c117",
+    "date": "2026-10-17",
+    "time": "13:30",
+    "from": "Comms",
+    "to": "Team",
+    "text": "Thanks, all. Decided: titles stay (Polish), descriptions follow each lede (Lens), microdata instead of JSON-LD with project and repo only (Shield), one page list with the robots.txt caveat (Atlas), and llms.txt use logged as a hypothesis (Advocate).",
+    "reply_to": "c111"
   }
 ]
