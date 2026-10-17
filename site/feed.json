@@ -258,6 +258,19 @@
       ]
     },
     {
+      "id": "update-changelog-0-70-2",
+      "url": "https://slopryno.github.io/slopworks/updates/#echangelog-0-70-2",
+      "external_url": "https://x.ai/changelog/bot",
+      "title": "In-chat app cards, payments, and Find in page",
+      "content_text": "Version 0.70.2 (which includes 0.69.0 to 0.70.1): connectors like Figma, Notion, and Canva can show an interactive app card in chat, Bots can pay with X Money or Stripe Link, and Cmd/Ctrl+F opens Find in page.",
+      "date_published": "2026-10-11T12:00:00+00:00",
+      "tags": [
+        "update",
+        "connectors",
+        "confirmed"
+      ]
+    },
+    {
       "id": "update-2108609764766908772",
       "url": "https://slopryno.github.io/slopworks/updates/#e2108609764766908772",
       "external_url": "https://x.com/bot/status/2108609764766908772",
@@ -284,6 +297,19 @@
       ]
     },
     {
+      "id": "update-changelog-0-68-1",
+      "url": "https://slopryno.github.io/slopworks/updates/#echangelog-0-68-1",
+      "external_url": "https://x.ai/changelog/bot",
+      "title": "Slide decks, formatted emails, and a bigger Bot screen",
+      "content_text": "Version 0.68.1: Bots build slide decks and deliver them as PowerPoint or Google Slides, send formatted emails from a draft card, and work on a 1920 × 1200 computer screen, up from 1280 × 800.",
+      "date_published": "2026-10-07T12:00:00+00:00",
+      "tags": [
+        "update",
+        "app",
+        "confirmed"
+      ]
+    },
+    {
       "id": "update-2107949161878606089",
       "url": "https://slopryno.github.io/slopworks/updates/#e2107949161878606089",
       "external_url": "https://x.com/bot/status/2107949161878606089",
@@ -293,6 +319,32 @@
       "tags": [
         "update",
         "x",
+        "confirmed"
+      ]
+    },
+    {
+      "id": "update-changelog-0-68-0",
+      "url": "https://slopryno.github.io/slopworks/updates/#echangelog-0-68-0",
+      "external_url": "https://x.ai/changelog/bot",
+      "title": "Five more languages and Gmail send-as drafts",
+      "content_text": "Version 0.68.0 adds Marathi, Tamil, Telugu, Swahili, and Hausa, and lets email drafts go out from a verified Gmail send-as address, with a From picker if you have more than one.",
+      "date_published": "2026-10-05T12:00:00+00:00",
+      "tags": [
+        "update",
+        "app",
+        "confirmed"
+      ]
+    },
+    {
+      "id": "update-changelog-2026-10-02",
+      "url": "https://slopryno.github.io/slopworks/updates/#echangelog-2026-10-02",
+      "external_url": "https://x.ai/changelog/bot",
+      "title": "Marketplace becomes Connect Apps",
+      "content_text": "An Oct 2 release renames Marketplace to Connect Apps, with category chips and Recommended for you first. Bot status lines use phrases like Thinking it through.",
+      "date_published": "2026-10-02T12:00:00+00:00",
+      "tags": [
+        "update",
+        "connectors",
         "confirmed"
       ]
     },
@@ -323,6 +375,32 @@
       ]
     },
     {
+      "id": "update-changelog-0-65-0",
+      "url": "https://slopryno.github.io/slopworks/updates/#echangelog-0-65-0",
+      "external_url": "https://x.ai/changelog/bot",
+      "title": "Voice chats with Team Bots, automatic updates on",
+      "content_text": "Version 0.65.0 lets teammates start a voice chat with a Team Bot and turns Automatic Updates on by default (you can turn it off in Settings, Updates).",
+      "date_published": "2026-09-30T12:00:00+00:00",
+      "tags": [
+        "update",
+        "voice",
+        "confirmed"
+      ]
+    },
+    {
+      "id": "update-changelog-0-64-0",
+      "url": "https://slopryno.github.io/slopworks/updates/#echangelog-0-64-0",
+      "external_url": "https://x.ai/changelog/bot",
+      "title": "Refreshed avatars and Secure Form logins",
+      "content_text": "Version 0.64.0 refreshes Bot avatars with bigger eyes and new shapes, opens logins in a Secure Form window that names the site, and lets you turn off drafts for a Bot so it sends directly.",
+      "date_published": "2026-09-30T12:00:00+00:00",
+      "tags": [
+        "update",
+        "app",
+        "confirmed"
+      ]
+    },
+    {
       "id": "update-2105373767568621895",
       "url": "https://slopryno.github.io/slopworks/updates/#e2105373767568621895",
       "external_url": "https://x.com/bot/status/2105373767568621895",
@@ -332,6 +410,58 @@
       "tags": [
         "update",
         "coding",
+        "confirmed"
+      ]
+    },
+    {
+      "id": "update-changelog-2026-09-29",
+      "url": "https://slopryno.github.io/slopworks/updates/#echangelog-2026-09-29",
+      "external_url": "https://x.ai/changelog/bot",
+      "title": "Approvals in Slack and clearer usage limits",
+      "content_text": "In Slack threads, a Bot that needs approval posts a Review an action card only you can answer. When included usage runs out, the app shows the usage limit notice instead of Bot failed to respond.",
+      "date_published": "2026-09-29T12:00:00+00:00",
+      "tags": [
+        "update",
+        "app",
+        "confirmed"
+      ]
+    },
+    {
+      "id": "update-changelog-2026-09-28",
+      "url": "https://slopryno.github.io/slopworks/updates/#echangelog-2026-09-28",
+      "external_url": "https://x.ai/changelog/bot",
+      "title": "Quote text and start lists in the composer",
+      "content_text": "Select text and press Cmd/Ctrl+L to quote it, type - or 1. to start a list, and get spell check as you type. A Bot's info pane gains a Library tab of the pages, files, and links it has shared.",
+      "date_published": "2026-09-28T12:00:00+00:00",
+      "tags": [
+        "update",
+        "app",
+        "confirmed"
+      ]
+    },
+    {
+      "id": "update-changelog-2026-09-26-outlook",
+      "url": "https://slopryno.github.io/slopworks/updates/#echangelog-2026-09-26-outlook",
+      "external_url": "https://x.ai/changelog/bot",
+      "title": "Email drafts work with Outlook",
+      "content_text": "A second Sep 26 release lets you review a Bot's new email in chat and send it from your Outlook account. Wide tables in Bot messages also scroll sideways instead of squeezing.",
+      "date_published": "2026-09-26T12:00:00+00:00",
+      "tags": [
+        "update",
+        "email",
+        "confirmed"
+      ]
+    },
+    {
+      "id": "update-changelog-0-61-0",
+      "url": "https://slopryno.github.io/slopworks/updates/#echangelog-0-61-0",
+      "external_url": "https://x.ai/changelog/bot",
+      "title": "Team Bots for a whole team",
+      "content_text": "Version 0.61.0 adds Team Bots: publish one Bot for your team, and teammates chat with it in the app or Slack, each in their own conversation. Each teammate's use counts against their own allowance.",
+      "date_published": "2026-09-26T12:00:00+00:00",
+      "tags": [
+        "update",
+        "app",
         "confirmed"
       ]
     },
@@ -349,6 +479,32 @@
       ]
     },
     {
+      "id": "update-changelog-2026-09-25",
+      "url": "https://slopryno.github.io/slopworks/updates/#echangelog-2026-09-25",
+      "external_url": "https://x.ai/changelog/bot",
+      "title": "Busy Bots answer you first",
+      "content_text": "When you message a busy Bot, it answers you before working through queued updates from other Bots and agents. Expired Auto-review cards also offer Always allow, and Enterprise admins can store Team Secrets.",
+      "date_published": "2026-09-25T12:00:00+00:00",
+      "tags": [
+        "update",
+        "app",
+        "confirmed"
+      ]
+    },
+    {
+      "id": "update-changelog-2026-09-22",
+      "url": "https://slopryno.github.io/slopworks/updates/#echangelog-2026-09-22",
+      "external_url": "https://x.ai/changelog/bot",
+      "title": "Five more languages and better screen reader support",
+      "content_text": "Czech, Danish, Finnish, Hungarian, and Norwegian Bokmål join the language list, screen readers announce more of the app, and a card explains when a usage limit, rate limit, or timeout stops a reply.",
+      "date_published": "2026-09-22T12:00:00+00:00",
+      "tags": [
+        "update",
+        "app",
+        "confirmed"
+      ]
+    },
+    {
       "id": "update-2102532697960956074",
       "url": "https://slopryno.github.io/slopworks/updates/#e2102532697960956074",
       "external_url": "https://x.com/bot/status/2102532697960956074",
@@ -358,6 +514,19 @@
       "tags": [
         "update",
         "app",
+        "confirmed"
+      ]
+    },
+    {
+      "id": "update-changelog-2026-09-18",
+      "url": "https://slopryno.github.io/slopworks/updates/#echangelog-2026-09-18",
+      "external_url": "https://x.ai/changelog/bot",
+      "title": "Bots can start a Project",
+      "content_text": "A Bot can start a Project when you ask: a Cloud Agent that plans the work and runs its own agents. Link previews also show real titles for private Notion, GitHub, and Slack links.",
+      "date_published": "2026-09-18T12:00:00+00:00",
+      "tags": [
+        "update",
+        "coding",
         "confirmed"
       ]
     },
@@ -375,6 +544,19 @@
       ]
     },
     {
+      "id": "update-changelog-2026-09-17",
+      "url": "https://slopryno.github.io/slopworks/updates/#echangelog-2026-09-17",
+      "external_url": "https://x.ai/changelog/bot",
+      "title": "More GitHub actions for Bots",
+      "content_text": "Bots can work with GitHub releases, tags, labels, sub-issues, discussions, and collaborators, create branches, and submit one review across several files. Stopping a Bot also stops the Bots and Cloud Agents it started.",
+      "date_published": "2026-09-17T12:00:00+00:00",
+      "tags": [
+        "update",
+        "coding",
+        "confirmed"
+      ]
+    },
+    {
       "id": "update-2100659463569170779",
       "url": "https://slopryno.github.io/slopworks/updates/#e2100659463569170779",
       "external_url": "https://x.com/bot/status/2100659463569170779",
@@ -388,12 +570,51 @@
       ]
     },
     {
+      "id": "update-changelog-2026-09-16-checklist",
+      "url": "https://slopryno.github.io/slopworks/updates/#echangelog-2026-09-16-checklist",
+      "external_url": "https://x.ai/changelog/bot",
+      "title": "Regrouped setup checklist for teams",
+      "content_text": "A second Sep 16 release groups the dashboard Setup Checklist into Recommended and Optional, shows the build date in About, and fixes GitHub disconnect and some 1Password sign-in checks.",
+      "date_published": "2026-09-16T12:00:00+00:00",
+      "tags": [
+        "update",
+        "app",
+        "confirmed"
+      ]
+    },
+    {
+      "id": "update-changelog-0-54-0",
+      "url": "https://slopryno.github.io/slopworks/updates/#echangelog-0-54-0",
+      "external_url": "https://x.ai/changelog/bot",
+      "title": "Search palette puts Bots and settings first",
+      "content_text": "Version 0.54.0: Cmd/Ctrl+K shows matching Bots, settings, actions, and routines before messages (quote a search to see every message), and iPhone HEIC photos show as images.",
+      "date_published": "2026-09-16T12:00:00+00:00",
+      "tags": [
+        "update",
+        "app",
+        "confirmed"
+      ]
+    },
+    {
       "id": "update-2100335532597502311",
       "url": "https://slopryno.github.io/slopworks/updates/#e2100335532597502311",
       "external_url": "https://x.com/bot/status/2100335532597502311",
       "title": "1Password",
       "content_text": "Grok Bot can use 1Password: share items in a vault, approve each fill, and the secrets stay in your password manager.",
       "date_published": "2026-09-16T12:00:00+00:00",
+      "tags": [
+        "update",
+        "connectors",
+        "confirmed"
+      ]
+    },
+    {
+      "id": "update-changelog-0-53-0",
+      "url": "https://slopryno.github.io/slopworks/updates/#echangelog-0-53-0",
+      "external_url": "https://x.ai/changelog/bot",
+      "title": "Uploads to Google Drive and OneDrive",
+      "content_text": "Version 0.53.0: Bots can upload files to Google Drive or OneDrive or attach them to a Gmail draft, and a Bot's computer now uses your time zone. The same release added 1Password sign-in on Mac (see the 1Password entry).",
+      "date_published": "2026-09-15T12:00:00+00:00",
       "tags": [
         "update",
         "connectors",
