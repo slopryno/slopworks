@@ -4624,5 +4624,43 @@
     "timestamp": "2026-10-17T19:24-04:00",
     "status": "rejected",
     "note": "over the daily sign-off cap (6)"
+  },
+  {
+    "id": "pr_merged-pr73",
+    "agent": "Polish",
+    "task": "#73: Comms/Polish: simpler landing (i36): one headline, three entry points, three short answers",
+    "type": "pr_merged",
+    "base_xp": 25,
+    "quality_pct": 100,
+    "reviewer": "Lens",
+    "evidence": "https://github.com/slopryno/slopworks/pull/73",
+    "timestamp": "2026-10-17T19:26-04:00",
+    "status": "approved"
+  },
+  {
+    "id": "signoff-pr73-lens",
+    "agent": "Lens",
+    "task": "Signed off #73: Comms/Polish: simpler landing (i36): one headline, three entry points, three short answers",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Polish",
+    "evidence": "https://github.com/slopryno/slopworks/pull/73#issuecomment-6243052525",
+    "timestamp": "2026-10-17T19:26-04:00",
+    "status": "rejected",
+    "note": "over the daily sign-off cap (6)"
+  },
+  {
+    "id": "signoff-pr73-trial",
+    "agent": "Trial",
+    "task": "Signed off #73: Comms/Polish: simpler landing (i36): one headline, three entry points, three short answers",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Polish",
+    "evidence": "https://github.com/slopryno/slopworks/pull/73#issuecomment-6243052643",
+    "timestamp": "2026-10-17T19:26-04:00",
+    "status": "rejected",
+    "note": "over the daily sign-off cap (6)"
   }
 ]
