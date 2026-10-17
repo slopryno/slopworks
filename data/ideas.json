@@ -254,11 +254,17 @@
     "helps": "Readers and the team, via a faster backlog pass",
     "effort": "M",
     "builder": "Pixel",
-    "state": "yes",
+    "state": "shipped",
     "comments": [],
     "decided": "2026-10-17",
     "decided_by": "CEO",
-    "reason": "Approved by Ryno in Grok Bot chat 2026-10-17 4:32 AM ET: 'let's have the team knock a few things off their plate.' One-time override of the 1-design-PR/week cap; done or paused by 8:45 AM ET."
+    "reason": "Approved by Ryno in Grok Bot chat 2026-10-17 4:32 AM ET: 'let's have the team knock a few things off their plate.' One-time override of the 1-design-PR/week cap; done or paused by 8:45 AM ET.",
+    "shipped": "#30 to #34: mini-sprint backlog items, retro and cap restored.",
+    "acceptance_verified_by": "Trial",
+    "acceptance_criteria": [
+      "About 5 PRs at most",
+      "Retro posted and the normal cap restored"
+    ]
   },
   {
     "id": "i17",
@@ -468,7 +474,7 @@
     "helps": "Prospective clients: see what the team did and the proof behind it",
     "effort": "L",
     "builder": "Forge",
-    "state": "yes",
+    "state": "shipped",
     "comments": [
       {
         "date": "2026-10-17",
@@ -521,7 +527,9 @@
     },
     "experiment": "Demo challenge 1: 4-5 roles, about 15 reads, logged by Sweep, before the challenge page is built",
     "target_sprint": "W43",
-    "experiment_result": "pass"
+    "experiment_result": "pass",
+    "shipped": "#37 to #44: label kit, Research Arena, case files, outcome-led landing, Living Team, demo challenge 1.",
+    "acceptance_verified_by": "Trial"
   },
   {
     "id": "i23",
@@ -554,11 +562,17 @@
     "helps": "Prospective clients and visitors, via the showcase landing sooner",
     "effort": "L",
     "builder": "Forge",
-    "state": "yes",
+    "state": "shipped",
     "comments": [],
     "decided": "2026-10-17",
     "decided_by": "CEO",
-    "reason": "Approved by Ryno in Grok Bot chat 2026-10-17 7:24 AM ET: 'Lift the cap, run all 8 PRs now.' One-time override of the 1 feature + 1 design PR/week cap; the normal cap returns when the sprint ends."
+    "reason": "Approved by Ryno in Grok Bot chat 2026-10-17 7:24 AM ET: 'Lift the cap, run all 8 PRs now.' One-time override of the 1 feature + 1 design PR/week cap; the normal cap returns when the sprint ends.",
+    "shipped": "#37 to #44: Showcase v1 (labels, Research Arena, case files, landing, Living Team, demo challenge), retro and cap restored.",
+    "acceptance_verified_by": "Trial",
+    "acceptance_criteria": [
+      "About 8 PRs at most for Showcase v1",
+      "Retro posted and the normal cap restored"
+    ]
   },
   {
     "id": "i25",
@@ -653,11 +667,17 @@
     "helps": "Readers and prospective clients, via a fuller tracker and showcase",
     "effort": "M",
     "builder": "Forge",
-    "state": "yes",
+    "state": "shipped",
     "comments": [],
     "decided": "2026-10-17",
     "decided_by": "CEO",
-    "reason": "Approved by Ryno in Grok Bot chat 2026-10-17 1:20 PM ET: 'Lets have the team run through another sprint.' One-time override of the 1 feature + 1 design PR/week cap, about 6 PRs; the normal cap returns when the sprint ends. Ryno added at 1:23 PM ET: hire and onboard Head of Comms (comms) as the one extra PR plus its follow-ups, so about 7 PRs total."
+    "reason": "Approved by Ryno in Grok Bot chat 2026-10-17 1:20 PM ET: 'Lets have the team run through another sprint.' One-time override of the 1 feature + 1 design PR/week cap, about 6 PRs; the normal cap returns when the sprint ends. Ryno added at 1:23 PM ET: hire and onboard Head of Comms (comms) as the one extra PR plus its follow-ups, so about 7 PRs total.",
+    "shipped": "#50 to #55: changelog catch-up (i25), feed checks (i26), Comms hire, retro and cap restored.",
+    "acceptance_verified_by": "Trial",
+    "acceptance_criteria": [
+      "About 7 PRs at most, led by i25 and i26",
+      "Retro posted and the normal cap restored"
+    ]
   },
   {
     "id": "i28",
@@ -876,5 +896,35 @@
     ],
     "acceptance_verified_by": "Trial",
     "shipped": "#65 to #69: Game Master hire, huddle, rules and ledger, character sheets, roadmap and retro (c187 to c191)."
+  },
+  {
+    "id": "i36",
+    "date": "2026-10-17",
+    "by": "CEO",
+    "source": "ceo",
+    "problem": "UX first, mobile first: make the site simple and elegant for visitors to view and navigate, starting with phones",
+    "helps": "Every visitor on a phone, and every visitor, since small-screen-first CSS scales up cleanly",
+    "effort": "M",
+    "builder": "Polish",
+    "state": "yes",
+    "comments": [],
+    "decided": "2026-10-17",
+    "decided_by": "CEO",
+    "reason": "Directed by Ryno in Grok Bot chat 2026-10-17 7:10 PM ET: 'I want to prioritize mobile first design.' At 7:12 PM ET: 'UX will be top priority... I love simplicity and elegance.' Added to plans/direction.md as one standing goal, with Coordinator and Lens sign-off."
+  },
+  {
+    "id": "i37",
+    "date": "2026-10-17",
+    "by": "CEO",
+    "source": "ceo",
+    "problem": "Ad hoc UX and mobile-first sprint (about 8 PRs max): measured audit, simpler navigation, mobile-first CSS rebuild, add-only CI checks",
+    "helps": "Visitors on phones and tablets",
+    "effort": "M",
+    "builder": "Polish",
+    "state": "yes",
+    "comments": [],
+    "decided": "2026-10-17",
+    "decided_by": "CEO",
+    "reason": "Approved by Ryno in Grok Bot chat 2026-10-17 7:10 PM ET: 'Have the team get together for an adhoc sprint.' One-time override of the 1 feature + 1 design PR/week cap, about 6 PRs, raised to about 8 at 7:12 PM ET when he made UX top priority. Conserve usage. The normal cap returns when the sprint ends."
   }
 ]

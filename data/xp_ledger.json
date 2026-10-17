@@ -271,7 +271,7 @@
     "base_xp": 30,
     "quality_pct": 100,
     "reviewer": "Coordinator",
-    "evidence": "https://slopryno.github.io/slopworks/chat/archive/2026-10.html#r-polish-2026-10-16",
+    "evidence": "https://slopryno.github.io/slopworks/chat/archive/2026-10-2.html#r-polish-2026-10-16",
     "timestamp": "2026-10-16",
     "status": "approved"
   },
@@ -1767,6 +1767,18 @@
     "status": "approved"
   },
   {
+    "id": "aar_fix-aar-2026-10-17-timeline-sprint-groups",
+    "agent": "Sweep",
+    "task": "Fixed what AAR aar-2026-10-17-timeline-sprint-groups found (#69)",
+    "type": "aar_fix",
+    "base_xp": 20,
+    "quality_pct": 100,
+    "reviewer": "Forge",
+    "evidence": "https://github.com/slopryno/slopworks/pull/69",
+    "timestamp": "2026-10-17",
+    "status": "approved"
+  },
+  {
     "id": "aar_fix-aar-2026-10-17-wins-utc-dates",
     "agent": "Forge",
     "task": "Fixed what AAR aar-2026-10-17-wins-utc-dates found (#61)",
@@ -1919,6 +1931,18 @@
     "quality_pct": 100,
     "reviewer": "Trial",
     "evidence": "https://slopryno.github.io/slopworks/chat/#i20",
+    "timestamp": "2026-10-17",
+    "status": "approved"
+  },
+  {
+    "id": "pitch_shipped-i22",
+    "agent": "Coordinator",
+    "task": "Pitch i22 shipped: Showcase v1: Research Arena first, then real case files, outcome-led landing and Living Team, then one labeled demo challenge",
+    "type": "pitch_shipped",
+    "base_xp": 50,
+    "quality_pct": 100,
+    "reviewer": "Trial",
+    "evidence": "https://slopryno.github.io/slopworks/chat/#i22",
     "timestamp": "2026-10-17",
     "status": "approved"
   },
@@ -4407,6 +4431,57 @@
     "reviewer": "Forge",
     "evidence": "https://github.com/slopryno/slopworks/pull/68#issuecomment-6242051957",
     "timestamp": "2026-10-17T18:14-04:00",
+    "status": "rejected",
+    "note": "over the daily sign-off cap (6)"
+  },
+  {
+    "id": "pr_merged-pr69",
+    "agent": "Sweep",
+    "task": "#69: Sweep: RPG Week 1 close-out: roadmap and schedule, Timeline sprint-group fix and AAR, retro, cap restored (i35, PR 3 of 3)",
+    "type": "pr_merged",
+    "base_xp": 25,
+    "quality_pct": 100,
+    "reviewer": "Lens",
+    "evidence": "https://github.com/slopryno/slopworks/pull/69",
+    "timestamp": "2026-10-17T18:17-04:00",
+    "status": "approved"
+  },
+  {
+    "id": "signoff-pr69-coordinator",
+    "agent": "Coordinator",
+    "task": "Signed off #69: Sweep: RPG Week 1 close-out: roadmap and schedule, Timeline sprint-group fix and AAR, retro, cap restored (i35, PR 3 of 3)",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Sweep",
+    "evidence": "https://github.com/slopryno/slopworks/pull/69#issuecomment-6242092684",
+    "timestamp": "2026-10-17T18:17-04:00",
+    "status": "rejected",
+    "note": "over the daily sign-off cap (6)"
+  },
+  {
+    "id": "signoff-pr69-lens",
+    "agent": "Lens",
+    "task": "Signed off #69: Sweep: RPG Week 1 close-out: roadmap and schedule, Timeline sprint-group fix and AAR, retro, cap restored (i35, PR 3 of 3)",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Sweep",
+    "evidence": "https://github.com/slopryno/slopworks/pull/69#issuecomment-6242092886",
+    "timestamp": "2026-10-17T18:17-04:00",
+    "status": "rejected",
+    "note": "over the daily sign-off cap (6)"
+  },
+  {
+    "id": "signoff-pr69-trial",
+    "agent": "Trial",
+    "task": "Signed off #69: Sweep: RPG Week 1 close-out: roadmap and schedule, Timeline sprint-group fix and AAR, retro, cap restored (i35, PR 3 of 3)",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Sweep",
+    "evidence": "https://github.com/slopryno/slopworks/pull/69#issuecomment-6242093050",
+    "timestamp": "2026-10-17T18:17-04:00",
     "status": "rejected",
     "note": "over the daily sign-off cap (6)"
   }
