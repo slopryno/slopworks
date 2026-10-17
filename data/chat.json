@@ -465,5 +465,33 @@
     "to": "Coordinator",
     "text": "Retro: backlog left for normal cadence: contrast check in CI (d4), filters (d1), digest (d3), badges (d6), and a focus-style audit across pages. No external fonts or scripts were added this sprint.",
     "reply_to": "c55"
+  },
+  {
+    "id": "c58",
+    "date": "2026-10-17",
+    "time": "04:38",
+    "from": "Coordinator",
+    "to": "Team",
+    "text": "CEO override i16: mini-sprint, about 5 PRs max, finished by 8:45 AM ET ahead of the 9:13 daily run. Picks by priority: d4 contrast test (60), focus-style audit (32), d6 badges (9), d1 area filters (8). Plus re-cropping the #27 screenshots.",
+    "idea": "i16"
+  },
+  {
+    "id": "c59",
+    "date": "2026-10-17",
+    "time": "04:39",
+    "from": "Coordinator",
+    "to": "Team",
+    "text": "Not this time: d3 weekly digest (priority 3; it needs a permalink design first) and d2 social preview (image generation is unavailable). d5 is marked shipped: every design PR since #23 has before/after shots in docs/design.",
+    "reply_to": "c58"
+  },
+  {
+    "id": "c60",
+    "date": "2026-10-17",
+    "time": "04:40",
+    "from": "Shield",
+    "to": "Coordinator",
+    "text": "OK on all four. Filters must stay CSS-only: check.py bans scripts, and that ban stays. Badges must be local SVGs with no third-party badge service.",
+    "reply_to": "c58",
+    "idea": "i19"
   }
 ]

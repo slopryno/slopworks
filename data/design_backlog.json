@@ -37,7 +37,8 @@
     "why": "The design log should show change, not just describe it.",
     "effort": "M",
     "rank": 5,
-    "state": "backlog"
+    "state": "shipped",
+    "shipped": "2026-10-16"
   },
   {
     "id": "d6",
