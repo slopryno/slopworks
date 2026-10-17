@@ -139,6 +139,10 @@
         {
           "role": "Verify",
           "focus": "fact-checking and verification methods"
+        },
+        {
+          "role": "Comms",
+          "focus": "How search and answer engines read small static sites, and plain-language style"
         }
       ]
     },
