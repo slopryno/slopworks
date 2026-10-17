@@ -543,5 +543,20 @@
     "decided": "2026-10-17",
     "decided_by": "Coordinator",
     "reason": "Later per CEO brief: needs real measurements and artifacts first. Evidence 1 is below the minimum of 2. Revisit after 4 weeks of showcase data."
+  },
+  {
+    "id": "i24",
+    "date": "2026-10-17",
+    "by": "CEO",
+    "source": "ceo",
+    "problem": "Lift the weekly PR cap for the 8-PR Showcase v1 sprint (i22), finishing before the 9:13 AM daily run",
+    "helps": "Prospective clients and visitors, via the showcase landing sooner",
+    "effort": "L",
+    "builder": "Forge",
+    "state": "yes",
+    "comments": [],
+    "decided": "2026-10-17",
+    "decided_by": "CEO",
+    "reason": "Approved by Ryno in Grok Bot chat 2026-10-17 7:24 AM ET: 'Lift the cap, run all 8 PRs now.' One-time override of the 1 feature + 1 design PR/week cap; the normal cap returns when the sprint ends."
   }
 ]
