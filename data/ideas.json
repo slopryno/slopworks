@@ -520,7 +520,8 @@
       "summary": "Proceed on Arena and case files. Weakest assumption: invented demo challenges read as credible proof. Cheaper alternative: replay real decisions first. Cuts: live-activity animation, simulated playback, numeric confidence, Impact Ledger."
     },
     "experiment": "Demo challenge 1: 4-5 roles, about 15 reads, logged by Sweep, before the challenge page is built",
-    "target_sprint": "W43"
+    "target_sprint": "W43",
+    "experiment_result": "pass"
   },
   {
     "id": "i23",
