@@ -63,3 +63,19 @@ class Onboarding(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class Offboarding(unittest.TestCase):
+    SCHED = {"research": [{"day": "Monday", "roles": [{"role": "Critic", "focus": "x"}]}]}
+
+    def test_docs(self):
+        for f in ("docs/onboarding.md", "docs/offboarding.md"):
+            self.assertTrue((ROOT / f).exists())
+        self.assertIn("alumni", (ROOT / "docs/offboarding.md").read_text())
+
+    def test_no_active_references(self):
+        gone = [{"role": "Critic", "date": "2026-11-01", "reason": "merged", "successor": "Coordinator"}]
+        self.assertTrue(check.alumni_errors(gone, self.SCHED, active_bots=["critic"]))  # still in rotation and bots/
+        self.assertTrue(check.alumni_errors(gone, {"research": []}, active_bots=["critic"]))
+        self.assertEqual(check.alumni_errors(gone, {"research": []}, active_bots=[]), [])
+        self.assertIn("alumni", check.DATA_FILES)
