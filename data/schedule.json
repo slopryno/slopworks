@@ -66,6 +66,12 @@
       "when": "Fridays: measure and learn",
       "cron": "13 9 * * 5",
       "what": "Analyst measures against each success metric, Librarian records outcomes, and the team retro runs. Urgent security issues or major Grok Bot updates can interrupt any day."
+    },
+    {
+      "id": "progression",
+      "when": "Fridays: Slopworks RPG check-in (i34)",
+      "cron": "13 9 * * 5",
+      "what": "Week 1 shipped: progression rules, the XP ledger, and character sheets; the daily run refreshes the ledger with scripts/xp.py. Next: Week 2 quests, Week 3 the first team raid, Week 4 audit, rebalance, and skill trees. Each step starts on evidence, not the calendar."
     }
   ],
   "limits": [

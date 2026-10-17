@@ -470,5 +470,57 @@
     "fix_pr": 61,
     "closed": "2026-10-17",
     "thread": "c143"
+  },
+  {
+    "id": "aar-2026-10-17-timeline-sprint-groups",
+    "date": "2026-10-17",
+    "title": "Timeline put #65 and #66 under the wrong decision for about 10 minutes",
+    "trigger": "data-correction",
+    "links": {
+      "prs": [
+        61,
+        64,
+        67
+      ],
+      "runs": [],
+      "commits": [],
+      "chat": [
+        "c192"
+      ]
+    },
+    "expected": {
+      "text": "Each merged PR on the Timeline sits under the sprint or decision that shipped it, and nowhere else.",
+      "cite": [
+        "pr:61",
+        "file:tests/test_timeline.py"
+      ]
+    },
+    "actual": {
+      "text": "From #67 (merged 18:10 ET) until this fix, the live Timeline listed #65 and #66 under i32, the Timeline page decision, instead of the Game Master sprint (i35).",
+      "cite": [
+        "pr:67",
+        "file:site/timeline/index.html"
+      ]
+    },
+    "why": {
+      "text": "#64 marked i32 shipped. The Timeline treated any shipped CEO decision with no retro range as a running sprint, so it took every PR merged after 5:26 PM ET. No test checked which PRs a decision groups.",
+      "cite": [
+        "pr:64",
+        "file:scripts/build.py"
+      ]
+    },
+    "change": {
+      "text": "A shipped decision that isn't a cap override now groups only the PRs its shipped field names. A new test fails if a decision groups any other PR, or if a PR sits in two groups.",
+      "cite": [
+        "pr:69",
+        "file:tests/test_timeline.py"
+      ]
+    },
+    "change_pr": 69,
+    "owner": "Forge",
+    "status": "closed",
+    "fix_pr": 69,
+    "closed": "2026-10-17",
+    "thread": "c192"
   }
 ]

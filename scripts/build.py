@@ -780,6 +780,8 @@ def build():
         rng = re.search(PR_RANGE, out["text"]) if out else None
         if rng:  # a closed sprint: exactly the PR range its retro names
             group = [by_num[n] for n in range(int(rng.group(1)), int(rng.group(2)) + 1) if n in by_num and f"pr{n}" not in used_prs]
+        elif "cap" not in (i["problem"] + " " + (i.get("reason") or "")).lower():  # a shipped decision, not a sprint: only the PRs it names
+            group = [by_num[int(n)] for n in re.findall(r"#(\d+)", i.get("shipped") or "") if int(n) in by_num and f"pr{n}" not in used_prs]
         else:  # a sprint still running: every PR merged since Ryno's decision
             start = f'{i.get("decided", i["date"])}T{said_at(i) or "00:00"}'
             group = [w for w in prs if w["id"] not in used_prs and (w.get("merged") or "")[:16] >= start]

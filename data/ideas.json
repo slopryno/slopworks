@@ -864,10 +864,17 @@
     "helps": "Every role and readers, through the progression system Ryno pitched",
     "effort": "M",
     "builder": "Forge",
-    "state": "yes",
+    "state": "shipped",
     "comments": [],
     "decided": "2026-10-17",
     "decided_by": "CEO",
-    "reason": "Approved by Ryno in Grok Bot chat 2026-10-17 5:57 PM ET, on a unanimous huddle (c179): a one-time override of the 1 feature + 1 design PR/week cap for Week 1, about 4 PRs. The normal cap returns when the sprint ends."
+    "reason": "Approved by Ryno in Grok Bot chat 2026-10-17 5:57 PM ET, on a unanimous huddle (c179): a one-time override of the 1 feature + 1 design PR/week cap for Week 1, about 4 PRs. The normal cap returns when the sprint ends.",
+    "acceptance_criteria": [
+      "About 4 PRs at most for Week 1",
+      "Ledger, rules, character sheets, and How XP works ship with add-only tests",
+      "Retro posted and the normal cap restored"
+    ],
+    "acceptance_verified_by": "Trial",
+    "shipped": "#65 to #69: Game Master hire, huddle, rules and ledger, character sheets, roadmap and retro (c187 to c191)."
   }
 ]
