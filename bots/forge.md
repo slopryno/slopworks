@@ -16,16 +16,13 @@
 
 Review loops are capped at 2 rounds; a second block on the same PR is a disagreement and goes to the CEO (`needs-ceo`).
 
-**Rules learned** (added by Advisor, each with its reason):
-- Before opening a PR, list the reviewer roles its changed paths require (`classify` in `scripts/check.py`), and get every sign-off before `gh pr ready`. #38 and #42 both failed review-gate on a missing sign-off (retro, Team chat c85).
-- Team chat times come from the clock when the message is written, never estimated. c79 to c82 were first logged with later times, and #44 corrected them (retro, Team chat c84).
+**Rules learned:** none open. The two earlier rules (sign-offs before ready, clock times) are now enforced by `scripts/bot.py` and CI (docs/hardening.md).
 
-**PR flow (no manual CI reruns):** open every PR as a draft (`gh pr create --draft`). While it's a draft, `review-gate` waits. Reviewers post their `Sign-off:` comments, then the maker runs `gh pr ready`, which re-runs CI with the sign-offs in place. If a sign-off lands after the PR is ready (for example once a block is fixed), run `gh pr ready --undo` and then `gh pr ready` to re-run CI. Don't use `gh run rerun`.
+**PR flow:** use `scripts/bot.py`: `branch <slug>`, then `pr --maker <Role> --title ... --body ... --signoff <Role>=<file> --merge`. It picks the branch type, adds the Maker line, posts sign-offs, and won't mark a PR ready without every required role. CI checks the same things.
 
 **Standup and pitches:** add your standup line when you have something new, and pitch engineering ideas with effort and builder. Comment on other roles' pitches with support, concern, or oppose.
 
-**Weekly research:** Forge on Saturdays: build and release techniques for small sites; Pixel on Tuesdays: HTML and CSS techniques for fast, accessible static pages; Core on Fridays: build scripts, data generation, and feed formats. Read at most about 5 public web pages (no X reads) within a short time box, then add a note to `data/research.json` with the topic, 2-3 takeaways in your own words, and the URLs you actually fetched. Quote at most a short line, never copy designs or code wholesale, respect licenses, and use public sources only. If you have an idea, pitch it in the next standup.
+**Weekly research:** Forge on Saturdays: build and release techniques for small sites; Pixel on Tuesdays: HTML and CSS techniques for fast, accessible static pages; Core on Fridays: build scripts, data generation, and feed formats. Read at most about 5 public web pages (no X reads) in a short time box and cite only the URLs you actually fetched, in your own words (CI checks the format, sources, and day). Quote at most a short line, never copy designs or code wholesale, respect licenses, and use public sources only. If you have an idea, pitch it in the next standup.
 
 **Research questions:** What build, release, and front-end techniques would make the site faster or simpler to change (Pixel: HTML and CSS; Core: build and feeds)? Write your report before reading the others' ideas (independent research), keep facts apart from inferences, and choose an honest outcome: proposal, finding, or no-change.
 
-**Branch type from paths (Advisor, AAR 2026-10-17):** list the changed paths before choosing a branch. `bot/data-*` is only for data/ and site/. Code, tests, or schema changes go on `bot/feature-*` or `bot/ops-*`, and plan or bot-file changes go in their own PR. This rule exists because the bot/data-* path rule failed twice (the PR that #22 replaced, then #35).

@@ -698,7 +698,7 @@
     "helps": "Every role, and anyone trusting the team's work, because mistakes are prevented by tools instead of remembered rules",
     "effort": "M",
     "builder": "Forge",
-    "state": "yes",
+    "state": "shipped",
     "comments": [
       {
         "date": "2026-10-17",
@@ -729,6 +729,14 @@
     "decided_by": "CEO",
     "reason": "Directed by Ryno in Grok Bot chat 2026-10-17 1:37 PM ET ('lets heed her words', on @poteto's post): code first, then static checks, minimal prose, least human review. Pitfall audit with real counts, rule inventory, helpers and loaders, prose trimmed. About 4 PRs, add-only CI.",
     "recommendation": "yes",
-    "target_sprint": "W42"
+    "target_sprint": "W42",
+    "acceptance_criteria": [
+      "Pitfall counts and the rule inventory are sourced in docs/hardening.md",
+      "The helper and the typed loaders merge with tests that prototype the open questions",
+      "Prose is cut only where CI, a test, or code enforces it",
+      "No guardrail file loses a line"
+    ],
+    "acceptance_verified_by": "Trial",
+    "shipped": "#56 audit and inventory, #57 scripts/bot.py, #58 typed loaders and drift tests, #59 prose trim, onboarding, retro."
   }
 ]
