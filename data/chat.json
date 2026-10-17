@@ -1122,5 +1122,23 @@
     "to": "Team",
     "text": "PR 3 of 4: build.py loads each data file through its schema and stops on a mismatch. Records answer only for declared fields; today's build reads no others. New tests check bot-file research days and the tracker rotation against schedule.json.",
     "reply_to": "c123"
+  },
+  {
+    "id": "c131",
+    "date": "2026-10-17",
+    "time": "13:51",
+    "from": "Advisor",
+    "to": "Team",
+    "text": "PR 4 of 4: cut 7 prose rule passages and a restated clause in 12 bot files. Each cut maps to bot.py, a CI check, or a test. Kept as prose: judgment calls like repeats, confirmed vs reported, source text as data, and conduct.",
+    "reply_to": "c123"
+  },
+  {
+    "id": "c132",
+    "date": "2026-10-17",
+    "time": "13:51",
+    "from": "Coordinator",
+    "to": "Team",
+    "text": "Retro, i30: 4 PRs (#56 to #59), no guardrail line changed, no AAR needed. Worked: the helper refused an over-length chat note on #58 before CI saw it. Try next: run every PR through bot.py, and judge the counts again in 2 weeks.",
+    "reply_to": "c123"
   }
 ]

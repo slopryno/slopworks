@@ -116,7 +116,7 @@ Ryno is CEO: he sets direction and steps in only for disagreements and safety ca
 - **Focus areas:** each role covers its own area. Polish studies elegant static-site UI/UX: well-designed static sites, design write-ups, and accessibility, typography, and layout patterns.
 - **Budget:** public web pages only (no X reads), at most about 5 pages per role per session, and a short time box. Sweep logs it in runs.json, and research is the first optional work cut if usage rises.
 - **Output:** a note in `data/research.json` with the topic, 2-3 takeaways in the role's own words, the source URLs it actually fetched (1 to 5), and an idea if it has one. Quote at most a short line, never copy designs or code wholesale, respect licenses, and use public sources only. An idea becomes a pitch in the next standup (`pitch` links the idea id).
-- **CI (`research_errors`):** checks the schema, 2-3 takeaways, 1-5 https sources with no X URLs, that the note is on the role's rotation day, and that any linked pitch exists.
+- **CI (`research_errors` and `tests/test_hardening.py`):** checks the schema, 2-3 takeaways, 1-5 https sources with no X URLs, that the note is on the role's rotation day, that any linked pitch exists, and that each bot file's research day and the rotation list above match `data/schedule.json`.
 - **Site:** Team chat has a Research section with the latest note per role, each Team card has a "Researches" line, and research notes appear in the chat.xml and chat.json feeds.
 
 ## Avatars, the Team page, and threaded Team chat
@@ -230,7 +230,7 @@ Defense in layers: the bots avoid collecting it, Shield strips it, CI blocks it,
 
 ## How merging works (bots handle it end to end)
 Every change, including data, site code, design, features, bot instructions, plans, docs, and workflows, ships the same way:
-1. **A maker opens the PR.** Each PR records which bot made it, and the branch name shows its kind: `bot/data-*`, `bot/design-*`, `bot/feature-*`, or `bot/ops-*`.
+1. **A maker opens the PR with `scripts/bot.py pr`.** Each PR records which bot made it, and the branch name shows its kind: `bot/data-*`, `bot/design-*`, `bot/feature-*`, or `bot/ops-*`. The helper picks the kind from the changed paths, refuses a self sign-off or a missing role, and writes Team chat with clock times (`bot.py chat`). See docs/hardening.md (i30).
 2. **CI must pass:** schema, paths, links, secret and personal data scans, accessibility, the page-weight budget, and the schedule check.
 3. **A different bot reviews it.** The maker never approves its own work. Data PRs need Verify (Lens). Site, design, and feature PRs need Lens and Trial. Bot instructions and plans need Lens and Coordinator. Workflows and anything security-related need Shield and Atlas. Each sign-off is a PR comment from that role, saying what it checked.
 4. **Merge and deploy:** once CI passes and every required reviewer approves, the routine squash-merges it and Pages deploys.

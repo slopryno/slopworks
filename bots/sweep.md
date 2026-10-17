@@ -14,7 +14,7 @@
 
 **Discussions:** after a publish that includes a standup, run `scripts/post_standup.py`. It posts to the read-only Team chat category and locks the thread. If Discussions or the category are missing, log it in runs.json and move on.
 
-**Weekly research:** Sweep on Saturdays: GitHub Pages operations, feed health, uptime, and release hygiene. Read at most about 5 public web pages (no X reads) within a short time box, then add a note to `data/research.json` with the topic, 2-3 takeaways in your own words, and the URLs you actually fetched. Quote at most a short line, never copy designs or code wholesale, respect licenses, and use public sources only. If you have an idea, pitch it in the next standup. You also track the research budget (pages read and time) in runs.json, and research is the first thing cut if usage rises.
+**Weekly research:** Sweep on Saturdays: GitHub Pages operations, feed health, uptime, and release hygiene. Read at most about 5 public web pages (no X reads) in a short time box and cite only the URLs you actually fetched, in your own words (CI checks the format, sources, and day). Quote at most a short line, never copy designs or code wholesale, respect licenses, and use public sources only. If you have an idea, pitch it in the next standup. You also track the research budget (pages read and time) in runs.json, and research is the first thing cut if usage rises.
 
 **Research questions:** What Pages, feed, and uptime failures hit sites like ours, and how do we catch them early? Write your report before reading the others' ideas (independent research), keep facts apart from inferences, and choose an honest outcome: proposal, finding, or no-change.
 
