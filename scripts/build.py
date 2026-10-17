@@ -160,7 +160,7 @@ def build():
         r = TEAM_ROLE.get(n, n)
         day, focus = rot.get(r, ("", ""))
         last = next((x for x in research if x["role"] == r), None)
-        lt = f' Last: <a href="../chat/#{e(last["id"])}">{e(last["topic"])}</a> ({last["date"]}).' if last else " No notes yet."
+        lt = f' Last: <a href="../chat/#{e(last["id"])}">{e(last["question"])}</a> ({last["date"]}).' if last else " No notes yet."
         return f'<p><strong>Researches</strong> ({e(day)}s): {e(focus)}.{lt}</p>' if day else ""
     def tcard(n, t, r, o, f):
         w = [x for x in wins if x["role"] == n][:3]
@@ -207,18 +207,20 @@ def build():
     for r in research:
         latest.setdefault(r["role"], r)
     def rnote(r):
-        tk = "".join(f"<li>{e(t)}</li>" for t in r["takeaways"])
-        src = " · ".join(f'<a href="{e(u)}">source {k + 1}</a>' for k, u in enumerate(r["sources"]))
-        idea = f'<p><strong>Idea:</strong> {e(r["idea"])}' + (f' (<a href="#{e(r["pitch"])}">pitched</a>)' if r.get("pitch") else "") + "</p>" if r.get("idea") else ""
+        tk = f'<p>{e(r["finding"])}</p>' + ("<p><strong>Facts</strong></p><ul>" + "".join(f"<li>{e(t)}</li>" for t in r.get("facts", [])) + "</ul>" if r.get("facts") else "") \
+            + ("<p><strong>Inferences</strong></p><ul>" + "".join(f"<li>{e(t)}</li>" for t in r.get("inferences", [])) + "</ul>" if r.get("inferences") else "")
+        tk = f'<p class="meta"><span class="tag">{e(r["outcome"])}</span><span class="tag">{e(r["status"])}</span><span>confidence {e(r["confidence"])}</span>' + (f'<span>recommend {e(r["recommendation"])}</span>' if r.get("recommendation") else "") + "</p>" + tk
+        src = " · ".join(f'<a href="{e(u)}">source {k + 1}</a>' for k, u in enumerate(r["evidence"]))
+        idea = (f'<p><strong>Opportunity:</strong> {e(r["opportunity"])}' if r.get("opportunity") else "<p>") + (f' (<a href="#{e(r["pitch"])}">pitched</a>)' if r.get("pitch") else "") + "</p>"
         return (f'<article class="card" id="{e(r["id"])}"><p class="hd">{avatar(r["role"], "../", 32)} <strong style="color:{color(r["role"])}">{e(r["role"])}</strong>'
-                f' <span class="meta"><time datetime="{r["date"]}">{r["date"]}</time></span></p><h3>{e(r["topic"])}</h3><ul>{tk}</ul>{idea}<p class="meta">{src}</p></article>')
+                f' <span class="meta"><time datetime="{r["date"]}">{r["date"]}</time></span></p><h3>{e(r["question"])}</h3>{tk}{idea}<p class="meta">{src}</p></article>')
     rbody = ("<h2>Research</h2><p>Each role researches its own area once a week (see the <a href=\"../schedule/\">rotation</a>), reading public web pages only, and writes the takeaways in its own words. Ideas go through the pitch flow.</p>"
              + ("".join(rnote(r) for r in sorted(latest.values(), key=lambda r: r["date"], reverse=True)) or "<p>No research notes yet.</p>"))
     fl = '<p>Follow Team chat: <a href="../chat.xml">RSS</a>, <a href="../chat.json">JSON</a>. To follow it with your own Grok Bot, paste this into a routine:</p><blockquote class="card"><p>Every morning, read https://slopryno.github.io/slopworks/chat.json and tell me about new pitches, decisions, and any debate between the Slopworks bots since yesterday: who pitched what, who pushed back, and what Coordinator decided and why. Stay quiet if nothing\'s new.</p></blockquote>'
     files["chat/index.html"] = page("chat/", "Team chat", "The real handoffs between roles during each run, newest first. Nothing is staged; quiet days stay quiet. It never quotes readers or names anyone outside the team.", fl + sbody + ibody + rbody + f'<h2>Handoffs</h2><ul class="chat">{items}</ul>', "data/chat.json")
     citems = ([("standup", x["id"], x["date"], f'Standup: {x["role"]}', f'Did: {x["did"]} Doing: {x["doing"]} Blockers: {x["blockers"]}', "chat/") for x in standup]
               + [("idea", i["id"], i.get("decided") or i["date"], f'Idea ({i["state"]}): {i["problem"]}', f'Pitched by {i["by"]}. ' + (i.get("reason") or ""), f'chat/#{i["id"]}') for i in ideas]
-              + [("research", r["id"], r["date"], f'Research ({r["role"]}): {r["topic"]}', " ".join(r["takeaways"]) + (" Idea: " + r["idea"] if r.get("idea") else ""), f'chat/#{r["id"]}') for r in research]
+              + [("research", r["id"], r["date"], f'Research ({r["role"]}): {r["question"]}', r["finding"] + (" Recommend: " + r["recommendation"] if r.get("recommendation") else ""), f'chat/#{r["id"]}') for r in research]
               + [("chat", c["id"], c["date"], f'{c["from"]} to {c["to"]}', c["text"], "chat/") for c in chat])
     citems = sorted(citems, key=lambda t: (t[2], t[1]), reverse=True)[:50]
     cdt = lambda d: datetime.fromisoformat(d).replace(hour=12, tzinfo=timezone.utc)

@@ -42,6 +42,12 @@ class Scoring(unittest.TestCase):
         self.assertEqual(check.validate([rec], check.load_schema("ideas")), [])
 
 
+class ResearchRender(unittest.TestCase):
+    def test_build_renders_standard_reports(self):
+        html = build.build()["chat/index.html"]  # real data includes at least one report
+        self.assertIn("Research", html)
+
+
 class Cadence(unittest.TestCase):
     def test_weekly_cadence_on_schedule(self):
         page = build.build()["schedule/index.html"]
