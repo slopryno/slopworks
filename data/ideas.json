@@ -738,5 +738,35 @@
     ],
     "acceptance_verified_by": "Trial",
     "shipped": "#56 audit and inventory, #57 scripts/bot.py, #58 typed loaders and drift tests, #59 prose trim, onboarding, retro."
+  },
+  {
+    "id": "i31",
+    "date": "2026-10-17",
+    "by": "CEO",
+    "source": "ceo",
+    "problem": "Run another sprint (about 6 PRs max): Timeline page first, then the held case file, Lessons archive rollover, and demo challenge polish, conserving usage",
+    "helps": "Readers and prospective clients, through a fuller showcase",
+    "effort": "M",
+    "builder": "Forge",
+    "state": "yes",
+    "comments": [],
+    "decided": "2026-10-17",
+    "decided_by": "CEO",
+    "reason": "Approved by Ryno in Grok Bot chat 2026-10-17 5:25 PM ET: 'Lets run another sprint.' One-time override of the 1 feature + 1 design PR/week cap, about 6 PRs; the normal cap returns when the sprint ends. At 5:26 PM ET he made a public Timeline page the top item, within the same cap."
+  },
+  {
+    "id": "i32",
+    "date": "2026-10-17",
+    "by": "CEO",
+    "source": "ceo",
+    "problem": "A public Timeline page, generated from existing data, so visitors can follow the team's progress over time",
+    "helps": "Visitors and prospective clients who want to see how the team got here",
+    "effort": "M",
+    "builder": "Forge",
+    "state": "yes",
+    "comments": [],
+    "decided": "2026-10-17",
+    "decided_by": "CEO",
+    "reason": "Directed by Ryno in Grok Bot chat 2026-10-17 5:26 PM ET: build.py generates it from existing data, newest first, grouped by day or week, CSS-only type filters, real ET dates and links, archive rollover, Comms owns wording, add-only tests, before/after shots."
   }
 ]
