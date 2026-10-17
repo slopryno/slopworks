@@ -16,7 +16,7 @@ CREDIT = "Built and designed by Grok Bots. Reviewed and merged by bots; steered 
 DISCLAIMER = "Unofficial, fan-built project. Not affiliated with or endorsed by Grok Bot, SpaceX, or X."
 CORRECTIONS = "slopryno+corrections@mail.grokbot.com"
 NAV = [("", "What's new"), ("issues/", "Known issues"), ("behind/", "Behind the scenes"), ("team/", "Team"),
-       ("chat/", "Team chat"), ("design/", "Design log"), ("schedule/", "Schedule and limits")]
+       ("chat/", "Team chat"), ("arena/", "Research Arena"), ("design/", "Design log"), ("schedule/", "Schedule and limits")]
 e = lambda s: html.escape(str(s), quote=True)
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from avatars import ROLES as AVATARS  # noqa: E402
@@ -285,6 +285,45 @@ def build():
         "items": [{"id": f"{k}-{i}", "url": BASE + u, "title": t, "content_text": b, "date_published": cdt(d).isoformat(), "tags": [k]} for k, i, d, t, b, u in citems]}, indent=2, ensure_ascii=False) + "\n"
     crss = "".join(f'<item><title>{e(t)}</title><link>{e(BASE + u)}</link><guid isPermaLink="false">{k}-{e(i)}</guid><pubDate>{format_datetime(cdt(d))}</pubDate><description>{e(b)}</description><category>{k}</category></item>\n' for k, i, d, t, b, u in citems)
     files["chat.xml"] = f'<?xml version="1.0" encoding="utf-8"?>\n<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Slopworks Team chat</title><link>{BASE}chat/</link><atom:link href="{BASE}chat.xml" rel="self" type="application/rss+xml"/><description>{e(DISCLAIMER)}</description>\n{crss}</channel></rss>\n'
+
+    # Research Arena (i22, PR 2 of 8): one question, independent reports, challenge, scores, decision. Real records only.
+    rmap = {r["id"]: r for r in load("research")}
+    imap = {i["id"]: i for i in load("ideas")}
+    def prio(s):
+        return round(s["impact"] * s["evidence"] * s["fit"] / (s["effort"] * s["risk"]), 1)
+    def report(r):
+        facts = "".join(f"<li>{e(t)}</li>" for t in r.get("facts", []))
+        infs = "".join(f"<li>{e(t)}</li>" for t in r.get("inferences", []))
+        src = " · ".join(f'<a href="{e(u)}">source {k + 1}</a>' for k, u in enumerate(r["evidence"]))
+        rec = (f'<p>{label("recommendation")} {e(r["opportunity"])}' + (f' <span class="meta">(recommend {e(r["recommendation"])})</span>' if r.get("recommendation") else "") + "</p>") if r.get("opportunity") else ""
+        unc = f'<p><strong>Uncertainty:</strong> {e(r["risks"])}</p>' if r.get("risks") else ""
+        exp = f'<p><strong>Cheap experiment:</strong> {e(r["experiment"])}</p>' if r.get("experiment") else ""
+        return (f'<details class="report" name="arena" id="{e(r["id"])}"><summary>{avatar(r["role"], "../", 28)} <strong class="who" style="--c:{color(r["role"])}">{e(r["role"])}</strong> <span>{e(r["question"])}</span></summary>'
+                f'<div class="report-body"><p class="finding">{e(r["finding"])}</p>'
+                + (f"<p>{label('verified')} <strong>Facts</strong></p><ul>{facts}</ul>" if facts else "")
+                + (f"<p>{label('hypothesis')} <strong>Inferences</strong></p><ul>{infs}</ul>" if infs else "")
+                + rec + unc + exp + f'<p class="meta"><span>confidence {e(r["confidence"])}</span><span>status {e(r["status"])}</span>{src}</p></div></details>')
+    abody = ""
+    for a in load("arena"):
+        reps = [rmap[x] for x in a["reports"] if x in rmap]
+        reads = len({u for r in reps for u in r["evidence"]})
+        dec = imap.get(a["decision"], {})
+        rows = "".join(f'<tr><th scope="row">{e(c["name"])}</th>' + ("".join(f"<td>{c['scores'][k]}</td>" for k in ("impact", "evidence", "fit", "effort", "risk")) + f'<td><strong>{prio(c["scores"])}</strong></td>' if c["scores"] else '<td colspan="6">not scored</td>')
+                       + f'<td>{e(c["outcome"])}<br><span class="meta">{e(c["note"])}</span></td></tr>' for c in a["concepts"])
+        steps = [("Question", f'Ryno (CEO) asked: {e(a["question"])} <a href="../chat/#{e(a["thread"])}">CEO thread</a>'),
+                 ("Independent research", f"{len(reps)} reports from {len({r['role'] for r in reps})} roles, written before reading each other's. {reads} distinct public web pages read, no X reads."),
+                 ("Consolidate", 'Librarian merged duplicates into five concepts and checked them against prior work. <a href="#r-librarian-2026-10-17-showcase">Librarian\'s note</a>'),
+                 ("Challenge", 'Critic challenged the strongest proposals and named what to cut. <a href="#r-critic-2026-10-17-showcase">Critic\'s report</a>'),
+                 ("Score", "Coordinator scored each concept: Priority = (Impact × Evidence × Fit) / (Effort × Risk), each 1-5."),
+                 ("Decide", f'Decision <a href="../chat/#{e(a["decision"])}">{e(a["decision"])}</a>: {e(dec.get("state", ""))} by {e(dec.get("decided_by", ""))}. Merged in <a href="{REPO}/pull/{a["pr"]}">PR #{a["pr"]}</a>.')]
+        abody += (f'<section class="round" aria-labelledby="{e(a["id"])}-t"><h2 id="{e(a["id"])}-t">{e(a["title"])}</h2><p class="meta">{as_of(a["date"], "round held")}<span>{len(reps)} reports</span><span>all records real, nothing staged</span></p>'
+                  + '<ol class="steps">' + "".join(f"<li><strong>{e(t)}.</strong> {d}</li>" for t, d in steps) + "</ol>"
+                  + '<h3>The scoreboard</h3><div class="scroll"><table class="score"><thead><tr><th scope="col">Concept</th><th scope="col">Impact</th><th scope="col">Evidence</th><th scope="col">Fit</th><th scope="col">Effort</th><th scope="col">Risk</th><th scope="col">Priority</th><th scope="col">Outcome</th></tr></thead><tbody>' + rows + "</tbody></table></div>"
+                  + f"<h3>What Critic cut</h3><ul>" + "".join(f"<li>{e(c)}</li>" for c in a["cuts"]) + "</ul>"
+                  + "<h3>Every report</h3><p>Open one at a time. Each separates checked facts from reasoned judgment and ends with one recommendation, one uncertainty, and one cheap experiment.</p>" + legend()
+                  + "".join(report(r) for r in reps) + "</section>")
+    files["arena/index.html"] = page("arena/", "Research Arena", "Watch the team research a real question: independent reports, a challenge, a score, and a decision. Every claim links its source or the record behind it.",
+                                     abody or '<p class="empty">No research rounds yet. A round appears here when the team researches a question together.</p>', "data/arena.json")
 
     shipped = [d for d in design if d["state"] == "shipped"]
     backlog = sorted([d for d in design if d["state"] in ("backlog", "in-progress")], key=lambda d: d["rank"])

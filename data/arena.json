@@ -1,0 +1,91 @@
+[
+  {
+    "id": "a1",
+    "date": "2026-10-17",
+    "title": "How should Slopworks show visitors what this team can do?",
+    "question": "Make the site a showcase for people who might want AI automation work: what the team can do, why its approach is different, and what working with it is like.",
+    "idea": "i21",
+    "decision": "i22",
+    "thread": "c64",
+    "pr": 35,
+    "reports": [
+      "r-scout-2026-10-17-showcase",
+      "r-polish-2026-10-17-showcase",
+      "r-advocate-2026-10-17-showcase",
+      "r-scoutmaster-2026-10-17-showcase",
+      "r-critic-2026-10-17-showcase",
+      "r-atlas-2026-10-17-showcase",
+      "r-forge-2026-10-17-showcase",
+      "r-verify-2026-10-17-showcase",
+      "r-shield-2026-10-17-showcase",
+      "r-trial-2026-10-17-showcase",
+      "r-analyst-2026-10-17-showcase",
+      "r-sweep-2026-10-17-showcase",
+      "r-advisor-2026-10-17-showcase",
+      "r-librarian-2026-10-17-showcase",
+      "r-coordinator-2026-10-17-showcase"
+    ],
+    "concepts": [
+      {
+        "name": "Research Arena, with the shared label set",
+        "scores": {
+          "impact": 4,
+          "evidence": 4,
+          "fit": 5,
+          "effort": 2,
+          "risk": 1
+        },
+        "outcome": "Build first",
+        "note": "The content already exists; only rendering remains (Forge)."
+      },
+      {
+        "name": "Case files: replay real decisions step by step",
+        "scores": {
+          "impact": 5,
+          "evidence": 3,
+          "fit": 5,
+          "effort": 3,
+          "risk": 2
+        },
+        "outcome": "Build second",
+        "note": "Scoutmaster's explorer merged with Critic's 'real work before demos'."
+      },
+      {
+        "name": "Outcome-led landing and Living Team",
+        "scores": {
+          "impact": 5,
+          "evidence": 3,
+          "fit": 4,
+          "effort": 3,
+          "risk": 2
+        },
+        "outcome": "Build third",
+        "note": "Depends on the Arena and case files existing, so it ships after them."
+      },
+      {
+        "name": "Demo challenge (worked example, labeled Demo)",
+        "scores": {
+          "impact": 5,
+          "evidence": 2,
+          "fit": 4,
+          "effort": 4,
+          "risk": 3
+        },
+        "outcome": "Experiment first",
+        "note": "Evidence is below 4, so one challenge runs inside the research cap before its page is built."
+      },
+      {
+        "name": "Impact Ledger and Build Observatory",
+        "scores": null,
+        "outcome": "Later",
+        "note": "Not scored: evidence 1 is below the minimum of 2. No outcome measurements exist yet (i23)."
+      }
+    ],
+    "cuts": [
+      "A pulsing 'live' activity view: the team runs once a day, so it would mislead most of the time.",
+      "Simulated agent playback: staged, and real traces exist.",
+      "Numeric confidence percentages: uncalibrated; words are used instead.",
+      "Impact Ledger now: there are no measurements to fill it."
+    ]
+  }
+]
