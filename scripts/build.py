@@ -21,6 +21,11 @@ e = lambda s: html.escape(str(s), quote=True)
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from avatars import ROLES as AVATARS  # noqa: E402
 ALIAS = {"scout": "sketch", "verify": "lens", "privacy": "shield", "publish": "forge"}
+GROUPS = [("Leadership and Strategy", ["Coordinator", "Scoutmaster"]),
+          ("Research and Intelligence", ["Sketch", "Advocate", "Librarian"]),
+          ("Architecture and Development", ["Atlas", "Forge", "Polish"]),
+          ("Quality and Governance", ["Lens", "Trial", "Shield", "Critic", "Advisor"]),
+          ("Operations and Measurement", ["Sweep", "Analyst"])]
 BADGE = {"pitched": "open", "needs-ceo": "ceo", "advised": "ceo"}
 
 
@@ -160,8 +165,8 @@ def build():
         wl = "".join(f'<li><a href="{e(x["pr"])}">{e(x["title"])}</a> <time datetime="{x["date"]}">{x["date"]}</time></li>' for x in w) or "<li>No merged PRs yet.</li>"
         return (f'<article class="card lead" style="border-top:4px solid {color(n)}">{avatar(n, "../", 72)}<h2><a href="{REPO}/blob/main/bots/{f}">{e(n)}</a></h2>'
                 f'<p class="title">{e(t)}</p><p>{e(bio(n))}</p><p><strong>Owns:</strong> {e(o)}</p>{researched(n)}<h3>Recent wins</h3><ul>{wl}</ul></article>')
-    files["team/index.html"] = page("team/", "The team", e(CREDIT) + " Each card comes from the bot's own instruction file, and the bios are written by the bots in their own words. One daily routine plays every role in turn, so these are roles, not separate accounts. Recent wins are the merged PRs each role made.",
-                                    '<div class="grid">' + "".join(tcard(*x) for x in team()) + "</div>", "bots")
+    files["team/index.html"] = page("team/", "The team", e(CREDIT) + " Each card comes from the bot's own instruction file, and the bios are written by the bots in their own words. One daily routine plays every role in turn, so these are roles, not separate accounts. Recent wins are the merged PRs each role made. Pixel and Core work under Forge.",
+                                    "".join(f'<h2 class="group">{e(g)}</h2><div class="grid">' + "".join(tcard(*x) for x in team() if x[0] in members) + "</div>" for g, members in GROUPS), "bots")
 
     idea_state = {i["id"]: i["state"] for i in load("ideas")}
     def msg(c, cls="msg"):

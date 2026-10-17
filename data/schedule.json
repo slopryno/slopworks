@@ -52,6 +52,10 @@
         {
           "role": "Analyst",
           "focus": "useful metrics for small content sites and how to read them honestly"
+        },
+        {
+          "role": "Scoutmaster",
+          "focus": "strategic opportunities: what similar trackers and communities do that we could do"
         }
       ]
     },
@@ -65,6 +69,10 @@
         {
           "role": "Pixel",
           "focus": "HTML and CSS techniques for fast, accessible static pages"
+        },
+        {
+          "role": "Advocate",
+          "focus": "reader problems: what people publicly ask or struggle with about Grok Bot (evidence, not guesses)"
         }
       ]
     },
@@ -78,6 +86,10 @@
         {
           "role": "Trial",
           "focus": "testing static sites: HTML checks, link checks, visual and accessibility tests"
+        },
+        {
+          "role": "Critic",
+          "focus": "decision quality: common failure modes of small product bets and how teams test them cheaply"
         }
       ]
     },
@@ -126,6 +138,10 @@
         {
           "role": "Advisor",
           "focus": "prompt and skill quality: writing clear, testable bot instructions"
+        },
+        {
+          "role": "Librarian",
+          "focus": "knowledge management: keeping research and decision records deduplicated and fresh"
         }
       ]
     }
