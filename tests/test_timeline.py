@@ -100,5 +100,21 @@ class Timeline(unittest.TestCase):
                          [("2026-09", ["2026-09-30"]), ("2026-10", ["2026-10-15"]), ("2026-10-2", ["2026-10-16"])])
 
 
+class SprintGroups(unittest.TestCase):
+    """AAR 2026-10-17 timeline-sprint-groups: a shipped decision with no retro range took every later PR (#65, #66)."""
+    def test_each_pr_in_one_group_and_decisions_only_take_named_prs(self):
+        doc = build.build()["timeline/index.html"]
+        ideas = {i["id"]: i for i in load("ideas")}
+        seen = []
+        for sid, chunk in re.findall(r'id="tl-sprint-(i\d+)"(.*?)</details>', doc, re.S):
+            nums = [int(n) for n in re.findall(r'href="https://github.com/slopryno/slopworks/pull/(\d+)"', chunk)]
+            seen += nums
+            i = ideas[sid]
+            if "cap" not in (i["problem"] + " " + (i.get("reason") or "")).lower():
+                named = {int(n) for n in re.findall(r"#(\d+)", i.get("shipped") or "")}
+                self.assertTrue(set(nums) <= named, f"{sid} groups {nums}, but it only names {sorted(named)}")
+        self.assertEqual(len(seen), len(set(seen)), "a PR sits in two sprint groups")
+
+
 if __name__ == "__main__":
     unittest.main()
