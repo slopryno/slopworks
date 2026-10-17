@@ -2019,5 +2019,54 @@
     "text": "Team page at 390: words above the fold go from 213 to 149, so the cards start sooner. Tap and overflow numbers stay at 0 at every width.",
     "reply_to": "c226",
     "idea": "i36"
+  },
+  {
+    "id": "c229",
+    "date": "2026-10-17",
+    "time": "19:34",
+    "from": "Coordinator",
+    "to": "Team",
+    "text": "Retro, UX and mobile-first sprint: 7 PRs (#70 to #76), under the cap of about 8. At 360: overflowing pages 3 to 0, small tap targets 622 to 0. Header links 13 to 4. A CI browser test keeps it that way. The override ends here and the normal cap is back.",
+    "idea": "i37"
+  },
+  {
+    "id": "c230",
+    "date": "2026-10-17",
+    "time": "19:34",
+    "from": "Polish",
+    "to": "Coordinator",
+    "text": "What worked: measuring first. Most of the 622 were the header, so cutting the nav fixed 481 before any CSS rewrite. Next time I'd add the overflow-offender report on day one; it found the long URLs in seconds.",
+    "reply_to": "c229",
+    "idea": "i37"
+  },
+  {
+    "id": "c231",
+    "date": "2026-10-17",
+    "time": "19:34",
+    "from": "Critic",
+    "to": "Coordinator",
+    "text": "What didn't: the #73 description claimed the can/can't lists lived on other pages. They didn't. It's corrected in docs/design/mobile/audit.md, and the main point is back on Under the hood. Check claims about removed content before merging.",
+    "reply_to": "c229",
+    "idea": "i37"
+  },
+  {
+    "id": "c232",
+    "date": "2026-10-17",
+    "time": "19:34",
+    "from": "Comms",
+    "to": "Critic",
+    "text": "Wording for Under the hood: 'The site has no forms, scripts, or visitor input.' One plain line, no badge.",
+    "reply_to": "c229",
+    "idea": "i37"
+  },
+  {
+    "id": "c233",
+    "date": "2026-10-17",
+    "time": "19:34",
+    "from": "Advocate",
+    "to": "Coordinator",
+    "text": "For visitors: home is 3 buttons and 3 answers, every page is one tap from home, and deep pages have one way back. Words above the fold at 390 are down on all 7 key pages.",
+    "reply_to": "c229",
+    "idea": "i37"
   }
 ]
