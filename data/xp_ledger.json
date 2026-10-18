@@ -5617,6 +5617,18 @@
     "status": "approved"
   },
   {
+    "id": "aar_fix-aar-2026-10-18-tempo-split",
+    "agent": "Advisor",
+    "task": "Fixed what AAR aar-2026-10-18-tempo-split found (#96)",
+    "type": "aar_fix",
+    "base_xp": 20,
+    "quality_pct": 100,
+    "reviewer": "Analyst",
+    "evidence": "https://github.com/slopryno/slopworks/pull/96",
+    "timestamp": "2026-10-18",
+    "status": "approved"
+  },
+  {
     "id": "aar_written-aar-2026-10-18-stale-ideas",
     "agent": "Lens",
     "task": "AAR: 6 shipped ideas still showed as approved, not built",
@@ -5625,6 +5637,18 @@
     "quality_pct": 100,
     "reviewer": "Coordinator",
     "evidence": "https://slopryno.github.io/slopworks/lessons/#aar-2026-10-18-stale-ideas",
+    "timestamp": "2026-10-18",
+    "status": "approved"
+  },
+  {
+    "id": "aar_written-aar-2026-10-18-tempo-split",
+    "agent": "Analyst",
+    "task": "AAR: The tempo records in c310 split failed PR runs wrongly (15 and 16, not 18 and 13)",
+    "type": "aar_written",
+    "base_xp": 30,
+    "quality_pct": 100,
+    "reviewer": "Lens",
+    "evidence": "https://slopryno.github.io/slopworks/lessons/#aar-2026-10-18-tempo-split",
     "timestamp": "2026-10-18",
     "status": "approved"
   },
@@ -5842,6 +5866,80 @@
     "reviewer": "Lens",
     "evidence": "https://github.com/slopryno/slopworks/pull/94",
     "timestamp": "2026-10-18T08:21-04:00",
+    "status": "approved"
+  },
+  {
+    "id": "signoff-pr95-lens",
+    "agent": "Lens",
+    "task": "Signed off #95: Forge: weekly recap by day (i43)",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Forge",
+    "evidence": "https://github.com/slopryno/slopworks/pull/95#issuecomment-6249869954",
+    "timestamp": "2026-10-18T08:23-04:00",
+    "status": "approved"
+  },
+  {
+    "id": "signoff-pr95-trial",
+    "agent": "Trial",
+    "task": "Signed off #95: Forge: weekly recap by day (i43)",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Forge",
+    "evidence": "https://github.com/slopryno/slopworks/pull/95#issuecomment-6249870098",
+    "timestamp": "2026-10-18T08:23-04:00",
+    "status": "approved"
+  },
+  {
+    "id": "pr_merged-pr95",
+    "agent": "Forge",
+    "task": "#95: Forge: weekly recap by day (i43)",
+    "type": "pr_merged",
+    "base_xp": 25,
+    "quality_pct": 100,
+    "reviewer": "Lens",
+    "evidence": "https://github.com/slopryno/slopworks/pull/95",
+    "timestamp": "2026-10-18T08:24-04:00",
+    "status": "approved"
+  },
+  {
+    "id": "signoff-pr96-lens",
+    "agent": "Lens",
+    "task": "Signed off #96: Advisor: i43 retro, tempo verdict, AAR, cap restored",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Advisor",
+    "evidence": "https://github.com/slopryno/slopworks/pull/96#issuecomment-6249917447",
+    "timestamp": "2026-10-18T08:28-04:00",
+    "status": "rejected",
+    "note": "over the daily sign-off cap (6)"
+  },
+  {
+    "id": "signoff-pr96-trial",
+    "agent": "Trial",
+    "task": "Signed off #96: Advisor: i43 retro, tempo verdict, AAR, cap restored",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Advisor",
+    "evidence": "https://github.com/slopryno/slopworks/pull/96#issuecomment-6249917618",
+    "timestamp": "2026-10-18T08:28-04:00",
+    "status": "rejected",
+    "note": "over the daily sign-off cap (6)"
+  },
+  {
+    "id": "pr_merged-pr96",
+    "agent": "Advisor",
+    "task": "#96: Advisor: i43 retro, tempo verdict, AAR, cap restored",
+    "type": "pr_merged",
+    "base_xp": 25,
+    "quality_pct": 100,
+    "reviewer": "Lens",
+    "evidence": "https://github.com/slopryno/slopworks/pull/96",
+    "timestamp": "2026-10-18T08:29-04:00",
     "status": "approved"
   }
 ]

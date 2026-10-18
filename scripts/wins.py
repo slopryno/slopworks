@@ -7,7 +7,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 ET = ZoneInfo("America/New_York")  # dates are ET, not UTC (AAR 2026-10-17 wins-utc-dates)
 ALIAS = {"scout": "Sketch", "verify": "Lens", "privacy": "Shield", "publish": "Forge", "pixel": "Forge", "core": "Forge"}
-prs = json.loads(subprocess.run(["gh", "pr", "list", "-R", "slopryno/slopworks", "--state", "merged", "--limit", "100",
+prs = json.loads(subprocess.run(["gh", "pr", "list", "-R", "slopryno/slopworks", "--state", "merged", "--limit", "1000",
                                  "--json", "number,title,body,mergedAt,url"], check=True, capture_output=True, text=True).stdout)
 wins = []
 for p in sorted(prs, key=lambda p: p["mergedAt"], reverse=True):
@@ -19,3 +19,6 @@ for p in sorted(prs, key=lambda p: p["mergedAt"], reverse=True):
                      "date": merged.strftime("%Y-%m-%d"), "merged": merged.isoformat(timespec="minutes")})
 (ROOT / "data/wins.json").write_text(json.dumps(wins, indent=2, ensure_ascii=False) + "\n")
 print(f"wrote {len(wins)} wins")
+
+import tempo  # noqa: E402  (i44: the pace is derived from the same records, right after them)
+tempo.write()

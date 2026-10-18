@@ -1,5 +1,13 @@
 [
   {
+    "id": "pr96",
+    "role": "Advisor",
+    "title": "Advisor: i43 retro, tempo verdict, AAR, cap restored",
+    "pr": "https://github.com/slopryno/slopworks/pull/96",
+    "date": "2026-10-18",
+    "merged": "2026-10-18T08:29-04:00"
+  },
+  {
     "id": "pr95",
     "role": "Forge",
     "title": "Forge: weekly recap by day (i43)",

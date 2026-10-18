@@ -1105,5 +1105,29 @@
     ],
     "acceptance_verified_by": "Trial",
     "shipped": "#92 to #96: kickoff and tempo records, 200% zoom reflow (#93), 6 stale ideas closed with an AAR and a check (#94), recap by day (#95), tempo verdict and retro, cap restored"
+  },
+  {
+    "id": "i44",
+    "date": "2026-10-18",
+    "by": "CEO",
+    "source": "ceo",
+    "problem": "Standing tempo with an automatic slowdown: up to 6 PRs a sprint and 3 sprints a day (18 PRs a day), replacing per-sprint overrides; a tripwire drops it to 1 sprint of 3 PRs a day",
+    "helps": "Ryno and visitors: faster shipping, with a brake that the records pull on their own",
+    "effort": "M",
+    "builder": "Forge",
+    "state": "yes",
+    "comments": [],
+    "decided": "2026-10-18",
+    "decided_by": "CEO",
+    "reason": "Ryno in Grok Bot chat 2026-10-18 8:35 AM ET: 'Yes, adopt the faster pace with the automatic slowdown.' Approves Advisor's proposal (c320 to c322). Enforced in code: bot.py pr, an add-only check.py rule, logged refusals. Today's AARs trip it.",
+    "target_sprint": "W42",
+    "short_title": "Faster pace, automatic slowdown",
+    "acceptance_criteria": [
+      "Mode derived from records in data/tempo.json",
+      "bot.py pr refuses PRs over the day's limit and logs refusals",
+      "Add-only check.py rule: tempo.json matches records, no day over its limit",
+      "Pace line on Under the hood",
+      "Daily routine untouched; the sentence to add goes to Ryno"
+    ]
   }
 ]

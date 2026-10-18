@@ -1,0 +1,32 @@
+{
+  "decision": "i44",
+  "effective": "2026-10-18T08:35-04:00",
+  "limits": {
+    "normal": {
+      "prs_per_day": 18,
+      "sprints_per_day": 3,
+      "prs_per_sprint": 6
+    },
+    "slowed": {
+      "prs_per_day": 3,
+      "sprints_per_day": 1,
+      "prs_per_sprint": 3
+    }
+  },
+  "clean_needed": 10,
+  "trip_triggers": [
+    "revert",
+    "failed-deploy",
+    "ci-main",
+    "incident",
+    "data-correction"
+  ],
+  "mode": "slowed",
+  "clean_prs": 0,
+  "tripped_by": "aar-2026-10-18-tempo-split",
+  "trip_pr": 96,
+  "trip_at": "2026-10-18T08:29-04:00",
+  "as_of_pr": 96,
+  "days": [],
+  "violations": []
+}

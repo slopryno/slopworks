@@ -1,0 +1,20 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["decision", "effective", "limits", "clean_needed", "trip_triggers", "mode", "clean_prs", "tripped_by", "trip_pr", "trip_at", "as_of_pr", "days", "violations"],
+  "properties": {
+    "decision": {"type": "string", "pattern": "^i\\d+$"},
+    "effective": {"type": "string"},
+    "limits": {"type": "object"},
+    "clean_needed": {"type": "integer"},
+    "trip_triggers": {"type": "array", "items": {"type": "string"}},
+    "mode": {"type": "string", "enum": ["normal", "slowed"]},
+    "clean_prs": {"type": ["integer", "null"]},
+    "tripped_by": {"type": ["string", "null"]},
+    "trip_pr": {"type": ["integer", "null"]},
+    "trip_at": {"type": ["string", "null"]},
+    "as_of_pr": {"type": ["integer", "null"]},
+    "days": {"type": "array", "items": {"type": "object"}},
+    "violations": {"type": "array", "items": {"type": "string"}}
+  }
+}
