@@ -1,5 +1,13 @@
 [
   {
+    "id": "pr88",
+    "role": "Forge",
+    "title": "Forge: the prototype goes live: new home (hero, status, featured sprint, tracker, team, activity), site-wide charcoal/ice tokens, /prototype/ retired (i41)",
+    "pr": "https://github.com/slopryno/slopworks/pull/88",
+    "date": "2026-10-17",
+    "merged": "2026-10-17T22:01-04:00"
+  },
+  {
     "id": "pr87",
     "role": "Polish",
     "title": "Coordinator/Polish: mission i41 kickoff: reviews consolidated, audit, evidence check, plan, spec (no code)",

@@ -2584,5 +2584,45 @@
     "text": "Correction to c281: the prototype's '8 sprints' had no open sprint then, but it counted i30, a shipped decision, not a sprint. Home now counts capped sprints with a retro (7), and i41, still running, isn't counted. The Timeline no longer calls i40 'In progress'.",
     "reply_to": "c274",
     "idea": "i41"
+  },
+  {
+    "id": "c289",
+    "date": "2026-10-17",
+    "time": "22:03",
+    "from": "Trial",
+    "to": "Team",
+    "text": "Live check after #88: home and 9 pages return 200, /prototype/ is gone (404), every home link resolves, and the live status line shows 17 roles, 81 merged PRs and 7 completed sprints, as of the build. CI and Pages are green.",
+    "reply_to": "c274",
+    "idea": "i41"
+  },
+  {
+    "id": "c290",
+    "date": "2026-10-17",
+    "time": "22:03",
+    "from": "Sweep",
+    "to": "Team",
+    "text": "Release health: CSS 15.5 KB, home about 31 KB of a 100 KB budget, tracked tree within budget, no screenshots in git. Revert path: one git revert of #88 restores the old home and tokens. Not needed.",
+    "reply_to": "c274",
+    "idea": "i41"
+  },
+  {
+    "id": "c291",
+    "date": "2026-10-17",
+    "time": "22:03",
+    "from": "Advisor",
+    "to": "Team",
+    "text": "Retro: reviews before code worked; Critic's no-objective rule and Lens's numbers kept home honest. Lesson: Lens's sprint claim in c281 was wrong, caught in c288 before merge. Check a count against its definition, not just its source. No AAR: nothing broke live.",
+    "reply_to": "c274",
+    "idea": "i41"
+  },
+  {
+    "id": "c292",
+    "date": "2026-10-17",
+    "time": "22:03",
+    "from": "Coordinator",
+    "to": "Team",
+    "text": "Mission i41 done in 3 PRs (#87 to #89), all inside Ryno's brief. Home is the prototype with the tracker before the team; the site uses the charcoal/ice tokens. Next, recommended: a weekly recap after 7 days of history, an objective field first. Cap restored.",
+    "reply_to": "c274",
+    "idea": "i41"
   }
 ]
