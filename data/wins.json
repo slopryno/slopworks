@@ -1,5 +1,13 @@
 [
   {
+    "id": "pr84",
+    "role": "Coordinator",
+    "title": "Coordinator: retro for sprint i38, cap restored, Lens's sign-off cap evidence (182 of 263 over cap)",
+    "pr": "https://github.com/slopryno/slopworks/pull/84",
+    "date": "2026-10-17",
+    "merged": "2026-10-17T21:11-04:00"
+  },
+  {
     "id": "pr83",
     "role": "Comms",
     "title": "Comms/Polish: lede pass (8 ledes 1,722→1,168 chars), chip count spacing fix, Design log names the CI artifact (i38)",
