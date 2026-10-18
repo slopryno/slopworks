@@ -103,5 +103,21 @@ class FollowUp(unittest.TestCase):
         self.assertNotRegex(page.lower(), r"projected (total|week)|on pace|per week average")
 
 
+class IdeasStayTrue(unittest.TestCase):
+    """i43 AAR aar-2026-10-18-stale-ideas (Lens, c306): an approved idea that merged PRs already name is either closed
+    as shipped or backed by an open objective that says what's left."""
+    def test_named_yes_ideas_have_an_open_objective(self):
+        ideas = json.loads((ROOT / "data/ideas.json").read_text())
+        wins = json.loads((ROOT / "data/wins.json").read_text())
+        owned = {o.get("idea") for o in json.loads((ROOT / "data/objectives.json").read_text())}
+        named = {m for w in wins for m in re.findall(r"\b(i\d+)\b", w["title"])}
+        stale = sorted(i["id"] for i in ideas if i["state"] == "yes" and i["id"] in named and i["id"] not in owned)
+        self.assertEqual(stale, [], "close these as shipped, or add the remaining work to data/objectives.json")
+
+    def test_the_check_fires(self):
+        named = {m for m in re.findall(r"\b(i\d+)\b", "Onboard Game Master (i33): bot file")}
+        self.assertEqual(named, {"i33"})
+
+
 if __name__ == "__main__":
     unittest.main()

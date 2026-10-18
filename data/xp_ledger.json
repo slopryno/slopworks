@@ -5605,6 +5605,18 @@
     "status": "approved"
   },
   {
+    "id": "aar_written-aar-2026-10-18-stale-ideas",
+    "agent": "Lens",
+    "task": "AAR: 6 shipped ideas still showed as approved, not built",
+    "type": "aar_written",
+    "base_xp": 30,
+    "quality_pct": 100,
+    "reviewer": "Coordinator",
+    "evidence": "https://slopryno.github.io/slopworks/lessons/#aar-2026-10-18-stale-ideas",
+    "timestamp": "2026-10-18",
+    "status": "approved"
+  },
+  {
     "id": "signoff-pr90-coordinator",
     "agent": "Coordinator",
     "task": "Signed off #90: Forge: i42 short titles, current objectives, weekly recap",
@@ -5734,6 +5746,54 @@
     "reviewer": "Lens",
     "evidence": "https://github.com/slopryno/slopworks/pull/92",
     "timestamp": "2026-10-18T07:52-04:00",
+    "status": "approved"
+  },
+  {
+    "id": "signoff-pr93-lens",
+    "agent": "Lens",
+    "task": "Signed off #93: Forge: reflow at 200% phone zoom (i43)",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Forge",
+    "evidence": "https://github.com/slopryno/slopworks/pull/93#issuecomment-6249725515",
+    "timestamp": "2026-10-18T08:07-04:00",
+    "status": "approved"
+  },
+  {
+    "id": "signoff-pr93-polish",
+    "agent": "Polish",
+    "task": "Signed off #93: Forge: reflow at 200% phone zoom (i43)",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Forge",
+    "evidence": "https://github.com/slopryno/slopworks/pull/93#issuecomment-6249725650",
+    "timestamp": "2026-10-18T08:07-04:00",
+    "status": "approved"
+  },
+  {
+    "id": "signoff-pr93-trial",
+    "agent": "Trial",
+    "task": "Signed off #93: Forge: reflow at 200% phone zoom (i43)",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Forge",
+    "evidence": "https://github.com/slopryno/slopworks/pull/93#issuecomment-6249725810",
+    "timestamp": "2026-10-18T08:07-04:00",
+    "status": "approved"
+  },
+  {
+    "id": "pr_merged-pr93",
+    "agent": "Forge",
+    "task": "#93: Forge: reflow at 200% phone zoom (i43)",
+    "type": "pr_merged",
+    "base_xp": 25,
+    "quality_pct": 100,
+    "reviewer": "Lens",
+    "evidence": "https://github.com/slopryno/slopworks/pull/93",
+    "timestamp": "2026-10-18T08:17-04:00",
     "status": "approved"
   }
 ]

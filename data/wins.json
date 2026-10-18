@@ -1,5 +1,13 @@
 [
   {
+    "id": "pr93",
+    "role": "Forge",
+    "title": "Forge: reflow at 200% phone zoom (i43)",
+    "pr": "https://github.com/slopryno/slopworks/pull/93",
+    "date": "2026-10-18",
+    "merged": "2026-10-18T08:17-04:00"
+  },
+  {
     "id": "pr92",
     "role": "Coordinator",
     "title": "Coordinator: i43 kickoff, huddle and tempo records",

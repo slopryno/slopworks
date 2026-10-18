@@ -29,6 +29,10 @@
       "ref": {
         "type": "string",
         "pattern": "^c\\d+$"
+      },
+      "idea": {
+        "type": "string",
+        "pattern": "^i\\d+$"
       }
     }
   }

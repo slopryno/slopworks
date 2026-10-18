@@ -583,5 +583,69 @@
     "fix_pr": 77,
     "closed": "2026-10-17",
     "thread": "c240"
+  },
+  {
+    "id": "aar-2026-10-18-stale-ideas",
+    "date": "2026-10-18",
+    "title": "6 shipped ideas still showed as approved, not built",
+    "trigger": "data-correction",
+    "links": {
+      "prs": [
+        22,
+        29,
+        44,
+        52,
+        65,
+        76,
+        94
+      ],
+      "runs": [],
+      "commits": [],
+      "chat": [
+        "c306",
+        "c314",
+        "c295"
+      ]
+    },
+    "expected": {
+      "text": "When an approved idea's PRs merge, its record says shipped and links them, so the tracker's open ideas are real open work.",
+      "cite": [
+        "file:data/ideas.json",
+        "chat:c295"
+      ]
+    },
+    "actual": {
+      "text": "i9, i21, i28, i29, i33 and i36 shipped in #22 to #29, #35 to #44, #52, #53, #65 and #70 to #76 (Oct 16 and 17) but stayed 'yes' until today. Game Master flagged stale yes ideas in c295; Lens counted them in c306.",
+      "cite": [
+        "chat:c295",
+        "chat:c306",
+        "pr:29",
+        "pr:44",
+        "pr:52",
+        "pr:65",
+        "pr:76"
+      ]
+    },
+    "why": {
+      "text": "Sprints shipped under their own sprint ideas (i16, i24, i35, i37), and only those were closed at retro. Nothing tied the original pitch to the merged PRs, and no check looked for an approved idea that merged PRs had already named.",
+      "cite": [
+        "file:data/ideas.json",
+        "file:data/wins.json"
+      ]
+    },
+    "change": {
+      "text": "#94 closes the 6 with their PRs. New add-only test: an approved idea named in a merged PR title must be backed by an open objective in data/objectives.json, or CI fails. i34 stays open, tied to Game Master's Week 2 objective.",
+      "cite": [
+        "pr:94",
+        "file:tests/test_home.py",
+        "file:data/objectives.json"
+      ]
+    },
+    "change_pr": 94,
+    "owner": "Lens",
+    "status": "closed",
+    "fix_pr": 94,
+    "closed": "2026-10-18",
+    "thread": "c314"
   }
 ]
