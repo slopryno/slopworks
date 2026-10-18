@@ -1115,7 +1115,7 @@
     "helps": "Ryno and visitors: faster shipping, with a brake that the records pull on their own",
     "effort": "M",
     "builder": "Forge",
-    "state": "yes",
+    "state": "shipped",
     "comments": [],
     "decided": "2026-10-18",
     "decided_by": "CEO",
@@ -1128,7 +1128,9 @@
       "Add-only check.py rule: tempo.json matches records, no day over its limit",
       "Pace line on Under the hood",
       "Daily routine untouched; the sentence to add goes to Ryno"
-    ]
+    ],
+    "acceptance_verified_by": "Trial",
+    "shipped": "#97: scripts/tempo.py, data/tempo.json, bot.py pr refusals over the day limit and while main is red, data/refusals.json, add-only check.py rule, pace line on Under the hood"
   },
   {
     "id": "i45",

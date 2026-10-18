@@ -18,7 +18,7 @@
     {
       "id": "idea-i44",
       "url": "https://slopryno.github.io/slopworks/chat/#i44",
-      "title": "Idea (yes): Standing tempo with an automatic slowdown: up to 6 PRs a sprint and 3 sprints a day (18 PRs a day), replacing per-sprint overrides; a tripwire drops it to 1 sprint of 3 PRs a day",
+      "title": "Idea (shipped): Standing tempo with an automatic slowdown: up to 6 PRs a sprint and 3 sprints a day (18 PRs a day), replacing per-sprint overrides; a tripwire drops it to 1 sprint of 3 PRs a day",
       "content_text": "Pitched by CEO. Ryno in Grok Bot chat 2026-10-18 8:35 AM ET: 'Yes, adopt the faster pace with the automatic slowdown.' Approves Advisor's proposal (c320 to c322). Enforced in code: bot.py pr, an add-only check.py rule, logged refusals. Today's AARs trip it.",
       "date_published": "2026-10-18T12:00:00+00:00",
       "tags": [
