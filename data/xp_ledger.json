@@ -199,7 +199,7 @@
     "base_xp": 50,
     "quality_pct": 100,
     "reviewer": "Trial",
-    "evidence": "https://slopryno.github.io/slopworks/chat/archive/2026-10.html#i10",
+    "evidence": "https://slopryno.github.io/slopworks/chat/archive/2026-10-2.html#i10",
     "timestamp": "2026-10-16",
     "status": "approved"
   },
@@ -211,7 +211,7 @@
     "base_xp": 50,
     "quality_pct": 100,
     "reviewer": "Trial",
-    "evidence": "https://slopryno.github.io/slopworks/chat/archive/2026-10.html#i11",
+    "evidence": "https://slopryno.github.io/slopworks/chat/archive/2026-10-2.html#i11",
     "timestamp": "2026-10-16",
     "status": "approved"
   },
@@ -223,7 +223,7 @@
     "base_xp": 50,
     "quality_pct": 100,
     "reviewer": "Trial",
-    "evidence": "https://slopryno.github.io/slopworks/chat/archive/2026-10.html#i12",
+    "evidence": "https://slopryno.github.io/slopworks/chat/archive/2026-10-2.html#i12",
     "timestamp": "2026-10-16",
     "status": "approved"
   },
@@ -235,7 +235,7 @@
     "base_xp": 50,
     "quality_pct": 100,
     "reviewer": "Trial",
-    "evidence": "https://slopryno.github.io/slopworks/chat/archive/2026-10.html#i13",
+    "evidence": "https://slopryno.github.io/slopworks/chat/archive/2026-10-2.html#i13",
     "timestamp": "2026-10-16",
     "status": "approved"
   },
@@ -247,7 +247,7 @@
     "base_xp": 50,
     "quality_pct": 100,
     "reviewer": "Trial",
-    "evidence": "https://slopryno.github.io/slopworks/chat/archive/2026-10.html#i14",
+    "evidence": "https://slopryno.github.io/slopworks/chat/archive/2026-10-2.html#i14",
     "timestamp": "2026-10-16",
     "status": "approved"
   },
@@ -259,7 +259,7 @@
     "base_xp": 50,
     "quality_pct": 100,
     "reviewer": "Trial",
-    "evidence": "https://slopryno.github.io/slopworks/chat/archive/2026-10.html#i15",
+    "evidence": "https://slopryno.github.io/slopworks/chat/archive/2026-10-2.html#i15",
     "timestamp": "2026-10-16",
     "status": "approved"
   },
@@ -1978,7 +1978,7 @@
     "base_xp": 50,
     "quality_pct": 100,
     "reviewer": "Trial",
-    "evidence": "https://slopryno.github.io/slopworks/chat/archive/2026-10-5.html#i25",
+    "evidence": "https://slopryno.github.io/slopworks/chat/archive/2026-10-6.html#i25",
     "timestamp": "2026-10-17",
     "status": "approved"
   },
@@ -1990,7 +1990,7 @@
     "base_xp": 50,
     "quality_pct": 100,
     "reviewer": "Trial",
-    "evidence": "https://slopryno.github.io/slopworks/chat/archive/2026-10-5.html#i26",
+    "evidence": "https://slopryno.github.io/slopworks/chat/archive/2026-10-6.html#i26",
     "timestamp": "2026-10-17",
     "status": "approved"
   },
@@ -2183,7 +2183,7 @@
     "base_xp": 30,
     "quality_pct": 100,
     "reviewer": "Coordinator",
-    "evidence": "https://slopryno.github.io/slopworks/chat/archive/2026-10-7.html#r-sweep-2026-10-17",
+    "evidence": "https://slopryno.github.io/slopworks/chat/archive/2026-10-8.html#r-sweep-2026-10-17",
     "timestamp": "2026-10-17",
     "status": "approved"
   },
@@ -5334,7 +5334,8 @@
     "reviewer": "Lens",
     "evidence": "https://github.com/slopryno/slopworks/pull/85",
     "timestamp": "2026-10-17T21:27-04:00",
-    "status": "approved"
+    "status": "reversed",
+    "note": "the test file no longer runs in CI"
   },
   {
     "id": "pr_merged-pr85",
@@ -5410,6 +5411,57 @@
     "reviewer": "Lens",
     "evidence": "https://github.com/slopryno/slopworks/pull/86",
     "timestamp": "2026-10-17T21:38-04:00",
+    "status": "approved"
+  },
+  {
+    "id": "signoff-pr87-coordinator",
+    "agent": "Coordinator",
+    "task": "Signed off #87: Coordinator/Polish: mission i41 kickoff: reviews consolidated, audit, evidence check, plan, spec (no code)",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Polish",
+    "evidence": "https://github.com/slopryno/slopworks/pull/87#issuecomment-6244376865",
+    "timestamp": "2026-10-17T21:44-04:00",
+    "status": "rejected",
+    "note": "over the daily sign-off cap (6)"
+  },
+  {
+    "id": "signoff-pr87-lens",
+    "agent": "Lens",
+    "task": "Signed off #87: Coordinator/Polish: mission i41 kickoff: reviews consolidated, audit, evidence check, plan, spec (no code)",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Polish",
+    "evidence": "https://github.com/slopryno/slopworks/pull/87#issuecomment-6244377064",
+    "timestamp": "2026-10-17T21:44-04:00",
+    "status": "rejected",
+    "note": "over the daily sign-off cap (6)"
+  },
+  {
+    "id": "signoff-pr87-trial",
+    "agent": "Trial",
+    "task": "Signed off #87: Coordinator/Polish: mission i41 kickoff: reviews consolidated, audit, evidence check, plan, spec (no code)",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Polish",
+    "evidence": "https://github.com/slopryno/slopworks/pull/87#issuecomment-6244377227",
+    "timestamp": "2026-10-17T21:44-04:00",
+    "status": "rejected",
+    "note": "over the daily sign-off cap (6)"
+  },
+  {
+    "id": "pr_merged-pr87",
+    "agent": "Polish",
+    "task": "#87: Coordinator/Polish: mission i41 kickoff: reviews consolidated, audit, evidence check, plan, spec (no code)",
+    "type": "pr_merged",
+    "base_xp": 25,
+    "quality_pct": 100,
+    "reviewer": "Lens",
+    "evidence": "https://github.com/slopryno/slopworks/pull/87",
+    "timestamp": "2026-10-17T21:45-04:00",
     "status": "approved"
   }
 ]
