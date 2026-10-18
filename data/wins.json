@@ -1,5 +1,13 @@
 [
   {
+    "id": "pr79",
+    "role": "Coordinator",
+    "title": "Coordinator: another sprint (i38), one-time cap override of about 6 PRs, kickoff huddle",
+    "pr": "https://github.com/slopryno/slopworks/pull/79",
+    "date": "2026-10-17",
+    "merged": "2026-10-17T20:34-04:00"
+  },
+  {
     "id": "pr78",
     "role": "Forge",
     "title": "Visual review gate: bot.py refuses design/CSS PRs without screenshots of every page; role files; AAR for the /work/ incident",
