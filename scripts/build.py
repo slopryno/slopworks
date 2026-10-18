@@ -374,7 +374,7 @@ def build():
     n_open = sum(x["state"] == "open" for x in iss)
     stats = [(len(ups), "updates tracked", ""), (n_open, "open issues", "issues/"), (len(team()), "bot roles", "team/"),
              (last_run["date"] if last_run else "none", f'last run ({last_run["status"]}), as of this build' if last_run else "last run", "behind/")]
-    files["updates/index.html"] = page("updates/", "What's new in Grok Bot", f"{len(ups)} updates from public posts, newest first. Every item links its source and says whether it's <strong>confirmed</strong> (official account or docs) or <strong>reported</strong> (community post). This tracker is the product the team runs every day.",
+    files["updates/index.html"] = page("updates/", "What's new in Grok Bot", f"{len(ups)} Grok Bot updates from public posts, newest first. Each links its source and is marked <strong>confirmed</strong> (official account or docs) or <strong>reported</strong> (community post).",
                                (lambda f: f[1] + '<div class="filtered">' + f[0] + "".join(entry_card(x) for x in ups) + "</div>")(area_filter(ups)) if ups else '<p class="empty">Nothing yet.</p>', "data/updates.json")
 
     # Showcase landing (i22, PR 4 of 8): outcomes first, every number derived from repo data, every claim linked.
@@ -552,7 +552,7 @@ def build():
     msec = msec.replace('<h2 id="ideas">Ideas</h2>', '<h2 id="ideas">Ideas</h2>' + iintro[:-4] + more + "</p>", 1).replace('<h2 id="research">Research</h2>', '<h2 id="research">Research</h2>' + rintro[:-4] + more + "</p>", 1)
     fl = '<p>Follow Team chat: <a href="../chat.xml">RSS</a>, <a href="../chat.json">JSON</a>. </p><details class="routine"><summary>Follow it with your own Grok Bot</summary><p>Paste this into a routine:</p><blockquote class="card"><p>Every morning, read https://slopryno.github.io/slopworks/chat.json and tell me about new pitches, decisions, and any debate between the Slopworks bots since yesterday: who pitched what, who pushed back, and what Coordinator decided and why. Stay quiet if nothing\'s new.</p></blockquote></details>'
     fl = '<nav class="jump" aria-label="On this page"><a href="#standup">Standup</a><a href="#ideas">Ideas</a><a href="#research">Research</a><a href="#handoffs">Handoffs</a>' + ('<a href="#archive">Archive</a>' if parts else "") + '</nav>' + fl
-    files["chat/index.html"] = page("chat/", "Team chat", "The real handoffs between roles during each run, newest first. Nothing is staged; quiet days stay quiet. It never quotes readers or names anyone outside the team.", fl + sbody + msec + arch_list, "data/chat.json")
+    files["chat/index.html"] = page("chat/", "Team chat", "The real handoffs between roles, newest first. Nothing is staged, and it never quotes readers or names anyone outside the team.", fl + sbody + msec + arch_list, "data/chat.json")
     url = lambda i: loc.get(i, "chat/") + "#" + i
     citems = ([("standup", x["id"], x["date"], f'Standup: {x["role"]}', f'Did: {x["did"]} Doing: {x["doing"]} Blockers: {x["blockers"]}', "chat/") for x in standup]
               + [("idea", i["id"], i.get("decided") or i["date"], f'Idea ({i["state"]}): {i["problem"]}', f'Pitched by {i["by"]}. ' + (i.get("reason") or ""), url(i["id"])) for i in ideas]
@@ -662,7 +662,7 @@ def build():
              f'<h2>Every character sheet</h2><p class="meta">In name order. Levels describe each role\'s own record.</p><ul>{roster}</ul>'
              f'<p>Rules: <a href="{REPO}/blob/main/data/progression.json">data/progression.json</a> (owned by Game Master). Ledger: <a href="{REPO}/blob/main/data/xp_ledger.json">data/xp_ledger.json</a>, written by <a href="{REPO}/blob/main/scripts/xp.py">scripts/xp.py</a>. Decided in <a href="{href(prog["thread"], "../../", "team/xp/")}">Team chat</a>.</p>')
     files["team/xp/index.html"] = page("team/xp/", "How XP works", f"Each role earns XP from {len([y for y in ledger_all if y['status'] == 'approved'])} verified pieces of work so far: merged PRs, reviews, Blocks proven right, after-action reviews, research behind accepted decisions, and shipped pitches. Every point links its evidence.", xbody, "data/progression.json")
-    files["team/index.html"] = page("team/", "The team", f"{len(team())} Grok Bot roles in five groups, played by one daily routine. Each card shows the role's own bio, its latest real handoff, recent wins, and a character sheet with verified XP (<a href=\"xp/\">how XP works</a>). How the team grew is on the <a href=\"../timeline/\">Timeline</a>.",
+    files["team/index.html"] = page("team/", "The team", f"{len(team())} Grok Bot roles in five groups, played by one daily routine. Each has a character sheet with verified XP (<a href=\"xp/\">how XP works</a>); how the team grew is on the <a href=\"../timeline/\">Timeline</a>.",
                                     "".join(f'<h2 class="group">{e(g)}</h2><div class="grid">' + "".join(tcard(*x) for x in team() if x[0] in members) + "</div>" for g, members in GROUPS) + alumni_html, "bots")
 
 
@@ -703,8 +703,8 @@ def build():
     l_arch = ('<h2 id="archive">Archive</h2><p>Older reviews move to archive pages automatically, so this page stays light. Nothing is removed, and each review keeps its own permalink.</p><ul>'
               + "".join(f'<li><a href="archive/{k}.html">{e(k)}</a>: {len(us)} {"review" if len(us) == 1 else "reviews"}</li>' for k, m, n, us in reversed(l_parts)) + "</ul>") if l_parts else ""
     files["lessons/index.html"] = page("lessons/", "Lessons",
-        "When something goes wrong, the team writes an after-action review the same run: what was supposed to happen, what actually happened, why (blameless, with evidence), and what changes. "
-        "The Friday retro reviews the week's reviews and closes them, and Advisor turns repeats into rules or CI checks. Every line links the PR, CI run, commit, or Team chat message behind it.",
+        "When something goes wrong, the team writes a blameless after-action review the same run: what was expected, what happened, why, and what changes. Every line links its record.",
+        "<p>The Friday retro reviews the week's reviews and closes them, and Advisor turns repeats into rules or CI checks.</p>"
         f'<p class="meta"><span>{len(aars)} reviews</span><span>{n_open} open</span><span>newest first</span></p>'
         + ("".join(aar(u[1]) for u in l_main) or '<p class="empty">No after-action reviews yet. One appears here the same day something goes wrong.</p>') + l_arch, "data/aars.json")
     for k, (key, m, n, us) in enumerate(l_parts):
@@ -749,7 +749,7 @@ def build():
                   + f"<h3>What Critic cut</h3><ul>" + "".join(f"<li>{e(c)}</li>" for c in a["cuts"]) + "</ul>"
                   + "<h3>Every report</h3><p>Open one at a time. Each separates checked facts from reasoned judgment and ends with one recommendation, one uncertainty, and one cheap experiment.</p>" + legend()
                   + "".join(report(r) for r in reps) + "</section>")
-    files["arena/index.html"] = page("arena/", "Research Arena", "Watch the team research a real question: independent reports, a challenge, a score, and a decision. Every claim links its source or the record behind it.",
+    files["arena/index.html"] = page("arena/", "Research Arena", "A real research round: independent reports, a challenge, a score, and a decision. Every claim links its source.",
                                      abody or '<p class="empty">No research rounds yet. A round appears here when the team researches a question together.</p>', "data/arena.json")
 
     # Case files (i22, PR 3 of 8): real decisions replayed step by step. Links go to merged PRs, chat, and research only.
@@ -758,7 +758,7 @@ def build():
         return (f'<article class="card case" id="{e(c["id"])}"><h2>{e(c["title"])}</h2><p class="meta">{as_of(c["date"], "shipped")}<span>real work, not a demo</span></p>'
                 f'<p>{e(c["summary"])}</p><p><strong>What it shows:</strong> {e(c["shows"])}</p><ol class="trace">{st}</ol><p><strong>Outcome:</strong> {e(c["outcome"])} <a href="{REPO}/pull/{c["pr"]}">PR #{c["pr"]}</a></p></article>')
     cases = load("cases")
-    files["cases/index.html"] = page("cases/", "Case files", "Real decisions from this team, replayed step by step: the problem, the call, the build, the review, and what shipped. Every step links the merged PR or the Team chat message behind it.",
+    files["cases/index.html"] = page("cases/", "Case files", "Real decisions, replayed step by step from the problem to what shipped. Every step links its PR or Team chat message.",
                                      legend() + ("".join(map(case_card, cases)) or '<p class="empty">No case files yet. A case file is added after a decision ships.</p>') + '<p>Want to see how a decision gets made before anything ships? Visit the <a href="../arena/">Research Arena</a>.</p>', "data/cases.json")
 
     # Demo challenges (i22, PR 7 of 8): worked examples on fictional briefs, labeled Demo everywhere. Not advice, quotes, or client work.
@@ -775,7 +775,7 @@ def build():
                 f'<h3>Sources</h3><ul class="meta">' + "".join(f'<li><a href="{e(u)}">{e(u)}</a></li>' for u in srcs) + "</ul>"
                 f'<p>How it was run: <a href="{href(c["thread"], "../", "challenges/")}">Team chat thread</a> · <a href="{REPO}/pull/{c["pr"]}">research PR #{c["pr"]}</a></p></article>')
     chs = load("challenges")
-    files["challenges/index.html"] = page("challenges/", "Demo challenge", "What working with this team looks like: a brief goes in, roles research it independently, a critic challenges it, and a structured outcome comes back. This one is a labeled demo on a fictional brief.",
+    files["challenges/index.html"] = page("challenges/", "Demo challenge", "A labeled demo of working with the team: a fictional brief goes in, roles research it, a critic challenges it, and a structured outcome comes back.",
                                           legend() + ("".join(map(challenge, chs)) or '<p class="empty">No demo challenges yet. Each one is researched by the team and labeled Demo.</p>'), "data/challenges.json")
 
     # ---------- Timeline (i32): generated from the records, newest first, grouped by day (Comms wording, c136-c142) ----------
@@ -916,7 +916,7 @@ def build():
     tl_arch = ('<h2 id="archive">Archive</h2><p>Older days move to archive pages automatically, so this page stays light. Nothing is removed.</p><ul>'
                + "".join(f'<li><a href="archive/{k}.html">{arch_name(m, n)}</a>: {len(us)} {"day" if len(us) == 1 else "days"}</li>' for k, m, n, us in reversed(tl_parts)) + "</ul>") if tl_parts else ""
     fhtml, fcss = type_filter(present)
-    intro = ("How this team got here, newest first: what shipped, what Ryno decided, who joined, what the team researched, and what it learned when something went wrong."
+    intro = ("How the team got here, newest first: what shipped, what Ryno decided, who joined, and what it researched and learned."
              " Every line links its record.")
     files["timeline/index.html"] = page("timeline/", "Timeline", e(intro) + (f" Launched {e(day_name(launch))}." if launch else ""),
         hero + fcss + '<div class="filtered">' + fhtml + "".join(day_html(dd, "../") for dd in tl_main) + "</div>" + tl_arch + legend(), "data")
@@ -934,7 +934,7 @@ def build():
         return '<ul class="hub">' + "".join(f'<li><a href="../{s}"><strong>{e(t)}</strong><span>{e(DESCRIPTIONS[s])}</span></a></li>' for s, t in pages) + "</ul>"
     files["work/index.html"] = page("work/", "Work", "What the team has made, and how it went.", hub(WORK), "data/cases.json")
     files["hood/index.html"] = page("hood/", "Under the hood", "How the site runs: the tracker, the team's chat, and the logs. The site has no forms, scripts, or visitor input.", hub(HOOD), "data/runs.json")
-    files["design/index.html"] = page("design/", "Design log", "What Polish, the design bot, changed and what's next. One small design change a week at most, each reviewed by Lens and Trial.",
+    files["design/index.html"] = page("design/", "Design log", "What Polish, the design bot, changed and what's next. One small design change a week at most, each reviewed from screenshots of every page attached to its PR as a CI artifact.",
                                       "<h2>Shipped</h2>" + "".join(map(card, shipped)) + "<h2>Up next (ranked)</h2>" + "".join(map(card, backlog)), "data/design_backlog.json")
 
     srows = "".join(f'<tr><th scope="row">{e(i["when"])}</th><td>{e(i["what"])}</td></tr>' for i in sched["items"])
