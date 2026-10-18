@@ -1115,7 +1115,7 @@
     "helps": "Ryno and visitors: faster shipping, with a brake that the records pull on their own",
     "effort": "M",
     "builder": "Forge",
-    "state": "yes",
+    "state": "shipped",
     "comments": [],
     "decided": "2026-10-18",
     "decided_by": "CEO",
@@ -1128,6 +1128,32 @@
       "Add-only check.py rule: tempo.json matches records, no day over its limit",
       "Pace line on Under the hood",
       "Daily routine untouched; the sentence to add goes to Ryno"
+    ],
+    "acceptance_verified_by": "Trial",
+    "shipped": "#97: scripts/tempo.py, data/tempo.json, bot.py pr refusals over the day limit and while main is red, data/refusals.json, add-only check.py rule, pace line on Under the hood"
+  },
+  {
+    "id": "i45",
+    "date": "2026-10-18",
+    "by": "CEO",
+    "source": "ceo",
+    "problem": "Public metrics and trends from real records: PRs merged, open-to-merge time, sprint durations, CI catches vs failures on main, reverts, AARs, Blocks, the pace, and which way each is moving",
+    "helps": "Visitors who want proof, and the team, which sees whether it is getting better or worse",
+    "effort": "M",
+    "builder": "Forge",
+    "state": "yes",
+    "comments": [],
+    "decided": "2026-10-18",
+    "decided_by": "CEO",
+    "reason": "Ryno in Grok Bot chat 2026-10-18 8:37 AM ET: metrics on the site, PRs completed, how fast; the team decides where and how it looks. 8:39 AM ET: trend analysis too, bugs up or down. Ships under the slowed tempo (i44).",
+    "target_sprint": "W42",
+    "short_title": "Metrics and trends",
+    "acceptance_criteria": [
+      "Every number generated from records, with its definition and source",
+      "Trends against the prior day, per 10 PRs where volume differs, with the small-sample caveat",
+      "No scripts or chart libraries; text values, not color alone",
+      "0 overflow and 0 small taps at 195 plus 7 widths, light and dark",
+      "Placement and look decided in Team chat"
     ]
   }
 ]

@@ -1,11 +1,21 @@
 [
   {
+    "id": "pr97",
+    "role": "Forge",
+    "title": "Forge: standing tempo with an automatic slowdown (i44)",
+    "pr": "https://github.com/slopryno/slopworks/pull/97",
+    "date": "2026-10-18",
+    "merged": "2026-10-18T09:01-04:00",
+    "opened": "2026-10-18T08:45-04:00"
+  },
+  {
     "id": "pr96",
     "role": "Advisor",
     "title": "Advisor: i43 retro, tempo verdict, AAR, cap restored",
     "pr": "https://github.com/slopryno/slopworks/pull/96",
     "date": "2026-10-18",
-    "merged": "2026-10-18T08:29-04:00"
+    "merged": "2026-10-18T08:29-04:00",
+    "opened": "2026-10-18T08:28-04:00"
   },
   {
     "id": "pr95",
@@ -13,7 +23,8 @@
     "title": "Forge: weekly recap by day (i43)",
     "pr": "https://github.com/slopryno/slopworks/pull/95",
     "date": "2026-10-18",
-    "merged": "2026-10-18T08:24-04:00"
+    "merged": "2026-10-18T08:24-04:00",
+    "opened": "2026-10-18T08:23-04:00"
   },
   {
     "id": "pr94",
@@ -21,7 +32,8 @@
     "title": "Forge: close 6 shipped ideas, AAR, check that named ideas stay true (i43)",
     "pr": "https://github.com/slopryno/slopworks/pull/94",
     "date": "2026-10-18",
-    "merged": "2026-10-18T08:21-04:00"
+    "merged": "2026-10-18T08:21-04:00",
+    "opened": "2026-10-18T08:20-04:00"
   },
   {
     "id": "pr93",
@@ -29,7 +41,8 @@
     "title": "Forge: reflow at 200% phone zoom (i43)",
     "pr": "https://github.com/slopryno/slopworks/pull/93",
     "date": "2026-10-18",
-    "merged": "2026-10-18T08:17-04:00"
+    "merged": "2026-10-18T08:17-04:00",
+    "opened": "2026-10-18T08:03-04:00"
   },
   {
     "id": "pr92",
@@ -37,7 +50,8 @@
     "title": "Coordinator: i43 kickoff, huddle and tempo records",
     "pr": "https://github.com/slopryno/slopworks/pull/92",
     "date": "2026-10-18",
-    "merged": "2026-10-18T07:52-04:00"
+    "merged": "2026-10-18T07:52-04:00",
+    "opened": "2026-10-18T07:51-04:00"
   },
   {
     "id": "pr91",
@@ -45,7 +59,8 @@
     "title": "Advisor: i42 retro, cap restored",
     "pr": "https://github.com/slopryno/slopworks/pull/91",
     "date": "2026-10-18",
-    "merged": "2026-10-18T01:40-04:00"
+    "merged": "2026-10-18T01:40-04:00",
+    "opened": "2026-10-18T01:40-04:00"
   },
   {
     "id": "pr90",
@@ -53,7 +68,8 @@
     "title": "Forge: i42 short titles, current objectives, weekly recap",
     "pr": "https://github.com/slopryno/slopworks/pull/90",
     "date": "2026-10-18",
-    "merged": "2026-10-18T01:38-04:00"
+    "merged": "2026-10-18T01:38-04:00",
+    "opened": "2026-10-18T01:32-04:00"
   },
   {
     "id": "pr89",
@@ -61,7 +77,8 @@
     "title": "Sweep: mission i41 post-deploy report, retro, i41 shipped, cap restored",
     "pr": "https://github.com/slopryno/slopworks/pull/89",
     "date": "2026-10-17",
-    "merged": "2026-10-17T22:05-04:00"
+    "merged": "2026-10-17T22:05-04:00",
+    "opened": "2026-10-17T22:04-04:00"
   },
   {
     "id": "pr88",
@@ -69,7 +86,8 @@
     "title": "Forge: the prototype goes live: new home (hero, status, featured sprint, tracker, team, activity), site-wide charcoal/ice tokens, /prototype/ retired (i41)",
     "pr": "https://github.com/slopryno/slopworks/pull/88",
     "date": "2026-10-17",
-    "merged": "2026-10-17T22:01-04:00"
+    "merged": "2026-10-17T22:01-04:00",
+    "opened": "2026-10-17T21:57-04:00"
   },
   {
     "id": "pr87",
@@ -77,7 +95,8 @@
     "title": "Coordinator/Polish: mission i41 kickoff: reviews consolidated, audit, evidence check, plan, spec (no code)",
     "pr": "https://github.com/slopryno/slopworks/pull/87",
     "date": "2026-10-17",
-    "merged": "2026-10-17T21:45-04:00"
+    "merged": "2026-10-17T21:45-04:00",
+    "opened": "2026-10-17T21:44-04:00"
   },
   {
     "id": "pr86",
@@ -85,7 +104,8 @@
     "title": "Pixel: prototype dark mode lifted to charcoal (Ryno: 'too dark?'), cards read with a 1.65:1 border, muted text lifted to keep 4.5:1",
     "pr": "https://github.com/slopryno/slopworks/pull/86",
     "date": "2026-10-17",
-    "merged": "2026-10-17T21:38-04:00"
+    "merged": "2026-10-17T21:38-04:00",
+    "opened": "2026-10-17T21:37-04:00"
   },
   {
     "id": "pr85",
@@ -93,7 +113,8 @@
     "title": "Pixel: prototype page for Ryno's redesign pitch (i40): huddle, visual direction with contrast checks, /prototype/ only, no rollout",
     "pr": "https://github.com/slopryno/slopworks/pull/85",
     "date": "2026-10-17",
-    "merged": "2026-10-17T21:27-04:00"
+    "merged": "2026-10-17T21:27-04:00",
+    "opened": "2026-10-17T21:21-04:00"
   },
   {
     "id": "pr84",
@@ -101,7 +122,8 @@
     "title": "Coordinator: retro for sprint i38, cap restored, Lens's sign-off cap evidence (182 of 263 over cap)",
     "pr": "https://github.com/slopryno/slopworks/pull/84",
     "date": "2026-10-17",
-    "merged": "2026-10-17T21:11-04:00"
+    "merged": "2026-10-17T21:11-04:00",
+    "opened": "2026-10-17T21:10-04:00"
   },
   {
     "id": "pr83",
@@ -109,7 +131,8 @@
     "title": "Comms/Polish: lede pass (8 ledes 1,722→1,168 chars), chip count spacing fix, Design log names the CI artifact (i38)",
     "pr": "https://github.com/slopryno/slopworks/pull/83",
     "date": "2026-10-17",
-    "merged": "2026-10-17T21:08-04:00"
+    "merged": "2026-10-17T21:08-04:00",
+    "opened": "2026-10-17T21:04-04:00"
   },
   {
     "id": "pr82",
@@ -117,7 +140,8 @@
     "title": "Sweep: lean repo (i39): screenshots and temp files out of git (263→183 files, 7.5→1.9 MB), lean CI checks, review screenshots as a CI artifact",
     "pr": "https://github.com/slopryno/slopworks/pull/82",
     "date": "2026-10-17",
-    "merged": "2026-10-17T20:59-04:00"
+    "merged": "2026-10-17T20:59-04:00",
+    "opened": "2026-10-17T20:58-04:00"
   },
   {
     "id": "pr81",
@@ -125,7 +149,8 @@
     "title": "Pixel: character sheets and Timeline on phones (i38): even achievement rows, clean work list, roomier Timeline",
     "pr": "https://github.com/slopryno/slopworks/pull/81",
     "date": "2026-10-17",
-    "merged": "2026-10-17T20:47-04:00"
+    "merged": "2026-10-17T20:47-04:00",
+    "opened": "2026-10-17T20:46-04:00"
   },
   {
     "id": "pr80",
@@ -133,7 +158,8 @@
     "title": "Forge: review screenshots out of git (c243): manifest with hashes plus key shots, gate checks the manifest, #77 set leaves the tree",
     "pr": "https://github.com/slopryno/slopworks/pull/80",
     "date": "2026-10-17",
-    "merged": "2026-10-17T20:37-04:00"
+    "merged": "2026-10-17T20:37-04:00",
+    "opened": "2026-10-17T20:37-04:00"
   },
   {
     "id": "pr79",
@@ -141,7 +167,8 @@
     "title": "Coordinator: another sprint (i38), one-time cap override of about 6 PRs, kickoff huddle",
     "pr": "https://github.com/slopryno/slopworks/pull/79",
     "date": "2026-10-17",
-    "merged": "2026-10-17T20:34-04:00"
+    "merged": "2026-10-17T20:34-04:00",
+    "opened": "2026-10-17T20:33-04:00"
   },
   {
     "id": "pr78",
@@ -149,7 +176,8 @@
     "title": "Visual review gate: bot.py refuses design/CSS PRs without screenshots of every page; role files; AAR for the /work/ incident",
     "pr": "https://github.com/slopryno/slopworks/pull/78",
     "date": "2026-10-17",
-    "merged": "2026-10-17T20:28-04:00"
+    "merged": "2026-10-17T20:28-04:00",
+    "opened": "2026-10-17T20:27-04:00"
   },
   {
     "id": "pr77",
@@ -157,7 +185,8 @@
     "title": "Hotfix: /work/ titles broken mid-word, footer overflow, footer 13→5 links; new visual CI checks and screenshots of every page",
     "pr": "https://github.com/slopryno/slopworks/pull/77",
     "date": "2026-10-17",
-    "merged": "2026-10-17T20:23-04:00"
+    "merged": "2026-10-17T20:23-04:00",
+    "opened": "2026-10-17T20:22-04:00"
   },
   {
     "id": "pr76",
@@ -165,7 +194,8 @@
     "title": "Advocate/Polish: mobile and UX after-audit, retro, cap restored (i36, i37)",
     "pr": "https://github.com/slopryno/slopworks/pull/76",
     "date": "2026-10-17",
-    "merged": "2026-10-17T19:35-04:00"
+    "merged": "2026-10-17T19:35-04:00",
+    "opened": "2026-10-17T19:34-04:00"
   },
   {
     "id": "pr75",
@@ -173,7 +203,8 @@
     "title": "Critic: cut noise (i36): one pitch badge per thread, legends only where needed, shorter Team intro",
     "pr": "https://github.com/slopryno/slopworks/pull/75",
     "date": "2026-10-17",
-    "merged": "2026-10-17T19:32-04:00"
+    "merged": "2026-10-17T19:32-04:00",
+    "opened": "2026-10-17T19:32-04:00"
   },
   {
     "id": "pr74",
@@ -181,7 +212,8 @@
     "title": "Polish/Trial: mobile-first CSS (i36), 0 overflow and 0 small tap targets at every width, 360px browser test",
     "pr": "https://github.com/slopryno/slopworks/pull/74",
     "date": "2026-10-17",
-    "merged": "2026-10-17T19:30-04:00"
+    "merged": "2026-10-17T19:30-04:00",
+    "opened": "2026-10-17T19:30-04:00"
   },
   {
     "id": "pr73",
@@ -189,7 +221,8 @@
     "title": "Comms/Polish: simpler landing (i36): one headline, three entry points, three short answers",
     "pr": "https://github.com/slopryno/slopworks/pull/73",
     "date": "2026-10-17",
-    "merged": "2026-10-17T19:26-04:00"
+    "merged": "2026-10-17T19:26-04:00",
+    "opened": "2026-10-17T19:26-04:00"
   },
   {
     "id": "pr72",
@@ -197,7 +230,8 @@
     "title": "Polish: simpler nav (i36): 4 top links, Work and Under the hood hubs, back links, footer list",
     "pr": "https://github.com/slopryno/slopworks/pull/72",
     "date": "2026-10-17",
-    "merged": "2026-10-17T19:24-04:00"
+    "merged": "2026-10-17T19:24-04:00",
+    "opened": "2026-10-17T19:24-04:00"
   },
   {
     "id": "pr71",
@@ -205,7 +239,8 @@
     "title": "Advocate/Polish: measured mobile and UX audit (i36): harness, before numbers, research, nav proposal",
     "pr": "https://github.com/slopryno/slopworks/pull/71",
     "date": "2026-10-17",
-    "merged": "2026-10-17T19:21-04:00"
+    "merged": "2026-10-17T19:21-04:00",
+    "opened": "2026-10-17T19:21-04:00"
   },
   {
     "id": "pr70",
@@ -213,7 +248,8 @@
     "title": "Polish: UX and mobile-first direction (i36), sprint override (i37), kickoff huddle",
     "pr": "https://github.com/slopryno/slopworks/pull/70",
     "date": "2026-10-17",
-    "merged": "2026-10-17T19:16-04:00"
+    "merged": "2026-10-17T19:16-04:00",
+    "opened": "2026-10-17T19:16-04:00"
   },
   {
     "id": "pr69",
@@ -221,7 +257,8 @@
     "title": "Sweep: RPG Week 1 close-out: roadmap and schedule, Timeline sprint-group fix and AAR, retro, cap restored (i35, PR 3 of 3)",
     "pr": "https://github.com/slopryno/slopworks/pull/69",
     "date": "2026-10-17",
-    "merged": "2026-10-17T18:17-04:00"
+    "merged": "2026-10-17T18:17-04:00",
+    "opened": "2026-10-17T18:17-04:00"
   },
   {
     "id": "pr68",
@@ -229,7 +266,8 @@
     "title": "Pixel: character sheets for all 17 roles, How XP works, Team card links (i34 Week 1, PR 2 of 3)",
     "pr": "https://github.com/slopryno/slopworks/pull/68",
     "date": "2026-10-17",
-    "merged": "2026-10-17T18:14-04:00"
+    "merged": "2026-10-17T18:14-04:00",
+    "opened": "2026-10-17T18:14-04:00"
   },
   {
     "id": "pr67",
@@ -237,7 +275,8 @@
     "title": "Forge/Gamemaster: progression rules and a backfilled XP ledger (i34 Week 1, PR 1 of 3)",
     "pr": "https://github.com/slopryno/slopworks/pull/67",
     "date": "2026-10-17",
-    "merged": "2026-10-17T18:10-04:00"
+    "merged": "2026-10-17T18:10-04:00",
+    "opened": "2026-10-17T18:10-04:00"
   },
   {
     "id": "pr66",
@@ -245,7 +284,8 @@
     "title": "Coordinator: Slopworks RPG huddle (i34), Week 1 override (i35), i31 shipped",
     "pr": "https://github.com/slopryno/slopworks/pull/66",
     "date": "2026-10-17",
-    "merged": "2026-10-17T18:06-04:00"
+    "merged": "2026-10-17T18:06-04:00",
+    "opened": "2026-10-17T18:06-04:00"
   },
   {
     "id": "pr65",
@@ -253,7 +293,8 @@
     "title": "Onboard Game Master (i33): bot file, avatar, Team page, rotation, onboarding run",
     "pr": "https://github.com/slopryno/slopworks/pull/65",
     "date": "2026-10-17",
-    "merged": "2026-10-17T18:03-04:00"
+    "merged": "2026-10-17T18:03-04:00",
+    "opened": "2026-10-17T18:03-04:00"
   },
   {
     "id": "pr64",
@@ -261,7 +302,8 @@
     "title": "Coordinator: sprint i31 retro, cap restored, i32 shipped, wins refreshed",
     "pr": "https://github.com/slopryno/slopworks/pull/64",
     "date": "2026-10-17",
-    "merged": "2026-10-17T17:39-04:00"
+    "merged": "2026-10-17T17:39-04:00",
+    "opened": "2026-10-17T17:38-04:00"
   },
   {
     "id": "pr63",
@@ -269,7 +311,8 @@
     "title": "Polish: demo challenge polish: one full demo note, label chips on their own line (sprint i31)",
     "pr": "https://github.com/slopryno/slopworks/pull/63",
     "date": "2026-10-17",
-    "merged": "2026-10-17T17:38-04:00"
+    "merged": "2026-10-17T17:38-04:00",
+    "opened": "2026-10-17T17:37-04:00"
   },
   {
     "id": "pr62",
@@ -277,7 +320,8 @@
     "title": "Core: Lessons archive rollover, reusing the shared rollover helper (sprint i31)",
     "pr": "https://github.com/slopryno/slopworks/pull/62",
     "date": "2026-10-17",
-    "merged": "2026-10-17T17:37-04:00"
+    "merged": "2026-10-17T17:37-04:00",
+    "opened": "2026-10-17T17:36-04:00"
   },
   {
     "id": "pr61",
@@ -285,7 +329,8 @@
     "title": "Pixel/Core: Timeline page generated from the records (i32), ET win dates (AAR), archive rollover",
     "pr": "https://github.com/slopryno/slopworks/pull/61",
     "date": "2026-10-17",
-    "merged": "2026-10-17T17:35-04:00"
+    "merged": "2026-10-17T17:35-04:00",
+    "opened": "2026-10-17T17:35-04:00"
   },
   {
     "id": "pr60",
@@ -293,7 +338,8 @@
     "title": "Coordinator: sprint 3 kickoff (CEO override i31), Timeline decision (i32), held case file",
     "pr": "https://github.com/slopryno/slopworks/pull/60",
     "date": "2026-10-17",
-    "merged": "2026-10-17T17:30-04:00"
+    "merged": "2026-10-17T17:30-04:00",
+    "opened": "2026-10-17T17:29-04:00"
   },
   {
     "id": "pr59",
@@ -301,7 +347,8 @@
     "title": "Advisor: trim prose now enforced by code and CI; onboarding uses the helpers; retro (i30, PR 4 of 4)",
     "pr": "https://github.com/slopryno/slopworks/pull/59",
     "date": "2026-10-17",
-    "merged": "2026-10-17T13:52-04:00"
+    "merged": "2026-10-17T13:52-04:00",
+    "opened": "2026-10-17T13:51-04:00"
   },
   {
     "id": "pr58",
@@ -309,7 +356,8 @@
     "title": "Core: typed loaders that fail fast, plus tests for hand-copied values (i30, PR 3 of 4)",
     "pr": "https://github.com/slopryno/slopworks/pull/58",
     "date": "2026-10-17",
-    "merged": "2026-10-17T13:49-04:00"
+    "merged": "2026-10-17T13:49-04:00",
+    "opened": "2026-10-17T13:49-04:00"
   },
   {
     "id": "pr57",
@@ -317,7 +365,8 @@
     "title": "Core: scripts/bot.py, the default path for PRs, sign-offs, branches, and chat (i30, PR 2 of 4)",
     "pr": "https://github.com/slopryno/slopworks/pull/57",
     "date": "2026-10-17",
-    "merged": "2026-10-17T13:48-04:00"
+    "merged": "2026-10-17T13:48-04:00",
+    "opened": "2026-10-17T13:47-04:00"
   },
   {
     "id": "pr56",
@@ -325,7 +374,8 @@
     "title": "Atlas: hardening audit and rule inventory (i30, PR 1 of 4)",
     "pr": "https://github.com/slopryno/slopworks/pull/56",
     "date": "2026-10-17",
-    "merged": "2026-10-17T13:46-04:00"
+    "merged": "2026-10-17T13:46-04:00",
+    "opened": "2026-10-17T13:45-04:00"
   },
   {
     "id": "pr55",
@@ -333,7 +383,8 @@
     "title": "Sweep: sprint i27 retro, cap restored, wins refreshed, one AAR",
     "pr": "https://github.com/slopryno/slopworks/pull/55",
     "date": "2026-10-17",
-    "merged": "2026-10-17T13:34-04:00"
+    "merged": "2026-10-17T13:34-04:00",
+    "opened": "2026-10-17T13:33-04:00"
   },
   {
     "id": "pr54",
@@ -341,7 +392,8 @@
     "title": "Core: feed check (i26) plus sitemap, metadata, and hype checks (add-only)",
     "pr": "https://github.com/slopryno/slopworks/pull/54",
     "date": "2026-10-17",
-    "merged": "2026-10-17T13:33-04:00"
+    "merged": "2026-10-17T13:33-04:00",
+    "opened": "2026-10-17T13:32-04:00"
   },
   {
     "id": "pr53",
@@ -349,7 +401,8 @@
     "title": "Comms: page metadata, sitemap, robots.txt, llms.txt, and the style guide",
     "pr": "https://github.com/slopryno/slopworks/pull/53",
     "date": "2026-10-17",
-    "merged": "2026-10-17T13:31-04:00"
+    "merged": "2026-10-17T13:31-04:00",
+    "opened": "2026-10-17T13:30-04:00"
   },
   {
     "id": "pr52",
@@ -357,7 +410,8 @@
     "title": "Forge: hire and onboard Head of Comms (i28, i29)",
     "pr": "https://github.com/slopryno/slopworks/pull/52",
     "date": "2026-10-17",
-    "merged": "2026-10-17T13:28-04:00"
+    "merged": "2026-10-17T13:28-04:00",
+    "opened": "2026-10-17T13:28-04:00"
   },
   {
     "id": "pr51",
@@ -365,7 +419,8 @@
     "title": "Scout: official changelog catch-up 0.53.0 to 0.70.2 (i25)",
     "pr": "https://github.com/slopryno/slopworks/pull/51",
     "date": "2026-10-17",
-    "merged": "2026-10-17T13:25-04:00"
+    "merged": "2026-10-17T13:25-04:00",
+    "opened": "2026-10-17T13:25-04:00"
   },
   {
     "id": "pr50",
@@ -373,7 +428,8 @@
     "title": "Coordinator: sprint 2 kickoff (CEO override i27); i25 and i26 approved",
     "pr": "https://github.com/slopryno/slopworks/pull/50",
     "date": "2026-10-17",
-    "merged": "2026-10-17T13:24-04:00"
+    "merged": "2026-10-17T13:24-04:00",
+    "opened": "2026-10-17T13:23-04:00"
   },
   {
     "id": "pr49",
@@ -381,7 +437,8 @@
     "title": "Advisor: same-day after-action reviews (AARs), Lessons page, add-only checks, 7 real backfills",
     "pr": "https://github.com/slopryno/slopworks/pull/49",
     "date": "2026-10-17",
-    "merged": "2026-10-17T10:35-04:00"
+    "merged": "2026-10-17T10:35-04:00",
+    "opened": "2026-10-17T10:35-04:00"
   },
   {
     "id": "pr48",
@@ -389,7 +446,8 @@
     "title": "Sweep: Team chat archive rollover (main page 99.9% → 50.7% of budget)",
     "pr": "https://github.com/slopryno/slopworks/pull/48",
     "date": "2026-10-17",
-    "merged": "2026-10-17T09:37-04:00"
+    "merged": "2026-10-17T09:37-04:00",
+    "opened": "2026-10-17T09:37-04:00"
   },
   {
     "id": "pr47",
@@ -397,7 +455,8 @@
     "title": "Run log 2026-10-17: post-deploy check and Discussions status",
     "pr": "https://github.com/slopryno/slopworks/pull/47",
     "date": "2026-10-17",
-    "merged": "2026-10-17T09:30-04:00"
+    "merged": "2026-10-17T09:30-04:00",
+    "opened": "2026-10-17T09:30-04:00"
   },
   {
     "id": "pr46",
@@ -405,7 +464,8 @@
     "title": "Advisor: fold repeats into existing entries (Scout); sign-offs first and real chat times (Forge)",
     "pr": "https://github.com/slopryno/slopworks/pull/46",
     "date": "2026-10-17",
-    "merged": "2026-10-17T09:29-04:00"
+    "merged": "2026-10-17T09:29-04:00",
+    "opened": "2026-10-17T09:29-04:00"
   },
   {
     "id": "pr45",
@@ -413,7 +473,8 @@
     "title": "Daily run 2026-10-17: 8 updates, 2 issues, 1 correction, Saturday research",
     "pr": "https://github.com/slopryno/slopworks/pull/45",
     "date": "2026-10-17",
-    "merged": "2026-10-17T09:28-04:00"
+    "merged": "2026-10-17T09:28-04:00",
+    "opened": "2026-10-17T09:27-04:00"
   },
   {
     "id": "pr44",
@@ -421,7 +482,8 @@
     "title": "Showcase 8/8: showcase CI checks (additions only), retro, cap restored",
     "pr": "https://github.com/slopryno/slopworks/pull/44",
     "date": "2026-10-17",
-    "merged": "2026-10-17T07:41-04:00"
+    "merged": "2026-10-17T07:41-04:00",
+    "opened": "2026-10-17T07:40-04:00"
   },
   {
     "id": "pr43",
@@ -429,7 +491,8 @@
     "title": "Showcase 7/8: Demo challenge page, labeled Demo",
     "pr": "https://github.com/slopryno/slopworks/pull/43",
     "date": "2026-10-17",
-    "merged": "2026-10-17T07:38-04:00"
+    "merged": "2026-10-17T07:38-04:00",
+    "opened": "2026-10-17T07:38-04:00"
   },
   {
     "id": "pr42",
@@ -437,7 +500,8 @@
     "title": "Showcase 6/8: demo challenge 1 research (experiment)",
     "pr": "https://github.com/slopryno/slopworks/pull/42",
     "date": "2026-10-17",
-    "merged": "2026-10-17T07:36-04:00"
+    "merged": "2026-10-17T07:36-04:00",
+    "opened": "2026-10-17T07:35-04:00"
   },
   {
     "id": "pr41",
@@ -445,7 +509,8 @@
     "title": "Showcase 5/8: Living Team cards with latest real handoffs",
     "pr": "https://github.com/slopryno/slopworks/pull/41",
     "date": "2026-10-17",
-    "merged": "2026-10-17T07:34-04:00"
+    "merged": "2026-10-17T07:34-04:00",
+    "opened": "2026-10-17T07:34-04:00"
   },
   {
     "id": "pr40",
@@ -453,7 +518,8 @@
     "title": "Showcase 4/8: outcome-led landing page",
     "pr": "https://github.com/slopryno/slopworks/pull/40",
     "date": "2026-10-17",
-    "merged": "2026-10-17T07:33-04:00"
+    "merged": "2026-10-17T07:33-04:00",
+    "opened": "2026-10-17T07:33-04:00"
   },
   {
     "id": "pr39",
@@ -461,7 +527,8 @@
     "title": "Showcase 3/8: two real case files",
     "pr": "https://github.com/slopryno/slopworks/pull/39",
     "date": "2026-10-17",
-    "merged": "2026-10-17T07:31-04:00"
+    "merged": "2026-10-17T07:31-04:00",
+    "opened": "2026-10-17T07:31-04:00"
   },
   {
     "id": "pr38",
@@ -469,7 +536,8 @@
     "title": "Showcase 2/8: Research Arena page",
     "pr": "https://github.com/slopryno/slopworks/pull/38",
     "date": "2026-10-17",
-    "merged": "2026-10-17T07:30-04:00"
+    "merged": "2026-10-17T07:30-04:00",
+    "opened": "2026-10-17T07:29-04:00"
   },
   {
     "id": "pr37",
@@ -477,7 +545,8 @@
     "title": "Showcase 1/8: shared label set, CEO override i24, sprint kickoff",
     "pr": "https://github.com/slopryno/slopworks/pull/37",
     "date": "2026-10-17",
-    "merged": "2026-10-17T07:28-04:00"
+    "merged": "2026-10-17T07:28-04:00",
+    "opened": "2026-10-17T07:28-04:00"
   },
   {
     "id": "pr36",
@@ -485,7 +554,8 @@
     "title": "Direction: goal 6, showcase of the team's work (Ryno 2026-10-17)",
     "pr": "https://github.com/slopryno/slopworks/pull/36",
     "date": "2026-10-17",
-    "merged": "2026-10-17T07:27-04:00"
+    "merged": "2026-10-17T07:27-04:00",
+    "opened": "2026-10-17T07:26-04:00"
   },
   {
     "id": "pr35",
@@ -493,7 +563,8 @@
     "title": "Showcase research round: 14 roles, CEO pitch i21 huddle, decision i22",
     "pr": "https://github.com/slopryno/slopworks/pull/35",
     "date": "2026-10-17",
-    "merged": "2026-10-17T05:05-04:00"
+    "merged": "2026-10-17T05:05-04:00",
+    "opened": "2026-10-17T05:03-04:00"
   },
   {
     "id": "pr34",
@@ -501,7 +572,8 @@
     "title": "Backlog: README badges from repo data (d6) and sprint results (i20)",
     "pr": "https://github.com/slopryno/slopworks/pull/34",
     "date": "2026-10-17",
-    "merged": "2026-10-17T04:42-04:00"
+    "merged": "2026-10-17T04:42-04:00",
+    "opened": "2026-10-17T04:41-04:00"
   },
   {
     "id": "pr33",
@@ -509,7 +581,8 @@
     "title": "Backlog: area filters on What's new and Known issues (d1) (i19)",
     "pr": "https://github.com/slopryno/slopworks/pull/33",
     "date": "2026-10-17",
-    "merged": "2026-10-17T04:40-04:00"
+    "merged": "2026-10-17T04:40-04:00",
+    "opened": "2026-10-17T04:39-04:00"
   },
   {
     "id": "pr32",
@@ -517,7 +590,8 @@
     "title": "Backlog: consistent focus rings plus re-cropped #27 screenshots (i18)",
     "pr": "https://github.com/slopryno/slopworks/pull/32",
     "date": "2026-10-17",
-    "merged": "2026-10-17T04:38-04:00"
+    "merged": "2026-10-17T04:38-04:00",
+    "opened": "2026-10-17T04:38-04:00"
   },
   {
     "id": "pr31",
@@ -525,7 +599,8 @@
     "title": "Backlog: contrast check in CI (d4) (i17)",
     "pr": "https://github.com/slopryno/slopworks/pull/31",
     "date": "2026-10-17",
-    "merged": "2026-10-17T04:36-04:00"
+    "merged": "2026-10-17T04:36-04:00",
+    "opened": "2026-10-17T04:35-04:00"
   },
   {
     "id": "pr30",
@@ -533,7 +608,8 @@
     "title": "Mini-sprint plan: CEO override i16, picks i17-i20",
     "pr": "https://github.com/slopryno/slopworks/pull/30",
     "date": "2026-10-17",
-    "merged": "2026-10-17T04:34-04:00"
+    "merged": "2026-10-17T04:34-04:00",
+    "opened": "2026-10-17T04:34-04:00"
   },
   {
     "id": "pr29",
@@ -541,7 +617,8 @@
     "title": "Team chat: UI/UX sprint results and retro",
     "pr": "https://github.com/slopryno/slopworks/pull/29",
     "date": "2026-10-16",
-    "merged": "2026-10-16T23:20-04:00"
+    "merged": "2026-10-16T23:20-04:00",
+    "opened": "2026-10-16T23:18-04:00"
   },
   {
     "id": "pr28",
@@ -549,7 +626,8 @@
     "title": "Design: consistent type scale and 70ch measure (i15)",
     "pr": "https://github.com/slopryno/slopworks/pull/28",
     "date": "2026-10-16",
-    "merged": "2026-10-16T23:18-04:00"
+    "merged": "2026-10-16T23:18-04:00",
+    "opened": "2026-10-16T23:17-04:00"
   },
   {
     "id": "pr27",
@@ -557,7 +635,8 @@
     "title": "Design: role names in body color with colored marker (i14)",
     "pr": "https://github.com/slopryno/slopworks/pull/27",
     "date": "2026-10-16",
-    "merged": "2026-10-16T23:16-04:00"
+    "merged": "2026-10-16T23:16-04:00",
+    "opened": "2026-10-16T23:16-04:00"
   },
   {
     "id": "pr26",
@@ -565,7 +644,8 @@
     "title": "Design: Team chat jump links and readability (i13)",
     "pr": "https://github.com/slopryno/slopworks/pull/26",
     "date": "2026-10-16",
-    "merged": "2026-10-16T23:15-04:00"
+    "merged": "2026-10-16T23:15-04:00",
+    "opened": "2026-10-16T23:14-04:00"
   },
   {
     "id": "pr25",
@@ -573,7 +653,8 @@
     "title": "Design: empty states that explain what appears and when (i12)",
     "pr": "https://github.com/slopryno/slopworks/pull/25",
     "date": "2026-10-16",
-    "merged": "2026-10-16T23:14-04:00"
+    "merged": "2026-10-16T23:14-04:00",
+    "opened": "2026-10-16T23:13-04:00"
   },
   {
     "id": "pr24",
@@ -581,7 +662,8 @@
     "title": "Design: compact mobile nav and header (i11)",
     "pr": "https://github.com/slopryno/slopworks/pull/24",
     "date": "2026-10-16",
-    "merged": "2026-10-16T23:12-04:00"
+    "merged": "2026-10-16T23:12-04:00",
+    "opened": "2026-10-16T23:12-04:00"
   },
   {
     "id": "pr23",
@@ -589,7 +671,8 @@
     "title": "Design: home page first impression: intro, stat strip, next steps (i10)",
     "pr": "https://github.com/slopryno/slopworks/pull/23",
     "date": "2026-10-16",
-    "merged": "2026-10-16T23:11-04:00"
+    "merged": "2026-10-16T23:11-04:00",
+    "opened": "2026-10-16T23:10-04:00"
   },
   {
     "id": "pr22",
@@ -597,7 +680,8 @@
     "title": "Team meeting with the new hires, UI/UX huddle and scored sprint, cap override logged",
     "pr": "https://github.com/slopryno/slopworks/pull/22",
     "date": "2026-10-16",
-    "merged": "2026-10-16T23:10-04:00"
+    "merged": "2026-10-16T23:10-04:00",
+    "opened": "2026-10-16T23:09-04:00"
   },
   {
     "id": "pr20",
@@ -605,7 +689,8 @@
     "title": "Research pipeline: standard reports, decision record, scoring gates, weekly cadence (CEO-approved)",
     "pr": "https://github.com/slopryno/slopworks/pull/20",
     "date": "2026-10-16",
-    "merged": "2026-10-16T23:05-04:00"
+    "merged": "2026-10-16T23:05-04:00",
+    "opened": "2026-10-16T23:03-04:00"
   },
   {
     "id": "pr19",
@@ -613,7 +698,8 @@
     "title": "New hires: Scoutmaster, Critic, User Advocate, Research Librarian, plus org groups and onboarding (CEO-approved)",
     "pr": "https://github.com/slopryno/slopworks/pull/19",
     "date": "2026-10-16",
-    "merged": "2026-10-16T23:01-04:00"
+    "merged": "2026-10-16T23:01-04:00",
+    "opened": "2026-10-16T22:58-04:00"
   },
   {
     "id": "pr18",
@@ -621,7 +707,8 @@
     "title": "Weekly research rotation: every role researches its area and brings ideas (CEO-approved)",
     "pr": "https://github.com/slopryno/slopworks/pull/18",
     "date": "2026-10-16",
-    "merged": "2026-10-16T22:51-04:00"
+    "merged": "2026-10-16T22:51-04:00",
+    "opened": "2026-10-16T22:50-04:00"
   },
   {
     "id": "pr17",
@@ -629,7 +716,8 @@
     "title": "Avatars v2: animated Grok Bot–style blobs, no tiles, livelier Team hover",
     "pr": "https://github.com/slopryno/slopworks/pull/17",
     "date": "2026-10-16",
-    "merged": "2026-10-16T22:38-04:00"
+    "merged": "2026-10-16T22:38-04:00",
+    "opened": "2026-10-16T22:37-04:00"
   },
   {
     "id": "pr16",
@@ -637,7 +725,8 @@
     "title": "Avatars, leadership Team page, Slack-style threaded Team chat, CEO pitch huddles (CEO sprint 2026-10-16)",
     "pr": "https://github.com/slopryno/slopworks/pull/16",
     "date": "2026-10-16",
-    "merged": "2026-10-16T22:27-04:00"
+    "merged": "2026-10-16T22:27-04:00",
+    "opened": "2026-10-16T22:25-04:00"
   },
   {
     "id": "pr15",
@@ -645,7 +734,8 @@
     "title": "Standup, pitches and idea log, Team chat feeds, read-only Discussions, X drafts (CEO sprint 2026-10-16)",
     "pr": "https://github.com/slopryno/slopworks/pull/15",
     "date": "2026-10-16",
-    "merged": "2026-10-16T16:27-04:00"
+    "merged": "2026-10-16T16:27-04:00",
+    "opened": "2026-10-16T16:26-04:00"
   },
   {
     "id": "pr14",
@@ -653,7 +743,8 @@
     "title": "Allowlist @xai (CEO-approved); close sprint W42 CEO items",
     "pr": "https://github.com/slopryno/slopworks/pull/14",
     "date": "2026-10-16",
-    "merged": "2026-10-16T11:25-04:00"
+    "merged": "2026-10-16T11:25-04:00",
+    "opened": "2026-10-16T11:23-04:00"
   },
   {
     "id": "pr13",
@@ -661,7 +752,8 @@
     "title": "Sweep: actions/checkout v4→v7 in ci.yml (supersedes #11)",
     "pr": "https://github.com/slopryno/slopworks/pull/13",
     "date": "2026-10-16",
-    "merged": "2026-10-16T11:25-04:00"
+    "merged": "2026-10-16T11:25-04:00",
+    "opened": "2026-10-16T11:23-04:00"
   },
   {
     "id": "pr12",
@@ -669,7 +761,8 @@
     "title": "Scout/Coordinator: official changelog, docs, and status sources, plus X rate-limit fallback (sprint W42)",
     "pr": "https://github.com/slopryno/slopworks/pull/12",
     "date": "2026-10-16",
-    "merged": "2026-10-16T11:08-04:00"
+    "merged": "2026-10-16T11:08-04:00",
+    "opened": "2026-10-16T11:07-04:00"
   },
   {
     "id": "pr10",
@@ -677,7 +770,8 @@
     "title": "Sweep: bump Pages workflow actions (supersedes #1-#4), monthly grouped Dependabot",
     "pr": "https://github.com/slopryno/slopworks/pull/10",
     "date": "2026-10-16",
-    "merged": "2026-10-16T11:06-04:00"
+    "merged": "2026-10-16T11:06-04:00",
+    "opened": "2026-10-16T11:05-04:00"
   },
   {
     "id": "pr9",
@@ -685,7 +779,8 @@
     "title": "Core/Trial: re-run review-gate after sign-offs (draft flow), no manual reruns",
     "pr": "https://github.com/slopryno/slopworks/pull/9",
     "date": "2026-10-16",
-    "merged": "2026-10-16T11:05-04:00"
+    "merged": "2026-10-16T11:05-04:00",
+    "opened": "2026-10-16T11:03-04:00"
   },
   {
     "id": "pr8",
@@ -693,7 +788,8 @@
     "title": "Daily run 2026-10-16: 1 new issue, Friday retro",
     "pr": "https://github.com/slopryno/slopworks/pull/8",
     "date": "2026-10-16",
-    "merged": "2026-10-16T09:29-04:00"
+    "merged": "2026-10-16T09:29-04:00",
+    "opened": "2026-10-16T09:28-04:00"
   },
   {
     "id": "pr7",
@@ -701,7 +797,8 @@
     "title": "Advisor: Scout skips event and livestream posts when drafting",
     "pr": "https://github.com/slopryno/slopworks/pull/7",
     "date": "2026-10-16",
-    "merged": "2026-10-16T09:29-04:00"
+    "merged": "2026-10-16T09:29-04:00",
+    "opened": "2026-10-16T09:27-04:00"
   },
   {
     "id": "pr6",
@@ -709,7 +806,8 @@
     "title": "Backfill: 30 days of Grok Bot updates and issues",
     "pr": "https://github.com/slopryno/slopworks/pull/6",
     "date": "2026-10-15",
-    "merged": "2026-10-15T23:44-04:00"
+    "merged": "2026-10-15T23:44-04:00",
+    "opened": "2026-10-15T23:42-04:00"
   },
   {
     "id": "pr5",
@@ -717,6 +815,7 @@
     "title": "Launch: CI gates, site v1, team roles, direction and roadmap",
     "pr": "https://github.com/slopryno/slopworks/pull/5",
     "date": "2026-10-15",
-    "merged": "2026-10-15T23:42-04:00"
+    "merged": "2026-10-15T23:42-04:00",
+    "opened": "2026-10-15T23:39-04:00"
   }
 ]

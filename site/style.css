@@ -114,3 +114,12 @@ summary{flex-wrap:wrap}summary span,li>div,.char .hd>*{min-width:0}.char .hd{fle
 .stack tr,.stack th,.stack td{display:block}.stack td{padding-top:0}@media (min-width:20rem){.stack tr{display:table-row}.stack th,.stack td{display:table-cell}.stack td{padding-top:revert}}.scroll .stack{width:100%}.fit table{width:100%}body{overflow-wrap:break-word}
 /* i44: pace line on Under the hood */
 .pace{border-left:3px solid var(--accent);padding:.25rem 0 .25rem .75rem;margin:1.25rem 0;font-size:.95rem}
+/* i45: metrics and trends */
+.nums{list-style:none;padding:0;margin:1rem 0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(10rem,100%),1fr));gap:.75rem}
+.nums li{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:.75rem .85rem}
+.nums strong{display:block;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:clamp(1.6rem,7vw,2.2rem);line-height:1.1;color:var(--fg)}
+.lbl-n{display:block;font-weight:700;margin-top:.2rem}.def{display:block;color:var(--muted);font-size:.85rem;margin-top:.35rem}
+.nums a{display:inline-flex;align-items:center;min-height:44px}
+.bar{display:inline-block;vertical-align:middle;height:.6rem;width:calc(var(--w) * .05rem);min-width:2px;margin-right:.45rem;border-radius:2px;background:var(--accent)}
+.warn-t{border-left:3px solid var(--warn);padding-left:.75rem}.days td:nth-child(2){white-space:nowrap}
+.sprints{padding-left:1.1rem}.sprints li{margin:.3rem 0}
