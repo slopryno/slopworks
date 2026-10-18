@@ -5169,5 +5169,69 @@
     "evidence": "https://github.com/slopryno/slopworks/pull/82",
     "timestamp": "2026-10-17T20:59-04:00",
     "status": "approved"
+  },
+  {
+    "id": "pr_merged-pr83",
+    "agent": "Comms",
+    "task": "#83: Comms/Polish: lede pass (8 ledes 1,722→1,168 chars), chip count spacing fix, Design log names the CI artifact (i38)",
+    "type": "pr_merged",
+    "base_xp": 25,
+    "quality_pct": 100,
+    "reviewer": "Lens",
+    "evidence": "https://github.com/slopryno/slopworks/pull/83",
+    "timestamp": "2026-10-17T21:08-04:00",
+    "status": "approved"
+  },
+  {
+    "id": "signoff-pr83-coordinator",
+    "agent": "Coordinator",
+    "task": "Signed off #83: Comms/Polish: lede pass (8 ledes 1,722→1,168 chars), chip count spacing fix, Design log names the CI artifact (i38)",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Comms",
+    "evidence": "https://github.com/slopryno/slopworks/pull/83#issuecomment-6244057368",
+    "timestamp": "2026-10-17T21:08-04:00",
+    "status": "rejected",
+    "note": "over the daily sign-off cap (6)"
+  },
+  {
+    "id": "signoff-pr83-lens",
+    "agent": "Lens",
+    "task": "Signed off #83: Comms/Polish: lede pass (8 ledes 1,722→1,168 chars), chip count spacing fix, Design log names the CI artifact (i38)",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Comms",
+    "evidence": "https://github.com/slopryno/slopworks/pull/83#issuecomment-6244057477",
+    "timestamp": "2026-10-17T21:08-04:00",
+    "status": "rejected",
+    "note": "over the daily sign-off cap (6)"
+  },
+  {
+    "id": "signoff-pr83-polish",
+    "agent": "Polish",
+    "task": "Signed off #83: Comms/Polish: lede pass (8 ledes 1,722→1,168 chars), chip count spacing fix, Design log names the CI artifact (i38)",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Comms",
+    "evidence": "https://github.com/slopryno/slopworks/pull/83#issuecomment-6244057628",
+    "timestamp": "2026-10-17T21:08-04:00",
+    "status": "rejected",
+    "note": "over the daily sign-off cap (6)"
+  },
+  {
+    "id": "signoff-pr83-trial",
+    "agent": "Trial",
+    "task": "Signed off #83: Comms/Polish: lede pass (8 ledes 1,722→1,168 chars), chip count spacing fix, Design log names the CI artifact (i38)",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Comms",
+    "evidence": "https://github.com/slopryno/slopworks/pull/83#issuecomment-6244057736",
+    "timestamp": "2026-10-17T21:08-04:00",
+    "status": "rejected",
+    "note": "over the daily sign-off cap (6)"
   }
 ]
