@@ -1,13 +1,5 @@
 [
   {
-    "role": "Coordinator",
-    "objective": "Check /metrics/ live, then close i45 in its retro",
-    "source": "data/ideas.json",
-    "assigned": "2026-10-18",
-    "ref": "c335",
-    "idea": "i45"
-  },
-  {
     "role": "Gamemaster",
     "objective": "Design the Week 2 quests: daily, weekly and level-up",
     "source": "plans/roadmap.md",
