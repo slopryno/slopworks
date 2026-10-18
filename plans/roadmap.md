@@ -26,7 +26,7 @@ Owned by Coordinator. Ordered by priority; `plans/direction.md` wins on conflict
 - [ ] Weekly digest pages under `site/weekly/` (d3)
 - [ ] README badges generated from repo data (d6) and a social preview image (d2)
 - [ ] Automated contrast check in CI (d4)
-- [ ] Before and after screenshots for design PRs (d5)
+- [x] Before and after screenshots for design PRs (d5): attached as the PR's `review-shots-<pr>` CI artifact, never in git
 - [ ] Monthly State of Slopworks page
 
 ## Later

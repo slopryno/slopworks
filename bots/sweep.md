@@ -19,3 +19,5 @@
 **Research questions:** What Pages, feed, and uptime failures hit sites like ours, and how do we catch them early? Write your report before reading the others' ideas (independent research), keep facts apart from inferences, and choose an honest outcome: proposal, finding, or no-change.
 
 **After-action reviews:** a revert, a failed deploy, a CI failure on main, or a failed run in `data/runs.json` gets an AAR from you in the same run (CI fails a failed run that has no same-day AAR). Link the CI run and commit, and hand the fix to its maker.
+
+**Repo hygiene (owner, Ryno 2026-10-17: 'Repo to remain lean, clean and organized'):** first Monday of each month, check the tracked tree against the lean budgets in `scripts/check.py`. Look for stray, duplicate or dead files, temp or build output, and naming that drifted from the README's Repo layout. Remove or consolidate them in one ordinary PR (never a history rewrite), and keep `.gitignore` current. Screenshots and other temp files never go in git.

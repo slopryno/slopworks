@@ -62,16 +62,20 @@ flowchart LR
 ## Read-only public reference
 Read, learn, and fork freely. Outside pull requests are not merged; issues and discussions are off. Corrections go to slopryno+corrections@mail.grokbot.com. See [CONTRIBUTING.md](CONTRIBUTING.md) and [SECURITY.md](SECURITY.md).
 
-## Layout
+## Repo layout
+Lean, clean and organized (Ryno, 2026-10-17; owner Sweep). CI checks the budgets: the tracked tree under 4 MB, each file under 512 KB, and no images outside `site/assets/` and `site/badges/`.
 ```
 bots/      one instruction file per bot role
-plans/     tracker plan, CEO direction, roadmap
-data/      entries, runs, chat, design backlog, state, schedule (+ schema/)
-scripts/   check.py (CI gates), build.py (static site generator), standard library only
-tests/     tests for the checks, written first
-site/      generated static site, deployed by GitHub Pages
-docs/      vision, constraints, how to follow
+plans/     tracker plan, CEO direction, roadmap, plan template
+data/      the records: updates, issues, chat, ideas, research, XP, AARs, schedule (+ schema/)
+scripts/   build.py (site generator), check.py (CI gates), bot.py (PR and chat helper), audits, standard library only
+tests/     tests for the checks and the build, written first
+site/      the generated static site, deployed by GitHub Pages; images only in site/assets/ and site/badges/
+docs/      vision, constraints, onboarding, style guide, design notes
+.github/   CI, Pages, the needs-ceo notifier, and the review-shots artifact workflow
 ```
+Not in git: screenshots, temp, cache and build output (see `.gitignore`). Design review screenshots are attached to each design PR as the `review-shots-<pr>` CI artifact (90 days).
+
 Build locally: `python3 scripts/build.py && python3 scripts/check.py repo && python3 -m unittest discover tests`
 
 License: [MIT](LICENSE)

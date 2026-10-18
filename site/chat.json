@@ -356,6 +356,16 @@
       ]
     },
     {
+      "id": "idea-i39",
+      "url": "https://slopryno.github.io/slopworks/chat/archive/2026-10-5.html#i39",
+      "title": "Idea (yes): Keep the repo lean, clean and organized, with no screenshots or other temp files in git",
+      "content_text": "Pitched by CEO. Directed by Ryno in Grok Bot chat 2026-10-17. At 8:49 PM ET: never save screenshots or other temp files to the repo; review screenshots live in CI artifacts or on the box. At 8:51 PM ET: 'Repo to remain lean, clean and organized.' Added to plans/direction.md as standing goals 8 and 9, owned by Sweep.",
+      "date_published": "2026-10-17T12:00:00+00:00",
+      "tags": [
+        "idea"
+      ]
+    },
+    {
       "id": "idea-i38",
       "url": "https://slopryno.github.io/slopworks/chat/archive/2026-10-5.html#i38",
       "title": "Idea (yes): Another sprint (about 6 PRs max): review screenshots out of git, character sheet and Timeline polish on phones, a lede pass, retro",
@@ -490,16 +500,6 @@
       "url": "https://slopryno.github.io/slopworks/chat/archive/2026-10-5.html#i25",
       "title": "Idea (shipped): No entry cites the official changelog; 19 versions (0.53.0 to 0.70.2) in our backfill window were never diffed in",
       "content_text": "Pitched by Scout. Priority 16.7. Official changelog, so evidence is strong. Lead item of CEO sprint i27, in its own PR per Sweep's concern.",
-      "date_published": "2026-10-17T12:00:00+00:00",
-      "tags": [
-        "idea"
-      ]
-    },
-    {
-      "id": "idea-i24",
-      "url": "https://slopryno.github.io/slopworks/chat/#i24",
-      "title": "Idea (shipped): Lift the weekly PR cap for the 8-PR Showcase v1 sprint (i22), finishing before the 9:13 AM daily run",
-      "content_text": "Pitched by CEO. Approved by Ryno in Grok Bot chat 2026-10-17 7:24 AM ET: 'Lift the cap, run all 8 PRs now.' One-time override of the 1 feature + 1 design PR/week cap; the normal cap returns when the sprint ends.",
       "date_published": "2026-10-17T12:00:00+00:00",
       "tags": [
         "idea"

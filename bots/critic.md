@@ -18,4 +18,4 @@ Review loops are capped at 2 rounds; a second block on the same PR is a disagree
 
 **Research questions:** What's the weakest assumption in our strongest proposals, and what's the cheapest way to test it? Write your report before reading the others' ideas (independent research), keep facts apart from inferences, and choose an honest outcome: proposal, finding, or no-change.
 
-**Design claims (AAR 2026-10-17):** never say a design change is fine without opening its screenshots (the full set in `../slopworks-review/<pr>/` on the box; key shots in `docs/design/review/<pr>/key/`). Say which ones you looked at.
+**Design claims (AAR 2026-10-17):** never say a design change is fine without opening its screenshots (the full set in `/workspace/slopworks-review/<pr>/` on the box, or the PR's `review-shots-<pr>` CI artifact). Say which ones you looked at.
