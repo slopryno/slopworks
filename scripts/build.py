@@ -17,7 +17,7 @@ DISCLAIMER = "Unofficial, fan-built project. Not affiliated with or endorsed by 
 CORRECTIONS = "slopryno+corrections@mail.grokbot.com"
 # Information architecture (i36, Team chat c210 to c214): 4 top items plus the brand as Home. Deeper pages sit one tap
 # from their hub, every deep page has one "Back to" link, and the footer lists every page. No URL moved.
-WORK = [("timeline/", "Timeline"), ("cases/", "Case files"), ("arena/", "Research Arena"), ("challenges/", "Demo challenge")]
+WORK = [("timeline/", "Timeline"), ("weekly/", "Weekly recap"), ("cases/", "Case files"), ("arena/", "Research Arena"), ("challenges/", "Demo challenge")]
 HOOD = [("updates/", "What's new"), ("issues/", "Known issues"), ("chat/", "Team chat"), ("schedule/", "Schedule and limits"), ("behind/", "Behind the scenes"), ("design/", "Design log")]
 TOP = [("work/", "Work"), ("team/", "Team"), ("lessons/", "Lessons"), ("hood/", "Under the hood")]
 NAV = [("", "Home")] + WORK + [("team/", "Team"), ("lessons/", "Lessons")]  # every visitor page, for llms.txt and the footer
@@ -167,6 +167,7 @@ def load(name):
 # Comms (i28): one plain, page-true description per page. Pages not listed fall back to their lede.
 DESCRIPTIONS = {
     "": "An unofficial Grok Bot tracker built, designed, and run by Grok Bots, with every claim linked to a public source or a merged change.",
+    "weekly/": "A weekly recap of the Slopworks bot team from its records: merged PRs, sprints, research, lessons, and next objectives. A running week is labeled so far.",
     "updates/": "Grok Bot updates from the official changelog and team posts, newest first, each labeled confirmed or reported and linked to its source.",
     "issues/": "Known Grok Bot issues from public reports, grouped by area, and marked fixed only when a public source says so.",
     "timeline/": "The Slopworks bot team's progress over time, newest first: what shipped, what Ryno decided, who joined, what was researched, and what was learned.",
@@ -300,13 +301,15 @@ def level_for(xp, levels):
     return i + 1, levels[i], levels[i + 1] if i + 1 < len(levels) else None
 
 
-def rollover(units, size, target):
+def rollover(units, size, target, keep=1, hard=None):
     """Archive rollover shared by Timeline and Lessons, in the Team chat pattern. units: newest first, each (date, ...).
     The newest units stay on the main page while they fit the byte target; older ones go to month parts
-    (YYYY-MM, then YYYY-MM-2 ...), filled oldest first so an item's archive page stays put as new items roll in."""
+    (YYYY-MM, then YYYY-MM-2 ...), filled oldest first so an item's archive page stays put as new items roll in.
+    keep (i42): the newest `keep` units stay even past the target, as long as they fit `hard` bytes, so a new day
+    doesn't leave the main page with one thin day."""
     main, rest, used = [], [], 0
     for u in units:
-        if not rest and (not main or used + size(u) <= target):
+        if not rest and (not main or used + size(u) <= target or (len(main) < keep and hard and used + size(u) <= hard)):
             main.append(u); used += size(u)
         else:
             rest.append(u)
@@ -375,7 +378,7 @@ def build():
     stats = [(len(ups), "updates tracked", ""), (n_open, "open issues", "issues/"), (len(team()), "bot roles", "team/"),
              (last_run["date"] if last_run else "none", f'last run ({last_run["status"]}), as of this build' if last_run else "last run", "behind/")]
     files["updates/index.html"] = page("updates/", "What's new in Grok Bot", f"{len(ups)} Grok Bot updates from public posts, newest first. Each links its source and is marked <strong>confirmed</strong> (official account or docs) or <strong>reported</strong> (community post).",
-                               (lambda f: f[1] + '<div class="filtered">' + f[0] + "".join(entry_card(x) for x in ups) + "</div>")(area_filter(ups)) if ups else '<p class="empty">Nothing yet.</p>', "data/updates.json")
+                               (lambda f: f[1] + '<div class="filtered">' + f[0] + '<h2 id="all">Updates, newest first</h2>' + "".join(entry_card(x) for x in ups) + "</div>")(area_filter(ups)) if ups else '<p class="empty">Nothing yet.</p>', "data/updates.json")
 
     # Tracker counts for home (i22's proof line, kept on home's tracker panel in i41).
     ideas_all = load("ideas")
@@ -397,7 +400,7 @@ def build():
         notes = "".join(f"<li>{e(n)}</li>" for n in r.get("notes", []))
         body += (f'<article class="card" id="run-{e(r["id"])}"><h3>{e(r["date"])} · {e(r["kind"])} run · {e(r["status"])}</h3>'
                  f'<table><tbody>{counts}<tr><th scope="row">X reads</th><td>{r.get("x_reads", 0)}</td></tr></tbody></table><ul>{notes}</ul></article>')
-    files["behind/index.html"] = page("behind/", "Behind the scenes", f"What each role found, dropped, or stripped in every run. Auto-merge is <strong>{e(state['auto_merge'])}</strong>. These are roles played in one daily routine, not separate live bots.", body, "data/runs.json")
+    files["behind/index.html"] = page("behind/", "Behind the scenes", f"What each role found, dropped, or stripped in every run. Auto-merge is <strong>{e(state['auto_merge'])}</strong>. These are roles played in one daily routine, not separate live bots.", ('<h2 id="runs">Runs, newest first</h2>' + body) if body else body, "data/runs.json")
 
     # ---------- Team chat with automatic archive rollover ----------
     # The main page keeps the newest threads, notes, and ideas inside a byte target (well under the page-weight budget);
@@ -546,6 +549,8 @@ def build():
     crss = "".join(f'<item><title>{e(t)}</title><link>{e(BASE + u)}</link><guid isPermaLink="false">{k}-{e(i)}</guid><pubDate>{format_datetime(cdt(d))}</pubDate><description>{e(b)}</description><category>{k}</category></item>\n' for k, i, d, t, b, u in citems)
     files["chat.xml"] = f'<?xml version="1.0" encoding="utf-8"?>\n<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Slopworks Team chat</title><link>{BASE}chat/</link><atom:link href="{BASE}chat.xml" rel="self" type="application/rss+xml"/><description>{e(DISCLAIMER)}</description>\n{crss}</channel></rss>\n'
     wins = load("wins")
+    import home
+    objectives = {o["role"]: o for o in load("objectives")}  # i42: one current objective per role, each from a real record
     alumni = load("alumni")
     alumni_html = ("<h2 class=\"group\">Alumni</h2><ul>" + "".join(f'<li><a href="{REPO}/blob/main/bots/alumni/{e(a["role"].lower())}.md">{e(a["role"])}</a>: retired {a["date"]}. {e(a["reason"])} Work handed to {e(a["successor"])}.</li>' for a in alumni) + "</ul>") if alumni else ""
     research = sorted(load("research"), key=lambda r: r["date"], reverse=True)
@@ -570,7 +575,7 @@ def build():
         w = [x for x in wins if x["role"] == n][:3]
         wl = "".join(f'<li><a href="{e(x["pr"])}">{e(x["title"])}</a> <time datetime="{x["date"]}">{x["date"]}</time></li>' for x in w) or '<li class="empty">No merged PRs yet. Shipped work shows up here after CI passes and the PR is squash-merged.</li>'
         return (f'<article class="card lead" style="border-top:4px solid {color(n)}">{avatar(n, "../", 72)}<h2><a href="{REPO}/blob/main/bots/{f}">{e(n)}</a></h2>'
-                f'<p class="title">{e(t)}</p><p class="xp"><a href="{f[:-3]}/">Character sheet</a>: {xp_line(n, "")}</p><p>{e(bio(n))}</p><p><strong>Owns:</strong> {e(o)}</p><h3>Latest handoff</h3>{latest_msg(n)}{researched(n)}<h3>Recent wins</h3><ul>{wl}</ul></article>')
+                f'<p class="title">{e(t)}</p>{home.objective(objectives[n], "../", href) if n in objectives else ""}<p class="xp"><a href="{f[:-3]}/">Character sheet</a>: {xp_line(n, "")}</p><p>{e(bio(n))}</p><p><strong>Owns:</strong> {e(o)}</p><h3>Latest handoff</h3>{latest_msg(n)}{researched(n)}<h3>Recent wins</h3><ul>{wl}</ul></article>')
     # Character sheets (i34, Week 1): every number is computed here from data/xp_ledger.json and data/progression.json.
     prog, ledger_all = load("progression"), load("xp_ledger")
     totals, levels = xp_totals(ledger_all), prog["levels"]
@@ -804,7 +809,7 @@ def build():
         used_prs |= {w["id"] for w in group}
         last = group[-1]
         items.append({"types": ["shipped"] + (["milestone"] if i["state"] == "shipped" else []), "date": last["merged"][:10], "time": last["merged"][11:16],
-                      "id": f"tl-sprint-{i['id']}", "who": None, "title": i["problem"], "sprint": i["id"],
+                      "id": f"tl-sprint-{i['id']}", "who": None, "title": i["problem"], "short": i.get("short_title"), "sprint": i["id"],
                       "capped": "cap" in (i["problem"] + " " + (i.get("reason") or "")).lower(),
                       "text": out["text"] if out else (i.get("shipped") if i["state"] == "shipped" else "In progress."), "link": lambda up, c=(out or ms[0]): href(c["id"], up, "timeline/"),
                       "cue": "retro" if out else ("thread" if i["state"] == "shipped" else "kickoff"), "children": [pr_item(w) for w in reversed(group)]})
@@ -884,7 +889,10 @@ def build():
         d, xs = dd
         return (f'<section class="tl-day" aria-labelledby="d-{d}"><h2 id="d-{d}">{day_name(d)}</h2><p class="meta">{day_counts(xs)}</p>'
                 f'<ol class="tl">' + "".join(tl_item(x, up) for x in xs) + "</ol></section>")
-    tl_main, tl_parts = rollover(days, lambda dd: len(day_html(dd, "../").encode()), TL_TARGET)
+    tl_main, tl_parts = rollover(days, lambda dd: len(day_html(dd, "../").encode()), TL_TARGET, keep=2, hard=budget - css_bytes - 12000)
+    # Where each Timeline record lives now (i42): home links a sprint on whichever page holds it.
+    tl_where = {x["id"]: "timeline/" for _, xs in tl_main for x in xs}
+    tl_where.update({x["id"]: f"timeline/archive/{key}.html" for key, _, _, us in tl_parts for _, xs in us for x in xs})
     present = [(k, t) for k, t in TL_TYPES if any(k in x["types"] for x in items)]
     n_pr = len(prs)
     n_sprint = sum(1 for x in items if x.get("capped"))  # a shipped decision grouped with its PRs isn't a sprint
@@ -907,10 +915,13 @@ def build():
         files[slug] = page(slug, f"Timeline archive: {arch_name(m, n)}", "Older days from the Slopworks timeline, moved here automatically to keep the main page light. The same records, unchanged.",
             f'<nav class="jump" aria-label="Archive pages">{"".join(nav_l)}</nav>' + fcss + '<div class="filtered">' + fhtml + "".join(day_html(dd, "../../") for dd in sorted(us, reverse=True)) + "</div>", "data")
 
+    # Weekly recap (i42, Analyst and Comms, c297 and c298): real records only; a running week says "so far".
+    import weekly
+    files["weekly/index.html"] = page("weekly/", "Weekly recap", "What happened each week, from the records: what shipped, what the team found, what it learned, and what's next. A week still running is marked so far.",
+                                      weekly.render(sys.modules[__name__], items, wins, ups, iss, aars, list(objectives.values())), "data")
     # Home (mission i41, from the i40 prototype; spec in docs/mission/spec.md): hero, status line, featured sprint, tracker, team, activity.
-    import home
     files["index.html"] = page("", home.TITLE, f"{len(team())} Grok Bot roles run a real product, an unofficial Grok Bot tracker, and publish every decision behind it.",
-                               home.render(sys.modules[__name__], items, wins, ups, iss, totals, levels, team(), dropped, screened), "data", h1=home.HEADLINE)
+                               home.render(sys.modules[__name__], items, wins, ups, iss, totals, levels, team(), dropped, screened, tl_where, objectives, href), "data", h1=home.HEADLINE)
 
     shipped = [d for d in design if d["state"] == "shipped"]
     backlog = sorted([d for d in design if d["state"] in ("backlog", "in-progress")], key=lambda d: d["rank"])

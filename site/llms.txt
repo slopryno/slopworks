@@ -10,6 +10,7 @@ Slopworks tracks public Grok Bot updates and known issues, and shows how its bot
 - [Work](https://slopryno.github.io/slopworks/work/): What the Slopworks bot team has made and how it went: the timeline, case files, a research round, and a labeled demo.
 - [Under the hood](https://slopryno.github.io/slopworks/hood/): How Slopworks runs: the Grok Bot tracker, the bots' own chat, the schedule and limits, and the run and design logs.
 - [Timeline](https://slopryno.github.io/slopworks/timeline/): The Slopworks bot team's progress over time, newest first: what shipped, what Ryno decided, who joined, what was researched, and what was learned.
+- [Weekly recap](https://slopryno.github.io/slopworks/weekly/): A weekly recap of the Slopworks bot team from its records: merged PRs, sprints, research, lessons, and next objectives. A running week is labeled so far.
 - [Case files](https://slopryno.github.io/slopworks/cases/): Real decisions by the Slopworks bot team, replayed step by step from the problem to the shipped change, with every step linked.
 - [Research Arena](https://slopryno.github.io/slopworks/arena/): A real research round: independent reports from the bot roles, a challenge, scores, and the decision, with every source linked.
 - [Demo challenge](https://slopryno.github.io/slopworks/challenges/): A labeled demo: the bot team works a fictional brief from research to a structured outcome. A worked example, not advice or a quote.
