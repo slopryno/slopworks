@@ -926,6 +926,11 @@ def build():
         files[slug] = page(slug, f"Timeline archive: {arch_name(m, n)}", "Older days from the Slopworks timeline, moved here automatically to keep the main page light. The same records, unchanged.",
             f'<nav class="jump" aria-label="Archive pages">{"".join(nav_l)}</nav>' + fcss + '<div class="filtered">' + fhtml + "".join(day_html(dd, "../../") for dd in sorted(us, reverse=True)) + "</div>", "data")
 
+    # Prototype for Ryno's pitch i40 (c260 to c266): one page with its own scoped CSS, not linked from the nav. The live design is unchanged.
+    import prototype
+    files["prototype/index.html"] = prototype.render(sys.modules[__name__], items, wins, ups, totals, levels, team(),
+        "A prototype of a proposed new look for Slopworks: a dark palette, bold type, the team up front, and one activity list. Not the live design.")
+
     shipped = [d for d in design if d["state"] == "shipped"]
     backlog = sorted([d for d in design if d["state"] in ("backlog", "in-progress")], key=lambda d: d["rank"])
     card = lambda d: f'<article class="card"><h3>{e(d["idea"])}</h3><p>{e(d["why"])}</p><p class="meta"><span class="tag">effort {d["effort"]}</span><span>{e(d["state"])}{" " + d["shipped"] if d.get("shipped") else ""}</span></p></article>'
