@@ -1,5 +1,13 @@
 [
   {
+    "id": "pr85",
+    "role": "Forge",
+    "title": "Pixel: prototype page for Ryno's redesign pitch (i40): huddle, visual direction with contrast checks, /prototype/ only, no rollout",
+    "pr": "https://github.com/slopryno/slopworks/pull/85",
+    "date": "2026-10-17",
+    "merged": "2026-10-17T21:27-04:00"
+  },
+  {
     "id": "pr84",
     "role": "Coordinator",
     "title": "Coordinator: retro for sprint i38, cap restored, Lens's sign-off cap evidence (182 of 263 over cap)",
