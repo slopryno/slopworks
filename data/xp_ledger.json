@@ -2183,7 +2183,7 @@
     "base_xp": 30,
     "quality_pct": 100,
     "reviewer": "Coordinator",
-    "evidence": "https://slopryno.github.io/slopworks/chat/archive/2026-10-6.html#r-sweep-2026-10-17",
+    "evidence": "https://slopryno.github.io/slopworks/chat/archive/2026-10-7.html#r-sweep-2026-10-17",
     "timestamp": "2026-10-17",
     "status": "approved"
   },
@@ -5346,6 +5346,70 @@
     "reviewer": "Lens",
     "evidence": "https://github.com/slopryno/slopworks/pull/85",
     "timestamp": "2026-10-17T21:27-04:00",
+    "status": "approved"
+  },
+  {
+    "id": "signoff-pr86-coordinator",
+    "agent": "Coordinator",
+    "task": "Signed off #86: Pixel: prototype dark mode lifted to charcoal (Ryno: 'too dark?'), cards read with a 1.65:1 border, muted text lifted to keep 4.5:1",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Forge",
+    "evidence": "https://github.com/slopryno/slopworks/pull/86#issuecomment-6244308320",
+    "timestamp": "2026-10-17T21:37-04:00",
+    "status": "rejected",
+    "note": "over the daily sign-off cap (6)"
+  },
+  {
+    "id": "signoff-pr86-lens",
+    "agent": "Lens",
+    "task": "Signed off #86: Pixel: prototype dark mode lifted to charcoal (Ryno: 'too dark?'), cards read with a 1.65:1 border, muted text lifted to keep 4.5:1",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Forge",
+    "evidence": "https://github.com/slopryno/slopworks/pull/86#issuecomment-6244308490",
+    "timestamp": "2026-10-17T21:37-04:00",
+    "status": "rejected",
+    "note": "over the daily sign-off cap (6)"
+  },
+  {
+    "id": "signoff-pr86-polish",
+    "agent": "Polish",
+    "task": "Signed off #86: Pixel: prototype dark mode lifted to charcoal (Ryno: 'too dark?'), cards read with a 1.65:1 border, muted text lifted to keep 4.5:1",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Forge",
+    "evidence": "https://github.com/slopryno/slopworks/pull/86#issuecomment-6244308618",
+    "timestamp": "2026-10-17T21:37-04:00",
+    "status": "rejected",
+    "note": "over the daily sign-off cap (6)"
+  },
+  {
+    "id": "signoff-pr86-trial",
+    "agent": "Trial",
+    "task": "Signed off #86: Pixel: prototype dark mode lifted to charcoal (Ryno: 'too dark?'), cards read with a 1.65:1 border, muted text lifted to keep 4.5:1",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Forge",
+    "evidence": "https://github.com/slopryno/slopworks/pull/86#issuecomment-6244308752",
+    "timestamp": "2026-10-17T21:37-04:00",
+    "status": "rejected",
+    "note": "over the daily sign-off cap (6)"
+  },
+  {
+    "id": "pr_merged-pr86",
+    "agent": "Forge",
+    "task": "#86: Pixel: prototype dark mode lifted to charcoal (Ryno: 'too dark?'), cards read with a 1.65:1 border, muted text lifted to keep 4.5:1",
+    "type": "pr_merged",
+    "base_xp": 25,
+    "quality_pct": 100,
+    "reviewer": "Lens",
+    "evidence": "https://github.com/slopryno/slopworks/pull/86",
+    "timestamp": "2026-10-17T21:38-04:00",
     "status": "approved"
   }
 ]
