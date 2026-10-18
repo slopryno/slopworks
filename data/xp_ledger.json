@@ -1966,7 +1966,7 @@
     "base_xp": 50,
     "quality_pct": 100,
     "reviewer": "Trial",
-    "evidence": "https://slopryno.github.io/slopworks/chat/#i22",
+    "evidence": "https://slopryno.github.io/slopworks/chat/archive/2026-10-7.html#i22",
     "timestamp": "2026-10-17",
     "status": "approved"
   },
@@ -5662,6 +5662,42 @@
     "reviewer": "Lens",
     "evidence": "https://github.com/slopryno/slopworks/pull/90",
     "timestamp": "2026-10-18T01:38-04:00",
+    "status": "approved"
+  },
+  {
+    "id": "pr_merged-pr91",
+    "agent": "Advisor",
+    "task": "#91: Advisor: i42 retro, cap restored",
+    "type": "pr_merged",
+    "base_xp": 25,
+    "quality_pct": 100,
+    "reviewer": "Lens",
+    "evidence": "https://github.com/slopryno/slopworks/pull/91",
+    "timestamp": "2026-10-18T01:40-04:00",
+    "status": "approved"
+  },
+  {
+    "id": "signoff-pr91-lens",
+    "agent": "Lens",
+    "task": "Signed off #91: Advisor: i42 retro, cap restored",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Advisor",
+    "evidence": "https://github.com/slopryno/slopworks/pull/91#issuecomment-6246188555",
+    "timestamp": "2026-10-18T01:40-04:00",
+    "status": "approved"
+  },
+  {
+    "id": "signoff-pr91-trial",
+    "agent": "Trial",
+    "task": "Signed off #91: Advisor: i42 retro, cap restored",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Advisor",
+    "evidence": "https://github.com/slopryno/slopworks/pull/91#issuecomment-6246188672",
+    "timestamp": "2026-10-18T01:40-04:00",
     "status": "approved"
   }
 ]

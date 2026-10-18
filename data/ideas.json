@@ -1066,5 +1066,30 @@
     "short_title": "Short titles, objectives, weekly recap",
     "acceptance_verified_by": "Trial",
     "shipped": "#90 to #91: short_title, data/objectives.json, /weekly/ with Week 1 labelled so far, featured count from the retro range (#90), retro and cap restored (c301 to c303)"
+  },
+  {
+    "id": "i43",
+    "date": "2026-10-18",
+    "by": "CEO",
+    "source": "ceo",
+    "problem": "Higher-tempo sprint (no per-sprint PR cap): Coordinator picks visitor-facing UX and mobile work from the real backlog; Analyst and Advisor answer whether tempo can rise long-term",
+    "helps": "Phone readers, including people who zoom to 200%, and anyone checking whether the tracker's open ideas are true",
+    "effort": "L",
+    "builder": "Forge",
+    "state": "yes",
+    "comments": [],
+    "decided": "2026-10-18",
+    "decided_by": "CEO",
+    "reason": "Ryno in Grok Bot chat 2026-10-18 7:46 AM ET: run the next sprint at a higher tempo. A one-time lift of the per-sprint PR cap, pace only, guardrails unchanged. Coordinator picks scope from the backlog. The normal cap returns when the sprint ends.",
+    "target_sprint": "W42",
+    "short_title": "Zoom reflow, true ideas, tempo check",
+    "acceptance_criteria": [
+      "No per-sprint PR cap; every guardrail unchanged",
+      "0 page overflow at 195 px (a 390 phone at 200% zoom) on every page",
+      "Approved ideas that already shipped are closed with their PRs, with an AAR and a check",
+      "Weekly recap shows each day's merged PRs, from records",
+      "Tempo verdict from real records with a proposed tripwire, reported, not enacted",
+      "Retro posted and the normal cap restored"
+    ]
   }
 ]
