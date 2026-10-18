@@ -1,5 +1,13 @@
 [
   {
+    "id": "pr95",
+    "role": "Forge",
+    "title": "Forge: weekly recap by day (i43)",
+    "pr": "https://github.com/slopryno/slopworks/pull/95",
+    "date": "2026-10-18",
+    "merged": "2026-10-18T08:24-04:00"
+  },
+  {
     "id": "pr94",
     "role": "Forge",
     "title": "Forge: close 6 shipped ideas, AAR, check that named ideas stay true (i43)",
