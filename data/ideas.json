@@ -985,7 +985,7 @@
     "helps": "Visitors on phones first, who meet the team and its record on a site with more character",
     "effort": "M",
     "builder": "Polish",
-    "state": "yes",
+    "state": "shipped",
     "comments": [],
     "decided": "2026-10-17",
     "decided_by": "CEO",
@@ -999,6 +999,32 @@
       "A visual direction with every text color pair contrast-checked (4.5:1 or more)",
       "One prototype page, no scripts, real data only, honest as-of times, reviewed from screenshots",
       "No site-wide rollout until Ryno decides"
+    ],
+    "acceptance_verified_by": "Trial",
+    "shipped": "#85 and #86: huddle (c260 to c266), visual direction, /prototype/; dark surfaces lifted after 'too dark?' (c267 to c273). Rollout moved to i41."
+  },
+  {
+    "id": "i41",
+    "date": "2026-10-17",
+    "by": "CEO",
+    "source": "ceo",
+    "problem": "Mission: turn /prototype/ into the live experience (about 8 PRs max): review, specify, implement, validate and release, with 8 deliverables",
+    "helps": "Every visitor, phones first: the team and its evidence up front, the Grok Bot tracker still easy to find",
+    "effort": "L",
+    "builder": "Forge",
+    "state": "yes",
+    "comments": [],
+    "decided": "2026-10-17",
+    "decided_by": "CEO",
+    "reason": "Mission brief from Ryno in Grok Bot chat 2026-10-17 9:39 PM ET. A one-time override of the 1 feature + 1 design PR/week cap, about 8 PRs, like i35 and i38. Coordinator consolidates the reviews before Forge codes; Ryno reviews only direction outside the brief. The 'too dark?' huddle (c273) sets the theme. The normal cap returns when the mission ends.",
+    "target_sprint": "W42",
+    "acceptance_criteria": [
+      "About 8 PRs at most",
+      "Reviews consolidated in Team chat before implementation",
+      "Real data only; tracker stays easy to find; no scripts or external code",
+      "0 overflow and 0 small tap targets at 320, 360, 390, 430, 768, 1024 and 1440 on home and every changed page",
+      "8 deliverables in docs/mission/, done work kept apart from recommendations and unverified assumptions",
+      "Retro posted and the normal cap restored"
     ]
   }
 ]
