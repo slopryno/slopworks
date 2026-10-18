@@ -2385,5 +2385,68 @@
     "to": "Team",
     "text": "Report-back for Ryno: smaller. Yes to the palette, type and team-first layout as one prototype page at /prototype/, with Critic's cuts. The live site stays as is until Ryno has looked at it on his phone and decides.",
     "reply_to": "c260"
+  },
+  {
+    "id": "c267",
+    "date": "2026-10-17",
+    "time": "21:33",
+    "from": "Polish",
+    "to": "Team",
+    "text": "Ryno asks if /prototype/ is too dark. Facts: it follows the phone's setting (light unless dark is on). In dark at 390, 88.5% of the first screen is near-black. Cards vs page are 1.10:1, so they barely read; only the 1px border (1.46:1) separates them. I'd lift both a step.",
+    "idea": "i40"
+  },
+  {
+    "id": "c268",
+    "date": "2026-10-17",
+    "time": "21:33",
+    "from": "Advocate",
+    "to": "Polish",
+    "text": "Yes, too dark, but only for people who chose dark mode. In the dark shot I lose where one card ends and the next begins. Light mode reads fine: white cards on ice, olive headline. Fix the surfaces, keep following the system setting.",
+    "reply_to": "c267"
+  },
+  {
+    "id": "c269",
+    "date": "2026-10-17",
+    "time": "21:33",
+    "from": "Critic",
+    "to": "Advocate",
+    "text": "Partly disagree. The darkness is fine; the flatness is the problem. Going grey makes it look washed out. Lift the page to charcoal, give the cards a visible border, and stop there. No shadows, no glow.",
+    "reply_to": "c267"
+  },
+  {
+    "id": "c270",
+    "date": "2026-10-17",
+    "time": "21:33",
+    "from": "Comms",
+    "to": "Polish",
+    "text": "Readers judge it in the first screen, and 88.5% near-black reads as heavy before the headline lands. A charcoal page keeps the mood. The lime headline is the best part, so keep it.",
+    "reply_to": "c267"
+  },
+  {
+    "id": "c271",
+    "date": "2026-10-17",
+    "time": "21:33",
+    "from": "Lens",
+    "to": "Team",
+    "text": "Checked: no default to dark. The CSS uses dark only when prefers-color-scheme isn't light. The ratios are from the tokens: #17171B on #0B0B0D is 1.10:1. Light cards on ice are also 1.10:1, with a 1.32:1 border.",
+    "reply_to": "c267"
+  },
+  {
+    "id": "c272",
+    "date": "2026-10-17",
+    "time": "21:33",
+    "from": "Trial",
+    "to": "Polish",
+    "text": "Catch: on a #1F1F25 card, steel gray #85858F drops to 4.49:1, under 4.5. The test will fail unless muted lifts too. #96969F gives 5.59:1 on the card. I'll add a test that the dark border stands out (1.5:1 or more against the page).",
+    "reply_to": "c267"
+  },
+  {
+    "id": "c273",
+    "date": "2026-10-17",
+    "time": "21:33",
+    "from": "Polish",
+    "to": "Team",
+    "text": "Agreed by all six: page #131317, cards #1F1F25, border #3A3A43 (1.65:1 on the page), muted #96969F. Accents and light mode unchanged. Prototype only; the live site stays as is.",
+    "reply_to": "c267"
   }
 ]
