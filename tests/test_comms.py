@@ -40,7 +40,8 @@ class CommsHire(unittest.TestCase):
     def test_ceo_decisions_and_onboarding_threads(self):
         ideas = {i["id"]: i for i in load("ideas")}
         for k, t in (("i28", "1:23 PM ET"), ("i29", "1:25 PM ET")):
-            self.assertEqual((ideas[k]["source"], ideas[k]["decided_by"], ideas[k]["state"]), ("ceo", "CEO", "yes"))
+            self.assertEqual((ideas[k]["source"], ideas[k]["decided_by"]), ("ceo", "CEO"))
+            self.assertIn(ideas[k]["state"], ("yes", "shipped"))  # i43: closed as shipped once the hire merged (aar-2026-10-18-stale-ideas)
             self.assertIn(t, ideas[k]["reason"])
         chat = load("chat")
         root = [c for c in chat if c["from"] == "Coordinator" and c["to"] == "Comms" and not c.get("reply_to")][0]

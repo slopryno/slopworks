@@ -8,12 +8,14 @@
     "helps": "Readers, via a faster polish pass",
     "effort": "M",
     "builder": "Pixel",
-    "state": "yes",
+    "state": "shipped",
     "comments": [],
     "decided": "2026-10-16",
     "decided_by": "CEO",
     "reason": "Approved by Ryno in Grok Bot chat 2026-10-16: knock out UI/UX before the weekly usage reset. One-time override; the cap returns after this sprint.",
-    "short_title": "UI/UX sprint"
+    "short_title": "UI/UX sprint",
+    "shipped": "#22 to #29: UI/UX huddle and scored sprint with the cap override (#22), compact nav (#24), results and retro (#29). Closed late, AAR aar-2026-10-18-stale-ideas (c314).",
+    "acceptance_verified_by": "Trial"
   },
   {
     "id": "i10",
@@ -425,7 +427,7 @@
     "helps": "Prospective clients and visitors judging the team's capability",
     "effort": "L",
     "builder": "Forge",
-    "state": "yes",
+    "state": "shipped",
     "comments": [
       {
         "date": "2026-10-17",
@@ -465,7 +467,9 @@
     "pros": "Real traces already exist (research, decisions, sign-offs, Trial checks); static build fits; a clear differentiator from status dashboards.",
     "cons": "About 8 PRs exceeds the 1 feature + 1 design PR/week cap; demo challenges cost Slopbot usage; commercial framing vs GitHub Pages terms.",
     "concerns": "Never claim liveness, metrics, or outcomes without a linked artifact. Demos always labeled. Ryno's call on cap override and Pages terms.",
-    "target_sprint": "W43"
+    "target_sprint": "W43",
+    "shipped": "PRs 35 to 44: showcase research round and decision i22 (PR 35), goal 6 (PR 36), Showcase v1 sprint i24 (PRs 37 to 44). Closed late, AAR aar-2026-10-18-stale-ideas (c314).",
+    "acceptance_verified_by": "Trial"
   },
   {
     "id": "i22",
@@ -692,11 +696,13 @@
     "helps": "Visitors who find the site through search and answer engines, and every reader",
     "effort": "M",
     "builder": "Forge",
-    "state": "yes",
+    "state": "shipped",
     "comments": [],
     "decided": "2026-10-17",
     "decided_by": "CEO",
-    "reason": "Approved by Ryno in Grok Bot chat 2026-10-17 1:23 PM ET: hire and onboard Head of Comms per docs/onboarding.md, folded into sprint i27 as the one extra PR plus follow-ups (about 7 PRs total). Never posts to X, only drafts for Ryno. No invented metrics such as rankings or traffic."
+    "reason": "Approved by Ryno in Grok Bot chat 2026-10-17 1:23 PM ET: hire and onboard Head of Comms per docs/onboarding.md, folded into sprint i27 as the one extra PR plus follow-ups (about 7 PRs total). Never posts to X, only drafts for Ryno. No invented metrics such as rankings or traffic.",
+    "shipped": "PRs 52 and 53: Head of Comms hired and onboarded (PR 52), then page metadata, sitemap, robots.txt, llms.txt and the style guide (PR 53). Closed late, AAR aar-2026-10-18-stale-ideas (c314).",
+    "acceptance_verified_by": "Trial"
   },
   {
     "id": "i29",
@@ -707,11 +713,13 @@
     "helps": "Readers, via one consistent and honest voice",
     "effort": "S",
     "builder": "Comms",
-    "state": "yes",
+    "state": "shipped",
     "comments": [],
     "decided": "2026-10-17",
     "decided_by": "CEO",
-    "reason": "Ryno, Grok Bot chat 2026-10-17 1:25 PM ET: messaging is a team effort. Comms posts wording proposals in Team chat, acknowledges each relevant role's comments, then has the final say, as Coordinator does on pitches. It never self-approves or overrides facts. needs-ceo only for self-description or client claims, legal or Pages-terms risk, an unsettled disagreement, or safety."
+    "reason": "Ryno, Grok Bot chat 2026-10-17 1:25 PM ET: messaging is a team effort. Comms posts wording proposals in Team chat, acknowledges each relevant role's comments, then has the final say, as Coordinator does on pitches. It never self-approves or overrides facts. needs-ceo only for self-description or client claims, legal or Pages-terms risk, an unsettled disagreement, or safety.",
+    "shipped": "PR 52: Comms authority written into bots/comms.md with the hire (i28, i29). Closed late, AAR aar-2026-10-18-stale-ideas (c314).",
+    "acceptance_verified_by": "Trial"
   },
   {
     "id": "i30",
@@ -818,11 +826,13 @@
     "helps": "Every role, through a fair, evidence-backed way to see and celebrate real progress",
     "effort": "M",
     "builder": "Forge",
-    "state": "yes",
+    "state": "shipped",
     "comments": [],
     "decided": "2026-10-17",
     "decided_by": "CEO",
-    "reason": "Approved by Ryno in Grok Bot chat 2026-10-17 5:57 PM ET: hire a Game Master per docs/onboarding.md. It owns the progression rules, never awards XP, and never self-approves. Rule changes need input from the affected roles plus Critic's challenge, the same way Comms works (i29). It escalates to Ryno only on a disagreement it can't settle."
+    "reason": "Approved by Ryno in Grok Bot chat 2026-10-17 5:57 PM ET: hire a Game Master per docs/onboarding.md. It owns the progression rules, never awards XP, and never self-approves. Rule changes need input from the affected roles plus Critic's challenge, the same way Comms works (i29). It escalates to Ryno only on a disagreement it can't settle.",
+    "shipped": "PR 65: Game Master onboarded: bot file, avatar, Team page, rotation, onboarding run. Closed late, AAR aar-2026-10-18-stale-ideas (c314).",
+    "acceptance_verified_by": "Trial"
   },
   {
     "id": "i34",
@@ -913,11 +923,13 @@
     "helps": "Every visitor on a phone, and every visitor, since small-screen-first CSS scales up cleanly",
     "effort": "M",
     "builder": "Polish",
-    "state": "yes",
+    "state": "shipped",
     "comments": [],
     "decided": "2026-10-17",
     "decided_by": "CEO",
-    "reason": "Directed by Ryno in Grok Bot chat 2026-10-17 7:10 PM ET: 'I want to prioritize mobile first design.' At 7:12 PM ET: 'UX will be top priority... I love simplicity and elegance.' Added to plans/direction.md as one standing goal, with Coordinator and Lens sign-off."
+    "reason": "Directed by Ryno in Grok Bot chat 2026-10-17 7:10 PM ET: 'I want to prioritize mobile first design.' At 7:12 PM ET: 'UX will be top priority... I love simplicity and elegance.' Added to plans/direction.md as one standing goal, with Coordinator and Lens sign-off.",
+    "shipped": "PRs 70 to 76: UX and mobile-first direction, audit, 4-link nav and hubs, simpler home, mobile-first CSS, after-audit and retro (sprint i37). Closed late, AAR aar-2026-10-18-stale-ideas (c314).",
+    "acceptance_verified_by": "Trial"
   },
   {
     "id": "i37",

@@ -41,7 +41,8 @@ class GameMasterHire(unittest.TestCase):
 
     def test_ceo_decision_and_onboarding_thread(self):
         i = {x["id"]: x for x in load("ideas")}["i33"]
-        self.assertEqual((i["source"], i["decided_by"], i["state"]), ("ceo", "CEO", "yes"))
+        self.assertEqual((i["source"], i["decided_by"]), ("ceo", "CEO"))
+        self.assertIn(i["state"], ("yes", "shipped"))  # i43: closed as shipped once the hire merged (aar-2026-10-18-stale-ideas)
         self.assertIn("5:57 PM ET", i["reason"])
         chat = load("chat")
         root = [c for c in chat if c["from"] == "Coordinator" and c["to"] == "Gamemaster" and not c.get("reply_to")][0]

@@ -1,10 +1,19 @@
 [
   {
+    "role": "Coordinator",
+    "objective": "Finish sprint i43: zoom reflow, true ideas, recap by day, retro",
+    "source": "data/ideas.json",
+    "assigned": "2026-10-18",
+    "ref": "c304",
+    "idea": "i43"
+  },
+  {
     "role": "Gamemaster",
     "objective": "Design the Week 2 quests: daily, weekly and level-up",
     "source": "plans/roadmap.md",
     "assigned": "2026-10-17",
-    "ref": "c248"
+    "ref": "c248",
+    "idea": "i34"
   },
   {
     "role": "Analyst",
