@@ -23,11 +23,15 @@ class Home(unittest.TestCase):
         self.assertIn(f'PR #{last["pr"].rsplit("/", 1)[1]}</a>', self.doc)
 
     def test_sprints_counted_only_when_completed(self):
-        items = [{"sprint": "i1", "cue": "retro"}, {"sprint": "i2", "cue": "kickoff"}, {"cue": "PR #3"}]
+        items = [{"sprint": "i1", "capped": True, "cue": "retro"}, {"sprint": "i2", "capped": True, "cue": "kickoff"},
+                 {"sprint": "i3", "capped": False, "cue": "thread"}, {"cue": "PR #3"}]
         self.assertEqual(home.completed_sprints(items), items[:1])
         tl = "".join(v for k, v in self.files.items() if k.startswith("timeline/"))
         n = int(re.search(r"<span>(\d+) completed sprints</span>", self.doc).group(1))
-        self.assertEqual(n, tl.count(">retro</a>"))  # a running sprint shows "kickoff" and isn't counted
+        sprints = re.findall(r'<li class="tl-item[^"]*" id="tl-sprint-.*?</li>\s*(?=<li class="tl-item|</ol>)', tl, re.S)
+        done = [x for x in sprints if '<span class="tag">Sprint</span>' in x and ">retro</a>" in x]
+        self.assertEqual(n, len(done))  # a running sprint shows "kickoff", and a shipped decision isn't a sprint
+        self.assertNotIn('<span class="tag">Sprint</span> <time datetime="2026-10-17T21:38', tl)  # i40 was a decision, not a sprint
 
     def test_tracker_comes_before_the_team(self):
         self.assertLess(self.doc.index('id="tracker"'), self.doc.index('id="team-t"'))

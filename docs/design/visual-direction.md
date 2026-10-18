@@ -1,8 +1,8 @@
-# Visual direction (i40, prototype only)
+# Visual direction (i40; shipped in i41)
 
 Owned by Polish. It comes from Ryno's pitch i40, an outside Mobile Readiness and Visual Redesign Audit, and the huddle in Team chat (c260 to c266). The audit reviewed the old site: a 7-link nav, home shown as an updates list, and no phone-width testing. Most of its mobile checklist shipped in #72 to #74. What's new here is the palette, the type, and a team-first home.
 
-**Status:** one prototype page at [/prototype/](https://slopryno.github.io/slopworks/prototype/). The live site and `site/style.css` are unchanged until Ryno decides on a rollout.
+**Status:** shipped site-wide in mission i41 (docs/mission/). The home page uses the prototype layout, and site/style.css uses these tokens. /prototype/ is retired; its history is in #85 and #86.
 
 ## Palette
 
@@ -39,7 +39,7 @@ Lime and orange fail as text on a light background (lime on ice white is 1.07:1)
 | #B2360F, light | 5.56 | 6.13 |
 | #5A48D0, light | 5.82 | 6.42 |
 
-Lowest pair: signal orange on a dark card, 5.54:1. `tests/test_prototype.py` checks every pair, so a token change that drops one below 4.5:1 fails CI.
+Lowest pair: signal orange on a dark card, 5.54:1. `tests/test_contrast.py` checks every site token pair, so a token change that drops one below 4.5:1 fails CI.
 
 ## Type
 
@@ -70,6 +70,6 @@ Web fonts, glow and gradients, live dots and pulsing indicators, a "current ques
 
 The prototype was measured with `scripts/mobile_audit.py` at 320, 360, 390, 430, 768, 1024 and 1440, plus 844 (phone landscape), in light and dark. Results: 0 overflow, 0 tap targets under 44px, 0 text under 12px, 0 low-contrast text. Reduced motion is honored, and the page has no animation. The page is about 17 KB of HTML, including its inline CSS. Screenshots are in the PR's CI artifact, never in git.
 
-## Not decided
+## Decided in i41
 
-A site-wide rollout, a light-or-dark default, and whether Team chat, Lessons, and the other pages adopt the cards. Ryno decides after looking at the prototype on his phone.
+The site follows the phone's setting, with both themes designed (c273). Home uses these components. The site tokens are in [docs/mission/spec.md](../mission/spec.md); there, light muted stays #57606a (5.79:1 on ice white), because the existing contrast test pins it.

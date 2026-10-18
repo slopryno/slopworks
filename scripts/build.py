@@ -805,6 +805,7 @@ def build():
         last = group[-1]
         items.append({"types": ["shipped"] + (["milestone"] if i["state"] == "shipped" else []), "date": last["merged"][:10], "time": last["merged"][11:16],
                       "id": f"tl-sprint-{i['id']}", "who": None, "title": i["problem"], "sprint": i["id"],
+                      "capped": "cap" in (i["problem"] + " " + (i.get("reason") or "")).lower(),
                       "text": out["text"] if out else (i.get("shipped") if i["state"] == "shipped" else "In progress."), "link": lambda up, c=(out or ms[0]): href(c["id"], up, "timeline/"),
                       "cue": "retro" if out else ("thread" if i["state"] == "shipped" else "kickoff"), "children": [pr_item(w) for w in reversed(group)]})
     first = prs[0] if prs else None
@@ -852,7 +853,7 @@ def build():
     def tl_item(x, up):
         dt, t = when(x["date"], x["time"])
         tm = f'<time datetime="{dt}">{t} ET</time>' if t else f'<time datetime="{dt}">{x["date"]}</time>'
-        tag = TL_NAMES[x["types"][0]] if not x.get("sprint") else "Sprint"
+        tag = "Sprint" if x.get("capped") else TL_NAMES[x["types"][0]]
         lbl = f' {label("demo")}' if x.get("demo") else ""
         who = f' <span class="meta">{e(x["who"])}</span>' if x.get("who") else ""
         body = f'<p>{e(x["text"])}</p>' if x.get("text") else ""
@@ -886,7 +887,7 @@ def build():
     tl_main, tl_parts = rollover(days, lambda dd: len(day_html(dd, "../").encode()), TL_TARGET)
     present = [(k, t) for k, t in TL_TYPES if any(k in x["types"] for x in items)]
     n_pr = len(prs)
-    n_sprint = sum(1 for x in items if x.get("sprint"))
+    n_sprint = sum(1 for x in items if x.get("capped"))  # a shipped decision grouped with its PRs isn't a sprint
     launch = prs[0]["date"] if prs else None
     hero = (f'<p class="meta">{label("verified")} counted from the repo when this page was built</p><ul class="proof tl-proof">'
             + "".join(f"<li><strong>{v}</strong> <span>{e(l)}</span></li>" for v, l in ((n_pr, "merged PRs"), (n_sprint, "sprints"), (sum("decision" in x["types"] for x in items), "CEO decisions"), (len(aars), "lessons written up"), (len(team()), "roles"))) + "</ul>")

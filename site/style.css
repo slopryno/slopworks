@@ -86,7 +86,7 @@ details summary{padding:.75rem 0;line-height:1.5}.report>summary{min-height:44px
 a{text-decoration-color:var(--ok);text-decoration-thickness:.1em;text-underline-offset:.2em}h1{font-weight:800;letter-spacing:-.03em}main.home>h1 em{font-style:normal;color:var(--ok)}
 time,.mono,.status,.kicker{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:max(.8rem,.9em)}
 .card,.hub a,.report{border-radius:12px}
-.status{display:flex;flex-wrap:wrap;gap:0 1rem;color:var(--muted);margin:.75rem 0 0}.status a{display:inline-flex;align-items:center;min-height:44px;color:var(--fg)}.status span{display:inline-flex;align-items:center;min-height:2rem}
+.status{display:flex;flex-wrap:wrap;gap:0 1rem;color:var(--muted);margin:.75rem 0 0}.status a{display:inline-flex;align-items:center;min-height:44px;color:var(--fg)}.status span{display:inline-flex;flex-wrap:wrap;align-items:center;gap:0 .45em;min-height:2rem}
 .panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:1rem 1.1rem;margin:1.5rem 0}.panel h2{margin-top:.25rem}
 .kicker{color:var(--ok);text-transform:uppercase;letter-spacing:.06em;margin:0;font-weight:700}.feature h2{margin:.35rem 0 .5rem}
 .sub{color:var(--muted);font-size:.95rem}

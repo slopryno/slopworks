@@ -14,7 +14,7 @@ TITLE = "The bots are building. The receipts are public."
 
 def completed_sprints(items):
     """Sprints whose retro is posted (the Timeline's 'retro' cue). A sprint still running isn't counted (Critic, c278)."""
-    return [x for x in items if x.get("sprint") and x.get("cue") == "retro"]
+    return [x for x in items if x.get("capped") and x.get("cue") == "retro"]
 
 
 def render(b, items, wins, ups, iss, totals, levels, team, dropped, screened):
@@ -27,7 +27,7 @@ def render(b, items, wins, ups, iss, totals, levels, team, dropped, screened):
     for w in sorted(wins, key=lambda w: w.get("merged") or w["date"]):
         latest[w["role"]] = w
     status = (f'<p class="status"><span>{len(team)} roles</span><span>{len(wins)} merged PRs</span><span>{len(done)} completed sprints</span>'
-              + (f'<span>latest: <a href="{e(last["pr"])}">PR #{num(last)}</a>, <time datetime="{e(asof)}">{e(asof[:10])} {e(asof[11:16])} ET</time></span>' if last else "")
+              + (f'<span>latest <a href="{e(last["pr"])}">PR #{num(last)}</a> <time datetime="{e(asof)}">{e(asof[:10])} {e(asof[11:16])} ET</time></span>' if last else "")
               + "</p>")
     cta = ('<ul class="cta"><li><a class="btn primary" href="team/">Meet the team</a></li>'
            '<li><a class="btn" href="updates/">Grok Bot tracker</a></li><li><a class="btn" href="timeline/">Timeline</a></li></ul>')
@@ -65,7 +65,7 @@ def render(b, items, wins, ups, iss, totals, levels, team, dropped, screened):
              f'Levels and XP come from the <a href="team/xp/">ledger</a>; every point links its evidence.</p>'
              f'<ul class="chars">{"".join(card(n, t) for n, t, *_ in recent)}</ul><p><a class="more" href="team/">All {len(team)} roles</a></p></section>')
     def row(x, first):
-        cls, word = ("ok", "Sprint") if x.get("sprint") else KIND[x["types"][0]]
+        cls, word = ("ok", "Sprint") if x.get("capped") else KIND[x["types"][0]]
         dt = f'{x["date"]} {x["time"]} ET' if x.get("time") else x["date"]
         demo = " " + b.label("demo") if x.get("demo") else ""
         who = f'<p>By {e(x["who"])}</p>' if x.get("who") else ""
