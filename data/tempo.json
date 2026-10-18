@@ -22,11 +22,16 @@
     "data-correction"
   ],
   "mode": "slowed",
-  "clean_prs": 0,
+  "clean_prs": 1,
   "tripped_by": "aar-2026-10-18-tempo-split",
   "trip_pr": 96,
   "trip_at": "2026-10-18T08:29-04:00",
-  "as_of_pr": 96,
-  "days": [],
+  "as_of_pr": 97,
+  "days": [
+    {
+      "date": "2026-10-18",
+      "prs": 1
+    }
+  ],
   "violations": []
 }
