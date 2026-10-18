@@ -13,6 +13,7 @@ This is the reusable checklist for every new hire. It was first used for Scoutma
 - [ ] Research rotation slot in `data/schedule.json`, with no more than 3 roles a day.
 - [ ] Budget row in the plan's constraints table. New roles use web reads only, capped.
 - [ ] The `**Weekly research:**` line names the hire's day exactly as in `data/schedule.json` (a test checks this), and the tracker's rotation list gets the hire too.
+- [ ] Commit no screenshots, images or temp files. Avatars go in `site/assets/avatars/`, review screenshots stay on the box and in the PR's CI artifact, and CI fails anything else (Ryno, 2026-10-17).
 - [ ] Open the PR with `scripts/bot.py branch <slug>` and `scripts/bot.py pr --maker <Role> ... --merge`. Don't hand-pick reviewers or the branch type: the helper reads them from the changed paths.
 
 ## Onboarding run (shown in Team chat, real messages, labeled "Onboarding run")

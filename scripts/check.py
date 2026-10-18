@@ -676,6 +676,38 @@ def _diff_lines(base, head, path):
     return added, removed
 
 
+# ---------- lean repo (Ryno, 2026-10-17, 8:49 and 8:51 PM ET): additions only, these only tighten ----------
+LEAN_TREE_BYTES = 4_000_000  # the tracked tree was 1.9 MB after the cleanup PR; this leaves room, not slack for screenshots
+LEAN_FILE_BYTES = 512_000  # per tracked file (CI's 1 MB rule stays as a backstop)
+LEAN_IMAGE_EXT = (".png", ".jpg", ".jpeg", ".gif", ".webp", ".avif", ".bmp", ".tif", ".tiff", ".ico", ".svg")
+LEAN_IMAGE_OK = ("site/assets/", "site/badges/")
+LEAN_TEMP = re.compile(r"(^|/)(__pycache__|\.cache|\.pytest_cache|tmp|temp|build|dist|node_modules|slopworks-review)/|"
+                       r"(^|/)docs/design/review/|"
+                       r"(\.(tmp|temp|log|swp|swo|bak|orig|rej|pyc|zip|tar|tgz|gz)|~|(^|/)(\.DS_Store|Thumbs\.db))$", re.I)
+
+
+def lean_errors(files, sizes, ignored=()):
+    """files: tracked paths; sizes: {path: bytes}; ignored: tracked paths that .gitignore says shouldn't be tracked."""
+    errs = []
+    for f in files:
+        if f.lower().endswith(LEAN_IMAGE_EXT) and not f.startswith(LEAN_IMAGE_OK):
+            errs.append(f"{f}: images live only in {' or '.join(LEAN_IMAGE_OK)}; screenshots go in the PR's CI artifact, never in git")
+        if LEAN_TEMP.search(f):
+            errs.append(f"{f}: temp, cache or build output doesn't belong in git")
+        if sizes.get(f, 0) > LEAN_FILE_BYTES:
+            errs.append(f"{f}: {sizes[f] // 1024} KB is over the {LEAN_FILE_BYTES // 1024} KB per-file budget")
+    errs += [f"{f}: tracked but matches .gitignore; remove it from git" for f in ignored]
+    total = sum(sizes.get(f, 0) for f in files)
+    if total > LEAN_TREE_BYTES:
+        errs.append(f"repo: the tracked tree is {total // 1024} KB, over the {LEAN_TREE_BYTES // 1024} KB budget")
+    return errs
+
+
+def tracked_ignored():
+    out = subprocess.run(["git", "ls-files", "-ci", "--exclude-standard"], capture_output=True, text=True, cwd=ROOT).stdout
+    return [l for l in out.splitlines() if l]
+
+
 # ---------- runners ----------
 def tracked_files():
     out = subprocess.run(["git", "ls-files"], capture_output=True, text=True, cwd=ROOT).stdout.split()
@@ -738,6 +770,7 @@ def run_repo():
         for item in data["schedule"]["items"]:
             if html_escape(item["when"]) not in page or html_escape(item["what"]) not in page:
                 errs.append(f"site/schedule: out of sync with data/schedule.json ({item['id']})")
+    errs += lean_errors(files, {f: (ROOT / f).stat().st_size for f in files}, tracked_ignored())
     return errs
 
 

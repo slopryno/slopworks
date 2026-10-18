@@ -32,6 +32,12 @@
       "what": "State of Slopworks page, roadmap review, and architecture review."
     },
     {
+      "id": "repo-hygiene",
+      "when": "First Monday of the month (Sweep)",
+      "cron": "13 9 1-7 * 1",
+      "what": "Repo hygiene: Sweep checks the tracked tree against the lean budgets and removes stray, duplicate, dead, temp or build files in one ordinary PR. No history rewrites."
+    },
+    {
       "id": "research",
       "when": "One to three roles a day, all week (in the daily run)",
       "cron": "13 9 * * *",
