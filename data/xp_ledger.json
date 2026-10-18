@@ -1978,7 +1978,7 @@
     "base_xp": 50,
     "quality_pct": 100,
     "reviewer": "Trial",
-    "evidence": "https://slopryno.github.io/slopworks/chat/archive/2026-10-4.html#i25",
+    "evidence": "https://slopryno.github.io/slopworks/chat/archive/2026-10-5.html#i25",
     "timestamp": "2026-10-17",
     "status": "approved"
   },
@@ -1990,7 +1990,7 @@
     "base_xp": 50,
     "quality_pct": 100,
     "reviewer": "Trial",
-    "evidence": "https://slopryno.github.io/slopworks/chat/archive/2026-10-4.html#i26",
+    "evidence": "https://slopryno.github.io/slopworks/chat/archive/2026-10-5.html#i26",
     "timestamp": "2026-10-17",
     "status": "approved"
   },
@@ -4978,5 +4978,56 @@
     "evidence": "https://github.com/slopryno/slopworks/pull/79",
     "timestamp": "2026-10-17T20:34-04:00",
     "status": "approved"
+  },
+  {
+    "id": "pr_merged-pr80",
+    "agent": "Forge",
+    "task": "#80: Forge: review screenshots out of git (c243): manifest with hashes plus key shots, gate checks the manifest, #77 set leaves the tree",
+    "type": "pr_merged",
+    "base_xp": 25,
+    "quality_pct": 100,
+    "reviewer": "Lens",
+    "evidence": "https://github.com/slopryno/slopworks/pull/80",
+    "timestamp": "2026-10-17T20:37-04:00",
+    "status": "approved"
+  },
+  {
+    "id": "signoff-pr80-coordinator",
+    "agent": "Coordinator",
+    "task": "Signed off #80: Forge: review screenshots out of git (c243): manifest with hashes plus key shots, gate checks the manifest, #77 set leaves the tree",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Forge",
+    "evidence": "https://github.com/slopryno/slopworks/pull/80#issuecomment-6243800282",
+    "timestamp": "2026-10-17T20:37-04:00",
+    "status": "rejected",
+    "note": "over the daily sign-off cap (6)"
+  },
+  {
+    "id": "signoff-pr80-lens",
+    "agent": "Lens",
+    "task": "Signed off #80: Forge: review screenshots out of git (c243): manifest with hashes plus key shots, gate checks the manifest, #77 set leaves the tree",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Forge",
+    "evidence": "https://github.com/slopryno/slopworks/pull/80#issuecomment-6243800489",
+    "timestamp": "2026-10-17T20:37-04:00",
+    "status": "rejected",
+    "note": "over the daily sign-off cap (6)"
+  },
+  {
+    "id": "signoff-pr80-trial",
+    "agent": "Trial",
+    "task": "Signed off #80: Forge: review screenshots out of git (c243): manifest with hashes plus key shots, gate checks the manifest, #77 set leaves the tree",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Forge",
+    "evidence": "https://github.com/slopryno/slopworks/pull/80#issuecomment-6243800708",
+    "timestamp": "2026-10-17T20:37-04:00",
+    "status": "rejected",
+    "note": "over the daily sign-off cap (6)"
   }
 ]

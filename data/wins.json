@@ -1,5 +1,13 @@
 [
   {
+    "id": "pr80",
+    "role": "Forge",
+    "title": "Forge: review screenshots out of git (c243): manifest with hashes plus key shots, gate checks the manifest, #77 set leaves the tree",
+    "pr": "https://github.com/slopryno/slopworks/pull/80",
+    "date": "2026-10-17",
+    "merged": "2026-10-17T20:37-04:00"
+  },
+  {
     "id": "pr79",
     "role": "Coordinator",
     "title": "Coordinator: another sprint (i38), one-time cap override of about 6 PRs, kickoff huddle",
