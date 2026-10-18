@@ -1,5 +1,13 @@
 [
   {
+    "id": "pr90",
+    "role": "Forge",
+    "title": "Forge: i42 short titles, current objectives, weekly recap",
+    "pr": "https://github.com/slopryno/slopworks/pull/90",
+    "date": "2026-10-18",
+    "merged": "2026-10-18T01:38-04:00"
+  },
+  {
     "id": "pr89",
     "role": "Sweep",
     "title": "Sweep: mission i41 post-deploy report, retro, i41 shipped, cap restored",
