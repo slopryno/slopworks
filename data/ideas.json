@@ -935,5 +935,26 @@
     ],
     "acceptance_verified_by": "Trial",
     "shipped": "#70 to #76: audit, 4-link nav and hubs, simpler home, mobile-first CSS, 360px CI test, cuts, retro. At 360: overflow 3 to 0, small targets 622 to 0. Cap restored."
+  },
+  {
+    "id": "i38",
+    "date": "2026-10-17",
+    "by": "CEO",
+    "source": "ceo",
+    "problem": "Another sprint (about 6 PRs max): review screenshots out of git, character sheet and Timeline polish on phones, a lede pass, retro",
+    "helps": "Visitors on phones, and the repo's size for anyone cloning it",
+    "effort": "M",
+    "builder": "Polish",
+    "state": "yes",
+    "comments": [],
+    "decided": "2026-10-17",
+    "decided_by": "CEO",
+    "reason": "Approved by Ryno in Grok Bot chat 2026-10-17 8:31 PM ET: 'Run another sprint.' A one-time override of the 1 feature + 1 design PR/week cap, about 6 PRs, conserving usage, the same way as i35. Standing direction: UX first, mobile first, simple and elegant (i36). The normal cap returns when the sprint ends.",
+    "acceptance_criteria": [
+      "About 6 PRs at most",
+      "Review screenshots no longer committed in full: a manifest with hashes plus a few small key shots",
+      "Every design or CSS PR passes the screenshot review gate, with real Problems found lines",
+      "Retro posted and the normal cap restored"
+    ]
   }
 ]
