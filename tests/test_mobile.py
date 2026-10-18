@@ -110,5 +110,23 @@ class VisualDetectorsFire(unittest.TestCase):
         self.assertTrue(any("Corrections" in x for x in r["past_right_edge"]), "text past the edge")
 
 
+class At200PercentZoom(unittest.TestCase):
+    """i43 (Polish, c305): a 390 px phone zoomed to 200% lays pages out at 195 CSS px. No page may scroll sideways there;
+    a wide data table may scroll inside its own box."""
+    @classmethod
+    def setUpClass(cls):
+        if not mobile_audit.chrome():
+            raise AssertionError("CI needs headless Chrome for the zoom check")
+        cls.rows = mobile_audit.measure([195]) + mobile_audit.measure([195], font='"DejaVu Sans", "Verdana", sans-serif')
+
+    def test_every_page_measured(self):
+        self.assertEqual([r["page"] for r in self.rows if r.get("error")], [])
+        self.assertEqual(len(self.rows), 2 * len(mobile_audit.pages()))
+
+    def test_no_page_scrolls_sideways(self):
+        self.assertEqual({r["page"]: r["overflow_px"] for r in self.rows if r["overflow_px"]}, {})
+        self.assertEqual({r["page"]: r["past_right_edge"][:2] for r in self.rows if r["past_right_edge"]}, {})
+
+
 if __name__ == "__main__":
     unittest.main()
