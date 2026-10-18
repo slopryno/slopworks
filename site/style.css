@@ -66,11 +66,11 @@ main.home>h1{font-size:clamp(1.9rem,1.4rem + 2.2vw,2.5rem);letter-spacing:-.02em
 .latest{margin:.25rem 0 .5rem;padding:.4rem .7rem;border-left:3px solid var(--line);background:var(--card);border-radius:0 6px 6px 0;font-size:.9rem}.latest p{margin:.15rem 0}
 .demo-banner{border:1px dashed var(--accent);border-radius:6px;padding:.4rem .7rem;margin:0 0 .5rem;font-size:.9rem}.outcome{padding-left:1.1rem}.outcome li{margin:.35rem 0}.challenge h3{margin:1rem 0 .25rem}
 .aar dl{margin:.5rem 0 0}.aar dt{font-weight:600;margin-top:.6rem}.aar dd{margin:.15rem 0 0}
-.tl{list-style:none;padding:0;margin:.5rem 0 1.5rem;border-left:2px solid var(--line)}.tl-item{position:relative;margin:0 0 .9rem;padding-left:1rem}.tl-item::before{content:"";position:absolute;left:-.4rem;top:.45rem;width:.6rem;height:.6rem;border-radius:50%;background:var(--line)}.tl-mile::before{background:var(--accent)}.tl-item p{margin:.15rem 0}.tl-title{font-weight:600}.tl-title a{font-weight:400;font-size:.9rem}.tl-prs{font-size:.9rem;padding-left:1.1rem}.tl-proof{display:flex;flex-wrap:wrap;gap:.4rem 1.2rem;list-style:none;padding:0}
+.tl{list-style:none;padding:0;margin:.5rem 0 1.5rem;border-left:2px solid var(--line)}.tl-item{position:relative;margin:0 0 1.4rem;padding-left:1rem}.tl-item::before{content:"";position:absolute;left:-.4rem;top:.45rem;width:.6rem;height:.6rem;border-radius:50%;background:var(--line)}.tl-mile::before{background:var(--accent)}.tl-item p{margin:.15rem 0}.tl-title{font-weight:600;line-height:1.35}.tl-title a{font-weight:400;font-size:.9rem}.tl-prs{font-size:.9rem;padding-left:1.1rem}.tl-proof{display:flex;flex-wrap:wrap;gap:.4rem 1.2rem;list-style:none;padding:0}
 .outcome .lbl{display:table;margin:0 0 .15rem}
 .sheet{display:flex;gap:1rem;align-items:flex-start}.sheet>div{flex:1;min-width:0}.sheet .lvl{font-size:1.25rem;font-weight:700;margin:.2rem 0}
 .xpbar{height:.9rem;border:1px solid var(--line);border-radius:999px;overflow:hidden;background:var(--bg)}.xpbar span{display:block;height:100%;min-width:0}
-.xpnum{margin:.3rem 0}.achs{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:.5rem}.ach{border:1px solid var(--line);border-radius:999px;padding:.2rem .7rem}.ach.got{border-width:2px}.ach .meta{display:block;font-size:.8rem}
+.xpnum{margin:.3rem 0}.achs{list-style:none;padding:0;display:grid;gap:.4rem}.ach{border:1px solid var(--line);border-radius:.6rem;padding:.45rem .75rem}.ach.got{border-width:2px}.ach .meta{display:block;font-size:.8rem}
 .lead .xp{font-size:.9rem;margin:.25rem 0 0}.scroll{overflow-x:auto}
 /* Mobile first (i36): tap targets of at least 44px on phones, long links wrap, then min-width steps up. */
 main p,main li,main dd,main a,footer{overflow-wrap:break-word}
@@ -79,3 +79,5 @@ details summary{padding:.75rem 0;line-height:1.5}.report>summary{min-height:44px
 .meta a,main li>a:only-child:not(:has(*)),.lead h2 a,.lead li>a{display:inline-flex;align-items:center;min-height:44px;min-width:44px}
 .meta>*{min-width:0;max-width:100%}.meta a{max-width:100%;overflow-wrap:anywhere}.scroll table{width:max-content;max-width:max(100%,40rem)}.scroll th,.scroll td{min-width:4.5rem}.cta li{flex:1 1 100%}.cta .btn{width:100%;justify-content:center}
 @media (min-width:40rem){header{padding:.75rem 0}.disclaimer{margin:1rem 0}.cta li{flex:none}.cta .btn{width:auto}}
+.worklist{list-style:none;padding:0;margin:.5rem 0 1rem}.worklist li{padding:.6rem 0;border-top:1px solid var(--line)}.worklist li:first-child{border-top:0}.worklist time{display:block;font-size:.8rem;color:var(--muted)}.worklist .meta{display:block;margin-top:.15rem}
+@media (min-width:40rem){.achs{grid-template-columns:repeat(2,minmax(0,1fr))}}

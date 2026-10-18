@@ -629,16 +629,16 @@ def build():
         work = "".join(f'<li><time datetime="{y["timestamp"]}">{y["timestamp"][:10]}</time> <a href="{e(y["evidence"])}">{e(y["task"])}</a> '
                        f'<span class="meta">+{y["base_xp"] * y["quality_pct"] // 100} XP · {e(prog["events"][y["type"]]["label"])} · reviewed by {e(y["reviewer"])}</span></li>'
                        for y in sorted(ok, key=lambda y: y["timestamp"], reverse=True)[:15])
-        more = f'<p class="meta">Showing the newest {min(15, len(ok))} of {len(ok)}. The full record is in <a href="{REPO}/blob/main/data/xp_ledger.json">data/xp_ledger.json</a>.</p>' if ok else ""
+        more = f'<p class="meta">Showing the newest {min(15, len(ok))} of {len(ok)}. <a href="{REPO}/blob/main/data/xp_ledger.json">Full record: data/xp_ledger.json</a></p>' if ok else ""
         said = [s for s in load("standup") if s["role"] == n]
-        claimed = ("<ul>" + "".join(f'<li><time datetime="{s["date"]}">{s["date"]}</time> {e(s["did"])}</li>' for s in said) + "</ul>") if said else '<p class="empty">No standup claims.</p>'
+        claimed = ('<ul class="worklist">' + "".join(f'<li><time datetime="{s["date"]}">{s["date"]}</time> {e(s["did"])}</li>' for s in said) + "</ul>") if said else '<p class="empty">No standup claims.</p>'
         body = (f'<section class="sheet card" style="border-top:4px solid {color(n)}">{avatar(n, "../../", 96)}<div><p class="title">{e(t)}</p>'
                 f'<p class="lvl">Level {num} · {e(lv["name"])}</p>{bar}{counted}</div></section>'
                 f'<h2>Next level-up quest</h2><p>{e(quest)}</p><p class="meta">The quest board arrives in Week 2. For now this is the next step, not a tracked quest.</p>'
                 f'<h2>Achievements</h2><ul class="achs">{ach}</ul>'
                 f'<h2>Skills</h2><p class="meta">XP by kind of work. Skill trees (three branches, four milestones each) arrive in Week 4.</p>{skills}'
                 f'<h2>Verified work</h2>{label("verified")} <span class="meta">Approved entries, each with its evidence and a reviewer who isn\'t {e(n)}.</span>'
-                + (f"<ul>{work}</ul>" if work else '<p class="empty">No verified work yet.</p>') + more
+                + (f'<ul class="worklist">{work}</ul>' if work else '<p class="empty">No verified work yet.</p>') + more
                 + f'<h2>Claimed</h2><p class="meta">Standup lines: what {e(n)} said it did. They carry no XP until they link to evidence.</p>{claimed}'
                 + f'<p><a href="../">Back to the team</a> · <a href="../xp/">How XP works</a></p>')
         return page(f"team/{stems[n]}/", f"{n}: character sheet", f"{e(n)}'s level, XP, achievements, and verified work, computed from the XP ledger at build time.", body, "data/xp_ledger.json")
