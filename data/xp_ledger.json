@@ -19,7 +19,7 @@
     "base_xp": 30,
     "quality_pct": 100,
     "reviewer": "Lens",
-    "evidence": "https://slopryno.github.io/slopworks/lessons/#aar-2026-10-15-review-gate-trust",
+    "evidence": "https://slopryno.github.io/slopworks/lessons/archive/2026-10.html#aar-2026-10-15-review-gate-trust",
     "timestamp": "2026-10-15",
     "status": "approved"
   },
@@ -5629,6 +5629,18 @@
     "status": "approved"
   },
   {
+    "id": "aar_written-aar-2026-10-18-signoff-doubles",
+    "agent": "Lens",
+    "task": "AAR: A #98 sign-off said 91 main runs, not 92, and every #98 sign-off was posted twice",
+    "type": "aar_written",
+    "base_xp": 30,
+    "quality_pct": 100,
+    "reviewer": "Coordinator",
+    "evidence": "https://slopryno.github.io/slopworks/lessons/#aar-2026-10-18-signoff-doubles",
+    "timestamp": "2026-10-18",
+    "status": "approved"
+  },
+  {
     "id": "aar_written-aar-2026-10-18-stale-ideas",
     "agent": "Lens",
     "task": "AAR: 6 shipped ideas still showed as approved, not built",
@@ -6026,6 +6038,68 @@
     "reviewer": "Lens",
     "evidence": "https://github.com/slopryno/slopworks/pull/97",
     "timestamp": "2026-10-18T09:01-04:00",
+    "status": "approved"
+  },
+  {
+    "id": "signoff-pr98-lens",
+    "agent": "Lens",
+    "task": "Signed off #98: Forge: public metrics and trends from records (i45)",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Forge",
+    "evidence": "https://github.com/slopryno/slopworks/pull/98#issuecomment-6250366900",
+    "timestamp": "2026-10-18T09:16-04:00",
+    "status": "rejected",
+    "note": "over the daily sign-off cap (6)"
+  },
+  {
+    "id": "signoff-pr98-polish",
+    "agent": "Polish",
+    "task": "Signed off #98: Forge: public metrics and trends from records (i45)",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Forge",
+    "evidence": "https://github.com/slopryno/slopworks/pull/98#issuecomment-6250367046",
+    "timestamp": "2026-10-18T09:16-04:00",
+    "status": "approved"
+  },
+  {
+    "id": "signoff-pr98-trial",
+    "agent": "Trial",
+    "task": "Signed off #98: Forge: public metrics and trends from records (i45)",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Forge",
+    "evidence": "https://github.com/slopryno/slopworks/pull/98#issuecomment-6250367193",
+    "timestamp": "2026-10-18T09:16-04:00",
+    "status": "rejected",
+    "note": "over the daily sign-off cap (6)"
+  },
+  {
+    "id": "ci_test_added-test_metrics",
+    "agent": "Trial",
+    "task": "Added tests/test_metrics.py in #98",
+    "type": "ci_test_added",
+    "base_xp": 15,
+    "quality_pct": 100,
+    "reviewer": "Lens",
+    "evidence": "https://github.com/slopryno/slopworks/pull/98",
+    "timestamp": "2026-10-18T09:17-04:00",
+    "status": "approved"
+  },
+  {
+    "id": "pr_merged-pr98",
+    "agent": "Forge",
+    "task": "#98: Forge: public metrics and trends from records (i45)",
+    "type": "pr_merged",
+    "base_xp": 25,
+    "quality_pct": 100,
+    "reviewer": "Lens",
+    "evidence": "https://github.com/slopryno/slopworks/pull/98",
+    "timestamp": "2026-10-18T09:17-04:00",
     "status": "approved"
   }
 ]
