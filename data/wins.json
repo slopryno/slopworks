@@ -1,5 +1,13 @@
 [
   {
+    "id": "pr83",
+    "role": "Comms",
+    "title": "Comms/Polish: lede pass (8 ledes 1,722→1,168 chars), chip count spacing fix, Design log names the CI artifact (i38)",
+    "pr": "https://github.com/slopryno/slopworks/pull/83",
+    "date": "2026-10-17",
+    "merged": "2026-10-17T21:08-04:00"
+  },
+  {
     "id": "pr82",
     "role": "Sweep",
     "title": "Sweep: lean repo (i39): screenshots and temp files out of git (263→183 files, 7.5→1.9 MB), lean CI checks, review screenshots as a CI artifact",
