@@ -117,11 +117,11 @@ class At200PercentZoom(unittest.TestCase):
     def setUpClass(cls):
         if not mobile_audit.chrome():
             raise AssertionError("CI needs headless Chrome for the zoom check")
-        cls.rows = mobile_audit.measure([195])
+        cls.rows = mobile_audit.measure([195]) + mobile_audit.measure([195], font='"DejaVu Sans", "Verdana", sans-serif')
 
     def test_every_page_measured(self):
         self.assertEqual([r["page"] for r in self.rows if r.get("error")], [])
-        self.assertEqual(len(self.rows), len(mobile_audit.pages()))
+        self.assertEqual(len(self.rows), 2 * len(mobile_audit.pages()))
 
     def test_no_page_scrolls_sideways(self):
         self.assertEqual({r["page"]: r["overflow_px"] for r in self.rows if r["overflow_px"]}, {})

@@ -111,4 +111,4 @@ ul.status.wk{list-style:none;padding:0}ul.status.wk li{display:inline-flex;gap:.
 .recap{padding-left:1.1rem}.recap li{margin:.4rem 0}.week h2{margin-top:.25rem}
 /* i43: reflow at 200% phone zoom (195 CSS px) */
 summary{flex-wrap:wrap}summary span,li>div,.char .hd>*{min-width:0}.char .hd{flex-wrap:wrap}.lbl{white-space:normal;max-width:100%}
-.stack tr,.stack th,.stack td{display:block}.stack td{padding-top:0}@media (min-width:20rem){.stack tr{display:table-row}.stack th,.stack td{display:table-cell}.stack td{padding-top:revert}}.scroll .stack{width:100%}.fit table{width:100%}
+.stack tr,.stack th,.stack td{display:block}.stack td{padding-top:0}@media (min-width:20rem){.stack tr{display:table-row}.stack th,.stack td{display:table-cell}.stack td{padding-top:revert}}.scroll .stack{width:100%}.fit table{width:100%}body{overflow-wrap:break-word}
