@@ -1,5 +1,13 @@
 [
   {
+    "id": "pr89",
+    "role": "Sweep",
+    "title": "Sweep: mission i41 post-deploy report, retro, i41 shipped, cap restored",
+    "pr": "https://github.com/slopryno/slopworks/pull/89",
+    "date": "2026-10-17",
+    "merged": "2026-10-17T22:05-04:00"
+  },
+  {
     "id": "pr88",
     "role": "Forge",
     "title": "Forge: the prototype goes live: new home (hero, status, featured sprint, tracker, team, activity), site-wide charcoal/ice tokens, /prototype/ retired (i41)",

@@ -1,0 +1,35 @@
+{
+  "type": "array",
+  "items": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "role",
+      "objective",
+      "source",
+      "assigned",
+      "ref"
+    ],
+    "properties": {
+      "role": {
+        "type": "string"
+      },
+      "objective": {
+        "type": "string",
+        "maxLength": 70
+      },
+      "source": {
+        "type": "string",
+        "pattern": "^(data|plans|docs)/[a-z0-9_./-]+$"
+      },
+      "assigned": {
+        "type": "string",
+        "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+      },
+      "ref": {
+        "type": "string",
+        "pattern": "^c\\d+$"
+      }
+    }
+  }
+}
