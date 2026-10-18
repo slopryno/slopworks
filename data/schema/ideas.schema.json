@@ -409,6 +409,10 @@
             "maxLength": 400
           }
         }
+      },
+      "short_title": {
+        "type": "string",
+        "maxLength": 40
       }
     }
   }

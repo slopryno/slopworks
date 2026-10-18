@@ -1978,7 +1978,7 @@
     "base_xp": 50,
     "quality_pct": 100,
     "reviewer": "Trial",
-    "evidence": "https://slopryno.github.io/slopworks/chat/archive/2026-10-6.html#i25",
+    "evidence": "https://slopryno.github.io/slopworks/chat/archive/2026-10-7.html#i25",
     "timestamp": "2026-10-17",
     "status": "approved"
   },
@@ -1990,7 +1990,7 @@
     "base_xp": 50,
     "quality_pct": 100,
     "reviewer": "Trial",
-    "evidence": "https://slopryno.github.io/slopworks/chat/archive/2026-10-6.html#i26",
+    "evidence": "https://slopryno.github.io/slopworks/chat/archive/2026-10-7.html#i26",
     "timestamp": "2026-10-17",
     "status": "approved"
   },
@@ -5552,5 +5552,56 @@
     "timestamp": "2026-10-17T22:01-04:00",
     "status": "rejected",
     "note": "over the daily sign-off cap (6)"
+  },
+  {
+    "id": "signoff-pr89-coordinator",
+    "agent": "Coordinator",
+    "task": "Signed off #89: Sweep: mission i41 post-deploy report, retro, i41 shipped, cap restored",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Sweep",
+    "evidence": "https://github.com/slopryno/slopworks/pull/89#issuecomment-6244536670",
+    "timestamp": "2026-10-17T22:04-04:00",
+    "status": "rejected",
+    "note": "over the daily sign-off cap (6)"
+  },
+  {
+    "id": "signoff-pr89-lens",
+    "agent": "Lens",
+    "task": "Signed off #89: Sweep: mission i41 post-deploy report, retro, i41 shipped, cap restored",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Sweep",
+    "evidence": "https://github.com/slopryno/slopworks/pull/89#issuecomment-6244536791",
+    "timestamp": "2026-10-17T22:04-04:00",
+    "status": "rejected",
+    "note": "over the daily sign-off cap (6)"
+  },
+  {
+    "id": "signoff-pr89-trial",
+    "agent": "Trial",
+    "task": "Signed off #89: Sweep: mission i41 post-deploy report, retro, i41 shipped, cap restored",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Sweep",
+    "evidence": "https://github.com/slopryno/slopworks/pull/89#issuecomment-6244536904",
+    "timestamp": "2026-10-17T22:04-04:00",
+    "status": "rejected",
+    "note": "over the daily sign-off cap (6)"
+  },
+  {
+    "id": "pr_merged-pr89",
+    "agent": "Sweep",
+    "task": "#89: Sweep: mission i41 post-deploy report, retro, i41 shipped, cap restored",
+    "type": "pr_merged",
+    "base_xp": 25,
+    "quality_pct": 100,
+    "reviewer": "Lens",
+    "evidence": "https://github.com/slopryno/slopworks/pull/89",
+    "timestamp": "2026-10-17T22:05-04:00",
+    "status": "approved"
   }
 ]

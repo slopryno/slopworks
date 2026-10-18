@@ -12,7 +12,8 @@
     "comments": [],
     "decided": "2026-10-16",
     "decided_by": "CEO",
-    "reason": "Approved by Ryno in Grok Bot chat 2026-10-16: knock out UI/UX before the weekly usage reset. One-time override; the cap returns after this sprint."
+    "reason": "Approved by Ryno in Grok Bot chat 2026-10-16: knock out UI/UX before the weekly usage reset. One-time override; the cap returns after this sprint.",
+    "short_title": "UI/UX sprint"
   },
   {
     "id": "i10",
@@ -264,7 +265,8 @@
     "acceptance_criteria": [
       "About 5 PRs at most",
       "Retro posted and the normal cap restored"
-    ]
+    ],
+    "short_title": "Backlog mini-sprint"
   },
   {
     "id": "i17",
@@ -572,7 +574,8 @@
     "acceptance_criteria": [
       "About 8 PRs at most for Showcase v1",
       "Retro posted and the normal cap restored"
-    ]
+    ],
+    "short_title": "Showcase v1"
   },
   {
     "id": "i25",
@@ -677,7 +680,8 @@
     "acceptance_criteria": [
       "About 7 PRs at most, led by i25 and i26",
       "Retro posted and the normal cap restored"
-    ]
+    ],
+    "short_title": "Feeds, comms and a new hire"
   },
   {
     "id": "i28",
@@ -757,7 +761,8 @@
       "No guardrail file loses a line"
     ],
     "acceptance_verified_by": "Trial",
-    "shipped": "#56 audit and inventory, #57 scripts/bot.py, #58 typed loaders and drift tests, #59 prose trim, onboarding, retro."
+    "shipped": "#56 audit and inventory, #57 scripts/bot.py, #58 typed loaders and drift tests, #59 prose trim, onboarding, retro.",
+    "short_title": "Repo hardening"
   },
   {
     "id": "i31",
@@ -778,7 +783,8 @@
       "Retro posted and the normal cap restored"
     ],
     "acceptance_verified_by": "Trial",
-    "shipped": "#60 to #64: Timeline, case file, Lessons rollover, demo polish, retro and cap restore (c150 to c153)."
+    "shipped": "#60 to #64: Timeline, case file, Lessons rollover, demo polish, retro and cap restore (c150 to c153).",
+    "short_title": "Timeline, case file, Lessons archive"
   },
   {
     "id": "i32",
@@ -895,7 +901,8 @@
       "Retro posted and the normal cap restored"
     ],
     "acceptance_verified_by": "Trial",
-    "shipped": "#65 to #69: Game Master hire, huddle, rules and ledger, character sheets, roadmap and retro (c187 to c191)."
+    "shipped": "#65 to #69: Game Master hire, huddle, rules and ledger, character sheets, roadmap and retro (c187 to c191).",
+    "short_title": "RPG Week 1: XP and character sheets"
   },
   {
     "id": "i36",
@@ -934,7 +941,8 @@
       "Retro posted and the normal cap restored"
     ],
     "acceptance_verified_by": "Trial",
-    "shipped": "#70 to #76: audit, 4-link nav and hubs, simpler home, mobile-first CSS, 360px CI test, cuts, retro. At 360: overflow 3 to 0, small targets 622 to 0. Cap restored."
+    "shipped": "#70 to #76: audit, 4-link nav and hubs, simpler home, mobile-first CSS, 360px CI test, cuts, retro. At 360: overflow 3 to 0, small targets 622 to 0. Cap restored.",
+    "short_title": "Mobile-first UX sprint"
   },
   {
     "id": "i38",
@@ -957,7 +965,8 @@
       "Retro posted and the normal cap restored"
     ],
     "acceptance_verified_by": "Trial",
-    "shipped": "#79 to #84: kickoff, screenshots out of git (then fully out under i39, #82), sheets and Timeline on phones, lede pass, retro with the cap restored (c255 to c259)."
+    "shipped": "#79 to #84: kickoff, screenshots out of git (then fully out under i39, #82), sheets and Timeline on phones, lede pass, retro with the cap restored (c255 to c259).",
+    "short_title": "Screenshots out of git, phone polish"
   },
   {
     "id": "i39",
@@ -1001,7 +1010,8 @@
       "No site-wide rollout until Ryno decides"
     ],
     "acceptance_verified_by": "Trial",
-    "shipped": "#85 and #86: huddle (c260 to c266), visual direction, /prototype/; dark surfaces lifted after 'too dark?' (c267 to c273). Rollout moved to i41."
+    "shipped": "#85 and #86: huddle (c260 to c266), visual direction, /prototype/; dark surfaces lifted after 'too dark?' (c267 to c273). Rollout moved to i41.",
+    "short_title": "Visual redesign prototype"
   },
   {
     "id": "i41",
@@ -1027,6 +1037,32 @@
       "Retro posted and the normal cap restored"
     ],
     "acceptance_verified_by": "Trial",
-    "shipped": "#87 to #89: reviews and spec (c274 to c288), new home and site tokens with /prototype/ retired (#88), release report and retro, cap restored (docs/mission/)."
+    "shipped": "#87 to #89: reviews and spec (c274 to c288), new home and site tokens with /prototype/ retired (#88), release report and retro, cap restored (docs/mission/).",
+    "short_title": "The prototype goes live"
+  },
+  {
+    "id": "i42",
+    "date": "2026-10-18",
+    "by": "CEO",
+    "source": "ceo",
+    "problem": "Follow-up sprint (about 4 PRs max): short sprint titles, a current objective on team cards, a weekly recap from real records, the featured PR count",
+    "helps": "Phone readers and returning visitors, who see what changed this week and what each role is on now",
+    "effort": "M",
+    "builder": "Forge",
+    "state": "yes",
+    "comments": [],
+    "decided": "2026-10-18",
+    "decided_by": "CEO",
+    "reason": "Ryno in Grok Bot chat 2026-10-18 1:17 AM ET: 'Build it', on the i41 report's not-built list. A one-time override of the 1 feature + 1 design PR/week cap, about 4 PRs, like i35, i38 and i41. Analyst and Comms decide the recap form. The normal cap returns when the sprint ends.",
+    "target_sprint": "W42",
+    "acceptance_criteria": [
+      "About 4 PRs at most",
+      "Featured sprint title fits 1 to 2 lines at 320 px, from a real record",
+      "Objectives only from real open or assigned work, each with a source; the slot is hidden when a role has none",
+      "Weekly recap from real records only, partial weeks labelled; decision recorded",
+      "0 overflow and 0 small tap targets at 7 widths on changed pages",
+      "Retro posted and the normal cap restored"
+    ],
+    "short_title": "Short titles, objectives, weekly recap"
   }
 ]
