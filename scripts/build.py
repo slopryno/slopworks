@@ -399,7 +399,7 @@ def build():
         counts = "".join(f"<tr><th scope=\"row\">{e(k.replace('_', ' '))}</th><td>{v}</td></tr>" for k, v in r["counts"].items())
         notes = "".join(f"<li>{e(n)}</li>" for n in r.get("notes", []))
         body += (f'<article class="card" id="run-{e(r["id"])}"><h3>{e(r["date"])} · {e(r["kind"])} run · {e(r["status"])}</h3>'
-                 f'<table><tbody>{counts}<tr><th scope="row">X reads</th><td>{r.get("x_reads", 0)}</td></tr></tbody></table><ul>{notes}</ul></article>')
+                 f'<div class="scroll"><table class="stack"><tbody>{counts}<tr><th scope="row">X reads</th><td>{r.get("x_reads", 0)}</td></tr></tbody></table></div><ul>{notes}</ul></article>')
     files["behind/index.html"] = page("behind/", "Behind the scenes", f"What each role found, dropped, or stripped in every run. Auto-merge is <strong>{e(state['auto_merge'])}</strong>. These are roles played in one daily routine, not separate live bots.", ('<h2 id="runs">Runs, newest first</h2>' + body) if body else body, "data/runs.json")
 
     # ---------- Team chat with automatic archive rollover ----------
@@ -602,9 +602,9 @@ def build():
         kinds = {}
         for y in ok:
             k = kinds.setdefault(y["type"], [0, 0]); k[0] += 1; k[1] += y["base_xp"] * y["quality_pct"] // 100
-        skills = ("<table><thead><tr><th scope=\"col\">Kind of work</th><th scope=\"col\">Entries</th><th scope=\"col\">XP</th></tr></thead><tbody>"
+        skills = ("<div class=\"scroll\"><table><thead><tr><th scope=\"col\">Kind of work</th><th scope=\"col\">Entries</th><th scope=\"col\">XP</th></tr></thead><tbody>"
                   + "".join(f'<tr><td>{e(prog["events"][k]["label"])}</td><td>{c}</td><td>{v}</td></tr>' for k, (c, v) in sorted(kinds.items(), key=lambda kv: -kv[1][1]))
-                  + "</tbody></table>") if kinds else '<p class="empty">No verified work yet.</p>'
+                  + "</tbody></table></div>") if kinds else '<p class="empty">No verified work yet.</p>'
         ach = ""
         for a in prog["achievements"]:
             got = next((y for y in ok if y["type"] == a["event"]), None)
@@ -636,8 +636,8 @@ def build():
         ev_rows += f'<tr><td>{e(v["label"])}</td><td>{d if d is not None else "-"}</td><td>{e(extra) or "-"}</td><td>{e(v["who"])}</td><td>{e(v["reviewer"])}</td></tr>'
     roster = "".join(f'<li><a href="../{stems[n]}/">{e(n)}</a>: {xp_line(n, "")}</li>' for n in sorted(stems))
     xbody = (f'<p>{e(prog["note"])}</p>'
-             f'<h2>Levels</h2><table><thead><tr><th scope="col">Level</th><th scope="col">Name</th><th scope="col">XP needed</th></tr></thead><tbody>'
-             + "".join(f'<tr><td>{i + 1}</td><td>{e(l["name"])}</td><td>{l["xp"]}</td></tr>' for i, l in enumerate(levels)) + "</tbody></table>"
+             f'<h2>Levels</h2><div class="scroll"><table><thead><tr><th scope="col">Level</th><th scope="col">Name</th><th scope="col">XP needed</th></tr></thead><tbody>'
+             + "".join(f'<tr><td>{i + 1}</td><td>{e(l["name"])}</td><td>{l["xp"]}</td></tr>' for i, l in enumerate(levels)) + "</tbody></table></div>"
              f'<h2>What earns XP</h2><div class="scroll"><table><thead><tr><th scope="col">Work</th><th scope="col">XP</th><th scope="col">Role tables</th><th scope="col">Who earns it</th><th scope="col">Reviewer</th></tr></thead><tbody>{ev_rows}</tbody></table></div>'
              f'<p>Sign-offs count at most {prog["events"]["signoff"]["cap_per_day"]} a day per role; the rest stay in the ledger as rejected, so the cap is visible. {e(prog["quality"]["note"])}</p>'
              f'<h2>Fair play</h2><ol>' + "".join(f"<li>{e(r)}</li>" for r in prog["anti_gaming"]) + "</ol>"
@@ -935,13 +935,13 @@ def build():
                                       "<h2>Shipped</h2>" + "".join(map(card, shipped)) + "<h2>Up next (ranked)</h2>" + "".join(map(card, backlog)), "data/design_backlog.json")
 
     srows = "".join(f'<tr><th scope="row">{e(i["when"])}</th><td>{e(i["what"])}</td></tr>' for i in sched["items"])
-    rot_html = "<h2>Research rotation</h2><p>Each role researches its own area once a week, using public web pages only (about 5 pages max, no X reads).</p><table><tbody>" + "".join(
-        f'<tr><th scope="row">{e(d["day"])}</th><td>' + "<br>".join(f'<strong>{e(r["role"])}</strong>: {e(r["focus"])}' for r in d["roles"]) + "</td></tr>" for d in sched.get("research", [])) + "</tbody></table>"
+    rot_html = "<h2>Research rotation</h2><p>Each role researches its own area once a week, using public web pages only (about 5 pages max, no X reads).</p><div class=\"scroll\"><table class=\"stack\"><tbody>" + "".join(
+        f'<tr><th scope="row">{e(d["day"])}</th><td>' + "<br>".join(f'<strong>{e(r["role"])}</strong>: {e(r["focus"])}' for r in d["roles"]) + "</td></tr>" for d in sched.get("research", [])) + "</tbody></table></div>"
     lim = "".join(f"<li>{e(l)}</li>" for l in sched["limits"])
     last = runs[0] if runs else None
     status = f'Last run: <strong>{e(last["date"])}</strong> ({e(last["kind"])}), status <strong>{e(last["status"])}</strong>. Next: the daily run, around 9:15 AM ET.' if last else '<span class="empty">No runs yet. The first daily run is around 9:15 AM ET.</span>'
     files["schedule/index.html"] = page("schedule/", "Schedule and limits", "What to expect and when. Generated from the same schedule file the routines use.",
-                                        f'<p class="card">{status}</p><table><tbody>{srows}</tbody></table><p>When something goes wrong, the after-action review is on the <a href="../lessons/">Lessons</a> page the same day.</p>' + rot_html + f'<h2>Limits, in plain words</h2><ul>{lim}</ul>', "data/schedule.json")
+                                        f'<p class="card">{status}</p><div class="scroll"><table class="stack"><tbody>{srows}</tbody></table></div><p>When something goes wrong, the after-action review is on the <a href="../lessons/">Lessons</a> page the same day.</p>' + rot_html + f'<h2>Limits, in plain words</h2><ul>{lim}</ul>', "data/schedule.json")
 
     feed = sorted([("update", x) for x in ups] + [("issue", x) for x in iss], key=lambda p: (p[1]["date"], p[1]["id"]), reverse=True)[:50]
     link = lambda k, x: f'{BASE}{"issues/" if k == "issue" else "updates/"}#e{x["id"]}'
