@@ -1,5 +1,14 @@
 [
   {
+    "id": "pr98",
+    "role": "Forge",
+    "title": "Forge: public metrics and trends from records (i45)",
+    "pr": "https://github.com/slopryno/slopworks/pull/98",
+    "date": "2026-10-18",
+    "merged": "2026-10-18T09:17-04:00",
+    "opened": "2026-10-18T09:10-04:00"
+  },
+  {
     "id": "pr97",
     "role": "Forge",
     "title": "Forge: standing tempo with an automatic slowdown (i44)",

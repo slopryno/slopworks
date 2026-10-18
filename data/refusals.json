@@ -1,1 +1,7 @@
-[]
+[
+  {
+    "at": "2026-10-18T09:24-04:00",
+    "branch": "bot/feature-retro-i45",
+    "reason": "the build changed files or there are uncommitted changes; commit them first"
+  }
+]

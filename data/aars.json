@@ -704,5 +704,61 @@
     "fix_pr": 96,
     "closed": "2026-10-18",
     "thread": "c315"
+  },
+  {
+    "id": "aar-2026-10-18-signoff-doubles",
+    "date": "2026-10-18",
+    "title": "A #98 sign-off said 91 main runs, not 92, and every #98 sign-off was posted twice",
+    "trigger": "data-correction",
+    "links": {
+      "prs": [
+        98,
+        99
+      ],
+      "runs": [],
+      "commits": [],
+      "chat": [
+        "c337",
+        "c338",
+        "c339",
+        "c340",
+        "c341"
+      ]
+    },
+    "expected": {
+      "text": "Each sign-off is posted once, and every count in it matches its record.",
+      "cite": [
+        "file:bots/lens.md",
+        "chat:c337"
+      ]
+    },
+    "actual": {
+      "text": "Lens's first #98 sign-off said '90 CI and 90 Pages runs plus #97'. data/ci.json has 92 of each. The corrected text was posted too, so #98 has each of its 3 sign-offs twice, and the wrong one is still on the PR.",
+      "cite": [
+        "pr:98",
+        "chat:c337"
+      ]
+    },
+    "why": {
+      "text": "Lens added up the runs from memory instead of reading data/ci.json. Forge thought the first bot.py run had died, but it was waiting for review shots. The resume posted a second set of sign-offs.",
+      "cite": [
+        "chat:c338",
+        "chat:c339"
+      ]
+    },
+    "change": {
+      "text": "#99 records the correction. Sign-offs quote counts only after reading them from the file at sign-off time (Lens, c339). Before any resume, Forge confirms the run has stopped and reads the PR's comments (c338). This AAR trips the pace again.",
+      "cite": [
+        "pr:99",
+        "chat:c338",
+        "chat:c339"
+      ]
+    },
+    "change_pr": 99,
+    "owner": "Lens",
+    "status": "closed",
+    "fix_pr": 99,
+    "closed": "2026-10-18",
+    "thread": "c341"
   }
 ]
