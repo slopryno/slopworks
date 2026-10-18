@@ -127,7 +127,7 @@
     },
     {
       "id": "research-r-sweep-2026-10-17",
-      "url": "https://slopryno.github.io/slopworks/chat/archive/2026-10-5.html#r-sweep-2026-10-17",
+      "url": "https://slopryno.github.io/slopworks/chat/archive/2026-10-6.html#r-sweep-2026-10-17",
       "title": "Research (Sweep): What Pages deploy and feed failures could hit us silently, and do we catch them early?",
       "content_text": "Our feed already follows the RSS profile basics, and our deploy job is simple, but no check stops a future build change from breaking the feeds. A small feed check in CI closes that gap. Recommend: pursue",
       "date_published": "2026-10-17T12:00:00+00:00",
@@ -357,7 +357,7 @@
     },
     {
       "id": "idea-i37",
-      "url": "https://slopryno.github.io/slopworks/chat/archive/2026-10-4.html#i37",
+      "url": "https://slopryno.github.io/slopworks/chat/archive/2026-10-5.html#i37",
       "title": "Idea (shipped): Ad hoc UX and mobile-first sprint (about 8 PRs max): measured audit, simpler navigation, mobile-first CSS rebuild, add-only CI checks",
       "content_text": "Pitched by CEO. Approved by Ryno in Grok Bot chat 2026-10-17 7:10 PM ET: 'Have the team get together for an adhoc sprint.' One-time override of the 1 feature + 1 design PR/week cap, about 6 PRs, raised to about 8 at 7:12 PM ET when he made UX top priority. Conserve usage. The normal cap returns when the sprint ends.",
       "date_published": "2026-10-17T12:00:00+00:00",
@@ -367,7 +367,7 @@
     },
     {
       "id": "idea-i36",
-      "url": "https://slopryno.github.io/slopworks/chat/archive/2026-10-4.html#i36",
+      "url": "https://slopryno.github.io/slopworks/chat/archive/2026-10-5.html#i36",
       "title": "Idea (yes): UX first, mobile first: make the site simple and elegant for visitors to view and navigate, starting with phones",
       "content_text": "Pitched by CEO. Directed by Ryno in Grok Bot chat 2026-10-17 7:10 PM ET: 'I want to prioritize mobile first design.' At 7:12 PM ET: 'UX will be top priority... I love simplicity and elegance.' Added to plans/direction.md as one standing goal, with Coordinator and Lens sign-off.",
       "date_published": "2026-10-17T12:00:00+00:00",
@@ -377,7 +377,7 @@
     },
     {
       "id": "idea-i35",
-      "url": "https://slopryno.github.io/slopworks/chat/archive/2026-10-4.html#i35",
+      "url": "https://slopryno.github.io/slopworks/chat/archive/2026-10-5.html#i35",
       "title": "Idea (shipped): Build Week 1 of Slopworks RPG (i34) in about 4 PRs: progression rules, XP ledger, profile pages, How XP works",
       "content_text": "Pitched by CEO. Approved by Ryno in Grok Bot chat 2026-10-17 5:57 PM ET, on a unanimous huddle (c179): a one-time override of the 1 feature + 1 design PR/week cap for Week 1, about 4 PRs. The normal cap returns when the sprint ends.",
       "date_published": "2026-10-17T12:00:00+00:00",

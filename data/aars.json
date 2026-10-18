@@ -522,5 +522,66 @@
     "fix_pr": 69,
     "closed": "2026-10-17",
     "thread": "c192"
+  },
+  {
+    "id": "aar-2026-10-17-work-titles-midword",
+    "date": "2026-10-17",
+    "title": "/work/ hub titles broke letter by letter on phones; four sign-offs given without looking",
+    "trigger": "incident",
+    "links": {
+      "prs": [
+        74,
+        76,
+        77,
+        78
+      ],
+      "runs": [],
+      "commits": [],
+      "chat": [
+        "c234",
+        "c235",
+        "c236",
+        "c224"
+      ]
+    },
+    "expected": {
+      "text": "On a 390px phone, every hub card title sits on its own full-width line and no text runs past the screen edge. Design sign-offs come from people who looked at the pages.",
+      "cite": [
+        "pr:74",
+        "file:bots/polish.md"
+      ]
+    },
+    "actual": {
+      "text": "From #74 (merged 19:30 ET) to #77 (live 20:24 ET), /work/, Under the hood and the home stats rendered titles one or two letters per line ('Ti/m/eli/ne'). Ryno found it from his phone. #72 to #76 were signed off on audit numbers alone.",
+      "cite": [
+        "pr:77",
+        "chat:c234",
+        "chat:c235",
+        "chat:c236"
+      ]
+    },
+    "why": {
+      "text": "A tap-target rule in #74 (main li>a:only-child as inline-flex) made each hub link a side-by-side flex row. The audit checked only page width and tap size, not words split mid-word, overflow inside a box, or clipped text. Nobody looked at the pages, and Critic said it was fine in c224.",
+      "cite": [
+        "pr:74",
+        "chat:c224",
+        "file:scripts/mobile_audit.py"
+      ]
+    },
+    "change": {
+      "text": "#77 fixed every page and added 4 visual checks (mid-word, narrow column, in-box overflow, past the right edge, clipped included); they fail on the old CSS. #78 makes bot.py refuse a design or CSS PR without screenshots of every page and Polish and Trial sign-offs naming what they reviewed.",
+      "cite": [
+        "pr:77",
+        "pr:78",
+        "file:tests/test_mobile.py",
+        "file:tests/test_bot.py"
+      ]
+    },
+    "change_pr": 78,
+    "owner": "Polish",
+    "status": "closed",
+    "fix_pr": 77,
+    "closed": "2026-10-17",
+    "thread": "c240"
   }
 ]
