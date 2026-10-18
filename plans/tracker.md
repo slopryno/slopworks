@@ -11,7 +11,7 @@ Slopworks is a Grok Bot tracker built, designed, and run by a team of Grok Bots,
 3. **Behind the scenes:** for each run, which bot found what, what Lens or Shield blocked, and which bot instructions changed and why.
 4. **The team:** each bot's role card, generated from `bots/`.
 5. **Team chat:** a running feed of the bots talking to each other during real work, like a team Slack channel. For example, Verify tells Scout "dropped 2, no source, try the official docs next time", Shield thanks Polish for catching contrast on the issues page, Trial pairs with Forge on a test, or Coordinator gives a shout-out in the Friday retro. Each message links the commit, PR, or run it's about.
-6. **Design log:** what Polish changed on the site, what's next in its backlog, and before and after screenshots, so you can watch the site get more polished over time.
+6. **Design log:** what Polish changed on the site, what's next in its backlog, and the review behind each change, so you can watch the site get more polished over time. Before and after screenshots are attached to each design PR as a CI artifact (`review-shots-<pr>`, 90 days), never committed to the repo (Ryno, 2026-10-17).
 
 ## Data
 - Entries are stored as JSON in `data/updates.json`, `data/issues.json`, and `data/runs.json`, and the static site renders them. No server, and no API calls from visitors' browsers.
@@ -279,7 +279,7 @@ Every change, including data, site code, design, features, bot instructions, pla
   - The README: a banner, a one-line pitch, the "built and designed by Grok Bots" credit, live badges (CI, last run, entry count, design score) generated from repo data with no outside badge services, a team table, a "how it works" diagram, and links to the site, the feeds, and the schedule.
   - Repo extras: description, topics, website link, a social preview image, release notes formatting, and well-organized `docs/`.
   - Optionally, your profile README (`slopryno/slopryno`) with a pinned Slopworks card. This is only if you say so, since it's your personal page.
-  - Everything goes through a reviewed `bot/design-*` PR with before and after screenshots. Settings changes like topics and the social image are applied by the bots after review.
+  - Everything goes through a reviewed `bot/design-*` PR with its screenshots as the PR's CI artifact. Settings changes like topics and the social image are applied by the bots after review.
 - If you reject a design PR, the reason goes into `bots/polish.md` through the Advisor so it doesn't pitch the same thing again.
 
 ## Success after 2 weeks
@@ -324,3 +324,8 @@ Readers see exactly what to expect:
 - Coverage is only as good as public posts. Quiet fixes won't show up.
 - The bots run as `slopryno`, so enforcement relies on the CI gates and the merge rule, not GitHub identities. Reviewer roles are separate instructions in one routine, not separate accounts.
 - The routine depends on Slopbot's computer and X access. A missed day gets reported, not hidden.
+
+## Repo hygiene (Ryno, 2026-10-17)
+- **Lean, clean and organized.** The repo holds source, data, docs and the built site, nothing else. `scripts/check.py` enforces the budgets on every PR: the tracked tree stays under 4 MB, each file under 512 KB, and no files that `.gitignore` excludes.
+- **No screenshots or temp files in git.** Images live only in `site/assets/` and `site/badges/`. Review screenshots go to the box (`/workspace/slopworks-review/<pr>/`) and to the PR's `review-shots-<pr>` CI artifact. Temp, cache and build output are ignored, and CI fails a PR that adds them.
+- **Owner:** Sweep, with a monthly repo hygiene pass (see the schedule). No history rewrites.

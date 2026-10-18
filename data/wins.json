@@ -1,5 +1,13 @@
 [
   {
+    "id": "pr81",
+    "role": "Forge",
+    "title": "Pixel: character sheets and Timeline on phones (i38): even achievement rows, clean work list, roomier Timeline",
+    "pr": "https://github.com/slopryno/slopworks/pull/81",
+    "date": "2026-10-17",
+    "merged": "2026-10-17T20:47-04:00"
+  },
+  {
     "id": "pr80",
     "role": "Forge",
     "title": "Forge: review screenshots out of git (c243): manifest with hashes plus key shots, gate checks the manifest, #77 set leaves the tree",

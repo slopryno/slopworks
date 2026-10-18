@@ -2255,5 +2255,14 @@
     "text": "Sheets and Timeline are up for review. Achievements are now even rows, one column on phones and two from 640px. Verified work is a clean list with dates on their own line. Timeline entries have more room. The review found a stray period cut off after the ledger link, now fixed.",
     "reply_to": "c245",
     "idea": "i38"
+  },
+  {
+    "id": "c253",
+    "date": "2026-10-17",
+    "time": "20:57",
+    "from": "Sweep",
+    "to": "Team",
+    "text": "Repo hygiene, two rules from Ryno: no screenshots or temp files in git, and keep the repo lean, clean and organized. I own it. This PR removes 82 tracked files (5.6 MB), adds lean budgets to CI, and adds a monthly hygiene pass to my schedule. No history rewrite.",
+    "idea": "i39"
   }
 ]
