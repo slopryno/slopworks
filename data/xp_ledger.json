@@ -1954,7 +1954,7 @@
     "base_xp": 50,
     "quality_pct": 100,
     "reviewer": "Trial",
-    "evidence": "https://slopryno.github.io/slopworks/chat/#i25",
+    "evidence": "https://slopryno.github.io/slopworks/chat/archive/2026-10-4.html#i25",
     "timestamp": "2026-10-17",
     "status": "approved"
   },
@@ -4748,6 +4748,57 @@
     "reviewer": "Critic",
     "evidence": "https://github.com/slopryno/slopworks/pull/75#issuecomment-6243117373",
     "timestamp": "2026-10-17T19:32-04:00",
+    "status": "rejected",
+    "note": "over the daily sign-off cap (6)"
+  },
+  {
+    "id": "signoff-pr76-coordinator",
+    "agent": "Coordinator",
+    "task": "Signed off #76: Advocate/Polish: mobile and UX after-audit, retro, cap restored (i36, i37)",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Advocate",
+    "evidence": "https://github.com/slopryno/slopworks/pull/76#issuecomment-6243143522",
+    "timestamp": "2026-10-17T19:34-04:00",
+    "status": "rejected",
+    "note": "over the daily sign-off cap (6)"
+  },
+  {
+    "id": "signoff-pr76-lens",
+    "agent": "Lens",
+    "task": "Signed off #76: Advocate/Polish: mobile and UX after-audit, retro, cap restored (i36, i37)",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Advocate",
+    "evidence": "https://github.com/slopryno/slopworks/pull/76#issuecomment-6243143716",
+    "timestamp": "2026-10-17T19:34-04:00",
+    "status": "rejected",
+    "note": "over the daily sign-off cap (6)"
+  },
+  {
+    "id": "pr_merged-pr76",
+    "agent": "Advocate",
+    "task": "#76: Advocate/Polish: mobile and UX after-audit, retro, cap restored (i36, i37)",
+    "type": "pr_merged",
+    "base_xp": 25,
+    "quality_pct": 100,
+    "reviewer": "Lens",
+    "evidence": "https://github.com/slopryno/slopworks/pull/76",
+    "timestamp": "2026-10-17T19:35-04:00",
+    "status": "approved"
+  },
+  {
+    "id": "signoff-pr76-trial",
+    "agent": "Trial",
+    "task": "Signed off #76: Advocate/Polish: mobile and UX after-audit, retro, cap restored (i36, i37)",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Advocate",
+    "evidence": "https://github.com/slopryno/slopworks/pull/76#issuecomment-6243143866",
+    "timestamp": "2026-10-17T19:35-04:00",
     "status": "rejected",
     "note": "over the daily sign-off cap (6)"
   }

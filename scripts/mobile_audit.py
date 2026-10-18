@@ -69,12 +69,43 @@ function measure(frame, job){
       for (; s && s !== d.body; s = s.parentElement) { const ox = w.getComputedStyle(s).overflowX; if (ox === 'auto' || ox === 'scroll') { ok = true; break; } }
       if (!ok) wideUnscrolled++; } });
   r.tables = tables; r.wide_tables = wide; r.wide_tables_unscrolled = wideUnscrolled;
+  // Visual-defect checks added after the 2026-10-17 /work/ incident (AAR): the metric audit missed mid-word breaks,
+  // element-level overflow, and anything the document's scrollWidth doesn't report.
+  const scroller = el => { for (let s = el; s && s !== d.documentElement; s = s.parentElement) { const ox = w.getComputedStyle(s).overflowX; if (ox === 'auto' || ox === 'scroll') return s; } return null; };
+  const name = el => (el.tagName.toLowerCase() + (el.className && typeof el.className === 'string' ? '.' + el.className.split(' ')[0] : '') + ' "' + (el.textContent||'').trim().replace(/\s+/g,' ').slice(0, 30) + '"');
+  const shown = el => !el.closest('[hidden], .skip') && !(el.closest('details:not([open])') && !el.closest('summary'));
+  let midword = [], boxes = [], past = [], narrow = [];
+  const tw2 = d.createTreeWalker(d.body, NodeFilter.SHOW_TEXT); let tn;
+  while ((tn = tw2.nextNode())) { const p = tn.parentElement; if (!p || !shown(p)) continue;
+    { const all = d.createRange(); all.selectNodeContents(tn); const rr = all.getBoundingClientRect();  // text can spill past its box
+      if (rr.width && rr.right > vw + 1 && !scroller(p) && past.length < 20) past.push('text in ' + name(p) + ' right edge ' + Math.round(rr.right) + ' > ' + vw); }
+    const re = /[^\s\-\u2013\u2014\/]+/g, s = tn.textContent; let m;
+    while ((m = re.exec(s))) { if (m[0].length < 2) continue;
+      const rg = d.createRange(); rg.setStart(tn, m.index); rg.setEnd(tn, m.index + m[0].length);
+      const rs = [...rg.getClientRects()].filter(x => x.width > 0); if (rs.length < 2) continue;
+      if (Math.abs(rs[rs.length - 1].top - rs[0].top) < 2) continue;  // same line, split by markup only
+      const natural = rs.reduce((a, x) => a + x.width, 0);
+      let a0 = m.index, b0 = m.index + m[0].length; while (a0 > 0 && !/\s/.test(s[a0 - 1])) a0--; while (b0 < s.length && !/\s/.test(s[b0])) b0++;
+      const token = s.slice(a0, b0);  // the whole space-free run: a URL, path, or email is allowed to break between its parts
+      if (natural > 0.75 * vw || (/[@\/]/.test(token) && token.length >= 20)) continue;  // too long for any phone line: breaking is right
+      if (midword.length < 20) midword.push('"' + m[0] + '" in ' + name(p) + ' split over ' + rs.length + ' lines'); } }
+  d.querySelectorAll('body *').forEach(el => { if (!shown(el)) return; const cs = w.getComputedStyle(el); if (cs.display === 'none' || cs.display === 'contents') return;
+    const b = el.getBoundingClientRect(); if (!b.width && !b.height) return;
+    const inScroll = scroller(el.parentElement);
+    if (el.clientWidth > 0 && el.scrollWidth > el.clientWidth + 1 && cs.overflowX !== 'auto' && cs.overflowX !== 'scroll' && !inScroll && boxes.length < 20)
+      boxes.push(name(el) + ' scrollWidth ' + el.scrollWidth + ' > clientWidth ' + el.clientWidth);
+    if (b.right > vw + 1 && !inScroll && past.length < 20) past.push(name(el) + ' right edge ' + Math.round(b.right) + ' > ' + vw);
+    const lines = () => { const rg = d.createRange(); rg.selectNodeContents(el); return new Set([...rg.getClientRects()].filter(x => x.width > 0).map(x => Math.round(x.top))).size; };
+    if (cs.display !== 'inline' && el.children.length === 0 && (el.textContent||'').trim().length >= 6 && el.clientWidth > 0 && el.clientWidth < 3 * parseFloat(cs.fontSize) && lines() > 1 && narrow.length < 20)
+      narrow.push(name(el) + ' only ' + el.clientWidth + 'px wide'); });
+  r.doc_h = d.documentElement.scrollHeight;
+  r.midword_breaks = midword; r.box_overflow = boxes; r.past_right_edge = past; r.narrow_text = narrow;
   return r;
 }
 let i = 0; const f = document.createElement('iframe'); f.style.border = '0'; document.body.appendChild(f);
 function next(){ if (i >= JOBS.length) { document.getElementById('out').textContent = JSON.stringify(out); return; }
   const j = JOBS[i++]; f.style.width = j.width + 'px'; f.style.height = j.fold + 'px';
-  f.onload = () => { try { out.push(measure(f, j)); } catch (e) { out.push({page: j.page, width: j.width, error: String(e)}); } next(); };
+  f.onload = () => { try { if (j.font) { const st = f.contentDocument.createElement('style'); st.textContent = 'body,body *{font-family:' + j.font + ' !important}'; f.contentDocument.head.appendChild(st); f.contentDocument.body.offsetHeight; } out.push(measure(f, j)); } catch (e) { out.push({page: j.page, width: j.width, error: String(e)}); } next(); };
   f.src = j.url; }
 next();
 </script>"""
@@ -138,10 +169,10 @@ def chrome():
     return None
 
 
-def measure(widths, dark=False, only=None):
+def measure(widths, dark=False, only=None, font=None):
     exe = chrome()
     if not exe: raise RuntimeError("no Chrome or Chromium found")
-    jobs = [{"page": k, "width": w, "fold": FOLD.get(w, 800), "url": (SITE / k).as_uri()} for w in widths for k in (only or pages())]
+    jobs = [{"page": k, "width": w, "fold": FOLD.get(w, 800), "url": (SITE / k).as_uri(), "font": font} for w in widths for k in (only or pages())]
     with tempfile.TemporaryDirectory() as tmp:
         h = Path(tmp) / "harness.html"
         h.write_text(HARNESS % (json.dumps(jobs), MIN_TAP))
@@ -165,6 +196,8 @@ def summary(rows):
         s["pages_with_small_targets"] += r["small_targets"] > 0; s["inline_links"] += r["inline_links"]; s["tiny_text"] += r["tiny_text"]
         s["low_contrast"] += r["low_contrast"]; s["wide_tables_unscrolled"] += r["wide_tables_unscrolled"]; s["tables"] += r["tables"]
         s["max_line_chars"] = max(s["max_line_chars"], r["max_line_chars"])
+        for k in ("midword_breaks", "box_overflow", "past_right_edge", "narrow_text"):
+            s[k] = s.get(k, 0) + len(r.get(k, []))
     return by
 
 
@@ -172,6 +205,7 @@ if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--widths", default="360,390,414,768,1280")
     ap.add_argument("--dark", action="store_true")
+    ap.add_argument("--font", help='force a font, e.g. "DejaVu Sans" (wide) to stress-test text that only fits in the default font')
     a = ap.parse_args()
-    rows = measure([int(w) for w in a.widths.split(",")], a.dark)
+    rows = measure([int(w) for w in a.widths.split(",")], a.dark, font=a.font)
     print(json.dumps({"summary": summary(rows), "static": static_numbers(), "rows": rows}, indent=1))
