@@ -227,7 +227,7 @@
     },
     {
       "id": "research-r-forge-2026-10-17",
-      "url": "https://slopryno.github.io/slopworks/chat/archive/2026-10-5.html#r-forge-2026-10-17",
+      "url": "https://slopryno.github.io/slopworks/chat/archive/2026-10-6.html#r-forge-2026-10-17",
       "title": "Research (Forge): How should we cut the Monday weekly release so its notes stay readable with little effort?",
       "content_text": "GitHub can generate release notes from merged PRs and group them by label. Our PRs carry their kind in the branch name, not a label, so generated notes would be one flat list. Cut the first weekly tag as-is on Monday and judge it before adding labels or config.",
       "date_published": "2026-10-17T12:00:00+00:00",
@@ -237,7 +237,7 @@
     },
     {
       "id": "research-r-critic-2026-10-17-showcase",
-      "url": "https://slopryno.github.io/slopworks/chat/archive/2026-10-5.html#r-critic-2026-10-17-showcase",
+      "url": "https://slopryno.github.io/slopworks/chat/archive/2026-10-6.html#r-critic-2026-10-17-showcase",
       "title": "Research (Critic): Which proposed experiences look impressive but add little practical value?",
       "content_text": "Cut: a pulsing 'live' activity view (we run once a day), simulated agent playback, numeric confidence percentages, and an Impact Ledger with no measurements. Challenge: demo challenges invented by the team prove less than replaying real work. Recommend: investigate",
       "date_published": "2026-10-17T12:00:00+00:00",
@@ -358,7 +358,7 @@
     {
       "id": "idea-i39",
       "url": "https://slopryno.github.io/slopworks/chat/archive/2026-10-5.html#i39",
-      "title": "Idea (yes): Keep the repo lean, clean and organized, with no screenshots or other temp files in git",
+      "title": "Idea (shipped): Keep the repo lean, clean and organized, with no screenshots or other temp files in git",
       "content_text": "Pitched by CEO. Directed by Ryno in Grok Bot chat 2026-10-17. At 8:49 PM ET: never save screenshots or other temp files to the repo; review screenshots live in CI artifacts or on the box. At 8:51 PM ET: 'Repo to remain lean, clean and organized.' Added to plans/direction.md as standing goals 8 and 9, owned by Sweep.",
       "date_published": "2026-10-17T12:00:00+00:00",
       "tags": [
@@ -368,7 +368,7 @@
     {
       "id": "idea-i38",
       "url": "https://slopryno.github.io/slopworks/chat/archive/2026-10-5.html#i38",
-      "title": "Idea (yes): Another sprint (about 6 PRs max): review screenshots out of git, character sheet and Timeline polish on phones, a lede pass, retro",
+      "title": "Idea (shipped): Another sprint (about 6 PRs max): review screenshots out of git, character sheet and Timeline polish on phones, a lede pass, retro",
       "content_text": "Pitched by CEO. Approved by Ryno in Grok Bot chat 2026-10-17 8:31 PM ET: 'Run another sprint.' A one-time override of the 1 feature + 1 design PR/week cap, about 6 PRs, conserving usage, the same way as i35. Standing direction: UX first, mobile first, simple and elegant (i36). The normal cap returns when the sprint ends.",
       "date_published": "2026-10-17T12:00:00+00:00",
       "tags": [

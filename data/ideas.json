@@ -945,7 +945,7 @@
     "helps": "Visitors on phones, and the repo's size for anyone cloning it",
     "effort": "M",
     "builder": "Polish",
-    "state": "yes",
+    "state": "shipped",
     "comments": [],
     "decided": "2026-10-17",
     "decided_by": "CEO",
@@ -955,7 +955,9 @@
       "Review screenshots no longer committed in full: a manifest with hashes plus a few small key shots",
       "Every design or CSS PR passes the screenshot review gate, with real Problems found lines",
       "Retro posted and the normal cap restored"
-    ]
+    ],
+    "acceptance_verified_by": "Trial",
+    "shipped": "#79 to #84: kickoff, screenshots out of git (then fully out under i39, #82), sheets and Timeline on phones, lede pass, retro with the cap restored (c255 to c259)."
   },
   {
     "id": "i39",
@@ -966,10 +968,12 @@
     "helps": "Anyone cloning or reading the repo, and the bots that work in it",
     "effort": "S",
     "builder": "Sweep",
-    "state": "yes",
+    "state": "shipped",
     "comments": [],
     "decided": "2026-10-17",
     "decided_by": "CEO",
-    "reason": "Directed by Ryno in Grok Bot chat 2026-10-17. At 8:49 PM ET: never save screenshots or other temp files to the repo; review screenshots live in CI artifacts or on the box. At 8:51 PM ET: 'Repo to remain lean, clean and organized.' Added to plans/direction.md as standing goals 8 and 9, owned by Sweep."
+    "reason": "Directed by Ryno in Grok Bot chat 2026-10-17. At 8:49 PM ET: never save screenshots or other temp files to the repo; review screenshots live in CI artifacts or on the box. At 8:51 PM ET: 'Repo to remain lean, clean and organized.' Added to plans/direction.md as standing goals 8 and 9, owned by Sweep.",
+    "acceptance_verified_by": "Trial",
+    "shipped": "#82: 82 tracked files (5.6 MB) removed, no history rewrite; lean CI checks; review screenshots as a CI artifact; monthly Sweep hygiene item."
   }
 ]
