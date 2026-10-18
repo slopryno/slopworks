@@ -140,5 +140,53 @@ class VisualReview(unittest.TestCase):
                 bot.plan_review(9, "feature", paths, bad, self.make())
 
 
+class ReviewManifest(unittest.TestCase):
+    """c243: the full screenshot set stays out of git; the PR commits a manifest with hashes that bot.py checks."""
+    good = VisualReview.good
+
+    def make(self, drop=None, tamper=None):
+        import shots, tempfile
+        root, full = Path(tempfile.mkdtemp()), Path(tempfile.mkdtemp())
+        for page in ("index.html", "work/index.html"):
+            (root / "site" / page).parent.mkdir(parents=True, exist_ok=True)
+            (root / "site" / page).write_text("<p>x")
+            for theme in shots.THEMES:
+                for w in shots.WIDTHS:
+                    f = full / f"{theme}-{w}" / f"{shots.slug(page)}.part1.webp"
+                    f.parent.mkdir(parents=True, exist_ok=True)
+                    f.write_bytes(f"{theme}{w}{page}".encode())
+        m = shots.manifest(9, full)
+        if drop:
+            del m["files"][drop]
+        if tamper:
+            (full / tamper).write_bytes(b"changed after the review")
+        d = root / "docs/design/review/9"
+        d.mkdir(parents=True)
+        (d / "manifest.json").write_text(json.dumps(m))
+        return root, full
+
+    def check(self, root, full, paths=("site/style.css", "docs/design/review/9/manifest.json")):
+        bot.plan_review(9, "feature", list(paths), self.good, root, full=full)
+
+    def test_passes_with_a_matching_manifest(self):
+        self.check(*self.make())
+
+    def test_refuses_a_page_missing_from_the_manifest(self):
+        with self.assertRaisesRegex(bot.Refused, "dark-768/work"):
+            self.check(*self.make(drop="dark-768/work.part1.webp"))
+
+    def test_refuses_files_changed_after_the_manifest(self):
+        with self.assertRaisesRegex(bot.Refused, "don't match"):
+            self.check(*self.make(tamper="light-390/home.part1.webp"))
+
+    def test_refuses_a_full_set_committed_again(self):
+        root, full = self.make()
+        big = root / "docs/design/review/9/light-360/home.part1.webp"
+        big.parent.mkdir(parents=True)
+        big.write_bytes(b"x" * (bot.REVIEW_BUDGET + 1))
+        with self.assertRaisesRegex(bot.Refused, "not the full set"):
+            self.check(root, full, ("site/style.css", "docs/design/review/9/manifest.json", "docs/design/review/9/light-360/home.part1.webp"))
+
+
 if __name__ == "__main__":
     unittest.main()
