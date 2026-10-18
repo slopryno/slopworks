@@ -148,6 +148,17 @@ def _typed(value, schema, where):
     return value
 
 
+def pace_line(t, up):
+    """Under the hood (i44): the pace the bots work at, straight from data/tempo.json (derived from wins and AARs)."""
+    lim = t["limits"][t["mode"]]
+    why = (f' since <a href="{up}lessons/#{e(t["tripped_by"])}">{e(t["tripped_by"])}</a> (#{t["trip_pr"]})' if t["mode"] == "slowed" else "")
+    clean = f', {t["clean_prs"]} of {t["clean_needed"]} clean PRs{why}' if t["mode"] == "slowed" else ""
+    return (f'<p class="pace"><strong>Pace: {e(t["mode"])}</strong>{clean}. Up to {lim["prs_per_day"]} merged PRs a day '
+            f'({lim["sprints_per_day"]} {"sprint" if lim["sprints_per_day"] == 1 else "sprints"} of up to {lim["prs_per_sprint"]}). '
+            f'A revert, CI failure on main, failed deploy, or incident or data-correction AAR slows it until {t["clean_needed"]} clean PRs merge. '
+            f'<a href="https://github.com/slopryno/slopworks/blob/main/data/tempo.json">Source</a></p>')
+
+
 def load(name):
     """Typed loader: parse, validate against data/schema/<name>.schema.json, and return strict records."""
     sys.path.insert(0, str(ROOT / "scripts"))
@@ -930,7 +941,7 @@ def build():
     def hub(pages):
         return '<ul class="hub">' + "".join(f'<li><a href="../{s}"><strong>{e(t)}</strong><span>{e(DESCRIPTIONS[s])}</span></a></li>' for s, t in pages) + "</ul>"
     files["work/index.html"] = page("work/", "Work", "What the team has made, and how it went.", hub(WORK), "data/cases.json")
-    files["hood/index.html"] = page("hood/", "Under the hood", "How the site runs: the tracker, the team's chat, and the logs. The site has no forms, scripts, or visitor input.", hub(HOOD), "data/runs.json")
+    files["hood/index.html"] = page("hood/", "Under the hood", "How the site runs: the tracker, the team's chat, and the logs. The site has no forms, scripts, or visitor input.", hub(HOOD) + pace_line(load("tempo"), "../"), "data/runs.json")
     files["design/index.html"] = page("design/", "Design log", "What Polish, the design bot, changed and what's next. One small design change a week at most, each reviewed from screenshots of every page attached to its PR as a CI artifact.",
                                       "<h2>Shipped</h2>" + "".join(map(card, shipped)) + "<h2>Up next (ranked)</h2>" + "".join(map(card, backlog)), "data/design_backlog.json")
 

@@ -714,6 +714,27 @@ def tracked_files():
     return [f for f in out if (ROOT / f).is_file()]
 
 
+def tempo_errors(root=None):
+    """i44 (Ryno 2026-10-18): data/tempo.json must equal what the records give, and no merged PR since the decision
+    may have gone over its day's limit (18 a day normal, 3 a day slowed). Refusals are logged in data/refusals.json."""
+    import tempo
+    root = root or ROOT
+    errs = []
+    load = lambda n: json.loads((root / f"data/{n}.json").read_text())
+    for name in ("tempo", "refusals"):
+        try:
+            errs += [f"data/{name}.json {e}" for e in validate(load(name), load_schema(name))]
+        except (OSError, ValueError) as err:
+            errs.append(f"data/{name}.json: {err}")
+    if errs:
+        return errs
+    want = tempo.derive(load("wins"), load("aars"))
+    if load("tempo") != want:
+        errs.append("data/tempo.json doesn't match data/wins.json and data/aars.json; run scripts/wins.py (or scripts/tempo.py)")
+    errs += [f"tempo: {v}" for v in want["violations"]]
+    return errs
+
+
 def run_repo():
     errs = []
     files = tracked_files()
@@ -756,6 +777,7 @@ def run_repo():
     errs += showcase_errors(data)
     errs += aar_errors(data.get("aars", []), data.get("chat", []), data.get("runs", []))
     errs += chat_future_errors(data.get("chat", []))
+    errs += tempo_errors()
     errs += comms_feed_errors(files)
     css = sum((ROOT / f).stat().st_size for f in files if f.startswith("site/") and f.endswith(".css"))
     for f in files:
