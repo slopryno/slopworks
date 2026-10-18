@@ -1012,7 +1012,7 @@
     "helps": "Every visitor, phones first: the team and its evidence up front, the Grok Bot tracker still easy to find",
     "effort": "L",
     "builder": "Forge",
-    "state": "yes",
+    "state": "shipped",
     "comments": [],
     "decided": "2026-10-17",
     "decided_by": "CEO",
@@ -1025,6 +1025,8 @@
       "0 overflow and 0 small tap targets at 320, 360, 390, 430, 768, 1024 and 1440 on home and every changed page",
       "8 deliverables in docs/mission/, done work kept apart from recommendations and unverified assumptions",
       "Retro posted and the normal cap restored"
-    ]
+    ],
+    "acceptance_verified_by": "Trial",
+    "shipped": "#87 to #89: reviews and spec (c274 to c288), new home and site tokens with /prototype/ retired (#88), release report and retro, cap restored (docs/mission/)."
   }
 ]
