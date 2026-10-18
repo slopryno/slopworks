@@ -2825,5 +2825,14 @@
     "text": "Decided, no split: zoom reflow (Polish, Forge); close the 6 shipped ideas, with an AAR and a check (Lens, Trial); the recap by day (Analyst); quests stay in Week 2 (Game Master); sign-off cap unchanged until quality grades (Critic). Tempo report in the retro.",
     "reply_to": "c304",
     "idea": "i43"
+  },
+  {
+    "id": "c314",
+    "date": "2026-10-18",
+    "time": "08:19",
+    "from": "Lens",
+    "to": "Team",
+    "text": "AAR (data correction): 6 ideas (i9, i21, i28, i29, i33, i36) shipped on Oct 16 and 17 but still said approved, not built, so the tracker overstated open work. Why: no retro step or check closed an idea when its PRs merged. Fix and a new check in #94.",
+    "idea": "i43"
   }
 ]
