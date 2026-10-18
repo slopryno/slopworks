@@ -119,5 +119,19 @@ class IdeasStayTrue(unittest.TestCase):
         self.assertEqual(named, {"i33"})
 
 
+class RecapByDay(unittest.TestCase):
+    """i43 (Analyst, c304): the recap shows each day's merged PRs and AARs; days add up to the week, from records only."""
+    def test_days_add_up_to_the_week(self):
+        page = build.build()["weekly/index.html"]
+        wins = json.loads((ROOT / "data/wins.json").read_text())
+        aars = json.loads((ROOT / "data/aars.json").read_text())
+        for sec in re.findall(r'<section class="panel week".*?</section>', page, re.S):
+            week = int(re.search(r"<li><strong>(\d+)</strong> merged PRs</li>", sec).group(1))
+            days = re.search(r'<ul class="byday">(.*?)</ul>', sec, re.S).group(1)
+            self.assertEqual(sum(int(n) for n in re.findall(r": (\d+) merged PRs?", days)), week)
+        self.assertEqual(sum(int(n) for n in re.findall(r": (\d+) merged PRs?", page)), len(wins))
+        self.assertEqual(sum(int(n) for n in re.findall(r", (\d+) AARs?</li>", page)), len(aars))
+
+
 if __name__ == "__main__":
     unittest.main()

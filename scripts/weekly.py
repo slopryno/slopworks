@@ -54,12 +54,18 @@ def render(b, items, wins, ups, iss, aars, objectives, up="../"):
         latest = lambda xs: [max(xs, key=lambda x: (x["date"], x["time"] or ""))] if xs else []
         iss_line = ('<li><strong>Issue tracked:</strong> <span class="sub">none added or fixed this week</span></li>' if not issues else
                     "".join(f'<li><strong>Issue tracked:</strong> {e(i["title"])} ({e(i["state"])}) <a href="{up}issues/#e{e(i["id"])}">known issue</a></li>' for i in issues[-1:]))
+        day = lambda d: d.isoformat()
+        by_day = "".join(
+            f'<li><strong>{nice(d)}</strong>: {n} merged {"PR" if n == 1 else "PRs"}, {k} {"AAR" if k == 1 else "AARs"}</li>'
+            for d in (s + timedelta(days=j) for j in range(days))
+            for n, k in [(sum((w.get("merged") or w["date"])[:10] == day(d) for w in wins), sum(x["date"] == day(d) for x in aars))])
         nxt = "".join(f'<li>{e(o["role"])}: {e(o["objective"])}</li>' for o in objectives) or '<li class="sub">No open objectives on record.</li>'
         out.append(
             f'<section class="panel week" aria-labelledby="w{n}"><p class="kicker">{"\u2713 " if final else ""}{label}</p>'
             f'<h2 id="w{n}">Week {n}: {nice(s)} to {nice(t)}</h2>'
             + ("" if final else f'<p class="sub">Partial week, counted to the newest record ({e(stamp)}). Nothing here is projected to a full week.</p>')
             + '<ul class="status wk">' + "".join(f"<li><strong>{v}</strong> {l}</li>" for v, l in counts) + "</ul>"
+            + f'<h3>By day</h3><ul class="byday">{by_day}</ul><h3>Highlights</h3>'
             + "<ul class=\"recap\">" + pick("Top accomplishment (the completed sprint with the most PRs)", sprints, "no sprint completed yet")
             + pick("Discovery (newest research round)", latest(research), "no research round yet")
             + iss_line + pick("Lesson (newest after-action review)", latest(lessons), "none needed this week")
