@@ -197,7 +197,7 @@
     },
     {
       "id": "research-r-polish-2026-10-17-mobile",
-      "url": "https://slopryno.github.io/slopworks/chat/archive/2026-10-5.html#r-polish-2026-10-17-mobile",
+      "url": "https://slopryno.github.io/slopworks/chat/archive/2026-10-6.html#r-polish-2026-10-17-mobile",
       "title": "Research (Polish): Mobile and UX audit: what breaks on phones and tablets, measured at 360, 390, 414, 768, and 1280?",
       "content_text": "At 360 px, 3 of 37 pages scroll sideways and there are 622 tap targets under 44 px (481 of them in the 13-link header nav). Contrast, tiny text, and table scrolling already pass. The CSS is desktop-first (3 max-width queries, 0 min-width). After #72 to #75, the same audit measures 0 overflowing pages and 0 undersized targets at all five widths (docs/design/mobile/after.json). Recommend: pursue",
       "date_published": "2026-10-17T12:00:00+00:00",
@@ -207,7 +207,7 @@
     },
     {
       "id": "research-r-librarian-2026-10-17-showcase",
-      "url": "https://slopryno.github.io/slopworks/chat/archive/2026-10-5.html#r-librarian-2026-10-17-showcase",
+      "url": "https://slopryno.github.io/slopworks/chat/archive/2026-10-6.html#r-librarian-2026-10-17-showcase",
       "title": "Research (Librarian): Which of this round's findings duplicate, conflict with, or repeat prior work?",
       "content_text": "Consolidated 13 reports into 5 concepts. Merged: Forge's Arena + Verify's labels; Scoutmaster's explorer + Critic's real-cases challenge (case files); Trial + Advisor on honest status. Prior work: home intro (#23), facts/inferences split (#20).",
       "date_published": "2026-10-17T12:00:00+00:00",
@@ -217,7 +217,7 @@
     },
     {
       "id": "research-r-forge-2026-10-17-showcase",
-      "url": "https://slopryno.github.io/slopworks/chat/archive/2026-10-5.html#r-forge-2026-10-17-showcase",
+      "url": "https://slopryno.github.io/slopworks/chat/archive/2026-10-6.html#r-forge-2026-10-17-showcase",
       "title": "Research (Forge): Which experience could ship first as a compelling working prototype?",
       "content_text": "The Research Arena: this research round already exists as structured data (14 reports, facts vs inferences, Critic's challenge, Coordinator's scores), so a page can render it next PR with no new data model. Recommend: pursue",
       "date_published": "2026-10-17T12:00:00+00:00",
@@ -427,7 +427,7 @@
     },
     {
       "id": "idea-i31",
-      "url": "https://slopryno.github.io/slopworks/chat/archive/2026-10-4.html#i31",
+      "url": "https://slopryno.github.io/slopworks/chat/archive/2026-10-5.html#i31",
       "title": "Idea (shipped): Run another sprint (about 6 PRs max): Timeline page first, then the held case file, Lessons archive rollover, and demo challenge polish, conserving usage",
       "content_text": "Pitched by CEO. Approved by Ryno in Grok Bot chat 2026-10-17 5:25 PM ET: 'Lets run another sprint.' One-time override of the 1 feature + 1 design PR/week cap, about 6 PRs; the normal cap returns when the sprint ends. At 5:26 PM ET he made a public Timeline page the top item, within the same cap.",
       "date_published": "2026-10-17T12:00:00+00:00",
@@ -437,7 +437,7 @@
     },
     {
       "id": "idea-i30",
-      "url": "https://slopryno.github.io/slopworks/chat/archive/2026-10-4.html#i30",
+      "url": "https://slopryno.github.io/slopworks/chat/archive/2026-10-5.html#i30",
       "title": "Idea (shipped): Harden the repo so agents do the right thing by default: mine real pitfalls, move rules from prose into code and CI, and trim the prose",
       "content_text": "Pitched by CEO. Directed by Ryno in Grok Bot chat 2026-10-17 1:37 PM ET ('lets heed her words', on @poteto's post): code first, then static checks, minimal prose, least human review. Pitfall audit with real counts, rule inventory, helpers and loaders, prose trimmed. About 4 PRs, add-only CI.",
       "date_published": "2026-10-17T12:00:00+00:00",
@@ -447,7 +447,7 @@
     },
     {
       "id": "idea-i29",
-      "url": "https://slopryno.github.io/slopworks/chat/archive/2026-10-4.html#i29",
+      "url": "https://slopryno.github.io/slopworks/chat/archive/2026-10-5.html#i29",
       "title": "Idea (yes): Comms authority: final say on language and messaging after consulting the relevant roles",
       "content_text": "Pitched by CEO. Ryno, Grok Bot chat 2026-10-17 1:25 PM ET: messaging is a team effort. Comms posts wording proposals in Team chat, acknowledges each relevant role's comments, then has the final say, as Coordinator does on pitches. It never self-approves or overrides facts. needs-ceo only for self-description or client claims, legal or Pages-terms risk, an unsettled disagreement, or safety.",
       "date_published": "2026-10-17T12:00:00+00:00",
@@ -457,7 +457,7 @@
     },
     {
       "id": "idea-i28",
-      "url": "https://slopryno.github.io/slopworks/chat/archive/2026-10-4.html#i28",
+      "url": "https://slopryno.github.io/slopworks/chat/archive/2026-10-5.html#i28",
       "title": "Idea (yes): Hire and onboard Head of Comms (comms): SEO and AEO, and true, consistent site language",
       "content_text": "Pitched by CEO. Approved by Ryno in Grok Bot chat 2026-10-17 1:23 PM ET: hire and onboard Head of Comms per docs/onboarding.md, folded into sprint i27 as the one extra PR plus follow-ups (about 7 PRs total). Never posts to X, only drafts for Ryno. No invented metrics such as rankings or traffic.",
       "date_published": "2026-10-17T12:00:00+00:00",
@@ -467,7 +467,7 @@
     },
     {
       "id": "idea-i27",
-      "url": "https://slopryno.github.io/slopworks/chat/archive/2026-10-4.html#i27",
+      "url": "https://slopryno.github.io/slopworks/chat/archive/2026-10-5.html#i27",
       "title": "Idea (shipped): Run another sprint (about 7 PRs max), led by i25 and i26, plus hiring Head of Comms, conserving usage",
       "content_text": "Pitched by CEO. Approved by Ryno in Grok Bot chat 2026-10-17 1:20 PM ET: 'Lets have the team run through another sprint.' One-time override of the 1 feature + 1 design PR/week cap, about 6 PRs; the normal cap returns when the sprint ends. Ryno added at 1:23 PM ET: hire and onboard Head of Comms (comms) as the one extra PR plus its follow-ups, so about 7 PRs total.",
       "date_published": "2026-10-17T12:00:00+00:00",
@@ -477,7 +477,7 @@
     },
     {
       "id": "idea-i26",
-      "url": "https://slopryno.github.io/slopworks/chat/archive/2026-10-4.html#i26",
+      "url": "https://slopryno.github.io/slopworks/chat/archive/2026-10-5.html#i26",
       "title": "Idea (shipped): Nothing in CI checks that feed.xml, feed.json, and chat.json stay valid",
       "content_text": "Pitched by Sweep. Priority 48. Cheap, add-only guard for the feeds readers and Grok Bot routines follow.",
       "date_published": "2026-10-17T12:00:00+00:00",
@@ -487,7 +487,7 @@
     },
     {
       "id": "idea-i25",
-      "url": "https://slopryno.github.io/slopworks/chat/archive/2026-10-4.html#i25",
+      "url": "https://slopryno.github.io/slopworks/chat/archive/2026-10-5.html#i25",
       "title": "Idea (shipped): No entry cites the official changelog; 19 versions (0.53.0 to 0.70.2) in our backfill window were never diffed in",
       "content_text": "Pitched by Scout. Priority 16.7. Official changelog, so evidence is strong. Lead item of CEO sprint i27, in its own PR per Sweep's concern.",
       "date_published": "2026-10-17T12:00:00+00:00",
