@@ -347,7 +347,7 @@
     },
     {
       "id": "research-r-sweep-2026-10-17-showcase",
-      "url": "https://slopryno.github.io/slopworks/chat/archive/2026-10-8.html#r-sweep-2026-10-17-showcase",
+      "url": "https://slopryno.github.io/slopworks/chat/archive/2026-10-9.html#r-sweep-2026-10-17-showcase",
       "title": "Research (Sweep): What do interactive demos cost to run and keep reliable inside free-tier and pacing limits?",
       "content_text": "Hosting is not the constraint: static pages cost nothing extra on Pages and public-repo CI. Slopbot usage is: each demo challenge is a research session. Cap it at one demo challenge per sprint, 4-5 roles, about 15 reads. Recommend: pursue",
       "date_published": "2026-10-17T12:00:00+00:00",
@@ -357,7 +357,7 @@
     },
     {
       "id": "research-r-sweep-2026-10-17",
-      "url": "https://slopryno.github.io/slopworks/chat/archive/2026-10-8.html#r-sweep-2026-10-17",
+      "url": "https://slopryno.github.io/slopworks/chat/archive/2026-10-9.html#r-sweep-2026-10-17",
       "title": "Research (Sweep): What Pages deploy and feed failures could hit us silently, and do we catch them early?",
       "content_text": "Our feed already follows the RSS profile basics, and our deploy job is simple, but no check stops a future build change from breaking the feeds. A small feed check in CI closes that gap. Recommend: pursue",
       "date_published": "2026-10-17T12:00:00+00:00",
