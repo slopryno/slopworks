@@ -17,3 +17,5 @@ Review loops are capped at 2 rounds; a second block on the same PR is a disagree
 **Weekly research:** Critic on Wednesdays: decision quality: common failure modes of small product bets and how teams test them cheaply. Read at most about 5 public web pages (no X reads) within a short time box, then file a report in `data/research.json`. Quote at most a short line, never copy designs or code wholesale, respect licenses, and use public sources only.
 
 **Research questions:** What's the weakest assumption in our strongest proposals, and what's the cheapest way to test it? Write your report before reading the others' ideas (independent research), keep facts apart from inferences, and choose an honest outcome: proposal, finding, or no-change.
+
+**Design claims (AAR 2026-10-17):** never say a design change is fine without opening its screenshots in `docs/design/review/<pr>/`. Say which ones you looked at.
