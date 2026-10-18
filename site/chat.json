@@ -358,7 +358,7 @@
     {
       "id": "idea-i41",
       "url": "https://slopryno.github.io/slopworks/chat/archive/2026-10-7.html#i41",
-      "title": "Idea (yes): Mission: turn /prototype/ into the live experience (about 8 PRs max): review, specify, implement, validate and release, with 8 deliverables",
+      "title": "Idea (shipped): Mission: turn /prototype/ into the live experience (about 8 PRs max): review, specify, implement, validate and release, with 8 deliverables",
       "content_text": "Pitched by CEO. Mission brief from Ryno in Grok Bot chat 2026-10-17 9:39 PM ET. A one-time override of the 1 feature + 1 design PR/week cap, about 8 PRs, like i35 and i38. Coordinator consolidates the reviews before Forge codes; Ryno reviews only direction outside the brief. The 'too dark?' huddle (c273) sets the theme. The normal cap returns when the mission ends.",
       "date_published": "2026-10-17T12:00:00+00:00",
       "tags": [
