@@ -10,7 +10,7 @@
                                     run the local checks, open a draft, add the Maker line, post sign-offs,
                                     refuse a self sign-off or a missing required role, then mark ready (and merge)
                                     a design or CSS PR also needs --review N: screenshots of every page in
-                                    docs/design/review/N/ (scripts/shots.py N), and Polish and Trial sign-offs that
+                                    a manifest at docs/design/review/N/ (scripts/shots.py N), and Polish and Trial sign-offs that
                                     say which screenshots they looked at and what problems they found (AAR 2026-10-17)
 
 CI stays the backstop (review-gate, path rule, guardrail-gate). This helper only makes the right path the easy one.
@@ -105,33 +105,46 @@ def needs_visual_review(kind, paths):
     return kind == "design" or any(p.startswith(VISUAL_PATHS) for p in paths)
 
 
-def review_problems(n, paths, root=ROOT):
-    """What is missing from docs/design/review/<n>/: every page, every width and theme, added in this PR."""
+REVIEW_BUDGET = 2_000_000  # bytes a PR may add under docs/design/review/<n>/ (c243: full sets stay out of git)
+
+
+def review_problems(n, paths, root=ROOT, full=None):
+    """What is missing from the review of PR <n>: every page, every width and theme, shot for this PR.
+    Preferred: docs/design/review/<n>/manifest.json in the PR, matching the full set on disk (scripts/shots.py)."""
     import shots  # names only; shooting needs Chrome and PIL
     d = f"docs/design/review/{n}/"
     pages = sorted(str(p.relative_to(root / "site")) for p in (root / "site").rglob("*.html"))
-    missing = []
-    for theme in shots.THEMES:
-        for w in shots.WIDTHS:
-            sub = root / d / f"{theme}-{w}"
-            for page in pages:
-                s = shots.slug(page)
-                if not (sub / f"{s}.webp").exists() and not any(sub.glob(f"{s}.part*.webp")):
-                    missing.append(f"{theme}-{w}/{s}")
-    problems = [f"{len(missing)} screenshots missing from {d} (first: {', '.join(missing[:5])}); run scripts/shots.py {n}"] if missing else []
+    mf = root / d / "manifest.json"
+    if mf.exists():
+        files = json.loads(mf.read_text()).get("files", {})
+        have = lambda sub, s: f"{sub}/{s}.webp" in files or any(k.startswith(f"{sub}/{s}.part") for k in files)
+    else:
+        have = lambda sub, s: (root / d / sub / f"{s}.webp").exists() or any((root / d / sub).glob(f"{s}.part*.webp"))
+    missing = [f"{theme}-{w}/{shots.slug(page)}" for theme in shots.THEMES for w in shots.WIDTHS for page in pages
+               if not have(f"{theme}-{w}", shots.slug(page))]
+    problems = [f"{len(missing)} screenshots missing for PR {n} (first: {', '.join(missing[:5])}); run scripts/shots.py {n}"] if missing else []
+    if mf.exists():
+        full = Path(full or shots.REVIEW_DIR / str(n))
+        bad = [k for k, h in files.items() if not (full / k).exists() or shots.sha(full / k) != h]
+        if bad:
+            problems.append(f"{len(bad)} files in the manifest don't match {full} (first: {', '.join(bad[:3])}); "
+                            f"reshoot with scripts/shots.py {n}")
     if not any(p.startswith(d) for p in paths):
-        problems.append(f"{d} isn't part of this PR; shoot the pages as they are in this PR and commit them")
+        problems.append(f"{d} isn't part of this PR; shoot the pages as they are in this PR and commit the manifest")
+    added = sum((root / p).stat().st_size for p in paths if p.startswith(d) and (root / p).is_file())
+    if added > REVIEW_BUDGET:
+        problems.append(f"this PR adds {added // 1024} KB under {d}; commit the manifest and key shots, not the full set (c243)")
     return problems
 
 
-def plan_review(n, kind, paths, signoffs, root=ROOT):
+def plan_review(n, kind, paths, signoffs, root=ROOT, full=None):
     """Refuse a design or CSS PR without a full screenshot set and real Polish and Trial reviews of it."""
     if not needs_visual_review(kind, paths):
         return
     if n is None:
         raise Refused(f"design or CSS PR ({', '.join(p for p in paths if p.startswith(VISUAL_PATHS)) or 'bot/design-*'}): "
                       "pass --review N with the screenshots from scripts/shots.py N, N being this PR's number")
-    problems = review_problems(n, paths, root)
+    problems = review_problems(n, paths, root, full)
     by_role = {role(w): t for w, t in signoffs.items()}
     for r in REVIEWERS:
         text = by_role.get(r)

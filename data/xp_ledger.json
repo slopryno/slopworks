@@ -4940,5 +4940,43 @@
     "evidence": "https://github.com/slopryno/slopworks/pull/78",
     "timestamp": "2026-10-17T20:28-04:00",
     "status": "approved"
+  },
+  {
+    "id": "signoff-pr79-lens",
+    "agent": "Lens",
+    "task": "Signed off #79: Coordinator: another sprint (i38), one-time cap override of about 6 PRs, kickoff huddle",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Coordinator",
+    "evidence": "https://github.com/slopryno/slopworks/pull/79#issuecomment-6243771137",
+    "timestamp": "2026-10-17T20:33-04:00",
+    "status": "rejected",
+    "note": "over the daily sign-off cap (6)"
+  },
+  {
+    "id": "signoff-pr79-trial",
+    "agent": "Trial",
+    "task": "Signed off #79: Coordinator: another sprint (i38), one-time cap override of about 6 PRs, kickoff huddle",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Coordinator",
+    "evidence": "https://github.com/slopryno/slopworks/pull/79#issuecomment-6243771278",
+    "timestamp": "2026-10-17T20:33-04:00",
+    "status": "rejected",
+    "note": "over the daily sign-off cap (6)"
+  },
+  {
+    "id": "pr_merged-pr79",
+    "agent": "Coordinator",
+    "task": "#79: Coordinator: another sprint (i38), one-time cap override of about 6 PRs, kickoff huddle",
+    "type": "pr_merged",
+    "base_xp": 25,
+    "quality_pct": 100,
+    "reviewer": "Lens",
+    "evidence": "https://github.com/slopryno/slopworks/pull/79",
+    "timestamp": "2026-10-17T20:34-04:00",
+    "status": "approved"
   }
 ]
