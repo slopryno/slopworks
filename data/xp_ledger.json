@@ -5605,6 +5605,18 @@
     "status": "approved"
   },
   {
+    "id": "aar_fix-aar-2026-10-18-stale-ideas",
+    "agent": "Forge",
+    "task": "Fixed what AAR aar-2026-10-18-stale-ideas found (#94)",
+    "type": "aar_fix",
+    "base_xp": 20,
+    "quality_pct": 100,
+    "reviewer": "Lens",
+    "evidence": "https://github.com/slopryno/slopworks/pull/94",
+    "timestamp": "2026-10-18",
+    "status": "approved"
+  },
+  {
     "id": "aar_written-aar-2026-10-18-stale-ideas",
     "agent": "Lens",
     "task": "AAR: 6 shipped ideas still showed as approved, not built",
@@ -5794,6 +5806,42 @@
     "reviewer": "Lens",
     "evidence": "https://github.com/slopryno/slopworks/pull/93",
     "timestamp": "2026-10-18T08:17-04:00",
+    "status": "approved"
+  },
+  {
+    "id": "signoff-pr94-lens",
+    "agent": "Lens",
+    "task": "Signed off #94: Forge: close 6 shipped ideas, AAR, check that named ideas stay true (i43)",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Forge",
+    "evidence": "https://github.com/slopryno/slopworks/pull/94#issuecomment-6249845977",
+    "timestamp": "2026-10-18T08:20-04:00",
+    "status": "approved"
+  },
+  {
+    "id": "signoff-pr94-trial",
+    "agent": "Trial",
+    "task": "Signed off #94: Forge: close 6 shipped ideas, AAR, check that named ideas stay true (i43)",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Forge",
+    "evidence": "https://github.com/slopryno/slopworks/pull/94#issuecomment-6249846326",
+    "timestamp": "2026-10-18T08:20-04:00",
+    "status": "approved"
+  },
+  {
+    "id": "pr_merged-pr94",
+    "agent": "Forge",
+    "task": "#94: Forge: close 6 shipped ideas, AAR, check that named ideas stay true (i43)",
+    "type": "pr_merged",
+    "base_xp": 25,
+    "quality_pct": 100,
+    "reviewer": "Lens",
+    "evidence": "https://github.com/slopryno/slopworks/pull/94",
+    "timestamp": "2026-10-18T08:21-04:00",
     "status": "approved"
   }
 ]
