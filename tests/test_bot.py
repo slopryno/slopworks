@@ -157,6 +157,7 @@ class VisualReview(unittest.TestCase):
             with self.assertRaisesRegex(bot.Refused, "can't be committed"):
                 bot.plan_review(None, "data", ["data/chat.json", img], self.good)
         bot.plan_review(None, "data", ["site/badges/roles.svg", "data/x.json"], self.good)  # a real site asset is fine
+        bot.plan_review(None, "data", ["docs/design/x/after.png"], self.good, removed=["docs/design/x/after.png"])  # deleting one is fine
 
     def test_artifact(self):
         self.assertEqual(bot.artifact_problems(9, [{"name": "review-shots-9", "expired": False}]), [])

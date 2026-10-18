@@ -136,9 +136,10 @@ def committed_images(paths):
     return [p for p in paths if p.lower().endswith(IMAGE_EXT) and not p.startswith(IMAGE_OK)]
 
 
-def plan_review(n, kind, paths, signoffs, root=ROOT, full=None):
-    """Refuse a design or CSS PR without a full screenshot set on the box and real Polish and Trial reviews of it."""
-    imgs = committed_images(paths)
+def plan_review(n, kind, paths, signoffs, root=ROOT, full=None, removed=()):
+    """Refuse a design or CSS PR without a full screenshot set on the box and real Polish and Trial reviews of it.
+    removed: paths this PR deletes; deleting an old screenshot is the point, not a problem."""
+    imgs = [p for p in committed_images(paths) if p not in set(removed)]
     if imgs:
         raise Refused(f"images can't be committed outside {', '.join(IMAGE_OK)}: {', '.join(imgs[:5])}; "
                       "review screenshots live on the box and in the PR's CI artifact")
@@ -256,7 +257,7 @@ def cmd_pr(a):
         who, _, f = s.partition("=")
         signoffs[who] = Path(f).read_text()
     comments = plan_signoffs(a.maker, paths, signoffs)  # refuse before anything is pushed
-    plan_review(a.review, m.group(1), paths, signoffs)
+    plan_review(a.review, m.group(1), paths, signoffs, removed=[p for p in paths if not (ROOT / p).exists()])
     if needs_visual_review(m.group(1), paths) and next_pr_number() != a.review:
         raise Refused(f"--review {a.review} but this PR will be #{next_pr_number()}; reshoot into that number")
     visual = needs_visual_review(m.group(1), paths)
