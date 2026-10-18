@@ -5029,5 +5029,69 @@
     "timestamp": "2026-10-17T20:37-04:00",
     "status": "rejected",
     "note": "over the daily sign-off cap (6)"
+  },
+  {
+    "id": "signoff-pr81-coordinator",
+    "agent": "Coordinator",
+    "task": "Signed off #81: Pixel: character sheets and Timeline on phones (i38): even achievement rows, clean work list, roomier Timeline",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Forge",
+    "evidence": "https://github.com/slopryno/slopworks/pull/81#issuecomment-6243876793",
+    "timestamp": "2026-10-17T20:46-04:00",
+    "status": "rejected",
+    "note": "over the daily sign-off cap (6)"
+  },
+  {
+    "id": "signoff-pr81-lens",
+    "agent": "Lens",
+    "task": "Signed off #81: Pixel: character sheets and Timeline on phones (i38): even achievement rows, clean work list, roomier Timeline",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Forge",
+    "evidence": "https://github.com/slopryno/slopworks/pull/81#issuecomment-6243876977",
+    "timestamp": "2026-10-17T20:46-04:00",
+    "status": "rejected",
+    "note": "over the daily sign-off cap (6)"
+  },
+  {
+    "id": "signoff-pr81-polish",
+    "agent": "Polish",
+    "task": "Signed off #81: Pixel: character sheets and Timeline on phones (i38): even achievement rows, clean work list, roomier Timeline",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Forge",
+    "evidence": "https://github.com/slopryno/slopworks/pull/81#issuecomment-6243877148",
+    "timestamp": "2026-10-17T20:46-04:00",
+    "status": "rejected",
+    "note": "over the daily sign-off cap (6)"
+  },
+  {
+    "id": "signoff-pr81-trial",
+    "agent": "Trial",
+    "task": "Signed off #81: Pixel: character sheets and Timeline on phones (i38): even achievement rows, clean work list, roomier Timeline",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Forge",
+    "evidence": "https://github.com/slopryno/slopworks/pull/81#issuecomment-6243877275",
+    "timestamp": "2026-10-17T20:46-04:00",
+    "status": "rejected",
+    "note": "over the daily sign-off cap (6)"
+  },
+  {
+    "id": "pr_merged-pr81",
+    "agent": "Forge",
+    "task": "#81: Pixel: character sheets and Timeline on phones (i38): even achievement rows, clean work list, roomier Timeline",
+    "type": "pr_merged",
+    "base_xp": 25,
+    "quality_pct": 100,
+    "reviewer": "Lens",
+    "evidence": "https://github.com/slopryno/slopworks/pull/81",
+    "timestamp": "2026-10-17T20:47-04:00",
+    "status": "approved"
   }
 ]

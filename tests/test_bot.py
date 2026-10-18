@@ -87,62 +87,11 @@ class Count(unittest.TestCase):
 
 
 class VisualReview(unittest.TestCase):
-    """AAR 2026-10-17 (/work/ incident): design and CSS PRs need screenshots of every page and sign-offs that looked."""
+    """AAR 2026-10-17 (/work/ incident): design and CSS PRs need screenshots of every page and sign-offs that looked.
+    Ryno, 2026-10-17 8:49 PM ET: the screenshots live on the box and in the PR's CI artifact, never in git."""
     good = {"Polish": "Screenshots reviewed: all 6 sets\nProblems found: none", "Trial": "Screenshots reviewed: all\nProblems found: tables, fixed",
             "Lens": "ok"}
-
-    def make(self, pages=("index.html", "work/index.html"), skip=()):
-        import shots, tempfile
-        root = Path(tempfile.mkdtemp())
-        for page in pages:
-            (root / "site" / page).parent.mkdir(parents=True, exist_ok=True)
-            (root / "site" / page).write_text("<p>x")
-        for theme in shots.THEMES:
-            for w in shots.WIDTHS:
-                d = root / "docs/design/review/9" / f"{theme}-{w}"
-                d.mkdir(parents=True, exist_ok=True)
-                for page in pages:
-                    if (theme, w, page) not in skip:
-                        (d / f"{shots.slug(page)}.part1.webp").write_bytes(b"x")
-        return root
-
-    def test_which_prs_need_it(self):
-        self.assertTrue(bot.needs_visual_review("feature", ["site/style.css"]))
-        self.assertTrue(bot.needs_visual_review("feature", ["scripts/build.py"]))
-        self.assertTrue(bot.needs_visual_review("feature", ["site/assets/avatars/a.svg"]))
-        self.assertTrue(bot.needs_visual_review("design", ["data/design_backlog.json"]))
-        self.assertFalse(bot.needs_visual_review("data", ["data/chat.json", "site/chat/index.html"]))
-
-    def test_refuses_without_review_number(self):
-        with self.assertRaisesRegex(bot.Refused, "--review N"):
-            bot.plan_review(None, "feature", ["site/style.css"], self.good)
-
-    def test_passes_with_every_page_and_real_signoffs(self):
-        root = self.make()
-        bot.plan_review(9, "feature", ["site/style.css", "docs/design/review/9/light-360/home.part1.webp"], self.good, root)
-
-    def test_refuses_a_missing_page_width_or_theme(self):
-        root = self.make(skip={("dark", 390, "work/index.html")})
-        with self.assertRaisesRegex(bot.Refused, "dark-390/work"):
-            bot.plan_review(9, "feature", ["site/style.css", "docs/design/review/9/x"], self.good, root)
-
-    def test_refuses_screenshots_not_in_this_pr(self):
-        with self.assertRaisesRegex(bot.Refused, "isn't part of this PR"):
-            bot.plan_review(9, "feature", ["site/style.css"], self.good, self.make())
-
-    def test_refuses_signoffs_that_did_not_look(self):
-        """The #72-#76 sign-offs: numbers only, no screenshots named, no problems listed."""
-        paths = ["site/style.css", "docs/design/review/9/x"]
-        for bad in ({"Polish": "0 overflow, looks good", "Trial": self.good["Trial"]},
-                    {"Polish": self.good["Polish"], "Trial": "Screenshots reviewed: all"},
-                    {"Trial": self.good["Trial"], "Lens": "ok"}):
-            with self.assertRaisesRegex(bot.Refused, "visual review incomplete"):
-                bot.plan_review(9, "feature", paths, bad, self.make())
-
-
-class ReviewManifest(unittest.TestCase):
-    """c243: the full screenshot set stays out of git; the PR commits a manifest with hashes that bot.py checks."""
-    good = VisualReview.good
+    paths = ["site/style.css"]
 
     def make(self, drop=None, tamper=None):
         import shots, tempfile
@@ -160,18 +109,33 @@ class ReviewManifest(unittest.TestCase):
             del m["files"][drop]
         if tamper:
             (full / tamper).write_bytes(b"changed after the review")
-        d = root / "docs/design/review/9"
-        d.mkdir(parents=True)
-        (d / "manifest.json").write_text(json.dumps(m))
+        (full / "manifest.json").write_text(json.dumps(m))
         return root, full
 
-    def check(self, root, full, paths=("site/style.css", "docs/design/review/9/manifest.json")):
-        bot.plan_review(9, "feature", list(paths), self.good, root, full=full)
+    def check(self, root, full, signoffs=None, paths=None):
+        bot.plan_review(9, "feature", paths or self.paths, signoffs or self.good, root, full=full)
 
-    def test_passes_with_a_matching_manifest(self):
+    def test_which_prs_need_it(self):
+        self.assertTrue(bot.needs_visual_review("feature", ["site/style.css"]))
+        self.assertTrue(bot.needs_visual_review("feature", ["scripts/build.py"]))
+        self.assertTrue(bot.needs_visual_review("feature", ["site/assets/avatars/a.svg"]))
+        self.assertTrue(bot.needs_visual_review("design", ["data/design_backlog.json"]))
+        self.assertFalse(bot.needs_visual_review("data", ["data/chat.json", "site/chat/index.html"]))
+
+    def test_refuses_without_review_number(self):
+        with self.assertRaisesRegex(bot.Refused, "--review N"):
+            bot.plan_review(None, "feature", ["site/style.css"], self.good)
+
+    def test_passes_with_every_page_and_real_signoffs(self):
         self.check(*self.make())
 
-    def test_refuses_a_page_missing_from_the_manifest(self):
+    def test_refuses_no_set_on_the_box(self):
+        import tempfile
+        root, _ = self.make()
+        with self.assertRaisesRegex(bot.Refused, "no review set"):
+            self.check(root, Path(tempfile.mkdtemp()))
+
+    def test_refuses_a_missing_page_width_or_theme(self):
         with self.assertRaisesRegex(bot.Refused, "dark-768/work"):
             self.check(*self.make(drop="dark-768/work.part1.webp"))
 
@@ -179,13 +143,33 @@ class ReviewManifest(unittest.TestCase):
         with self.assertRaisesRegex(bot.Refused, "don't match"):
             self.check(*self.make(tamper="light-390/home.part1.webp"))
 
-    def test_refuses_a_full_set_committed_again(self):
+    def test_refuses_signoffs_that_did_not_look(self):
+        """The #72-#76 sign-offs: numbers only, no screenshots named, no problems listed."""
+        for bad in ({"Polish": "0 overflow, looks good", "Trial": self.good["Trial"]},
+                    {"Polish": self.good["Polish"], "Trial": "Screenshots reviewed: all"},
+                    {"Trial": self.good["Trial"], "Lens": "ok"}):
+            with self.assertRaisesRegex(bot.Refused, "visual review incomplete"):
+                self.check(*self.make(), signoffs=bad)
+
+    def test_refuses_images_in_git_on_any_pr(self):
+        """Ryno, 8:49 PM ET: no screenshots in the repo, not even small ones. Real site assets stay."""
+        for img in ("docs/design/review/9/light-360/home.part1.webp", "docs/design/x/after.png", "shot.jpg"):
+            with self.assertRaisesRegex(bot.Refused, "can't be committed"):
+                bot.plan_review(None, "data", ["data/chat.json", img], self.good)
+        bot.plan_review(None, "data", ["site/badges/roles.svg", "data/x.json"], self.good)  # a real site asset is fine
+
+    def test_artifact(self):
+        self.assertEqual(bot.artifact_problems(9, [{"name": "review-shots-9", "expired": False}]), [])
+        self.assertTrue(bot.artifact_problems(9, [{"name": "review-shots-8", "expired": False}]))
+        self.assertTrue(bot.artifact_problems(9, [{"name": "review-shots-9", "expired": True}]))
+        self.assertTrue(bot.artifact_problems(9, []))
+
+    def test_review_note_names_the_artifact_not_a_path_in_git(self):
         root, full = self.make()
-        big = root / "docs/design/review/9/light-360/home.part1.webp"
-        big.parent.mkdir(parents=True)
-        big.write_bytes(b"x" * (bot.REVIEW_BUDGET + 1))
-        with self.assertRaisesRegex(bot.Refused, "not the full set"):
-            self.check(root, full, ("site/style.css", "docs/design/review/9/manifest.json", "docs/design/review/9/light-360/home.part1.webp"))
+        note = bot.review_note(9, full)
+        self.assertIn("review-shots-9", note)
+        self.assertIn("12 files", note)
+        self.assertNotIn("docs/design", note)
 
 
 if __name__ == "__main__":

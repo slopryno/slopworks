@@ -9,8 +9,9 @@
   bot.py pr --maker R --title T --body FILE [--signoff Role=FILE ...] [--review N] [--merge]
                                     run the local checks, open a draft, add the Maker line, post sign-offs,
                                     refuse a self sign-off or a missing required role, then mark ready (and merge)
-                                    a design or CSS PR also needs --review N: screenshots of every page in
-                                    a manifest at docs/design/review/N/ (scripts/shots.py N), and Polish and Trial sign-offs that
+                                    a design or CSS PR also needs --review N: screenshots of every page,
+                                    a full set on the box (scripts/shots.py N, outside the checkout), the PR's
+                                    review-shots-N CI artifact, and Polish and Trial sign-offs that
                                     say which screenshots they looked at and what problems they found (AAR 2026-10-17)
 
 CI stays the backstop (review-gate, path rule, guardrail-gate). This helper only makes the right path the easy one.
@@ -105,46 +106,48 @@ def needs_visual_review(kind, paths):
     return kind == "design" or any(p.startswith(VISUAL_PATHS) for p in paths)
 
 
-REVIEW_BUDGET = 2_000_000  # bytes a PR may add under docs/design/review/<n>/ (c243: full sets stay out of git)
+IMAGE_EXT = (".png", ".jpg", ".jpeg", ".gif", ".webp", ".avif", ".bmp", ".tif", ".tiff", ".ico", ".svg")
+IMAGE_OK = ("site/assets/", "site/badges/")  # real site assets; nothing else in git is an image (Ryno, 2026-10-17)
+ARTIFACT = "review-shots-{n}"  # uploaded by .github/workflows/review-shots.yml, kept 90 days
 
 
-def review_problems(n, paths, root=ROOT, full=None):
-    """What is missing from the review of PR <n>: every page, every width and theme, shot for this PR.
-    Preferred: docs/design/review/<n>/manifest.json in the PR, matching the full set on disk (scripts/shots.py)."""
+def review_problems(n, full=None, root=ROOT):
+    """What is missing from the review set of PR <n> on the box (scripts/shots.py <n>, outside the checkout):
+    every page at every width and theme, listed in its manifest with hashes that still match the files."""
     import shots  # names only; shooting needs Chrome and PIL
-    d = f"docs/design/review/{n}/"
+    full = Path(full or shots.REVIEW_DIR / str(n))
+    mf = full / "manifest.json"
+    if not mf.exists():
+        return [f"no review set at {full}; run scripts/shots.py {n}"]
+    files = json.loads(mf.read_text()).get("files", {})
+    have = lambda sub, s: f"{sub}/{s}.webp" in files or any(k.startswith(f"{sub}/{s}.part") for k in files)
     pages = sorted(str(p.relative_to(root / "site")) for p in (root / "site").rglob("*.html"))
-    mf = root / d / "manifest.json"
-    if mf.exists():
-        files = json.loads(mf.read_text()).get("files", {})
-        have = lambda sub, s: f"{sub}/{s}.webp" in files or any(k.startswith(f"{sub}/{s}.part") for k in files)
-    else:
-        have = lambda sub, s: (root / d / sub / f"{s}.webp").exists() or any((root / d / sub).glob(f"{s}.part*.webp"))
     missing = [f"{theme}-{w}/{shots.slug(page)}" for theme in shots.THEMES for w in shots.WIDTHS for page in pages
                if not have(f"{theme}-{w}", shots.slug(page))]
     problems = [f"{len(missing)} screenshots missing for PR {n} (first: {', '.join(missing[:5])}); run scripts/shots.py {n}"] if missing else []
-    if mf.exists():
-        full = Path(full or shots.REVIEW_DIR / str(n))
-        bad = [k for k, h in files.items() if not (full / k).exists() or shots.sha(full / k) != h]
-        if bad:
-            problems.append(f"{len(bad)} files in the manifest don't match {full} (first: {', '.join(bad[:3])}); "
-                            f"reshoot with scripts/shots.py {n}")
-    if not any(p.startswith(d) for p in paths):
-        problems.append(f"{d} isn't part of this PR; shoot the pages as they are in this PR and commit the manifest")
-    added = sum((root / p).stat().st_size for p in paths if p.startswith(d) and (root / p).is_file())
-    if added > REVIEW_BUDGET:
-        problems.append(f"this PR adds {added // 1024} KB under {d}; commit the manifest and key shots, not the full set (c243)")
+    bad = [k for k, h in files.items() if not (full / k).exists() or shots.sha(full / k) != h]
+    if bad:
+        problems.append(f"{len(bad)} files in {mf} don't match (first: {', '.join(bad[:3])}); reshoot with scripts/shots.py {n}")
     return problems
 
 
+def committed_images(paths):
+    """Screenshots and other images never go in git; only real site assets do."""
+    return [p for p in paths if p.lower().endswith(IMAGE_EXT) and not p.startswith(IMAGE_OK)]
+
+
 def plan_review(n, kind, paths, signoffs, root=ROOT, full=None):
-    """Refuse a design or CSS PR without a full screenshot set and real Polish and Trial reviews of it."""
+    """Refuse a design or CSS PR without a full screenshot set on the box and real Polish and Trial reviews of it."""
+    imgs = committed_images(paths)
+    if imgs:
+        raise Refused(f"images can't be committed outside {', '.join(IMAGE_OK)}: {', '.join(imgs[:5])}; "
+                      "review screenshots live on the box and in the PR's CI artifact")
     if not needs_visual_review(kind, paths):
         return
     if n is None:
         raise Refused(f"design or CSS PR ({', '.join(p for p in paths if p.startswith(VISUAL_PATHS)) or 'bot/design-*'}): "
                       "pass --review N with the screenshots from scripts/shots.py N, N being this PR's number")
-    problems = review_problems(n, paths, root, full)
+    problems = review_problems(n, full, root)
     by_role = {role(w): t for w, t in signoffs.items()}
     for r in REVIEWERS:
         text = by_role.get(r)
@@ -156,6 +159,36 @@ def plan_review(n, kind, paths, signoffs, root=ROOT, full=None):
                 problems.append(f"{r}'s sign-off needs a '{line} ...' line")
     if problems:
         raise Refused("visual review incomplete:\n- " + "\n- ".join(problems))
+
+
+def artifact_problems(n, artifacts):
+    """artifacts: the run's list from the GitHub API. The PR needs its unexpired review-shots-<n> artifact."""
+    ok = [a for a in artifacts if a.get("name") == ARTIFACT.format(n=n) and not a.get("expired")]
+    return [] if ok else [f"no {ARTIFACT.format(n=n)} artifact on the PR's review-shots run"]
+
+
+def wait_for_artifact(n, sha, timeout=1200):
+    """Wait for review-shots.yml on the PR's head commit and return its artifact problems."""
+    end = time.time() + timeout
+    while time.time() < end:
+        runs = json.loads(gh("run", "list", "--workflow", "review-shots.yml", "--commit", sha, "--json", "databaseId,status,conclusion"))
+        done = [r for r in runs if r["status"] == "completed"]
+        if done:
+            if done[0]["conclusion"] != "success":
+                return [f"review-shots run {done[0]['databaseId']} ended {done[0]['conclusion']}"]
+            arts = json.loads(gh("api", f"repos/{{owner}}/{{repo}}/actions/runs/{done[0]['databaseId']}/artifacts"))["artifacts"]
+            return artifact_problems(n, arts)
+        time.sleep(15)
+    return [f"review-shots didn't finish within {timeout // 60} minutes"]
+
+
+def review_note(n, full=None):
+    """One line for the PR body: how big the box set is, and the digest of its manifest."""
+    import hashlib, shots
+    mf = Path(full or shots.REVIEW_DIR / str(n)) / "manifest.json"
+    m = json.loads(mf.read_text())
+    return (f"\n\nReview screenshots: {m['count']} files ({m['bytes'] // 1024} KB) reviewed on the box, manifest sha256 "
+            f"{hashlib.sha256(mf.read_bytes()).hexdigest()[:16]}; the CI copy is the `{ARTIFACT.format(n=n)}` artifact. None are in git.")
 
 
 def next_pr_number():
@@ -226,13 +259,21 @@ def cmd_pr(a):
     plan_review(a.review, m.group(1), paths, signoffs)
     if needs_visual_review(m.group(1), paths) and next_pr_number() != a.review:
         raise Refused(f"--review {a.review} but this PR will be #{next_pr_number()}; reshoot into that number")
+    visual = needs_visual_review(m.group(1), paths)
+    if visual:
+        body += review_note(a.review)
     local_checks()
     git("push", "-q", "-u", "origin", "HEAD")
     url = gh("pr", "create", "--draft", "--title", a.title, "--body", body).splitlines()[-1]
     n = url.rsplit("/", 1)[-1]
-    if needs_visual_review(m.group(1), paths) and int(n) != a.review:
-        print(f"PR {n} left as a draft: its screenshots are under review/{a.review}/, not review/{n}/")
+    if visual and int(n) != a.review:
+        print(f"PR {n} left as a draft: its screenshots are for #{a.review}, not #{n}")
         sys.exit(1)
+    if visual:
+        problems = wait_for_artifact(n, git("rev-parse", "HEAD").strip())
+        if problems:
+            print(f"PR {n} left as a draft: " + "; ".join(problems))
+            sys.exit(1)
     for c in comments:
         gh("pr", "comment", n, "--body", c)
     gh("pr", "ready", n)

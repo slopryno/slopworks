@@ -1,0 +1,41 @@
+name: Review screenshots
+# Ryno, 2026-10-17: review screenshots live in this PR artifact (90 days) and on the box, never in git.
+# Design or CSS PRs only (same rule as scripts/bot.py needs_visual_review); other PRs skip in seconds.
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+permissions:
+  contents: read
+jobs:
+  shots:
+    name: review-shots
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - name: Design or CSS PR?
+        id: need
+        env:
+          BASE: ${{ github.event.pull_request.base.sha }}
+          HEAD: ${{ github.event.pull_request.head.sha }}
+          BRANCH: ${{ github.head_ref }}
+        run: |
+          if [[ "$BRANCH" == bot/design-* ]] || git diff --name-only "$BASE" "$HEAD" | grep -qE '^(site/style\.css|scripts/build\.py|site/assets/|scripts/avatars\.py)'; then
+            echo "run=1" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Shoot every page at 360, 390 and 768, light and dark
+        if: steps.need.outputs.run == '1'
+        env:
+          SLOPWORKS_REVIEW_DIR: ${{ runner.temp }}/review
+        run: |
+          python3 -m pip install --quiet pillow
+          python3 scripts/shots.py ${{ github.event.pull_request.number }}
+      - uses: actions/upload-artifact@v7
+        if: steps.need.outputs.run == '1'
+        with:
+          name: review-shots-${{ github.event.pull_request.number }}
+          path: ${{ runner.temp }}/review/${{ github.event.pull_request.number }}
+          retention-days: 90
+          if-no-files-found: error

@@ -1,20 +1,15 @@
 #!/usr/bin/env python3
 """Screenshots for the visual review step (AAR 2026-10-17, the /work/ incident): every page at 360, 390 and 768,
-light and dark, full height, saved under docs/design/review/<pr>/ for Polish and Trial to look at before sign-off.
+light and dark, full height, kept out of git for Polish and Trial to look at before sign-off.
 
-  python3 scripts/shots.py 80                      -> full set in REVIEW_DIR/80/<theme>-<width>/<page>[.partN].webp,
-                                                      plus docs/design/review/80/manifest.json and key/ (committed)
-  python3 scripts/shots.py 80 --sheets /tmp/s80    also write contact sheets there (not committed)
-  python3 scripts/shots.py 80 --only work/index.html,index.html --key team/index.html
+  python3 scripts/shots.py 82                      -> REVIEW_DIR/82/<theme>-<width>/<page>[.partN].webp and REVIEW_DIR/82/manifest.json
+  python3 scripts/shots.py 82 --sheets /tmp/s82    also write contact sheets there
+  python3 scripts/shots.py 82 --only work/index.html,index.html
 
-The full set stays out of git (c243: about 42MB per design PR is too much for a public repo). It goes to REVIEW_DIR
-(env SLOPWORKS_REVIEW_DIR, default ../slopworks-review next to the repo, on the box that the bots share).
-Git gets a small manifest with a SHA-256 for every file, and a few key shots at reduced quality: the first part of
-home, work and each --key page at 390, light and dark. scripts/bot.py checks the manifest against the files on disk.
-
-Each full page is cut into parts of at most PART_H pixels, so every file stays far under CI's 1 MB limit and stays
-readable at full size. WebP keeps a full review to tens of megabytes. Optional contact sheets put several parts side
-by side at half size for a first pass; the full-size parts are the record. Uses the same headless Chrome as scripts/mobile_audit.py; nothing is added to site/.
+Nothing is written to the repo (Ryno, 2026-10-17: never save screenshots or other temp files to the repo). The set goes to
+REVIEW_DIR: env SLOPWORKS_REVIEW_DIR, default /workspace/slopworks-review next to the checkout on the box. CI writes the
+same set to a temp dir and uploads it as the PR's review-shots-<pr> artifact (.github/workflows/review-shots.yml, 90 days).
+The manifest lists every file with its SHA-256; scripts/bot.py checks it before a design or CSS PR goes up.
 """
 import argparse, hashlib, json, os, subprocess, sys, tempfile
 from concurrent.futures import ThreadPoolExecutor
@@ -29,8 +24,6 @@ THEMES = ("light", "dark")
 PART_H = 2400
 MAX_H = 24000
 REVIEW_DIR = Path(os.environ.get("SLOPWORKS_REVIEW_DIR", ROOT.parent / "slopworks-review"))
-KEY_PAGES = ("index.html", "work/index.html")
-KEY_WIDTH, KEY_H, KEY_Q = 390, 1600, 35
 
 
 def sha(f):
@@ -64,7 +57,6 @@ def main():
     ap.add_argument("pr")
     ap.add_argument("--only", help="comma-separated pages, e.g. work/index.html")
     ap.add_argument("--sheets", help="directory for half-size contact sheets (kept out of the repo)")
-    ap.add_argument("--key", default="", help="comma-separated pages to add to the committed key shots")
     a = ap.parse_args()
     exe = mobile_audit.chrome()
     if not exe:
@@ -72,7 +64,6 @@ def main():
     only = a.only.split(",") if a.only else None
     heights = {(r["page"], r["width"]): r.get("doc_h", 2000) for r in mobile_audit.measure(list(WIDTHS), only=only)}
     base = REVIEW_DIR / str(a.pr)
-    docs = ROOT / "docs" / "design" / "review" / str(a.pr)
     jobs = []
     with tempfile.TemporaryDirectory() as tmp:
         for (page, w), h in heights.items():
@@ -95,20 +86,9 @@ def main():
                 part.save(f, format="WEBP", quality=50, method=6)
                 made.append((theme, w, f))
     print(f"{len(made)} screenshot parts in {base}")
-    docs.mkdir(parents=True, exist_ok=True)
     m = manifest(a.pr, base)
-    (docs / "manifest.json").write_text(json.dumps(m, indent=1) + "\n")
-    keyd = docs / "key"
-    keyd.mkdir(exist_ok=True)
-    for page in list(KEY_PAGES) + [p for p in a.key.split(",") if p]:
-        for theme in THEMES:
-            d = base / f"{theme}-{KEY_WIDTH}"
-            src = d / f"{slug(page)}.webp"
-            src = src if src.exists() else d / f"{slug(page)}.part1.webp"
-            if src.exists():
-                im = Image.open(src).convert("RGB")
-                im.crop((0, 0, im.width, min(im.height, KEY_H))).save(keyd / f"{theme}-{KEY_WIDTH}-{slug(page)}.webp", format="WEBP", quality=KEY_Q, method=6)
-    print(f"manifest: {m['count']} files, {m['bytes'] // 1024} KB out of git; key shots in {keyd.relative_to(ROOT)}")
+    (base / "manifest.json").write_text(json.dumps(m, indent=1) + "\n")
+    print(f"manifest: {m['count']} files, {m['bytes'] // 1024} KB in {base} (not in git)")
     if not a.sheets:
         return
     # contact sheets: up to 8 parts per sheet, half size, in page order
