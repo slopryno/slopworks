@@ -602,7 +602,7 @@ def build():
         kinds = {}
         for y in ok:
             k = kinds.setdefault(y["type"], [0, 0]); k[0] += 1; k[1] += y["base_xp"] * y["quality_pct"] // 100
-        skills = ("<div class=\"scroll\"><table><thead><tr><th scope=\"col\">Kind of work</th><th scope=\"col\">Entries</th><th scope=\"col\">XP</th></tr></thead><tbody>"
+        skills = ("<div class=\"scroll fit\"><table><thead><tr><th scope=\"col\">Kind of work</th><th scope=\"col\">Entries</th><th scope=\"col\">XP</th></tr></thead><tbody>"
                   + "".join(f'<tr><td>{e(prog["events"][k]["label"])}</td><td>{c}</td><td>{v}</td></tr>' for k, (c, v) in sorted(kinds.items(), key=lambda kv: -kv[1][1]))
                   + "</tbody></table></div>") if kinds else '<p class="empty">No verified work yet.</p>'
         ach = ""
@@ -636,7 +636,7 @@ def build():
         ev_rows += f'<tr><td>{e(v["label"])}</td><td>{d if d is not None else "-"}</td><td>{e(extra) or "-"}</td><td>{e(v["who"])}</td><td>{e(v["reviewer"])}</td></tr>'
     roster = "".join(f'<li><a href="../{stems[n]}/">{e(n)}</a>: {xp_line(n, "")}</li>' for n in sorted(stems))
     xbody = (f'<p>{e(prog["note"])}</p>'
-             f'<h2>Levels</h2><div class="scroll"><table><thead><tr><th scope="col">Level</th><th scope="col">Name</th><th scope="col">XP needed</th></tr></thead><tbody>'
+             f'<h2>Levels</h2><div class="scroll fit"><table><thead><tr><th scope="col">Level</th><th scope="col">Name</th><th scope="col">XP needed</th></tr></thead><tbody>'
              + "".join(f'<tr><td>{i + 1}</td><td>{e(l["name"])}</td><td>{l["xp"]}</td></tr>' for i, l in enumerate(levels)) + "</tbody></table></div>"
              f'<h2>What earns XP</h2><div class="scroll"><table><thead><tr><th scope="col">Work</th><th scope="col">XP</th><th scope="col">Role tables</th><th scope="col">Who earns it</th><th scope="col">Reviewer</th></tr></thead><tbody>{ev_rows}</tbody></table></div>'
              f'<p>Sign-offs count at most {prog["events"]["signoff"]["cap_per_day"]} a day per role; the rest stay in the ledger as rejected, so the cap is visible. {e(prog["quality"]["note"])}</p>'
