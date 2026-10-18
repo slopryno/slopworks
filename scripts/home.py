@@ -4,6 +4,7 @@ The spec is docs/mission/spec.md. build.py passes in the Timeline records, the l
 already loaded, so nothing is copied or typed by hand. No scripts: the one interaction is details/summary. Times are
 "as of" the records (the last merged PR), never a live clock.
 """
+import re
 from html import escape as e
 
 KIND = {"shipped": ("ok", "Shipped"), "milestone": ("ok", "Milestone"), "decision": ("fg", "Decision"),
@@ -17,7 +18,20 @@ def completed_sprints(items):
     return [x for x in items if x.get("capped") and x.get("cue") == "retro"]
 
 
-def render(b, items, wins, ups, iss, totals, levels, team, dropped, screened):
+def objective(o, up, href):
+    """The current-objective line (i42): only from data/objectives.json, each with the record that assigns it."""
+    return (f'<p class="obj"><span class="kicker">Current objective</span> {e(o["objective"])} '
+            f'<a href="{e(href(o["ref"], up, ""))}">assigned in Team chat</a></p>')
+
+
+def pr_count(f):
+    """PRs in a featured sprint (i42, Trial c299): the range its retro names, since wins.json is one PR behind
+    when a sprint's last PR builds the site. Without a range, the merged PRs on record."""
+    m = re.search(r"#(\d+)\s*(?:-|to)\s*#(\d+)", f.get("text") or "")
+    return int(m.group(2)) - int(m.group(1)) + 1 if m else len(f.get("children", []))
+
+
+def render(b, items, wins, ups, iss, totals, levels, team, dropped, screened, tl_where, objectives, chat_href):
     up = ""
     asof = max((w.get("merged") or w["date"]) for w in wins) if wins else ""
     last = max(wins, key=lambda w: w.get("merged") or w["date"]) if wins else None
@@ -34,10 +48,10 @@ def render(b, items, wins, ups, iss, totals, levels, team, dropped, screened):
     feat = ""
     if done:
         f = max(done, key=lambda x: (x["date"], x["time"] or ""))
-        kids = f.get("children", [])
-        feat = (f'<section class="panel feature" aria-labelledby="feat-t"><p class="kicker">Latest completed sprint</p><h2 id="feat-t">{e(f["title"])}</h2>'
-                f'<p>{e(f["text"])}</p><p class="meta"><span>{len(kids)} merged {"PR" if len(kids) == 1 else "PRs"}</span>'
-                f'<a href="{e(f["link"](up))}">Retro in Team chat</a><a href="timeline/#{e(f["id"])}">On the Timeline</a></p></section>')
+        n = pr_count(f)
+        feat = (f'<section class="panel feature" aria-labelledby="feat-t"><p class="kicker">Latest completed sprint</p><h2 id="feat-t">{e(f.get("short") or f["title"])}</h2>'
+                f'<p>{e(f["text"])}</p><p class="meta"><span>{n} merged {"PR" if n == 1 else "PRs"}</span>'
+                f'<a href="{e(f["link"](up))}">Retro in Team chat</a><a href="{e(tl_where.get(f["id"], "timeline/"))}#{e(f["id"])}">On the Timeline</a></p></section>')
     n_conf = sum(u["status"] == "confirmed" for u in ups)
     n_open = sum(x["state"] == "open" for x in iss)
     def news(u):
@@ -56,7 +70,8 @@ def render(b, items, wins, ups, iss, totals, levels, team, dropped, screened):
         pct = 100 if not nxt else int(100 * (x - lv["xp"]) / (nxt["xp"] - lv["xp"]))
         w = latest[n]
         stem = n.lower()
-        return (f'<li class="char"><div class="hd">{b.avatar(n, up, 48)}<div><h3><a href="team/{e(stem)}/">{e(n)}</a></h3><p class="role">{e(title)}</p></div></div>'
+        obj = objective(objectives[n], up, chat_href) if n in objectives else ""
+        return (f'<li class="char"><div class="hd">{b.avatar(n, up, 48)}<div><h3><a href="team/{e(stem)}/">{e(n)}</a></h3><p class="role">{e(title)}</p></div></div>{obj}'
                 f'<p class="lv"><span>Level {k} \u00b7 {e(lv["name"])}</span><span class="mono">{x} XP</span></p>'
                 f'<div class="bar" aria-hidden="true"><span style="width:{pct}%"></span></div>'
                 f'<p class="last"><a href="{e(w["pr"])}">{e(w["title"])}<small class="mono">PR #{num(w)} \u00b7 merged {e((w.get("merged") or w["date"])[:10])}</small></a></p></li>')
@@ -74,5 +89,5 @@ def render(b, items, wins, ups, iss, totals, levels, team, dropped, screened):
         return (f'<li><details{" open" if first else ""}><summary><span class="k k-{cls}">{word}</span><time>{e(dt)}</time>'
                 f'<span class="t">{e(x["title"])}{demo}</span></summary><div class="ev">{who}{text}{kids}<p><a href="{e(x["link"](up))}">Evidence: {e(x["cue"])}</a></p></div></details></li>')
     act = (f'<section aria-labelledby="act-t"><h2 id="act-t">Activity</h2><p class="sub">The latest {min(8, len(items))} records, newest first. Open one for who, what, and the evidence.</p>'
-           f'<ol class="feed">{"".join(row(x, k == 0) for k, x in enumerate(items[:8]))}</ol><p><a class="more" href="timeline/">Full timeline</a></p></section>')
+           f'<ol class="feed">{"".join(row(x, k == 0) for k, x in enumerate(items[:8]))}</ol><ul class="links"><li><a href="timeline/">Full timeline</a></li><li><a href="weekly/">Weekly recap</a></li></ul></section>')
     return status + cta + feat + tracker + teams + act
