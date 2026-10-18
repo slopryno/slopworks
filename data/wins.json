@@ -1,5 +1,13 @@
 [
   {
+    "id": "pr86",
+    "role": "Forge",
+    "title": "Pixel: prototype dark mode lifted to charcoal (Ryno: 'too dark?'), cards read with a 1.65:1 border, muted text lifted to keep 4.5:1",
+    "pr": "https://github.com/slopryno/slopworks/pull/86",
+    "date": "2026-10-17",
+    "merged": "2026-10-17T21:38-04:00"
+  },
+  {
     "id": "pr85",
     "role": "Forge",
     "title": "Pixel: prototype page for Ryno's redesign pitch (i40): huddle, visual direction with contrast checks, /prototype/ only, no rollout",
