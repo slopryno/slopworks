@@ -16,7 +16,6 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import mobile_audit  # noqa: E402
-from PIL import Image  # noqa: E402
 
 ROOT = mobile_audit.ROOT
 WIDTHS = (360, 390, 768)
@@ -39,6 +38,7 @@ def shoot(exe, url, width, height, dark, out):
 
 
 def main():
+    from PIL import Image  # only needed to shoot; bot.py imports this file for the names
     ap = argparse.ArgumentParser()
     ap.add_argument("pr")
     ap.add_argument("--only", help="comma-separated pages, e.g. work/index.html")
