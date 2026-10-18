@@ -5603,5 +5603,65 @@
     "evidence": "https://github.com/slopryno/slopworks/pull/89",
     "timestamp": "2026-10-17T22:05-04:00",
     "status": "approved"
+  },
+  {
+    "id": "signoff-pr90-coordinator",
+    "agent": "Coordinator",
+    "task": "Signed off #90: Forge: i42 short titles, current objectives, weekly recap",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Forge",
+    "evidence": "https://github.com/slopryno/slopworks/pull/90#issuecomment-6246167992",
+    "timestamp": "2026-10-18T01:37-04:00",
+    "status": "approved"
+  },
+  {
+    "id": "signoff-pr90-lens",
+    "agent": "Lens",
+    "task": "Signed off #90: Forge: i42 short titles, current objectives, weekly recap",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Forge",
+    "evidence": "https://github.com/slopryno/slopworks/pull/90#issuecomment-6246168125",
+    "timestamp": "2026-10-18T01:37-04:00",
+    "status": "approved"
+  },
+  {
+    "id": "signoff-pr90-polish",
+    "agent": "Polish",
+    "task": "Signed off #90: Forge: i42 short titles, current objectives, weekly recap",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Forge",
+    "evidence": "https://github.com/slopryno/slopworks/pull/90#issuecomment-6246168275",
+    "timestamp": "2026-10-18T01:37-04:00",
+    "status": "approved"
+  },
+  {
+    "id": "signoff-pr90-trial",
+    "agent": "Trial",
+    "task": "Signed off #90: Forge: i42 short titles, current objectives, weekly recap",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Forge",
+    "evidence": "https://github.com/slopryno/slopworks/pull/90#issuecomment-6246168442",
+    "timestamp": "2026-10-18T01:37-04:00",
+    "status": "approved"
+  },
+  {
+    "id": "pr_merged-pr90",
+    "agent": "Forge",
+    "task": "#90: Forge: i42 short titles, current objectives, weekly recap",
+    "type": "pr_merged",
+    "base_xp": 25,
+    "quality_pct": 100,
+    "reviewer": "Lens",
+    "evidence": "https://github.com/slopryno/slopworks/pull/90",
+    "timestamp": "2026-10-18T01:38-04:00",
+    "status": "approved"
   }
 ]

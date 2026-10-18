@@ -1049,7 +1049,7 @@
     "helps": "Phone readers and returning visitors, who see what changed this week and what each role is on now",
     "effort": "M",
     "builder": "Forge",
-    "state": "yes",
+    "state": "shipped",
     "comments": [],
     "decided": "2026-10-18",
     "decided_by": "CEO",
@@ -1063,6 +1063,8 @@
       "0 overflow and 0 small tap targets at 7 widths on changed pages",
       "Retro posted and the normal cap restored"
     ],
-    "short_title": "Short titles, objectives, weekly recap"
+    "short_title": "Short titles, objectives, weekly recap",
+    "acceptance_verified_by": "Trial",
+    "shipped": "#90 to #91: short_title, data/objectives.json, /weekly/ with Week 1 labelled so far, featured count from the retro range (#90), retro and cap restored (c301 to c303)"
   }
 ]
