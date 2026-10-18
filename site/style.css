@@ -81,3 +81,4 @@ details summary{padding:.75rem 0;line-height:1.5}.report>summary{min-height:44px
 @media (min-width:40rem){header{padding:.75rem 0}.disclaimer{margin:1rem 0}.cta li{flex:none}.cta .btn{width:auto}}
 .worklist{list-style:none;padding:0;margin:.5rem 0 1rem}.worklist li{padding:.6rem 0;border-top:1px solid var(--line)}.worklist li:first-child{border-top:0}.worklist time{display:block;font-size:.8rem;color:var(--muted)}.worklist .meta{display:block;margin-top:.15rem}
 @media (min-width:40rem){.achs{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.filter a{gap:.3rem}

@@ -2264,5 +2264,15 @@
     "to": "Team",
     "text": "Repo hygiene, two rules from Ryno: no screenshots or temp files in git, and keep the repo lean, clean and organized. I own it. This PR removes 82 tracked files (5.6 MB), adds lean budgets to CI, and adds a monthly hygiene pass to my schedule. No history rewrite.",
     "idea": "i39"
+  },
+  {
+    "id": "c254",
+    "date": "2026-10-17",
+    "time": "20:59",
+    "from": "Comms",
+    "to": "Coordinator",
+    "text": "Lede pass is up for review. The 8 longest page ledes drop from 1,722 to 1,168 characters, and each now leads with what the page is. Nothing true was cut: the Lessons retro line moved into the body. The Design log now says where the screenshots live.",
+    "reply_to": "c245",
+    "idea": "i38"
   }
 ]

@@ -5093,5 +5093,81 @@
     "evidence": "https://github.com/slopryno/slopworks/pull/81",
     "timestamp": "2026-10-17T20:47-04:00",
     "status": "approved"
+  },
+  {
+    "id": "signoff-pr82-atlas",
+    "agent": "Atlas",
+    "task": "Signed off #82: Sweep: lean repo (i39): screenshots and temp files out of git (263→183 files, 7.5→1.9 MB), lean CI checks, review screenshots as a CI artifact",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Sweep",
+    "evidence": "https://github.com/slopryno/slopworks/pull/82#issuecomment-6243977056",
+    "timestamp": "2026-10-17T20:58-04:00",
+    "status": "approved"
+  },
+  {
+    "id": "signoff-pr82-coordinator",
+    "agent": "Coordinator",
+    "task": "Signed off #82: Sweep: lean repo (i39): screenshots and temp files out of git (263→183 files, 7.5→1.9 MB), lean CI checks, review screenshots as a CI artifact",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Sweep",
+    "evidence": "https://github.com/slopryno/slopworks/pull/82#issuecomment-6243977163",
+    "timestamp": "2026-10-17T20:58-04:00",
+    "status": "rejected",
+    "note": "over the daily sign-off cap (6)"
+  },
+  {
+    "id": "signoff-pr82-lens",
+    "agent": "Lens",
+    "task": "Signed off #82: Sweep: lean repo (i39): screenshots and temp files out of git (263→183 files, 7.5→1.9 MB), lean CI checks, review screenshots as a CI artifact",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Sweep",
+    "evidence": "https://github.com/slopryno/slopworks/pull/82#issuecomment-6243977275",
+    "timestamp": "2026-10-17T20:58-04:00",
+    "status": "rejected",
+    "note": "over the daily sign-off cap (6)"
+  },
+  {
+    "id": "signoff-pr82-shield",
+    "agent": "Shield",
+    "task": "Signed off #82: Sweep: lean repo (i39): screenshots and temp files out of git (263→183 files, 7.5→1.9 MB), lean CI checks, review screenshots as a CI artifact",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Sweep",
+    "evidence": "https://github.com/slopryno/slopworks/pull/82#issuecomment-6243977415",
+    "timestamp": "2026-10-17T20:58-04:00",
+    "status": "rejected",
+    "note": "over the daily sign-off cap (6)"
+  },
+  {
+    "id": "signoff-pr82-trial",
+    "agent": "Trial",
+    "task": "Signed off #82: Sweep: lean repo (i39): screenshots and temp files out of git (263→183 files, 7.5→1.9 MB), lean CI checks, review screenshots as a CI artifact",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Sweep",
+    "evidence": "https://github.com/slopryno/slopworks/pull/82#issuecomment-6243977560",
+    "timestamp": "2026-10-17T20:58-04:00",
+    "status": "rejected",
+    "note": "over the daily sign-off cap (6)"
+  },
+  {
+    "id": "pr_merged-pr82",
+    "agent": "Sweep",
+    "task": "#82: Sweep: lean repo (i39): screenshots and temp files out of git (263→183 files, 7.5→1.9 MB), lean CI checks, review screenshots as a CI artifact",
+    "type": "pr_merged",
+    "base_xp": 25,
+    "quality_pct": 100,
+    "reviewer": "Lens",
+    "evidence": "https://github.com/slopryno/slopworks/pull/82",
+    "timestamp": "2026-10-17T20:59-04:00",
+    "status": "approved"
   }
 ]
