@@ -208,8 +208,9 @@ def page(slug, title, lede, body, source):
     here = section(slug)[0]
     cur = lambda s: ' aria-current="page"' if s == slug else (' aria-current="true"' if s == here else "")
     nav = "".join(f'<li><a href="{up}{s}"{cur(s)}>{e(t)}</a></li>' for s, t in TOP)
-    sitemap = (f'<nav class="sitelist" aria-label="All pages"><ul><li><a href="{up}">Home</a></li>'
-               + "".join(f'<li><a href="{up}{s}">{e(t)}</a></li>' for s, t in WORK + [("team/", "Team"), ("lessons/", "Lessons")] + HOOD) + "</ul></nav>")
+    # Footer (hotfix after the 2026-10-17 /work/ incident, Comms and Polish): the 5 sections, not every page.
+    sitemap = (f'<nav class="sitelist" aria-label="Sections"><ul><li><a href="{up}">Home</a></li>'
+               + "".join(f'<li><a href="{up}{s}">{e(t)}</a></li>' for s, t in TOP) + "</ul></nav>")
     return f"""<!doctype html>
 <html lang="en">
 <head>
@@ -245,8 +246,7 @@ def page(slug, title, lede, body, source):
 <footer><div class="wrap">
 {sitemap}
 <p>{e(CREDIT)}</p>
-<p>Corrections: <a href="mailto:{CORRECTIONS}">{CORRECTIONS}</a> · Follow: <a href="{up}feed.xml">RSS</a>, <a href="{up}feed.json">JSON</a>, <a href="{REPO}/blob/main/docs/follow.md">how to follow with Grok Bot</a> · <a href="{REPO}">Source</a> · <a href="{REPO}/commits/main/{source}">History of this page's data</a></p>
-<p>{e(DISCLAIMER)}</p>
+<p><a href="mailto:{CORRECTIONS}">Send a correction</a> · <a href="{up}feed.xml">RSS</a> · <a href="{REPO}/blob/main/docs/follow.md">Follow with Grok Bot</a> · <a href="{REPO}">Source</a> · <a href="{REPO}/commits/main/{source}">Page history</a></p>
 </div></footer>
 </body>
 </html>
@@ -662,7 +662,7 @@ def build():
              f'<h2>Every character sheet</h2><p class="meta">In name order. Levels describe each role\'s own record.</p><ul>{roster}</ul>'
              f'<p>Rules: <a href="{REPO}/blob/main/data/progression.json">data/progression.json</a> (owned by Game Master). Ledger: <a href="{REPO}/blob/main/data/xp_ledger.json">data/xp_ledger.json</a>, written by <a href="{REPO}/blob/main/scripts/xp.py">scripts/xp.py</a>. Decided in <a href="{href(prog["thread"], "../../", "team/xp/")}">Team chat</a>.</p>')
     files["team/xp/index.html"] = page("team/xp/", "How XP works", f"Each role earns XP from {len([y for y in ledger_all if y['status'] == 'approved'])} verified pieces of work so far: merged PRs, reviews, Blocks proven right, after-action reviews, research behind accepted decisions, and shipped pitches. Every point links its evidence.", xbody, "data/progression.json")
-    files["team/index.html"] = page("team/", "The team", f"{len(team())} Grok Bot roles in five groups, played by one daily routine. Each card shows the role's own bio, its latest real handoff, recent wins, and a character sheet with verified XP (<a href=\"xp/\">how XP works</a>).",
+    files["team/index.html"] = page("team/", "The team", f"{len(team())} Grok Bot roles in five groups, played by one daily routine. Each card shows the role's own bio, its latest real handoff, recent wins, and a character sheet with verified XP (<a href=\"xp/\">how XP works</a>). How the team grew is on the <a href=\"../timeline/\">Timeline</a>.",
                                     "".join(f'<h2 class="group">{e(g)}</h2><div class="grid">' + "".join(tcard(*x) for x in team() if x[0] in members) + "</div>" for g, members in GROUPS) + alumni_html, "bots")
 
 
