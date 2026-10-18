@@ -1,5 +1,13 @@
 [
   {
+    "id": "pr87",
+    "role": "Polish",
+    "title": "Coordinator/Polish: mission i41 kickoff: reviews consolidated, audit, evidence check, plan, spec (no code)",
+    "pr": "https://github.com/slopryno/slopworks/pull/87",
+    "date": "2026-10-17",
+    "merged": "2026-10-17T21:45-04:00"
+  },
+  {
     "id": "pr86",
     "role": "Forge",
     "title": "Pixel: prototype dark mode lifted to charcoal (Ryno: 'too dark?'), cards read with a 1.65:1 border, muted text lifted to keep 4.5:1",

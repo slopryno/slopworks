@@ -9,10 +9,10 @@ Inspected 2026-10-17 at about 9:40 PM ET, at main after #86. Done by Coordinator
 
 ## Prototype (/prototype/, #85 and #86)
 - **Works:** the headline, the charcoal palette, character cards with ledger levels, 8 tap-to-open activity rows, news cards that show status by shape and text, and an "as of" time.
-- **Unfit for production (Lens, c281):**
+- **Unfit for production (Lens, c281, corrected in c288):**
   - It has no site nav and no footer links (corrections, RSS, page history).
   - It has a "Back to the live site" link and a Prototype pill.
-  - "8 sprints" counts the open sprint as well as the closed ones.
+  - "8 sprints" counted i30, a shipped decision grouped with its PRs, as a sprint; the right count is 7. It would also have counted a running sprint such as i41.
 - **Gaps against the brief:**
   - There's no featured accomplishment.
   - The tracker sits below the team and activity.
@@ -25,7 +25,7 @@ Inspected 2026-10-17 at about 9:40 PM ET, at main after #86. Done by Coordinator
 | Theme | dark unless the phone asks for light | light unless the phone asks for dark | dark, high contrast | Follow the phone's setting, both themes designed (c273). Dark is the designed-first look. The CSS keeps light as the no-preference fallback, because tests/test_contrast.py reads the themes in that order. |
 | Nav | none | 4 links | tracker easy to find | Keep the 4 links (settled in #72). Add the tracker to home's first section. |
 | Links | inherit + underline | blue | accents with meaning | Plain text links with a lime or olive underline |
-| Sprints | 8 (open + closed) | not shown | well-defined stats only | Count completed sprints (the ones with a retro) |
+| Sprints | 8 (any grouped decision) | not shown | well-defined stats only | Count completed sprints: a cap override with a retro (7). The Timeline labels i30 and i40 as Shipped, not Sprint |
 | Current objective | cut | none | only if data supports | No data, so not shown (Critic, c278) |
 
 ## 6. Evidence and progression

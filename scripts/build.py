@@ -196,7 +196,7 @@ def page_url(slug):
     return BASE + slug
 
 
-def page(slug, title, lede, body, source):
+def page(slug, title, lede, body, source, h1=None):
     up = "../" * slug.count("/")
     desc, url, full = describe(slug, lede), page_url(slug), f"{title} · Slopworks"
     # Structured data as schema.org microdata, not JSON-LD: check.py bans every <script> tag, and that guardrail stays.
@@ -239,7 +239,7 @@ def page(slug, title, lede, body, source):
 </div></header>
 <main id="main" class="wrap{" home" if slug == "" else ""}" itemscope itemtype="https://schema.org/{kind}">{micro}
 {back_link(slug, up)}<p class="disclaimer">{e(DISCLAIMER)}</p>
-<h1>{e(title)}</h1>
+<h1>{h1 or e(title)}</h1>
 <p class="lede">{lede}</p>
 {trim_legend(body)}
 </main>
@@ -377,31 +377,11 @@ def build():
     files["updates/index.html"] = page("updates/", "What's new in Grok Bot", f"{len(ups)} Grok Bot updates from public posts, newest first. Each links its source and is marked <strong>confirmed</strong> (official account or docs) or <strong>reported</strong> (community post).",
                                (lambda f: f[1] + '<div class="filtered">' + f[0] + "".join(entry_card(x) for x in ups) + "</div>")(area_filter(ups)) if ups else '<p class="empty">Nothing yet.</p>', "data/updates.json")
 
-    # Showcase landing (i22, PR 4 of 8): outcomes first, every number derived from repo data, every claim linked.
-    research_all = load("research")
+    # Tracker counts for home (i22's proof line, kept on home's tracker panel in i41).
     ideas_all = load("ideas")
-    shipped_ok = [i for i in ideas_all if i["state"] == "shipped" and i.get("acceptance_verified_by") == "Trial"]
     dropped = sum(r["counts"].get("dropped_verify", 0) for r in runs)
     screened = sum(r["counts"].get("candidates", 0) for r in runs)
-    pdrop = sum(r["counts"].get("dropped_privacy", 0) for r in runs)
-    proof = [(len(research_all), "research reports filed, each with its sources", "arena/"),
-             (len(shipped_ok), "shipped changes with acceptance checked by Trial", "cases/"),
-             (f"{dropped} of {screened}", "candidate entries Verify dropped before publishing", "behind/"),
-             (len(ups), "Grok Bot updates tracked from public sources", "updates/")]
-    asof = last_run["date"] if last_run else ""
-    # Landing, simplified for i36 (Team chat c219 to c222): one headline, three entry points, three short answers, proof.
-    # Cut by Critic: the can/can't lists, the avatar strip, the catches list, the latest-cards block, and the label legend.
-    # Each still lives one tap away (Team, Case files, Behind the scenes, What's new).
-    q = [("What can this team do?", "Run a real product end to end: find and verify Grok Bot updates, then design, build, review, and ship this site.", ("updates/", "See the tracker")),
-         ("Why is it different?", "Every claim links a source, a different role reviews every change, and the guardrails live in CI.", ("cases/", "Read the case files")),
-         ("What is working with it like?", "A question goes in. Roles research it, a critic challenges it, and a scored decision comes back.", ("arena/", "Watch a research round"))]
-    go = [("work/", "See the work", "primary"), ("team/", "Meet the team", ""), ("timeline/", "Follow the progress", "")]
-    landing = ('<ul class="cta">' + "".join(f'<li><a class="btn {c}" href="{u}">{e(x)}</a></li>' for u, x, c in go) + "</ul>"
-               + '<section class="questions" aria-label="Three questions">' + "".join(f'<article class="q"><h2>{e(h)}</h2><p>{e(d)}</p><p><a class="more" href="{u}">{e(x)}</a></p></article>' for h, d, (u, x) in q) + "</section>"
-               + f'<section class="proof" aria-labelledby="proof-t"><h2 id="proof-t">Proof, not promises</h2><p class="meta">Counted from the repo when this page was built{(" · " + as_of(asof, "last daily run")) if asof else ""}</p><ul class="stats">'
-               + "".join(f'<li><a href="{u}"><strong>{e(v)}</strong> <span>{e(l)}</span></a></li>' for v, l, u in proof) + "</ul></section>")
-    files["index.html"] = page("", "Grok Bots, building in public",
-                               "A team of Grok Bot roles runs a real product, an unofficial Grok Bot tracker, and publishes every decision behind it.", landing, "data")
+    # Home moved below the Timeline (mission i41): it reuses the Timeline records, so it's built after them.
     areas = sorted({x["area"] for x in iss})
     body = ""
     for a in areas:
@@ -825,8 +805,9 @@ def build():
         last = group[-1]
         items.append({"types": ["shipped"] + (["milestone"] if i["state"] == "shipped" else []), "date": last["merged"][:10], "time": last["merged"][11:16],
                       "id": f"tl-sprint-{i['id']}", "who": None, "title": i["problem"], "sprint": i["id"],
-                      "text": out["text"] if out else "In progress.", "link": lambda up, c=(out or ms[0]): href(c["id"], up, "timeline/"),
-                      "cue": "retro" if out else "kickoff", "children": [pr_item(w) for w in reversed(group)]})
+                      "capped": "cap" in (i["problem"] + " " + (i.get("reason") or "")).lower(),
+                      "text": out["text"] if out else (i.get("shipped") if i["state"] == "shipped" else "In progress."), "link": lambda up, c=(out or ms[0]): href(c["id"], up, "timeline/"),
+                      "cue": "retro" if out else ("thread" if i["state"] == "shipped" else "kickoff"), "children": [pr_item(w) for w in reversed(group)]})
     first = prs[0] if prs else None
     for w in prs:
         if w["id"] in used_prs:
@@ -872,7 +853,7 @@ def build():
     def tl_item(x, up):
         dt, t = when(x["date"], x["time"])
         tm = f'<time datetime="{dt}">{t} ET</time>' if t else f'<time datetime="{dt}">{x["date"]}</time>'
-        tag = TL_NAMES[x["types"][0]] if not x.get("sprint") else "Sprint"
+        tag = "Sprint" if x.get("capped") else TL_NAMES[x["types"][0]]
         lbl = f' {label("demo")}' if x.get("demo") else ""
         who = f' <span class="meta">{e(x["who"])}</span>' if x.get("who") else ""
         body = f'<p>{e(x["text"])}</p>' if x.get("text") else ""
@@ -906,7 +887,7 @@ def build():
     tl_main, tl_parts = rollover(days, lambda dd: len(day_html(dd, "../").encode()), TL_TARGET)
     present = [(k, t) for k, t in TL_TYPES if any(k in x["types"] for x in items)]
     n_pr = len(prs)
-    n_sprint = sum(1 for x in items if x.get("sprint"))
+    n_sprint = sum(1 for x in items if x.get("capped"))  # a shipped decision grouped with its PRs isn't a sprint
     launch = prs[0]["date"] if prs else None
     hero = (f'<p class="meta">{label("verified")} counted from the repo when this page was built</p><ul class="proof tl-proof">'
             + "".join(f"<li><strong>{v}</strong> <span>{e(l)}</span></li>" for v, l in ((n_pr, "merged PRs"), (n_sprint, "sprints"), (sum("decision" in x["types"] for x in items), "CEO decisions"), (len(aars), "lessons written up"), (len(team()), "roles"))) + "</ul>")
@@ -926,10 +907,10 @@ def build():
         files[slug] = page(slug, f"Timeline archive: {arch_name(m, n)}", "Older days from the Slopworks timeline, moved here automatically to keep the main page light. The same records, unchanged.",
             f'<nav class="jump" aria-label="Archive pages">{"".join(nav_l)}</nav>' + fcss + '<div class="filtered">' + fhtml + "".join(day_html(dd, "../../") for dd in sorted(us, reverse=True)) + "</div>", "data")
 
-    # Prototype for Ryno's pitch i40 (c260 to c266): one page with its own scoped CSS, not linked from the nav. The live design is unchanged.
-    import prototype
-    files["prototype/index.html"] = prototype.render(sys.modules[__name__], items, wins, ups, totals, levels, team(),
-        "A prototype of a proposed new look for Slopworks: a dark palette, bold type, the team up front, and one activity list. Not the live design.")
+    # Home (mission i41, from the i40 prototype; spec in docs/mission/spec.md): hero, status line, featured sprint, tracker, team, activity.
+    import home
+    files["index.html"] = page("", home.TITLE, f"{len(team())} Grok Bot roles run a real product, an unofficial Grok Bot tracker, and publish every decision behind it.",
+                               home.render(sys.modules[__name__], items, wins, ups, iss, totals, levels, team(), dropped, screened), "data", h1=home.HEADLINE)
 
     shipped = [d for d in design if d["state"] == "shipped"]
     backlog = sorted([d for d in design if d["state"] in ("backlog", "in-progress")], key=lambda d: d["rank"])
