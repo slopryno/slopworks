@@ -975,5 +975,30 @@
     "reason": "Directed by Ryno in Grok Bot chat 2026-10-17. At 8:49 PM ET: never save screenshots or other temp files to the repo; review screenshots live in CI artifacts or on the box. At 8:51 PM ET: 'Repo to remain lean, clean and organized.' Added to plans/direction.md as standing goals 8 and 9, owned by Sweep.",
     "acceptance_verified_by": "Trial",
     "shipped": "#82: 82 tracked files (5.6 MB) removed, no history rewrite; lean CI checks; review screenshots as a CI artifact; monthly Sweep hygiene item."
+  },
+  {
+    "id": "i40",
+    "date": "2026-10-17",
+    "by": "CEO",
+    "source": "ceo",
+    "problem": "Visual redesign from an outside Mobile Readiness and Visual Redesign Audit: a dark editorial palette, bold type, the team as the main attraction on home, one activity view",
+    "helps": "Visitors on phones first, who meet the team and its record on a site with more character",
+    "effort": "M",
+    "builder": "Polish",
+    "state": "yes",
+    "comments": [],
+    "decided": "2026-10-17",
+    "decided_by": "CEO",
+    "reason": "Pitched by Ryno in Grok Bot chat 2026-10-17 9:04 PM ET, pasting an outside audit. Scope he set: a huddle, a visual direction (palette, type, spacing, components, contrast checked) and one working prototype page reviewed from screenshots, then stop before any site-wide rollout. Wireframes skipped. The audit reviewed the old site (7-link nav, home as an updates list) and could not test phone widths.",
+    "recommendation": "smaller",
+    "pros": "A clear palette and type scale, the team and its real record up front, one place to follow activity. Fits a static, script-free site.",
+    "cons": "Written against the old site, so much of its mobile list is already done. Bold can fight simple. A full rollout touches every page and the CSS budget.",
+    "target_sprint": "W42",
+    "acceptance_criteria": [
+      "Huddle with Coordinator's report-back, flagging what the audit got from the old site",
+      "A visual direction with every text color pair contrast-checked (4.5:1 or more)",
+      "One prototype page, no scripts, real data only, honest as-of times, reviewed from screenshots",
+      "No site-wide rollout until Ryno decides"
+    ]
   }
 ]

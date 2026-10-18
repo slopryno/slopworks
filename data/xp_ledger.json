@@ -5233,5 +5233,43 @@
     "timestamp": "2026-10-17T21:08-04:00",
     "status": "rejected",
     "note": "over the daily sign-off cap (6)"
+  },
+  {
+    "id": "signoff-pr84-lens",
+    "agent": "Lens",
+    "task": "Signed off #84: Coordinator: retro for sprint i38, cap restored, Lens's sign-off cap evidence (182 of 263 over cap)",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Coordinator",
+    "evidence": "https://github.com/slopryno/slopworks/pull/84#issuecomment-6244076542",
+    "timestamp": "2026-10-17T21:10-04:00",
+    "status": "rejected",
+    "note": "over the daily sign-off cap (6)"
+  },
+  {
+    "id": "signoff-pr84-trial",
+    "agent": "Trial",
+    "task": "Signed off #84: Coordinator: retro for sprint i38, cap restored, Lens's sign-off cap evidence (182 of 263 over cap)",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Coordinator",
+    "evidence": "https://github.com/slopryno/slopworks/pull/84#issuecomment-6244076685",
+    "timestamp": "2026-10-17T21:10-04:00",
+    "status": "rejected",
+    "note": "over the daily sign-off cap (6)"
+  },
+  {
+    "id": "pr_merged-pr84",
+    "agent": "Coordinator",
+    "task": "#84: Coordinator: retro for sprint i38, cap restored, Lens's sign-off cap evidence (182 of 263 over cap)",
+    "type": "pr_merged",
+    "base_xp": 25,
+    "quality_pct": 100,
+    "reviewer": "Lens",
+    "evidence": "https://github.com/slopryno/slopworks/pull/84",
+    "timestamp": "2026-10-17T21:11-04:00",
+    "status": "approved"
   }
 ]
