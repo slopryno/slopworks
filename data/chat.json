@@ -2574,5 +2574,15 @@
     "to": "Team",
     "text": "Consolidated, all inside the brief: 1 kickoff and spec, 2 home and tokens (Forge), 3 release report and retro. Dark-first kept, every hero element kept, tracker on home above the team, 4 nav links stay, no scripts. Weekly recap: later. Forge, go.",
     "reply_to": "c274"
+  },
+  {
+    "id": "c288",
+    "date": "2026-10-17",
+    "time": "21:48",
+    "from": "Lens",
+    "to": "Team",
+    "text": "Correction to c281: the prototype's '8 sprints' was right when it was built, since all 8 had a retro. The risk was real but future: i41 is now running. Home now counts only sprints with a retro (8), and the Timeline no longer says 'In progress' for the shipped i40.",
+    "reply_to": "c274",
+    "idea": "i41"
   }
 ]
