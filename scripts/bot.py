@@ -38,6 +38,45 @@ class Refused(Exception):
     pass
 
 
+# ---------- Tempo (i44, Ryno 2026-10-18 8:35 AM ET): pace rules live in scripts/tempo.py ----------
+import tempo  # noqa: E402
+
+
+def merged_now():
+    """Every merged PR from GitHub right now, so the count doesn't depend on wins.json being fresh."""
+    prs = json.loads(gh("pr", "list", "--state", "merged", "--limit", "1000", "--json", "number,mergedAt"))
+    at = lambda s: datetime.datetime.fromisoformat(s.replace("Z", "+00:00")).astimezone(ET).isoformat(timespec="minutes")
+    return [{"number": p["number"], "merged": at(p["mergedAt"])} for p in prs]
+
+
+def tempo_gate(prs, aars, now):
+    """Refuse a PR over today's limit for the current mode."""
+    mode, used, limit = tempo.today(prs, aars, now)
+    if used >= limit:
+        raise Refused(f"tempo: {mode} mode allows {limit} merged PRs today and {used} already count; "
+                      f"wait for tomorrow (ET){' or 10 clean PRs' if mode == 'slowed' else ''} (scripts/tempo.py, data/tempo.json)")
+    return mode, used, limit
+
+
+def main_red(runs):
+    """Refuse while the newest finished CI or Pages run on main failed: write its AAR first (it trips the slowdown)."""
+    for name in ("CI", "Pages"):
+        done = [r for r in runs if r["name"] == name and r["status"] == "completed"]
+        if done and done[0]["conclusion"] == "failure":
+            raise Refused(f"main is red: the latest {name} run on main failed; fix it and write the same-day AAR first")
+
+
+def log_refusal(path, branch, reason, now):
+    """Append a refusal to data/refusals.json so pre-merge catches are on the record (Trial, c319).
+    Only the first line is kept, and a line naming a possible secret or personal data is redacted."""
+    line = (reason.strip().splitlines() or [""])[0][:200]
+    if check.secret_hits(reason) or check.pii_hits(reason) or "secret" in line or "personal data" in line:
+        line = "redacted: the check output named a possible secret or personal data"
+    log = json.loads(path.read_text()) if path.exists() else []
+    log.append({"at": now.isoformat(timespec="minutes"), "branch": branch[:80], "reason": line})
+    path.write_text(json.dumps(log, indent=2, ensure_ascii=False) + "\n")
+
+
 def git(*args):
     return subprocess.run(["git", *args], cwd=ROOT, capture_output=True, text=True, check=True).stdout
 
@@ -258,6 +297,9 @@ def cmd_pr(a):
         signoffs[who] = Path(f).read_text()
     comments = plan_signoffs(a.maker, paths, signoffs)  # refuse before anything is pushed
     plan_review(a.review, m.group(1), paths, signoffs, removed=[p for p in paths if not (ROOT / p).exists()])
+    main_red(json.loads(gh("run", "list", "--branch", "main", "--limit", "10", "--json", "name,status,conclusion")))
+    mode, used, limit = tempo_gate(merged_now(), json.loads((ROOT / "data/aars.json").read_text()), datetime.datetime.now(ET))
+    print(f"tempo: {mode}, this is PR {used + 1} of {limit} today")
     if needs_visual_review(m.group(1), paths) and next_pr_number() != a.review:
         raise Refused(f"--review {a.review} but this PR will be #{next_pr_number()}; reshoot into that number")
     visual = needs_visual_review(m.group(1), paths)
@@ -328,6 +370,8 @@ def main(argv=None):
         elif a.cmd == "pr":
             cmd_pr(a)
     except Refused as e:
+        if a.cmd == "pr":
+            log_refusal(ROOT / "data/refusals.json", git("rev-parse", "--abbrev-ref", "HEAD").strip(), str(e), datetime.datetime.now(ET))
         print(f"bot.py: refused: {e}", file=sys.stderr)
         sys.exit(2)
 
