@@ -44,7 +44,8 @@ class Timeline(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.files = build.build()
-        cls.doc = cls.files["timeline/index.html"]
+        # i42: older days roll to archive pages, so record checks read the main page and its archives together.
+        cls.doc = cls.files["timeline/index.html"] + "".join(v for k, v in sorted(cls.files.items()) if k.startswith("timeline/archive/"))
 
     def test_every_item_resolves_to_a_real_artifact(self):
         pages, n = resolve_all(self.files, self)
