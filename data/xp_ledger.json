@@ -5941,5 +5941,91 @@
     "evidence": "https://github.com/slopryno/slopworks/pull/96",
     "timestamp": "2026-10-18T08:29-04:00",
     "status": "approved"
+  },
+  {
+    "id": "signoff-pr97-atlas",
+    "agent": "Atlas",
+    "task": "Signed off #97: Forge: standing tempo with an automatic slowdown (i44)",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Forge",
+    "evidence": "https://github.com/slopryno/slopworks/pull/97#issuecomment-6250205712",
+    "timestamp": "2026-10-18T08:59-04:00",
+    "status": "approved"
+  },
+  {
+    "id": "signoff-pr97-lens",
+    "agent": "Lens",
+    "task": "Signed off #97: Forge: standing tempo with an automatic slowdown (i44)",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Forge",
+    "evidence": "https://github.com/slopryno/slopworks/pull/97#issuecomment-6250205874",
+    "timestamp": "2026-10-18T08:59-04:00",
+    "status": "rejected",
+    "note": "over the daily sign-off cap (6)"
+  },
+  {
+    "id": "signoff-pr97-polish",
+    "agent": "Polish",
+    "task": "Signed off #97: Forge: standing tempo with an automatic slowdown (i44)",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Forge",
+    "evidence": "https://github.com/slopryno/slopworks/pull/97#issuecomment-6250206037",
+    "timestamp": "2026-10-18T08:59-04:00",
+    "status": "approved"
+  },
+  {
+    "id": "signoff-pr97-shield",
+    "agent": "Shield",
+    "task": "Signed off #97: Forge: standing tempo with an automatic slowdown (i44)",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Forge",
+    "evidence": "https://github.com/slopryno/slopworks/pull/97#issuecomment-6250206169",
+    "timestamp": "2026-10-18T08:59-04:00",
+    "status": "approved"
+  },
+  {
+    "id": "signoff-pr97-trial",
+    "agent": "Trial",
+    "task": "Signed off #97: Forge: standing tempo with an automatic slowdown (i44)",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Forge",
+    "evidence": "https://github.com/slopryno/slopworks/pull/97#issuecomment-6250206289",
+    "timestamp": "2026-10-18T08:59-04:00",
+    "status": "rejected",
+    "note": "over the daily sign-off cap (6)"
+  },
+  {
+    "id": "ci_test_added-test_tempo",
+    "agent": "Trial",
+    "task": "Added tests/test_tempo.py in #97",
+    "type": "ci_test_added",
+    "base_xp": 15,
+    "quality_pct": 100,
+    "reviewer": "Lens",
+    "evidence": "https://github.com/slopryno/slopworks/pull/97",
+    "timestamp": "2026-10-18T09:01-04:00",
+    "status": "approved"
+  },
+  {
+    "id": "pr_merged-pr97",
+    "agent": "Forge",
+    "task": "#97: Forge: standing tempo with an automatic slowdown (i44)",
+    "type": "pr_merged",
+    "base_xp": 25,
+    "quality_pct": 100,
+    "reviewer": "Lens",
+    "evidence": "https://github.com/slopryno/slopworks/pull/97",
+    "timestamp": "2026-10-18T09:01-04:00",
+    "status": "approved"
   }
 ]

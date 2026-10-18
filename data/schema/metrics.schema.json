@@ -1,0 +1,63 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "as_of",
+    "newest_day",
+    "days_of_history",
+    "ci_window_start",
+    "totals",
+    "pace",
+    "days",
+    "sprints",
+    "trends",
+    "worsening"
+  ],
+  "properties": {
+    "as_of": {
+      "type": "string"
+    },
+    "newest_day": {
+      "type": "string"
+    },
+    "days_of_history": {
+      "type": "integer"
+    },
+    "ci_window_start": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "totals": {
+      "type": "object"
+    },
+    "pace": {
+      "type": "object"
+    },
+    "days": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "sprints": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "trends": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "worsening": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

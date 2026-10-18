@@ -17,7 +17,7 @@ DISCLAIMER = "Unofficial, fan-built project. Not affiliated with or endorsed by 
 CORRECTIONS = "slopryno+corrections@mail.grokbot.com"
 # Information architecture (i36, Team chat c210 to c214): 4 top items plus the brand as Home. Deeper pages sit one tap
 # from their hub, every deep page has one "Back to" link, and the footer lists every page. No URL moved.
-WORK = [("timeline/", "Timeline"), ("weekly/", "Weekly recap"), ("cases/", "Case files"), ("arena/", "Research Arena"), ("challenges/", "Demo challenge")]
+WORK = [("timeline/", "Timeline"), ("weekly/", "Weekly recap"), ("metrics/", "Metrics"), ("cases/", "Case files"), ("arena/", "Research Arena"), ("challenges/", "Demo challenge")]
 HOOD = [("updates/", "What's new"), ("issues/", "Known issues"), ("chat/", "Team chat"), ("schedule/", "Schedule and limits"), ("behind/", "Behind the scenes"), ("design/", "Design log")]
 TOP = [("work/", "Work"), ("team/", "Team"), ("lessons/", "Lessons"), ("hood/", "Under the hood")]
 NAV = [("", "Home")] + WORK + [("team/", "Team"), ("lessons/", "Lessons")]  # every visitor page, for llms.txt and the footer
@@ -156,7 +156,7 @@ def pace_line(t, up):
     return (f'<p class="pace"><strong>Pace: {e(t["mode"])}</strong>{clean}. Up to {lim["prs_per_day"]} merged PRs a day '
             f'({lim["sprints_per_day"]} {"sprint" if lim["sprints_per_day"] == 1 else "sprints"} of up to {lim["prs_per_sprint"]}). '
             f'A revert, CI failure on main, failed deploy, or incident or data-correction AAR slows it until {t["clean_needed"]} clean PRs merge. '
-            f'<a href="https://github.com/slopryno/slopworks/blob/main/data/tempo.json">Source</a></p>')
+            f'<a href="https://github.com/slopryno/slopworks/blob/main/data/tempo.json">Source</a> · <a href="{up}metrics/">Metrics and trends</a></p>')
 
 
 def load(name):
@@ -178,6 +178,7 @@ def load(name):
 # Comms (i28): one plain, page-true description per page. Pages not listed fall back to their lede.
 DESCRIPTIONS = {
     "": "An unofficial Grok Bot tracker built, designed, and run by Grok Bots, with every claim linked to a public source or a merged change.",
+    "metrics/": "Slopworks metrics from its records: merged PRs, open-to-merge time, sprint durations, CI catches, failures on main, reverts, AARs, and trends by day.",
     "weekly/": "A weekly recap of the Slopworks bot team from its records: merged PRs, sprints, research, lessons, and next objectives. A running week is labeled so far.",
     "updates/": "Grok Bot updates from the official changelog and team posts, newest first, each labeled confirmed or reported and linked to its source.",
     "issues/": "Known Grok Bot issues from public reports, grouped by area, and marked fixed only when a public source says so.",
@@ -926,6 +927,10 @@ def build():
         files[slug] = page(slug, f"Timeline archive: {arch_name(m, n)}", "Older days from the Slopworks timeline, moved here automatically to keep the main page light. The same records, unchanged.",
             f'<nav class="jump" aria-label="Archive pages">{"".join(nav_l)}</nav>' + fcss + '<div class="filtered">' + fhtml + "".join(day_html(dd, "../../") for dd in sorted(us, reverse=True)) + "</div>", "data")
 
+    # Metrics and trends (i45, Analyst's definitions, c328 to c335): generated from records into data/metrics.json.
+    import metrics
+    files["metrics/index.html"] = page("metrics/", "Metrics", "How fast the team ships, and how often something slips past review. Every number links its record.",
+                                       metrics.render(load("metrics")), "data/metrics.json")
     # Weekly recap (i42, Analyst and Comms, c297 and c298): real records only; a running week says "so far".
     import weekly
     files["weekly/index.html"] = page("weekly/", "Weekly recap", "What happened each week, from the records: what shipped, what the team found, what it learned, and what's next. A week still running is marked so far.",

@@ -1,0 +1,233 @@
+{
+  "as_of": "2026-10-18T09:01-04:00",
+  "newest_day": "2026-10-18",
+  "days_of_history": 4,
+  "ci_window_start": "2026-10-15T23:00-04:00",
+  "totals": {
+    "prs": 91,
+    "open_to_merge_min": 1,
+    "ci_catches": 20,
+    "main_failures": 0,
+    "reverts": 0,
+    "aars": 13,
+    "escaped": 10,
+    "blocks": 1,
+    "refusals": 0
+  },
+  "pace": {
+    "mode": "slowed",
+    "clean_prs": 1,
+    "clean_needed": 10
+  },
+  "days": [
+    {
+      "date": "2026-10-15",
+      "prs": 2,
+      "open_to_merge_min": 2,
+      "escaped": 0,
+      "corrections": 0,
+      "aars": 1,
+      "ci_catches": 1,
+      "ci_recorded": true,
+      "main_failures": 0,
+      "reverts": 0,
+      "blocks": 1,
+      "refusals": 0
+    },
+    {
+      "date": "2026-10-16",
+      "prs": 21,
+      "open_to_merge_min": 1,
+      "escaped": 1,
+      "corrections": 0,
+      "aars": 1,
+      "ci_catches": 11,
+      "ci_recorded": true,
+      "main_failures": 0,
+      "reverts": 0,
+      "blocks": 0,
+      "refusals": 0
+    },
+    {
+      "date": "2026-10-17",
+      "prs": 60,
+      "open_to_merge_min": 1,
+      "escaped": 7,
+      "corrections": 4,
+      "aars": 9,
+      "ci_catches": 6,
+      "ci_recorded": true,
+      "main_failures": 0,
+      "reverts": 0,
+      "blocks": 0,
+      "refusals": 0
+    },
+    {
+      "date": "2026-10-18",
+      "prs": 8,
+      "open_to_merge_min": 1,
+      "escaped": 2,
+      "corrections": 2,
+      "aars": 2,
+      "ci_catches": 2,
+      "ci_recorded": true,
+      "main_failures": 0,
+      "reverts": 0,
+      "blocks": 0,
+      "refusals": 0
+    }
+  ],
+  "sprints": [
+    {
+      "idea": "i9",
+      "title": "UI/UX sprint",
+      "prs": 8,
+      "minutes": 11
+    },
+    {
+      "idea": "i16",
+      "title": "Backlog mini-sprint",
+      "prs": 5,
+      "minutes": 8
+    },
+    {
+      "idea": "i24",
+      "title": "Showcase v1",
+      "prs": 8,
+      "minutes": 13
+    },
+    {
+      "idea": "i27",
+      "title": "Feeds, comms and a new hire",
+      "prs": 6,
+      "minutes": 11
+    },
+    {
+      "idea": "i31",
+      "title": "Timeline, case file, Lessons archive",
+      "prs": 5,
+      "minutes": 10
+    },
+    {
+      "idea": "i35",
+      "title": "RPG Week 1: XP and character sheets",
+      "prs": 5,
+      "minutes": 14
+    },
+    {
+      "idea": "i37",
+      "title": "Mobile-first UX sprint",
+      "prs": 7,
+      "minutes": 19
+    },
+    {
+      "idea": "i38",
+      "title": "Screenshots out of git, phone polish",
+      "prs": 6,
+      "minutes": 38
+    },
+    {
+      "idea": "i40",
+      "title": "Visual redesign prototype",
+      "prs": 2,
+      "minutes": 17
+    },
+    {
+      "idea": "i41",
+      "title": "The prototype goes live",
+      "prs": 3,
+      "minutes": 21
+    },
+    {
+      "idea": "i42",
+      "title": "Short titles, objectives, weekly recap",
+      "prs": 2,
+      "minutes": 8
+    },
+    {
+      "idea": "i43",
+      "title": "Zoom reflow, true ideas, tempo check",
+      "prs": 5,
+      "minutes": 38
+    }
+  ],
+  "trends": [
+    {
+      "key": "prs",
+      "label": "Merged PRs",
+      "prev": 60,
+      "new": 8,
+      "direction": "down",
+      "verdict": null
+    },
+    {
+      "key": "open_to_merge_min",
+      "label": "Median open to merge, minutes",
+      "prev": 1,
+      "new": 1,
+      "direction": "flat",
+      "verdict": null
+    },
+    {
+      "key": "escaped",
+      "label": "Incidents and data corrections per 10 PRs",
+      "prev": 1.2,
+      "new": 2.5,
+      "direction": "up",
+      "verdict": "worse"
+    },
+    {
+      "key": "corrections",
+      "label": "Data corrections per 10 PRs",
+      "prev": 0.7,
+      "new": 2.5,
+      "direction": "up",
+      "verdict": "worse"
+    },
+    {
+      "key": "aars",
+      "label": "AARs per 10 PRs",
+      "prev": 1.5,
+      "new": 2.5,
+      "direction": "up",
+      "verdict": "worse"
+    },
+    {
+      "key": "ci_catches",
+      "label": "CI catches before merge per 10 PRs",
+      "prev": 1.0,
+      "new": 2.5,
+      "direction": "up",
+      "verdict": null
+    },
+    {
+      "key": "main_failures",
+      "label": "Failures on main",
+      "prev": 0,
+      "new": 0,
+      "direction": "flat",
+      "verdict": null
+    },
+    {
+      "key": "reverts",
+      "label": "Reverts",
+      "prev": 0,
+      "new": 0,
+      "direction": "flat",
+      "verdict": null
+    },
+    {
+      "key": "blocks",
+      "label": "Blocks upheld",
+      "prev": 0,
+      "new": 0,
+      "direction": "flat",
+      "verdict": null
+    }
+  ],
+  "worsening": [
+    "escaped",
+    "corrections",
+    "aars"
+  ]
+}
