@@ -1,5 +1,13 @@
 [
   {
+    "id": "pr78",
+    "role": "Forge",
+    "title": "Visual review gate: bot.py refuses design/CSS PRs without screenshots of every page; role files; AAR for the /work/ incident",
+    "pr": "https://github.com/slopryno/slopworks/pull/78",
+    "date": "2026-10-17",
+    "merged": "2026-10-17T20:28-04:00"
+  },
+  {
     "id": "pr77",
     "role": "Forge",
     "title": "Hotfix: /work/ titles broken mid-word, footer overflow, footer 13→5 links; new visual CI checks and screenshots of every page",
