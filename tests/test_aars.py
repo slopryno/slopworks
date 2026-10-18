@@ -67,9 +67,11 @@ class Aars(unittest.TestCase):
         self.assertEqual(check.a11y_issues(html), [])
         self.assertNotIn("<script", html)
         self.assertLess(len(html.encode()) + (ROOT / "site/style.css").stat().st_size, 0.6 * check.PATTERNS["max_page_bytes"])
+        main = [a for a in AARS if f'id="{a["id"]}"' in html]  # older reviews roll to lessons/archive/ (tests/test_lessons_archive.py)
+        self.assertGreaterEqual(len(main), 10)
         for a in AARS:
-            self.assertIn(f'id="{a["id"]}"', html)
-        order = [html.index(f'id="{a["id"]}"') for a in sorted(AARS, key=lambda a: (a["date"], a["id"]), reverse=True)]
+            self.assertTrue(any(f'id="{a["id"]}"' in v for k, v in FILES.items() if k.startswith("lessons/")), a["id"])
+        order = [html.index(f'id="{a["id"]}"') for a in sorted(main, key=lambda a: (a["date"], a["id"]), reverse=True)]
         self.assertEqual(order, sorted(order))  # newest first
         self.assertIn("lessons/", FILES["schedule/index.html"])
         self.assertIn('href="../lessons/"', FILES["team/index.html"])  # in the nav

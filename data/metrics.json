@@ -1,22 +1,22 @@
 {
-  "as_of": "2026-10-18T09:01-04:00",
+  "as_of": "2026-10-18T09:17-04:00",
   "newest_day": "2026-10-18",
   "days_of_history": 4,
   "ci_window_start": "2026-10-15T23:00-04:00",
   "totals": {
-    "prs": 91,
+    "prs": 92,
     "open_to_merge_min": 1,
     "ci_catches": 20,
     "main_failures": 0,
     "reverts": 0,
-    "aars": 13,
-    "escaped": 10,
+    "aars": 14,
+    "escaped": 11,
     "blocks": 1,
-    "refusals": 0
+    "refusals": 1
   },
   "pace": {
     "mode": "slowed",
-    "clean_prs": 1,
+    "clean_prs": 0,
     "clean_needed": 10
   },
   "days": [
@@ -64,17 +64,17 @@
     },
     {
       "date": "2026-10-18",
-      "prs": 8,
+      "prs": 9,
       "open_to_merge_min": 1,
-      "escaped": 2,
-      "corrections": 2,
-      "aars": 2,
+      "escaped": 3,
+      "corrections": 3,
+      "aars": 3,
       "ci_catches": 2,
       "ci_recorded": true,
       "main_failures": 0,
       "reverts": 0,
       "blocks": 0,
-      "refusals": 0
+      "refusals": 1
     }
   ],
   "sprints": [
@@ -156,7 +156,7 @@
       "key": "prs",
       "label": "Merged PRs",
       "prev": 60,
-      "new": 8,
+      "new": 9,
       "direction": "down",
       "verdict": null
     },
@@ -172,7 +172,7 @@
       "key": "escaped",
       "label": "Incidents and data corrections per 10 PRs",
       "prev": 1.2,
-      "new": 2.5,
+      "new": 3.3,
       "direction": "up",
       "verdict": "worse"
     },
@@ -180,7 +180,7 @@
       "key": "corrections",
       "label": "Data corrections per 10 PRs",
       "prev": 0.7,
-      "new": 2.5,
+      "new": 3.3,
       "direction": "up",
       "verdict": "worse"
     },
@@ -188,7 +188,7 @@
       "key": "aars",
       "label": "AARs per 10 PRs",
       "prev": 1.5,
-      "new": 2.5,
+      "new": 3.3,
       "direction": "up",
       "verdict": "worse"
     },
@@ -196,7 +196,7 @@
       "key": "ci_catches",
       "label": "CI catches before merge per 10 PRs",
       "prev": 1.0,
-      "new": 2.5,
+      "new": 2.2,
       "direction": "up",
       "verdict": null
     },

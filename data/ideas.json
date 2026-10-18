@@ -1141,7 +1141,7 @@
     "helps": "Visitors who want proof, and the team, which sees whether it is getting better or worse",
     "effort": "M",
     "builder": "Forge",
-    "state": "yes",
+    "state": "shipped",
     "comments": [],
     "decided": "2026-10-18",
     "decided_by": "CEO",
@@ -1154,6 +1154,8 @@
       "No scripts or chart libraries; text values, not color alone",
       "0 overflow and 0 small taps at 195 plus 7 widths, light and dark",
       "Placement and look decided in Team chat"
-    ]
+    ],
+    "acceptance_verified_by": "Trial",
+    "shipped": "#98: /metrics/ with 8 numbers, each defined and sourced; trends vs the prior day per 10 PRs, with the small-sample caveat; by-day table; scripts/metrics.py"
   }
 ]

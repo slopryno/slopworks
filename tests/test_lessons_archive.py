@@ -17,11 +17,13 @@ def lesson_pages(files):
 
 
 class LessonsArchive(unittest.TestCase):
-    def test_today_everything_fits_on_the_main_page(self):
-        files = build.build()
-        self.assertEqual(list(lesson_pages(files)), ["lessons/index.html"])
+    def test_today_every_review_is_on_exactly_one_page(self):
+        files = build.build()  # the 14th review (Oct 18) rolled the oldest into the archive, as designed
+        pages = lesson_pages(files)
         for a in AARS:
-            self.assertIn(f'id="{a["id"]}"', files["lessons/index.html"])
+            self.assertEqual(sum(f'id="{a["id"]}"' in v for v in pages.values()), 1, a["id"])
+            if a["status"] == "open" or a["date"] == max(x["date"] for x in AARS):
+                self.assertIn(f'id="{a["id"]}"', pages["lessons/index.html"])
 
     def test_rollover_drops_nothing_and_keeps_links_working(self):
         with mock.patch.object(build, "CHAT_TARGET", 0.2):
