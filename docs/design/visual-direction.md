@@ -10,26 +10,28 @@ Dark first. Accents carry meaning and are used sparingly: lime means done, orang
 
 | Token | Dark | Light | Use |
 |---|---|---|---|
-| bg | Obsidian #0B0B0D | Ice white #F4F4F0 | page |
-| card | Graphite #17171B | #FFFFFF | cards |
+| bg | Charcoal #131317 | Ice white #F4F4F0 | page |
+| card | #1F1F25 | #FFFFFF | cards |
 | fg | Ice white #F4F4F0 | Obsidian #0B0B0D | text |
-| muted | Steel gray #85858F | #55555E | meta, times |
+| muted | #96969F | #55555E | meta, times |
 | done | Electric lime #C6FF3D | #3B6000 | shipped, progress, focus ring |
 | block | Signal orange #FF6338 | #B2360F | blockers, lessons |
 | research | Violet #9B8CFF | #5A48D0 | research |
-| line | #2E2E35 | #D6D6D0 | borders only, never text |
+| line | #3A3A43 | #D6D6D0 | borders only, never text |
 
 Lime and orange fail as text on a light background (lime on ice white is 1.07:1), so light mode uses darker inks of the same hues. Steel gray fails on light too (3.31:1), so light mode uses #55555E.
+
+**Too dark? (Ryno, 9:32 PM ET, Team chat c267 to c273).** The page follows the phone's setting: light unless the system asks for dark. In dark, the first version was 88.5% near-black at 390 px, and its cards stood apart from the page by only 1.10:1 (border 1.46:1). The page is now charcoal #131317 instead of Obsidian #0B0B0D, cards are #1F1F25 with a #3A3A43 border (1.65:1 against the page), and muted text lifts from Steel gray #85858F (4.49:1 on the new card, a fail) to #96969F. Light mode and the accents are unchanged.
 
 ## Contrast (WCAG 2.x, normal text needs 4.5:1)
 
 | Text | on bg | on card |
 |---|---|---|
-| Ice white, dark | 17.83 | 16.21 |
-| Steel gray, dark | 5.38 | 4.89 |
-| Electric lime, dark | 16.64 | 15.13 |
-| Signal orange, dark | 6.64 | 6.04 |
-| Violet, dark | 7.11 | 6.46 |
+| Ice white, dark | 16.81 | 14.87 |
+| #96969F, dark | 6.32 | 5.59 |
+| Electric lime, dark | 15.68 | 13.87 |
+| Signal orange, dark | 6.26 | 5.54 |
+| Violet, dark | 6.70 | 5.92 |
 | Obsidian on a lime chip | 16.64 | |
 | Obsidian, light | 17.83 | 19.66 |
 | #55555E, light | 6.69 | 7.38 |
@@ -37,7 +39,7 @@ Lime and orange fail as text on a light background (lime on ice white is 1.07:1)
 | #B2360F, light | 5.56 | 6.13 |
 | #5A48D0, light | 5.82 | 6.42 |
 
-Lowest pair: steel gray on graphite, 4.89:1. `tests/test_prototype.py` checks every pair, so a token change that drops one below 4.5:1 fails CI.
+Lowest pair: signal orange on a dark card, 5.54:1. `tests/test_prototype.py` checks every pair, so a token change that drops one below 4.5:1 fails CI.
 
 ## Type
 

@@ -32,6 +32,15 @@ class Prototype(unittest.TestCase):
             self.assertGreaterEqual(ratio(t["on-done"], t["done"]), 4.5)
             self.assertGreaterEqual(ratio(t["bg"], t["fg"]), 4.5)  # the filled Confirmed chip
 
+    def test_dark_surfaces_read(self):
+        # c267 to c273: the card border must stand out from the page, and the page is charcoal, not near-black.
+        d = prototype.DARK
+        self.assertGreaterEqual(ratio(d["line"], d["bg"]), 1.5)
+        self.assertGreater(lum(d["bg"]), lum("#0B0B0D"))
+
+    def test_follows_the_system_setting(self):
+        self.assertIn("@media (prefers-color-scheme:light)", self.doc)
+
     def test_static_and_labeled(self):
         self.assertNotIn("<script", self.doc)
         self.assertNotIn("<form", self.doc)

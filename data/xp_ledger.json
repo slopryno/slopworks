@@ -5271,5 +5271,81 @@
     "evidence": "https://github.com/slopryno/slopworks/pull/84",
     "timestamp": "2026-10-17T21:11-04:00",
     "status": "approved"
+  },
+  {
+    "id": "signoff-pr85-coordinator",
+    "agent": "Coordinator",
+    "task": "Signed off #85: Pixel: prototype page for Ryno's redesign pitch (i40): huddle, visual direction with contrast checks, /prototype/ only, no rollout",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Forge",
+    "evidence": "https://github.com/slopryno/slopworks/pull/85#issuecomment-6244206570",
+    "timestamp": "2026-10-17T21:26-04:00",
+    "status": "rejected",
+    "note": "over the daily sign-off cap (6)"
+  },
+  {
+    "id": "signoff-pr85-lens",
+    "agent": "Lens",
+    "task": "Signed off #85: Pixel: prototype page for Ryno's redesign pitch (i40): huddle, visual direction with contrast checks, /prototype/ only, no rollout",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Forge",
+    "evidence": "https://github.com/slopryno/slopworks/pull/85#issuecomment-6244206685",
+    "timestamp": "2026-10-17T21:26-04:00",
+    "status": "rejected",
+    "note": "over the daily sign-off cap (6)"
+  },
+  {
+    "id": "signoff-pr85-polish",
+    "agent": "Polish",
+    "task": "Signed off #85: Pixel: prototype page for Ryno's redesign pitch (i40): huddle, visual direction with contrast checks, /prototype/ only, no rollout",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Forge",
+    "evidence": "https://github.com/slopryno/slopworks/pull/85#issuecomment-6244206795",
+    "timestamp": "2026-10-17T21:26-04:00",
+    "status": "rejected",
+    "note": "over the daily sign-off cap (6)"
+  },
+  {
+    "id": "signoff-pr85-trial",
+    "agent": "Trial",
+    "task": "Signed off #85: Pixel: prototype page for Ryno's redesign pitch (i40): huddle, visual direction with contrast checks, /prototype/ only, no rollout",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Forge",
+    "evidence": "https://github.com/slopryno/slopworks/pull/85#issuecomment-6244206930",
+    "timestamp": "2026-10-17T21:26-04:00",
+    "status": "rejected",
+    "note": "over the daily sign-off cap (6)"
+  },
+  {
+    "id": "ci_test_added-test_prototype",
+    "agent": "Forge",
+    "task": "Added tests/test_prototype.py in #85",
+    "type": "ci_test_added",
+    "base_xp": 15,
+    "quality_pct": 100,
+    "reviewer": "Lens",
+    "evidence": "https://github.com/slopryno/slopworks/pull/85",
+    "timestamp": "2026-10-17T21:27-04:00",
+    "status": "approved"
+  },
+  {
+    "id": "pr_merged-pr85",
+    "agent": "Forge",
+    "task": "#85: Pixel: prototype page for Ryno's redesign pitch (i40): huddle, visual direction with contrast checks, /prototype/ only, no rollout",
+    "type": "pr_merged",
+    "base_xp": 25,
+    "quality_pct": 100,
+    "reviewer": "Lens",
+    "evidence": "https://github.com/slopryno/slopworks/pull/85",
+    "timestamp": "2026-10-17T21:27-04:00",
+    "status": "approved"
   }
 ]

@@ -7,7 +7,8 @@ page, so the live site's style.css is untouched until Ryno decides on a rollout 
 from html import escape as e
 
 # Palette (Polish, c262); contrast ratios are in the direction doc and tests/test_prototype.py.
-DARK = {"bg": "#0B0B0D", "card": "#17171B", "fg": "#F4F4F0", "muted": "#85858F", "line": "#2E2E35",
+# Lifted to charcoal after Ryno asked "is it too dark?" (c267 to c273): was bg #0B0B0D, card #17171B, muted #85858F, line #2E2E35.
+DARK = {"bg": "#131317", "card": "#1F1F25", "fg": "#F4F4F0", "muted": "#96969F", "line": "#3A3A43",
         "done": "#C6FF3D", "block": "#FF6338", "research": "#9B8CFF", "on-done": "#0B0B0D"}
 LIGHT = {"bg": "#F4F4F0", "card": "#FFFFFF", "fg": "#0B0B0D", "muted": "#55555E", "line": "#D6D6D0",
          "done": "#3B6000", "block": "#B2360F", "research": "#5A48D0", "on-done": "#FFFFFF"}
