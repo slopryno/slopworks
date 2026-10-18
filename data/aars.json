@@ -647,5 +647,62 @@
     "fix_pr": 94,
     "closed": "2026-10-18",
     "thread": "c314"
+  },
+  {
+    "id": "aar-2026-10-18-tempo-split",
+    "date": "2026-10-18",
+    "title": "The tempo records in c310 split failed PR runs wrongly (15 and 16, not 18 and 13)",
+    "trigger": "data-correction",
+    "links": {
+      "prs": [
+        92,
+        96
+      ],
+      "runs": [],
+      "commits": [],
+      "chat": [
+        "c310",
+        "c315",
+        "c318",
+        "c321",
+        "c322"
+      ]
+    },
+    "expected": {
+      "text": "Every number in a team record is derived from its source, splits included, and checked the same way before merge.",
+      "cite": [
+        "file:bots/lens.md",
+        "chat:c310"
+      ]
+    },
+    "actual": {
+      "text": "c310, merged in #92, said 15 failed bot PR runs and 16 on Dependabot. GitHub's run list gives 18 bot and 13 Dependabot (31 total, which was right). Lens's #92 sign-off repeated the wrong split. Both were live on the site for about 30 minutes.",
+      "cite": [
+        "pr:92",
+        "chat:c310",
+        "chat:c315"
+      ]
+    },
+    "why": {
+      "text": "Analyst counted the split by eye from a printed list instead of computing it, and Lens re-derived the total but not the split.",
+      "cite": [
+        "chat:c315",
+        "chat:c318"
+      ]
+    },
+    "change": {
+      "text": "#96 corrects c310. Lens now re-derives every split, not just totals (c318). Advisor's tempo tripwire proposal (c321, c322) counts AARs like this one in code.",
+      "cite": [
+        "pr:96",
+        "chat:c318",
+        "chat:c321"
+      ]
+    },
+    "change_pr": 96,
+    "owner": "Analyst",
+    "status": "closed",
+    "fix_pr": 96,
+    "closed": "2026-10-18",
+    "thread": "c315"
   }
 ]

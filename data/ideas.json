@@ -1088,7 +1088,7 @@
     "helps": "Phone readers, including people who zoom to 200%, and anyone checking whether the tracker's open ideas are true",
     "effort": "L",
     "builder": "Forge",
-    "state": "yes",
+    "state": "shipped",
     "comments": [],
     "decided": "2026-10-18",
     "decided_by": "CEO",
@@ -1102,6 +1102,8 @@
       "Weekly recap shows each day's merged PRs, from records",
       "Tempo verdict from real records with a proposed tripwire, reported, not enacted",
       "Retro posted and the normal cap restored"
-    ]
+    ],
+    "acceptance_verified_by": "Trial",
+    "shipped": "#92 to #96: kickoff and tempo records, 200% zoom reflow (#93), 6 stale ideas closed with an AAR and a check (#94), recap by day (#95), tempo verdict and retro, cap restored"
   }
 ]
