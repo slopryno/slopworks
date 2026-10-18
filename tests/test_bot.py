@@ -86,5 +86,59 @@ class Count(unittest.TestCase):
         self.assertEqual(bot.count(sitemap, r"<loc>"), sitemap.read_text().count("<loc>"))
 
 
+class VisualReview(unittest.TestCase):
+    """AAR 2026-10-17 (/work/ incident): design and CSS PRs need screenshots of every page and sign-offs that looked."""
+    good = {"Polish": "Screenshots reviewed: all 6 sets\nProblems found: none", "Trial": "Screenshots reviewed: all\nProblems found: tables, fixed",
+            "Lens": "ok"}
+
+    def make(self, pages=("index.html", "work/index.html"), skip=()):
+        import shots, tempfile
+        root = Path(tempfile.mkdtemp())
+        for page in pages:
+            (root / "site" / page).parent.mkdir(parents=True, exist_ok=True)
+            (root / "site" / page).write_text("<p>x")
+        for theme in shots.THEMES:
+            for w in shots.WIDTHS:
+                d = root / "docs/design/review/9" / f"{theme}-{w}"
+                d.mkdir(parents=True, exist_ok=True)
+                for page in pages:
+                    if (theme, w, page) not in skip:
+                        (d / f"{shots.slug(page)}.part1.webp").write_bytes(b"x")
+        return root
+
+    def test_which_prs_need_it(self):
+        self.assertTrue(bot.needs_visual_review("feature", ["site/style.css"]))
+        self.assertTrue(bot.needs_visual_review("feature", ["scripts/build.py"]))
+        self.assertTrue(bot.needs_visual_review("feature", ["site/assets/avatars/a.svg"]))
+        self.assertTrue(bot.needs_visual_review("design", ["data/design_backlog.json"]))
+        self.assertFalse(bot.needs_visual_review("data", ["data/chat.json", "site/chat/index.html"]))
+
+    def test_refuses_without_review_number(self):
+        with self.assertRaisesRegex(bot.Refused, "--review N"):
+            bot.plan_review(None, "feature", ["site/style.css"], self.good)
+
+    def test_passes_with_every_page_and_real_signoffs(self):
+        root = self.make()
+        bot.plan_review(9, "feature", ["site/style.css", "docs/design/review/9/light-360/home.part1.webp"], self.good, root)
+
+    def test_refuses_a_missing_page_width_or_theme(self):
+        root = self.make(skip={("dark", 390, "work/index.html")})
+        with self.assertRaisesRegex(bot.Refused, "dark-390/work"):
+            bot.plan_review(9, "feature", ["site/style.css", "docs/design/review/9/x"], self.good, root)
+
+    def test_refuses_screenshots_not_in_this_pr(self):
+        with self.assertRaisesRegex(bot.Refused, "isn't part of this PR"):
+            bot.plan_review(9, "feature", ["site/style.css"], self.good, self.make())
+
+    def test_refuses_signoffs_that_did_not_look(self):
+        """The #72-#76 sign-offs: numbers only, no screenshots named, no problems listed."""
+        paths = ["site/style.css", "docs/design/review/9/x"]
+        for bad in ({"Polish": "0 overflow, looks good", "Trial": self.good["Trial"]},
+                    {"Polish": self.good["Polish"], "Trial": "Screenshots reviewed: all"},
+                    {"Trial": self.good["Trial"], "Lens": "ok"}):
+            with self.assertRaisesRegex(bot.Refused, "visual review incomplete"):
+                bot.plan_review(9, "feature", paths, bad, self.make())
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -6,9 +6,12 @@
   bot.py chat --from R --to R [--reply-to cN] [--idea iN] "text"
                                     append a Team chat message: next id, today's date, the clock time, checked first
   bot.py count <file> [regex]       count list items in a JSON file, or lines matching a regex, for sign-offs
-  bot.py pr --maker R --title T --body FILE [--signoff Role=FILE ...] [--merge]
+  bot.py pr --maker R --title T --body FILE [--signoff Role=FILE ...] [--review N] [--merge]
                                     run the local checks, open a draft, add the Maker line, post sign-offs,
                                     refuse a self sign-off or a missing required role, then mark ready (and merge)
+                                    a design or CSS PR also needs --review N: screenshots of every page in
+                                    docs/design/review/N/ (scripts/shots.py N), and Polish and Trial sign-offs that
+                                    say which screenshots they looked at and what problems they found (AAR 2026-10-17)
 
 CI stays the backstop (review-gate, path rule, guardrail-gate). This helper only makes the right path the easy one.
 """
@@ -23,6 +26,11 @@ KINDS = ("data", "design", "feature", "ops")
 SPECIALISTS = {"Pixel", "Core", "Vault", "Relay"}  # Forge specialists (bots/forge.md)
 ET = __import__("zoneinfo").ZoneInfo("America/New_York")
 OPS_PATHS = (".github/", "scripts/check.py", "scripts/patterns.json", "data/schema/allowed_handles.json")
+
+
+VISUAL_PATHS = ("site/style.css", "scripts/build.py", "site/assets/", "scripts/avatars.py")
+REVIEWERS = ("Polish", "Trial")
+REVIEW_LINES = ("Screenshots reviewed:", "Problems found:")
 
 
 class Refused(Exception):
@@ -92,6 +100,57 @@ def plan_signoffs(maker, paths, signoffs):
     return [got[r] for r in sorted(got)]
 
 
+def needs_visual_review(kind, paths):
+    """The /work/ incident (AAR 2026-10-17): a design or CSS change ships only after people look at every page."""
+    return kind == "design" or any(p.startswith(VISUAL_PATHS) for p in paths)
+
+
+def review_problems(n, paths, root=ROOT):
+    """What is missing from docs/design/review/<n>/: every page, every width and theme, added in this PR."""
+    import shots  # names only; shooting needs Chrome and PIL
+    d = f"docs/design/review/{n}/"
+    pages = sorted(str(p.relative_to(root / "site")) for p in (root / "site").rglob("*.html"))
+    missing = []
+    for theme in shots.THEMES:
+        for w in shots.WIDTHS:
+            sub = root / d / f"{theme}-{w}"
+            for page in pages:
+                s = shots.slug(page)
+                if not (sub / f"{s}.webp").exists() and not any(sub.glob(f"{s}.part*.webp")):
+                    missing.append(f"{theme}-{w}/{s}")
+    problems = [f"{len(missing)} screenshots missing from {d} (first: {', '.join(missing[:5])}); run scripts/shots.py {n}"] if missing else []
+    if not any(p.startswith(d) for p in paths):
+        problems.append(f"{d} isn't part of this PR; shoot the pages as they are in this PR and commit them")
+    return problems
+
+
+def plan_review(n, kind, paths, signoffs, root=ROOT):
+    """Refuse a design or CSS PR without a full screenshot set and real Polish and Trial reviews of it."""
+    if not needs_visual_review(kind, paths):
+        return
+    if n is None:
+        raise Refused(f"design or CSS PR ({', '.join(p for p in paths if p.startswith(VISUAL_PATHS)) or 'bot/design-*'}): "
+                      "pass --review N with the screenshots from scripts/shots.py N, N being this PR's number")
+    problems = review_problems(n, paths, root)
+    by_role = {role(w): t for w, t in signoffs.items()}
+    for r in REVIEWERS:
+        text = by_role.get(r)
+        if text is None:
+            problems.append(f"{r} must sign off on the screenshots")
+            continue
+        for line in REVIEW_LINES:
+            if not re.search(rf"^\s*{re.escape(line)}\s*\S", text, re.M):
+                problems.append(f"{r}'s sign-off needs a '{line} ...' line")
+    if problems:
+        raise Refused("visual review incomplete:\n- " + "\n- ".join(problems))
+
+
+def next_pr_number():
+    out = gh("api", "repos/{owner}/{repo}/issues?state=all&per_page=1&sort=created&direction=desc")
+    items = json.loads(out)
+    return (items[0]["number"] if items else 0) + 1
+
+
 def with_maker(body, maker):
     m = re.search(r"^\s*Maker:\s*(\S+)", body, re.M | re.I)
     if m:
@@ -151,10 +210,16 @@ def cmd_pr(a):
         who, _, f = s.partition("=")
         signoffs[who] = Path(f).read_text()
     comments = plan_signoffs(a.maker, paths, signoffs)  # refuse before anything is pushed
+    plan_review(a.review, m.group(1), paths, signoffs)
+    if needs_visual_review(m.group(1), paths) and next_pr_number() != a.review:
+        raise Refused(f"--review {a.review} but this PR will be #{next_pr_number()}; reshoot into that number")
     local_checks()
     git("push", "-q", "-u", "origin", "HEAD")
     url = gh("pr", "create", "--draft", "--title", a.title, "--body", body).splitlines()[-1]
     n = url.rsplit("/", 1)[-1]
+    if needs_visual_review(m.group(1), paths) and int(n) != a.review:
+        print(f"PR {n} left as a draft: its screenshots are under review/{a.review}/, not review/{n}/")
+        sys.exit(1)
     for c in comments:
         gh("pr", "comment", n, "--body", c)
     gh("pr", "ready", n)
@@ -184,6 +249,7 @@ def main(argv=None):
     n = sub.add_parser("count"); n.add_argument("file"); n.add_argument("pattern", nargs="?")
     r = sub.add_parser("pr"); r.add_argument("--maker", required=True); r.add_argument("--title", required=True)
     r.add_argument("--body", required=True); r.add_argument("--signoff", action="append"); r.add_argument("--merge", action="store_true")
+    r.add_argument("--review", type=int)
     a = p.parse_args(argv)
     try:
         if a.cmd == "roles":

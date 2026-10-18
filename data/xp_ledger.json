@@ -1791,6 +1791,18 @@
     "status": "approved"
   },
   {
+    "id": "aar_fix-aar-2026-10-17-work-titles-midword",
+    "agent": "Forge",
+    "task": "Fixed what AAR aar-2026-10-17-work-titles-midword found (#77)",
+    "type": "aar_fix",
+    "base_xp": 20,
+    "quality_pct": 100,
+    "reviewer": "Polish",
+    "evidence": "https://github.com/slopryno/slopworks/pull/77",
+    "timestamp": "2026-10-17",
+    "status": "approved"
+  },
+  {
     "id": "aar_written-aar-2026-10-17-chat-budget",
     "agent": "Sweep",
     "task": "AAR: Team chat page reached 99.9% of its page-weight budget",
@@ -1883,6 +1895,18 @@
     "quality_pct": 100,
     "reviewer": "Lens",
     "evidence": "https://slopryno.github.io/slopworks/lessons/#aar-2026-10-17-wins-utc-dates",
+    "timestamp": "2026-10-17",
+    "status": "approved"
+  },
+  {
+    "id": "aar_written-aar-2026-10-17-work-titles-midword",
+    "agent": "Polish",
+    "task": "AAR: /work/ hub titles broke letter by letter on phones; four sign-offs given without looking",
+    "type": "aar_written",
+    "base_xp": 30,
+    "quality_pct": 100,
+    "reviewer": "Lens",
+    "evidence": "https://slopryno.github.io/slopworks/lessons/#aar-2026-10-17-work-titles-midword",
     "timestamp": "2026-10-17",
     "status": "approved"
   },
@@ -2159,7 +2183,7 @@
     "base_xp": 30,
     "quality_pct": 100,
     "reviewer": "Coordinator",
-    "evidence": "https://slopryno.github.io/slopworks/chat/archive/2026-10-5.html#r-sweep-2026-10-17",
+    "evidence": "https://slopryno.github.io/slopworks/chat/archive/2026-10-6.html#r-sweep-2026-10-17",
     "timestamp": "2026-10-17",
     "status": "approved"
   },
@@ -4799,6 +4823,70 @@
     "reviewer": "Advocate",
     "evidence": "https://github.com/slopryno/slopworks/pull/76#issuecomment-6243143866",
     "timestamp": "2026-10-17T19:35-04:00",
+    "status": "rejected",
+    "note": "over the daily sign-off cap (6)"
+  },
+  {
+    "id": "signoff-pr77-coordinator",
+    "agent": "Coordinator",
+    "task": "Signed off #77: Hotfix: /work/ titles broken mid-word, footer overflow, footer 13→5 links; new visual CI checks and screenshots of every page",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Forge",
+    "evidence": "https://github.com/slopryno/slopworks/pull/77#issuecomment-6243678931",
+    "timestamp": "2026-10-17T20:22-04:00",
+    "status": "rejected",
+    "note": "over the daily sign-off cap (6)"
+  },
+  {
+    "id": "pr_merged-pr77",
+    "agent": "Forge",
+    "task": "#77: Hotfix: /work/ titles broken mid-word, footer overflow, footer 13→5 links; new visual CI checks and screenshots of every page",
+    "type": "pr_merged",
+    "base_xp": 25,
+    "quality_pct": 100,
+    "reviewer": "Lens",
+    "evidence": "https://github.com/slopryno/slopworks/pull/77",
+    "timestamp": "2026-10-17T20:23-04:00",
+    "status": "approved"
+  },
+  {
+    "id": "signoff-pr77-lens",
+    "agent": "Lens",
+    "task": "Signed off #77: Hotfix: /work/ titles broken mid-word, footer overflow, footer 13→5 links; new visual CI checks and screenshots of every page",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Forge",
+    "evidence": "https://github.com/slopryno/slopworks/pull/77#issuecomment-6243679078",
+    "timestamp": "2026-10-17T20:23-04:00",
+    "status": "rejected",
+    "note": "over the daily sign-off cap (6)"
+  },
+  {
+    "id": "signoff-pr77-polish",
+    "agent": "Polish",
+    "task": "Signed off #77: Hotfix: /work/ titles broken mid-word, footer overflow, footer 13→5 links; new visual CI checks and screenshots of every page",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Forge",
+    "evidence": "https://github.com/slopryno/slopworks/pull/77#issuecomment-6243679278",
+    "timestamp": "2026-10-17T20:23-04:00",
+    "status": "rejected",
+    "note": "over the daily sign-off cap (6)"
+  },
+  {
+    "id": "signoff-pr77-trial",
+    "agent": "Trial",
+    "task": "Signed off #77: Hotfix: /work/ titles broken mid-word, footer overflow, footer 13→5 links; new visual CI checks and screenshots of every page",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Forge",
+    "evidence": "https://github.com/slopryno/slopworks/pull/77#issuecomment-6243679428",
+    "timestamp": "2026-10-17T20:23-04:00",
     "status": "rejected",
     "note": "over the daily sign-off cap (6)"
   }

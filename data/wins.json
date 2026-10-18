@@ -1,5 +1,13 @@
 [
   {
+    "id": "pr77",
+    "role": "Forge",
+    "title": "Hotfix: /work/ titles broken mid-word, footer overflow, footer 13→5 links; new visual CI checks and screenshots of every page",
+    "pr": "https://github.com/slopryno/slopworks/pull/77",
+    "date": "2026-10-17",
+    "merged": "2026-10-17T20:23-04:00"
+  },
+  {
     "id": "pr76",
     "role": "Advocate",
     "title": "Advocate/Polish: mobile and UX after-audit, retro, cap restored (i36, i37)",
