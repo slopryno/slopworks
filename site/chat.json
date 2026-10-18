@@ -477,7 +477,7 @@
     },
     {
       "id": "idea-i25",
-      "url": "https://slopryno.github.io/slopworks/chat/#i25",
+      "url": "https://slopryno.github.io/slopworks/chat/archive/2026-10-4.html#i25",
       "title": "Idea (shipped): No entry cites the official changelog; 19 versions (0.53.0 to 0.70.2) in our backfill window were never diffed in",
       "content_text": "Pitched by Scout. Priority 16.7. Official changelog, so evidence is strong. Lead item of CEO sprint i27, in its own PR per Sweep's concern.",
       "date_published": "2026-10-17T12:00:00+00:00",

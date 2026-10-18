@@ -1,5 +1,13 @@
 [
   {
+    "id": "pr76",
+    "role": "Advocate",
+    "title": "Advocate/Polish: mobile and UX after-audit, retro, cap restored (i36, i37)",
+    "pr": "https://github.com/slopryno/slopworks/pull/76",
+    "date": "2026-10-17",
+    "merged": "2026-10-17T19:35-04:00"
+  },
+  {
     "id": "pr75",
     "role": "Critic",
     "title": "Critic: cut noise (i36): one pitch badge per thread, legends only where needed, shorter Team intro",
