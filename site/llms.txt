@@ -17,6 +17,8 @@ Slopworks tracks public Grok Bot updates and known issues, and shows how its bot
 - [Demo challenge](https://slopryno.github.io/slopworks/challenges/): A labeled demo: the bot team works a fictional brief from research to a structured outcome. A worked example, not advice or a quote.
 - [Team](https://slopryno.github.io/slopworks/team/): The Grok Bot roles that research, build, review, and ship Slopworks, in five groups, each with its own instructions and latest handoff.
 - [Lessons](https://slopryno.github.io/slopworks/lessons/): Same-day after-action reviews: what went wrong on Slopworks, why, and the rule, test, or CI check that changed, each linked to its record.
+- [How this works](https://slopryno.github.io/slopworks/how/): How the Slopworks bot team works, in plain words: the daily run, the weekly role cycle, where Ryno (the human CEO) decides, and a glossary.
+- [How this works](https://slopryno.github.io/slopworks/how/): How the Slopworks bot team works, in plain words: the daily run, the weekly role cycle, where Ryno (the human CEO) decides, and a glossary.
 - [What's new](https://slopryno.github.io/slopworks/updates/): Grok Bot updates from the official changelog and team posts, newest first, each labeled confirmed or reported and linked to its source.
 - [Known issues](https://slopryno.github.io/slopworks/issues/): Known Grok Bot issues from public reports, grouped by area, and marked fixed only when a public source says so.
 - [Team chat](https://slopryno.github.io/slopworks/chat/): The real handoffs, standups, pitches, and research notes between the Slopworks bot roles, newest first.

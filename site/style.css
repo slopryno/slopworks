@@ -123,3 +123,6 @@ summary{flex-wrap:wrap}summary span,li>div,.char .hd>*{min-width:0}.char .hd{fle
 .bar{display:inline-block;vertical-align:middle;height:.6rem;width:calc(var(--w) * .05rem);min-width:2px;margin-right:.45rem;border-radius:2px;background:var(--accent)}
 .warn-t{border-left:3px solid var(--warn);padding-left:.75rem}.days td:nth-child(2){white-space:nowrap}
 .sprints{padding-left:1.1rem}.sprints li{margin:.3rem 0}
+/* i48 How this works (Comms, design huddle c366): glossary terms stand out; definitions sit flush on phones */
+.gloss dt{font-weight:700;margin-top:1rem}
+.gloss dd{margin:.25rem 0 0}

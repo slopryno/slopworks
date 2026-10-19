@@ -1167,7 +1167,7 @@
     "helps": "Visitors and the team: shared changes get a named owner, a rollback path and a size before merge, and a check after",
     "effort": "S",
     "builder": "Forge",
-    "state": "yes",
+    "state": "shipped",
     "comments": [],
     "decided": "2026-10-18",
     "decided_by": "CEO",
@@ -1179,7 +1179,9 @@
       "bot.py pr refuses a shared-path PR without Atlas's note; the maker can't be Atlas",
       "Add-only check.py rule in the review gate, with tests",
       "Trial or Lens compares prediction and outcome after merge (data/blast_checks.json), counted in data/metrics.json"
-    ]
+    ],
+    "acceptance_verified_by": "Trial",
+    "shipped": "#100: Atlas blast-radius duty and guide, bot.py --blast gate, add-only review-gate rule, bot.py blast-check, with the first compares in data/blast_checks.json"
   },
   {
     "id": "i47",
@@ -1203,5 +1205,369 @@
       "Onboarding run in Team chat",
       "First deliverable is a proposal for Ryno, not a build"
     ]
+  },
+  {
+    "id": "i48",
+    "date": "2026-10-19",
+    "by": "Coordinator",
+    "source": "team",
+    "problem": "Visitors meet AAR, tempo, sign-off, Block and needs-ceo on 25 of 47 pages, and no page explains the daily loop or defines the terms",
+    "helps": "New visitors and clients: one plain page explains how the team works, with a glossary linked to the records",
+    "effort": "S",
+    "builder": "Forge",
+    "state": "yes",
+    "comments": [],
+    "evidence": [
+      "Ryno's external review, shared 2026-10-18 11:13 PM ET as research input (kept on the box; Librarian logged it, c-thread)"
+    ],
+    "decided": "2026-10-19",
+    "decided_by": "Coordinator",
+    "reason": "Priority 40.0. Critic's smaller version: a page under Under the hood, linked from home's activity links. No new nav item and no change to home's order, so the tracker keeps its place. Glossary values come from code (the tempo limits from scripts/tempo.py), so they can't drift.",
+    "scores": {
+      "impact": 4,
+      "evidence": 4,
+      "fit": 5,
+      "effort": 2,
+      "risk": 1,
+      "reversibility": 5
+    },
+    "librarian_checked": true,
+    "challenge": {
+      "by": "Critic",
+      "recommendation": "proceed",
+      "summary": "Proceed, smaller: one page, not a home rewrite. The risk is a glossary that drifts from the rules, so generate the numbers and link each term to its rule. Don't add a 5th header link."
+    },
+    "acceptance_criteria": [
+      "/how/ explains the daily run, the role cycle and the human CEO gates in plain words",
+      "A glossary defines at least AAR, tempo, sign-off, Block, maker, needs-ceo, ceo-approved, blast radius and XP, each linking its record or rule",
+      "Tempo numbers are generated from scripts/tempo.py",
+      "Linked from Under the hood and home; no header nav change, and the tracker section is unmoved",
+      "No scripts; 0 overflow and 0 small taps at 195 plus 7 widths, light and dark"
+    ]
+  },
+  {
+    "id": "i49",
+    "date": "2026-10-19",
+    "by": "Coordinator",
+    "source": "team",
+    "problem": "Home leads with process meta (the latest sprint) before the Grok Bot tracker; two outside reviews ask for the latest confirmed updates to lead",
+    "helps": "Visitors who come for the tracker, without burying the team",
+    "effort": "S",
+    "builder": "Comms",
+    "state": "yes",
+    "comments": [],
+    "evidence": [
+      "Ryno's external review, shared 2026-10-18 11:13 PM ET as research input (kept on the box; Librarian logged it, c-thread)"
+    ],
+    "decided": "2026-10-19",
+    "decided_by": "Coordinator",
+    "reason": "Priority 24.0. Design huddle c359 to c366 (Ryno delegated home order): tracker first, the team second, the sprint story after. Evidence: the external review, Grok's rationale, the site's own description (an unofficial Grok Bot tracker), and Ryno's rule that the tracker stays core. 'Meet the team' stays the first button.",
+    "scores": {
+      "impact": 3,
+      "evidence": 4,
+      "fit": 4,
+      "effort": 1,
+      "risk": 2,
+      "reversibility": 5
+    },
+    "librarian_checked": true,
+    "challenge": {
+      "by": "Critic",
+      "recommendation": "proceed",
+      "summary": "Proceed, if the team stays the 2nd section and 'Meet the team' stays the first button. Otherwise it buries the team, against Ryno's rule. No CSS change."
+    },
+    "acceptance_criteria": [
+      "Home order: hero, tracker, team, latest sprint, activity",
+      "'Meet the team' stays the first button; the team is the 2nd section",
+      "No CSS change; 0 overflow at 195 plus 7 widths, light and dark"
+    ]
+  },
+  {
+    "id": "i50",
+    "date": "2026-10-19",
+    "by": "Coordinator",
+    "source": "team",
+    "problem": "The review asks for persistent links to Timeline, Lessons, Team, Updates, Schedule and Metrics",
+    "helps": "Visitors who want a section in one tap",
+    "effort": "S",
+    "builder": "Polish",
+    "state": "no",
+    "comments": [],
+    "evidence": [
+      "Ryno's external review, shared 2026-10-18 11:13 PM ET as research input (kept on the box; Librarian logged it, c-thread)"
+    ],
+    "decided": "2026-10-19",
+    "decided_by": "Coordinator",
+    "reason": "Priority 2.0. Decided in the design huddle (c366, Ryno delegated the nav pattern): keep the 4-link top nav, with no bottom tab bar. The header is 4 links by design, and the footer lists the 5 sections, not every page (hotfix after the /work/ incident). No hover-only menus. Today every listed page is one tap from a hub (Work or Under the hood). Revisit only with evidence that hubs cost visitors.",
+    "scores": {
+      "impact": 3,
+      "evidence": 2,
+      "fit": 2,
+      "effort": 2,
+      "risk": 3,
+      "reversibility": 4
+    },
+    "librarian_checked": true,
+    "challenge": {
+      "by": "Critic",
+      "recommendation": "reject",
+      "summary": "Reject for now. 6 persistent links means a 7-item header or hover menus, and both break our rules (4-link header, no hover-only). The footer was cut to 5 sections on purpose after the /work/ incident."
+    }
+  },
+  {
+    "id": "i58",
+    "date": "2026-10-19",
+    "by": "Coordinator",
+    "source": "team",
+    "problem": "Role cards and lessons show everything at once; on phones the Team and Lessons pages are long scrolls (Grok rationale: progressive disclosure)",
+    "helps": "Phone visitors scanning the team or the lessons",
+    "effort": "M",
+    "builder": "Polish",
+    "state": "later",
+    "comments": [],
+    "evidence": [
+      "Ryno's external review, shared 2026-10-18 11:13 PM ET as research input (kept on the box; Librarian logged it, c-thread)"
+    ],
+    "decided": "2026-10-19",
+    "decided_by": "Coordinator",
+    "reason": "Priority 4.0. Queued for Polish and Trial (activation objectives). details/summary needs no script, but the summary must keep the role, level and latest win visible, open state must be keyboard and screen-reader friendly, and the page weight must not grow.",
+    "scores": {
+      "impact": 3,
+      "evidence": 2,
+      "fit": 4,
+      "effort": 3,
+      "risk": 2,
+      "reversibility": 4
+    },
+    "librarian_checked": true,
+    "challenge": {
+      "by": "Critic",
+      "recommendation": "investigate",
+      "summary": "Investigate: collapsing hides evidence. Keep the level, XP and latest win in the summary, and measure page height before and after."
+    }
+  },
+  {
+    "id": "i51",
+    "date": "2026-10-19",
+    "by": "Coordinator",
+    "source": "team",
+    "problem": "Metrics show numbers and CSS bars but no trend lines; the review asks for static SVG sparklines from build.py",
+    "helps": "Visitors scanning trends at a glance",
+    "effort": "M",
+    "builder": "Forge",
+    "state": "later",
+    "comments": [],
+    "evidence": [
+      "Ryno's external review, shared 2026-10-18 11:13 PM ET as research input (kept on the box; Librarian logged it, c-thread)"
+    ],
+    "decided": "2026-10-19",
+    "decided_by": "Coordinator",
+    "reason": "Priority 3.0. Queued. Inline static SVG is allowed (no scripts), but each chart must keep text values next to it (not color alone), stay inside the page-weight budget, and pass the screenshot review. /metrics/ already has a by-day table with bars. Worth it once there are 7+ days of history; today there are 4.",
+    "scores": {
+      "impact": 3,
+      "evidence": 2,
+      "fit": 3,
+      "effort": 3,
+      "risk": 2,
+      "reversibility": 4
+    },
+    "librarian_checked": true,
+    "challenge": {
+      "by": "Critic",
+      "recommendation": "investigate",
+      "summary": "Investigate. Sparklines on 4 days of data would mostly draw noise. Inline SVG is fine, but text values must stay, and the weight has to be measured. Revisit at 7+ days."
+    }
+  },
+  {
+    "id": "i52",
+    "date": "2026-10-19",
+    "by": "Coordinator",
+    "source": "team",
+    "problem": "Lessons can't be filtered by type, and the review asks for more scannable Timeline and Lessons",
+    "helps": "Readers looking for one kind of review",
+    "effort": "S",
+    "builder": "Polish",
+    "state": "later",
+    "comments": [],
+    "evidence": [
+      "Ryno's external review, shared 2026-10-18 11:13 PM ET as research input (kept on the box; Librarian logged it, c-thread)"
+    ],
+    "decided": "2026-10-19",
+    "decided_by": "Coordinator",
+    "reason": "Priority 8.0. Queued. Partly exists: Timeline has script-free filter chips, and every Lessons card already carries a type tag (Incident, Published-data correction, CI catch). The remaining gap is a Lessons type filter, using the same pattern as the Timeline chips.",
+    "scores": {
+      "impact": 2,
+      "evidence": 2,
+      "fit": 4,
+      "effort": 2,
+      "risk": 1,
+      "reversibility": 5
+    },
+    "librarian_checked": true,
+    "challenge": {
+      "by": "Critic",
+      "recommendation": "proceed",
+      "summary": "Proceed later. Cheap, but Lessons has 14 cards; a filter matters more at 30."
+    }
+  },
+  {
+    "id": "i53",
+    "date": "2026-10-19",
+    "by": "Coordinator",
+    "source": "team",
+    "problem": "Updates: the review asks for a clearer status treatment and a weekly digest",
+    "helps": "Tracker readers",
+    "effort": "S",
+    "builder": "Forge",
+    "state": "later",
+    "comments": [],
+    "evidence": [
+      "Ryno's external review, shared 2026-10-18 11:13 PM ET as research input (kept on the box; Librarian logged it, c-thread)"
+    ],
+    "decided": "2026-10-19",
+    "decided_by": "Coordinator",
+    "reason": "Priority 12.0. Queued. Partly exists: each update is labelled confirmed or reported with its source, and /weekly/ is a weekly digest from records. The gap is a 'This week in Grok Bot' block on /weekly/ from data/updates.json.",
+    "scores": {
+      "impact": 3,
+      "evidence": 2,
+      "fit": 4,
+      "effort": 2,
+      "risk": 1,
+      "reversibility": 5
+    },
+    "librarian_checked": true,
+    "challenge": {
+      "by": "Critic",
+      "recommendation": "proceed",
+      "summary": "Proceed later. The weekly digest exists; add the updates block only if it stays generated from data/updates.json."
+    }
+  },
+  {
+    "id": "i54",
+    "date": "2026-10-19",
+    "by": "Coordinator",
+    "source": "team",
+    "problem": "The review asks to surface role instruction files and character sheets on Team",
+    "helps": "Visitors who want to see how each role is set up",
+    "effort": "S",
+    "builder": "Polish",
+    "state": "later",
+    "comments": [],
+    "evidence": [
+      "Ryno's external review, shared 2026-10-18 11:13 PM ET as research input (kept on the box; Librarian logged it, c-thread)"
+    ],
+    "decided": "2026-10-19",
+    "decided_by": "Coordinator",
+    "reason": "Priority 16.0. Queued. Mostly exists: the Team page links each role's bots/<role>.md, and every role has a profile page with its character sheet. Comms can check whether the link labels make that clear.",
+    "scores": {
+      "impact": 2,
+      "evidence": 2,
+      "fit": 4,
+      "effort": 1,
+      "risk": 1,
+      "reversibility": 5
+    },
+    "librarian_checked": true,
+    "challenge": {
+      "by": "Critic",
+      "recommendation": "proceed",
+      "summary": "Proceed later. Mostly exists; this is a labelling check, not a build."
+    }
+  },
+  {
+    "id": "i55",
+    "date": "2026-10-19",
+    "by": "Coordinator",
+    "source": "team",
+    "problem": "The review asks to make needs-ceo decisions and CEO injections more visible on the Timeline",
+    "helps": "Visitors judging how much the human steers",
+    "effort": "S",
+    "builder": "Forge",
+    "state": "later",
+    "comments": [],
+    "evidence": [
+      "Ryno's external review, shared 2026-10-18 11:13 PM ET as research input (kept on the box; Librarian logged it, c-thread)"
+    ],
+    "decided": "2026-10-19",
+    "decided_by": "Coordinator",
+    "reason": "Priority 8.0. Queued. Partly exists: the Timeline already shows what Ryno decided, from ideas decided by the CEO. A 'Ryno decided' chip filter would make it one tap.",
+    "scores": {
+      "impact": 2,
+      "evidence": 2,
+      "fit": 4,
+      "effort": 2,
+      "risk": 1,
+      "reversibility": 5
+    },
+    "librarian_checked": true,
+    "challenge": {
+      "by": "Critic",
+      "recommendation": "proceed",
+      "summary": "Proceed later. Reuse the Timeline chip pattern; no new UI."
+    }
+  },
+  {
+    "id": "i56",
+    "date": "2026-10-19",
+    "by": "Coordinator",
+    "source": "team",
+    "problem": "The review asks to continue the accessibility work",
+    "helps": "Everyone, especially screen-reader and small-screen visitors",
+    "effort": "S",
+    "builder": "Polish",
+    "state": "later",
+    "comments": [],
+    "evidence": [
+      "Ryno's external review, shared 2026-10-18 11:13 PM ET as research input (kept on the box; Librarian logged it, c-thread)"
+    ],
+    "decided": "2026-10-19",
+    "decided_by": "Coordinator",
+    "reason": "Priority 15.0. Queued as a standing research question for Polish's Tuesday slot. Already in place: tests/test_contrast.py (4.5:1 in both themes), check.py a11y rules, and the mobile audit at 195 plus 7 widths.",
+    "scores": {
+      "impact": 3,
+      "evidence": 2,
+      "fit": 5,
+      "effort": 2,
+      "risk": 1,
+      "reversibility": 5
+    },
+    "librarian_checked": true,
+    "challenge": {
+      "by": "Critic",
+      "recommendation": "proceed",
+      "summary": "Proceed as ongoing work, not a sprint item."
+    }
+  },
+  {
+    "id": "i57",
+    "date": "2026-10-19",
+    "by": "Coordinator",
+    "source": "team",
+    "problem": "The review suggests a lightweight static dark-mode CSS option",
+    "helps": "Visitors reading at night",
+    "effort": "S",
+    "builder": "Polish",
+    "state": "no",
+    "comments": [],
+    "evidence": [
+      "Ryno's external review, shared 2026-10-18 11:13 PM ET as research input (kept on the box; Librarian logged it, c-thread)"
+    ],
+    "decided": "2026-10-19",
+    "decided_by": "Coordinator",
+    "reason": "Priority 1.0. Already exists: site/style.css follows the phone's setting (prefers-color-scheme), with dark colors checked at 4.5:1 by tests/test_contrast.py since #31. No new work.",
+    "scores": {
+      "impact": 1,
+      "evidence": 1,
+      "fit": 1,
+      "effort": 1,
+      "risk": 1,
+      "reversibility": 5
+    },
+    "librarian_checked": true,
+    "challenge": {
+      "by": "Critic",
+      "recommendation": "reject",
+      "summary": "Reject: it already exists."
+    }
   }
 ]

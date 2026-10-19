@@ -1,1 +1,18 @@
-[]
+[
+  {
+    "pr": 100,
+    "date": "2026-10-19",
+    "by": "Trial",
+    "predicted": "medium",
+    "result": "matched",
+    "note": "Only bot.py, check.py, metrics.py and the new schema moved. #101, the next shared-path PR, met the new rule first try (Atlas note, review gate green). No page layout changed; only chat and records pages re-rendered."
+  },
+  {
+    "pr": 101,
+    "date": "2026-10-19",
+    "by": "Lens",
+    "predicted": "small",
+    "result": "matched",
+    "note": "Enums, 1 avatar, 1 group name: CI validated every data file, the Team page shows 18 roles with the Strategy card, and no layout moved."
+  }
+]

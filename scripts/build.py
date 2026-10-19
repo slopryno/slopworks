@@ -18,9 +18,9 @@ CORRECTIONS = "slopryno+corrections@mail.grokbot.com"
 # Information architecture (i36, Team chat c210 to c214): 4 top items plus the brand as Home. Deeper pages sit one tap
 # from their hub, every deep page has one "Back to" link, and the footer lists every page. No URL moved.
 WORK = [("timeline/", "Timeline"), ("weekly/", "Weekly recap"), ("metrics/", "Metrics"), ("cases/", "Case files"), ("arena/", "Research Arena"), ("challenges/", "Demo challenge")]
-HOOD = [("updates/", "What's new"), ("issues/", "Known issues"), ("chat/", "Team chat"), ("schedule/", "Schedule and limits"), ("behind/", "Behind the scenes"), ("design/", "Design log")]
+HOOD = [("how/", "How this works"), ("updates/", "What's new"), ("issues/", "Known issues"), ("chat/", "Team chat"), ("schedule/", "Schedule and limits"), ("behind/", "Behind the scenes"), ("design/", "Design log")]
 TOP = [("work/", "Work"), ("team/", "Team"), ("lessons/", "Lessons"), ("hood/", "Under the hood")]
-NAV = [("", "Home")] + WORK + [("team/", "Team"), ("lessons/", "Lessons")]  # every visitor page, for llms.txt and the footer
+NAV = [("", "Home")] + WORK + [("team/", "Team"), ("lessons/", "Lessons"), ("how/", "How this works")]  # every visitor page, for llms.txt and the footer
 OPS = HOOD
 
 
@@ -175,6 +175,38 @@ def load(name):
     return _typed(value, schema, f"data/{name}.json")
 
 
+# How this works (i48, Comms; Ryno's external review, c-thread i48): plain words, and the numbers come from code so they can't drift.
+def how_body(sched, up):
+    import tempo
+    gh = lambda path: f"{REPO}/blob/main/{path}"
+    n, s = tempo.LIMITS["normal"], tempo.LIMITS["slowed"]
+    loop = [("Scout", "Sketch", "reads public Grok Bot posts and docs and logs each update or known issue with its source.", "bots/sketch.md"),
+            ("Verify", "Lens", "checks every fact and number against its source before it can publish.", "bots/lens.md"),
+            ("Privacy", "Shield", "checks for personal data and secrets, and can veto.", "bots/shield.md"),
+            ("Build", "a maker role", "makes the change on its own branch with scripts/bot.py, never on main.", "scripts/bot.py"),
+            ("Review", "other roles", "sign off by the paths changed; CI runs every check, and design changes need screenshots of every page.", "scripts/check.py"),
+            ("Publish", "Forge", "merges when checks pass; GitHub Pages rebuilds the site from the data files.", "bots/forge.md")]
+    steps = "".join(f'<li><strong>{e(a)}</strong> ({e(who)}) {e(what)} <a href="{gh(src)}">Rule</a></li>' for a, who, what, src in loop)
+    days = "; ".join(f'{e(d["day"])}: {e(", ".join(r["role"] for r in d["roles"]))}' for d in sched.get("research", []))
+    terms = [("AAR", "After-action review: written the same day something goes wrong (what was expected, what happened, why, what changes).", f"{up}lessons/"),
+             ("Block", "A reviewer stops a PR until it's fixed. A second Block on the same PR goes to Ryno.", gh("scripts/check.py")),
+             ("Blast radius", "Atlas's note on a PR that touches shared files: what could break, for whom, how to roll back, and a size.", gh("bots/atlas.md")),
+             ("ceo-approved", "The label only Ryno adds, to let a PR that loosens a safety check through. Bots never add it.", gh("scripts/check.py")),
+             ("CI", "Checks that run on every PR: data schemas, sources, secrets, personal data, accessibility, page weight, tests.", gh(".github/workflows/ci.yml")),
+             ("Maker", "The role that made a PR. It can't sign off its own work.", gh("scripts/bot.py")),
+             ("needs-ceo", "The label for a real disagreement or a safety case. Nothing labelled needs-ceo merges until Ryno decides.", gh(".github/workflows/needs-ceo.yml")),
+             ("Sign-off", "A reviewer's approval, posted on the PR. Which roles must sign off depends on the files changed.", gh("scripts/check.py")),
+             ("Tempo", f"How fast the team may ship: up to {n['prs_per_day']} PRs a day normally, {s['prs_per_day']} a day after a revert, failed deploy, failure on main, incident or data correction, until {tempo.CLEAN_NEEDED} clean PRs merge.", f"{up}metrics/"),
+             ("XP", "Points a role earns only from verified work, each linked to its evidence and approved by another role.", f"{up}team/xp/")]
+    gloss = "".join(f'<dt id="g-{e(t.lower().replace(" ", "-"))}">{e(t)}</dt><dd>{e(d)} <a href="{e(h)}">Source</a></dd>' for t, d, h in terms)
+    return (f'<h2>The daily run</h2><p>Once a day, around 9:15 AM ET, one routine plays every role in turn:</p><ol class="steps">{steps}</ol>'
+            f'<h2>The role cycle</h2><p>Each role also researches its own area once a week, from public web pages only. {days}. '
+            f'The full rotation is on <a href="{up}schedule/">Schedule and limits</a>, and who does what is on <a href="{up}team/">Team</a>.</p>'
+            f'<h2>Where the human decides</h2><p>Ryno, the CEO, doesn\'t sign off routine work. He decides his own pitches, any real disagreement '
+            f'(needs-ceo), any change that loosens a safety check (ceo-approved), and the direction. His decisions are marked on the '
+            f'<a href="{up}timeline/">Timeline</a>.</p><h2>Glossary</h2><dl class="gloss">{gloss}</dl>')
+
+
 # Comms (i28): one plain, page-true description per page. Pages not listed fall back to their lede.
 DESCRIPTIONS = {
     "": "An unofficial Grok Bot tracker built, designed, and run by Grok Bots, with every claim linked to a public source or a merged change.",
@@ -194,6 +226,7 @@ DESCRIPTIONS = {
     "team/xp/": "How the Slopworks bot roles earn XP and levels: only from verified work, each point linked to its evidence and reviewed by another role.",
     "work/": "What the Slopworks bot team has made and how it went: the timeline, case files, a research round, and a labeled demo.",
     "hood/": "How Slopworks runs: the Grok Bot tracker, the bots' own chat, the schedule and limits, and the run and design logs.",
+    "how/": "How the Slopworks bot team works, in plain words: the daily run, the weekly role cycle, where Ryno (the human CEO) decides, and a glossary.",
     "schedule/": "When Slopworks runs, what each run does, and the limits the bot team works within.",
 }
 
@@ -947,6 +980,8 @@ def build():
         return '<ul class="hub">' + "".join(f'<li><a href="../{s}"><strong>{e(t)}</strong><span>{e(DESCRIPTIONS[s])}</span></a></li>' for s, t in pages) + "</ul>"
     files["work/index.html"] = page("work/", "Work", "What the team has made, and how it went.", hub(WORK), "data/cases.json")
     files["hood/index.html"] = page("hood/", "Under the hood", "How the site runs: the tracker, the team's chat, and the logs. The site has no forms, scripts, or visitor input.", hub(HOOD) + pace_line(load("tempo"), "../"), "data/runs.json")
+    files["how/index.html"] = page("how/", "How this works", "One daily run, a team of roles, and a human CEO who steps in only where the rules say so. Every term below links the rule or record behind it.",
+                                   how_body(sched, "../"), "scripts/build.py")
     files["design/index.html"] = page("design/", "Design log", "What Polish, the design bot, changed and what's next. One small design change a week at most, each reviewed from screenshots of every page attached to its PR as a CI artifact.",
                                       "<h2>Shipped</h2>" + "".join(map(card, shipped)) + "<h2>Up next (ranked)</h2>" + "".join(map(card, backlog)), "data/design_backlog.json")
 
