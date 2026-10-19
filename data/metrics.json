@@ -1,10 +1,10 @@
 {
-  "as_of": "2026-10-18T09:26-04:00",
-  "newest_day": "2026-10-18",
-  "days_of_history": 4,
+  "as_of": "2026-10-19T00:02-04:00",
+  "newest_day": "2026-10-19",
+  "days_of_history": 5,
   "ci_window_start": "2026-10-15T23:00-04:00",
   "totals": {
-    "prs": 93,
+    "prs": 94,
     "open_to_merge_min": 1,
     "ci_catches": 20,
     "main_failures": 0,
@@ -18,7 +18,7 @@
   },
   "pace": {
     "mode": "slowed",
-    "clean_prs": 0,
+    "clean_prs": 1,
     "clean_needed": 10
   },
   "days": [
@@ -77,6 +77,20 @@
       "reverts": 0,
       "blocks": 0,
       "refusals": 1
+    },
+    {
+      "date": "2026-10-19",
+      "prs": 1,
+      "open_to_merge_min": 1,
+      "escaped": 0,
+      "corrections": 0,
+      "aars": 0,
+      "ci_catches": 0,
+      "ci_recorded": true,
+      "main_failures": 0,
+      "reverts": 0,
+      "blocks": 0,
+      "refusals": 0
     }
   ],
   "sprints": [
@@ -157,8 +171,8 @@
     {
       "key": "prs",
       "label": "Merged PRs",
-      "prev": 60,
-      "new": 10,
+      "prev": 10,
+      "new": 1,
       "direction": "down",
       "verdict": null
     },
@@ -173,33 +187,33 @@
     {
       "key": "escaped",
       "label": "Incidents and data corrections per 10 PRs",
-      "prev": 1.2,
-      "new": 3.0,
-      "direction": "up",
-      "verdict": "worse"
+      "prev": 3.0,
+      "new": 0.0,
+      "direction": "down",
+      "verdict": "better"
     },
     {
       "key": "corrections",
       "label": "Data corrections per 10 PRs",
-      "prev": 0.7,
-      "new": 3.0,
-      "direction": "up",
-      "verdict": "worse"
+      "prev": 3.0,
+      "new": 0.0,
+      "direction": "down",
+      "verdict": "better"
     },
     {
       "key": "aars",
       "label": "AARs per 10 PRs",
-      "prev": 1.5,
-      "new": 3.0,
-      "direction": "up",
-      "verdict": "worse"
+      "prev": 3.0,
+      "new": 0.0,
+      "direction": "down",
+      "verdict": "better"
     },
     {
       "key": "ci_catches",
       "label": "CI catches before merge per 10 PRs",
-      "prev": 1.0,
-      "new": 2.0,
-      "direction": "up",
+      "prev": 2.0,
+      "new": 0.0,
+      "direction": "down",
       "verdict": null
     },
     {
@@ -227,9 +241,5 @@
       "verdict": null
     }
   ],
-  "worsening": [
-    "escaped",
-    "corrections",
-    "aars"
-  ]
+  "worsening": []
 }

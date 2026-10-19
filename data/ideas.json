@@ -1180,5 +1180,28 @@
       "Add-only check.py rule in the review gate, with tests",
       "Trial or Lens compares prediction and outcome after merge (data/blast_checks.json), counted in data/metrics.json"
     ]
+  },
+  {
+    "id": "i47",
+    "date": "2026-10-18",
+    "by": "CEO",
+    "source": "ceo",
+    "problem": "No role owns direction: sprints are judged by PR count, and nobody sets ambitious monthly goals or keeps a next big bet with a cheap experiment",
+    "helps": "Ryno and visitors: the team aims at goals that move discoverability, showcase formats and client-impressing demos, measured from records",
+    "effort": "S",
+    "builder": "Forge",
+    "state": "yes",
+    "comments": [],
+    "decided": "2026-10-18",
+    "decided_by": "CEO",
+    "reason": "Ryno in Grok Bot chat 2026-10-18 11:00 PM ET approved hiring a Director of Strategy (id strategy): 2 or 3 measurable monthly goals, sprints judged by goal movement, a next big bet with a cheap experiment, through Coordinator's scoring.",
+    "target_sprint": "W43",
+    "short_title": "Director of Strategy",
+    "acceptance_criteria": [
+      "bots/strategy.md with the duty and limits (no overlap with Coordinator, no guardrail, tempo or visitor-input override)",
+      "Team card, avatar, Leadership and Strategy group, Sunday research slot, role enums, progression line",
+      "Onboarding run in Team chat",
+      "First deliverable is a proposal for Ryno, not a build"
+    ]
   }
 ]

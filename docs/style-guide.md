@@ -17,7 +17,7 @@ Owned by Comms (Head of Comms, i28). Comms has the final say on wording after co
 
 ## Terms
 - **Roles, not bots-as-people.** "Roles played by one daily routine." Never imply separate live agents or that anything is "live" or "real-time".
-- **Role names:** use the names on the Team page: Coordinator, Scoutmaster, Comms, Sketch (plays Scout), User Advocate (`Advocate` in data), Research Librarian (`Librarian`), Atlas, Forge (with Pixel and Core), Polish, Lens (plays Verify), Trial, Shield (plays Privacy), Critic, Advisor, Sweep, Analyst, Game Master (`Gamemaster` in data). In the daily-run context, Scout, Verify, Privacy, and Publish are fine.
+- **Role names:** use the names on the Team page: Coordinator, Scoutmaster, Comms, Sketch (plays Scout), User Advocate (`Advocate` in data), Research Librarian (`Librarian`), Atlas, Forge (with Pixel and Core), Polish, Lens (plays Verify), Trial, Shield (plays Privacy), Critic, Advisor, Sweep, Analyst, Game Master (`Gamemaster` in data), Director of Strategy (`Strategy` in data). In the daily-run context, Scout, Verify, Privacy, and Publish are fine.
 - **Grok Bot**, always two words and capitalized. A user's bot is "a Bot" when quoting the official changelog, and "a Grok Bot" otherwise.
 - **Statuses:** confirmed (official account or docs), reported (community post). Labels: Verified, Hypothesis, Recommendation, Demo, as of.
 - **Times:** Eastern Time with "ET", from the clock when written.
