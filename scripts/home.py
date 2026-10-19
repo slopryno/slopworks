@@ -40,11 +40,13 @@ def render(b, items, wins, ups, iss, totals, levels, team, dropped, screened, tl
     latest = {}
     for w in sorted(wins, key=lambda w: w.get("merged") or w["date"]):
         latest[w["role"]] = w
-    status = (f'<p class="status"><span>{len(team)} roles</span><span>{len(wins)} merged PRs</span><span>{len(done)} completed sprints</span>'
-              + (f'<span>latest <a href="{e(last["pr"])}">PR #{num(last)}</a> <time datetime="{e(asof)}">{e(asof[:10])} {e(asof[11:16])} ET</time></span>' if last else "")
-              + "</p>")
+    # Phase A V4 (Ryno 2026-10-19 6:33 PM ET, "Yes push new design"): big numbers carried by type, not colour fills, and a
+    # thin "live from the records" line. One primary button; the other two destinations are text links.
+    status = (f'<ul class="tiles"><li><strong>{len(team)}</strong> roles</li><li><strong>{len(wins)}</strong> merged PRs</li>'
+              f'<li><strong>{len(done)}</strong> completed sprints</li></ul>'
+              + (f'<p class="asof">Live from the records · latest <a href="{e(last["pr"])}">PR #{num(last)}</a> <time datetime="{e(asof)}">{e(asof[:10])} {e(asof[11:16])} ET</time></p>' if last else ""))
     cta = ('<ul class="cta"><li><a class="btn primary" href="team/">Meet the team</a></li>'
-           '<li><a class="btn" href="updates/">Grok Bot tracker</a></li><li><a class="btn" href="timeline/">Timeline</a></li></ul>')
+           '<li class="txt"><a href="updates/">Grok Bot tracker</a></li><li class="txt"><a href="timeline/">Timeline</a></li></ul>')
     feat = ""
     if done:
         f = max(done, key=lambda x: (x["date"], x["time"] or ""))
@@ -59,8 +61,8 @@ def render(b, items, wins, ups, iss, totals, levels, team, dropped, screened, tl
         return (f'<li>{st} <time datetime="{e(u["date"])}">{e(u["date"])}</time><h3>{e(u["title"])}</h3><p>{e(u["summary"])}</p>'
                 f'<a href="{e(u["source"])}">Source</a></li>')
     tracker = (f'<section class="panel" id="tracker" aria-labelledby="tracker-t"><h2 id="tracker-t">The Grok Bot tracker</h2>'
-               f'<p class="sub">{len(ups)} updates from public sources: {n_conf} confirmed by an official source, {len(ups) - n_conf} reported by the community. '
-               f'{n_open} known {"issue" if n_open == 1 else "issues"} open. Verify dropped {dropped} of {screened} candidate entries before publishing.</p>'
+               f'<p class="sub">{len(ups)} updates: {n_conf} confirmed, {len(ups) - n_conf} reported. '
+               f'{n_open} known {"issue" if n_open == 1 else "issues"} open. Verify dropped {dropped} of {screened} candidates before publishing.</p>'
                f'<ul class="news">{"".join(news(u) for u in ups[:3])}</ul>'
                '<ul class="links"><li><a href="updates/">All updates</a></li><li><a href="issues/">Known issues</a></li>'
                '<li><a href="behind/">How entries are checked</a></li><li><a href="arena/">Research Arena</a></li></ul></section>')
