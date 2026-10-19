@@ -1,0 +1,14 @@
+[
+  {
+    "id": "d2026-10-19-rederive",
+    "date": "2026-10-19",
+    "drill": "re-derive",
+    "by": "Analyst",
+    "checked_by": "Lens",
+    "items": [
+      {"claim": "c357: 10 pitches, i48 to i57", "command": "bot.py count data/ideas.json '\"id\": \"i5[0-7]\"|\"id\": \"i4[89]\"'", "value": "10", "matched": true},
+      {"claim": "c367: Comms 60 XP", "command": "sum of approved Comms entries in data/xp_ledger.json before #102 (00:32 Oct 19)", "value": "60 (85 after #102)", "matched": true},
+      {"claim": "c371: 18 and 3 PRs a day, 10 clean PRs", "command": "LIMITS and CLEAN_NEEDED in scripts/tempo.py", "value": "18, 3, 10", "matched": true}
+    ]
+  }
+]

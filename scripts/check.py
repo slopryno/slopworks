@@ -821,6 +821,74 @@ def blast_check_errors(root=None):
     return errs
 
 
+# ---------- training plan (Ryno, 2026-10-19 7:27 AM ET, i59): additions only, these only tighten ----------
+DERIVED = re.compile(r'^\s*Derived:\s*count\s+(\S+)(?:\s+"([^"]*)")?\s*=\s*(\d+)\s*$', re.M)
+
+
+def derived_count(path, pattern=None, root=None):
+    """The one command a Derived: line may name: list items in a JSON file, or lines matching a regex."""
+    p = (root or ROOT) / path
+    if not str(p.resolve()).startswith(str((root or ROOT).resolve())) or not p.is_file():
+        raise ValueError(f"{path} isn't a file in the repo")
+    if pattern is not None:
+        return sum(1 for l in p.read_text().splitlines() if re.search(pattern, l))
+    return len(json.loads(p.read_text()))
+
+
+def derived_errors(text, root=None):
+    """Re-run every 'Derived: count <file> ["regex"] = N' line in a sign-off; a mismatch or a bad line is an error."""
+    errs = []
+    for path, pattern, want in DERIVED.findall(text or ""):
+        try:
+            got = derived_count(path, pattern or None, root)
+        except (OSError, ValueError, re.error) as err:
+            errs.append(f"Derived line for {path}: {err}")
+            continue
+        if got != int(want):
+            errs.append(f"Derived: count {path}{' ' + repr(pattern) if pattern else ''} is {got}, not {want}")
+    return errs
+
+
+def lens_derived_errors(comments, root=None):
+    """Lens's latest sign-off must carry at least one Derived: line, and every Derived: line must re-run to its number."""
+    lens = [c.get("body", "") for c in trusted(comments) if re.match(r"^\s*Sign-off:\s*(Lens|Verify)\b", c.get("body", ""), re.I)]
+    if not lens:
+        return []
+    if not DERIVED.search(lens[-1]):
+        return ["Lens's sign-off needs at least one 'Derived: count <file> = N' line (training plan, i59)"]
+    return [f"Lens's sign-off: {e}" for e in derived_errors(lens[-1], root)]
+
+
+def objective_loop_errors(objectives, ideas):
+    """Close the loop: an objective tied to a shipped, rejected or vetoed idea is stale and must be closed or replaced."""
+    state = {i["id"]: i.get("state") for i in ideas}
+    return [f"data/objectives.json: {o['role']}'s objective is tied to {o['idea']}, which is {state[o['idea']]}; close or replace it"
+            for o in objectives if o.get("idea") in state and state[o["idea"]] in ("shipped", "no", "vetoed")]
+
+
+def drill_errors(root=None):
+    """data/drills.json: each re-derive drill names who answered and who checked, and they differ."""
+    root = root or ROOT
+    p = root / "data/drills.json"
+    if not p.exists():
+        return []
+    try:
+        drills = json.loads(p.read_text())
+    except ValueError as err:
+        return [f"data/drills.json: {err}"]
+    errs = [f"data/drills.json {e}" for e in validate(drills, load_schema("drills"))]
+    for d in drills if isinstance(drills, list) and not errs else []:
+        if d["by"] == d["checked_by"]:
+            errs.append(f"data/drills.json {d['id']}: {d['by']} can't check its own drill")
+    return errs
+
+
+def training_errors(root=None):
+    root = root or ROOT
+    load = lambda n: json.loads((root / f"data/{n}.json").read_text())
+    return objective_loop_errors(load("objectives"), load("ideas")) + drill_errors(root)
+
+
 def run_repo():
     errs = []
     files = tracked_files()
@@ -866,6 +934,7 @@ def run_repo():
     errs += tempo_errors()
     errs += override_errors()
     errs += blast_check_errors()
+    errs += training_errors()
     errs += comms_feed_errors(files)
     css = sum((ROOT / f).stat().st_size for f in files if f.startswith("site/") and f.endswith(".css"))
     for f in files:
@@ -935,6 +1004,7 @@ def run_review_gate():
         return []
     errs = review_gate(changed(base, head), pr.get("body") or "", comments)
     errs += blast_radius_errors(changed(base, head), pr.get("body") or "", comments)
+    errs += lens_derived_errors(comments)
     repeat = {r: n for r, n in block_count(comments).items() if n >= 2}
     if repeat:
         flag_ceo("Disagreement: " + ", ".join(f"{r} blocked {n} times" for r, n in repeat.items()) + ". Each side's position is in the comments above.")
