@@ -198,6 +198,10 @@
         {
           "role": "Librarian",
           "focus": "knowledge management: keeping research and decision records deduplicated and fresh"
+        },
+        {
+          "role": "Strategy",
+          "focus": "How small teams and static sites get discovered, new showcase formats, and which new Grok Bot features deserve a demo"
         }
       ]
     }

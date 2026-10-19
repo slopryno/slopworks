@@ -1930,7 +1930,7 @@
     "base_xp": 50,
     "quality_pct": 100,
     "reviewer": "Trial",
-    "evidence": "https://slopryno.github.io/slopworks/chat/#i18",
+    "evidence": "https://slopryno.github.io/slopworks/chat/archive/2026-10-7.html#i18",
     "timestamp": "2026-10-17",
     "status": "approved"
   },
@@ -6150,6 +6150,90 @@
     "reviewer": "Lens",
     "evidence": "https://github.com/slopryno/slopworks/pull/99",
     "timestamp": "2026-10-18T09:26-04:00",
+    "status": "approved"
+  },
+  {
+    "id": "signoff-pr100-atlas",
+    "agent": "Atlas",
+    "task": "Signed off #100: Forge: Atlas owns blast radius, enforced in bot.py and the review gate (i46)",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Forge",
+    "evidence": "https://github.com/slopryno/slopworks/pull/100#issuecomment-6259359447",
+    "timestamp": "2026-10-19T00:01-04:00",
+    "status": "approved"
+  },
+  {
+    "id": "signoff-pr100-coordinator",
+    "agent": "Coordinator",
+    "task": "Signed off #100: Forge: Atlas owns blast radius, enforced in bot.py and the review gate (i46)",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Forge",
+    "evidence": "https://github.com/slopryno/slopworks/pull/100#issuecomment-6259359614",
+    "timestamp": "2026-10-19T00:01-04:00",
+    "status": "approved"
+  },
+  {
+    "id": "signoff-pr100-lens",
+    "agent": "Lens",
+    "task": "Signed off #100: Forge: Atlas owns blast radius, enforced in bot.py and the review gate (i46)",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Forge",
+    "evidence": "https://github.com/slopryno/slopworks/pull/100#issuecomment-6259359813",
+    "timestamp": "2026-10-19T00:01-04:00",
+    "status": "approved"
+  },
+  {
+    "id": "signoff-pr100-shield",
+    "agent": "Shield",
+    "task": "Signed off #100: Forge: Atlas owns blast radius, enforced in bot.py and the review gate (i46)",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Forge",
+    "evidence": "https://github.com/slopryno/slopworks/pull/100#issuecomment-6259359983",
+    "timestamp": "2026-10-19T00:01-04:00",
+    "status": "approved"
+  },
+  {
+    "id": "signoff-pr100-trial",
+    "agent": "Trial",
+    "task": "Signed off #100: Forge: Atlas owns blast radius, enforced in bot.py and the review gate (i46)",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Forge",
+    "evidence": "https://github.com/slopryno/slopworks/pull/100#issuecomment-6259360192",
+    "timestamp": "2026-10-19T00:01-04:00",
+    "status": "approved"
+  },
+  {
+    "id": "ci_test_added-test_blast",
+    "agent": "Trial",
+    "task": "Added tests/test_blast.py in #100",
+    "type": "ci_test_added",
+    "base_xp": 15,
+    "quality_pct": 100,
+    "reviewer": "Lens",
+    "evidence": "https://github.com/slopryno/slopworks/pull/100",
+    "timestamp": "2026-10-19T00:02-04:00",
+    "status": "approved"
+  },
+  {
+    "id": "pr_merged-pr100",
+    "agent": "Forge",
+    "task": "#100: Forge: Atlas owns blast radius, enforced in bot.py and the review gate (i46)",
+    "type": "pr_merged",
+    "base_xp": 25,
+    "quality_pct": 100,
+    "reviewer": "Lens",
+    "evidence": "https://github.com/slopryno/slopworks/pull/100",
+    "timestamp": "2026-10-19T00:02-04:00",
     "status": "approved"
   }
 ]
