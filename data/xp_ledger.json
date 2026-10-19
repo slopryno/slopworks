@@ -6235,5 +6235,89 @@
     "evidence": "https://github.com/slopryno/slopworks/pull/100",
     "timestamp": "2026-10-19T00:02-04:00",
     "status": "approved"
+  },
+  {
+    "id": "ci_test_added-test_strategy",
+    "agent": "Trial",
+    "task": "Added tests/test_strategy.py in #101",
+    "type": "ci_test_added",
+    "base_xp": 15,
+    "quality_pct": 100,
+    "reviewer": "Lens",
+    "evidence": "https://github.com/slopryno/slopworks/pull/101",
+    "timestamp": "2026-10-19T00:13-04:00",
+    "status": "approved"
+  },
+  {
+    "id": "pr_merged-pr101",
+    "agent": "Forge",
+    "task": "#101: Forge: onboard the Director of Strategy (i47)",
+    "type": "pr_merged",
+    "base_xp": 25,
+    "quality_pct": 100,
+    "reviewer": "Lens",
+    "evidence": "https://github.com/slopryno/slopworks/pull/101",
+    "timestamp": "2026-10-19T00:13-04:00",
+    "status": "approved"
+  },
+  {
+    "id": "signoff-pr101-coordinator",
+    "agent": "Coordinator",
+    "task": "Signed off #101: Forge: onboard the Director of Strategy (i47)",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Forge",
+    "evidence": "https://github.com/slopryno/slopworks/pull/101#issuecomment-6259486320",
+    "timestamp": "2026-10-19T00:13-04:00",
+    "status": "approved"
+  },
+  {
+    "id": "signoff-pr101-lens",
+    "agent": "Lens",
+    "task": "Signed off #101: Forge: onboard the Director of Strategy (i47)",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Forge",
+    "evidence": "https://github.com/slopryno/slopworks/pull/101#issuecomment-6259486551",
+    "timestamp": "2026-10-19T00:13-04:00",
+    "status": "approved"
+  },
+  {
+    "id": "signoff-pr101-polish",
+    "agent": "Polish",
+    "task": "Signed off #101: Forge: onboard the Director of Strategy (i47)",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Forge",
+    "evidence": "https://github.com/slopryno/slopworks/pull/101#issuecomment-6259486758",
+    "timestamp": "2026-10-19T00:13-04:00",
+    "status": "approved"
+  },
+  {
+    "id": "signoff-pr101-shield",
+    "agent": "Shield",
+    "task": "Signed off #101: Forge: onboard the Director of Strategy (i47)",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Forge",
+    "evidence": "https://github.com/slopryno/slopworks/pull/101#issuecomment-6259486912",
+    "timestamp": "2026-10-19T00:13-04:00",
+    "status": "approved"
+  },
+  {
+    "id": "signoff-pr101-trial",
+    "agent": "Trial",
+    "task": "Signed off #101: Forge: onboard the Director of Strategy (i47)",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Forge",
+    "evidence": "https://github.com/slopryno/slopworks/pull/101#issuecomment-6259487104",
+    "timestamp": "2026-10-19T00:13-04:00",
+    "status": "approved"
   }
 ]

@@ -1,20 +1,5 @@
 [
   {
-    "role": "Gamemaster",
-    "objective": "Design the Week 2 quests: daily, weekly and level-up",
-    "source": "plans/roadmap.md",
-    "assigned": "2026-10-17",
-    "ref": "c248",
-    "idea": "i34"
-  },
-  {
-    "role": "Analyst",
-    "objective": "Check Week 1's recap when it turns final on day 8, Thu Oct 22",
-    "source": "data/chat.json",
-    "assigned": "2026-10-18",
-    "ref": "c300"
-  },
-  {
     "role": "Sweep",
     "objective": "First monthly repo hygiene pass, Monday Nov 2",
     "source": "data/schedule.json",
@@ -30,11 +15,65 @@
     "idea": "i47"
   },
   {
-    "role": "Trial",
-    "objective": "Compare Atlas's blast notes on #100 and #101 with what happened",
+    "role": "Comms",
+    "objective": "Check /how/ live, then close i48 and i49 at the retro",
     "source": "data/chat.json",
     "assigned": "2026-10-19",
-    "ref": "c346",
-    "idea": "i46"
+    "ref": "c368",
+    "idea": "i48"
+  },
+  {
+    "role": "Analyst",
+    "objective": "Oct 22: check Week 1's recap, then ship 1 SVG chart (i51)",
+    "source": "data/chat.json",
+    "assigned": "2026-10-19",
+    "ref": "c368",
+    "idea": "i51"
+  },
+  {
+    "role": "Gamemaster",
+    "objective": "Ship tested Week 2 quest rules by Thu Oct 22",
+    "source": "data/chat.json",
+    "assigned": "2026-10-19",
+    "ref": "c368",
+    "idea": "i34"
+  },
+  {
+    "role": "Scoutmaster",
+    "objective": "Bring 1 Grok Bot feature lead to each Monday research slot",
+    "source": "data/chat.json",
+    "assigned": "2026-10-19",
+    "ref": "c368"
+  },
+  {
+    "role": "Polish",
+    "objective": "Prototype collapsible role and lesson cards (i58)",
+    "source": "data/chat.json",
+    "assigned": "2026-10-19",
+    "ref": "c368",
+    "idea": "i58"
+  },
+  {
+    "role": "Trial",
+    "objective": "Test i58 at 195 plus 7 widths, by keyboard and screen reader",
+    "source": "data/chat.json",
+    "assigned": "2026-10-19",
+    "ref": "c368",
+    "idea": "i58"
+  },
+  {
+    "role": "Critic",
+    "objective": "Challenge each Strategy month-1 goal before Ryno decides",
+    "source": "data/chat.json",
+    "assigned": "2026-10-19",
+    "ref": "c368",
+    "idea": "i47"
+  },
+  {
+    "role": "Librarian",
+    "objective": "Weekly triage of the corrections inbox into pitches, no PII",
+    "source": "data/chat.json",
+    "assigned": "2026-10-19",
+    "ref": "c368"
   }
 ]
