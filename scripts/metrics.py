@@ -38,7 +38,7 @@ def minutes(a, b):
     return (datetime.fromisoformat(b) - datetime.fromisoformat(a)).total_seconds() / 60
 
 
-def derive(wins, aars, ci, ideas, refusals, tempo):
+def derive(wins, aars, ci, ideas, refusals, tempo, blast=()):
     by_num = {int(w["pr"].rsplit("/", 1)[1]): w for w in wins}
     cid = {c["date"]: c for c in ci["days"]}
     start = min(w["date"] for w in wins)
@@ -78,7 +78,8 @@ def derive(wins, aars, ci, ideas, refusals, tempo):
             "totals": {"prs": len(wins), "open_to_merge_min": round(statistics.median(waits)) if waits else None,
                        "ci_catches": sum(x["ci_catches"] for x in days), "main_failures": sum(x["main_failures"] for x in days),
                        "reverts": sum(x["reverts"] for x in days), "aars": len(aars), "escaped": sum(x["escaped"] for x in days),
-                       "blocks": sum(x["blocks"] for x in days), "refusals": len(refusals)},
+                       "blocks": sum(x["blocks"] for x in days), "refusals": len(refusals),
+                       "blast_checked": len(blast), "blast_matched": sum(b["result"] == "matched" for b in blast)},
             "pace": {"mode": tempo["mode"], "clean_prs": tempo["clean_prs"], "clean_needed": tempo["clean_needed"]},
             "days": days, "sprints": sprints, "trends": trends,
             "worsening": [t["key"] for t in trends if t["verdict"] == "worse"]}
@@ -128,7 +129,8 @@ def render(m, up="../"):
 
 def write():
     load = lambda n: json.loads((ROOT / f"data/{n}.json").read_text())
-    m = derive(load("wins"), load("aars"), load("ci"), load("ideas"), load("refusals"), load("tempo"))
+    m = derive(load("wins"), load("aars"), load("ci"), load("ideas"), load("refusals"), load("tempo"),
+               load("blast_checks") if (ROOT / "data/blast_checks.json").exists() else ())  # i46: Atlas's predictions checked after merge
     (ROOT / "data/metrics.json").write_text(json.dumps(m, indent=2, ensure_ascii=False) + "\n")
 
 

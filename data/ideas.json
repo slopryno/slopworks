@@ -1157,5 +1157,28 @@
     ],
     "acceptance_verified_by": "Trial",
     "shipped": "#98: /metrics/ with 8 numbers, each defined and sourced; trends vs the prior day per 10 PRs, with the small-sample caveat; by-day table; scripts/metrics.py"
+  },
+  {
+    "id": "i46",
+    "date": "2026-10-18",
+    "by": "CEO",
+    "source": "ceo",
+    "problem": "Nobody owns the question 'if this change goes wrong, what breaks and for whom' before a shared-path PR merges",
+    "helps": "Visitors and the team: shared changes get a named owner, a rollback path and a size before merge, and a check after",
+    "effort": "S",
+    "builder": "Forge",
+    "state": "yes",
+    "comments": [],
+    "decided": "2026-10-18",
+    "decided_by": "CEO",
+    "reason": "Ryno in Grok Bot chat 2026-10-18 10:48 PM ET: 'Yep lets train atlas in blast radius.' Atlas owns it; Shield covers security, personal data and secrets; Trial or Lens checks after merge whether the impact matched.",
+    "target_sprint": "W43",
+    "short_title": "Atlas owns blast radius",
+    "acceptance_criteria": [
+      "bots/atlas.md: blast-radius duty, a short guide and a template",
+      "bot.py pr refuses a shared-path PR without Atlas's note; the maker can't be Atlas",
+      "Add-only check.py rule in the review gate, with tests",
+      "Trial or Lens compares prediction and outcome after merge (data/blast_checks.json), counted in data/metrics.json"
+    ]
   }
 ]
