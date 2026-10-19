@@ -7,6 +7,7 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
 import bot, check  # noqa: E402
 
+LENS = 'ok\nDerived: count scripts/tempo.py "^CLEAN_NEEDED = " = 1'  # a Lens sign-off re-derives at least one number (i59)
 PATHS = ["data/updates.json", "data/schema/chat.schema.json", "site/index.html", "scripts/build.py", "tests/test_x.py",
          "bots/forge.md", "docs/onboarding.md", ".github/workflows/ci.yml", "scripts/check.py", "site/assets/avatars/a.svg"]
 
@@ -46,13 +47,13 @@ class Signoffs(unittest.TestCase):
 
     def test_bodies_pass_review_gate(self):
         paths = ["bots/forge.md", "site/index.html", "data/chat.json"]
-        bodies = bot.plan_signoffs("Forge", paths, {"Lens": "ok", "Coordinator": "ok", "Trial": "Sign-off: Trial\nok"})
+        bodies = bot.plan_signoffs("Forge", paths, {"Lens": LENS, "Coordinator": "ok", "Trial": "Sign-off: Trial\nok"})
         comments = [{"body": b, "author_association": "OWNER"} for b in bodies]
         self.assertEqual(check.review_gate(paths, bot.with_maker("x", "Forge"), comments), [])
 
     def test_aliases_and_unknown_roles(self):
         self.assertRaises(bot.Refused, bot.plan_signoffs, "Forge", ["data/a.json"], {"Lenz": "ok"})
-        self.assertEqual(len(bot.plan_signoffs("Forge", ["data/a.json"], {"Verify": "ok"})), 1)
+        self.assertEqual(len(bot.plan_signoffs("Forge", ["data/a.json"], {"Verify": LENS})), 1)
         self.assertRaises(bot.Refused, bot.with_maker, "Maker: Lens\n", "Forge")
         self.assertTrue(bot.with_maker("body", "Core").startswith("Maker: Core"))
 

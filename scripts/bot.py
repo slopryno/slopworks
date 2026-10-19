@@ -15,6 +15,8 @@
                                     say which screenshots they looked at and what problems they found (AAR 2026-10-17)
                                     a PR touching shared paths (check.BLAST_SHARED) also needs --blast FILE: Atlas's
                                     blast-radius note (bots/atlas.md), posted as Atlas's comment; the maker can't be Atlas (i46)
+  bot.py resume N [--signoff Role=FILE ...] [--blast FILE] [--merge]
+                                    finish an interrupted pr run: takes the same lock, posts only missing comments (i59)
   bot.py blast-check --pr N --by Trial|Lens --result matched|bigger|smaller "what happened"
                                     after merge: compare Atlas's prediction on PR N with what happened (data/blast_checks.json)
 
@@ -118,6 +120,43 @@ def new_blast_check(checks, pr, by, result, note, notes, merged, now):
     return entry
 
 
+# ---------- Lock and resume (i59, aar-2026-10-18-signoff-doubles): one bot.py pr run at a time, and resume posts only what's missing ----------
+def lock_path():
+    return Path(git("rev-parse", "--git-common-dir").strip()).resolve() / "bot-pr.lock"
+
+
+def take_lock(path=None, pid=None):
+    """Refuse if another live bot.py pr or resume holds the lock; a lock left by a dead process is replaced."""
+    import os
+    path, pid = Path(path or lock_path()), pid or os.getpid()
+    if path.exists():
+        try:
+            other = int(path.read_text().split()[0])
+            os.kill(other, 0)
+            if other != pid:
+                raise Refused(f"another bot.py run (pid {other}) is still going; wait for it, don't resume over it ({path})")
+        except (ValueError, IndexError, ProcessLookupError):
+            pass  # stale lock
+        except PermissionError:
+            raise Refused(f"another bot.py run holds {path}")
+    path.write_text(f"{pid}\n")
+    return path
+
+
+def release_lock(path):
+    try:
+        Path(path).unlink()
+    except FileNotFoundError:
+        pass
+
+
+def missing_comments(planned, posted):
+    """Planned comment bodies whose first line (e.g. 'Sign-off: Lens', 'Blast radius: Atlas') isn't on the PR yet."""
+    head = lambda b: b.strip().splitlines()[0].strip().lower() if b.strip() else ""
+    have = {head(b) for b in posted}
+    return [b for b in planned if head(b) not in have]
+
+
 def git(*args):
     return subprocess.run(["git", *args], cwd=ROOT, capture_output=True, text=True, check=True).stdout
 
@@ -178,6 +217,12 @@ def plan_signoffs(maker, paths, signoffs):
     missing = sorted(need - set(got))
     if missing:
         raise Refused(f"missing sign-off from {', '.join(missing)} (required for these paths: {', '.join(sorted(need))})")
+    for r, body in got.items():  # training plan (i59): every Derived: line re-runs to its number before posting
+        errs = check.derived_errors(body)
+        if r == "Lens" and not check.DERIVED.search(body):
+            errs.append("Lens's sign-off needs at least one 'Derived: count <file> = N' line")
+        if errs:
+            raise Refused(f"{r}'s sign-off: " + "; ".join(errs))
     return [got[r] for r in sorted(got)]
 
 
@@ -325,6 +370,60 @@ def gh(*args):
 
 
 def cmd_pr(a):
+    lock = take_lock()
+    try:
+        _cmd_pr(a)
+    finally:
+        release_lock(lock)
+
+
+def cmd_resume(a):
+    """Finish an interrupted bot.py pr: post only the missing comments, mark ready, then merge on green checks."""
+    lock = take_lock()
+    try:
+        n = str(a.pr)
+        pr = json.loads(gh("pr", "view", n, "--json", "state,isDraft,comments,files,body,headRefOid,headRefName"))
+        if pr["state"] != "OPEN":
+            raise Refused(f"PR {n} is {pr['state'].lower()}; nothing to resume")
+        paths = [f["path"] for f in pr["files"]]
+        signoffs = {who: Path(f).read_text() for who, _, f in (s.partition("=") for s in a.signoff or [])}
+        maker = re.search(r"^\s*Maker:\s*(\S+)", pr["body"], re.M | re.I).group(1)
+        planned = plan_signoffs(maker, paths, signoffs)
+        blast = plan_blast(maker, paths, Path(a.blast).read_text() if a.blast else None)
+        planned = ([blast] if blast else []) + planned
+        if pr["isDraft"] and needs_visual_review("design" if pr["headRefName"].startswith("bot/design-") else "", paths):
+            problems = wait_for_artifact(n, pr["headRefOid"])
+            if problems:
+                raise Refused(f"PR {n} stays a draft: " + "; ".join(problems))
+        todo = missing_comments(planned, [c["body"] for c in pr["comments"]])
+        for c in todo:
+            gh("pr", "comment", n, "--body", c)
+        print(f"PR {n}: posted {len(todo)} missing comment(s), skipped {len(planned) - len(todo)} already there")
+        if pr["isDraft"]:
+            gh("pr", "ready", n)
+        if a.merge:
+            mode, used, limit = tempo_gate(merged_now(), json.loads((ROOT / "data/aars.json").read_text()), datetime.datetime.now(ET), pr["headRefName"])
+            print(f"tempo: {mode}, this is PR {used + 1} of {limit} today")
+            merge_when_green(n)
+    finally:
+        release_lock(lock)
+
+
+def merge_when_green(n):
+    time.sleep(6)
+    subprocess.run(["gh", "pr", "checks", n, "--watch", "--interval", "8"], cwd=ROOT, capture_output=True)
+    states = set(re.findall(r"\t(pass|fail|pending|skipping)\t", subprocess.run(["gh", "pr", "checks", n], cwd=ROOT, capture_output=True, text=True).stdout))
+    labels = json.loads(gh("pr", "view", n, "--json", "labels"))["labels"]
+    if "pass" not in states or states - {"pass", "skipping"} or labels:
+        print(f"PR {n} not merged: checks {sorted(states)}, labels {[l['name'] for l in labels]}")
+        sys.exit(1)
+    gh("pr", "merge", n, "--squash", "--delete-branch")
+    git("checkout", "-q", "main")
+    git("pull", "-q")
+    print(f"merged {n}: {git('log', '--oneline', '-1').strip()}")
+
+
+def _cmd_pr(a):
     branch = git("rev-parse", "--abbrev-ref", "HEAD").strip()
     m = re.fullmatch(r"bot/(data|design|feature|ops)-[\w.-]+", branch)
     if not m:
@@ -365,19 +464,8 @@ def cmd_pr(a):
         gh("pr", "comment", n, "--body", c)
     gh("pr", "ready", n)
     print(f"PR {n} ready: {url}")
-    if not a.merge:
-        return
-    time.sleep(6)
-    subprocess.run(["gh", "pr", "checks", n, "--watch", "--interval", "8"], cwd=ROOT, capture_output=True)
-    states = set(re.findall(r"\t(pass|fail|pending|skipping)\t", subprocess.run(["gh", "pr", "checks", n], cwd=ROOT, capture_output=True, text=True).stdout))
-    labels = json.loads(gh("pr", "view", n, "--json", "labels"))["labels"]
-    if "pass" not in states or states - {"pass", "skipping"} or labels:
-        print(f"PR {n} not merged: checks {sorted(states)}, labels {[l['name'] for l in labels]}")
-        sys.exit(1)
-    gh("pr", "merge", n, "--squash", "--delete-branch")
-    git("checkout", "-q", "main")
-    git("pull", "-q")
-    print(f"merged {n}: {git('log', '--oneline', '-1').strip()}")
+    if a.merge:
+        merge_when_green(n)
 
 
 def main(argv=None):
@@ -391,9 +479,12 @@ def main(argv=None):
     r = sub.add_parser("pr"); r.add_argument("--maker", required=True); r.add_argument("--title", required=True)
     r.add_argument("--body", required=True); r.add_argument("--signoff", action="append"); r.add_argument("--merge", action="store_true")
     r.add_argument("--review", type=int); r.add_argument("--blast")
+    u = sub.add_parser("resume"); u.add_argument("pr", type=int); u.add_argument("--signoff", action="append")
+    u.add_argument("--blast"); u.add_argument("--merge", action="store_true")
     k = sub.add_parser("blast-check"); k.add_argument("--pr", type=int, required=True); k.add_argument("--by", required=True)
     k.add_argument("--result", required=True, choices=check.BLAST_RESULTS); k.add_argument("note")
     a = p.parse_args(argv)
+    sys.stdout.reconfigure(line_buffering=True)  # a quiet log looked like a dead run once (aar-2026-10-18-signoff-doubles)
     try:
         if a.cmd == "roles":
             paths = changed_paths()
@@ -415,6 +506,8 @@ def main(argv=None):
             print(f"{a.file}: {count(a.file, a.pattern)}")
         elif a.cmd == "pr":
             cmd_pr(a)
+        elif a.cmd == "resume":
+            cmd_resume(a)
         elif a.cmd == "blast-check":
             f = ROOT / "data/blast_checks.json"
             checks = json.loads(f.read_text()) if f.exists() else []
@@ -424,7 +517,7 @@ def main(argv=None):
             f.write_text(json.dumps(checks + [entry], indent=2, ensure_ascii=False) + "\n")
             print(f"PR {a.pr}: Atlas said {entry['predicted']}, {entry['by']} says {entry['result']}")
     except Refused as e:
-        if a.cmd == "pr":
+        if a.cmd in ("pr", "resume"):
             log_refusal(ROOT / "data/refusals.json", git("rev-parse", "--abbrev-ref", "HEAD").strip(), str(e), datetime.datetime.now(ET))
         print(f"bot.py: refused: {e}", file=sys.stderr)
         sys.exit(2)

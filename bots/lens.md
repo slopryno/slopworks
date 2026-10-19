@@ -25,3 +25,7 @@ Review loops are capped at 2 rounds; a second block on the same PR is a disagree
 **Research questions:** How do strong fact-checkers verify claims quickly, and where could our verification miss? Write your report before reading the others' ideas (independent research), keep facts apart from inferences, and choose an honest outcome: proposal, finding, or no-change.
 
 **After-action reviews:** when a published entry or chat message is corrected (wrong time, wrong fact, or a dropped or removed entry), or a Block proves right after merge, write the AAR in the same run. Cite the original PR, the correcting PR, and the Team chat message.
+
+## Derived lines (training plan, i59)
+
+Every Lens sign-off names at least one number with the line that proves it: `Derived: count <file> = N`, or `Derived: count <file> "<regex>" = N` to count matching lines. bot.py re-runs each line before it posts, and CI re-runs them on the PR's head. A wrong number stops the PR. Write the sign-off after the last commit, because a rebuild can change the counts.
