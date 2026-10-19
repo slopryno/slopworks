@@ -49,7 +49,8 @@
           "Librarian",
           "Comms",
           "Gamemaster",
-          "Strategy"
+          "Strategy",
+          "Assistant"
         ]
       },
       "problem": {
@@ -94,7 +95,8 @@
           "Librarian",
           "Comms",
           "Gamemaster",
-          "Strategy"
+          "Strategy",
+          "Assistant"
         ]
       },
       "state": {
@@ -152,7 +154,8 @@
                 "Librarian",
                 "Comms",
                 "Gamemaster",
-                "Strategy"
+                "Strategy",
+                "Assistant"
               ]
             },
             "stance": {
@@ -204,7 +207,8 @@
           "Librarian",
           "Comms",
           "Gamemaster",
-          "Strategy"
+          "Strategy",
+          "Assistant"
         ]
       },
       "reason": {
