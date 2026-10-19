@@ -16,7 +16,8 @@ class Metrics(unittest.TestCase):
         cls.page = build.build()["metrics/index.html"]
 
     def test_generated_from_records(self):
-        self.assertEqual(self.m, metrics.derive(load("wins"), load("aars"), load("ci"), load("ideas"), load("refusals"), load("tempo")))
+        self.assertEqual(self.m, metrics.derive(load("wins"), load("aars"), load("ci"), load("ideas"), load("refusals"), load("tempo"),
+                                                   load("blast_checks")))  # i46: blast-radius compares count too
         for n in ("ci", "metrics", "wins"):
             self.assertEqual(check.validate(load(n), check.load_schema(n)), [], n)
 
