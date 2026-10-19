@@ -8,9 +8,9 @@ a{color:var(--link)}a:focus-visible{outline:3px solid var(--accent);outline-offs
 header{border-bottom:1px solid var(--line);padding:.5rem 0}header .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:0 1rem}
 .brand{font-weight:700;font-size:1.25rem;text-decoration:none;color:var(--fg);display:inline-flex;align-items:center;min-height:44px}
 .back{margin:1rem 0 0}.back a{display:inline-flex;align-items:center;min-height:44px;text-decoration:none}.back a::before{content:"\2190\00a0"}
-nav ul{list-style:none;display:flex;flex-wrap:wrap;gap:0;padding:0;margin:0}nav li:first-child a{padding-left:0}
-nav a{text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:0 .5rem}nav a[aria-current]{font-weight:700;text-decoration:underline;text-underline-offset:.3em}
-.disclaimer{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:.35rem .6rem;font-size:.8rem;color:var(--muted);margin:.75rem 0}
+nav{--np:clamp(.3rem,1.5vw,.5rem)}nav ul{list-style:none;display:flex;flex-wrap:wrap;gap:0 calc(var(--np)*2);padding:0;margin:0}
+nav a{text-decoration:none;display:inline-flex;align-items:center;min-height:44px;min-width:44px;padding:0;font-size:clamp(.9375rem,4.2vw,1rem)}nav a[aria-current]{font-weight:700;text-decoration:underline;text-underline-offset:.3em}
+.disclaimer{border-bottom:1px solid var(--line);padding:.4rem 0;font-size:.75rem;line-height:1.4;color:var(--muted);margin:0 0 .25rem}
 .lede{color:var(--muted);margin-top:0}
 .card{border:1px solid var(--line);border-radius:8px;padding:.75rem 1rem;margin:.75rem 0;background:var(--bg)}
 .card h3{margin:.1rem 0 .25rem;font-size:1.05rem}
@@ -39,7 +39,7 @@ h1{font-size:clamp(1.6rem,1.25rem + 1.5vw,1.95rem);letter-spacing:-.01em;margin:
 h2{font-size:clamp(1.25rem,1.15rem + .5vw,1.4rem);margin:clamp(1.5rem,1.2rem + 1vw,2rem) 0 .6rem}
 h3{font-size:1.12rem}
 main p,main li,.intro{max-width:70ch}
-.card p,.card li{max-width:none}.disclaimer{max-width:72ch}
+.card p,.card li{max-width:none}main .disclaimer{max-width:none}
 p{margin:.6rem 0}
 :focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:3px}
 :focus:not(:focus-visible){outline:none}
@@ -76,7 +76,7 @@ details summary{padding:.75rem 0;line-height:1.5}.report>summary{min-height:44px
 .filter a,.jump a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;min-width:44px}
 .meta a,main li>a:only-child:not(:has(*)),.lead h2 a,.lead li>a{display:inline-flex;align-items:center;min-height:44px;min-width:44px}
 .meta>*{min-width:0;max-width:100%}.meta a{max-width:100%;overflow-wrap:anywhere}.scroll table{width:max-content;max-width:max(100%,40rem)}.scroll th,.scroll td{min-width:4.5rem}.cta li{flex:1 1 100%}.cta .btn{width:100%;justify-content:center}
-@media (min-width:40rem){header{padding:.75rem 0}.disclaimer{margin:1rem 0}.cta li{flex:none}.cta .btn{width:auto}}
+@media (min-width:40rem){header{padding:.75rem 0}.cta li{flex:none}.cta .btn{width:auto}}
 .worklist{list-style:none;padding:0;margin:.5rem 0 1rem}.worklist li{padding:.6rem 0;border-top:1px solid var(--line)}.worklist li:first-child{border-top:0}.worklist time{display:block;font-size:.8rem;color:var(--muted)}.worklist .meta{display:block;margin-top:.15rem}
 @media (min-width:40rem){.achs{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .filter a{gap:.3rem}
@@ -129,4 +129,4 @@ summary{flex-wrap:wrap}summary span,li>div,.char .hd>*,.lead .hd>*{min-width:0}.
 .st::first-letter,.tag::first-letter,.badge::first-letter,.k::first-letter{text-transform:uppercase}.tag a,.st a{display:inline;min-height:0;padding:.75rem 0}
 .card h2 a,.card h3 a,.lead h2 a,.news h3 a,.meta a,.last a,.obj a,.xp a,.links a,.status a,.sitelist a,.stats a{text-decoration:none}
 :is(.card h2,.card h3,.lead h2,.news h3,.meta,.last,.obj,.xp,.links,.status,.sitelist,.stats) a:is(:hover,:focus-visible){text-decoration:underline;text-decoration-color:var(--ok)}
-footer .links a{font-weight:400}.lead .hd>div{flex:1 1 7rem}
+footer .links a{font-weight:400}.next{margin:2rem 0 0}.lead .hd>div{flex:1 1 7rem}
