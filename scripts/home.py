@@ -89,5 +89,7 @@ def render(b, items, wins, ups, iss, totals, levels, team, dropped, screened, tl
         return (f'<li><details{" open" if first else ""}><summary><span class="k k-{cls}">{word}</span><time>{e(dt)}</time>'
                 f'<span class="t">{e(x["title"])}{demo}</span></summary><div class="ev">{who}{text}{kids}<p><a href="{e(x["link"](up))}">Evidence: {e(x["cue"])}</a></p></div></details></li>')
     act = (f'<section aria-labelledby="act-t"><h2 id="act-t">Activity</h2><p class="sub">The latest {min(8, len(items))} records, newest first. Open one for who, what, and the evidence.</p>'
-           f'<ol class="feed">{"".join(row(x, k == 0) for k, x in enumerate(items[:8]))}</ol><ul class="links"><li><a href="timeline/">Full timeline</a></li><li><a href="weekly/">Weekly recap</a></li><li><a href="metrics/">Metrics and trends</a></li></ul></section>')
-    return status + cta + feat + tracker + teams + act
+           f'<ol class="feed">{"".join(row(x, k == 0) for k, x in enumerate(items[:8]))}</ol><ul class="links"><li><a href="timeline/">Full timeline</a></li><li><a href="weekly/">Weekly recap</a></li><li><a href="metrics/">Metrics and trends</a></li><li><a href="how/">How this works</a></li></ul></section>')
+    # Home order (design huddle on Ryno's design inputs, 2026-10-19): the tracker leads, the team comes right after it and is
+    # never below the fold's second section, and the latest sprint (process meta) follows the team.
+    return status + cta + tracker + teams + feat + act

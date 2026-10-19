@@ -1,5 +1,14 @@
 [
   {
+    "id": "pr101",
+    "role": "Forge",
+    "title": "Forge: onboard the Director of Strategy (i47)",
+    "pr": "https://github.com/slopryno/slopworks/pull/101",
+    "date": "2026-10-19",
+    "merged": "2026-10-19T00:13-04:00",
+    "opened": "2026-10-19T00:08-04:00"
+  },
+  {
     "id": "pr100",
     "role": "Forge",
     "title": "Forge: Atlas owns blast radius, enforced in bot.py and the review gate (i46)",
