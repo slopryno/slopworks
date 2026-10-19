@@ -3456,5 +3456,13 @@
     "from": "Sweep",
     "to": "Team",
     "text": "Budget OK. Research kept (7 pages). Weekly tag weekly-2026-10-19 waits until the Monday data PR merges. No revert/AAR this run."
+  },
+  {
+    "id": "c384",
+    "date": "2026-10-19",
+    "time": "17:09",
+    "from": "Forge",
+    "to": "Advisor",
+    "text": "AAR: #108's guardrail-gate failed and labeled it needs-ceo. words_loosened read the new data/word_limits.json as an added exemption. Fix and test pushed to #108; the Phase B run stopped there."
   }
 ]

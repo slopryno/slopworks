@@ -1,0 +1,31 @@
+{
+  "_note": "Comms's word limits (visual review 2026-10-19, docs/voice.md). Add-only: a page joins enforced_pages in the PR that trims it; dropping a page, an area or a banned phrase, raising a limit, or adding an exemption is loosening and goes to the CEO.",
+  "areas": {
+    "page_title": {"selector": "main h1", "limit": 8},
+    "lede": {"selector": "main p.lede", "limit": 25},
+    "section_intro": {"selector": "main h2 + p", "limit": 25},
+    "hub_blurb": {"selector": "ul.hub span", "limit": 20},
+    "home_role_card": {"selector": "li.char", "limit": 30},
+    "team_role_card": {"selector": "article.lead", "limit": 60},
+    "role_bio": {"selector": "p.bio", "limit": 25},
+    "tracker_summary": {"selector": "article.card > h3 + p", "limit": 30},
+    "content_card": {"selector": ["article.case", "article.challenge"], "limit": 80},
+    "lesson_card": {"selector": "article.aar", "limit": 60},
+    "activity_item": {"selector": "ul.feed > li", "limit": 25},
+    "metric_caption": {"selector": "ul.nums li", "limit": 15},
+    "caption_note": {"selector": ["main caption", "main p.sub"], "limit": 25},
+    "definition": {"selector": ["dl.gloss dd", "ol.steps > li"], "limit": 25},
+    "paragraph": {"selector": ["main p", "main dd"], "limit": 45},
+    "footer": {"selector": "footer", "limit": 30}
+  },
+  "first_screen": 110,
+  "details_limit": 250,
+  "exempt": ["chat/", "timeline/archive/"],
+  "exempt_selectors": ["blockquote", "p.disclaimer"],
+  "sitewide": ["page_title"],
+  "data_checks": {
+    "updates_summary": {"limit": 30, "from": "2026-10-21"}
+  },
+  "enforced_pages": [
+  ]
+}

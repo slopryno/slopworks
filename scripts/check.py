@@ -653,6 +653,320 @@ def comms_feed_errors(files, root=None):
     return errs
 
 
+# ---------- word limits and voice (Comms, visual review 2026-10-19, V2): additions only ----------
+VOID_TAGS = {"area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "source", "track", "wbr"}
+BLOCK_TAGS = {"p", "li", "dd", "dt", "div", "h1", "h2", "h3", "h4", "tr", "td", "th", "section", "article", "summary", "br", "caption", "blockquote", "nav", "ul", "ol"}
+WORD = re.compile(r"\S*[A-Za-z0-9]\S*")  # a word has a letter or digit, so "·" and "→" separators don't count
+
+
+class _Node:
+    def __init__(self, tag, attrs, parent):
+        self.tag, self.attrs, self.parent, self.kids = tag, dict(attrs), parent, []
+        self.cls = set((self.attrs.get("class") or "").split())
+
+
+class _Tree(html.parser.HTMLParser):
+    def __init__(self):
+        super().__init__(convert_charrefs=True)
+        self.root = self.cur = _Node("#root", [], None)
+
+    def handle_starttag(self, tag, attrs):
+        n = _Node(tag, attrs, self.cur)
+        self.cur.kids.append(n)
+        if tag not in VOID_TAGS:
+            self.cur = n
+
+    def handle_endtag(self, tag):
+        n = self.cur
+        while n.parent and n.tag != tag:
+            n = n.parent
+        if n.parent:
+            self.cur = n.parent
+
+    def handle_data(self, data):
+        self.cur.kids.append(data)
+
+
+def _parse(doc):
+    t = _Tree()
+    t.feed(doc)
+    return t.root
+
+
+def _walk(n):
+    for k in n.kids:
+        if isinstance(k, _Node):
+            yield k
+            yield from _walk(k)
+
+
+def _compound(n, c):
+    tag, *cls = c.split(".")
+    return (not tag or n.tag == tag) and set(cls) <= n.cls
+
+
+def _prev(n):
+    sib = [k for k in n.parent.kids if isinstance(k, _Node)] if n.parent else []
+    i = sib.index(n)
+    return sib[i - 1] if i else None
+
+
+def _matches(n, parts):
+    """parts: a selector split into compounds and combinators (' ', '>', '+'), matched right to left."""
+    if not n or n.tag == "#root" or not _compound(n, parts[-1]):
+        return False
+    if len(parts) == 1:
+        return True
+    comb, rest = parts[-2], parts[:-2]
+    if comb == ">":
+        return _matches(n.parent, rest)
+    if comb == "+":
+        return _matches(_prev(n), rest)
+    a = n.parent
+    while a and a.tag != "#root":
+        if _matches(a, rest):
+            return True
+        a = a.parent
+    return False
+
+
+def _seq(selector):
+    """'main h2 + p' -> ['main', ' ', 'h2', '+', 'p']"""
+    seq = []
+    for t in re.sub(r"\s*([>+])\s*", r" \1 ", selector.strip()).split():
+        if t in (">", "+"):
+            seq.append(t)
+        else:
+            if seq and seq[-1] not in (">", "+"):
+                seq.append(" ")
+            seq.append(t)
+    return seq
+
+
+def _select(root, selector):
+    seq = _seq(selector)
+    return [n for n in _walk(root) if _matches(n, seq)]
+
+
+def _skipped(n, skip):
+    return n.tag in ("script", "style") or "hidden" in n.attrs or any(_matches(n, s) for s in skip)
+
+
+def _text(n, skip, open_only=True):
+    """Visible text of n: closed <details> show only their summary, and skipped (exempt) elements don't count."""
+    out = []
+    for k in n.kids:
+        if isinstance(k, str):
+            out.append(k)
+        elif not _skipped(k, skip):
+            if open_only and k.tag == "details" and "open" not in k.attrs:
+                out += [" "] + [_text(s, skip) for s in k.kids if isinstance(s, _Node) and s.tag == "summary"] + [" "]
+            else:
+                out += [" " if k.tag in BLOCK_TAGS else "", _text(k, skip, open_only), " " if k.tag in BLOCK_TAGS else ""]
+    return "".join(out)
+
+
+def word_count(text):
+    return len(WORD.findall(text or ""))
+
+
+def _skip_list(cfg):
+    return [_seq(s) for s in cfg.get("exempt_selectors", [])]
+
+
+def page_word_errors(rel, doc, cfg, areas=None):
+    """Every area over its limit on one built page: 'page · area · N words > limit · first words'."""
+    root, skip, errs = _parse(doc), _skip_list(cfg), []
+    for name, a in cfg["areas"].items():
+        if areas is not None and name not in areas:
+            continue
+        sels = a["selector"] if isinstance(a["selector"], list) else [a["selector"]]
+        for sel in sels:
+            for n in _select(root, sel):
+                if any(_skipped(p, skip) for p in _ancestors(n)) or _in_closed_details(n):
+                    continue
+                t = _text(n, skip)
+                w = word_count(t)
+                if w > a["limit"]:
+                    errs.append(f"site/{rel} · {name} · {w} words > {a['limit']} · \"{' '.join(WORD.findall(t)[:8])}\"")
+    if areas is None:
+        for d in _select(root, "details"):
+            if "open" in d.attrs:
+                continue
+            t = _reveal(d, skip)
+            w = word_count(t)
+            if w > cfg["details_limit"]:
+                errs.append(f"site/{rel} · details · {w} words > {cfg['details_limit']} · \"{' '.join(WORD.findall(t)[:8])}\"")
+    return errs
+
+
+def _reveal(d, skip):
+    """Text one tap on a closed <details> reveals: everything but its summary; nested closed details show only their summary
+    and count on their own."""
+    out = []
+    for k in d.kids:
+        if isinstance(k, str):
+            out.append(k)
+        elif k.tag != "summary" and not _skipped(k, skip):
+            if k.tag == "details" and "open" not in k.attrs:
+                out += [" "] + [_text(x, skip) for x in k.kids if isinstance(x, _Node) and x.tag == "summary"] + [" "]
+            else:
+                out += [" ", _text(k, skip), " "]
+    return "".join(out)
+
+
+def _ancestors(n):
+    while n is not None and n.tag != "#root":
+        yield n
+        n = n.parent
+
+
+def _in_closed_details(n):
+    """Inside a closed <details> but not in its summary: counted against the details limit, not the area's."""
+    p, child = n.parent, n
+    while p is not None and p.tag != "#root":
+        if p.tag == "details" and "open" not in p.attrs and child.tag != "summary":
+            return True
+        p, child = p.parent, p
+    return False
+
+
+def bios(root=None):
+    """{role: Bio line} from bots/*.md."""
+    out = {}
+    for f in sorted(((root or ROOT) / "bots").glob("*.md")):
+        m = re.search(r"\*\*Bio:\*\*\s*(.+)", f.read_text())
+        if m:
+            out[f.stem] = m.group(1).strip()
+    return out
+
+
+def word_limit_errors(root=None):
+    """data/word_limits.json: limits per area of the built site. Pages in enforced_pages meet every limit, sitewide areas hold
+    on every page that isn't an exempt record, and data_checks hold at the source (bios, new tracker summaries)."""
+    root = root or ROOT
+    p = root / "data/word_limits.json"
+    if not p.exists():
+        return []
+    try:
+        cfg = json.loads(p.read_text())
+    except ValueError as err:
+        return [f"data/word_limits.json: {err}"]
+    errs = [f"data/word_limits.json {e}" for e in validate(cfg, load_schema("word_limits"))]
+    if errs:
+        return errs
+    for name, a in cfg["areas"].items():
+        if not isinstance(a.get("limit"), int) or not a.get("selector"):
+            errs.append(f"data/word_limits.json: area {name} needs a selector and an integer limit")
+    enforced = set(cfg["enforced_pages"])
+    site = root / "site"
+    for page in sorted(enforced):
+        if not (site / page).is_file():
+            errs.append(f"data/word_limits.json: enforced page {page} isn't a built page")
+    for f in sorted(site.rglob("*.html")):
+        rel = str(f.relative_to(site))
+        if rel.startswith(tuple(cfg["exempt"])):
+            continue
+        if rel in enforced:
+            errs += page_word_errors(rel, f.read_text(), cfg)
+        elif cfg["sitewide"]:
+            errs += page_word_errors(rel, f.read_text(), cfg, set(cfg["sitewide"]))
+    checks = cfg.get("data_checks", {})
+    if "bios" in checks:
+        for stem, b in bios(root).items():
+            if word_count(b) > checks["bios"]:
+                errs.append(f"bots/{stem}.md · Bio · {word_count(b)} words > {checks['bios']} · \"{' '.join(b.split()[:8])}\"")
+    if "updates_summary" in checks:
+        lim = checks["updates_summary"]
+        for u in json.loads((root / "data/updates.json").read_text()):
+            if u.get("added", "") >= lim["from"] and word_count(u.get("summary")) > lim["limit"]:
+                errs.append(f"data/updates.json {u['id']} · summary · {word_count(u['summary'])} words > {lim['limit']}")
+    return errs
+
+
+def voice_hits(text, cfg, bio=False):
+    """Banned phrases (docs/voice.md) found in text; bio-only phrases count only in a role's Bio."""
+    t = re.sub(r"[\u2018\u2019]", "'", text or "")
+    found = [ph for ph in cfg["banned"] if re.search(r"(?<![\w-])" + re.escape(ph) + r"(?![\w-])", t, re.I)]
+    found += [x["why"] for x in cfg["patterns"] if re.search(x["re"], t, re.I)]
+    if bio:
+        found += [ph for ph in cfg["bio_only"] if re.search(r"(?<![\w-])" + re.escape(ph) + r"(?![\w-])", t, re.I)]
+    return found
+
+
+def voice_errors(root=None):
+    """data/voice.json: banned phrases fail on enforced pages (outside exempt records and quotes) and in role bios."""
+    root = root or ROOT
+    p, q = root / "data/voice.json", root / "data/word_limits.json"
+    if not p.exists() or not q.exists():
+        return []
+    try:
+        cfg, lim = json.loads(p.read_text()), json.loads(q.read_text())
+    except ValueError as err:
+        return [f"data/voice.json: {err}"]
+    errs = [f"data/voice.json {e}" for e in validate(cfg, load_schema("voice"))]
+    if errs:
+        return errs
+    skip = _skip_list(lim)
+    for page in sorted(lim.get("enforced_pages", [])):
+        f = root / "site" / page
+        if f.is_file():
+            main = _select(_parse(f.read_text()), "main")
+            text = " ".join(_text(m, skip, False) for m in main)
+            errs += [f"site/{page}: voice: '{h}' (docs/voice.md)" for h in voice_hits(text, cfg)]
+    if "bios" in lim.get("data_checks", {}):
+        for stem, b in bios(root).items():
+            errs += [f"bots/{stem}.md: Bio voice: '{h}' (docs/voice.md)" for h in voice_hits(b, cfg, bio=True)]
+    return errs
+
+
+def words_loosened(added, removed):
+    """Guardrail gate for data/word_limits.json and data/voice.json, read line by line: dropping an enforced page, a banned
+    phrase or an area, raising a limit, changing a selector, or adding an exemption loosens; adding or lowering doesn't."""
+    norm = lambda l: l.strip().rstrip(",").strip()
+    if not [l for l in removed if norm(l)] and "{" in [norm(l) for l in added]:
+        return False  # the file is new (AAR 2026-10-19-word-limits-new-file): creating the limits can't loosen them
+    add = [norm(l) for l in added if norm(l)]
+    gone = [norm(l) for l in removed if norm(l) and norm(l) not in add]
+
+    def kv(line):
+        try:
+            d = json.loads("{" + line + "}")
+        except ValueError:
+            return None
+        return next(iter(d.items())) if len(d) == 1 else None
+    new = dict(x for x in map(kv, add) if x)
+    old_keys = {x[0] for x in map(kv, gone) if x}
+    if any(k in ("exempt", "exempt_selectors") and k not in old_keys for k in new):
+        return True
+    for line in gone:
+        if re.fullmatch(r'"(?:[^"\\]|\\.)*"', line):
+            return True
+        x = kv(line)
+        if not x:
+            continue
+        k, old = x
+        if k not in new:
+            return True
+        cur = new[k]
+        if k in ("exempt", "exempt_selectors"):
+            if not isinstance(cur, list) or set(map(str, cur)) - set(map(str, old or [])):
+                return True
+            continue
+        lim = lambda v: v if isinstance(v, int) else (v.get("limit") if isinstance(v, dict) else None)
+        if isinstance(old, (int, dict)):
+            if lim(cur) is None or lim(old) is None or lim(cur) > lim(old):
+                return True
+            if isinstance(old, dict) and (cur.get("selector") != old.get("selector") or cur.get("from", "") > old.get("from", "")):
+                return True
+        elif isinstance(old, list):
+            if not isinstance(cur, list) or set(map(str, old)) - set(map(str, cur)):
+                return True
+        elif cur != old:
+            return True
+    return False
+
+
 # ---------- guardrail gate ----------
 def loosening(path, added, removed):
     real = lambda lines: [l for l in lines if l.strip() and not l.strip().startswith(("#", "//", '"_note"'))]
@@ -668,6 +982,8 @@ def loosening(path, added, removed):
         return bool(real(removed))
     if path == "data/ceo_overrides.json":  # Ryno 2026-10-19: CEO overrides are add-only; an edit or removal needs-ceo
         return bool(real(removed))
+    if path in ("data/word_limits.json", "data/voice.json"):
+        return words_loosened(added, removed)
     return False
 
 
@@ -936,6 +1252,8 @@ def run_repo():
     errs += blast_check_errors()
     errs += training_errors()
     errs += comms_feed_errors(files)
+    errs += word_limit_errors()
+    errs += voice_errors()
     css = sum((ROOT / f).stat().st_size for f in files if f.startswith("site/") and f.endswith(".css"))
     for f in files:
         if f.startswith("site/") and f.endswith(".html"):
