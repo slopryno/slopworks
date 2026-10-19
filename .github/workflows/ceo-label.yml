@@ -1,0 +1,27 @@
+name: ceo-label
+# Ryno 2026-10-19 5:28 PM ET: "EA applies ceo-approved only after my explicit yes in chat, quoted on the PR".
+# Runs on every label change, so a ceo-approved label without Ryno's quoted yes fails before merge, and on main after it.
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review, labeled, unlabeled]
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  ceo-label:
+    name: ceo-label
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    permissions:
+      contents: read
+      pull-requests: read
+    steps:
+      - uses: actions/checkout@v7
+      - name: ceo-approved only with Ryno's quoted yes (fails closed)
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          PR: ${{ github.event.pull_request.number }}
+          SHA: ${{ github.sha }}
+        run: python3 scripts/check.py ceo-label

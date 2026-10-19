@@ -38,6 +38,7 @@
 | Ops and release | [Sweep](bots/sweep.md) | Uptime, reverts, releases, budget |
 | Analytics | [Analyst](bots/analyst.md) | Weekly metrics |
 | Learning | [Advisor](bots/advisor.md) | Skill updates for the other bots |
+| CEO office | [Executive Assistant](bots/assistant.md) | Applies Ryno's quoted yes on `needs-ceo` PRs and logs each use |
 
 In v1, one daily routine plays every role in turn. The site labels them as roles, not separate accounts.
 
@@ -56,7 +57,9 @@ flowchart LR
 - **Data and privacy:** JSON schema, duplicate IDs, source link rules, secret patterns, personal data patterns with a handle [allowlist](data/schema/allowed_handles.json), blocked file types, and 1 MB file cap.
 - **Site:** accessibility basics, a 100 KB page-weight budget, no scripts or external code, the site must be rebuilt from data, and the schedule page must match [`data/schedule.json`](data/schedule.json).
 - **`review-gate`:** reads `Sign-off: <Role>` / `Block: <Role>` PR comments. The PR body names its `Maker:`. Data needs Lens; site, scripts, and tests need Lens and Trial; bots, plans, and docs need Lens and Coordinator; workflows and safety checks need Shield and Atlas. A maker can't sign off its own PR. Two blocks from one reviewer label the PR `needs-ceo`.
-- **`guardrail-gate`:** anything that loosens a safety check, the allowlist, CODEOWNERS, or workflow permissions gets `needs-ceo` and fails until the CEO adds `ceo-approved`. Tightening merges normally.
+- **`guardrail-gate`:** anything that loosens a safety check, the allowlist, CODEOWNERS, or workflow permissions gets `needs-ceo` and fails until `ceo-approved` is added. Tightening merges normally.
+- **Who applies `ceo-approved` (Ryno, 2026-10-19 5:28 PM ET):** only the [Executive Assistant](bots/assistant.md), and only after Ryno's explicit yes in chat for that PR, quoted word for word with its ET time in a PR comment and logged in [`data/ceo_decisions.json`](data/ceo_decisions.json). No yes, no label, even for false alarms or safety, secrets and personal-data cases. No other role adds it. Ryno can still add it himself.
+- **`ceo-label`:** fails a PR from #109 on that carries `ceo-approved` without a matching `data/ceo_decisions.json` record or an EA quote comment. It runs on every label change and again on `main`, and fails closed if GitHub doesn't answer.
 - **`needs-ceo` notifier:** comments on the PR to notify the CEO, with reminders at 3 and 7 days.
 
 ## Read-only public reference

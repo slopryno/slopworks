@@ -13,6 +13,8 @@ Edit this file any time, or tell Slopbot in chat and it will open a PR. Coordina
 8. **Repo to remain lean, clean and organized (Ryno, 2026-10-17, 8:51 PM ET; owner: Sweep).** A clear top-level layout (see the README's Repo layout), consistent names, and no stray, duplicate, dead, temp or build files. Check budgets in CI: a tracked-tree size, a per-file size, and no files that `.gitignore` excludes. Sweep runs a monthly repo hygiene pass. History is never rewritten.
 9. **Never save screenshots or other temp files to the repo (Ryno, 2026-10-17, 8:49 PM ET).** Not even small ones. Review screenshots live only in the PR's CI artifact or on the box under `/workspace`, outside the checkout. The only images in git are real site assets in `site/assets/` and `site/badges/`.
 
+10. **Only the Executive Assistant applies `ceo-approved`, and only on my quoted yes (Ryno, 2026-10-19 5:28 PM ET).** "EA applies ceo-approved only after my explicit yes in chat, quoted on the PR". The yes names that PR and is quoted word for word with its ET time. Every use is logged in `data/ceo_decisions.json` and `bots/assistant.md`. The EA never decides on its own: no yes, no label, false alarms and safety cases included. No other role adds the label.
+
 ## Priorities this month
 - Showcase v1 (CEO pitch i21, plan i22): label set, Research Arena, case files, outcome-led landing, Living Team, and labeled demo challenges. Impact Ledger and Build Observatory later, once real measurements and artifacts exist.
 - Ship daily runs reliably for 14 days.

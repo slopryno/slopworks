@@ -207,7 +207,8 @@
     "Sweep": "Ship an ops fix with a deploy check that proves it.",
     "Analyst": "File research behind an accepted decision.",
     "Gamemaster": "Earn XP the same way as everyone else: ship a rules change that another role reviews and merges.",
-    "Strategy": "Set a monthly goal that Ryno approves, then see it move on /metrics/ from real records."
+    "Strategy": "Set a monthly goal that Ryno approves, then see it move on /metrics/ from real records.",
+    "Assistant": "Log every use of ceo-approved with Ryno's verbatim yes, and keep the record matching CI."
   },
   "later_weeks": {
     "week2": "Daily, weekly, and level-up quests ('no meaningful opportunity found' counts), reviewer quality grades, and recorded preventions.",
