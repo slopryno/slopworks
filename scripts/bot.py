@@ -6,13 +6,17 @@
   bot.py chat --from R --to R [--reply-to cN] [--idea iN] "text"
                                     append a Team chat message: next id, today's date, the clock time, checked first
   bot.py count <file> [regex]       count list items in a JSON file, or lines matching a regex, for sign-offs
-  bot.py pr --maker R --title T --body FILE [--signoff Role=FILE ...] [--review N] [--merge]
+  bot.py pr --maker R --title T --body FILE [--signoff Role=FILE ...] [--blast FILE] [--review N] [--merge]
                                     run the local checks, open a draft, add the Maker line, post sign-offs,
                                     refuse a self sign-off or a missing required role, then mark ready (and merge)
                                     a design or CSS PR also needs --review N: screenshots of every page,
                                     a full set on the box (scripts/shots.py N, outside the checkout), the PR's
                                     review-shots-N CI artifact, and Polish and Trial sign-offs that
                                     say which screenshots they looked at and what problems they found (AAR 2026-10-17)
+                                    a PR touching shared paths (check.BLAST_SHARED) also needs --blast FILE: Atlas's
+                                    blast-radius note (bots/atlas.md), posted as Atlas's comment; the maker can't be Atlas (i46)
+  bot.py blast-check --pr N --by Trial|Lens --result matched|bigger|smaller "what happened"
+                                    after merge: compare Atlas's prediction on PR N with what happened (data/blast_checks.json)
 
 CI stays the backstop (review-gate, path rule, guardrail-gate). This helper only makes the right path the easy one.
 """
@@ -75,6 +79,42 @@ def log_refusal(path, branch, reason, now):
     log = json.loads(path.read_text()) if path.exists() else []
     log.append({"at": now.isoformat(timespec="minutes"), "branch": branch[:80], "reason": line})
     path.write_text(json.dumps(log, indent=2, ensure_ascii=False) + "\n")
+
+
+# ---------- Blast radius (i46, Ryno 2026-10-18 10:48 PM ET): Atlas assesses shared-path PRs ----------
+def plan_blast(maker, paths, text):
+    """The Atlas blast-radius comment to post, None if no shared path changed, or Refused."""
+    shared = check.blast_shared(paths)
+    if not shared:
+        return None
+    if role(maker) == "Atlas":
+        raise Refused("Atlas made this PR, so it can't assess its own blast radius; another role builds shared-path changes")
+    if not text:
+        raise Refused(f"shared paths ({', '.join(shared[:5])}): pass --blast FILE with Atlas's blast-radius note (bots/atlas.md)")
+    body = text if re.match(r"^\s*Blast radius:", text, re.I) else f"Blast radius: Atlas\n{text}"
+    errs = check.blast_note_errors(body)
+    if errs:
+        raise Refused("blast-radius note: " + "; ".join(errs))
+    return body
+
+
+def new_blast_check(checks, pr, by, result, note, notes, merged, now):
+    """One data/blast_checks.json entry. notes: comment bodies on the PR; merged: is the PR merged."""
+    if role(by) not in check.BLAST_CHECKERS:
+        raise Refused("Trial or Lens compares the prediction, not Atlas or the maker")
+    if not merged:
+        raise Refused(f"PR {pr} hasn't merged; compare after merge")
+    if any(c["pr"] == pr for c in checks):
+        raise Refused(f"PR {pr} is already in data/blast_checks.json")
+    atlas = [b for b in notes if re.match(r"^\s*Blast radius:\s*Atlas\b", b, re.I)]
+    size = check.blast_size(atlas[-1]) if atlas else None
+    if not size:
+        raise Refused(f"PR {pr} has no Atlas blast-radius note with a Size line")
+    entry = {"pr": pr, "date": now.strftime("%Y-%m-%d"), "by": role(by), "predicted": size, "result": result, "note": note}
+    errs = check.validate([entry], check.load_schema("blast_checks"))
+    if errs:
+        raise Refused("; ".join(errs))
+    return entry
 
 
 def git(*args):
@@ -296,6 +336,9 @@ def cmd_pr(a):
         who, _, f = s.partition("=")
         signoffs[who] = Path(f).read_text()
     comments = plan_signoffs(a.maker, paths, signoffs)  # refuse before anything is pushed
+    blast = plan_blast(a.maker, paths, Path(a.blast).read_text() if a.blast else None)
+    if blast:
+        comments = [blast] + comments
     plan_review(a.review, m.group(1), paths, signoffs, removed=[p for p in paths if not (ROOT / p).exists()])
     main_red(json.loads(gh("run", "list", "--branch", "main", "--limit", "10", "--json", "name,status,conclusion")))
     mode, used, limit = tempo_gate(merged_now(), json.loads((ROOT / "data/aars.json").read_text()), datetime.datetime.now(ET))
@@ -346,7 +389,9 @@ def main(argv=None):
     n = sub.add_parser("count"); n.add_argument("file"); n.add_argument("pattern", nargs="?")
     r = sub.add_parser("pr"); r.add_argument("--maker", required=True); r.add_argument("--title", required=True)
     r.add_argument("--body", required=True); r.add_argument("--signoff", action="append"); r.add_argument("--merge", action="store_true")
-    r.add_argument("--review", type=int)
+    r.add_argument("--review", type=int); r.add_argument("--blast")
+    k = sub.add_parser("blast-check"); k.add_argument("--pr", type=int, required=True); k.add_argument("--by", required=True)
+    k.add_argument("--result", required=True, choices=check.BLAST_RESULTS); k.add_argument("note")
     a = p.parse_args(argv)
     try:
         if a.cmd == "roles":
@@ -369,6 +414,14 @@ def main(argv=None):
             print(f"{a.file}: {count(a.file, a.pattern)}")
         elif a.cmd == "pr":
             cmd_pr(a)
+        elif a.cmd == "blast-check":
+            f = ROOT / "data/blast_checks.json"
+            checks = json.loads(f.read_text()) if f.exists() else []
+            pr = json.loads(gh("pr", "view", str(a.pr), "--json", "state,comments"))
+            entry = new_blast_check(checks, a.pr, a.by, a.result, a.note, [c["body"] for c in pr["comments"]],
+                                    pr["state"] == "MERGED", datetime.datetime.now(ET))
+            f.write_text(json.dumps(checks + [entry], indent=2, ensure_ascii=False) + "\n")
+            print(f"PR {a.pr}: Atlas said {entry['predicted']}, {entry['by']} says {entry['result']}")
     except Refused as e:
         if a.cmd == "pr":
             log_refusal(ROOT / "data/refusals.json", git("rev-parse", "--abbrev-ref", "HEAD").strip(), str(e), datetime.datetime.now(ET))

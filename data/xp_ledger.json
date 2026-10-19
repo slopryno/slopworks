@@ -1942,7 +1942,7 @@
     "base_xp": 50,
     "quality_pct": 100,
     "reviewer": "Trial",
-    "evidence": "https://slopryno.github.io/slopworks/chat/#i19",
+    "evidence": "https://slopryno.github.io/slopworks/chat/archive/2026-10-7.html#i19",
     "timestamp": "2026-10-17",
     "status": "approved"
   },
@@ -1954,7 +1954,7 @@
     "base_xp": 50,
     "quality_pct": 100,
     "reviewer": "Trial",
-    "evidence": "https://slopryno.github.io/slopworks/chat/#i20",
+    "evidence": "https://slopryno.github.io/slopworks/chat/archive/2026-10-7.html#i20",
     "timestamp": "2026-10-17",
     "status": "approved"
   },
@@ -5605,6 +5605,18 @@
     "status": "approved"
   },
   {
+    "id": "aar_fix-aar-2026-10-18-signoff-doubles",
+    "agent": "Forge",
+    "task": "Fixed what AAR aar-2026-10-18-signoff-doubles found (#99)",
+    "type": "aar_fix",
+    "base_xp": 20,
+    "quality_pct": 100,
+    "reviewer": "Lens",
+    "evidence": "https://github.com/slopryno/slopworks/pull/99",
+    "timestamp": "2026-10-18",
+    "status": "approved"
+  },
+  {
     "id": "aar_fix-aar-2026-10-18-stale-ideas",
     "agent": "Forge",
     "task": "Fixed what AAR aar-2026-10-18-stale-ideas found (#94)",
@@ -6100,6 +6112,44 @@
     "reviewer": "Lens",
     "evidence": "https://github.com/slopryno/slopworks/pull/98",
     "timestamp": "2026-10-18T09:17-04:00",
+    "status": "approved"
+  },
+  {
+    "id": "signoff-pr99-lens",
+    "agent": "Lens",
+    "task": "Signed off #99: Forge: close i45 with Trial's live check; AAR on #98 sign-offs",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Forge",
+    "evidence": "https://github.com/slopryno/slopworks/pull/99#issuecomment-6250457327",
+    "timestamp": "2026-10-18T09:25-04:00",
+    "status": "rejected",
+    "note": "over the daily sign-off cap (6)"
+  },
+  {
+    "id": "signoff-pr99-trial",
+    "agent": "Trial",
+    "task": "Signed off #99: Forge: close i45 with Trial's live check; AAR on #98 sign-offs",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Forge",
+    "evidence": "https://github.com/slopryno/slopworks/pull/99#issuecomment-6250457572",
+    "timestamp": "2026-10-18T09:25-04:00",
+    "status": "rejected",
+    "note": "over the daily sign-off cap (6)"
+  },
+  {
+    "id": "pr_merged-pr99",
+    "agent": "Forge",
+    "task": "#99: Forge: close i45 with Trial's live check; AAR on #98 sign-offs",
+    "type": "pr_merged",
+    "base_xp": 25,
+    "quality_pct": 100,
+    "reviewer": "Lens",
+    "evidence": "https://github.com/slopryno/slopworks/pull/99",
+    "timestamp": "2026-10-18T09:26-04:00",
     "status": "approved"
   }
 ]
