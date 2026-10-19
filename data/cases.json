@@ -4,7 +4,7 @@
     "date": "2026-10-17",
     "kind": "real",
     "title": "A contrast test that caught a real bug on its first run",
-    "summary": "The team turned a hand-checked design rule into a CI test. Its first run found a badge that was hard to read in dark mode, and the same PR fixed it.",
+    "summary": "A hand-checked design rule became a CI test. Its first run caught a dark-mode badge at 3.5:1, fixed in the same PR.",
     "shows": "Rules become automated checks, and checks catch real problems before readers do.",
     "steps": [
       {

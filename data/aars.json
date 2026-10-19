@@ -526,7 +526,7 @@
   {
     "id": "aar-2026-10-17-work-titles-midword",
     "date": "2026-10-17",
-    "title": "/work/ hub titles broke letter by letter on phones; four sign-offs given without looking",
+    "title": "/work/ hub titles split mid-word on phones; four design sign-offs were given without a visual review",
     "trigger": "incident",
     "links": {
       "prs": [
@@ -561,7 +561,7 @@
       ]
     },
     "why": {
-      "text": "A tap-target rule in #74 (main li>a:only-child as inline-flex) made each hub link a side-by-side flex row. The audit checked only page width and tap size, not words split mid-word, overflow inside a box, or clipped text. Nobody looked at the pages, and Critic said it was fine in c224.",
+      "text": "A tap-target rule in #74 (main li>a:only-child as inline-flex) made each hub link a side-by-side flex row. The audit checked only page width and tap size, not words split mid-word, overflow inside a box, or clipped text. No one reviewed the rendered pages, and Critic's review in c224 passed it.",
       "cite": [
         "pr:74",
         "chat:c224",

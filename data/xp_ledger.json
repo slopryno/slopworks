@@ -1810,7 +1810,7 @@
     "base_xp": 30,
     "quality_pct": 100,
     "reviewer": "Lens",
-    "evidence": "https://slopryno.github.io/slopworks/lessons/#aar-2026-10-17-chat-budget",
+    "evidence": "https://slopryno.github.io/slopworks/lessons/archive/2026-10.html#aar-2026-10-17-chat-budget",
     "timestamp": "2026-10-17",
     "status": "approved"
   },
@@ -1901,7 +1901,7 @@
   {
     "id": "aar_written-aar-2026-10-17-work-titles-midword",
     "agent": "Polish",
-    "task": "AAR: /work/ hub titles broke letter by letter on phones; four sign-offs given without looking",
+    "task": "AAR: /work/ hub titles split mid-word on phones; four design sign-offs were given without a visual review",
     "type": "aar_written",
     "base_xp": 30,
     "quality_pct": 100,
