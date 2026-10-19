@@ -9,7 +9,7 @@
     "ci_catches": 20,
     "main_failures": 0,
     "reverts": 0,
-    "aars": 14,
+    "aars": 15,
     "escaped": 11,
     "blocks": 1,
     "refusals": 1,
@@ -84,7 +84,7 @@
       "open_to_merge_min": 5,
       "escaped": 0,
       "corrections": 0,
-      "aars": 0,
+      "aars": 1,
       "ci_catches": 0,
       "ci_recorded": true,
       "main_failures": 0,
@@ -204,9 +204,9 @@
       "key": "aars",
       "label": "AARs per 10 PRs",
       "prev": 3.0,
-      "new": 0.0,
-      "direction": "down",
-      "verdict": "better"
+      "new": 3.3,
+      "direction": "up",
+      "verdict": "worse"
     },
     {
       "key": "ci_catches",
@@ -241,7 +241,9 @@
       "verdict": null
     }
   ],
-  "worsening": [],
+  "worsening": [
+    "aars"
+  ],
   "goals": [
     {
       "id": "G1",
