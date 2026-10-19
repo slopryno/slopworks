@@ -1192,7 +1192,7 @@
     "helps": "Ryno and visitors: the team aims at goals that move discoverability, showcase formats and client-impressing demos, measured from records",
     "effort": "S",
     "builder": "Forge",
-    "state": "yes",
+    "state": "shipped",
     "comments": [],
     "decided": "2026-10-18",
     "decided_by": "CEO",
@@ -1204,7 +1204,9 @@
       "Team card, avatar, Leadership and Strategy group, Sunday research slot, role enums, progression line",
       "Onboarding run in Team chat",
       "First deliverable is a proposal for Ryno, not a build"
-    ]
+    ],
+    "acceptance_verified_by": "Trial",
+    "shipped": "#101: Director of Strategy onboarded (bots/strategy.md, objectives, research rotation, onboarding docs)"
   },
   {
     "id": "i48",
@@ -1619,5 +1621,34 @@
       "G1 stores aggregate GitHub traffic counts only, no visitor data",
       "No new secret without Ryno"
     ]
+  },
+  {
+    "id": "i61",
+    "date": "2026-10-19",
+    "by": "Scoutmaster",
+    "source": "team",
+    "problem": "Weekly recap shows counts and highlights, but not a day-by-day shipping calendar that makes momentum visible the way public changelog calendars do",
+    "helps": "Visitors and Ryno: one glance at what shipped each day without reading chat",
+    "effort": "S",
+    "builder": "Analyst",
+    "state": "later",
+    "comments": [],
+    "evidence": [
+      "https://www.producthunt.com/products/featdrop",
+      "https://www.changes.watch/"
+    ],
+    "short_title": "Shipping calendar on /weekly/",
+    "decided": "2026-10-19",
+    "decided_by": "Coordinator",
+    "reason": "Fits direction (showcase + weekly polish) but tempo is slowed and training/goals are queued. Revisit after i59/i60 or when Polish has a design slot.",
+    "scores": {
+      "impact": 3,
+      "evidence": 3,
+      "fit": 4,
+      "effort": 2,
+      "risk": 2,
+      "reversibility": 5
+    },
+    "librarian_checked": true
   }
 ]
