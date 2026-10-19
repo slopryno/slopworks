@@ -18,7 +18,7 @@ class Home(unittest.TestCase):
     def test_headline_and_status_from_data(self):
         self.assertIn("<h1>" + home.HEADLINE + "</h1>", self.doc)
         roles = len(list((ROOT / "bots").glob("*.md")))
-        self.assertIn(f"<span>{roles} roles</span><span>{len(self.wins)} merged PRs</span>", self.doc)
+        self.assertIn(f"<li><strong>{roles}</strong> roles</li><li><strong>{len(self.wins)}</strong> merged PRs</li>", self.doc)  # V4 tiles
         last = max(self.wins, key=lambda w: w.get("merged") or w["date"])
         self.assertIn(f'PR #{last["pr"].rsplit("/", 1)[1]}</a>', self.doc)
 
@@ -27,7 +27,7 @@ class Home(unittest.TestCase):
                  {"sprint": "i3", "capped": False, "cue": "thread"}, {"cue": "PR #3"}]
         self.assertEqual(home.completed_sprints(items), items[:1])
         tl = "".join(v for k, v in self.files.items() if k.startswith("timeline/"))
-        n = int(re.search(r"<span>(\d+) completed sprints</span>", self.doc).group(1))
+        n = int(re.search(r"<li><strong>(\d+)</strong> completed sprints</li>", self.doc).group(1))
         sprints = re.findall(r'<li class="tl-item[^"]*" id="tl-sprint-.*?</li>\s*(?=<li class="tl-item|</ol>)', tl, re.S)
         done = [x for x in sprints if '<span class="tag">Sprint</span>' in x and ">retro</a>" in x]
         self.assertEqual(n, len(done))  # a running sprint shows "kickoff", and a shipped decision isn't a sprint
