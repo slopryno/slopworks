@@ -53,9 +53,10 @@ def merged_now():
     return [{"number": p["number"], "merged": at(p["mergedAt"])} for p in prs]
 
 
-def tempo_gate(prs, aars, now):
-    """Refuse a PR over today's limit for the current mode."""
-    mode, used, limit = tempo.today(prs, aars, now)
+def tempo_gate(prs, aars, now, branch=None):
+    """Refuse a PR over today's limit for the current mode. A CEO override in data/ceo_overrides.json lifts the
+    slowed limit only for a branch it names, inside its window (scripts/tempo.py lifted)."""
+    mode, used, limit = tempo.today(prs, aars, now, branch=branch)
     if used >= limit:
         raise Refused(f"tempo: {mode} mode allows {limit} merged PRs today and {used} already count; "
                       f"wait for tomorrow (ET){' or 10 clean PRs' if mode == 'slowed' else ''} (scripts/tempo.py, data/tempo.json)")
@@ -341,7 +342,7 @@ def cmd_pr(a):
         comments = [blast] + comments
     plan_review(a.review, m.group(1), paths, signoffs, removed=[p for p in paths if not (ROOT / p).exists()])
     main_red(json.loads(gh("run", "list", "--branch", "main", "--limit", "10", "--json", "name,status,conclusion")))
-    mode, used, limit = tempo_gate(merged_now(), json.loads((ROOT / "data/aars.json").read_text()), datetime.datetime.now(ET))
+    mode, used, limit = tempo_gate(merged_now(), json.loads((ROOT / "data/aars.json").read_text()), datetime.datetime.now(ET), branch)
     print(f"tempo: {mode}, this is PR {used + 1} of {limit} today")
     if needs_visual_review(m.group(1), paths) and next_pr_number() != a.review:
         raise Refused(f"--review {a.review} but this PR will be #{next_pr_number()}; reshoot into that number")
