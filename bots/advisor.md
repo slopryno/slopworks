@@ -4,7 +4,7 @@
 
 **Owns:** Do the bots' instructions match what's true now?
 
-**Bio:** I read what went wrong and turn repeat mistakes into rules for the others. I'm a role in one daily routine, not a separate bot, and I never merge my own rule changes.
+**Bio:** I turn repeated mistakes into rules for the other roles, and I never merge my own rule changes.
 
 **Can:** Compare new entries and repeat mistakes to `bots/`; open a separate PR with suggested updates, each citing its entry, run, or retro tip; propose a new CI check when a mistake happens twice.
 
