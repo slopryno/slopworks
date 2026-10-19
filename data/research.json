@@ -841,5 +841,90 @@
     "experiment": "Re-run the same audit after each PR and compare",
     "success_metric": "0 overflowing pages and 0 undersized non-inline targets at 360, no new overflow at 1280",
     "recommendation": "pursue"
+  },
+  {
+    "id": "r-coordinator-2026-10-19-planning",
+    "date": "2026-10-19",
+    "role": "Coordinator",
+    "kind": "rotation",
+    "confidence": "high",
+    "status": "verified",
+    "fresh_until": "2026-11-19",
+    "question": "How do strong product teams run weekly planning and keep decisions challengeable?",
+    "outcome": "finding",
+    "finding": "Keep Monday planning to goals and blockers (not task lists); every bet needs context, expected signal, owner, and a review date. Our ideas.json + chat already match; tighten review dates on yes items.",
+    "facts": [
+      "Monzo teams use a 30–45 minute Monday planning doc of top goals with links to proposals, not large task lists.",
+      "sh1pt's decision record fields are context, problem, bet, expected signal, constraints, owner, and review date.",
+      "A weekly cadence of Monday bets, midweek discovery, Friday signal review is enough for a small team."
+    ],
+    "inferences": [
+      "Our Monday pitch decisions and CEO brief already fit this shape.",
+      "Adding an explicit review date on each yes idea would close the learning loop without new process."
+    ],
+    "evidence": [
+      "https://monzo.com/blog/shipping-constantly-in-a-fast-paced-product-team",
+      "https://sh1pt.com/blog/product-management-operating-system"
+    ]
+  },
+  {
+    "id": "r-analyst-2026-10-19-metrics",
+    "date": "2026-10-19",
+    "role": "Analyst",
+    "kind": "rotation",
+    "confidence": "high",
+    "status": "verified",
+    "fresh_until": "2026-11-19",
+    "question": "Which metrics stay honest for a small static GitHub Pages site without visitor trackers?",
+    "outcome": "finding",
+    "finding": "Repo-derived metrics (PRs, CI, AARs, page weight, mobile audit) are the honest default while visitor measurement is on hold. Third-party analytics need scripts or pixels we currently forbid.",
+    "facts": [
+      "Plausible is a privacy-first analytics product that still requires adding a lightweight script to pages.",
+      "GitHub Pages has no first-class site analytics; repo Insights are not site traffic.",
+      "Ryno put visitor measurement on hold Oct 19: no traffic fetch, PAT, or site counter."
+    ],
+    "inferences": [
+      "G1 should stay On hold, not missed, until Ryno reopens visitor measurement.",
+      "/metrics/ should keep leading with records we already generate in wins.py and metrics.py."
+    ],
+    "evidence": [
+      "https://plausible.io/",
+      "https://guptadeepak.com/tools/top-5-static-site-hosting-jamstack-platforms-2026/"
+    ]
+  },
+  {
+    "id": "r-scoutmaster-2026-10-19-trackers",
+    "date": "2026-10-19",
+    "role": "Scoutmaster",
+    "kind": "rotation",
+    "confidence": "medium",
+    "status": "verified",
+    "fresh_until": "2026-11-19",
+    "question": "What do similar changelog trackers and update communities do that we could learn from?",
+    "outcome": "proposal",
+    "finding": "Public update calendars and curated weekly digests make shipping momentum visible. A day-by-day shipping calendar on /weekly/ would fit our records without new tracking scripts.",
+    "facts": [
+      "FeatDrop centers an update calendar so builders show monthly shipping history beyond a GitHub graph.",
+      "Changes.Watch curates weekly changelog signals with useful/risky labels across many products.",
+      "Releasebot aggregates vendor release notes into one feed with RSS and alerts."
+    ],
+    "inferences": [
+      "Our /weekly/ already has by-day PR and AAR counts; a calendar visualization is a small polish on existing data.",
+      "Community rating of changes is out of scope while we stay a single-product tracker."
+    ],
+    "evidence": [
+      "https://www.producthunt.com/products/featdrop",
+      "https://www.changes.watch/",
+      "https://releasebot.io/"
+    ],
+    "existing_work": "scripts/weekly.py by-day counts; design backlog d3 weekly digest pages",
+    "opportunity": "Add a compact shipping calendar to /weekly/ from wins.json dates",
+    "alternatives": "Leave by-day list as text only; or post to an external changelog community",
+    "effort": "S",
+    "risks": "Extra markup weight on /weekly/; calendar must stay record-derived",
+    "experiment": "Static HTML table or CSS grid of the current week from wins, no JS",
+    "success_metric": "Readers can see which days shipped without opening chat; page weight stays under budget",
+    "recommendation": "pursue",
+    "pitch": "i61"
   }
 ]

@@ -70,5 +70,45 @@
     "did": "Scout rule on event and livestream posts (#7)",
     "doing": "turn repeat mistakes from the retro and runs into bot-file rules",
     "blockers": "none"
+  },
+  {
+    "id": "s-2026-10-19-coordinator",
+    "date": "2026-10-19",
+    "role": "Coordinator",
+    "did": "Monday planning: no open/advised pitches; G1 visitors on hold",
+    "doing": "tempo day-count PR + CEO brief; investigations from research",
+    "blockers": "tempo slowed, 1 PR slot left today"
+  },
+  {
+    "id": "s-2026-10-19-scout",
+    "date": "2026-10-19",
+    "role": "Scout",
+    "did": "Changelog still 0.70.2 (Oct 11); @bot replies only, no product posts",
+    "doing": "quiet day logged; X search hit shared rate limit once",
+    "blockers": "none"
+  },
+  {
+    "id": "s-2026-10-19-polish",
+    "date": "2026-10-19",
+    "role": "Polish",
+    "did": "Deep Monday audit: 0 overflow / 0 small taps at 360, 390, 768",
+    "doing": "score into runs; backlog unchanged (d2 social preview still top open)",
+    "blockers": "none"
+  },
+  {
+    "id": "s-2026-10-19-advisor",
+    "date": "2026-10-19",
+    "role": "Advisor",
+    "did": "Tempo loophole fix ready (whole ET day counts from Oct 19)",
+    "doing": "ship with Monday run data in the last PR slot",
+    "blockers": "training rules (i59) and goals (i60) wait for later PRs"
+  },
+  {
+    "id": "s-2026-10-19-strategy",
+    "date": "2026-10-19",
+    "role": "Strategy",
+    "did": "Hired (#101); month-1 goals approved, G1 visitors on hold",
+    "doing": "wait for goals PR after training rules",
+    "blockers": "tempo: training then goals after today"
   }
 ]

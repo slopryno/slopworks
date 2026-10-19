@@ -1,5 +1,14 @@
 [
   {
+    "id": "pr102",
+    "role": "Comms",
+    "title": "Comms: How this works, tracker-first home, review intake and activation (i48, i49)",
+    "pr": "https://github.com/slopryno/slopworks/pull/102",
+    "date": "2026-10-19",
+    "merged": "2026-10-19T00:32-04:00",
+    "opened": "2026-10-19T00:26-04:00"
+  },
+  {
     "id": "pr101",
     "role": "Forge",
     "title": "Forge: onboard the Director of Strategy (i47)",

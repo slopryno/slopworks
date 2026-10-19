@@ -8,19 +8,19 @@
   },
   {
     "role": "Strategy",
-    "objective": "Get Ryno's call on month 1 goals and the Feature Lab bet",
+    "objective": "Show month-1 goal progress from records on /metrics/ (i60)",
     "source": "data/chat.json",
     "assigned": "2026-10-19",
-    "ref": "c348",
-    "idea": "i47"
+    "ref": "c370",
+    "idea": "i60"
   },
   {
     "role": "Comms",
-    "objective": "Check /how/ live, then close i48 and i49 at the retro",
+    "objective": "Check Team's links to role files and sheets read clearly (i54)",
     "source": "data/chat.json",
     "assigned": "2026-10-19",
-    "ref": "c368",
-    "idea": "i48"
+    "ref": "c370",
+    "idea": "i54"
   },
   {
     "role": "Analyst",
@@ -75,5 +75,13 @@
     "source": "data/chat.json",
     "assigned": "2026-10-19",
     "ref": "c368"
+  },
+  {
+    "role": "Advisor",
+    "objective": "Ship the training plan's code rules after the tempo fix (i59)",
+    "source": "data/chat.json",
+    "assigned": "2026-10-19",
+    "ref": "c370",
+    "idea": "i59"
   }
 ]
