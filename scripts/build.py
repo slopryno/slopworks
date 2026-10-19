@@ -292,7 +292,7 @@ def page(slug, title, lede, body, source, h1=None):
 <footer><div class="wrap">
 {sitemap}
 <p>{e(CREDIT)}</p>
-<p><a href="mailto:{CORRECTIONS}">Send a correction</a> · <a href="{up}feed.xml">RSS</a> · <a href="{REPO}/blob/main/docs/follow.md">Follow with Grok Bot</a> · <a href="{REPO}">Source</a> · <a href="{REPO}/commits/main/{source}">Page history</a></p>
+<p class="links"><a href="mailto:{CORRECTIONS}">Corrections</a> <a href="{up}feed.xml">RSS</a> <a href="{REPO}/blob/main/docs/follow.md">Follow</a> <a href="{REPO}">Source</a> <a href="{REPO}/commits/main/{source}">Page history</a></p>
 </div></footer>
 </body>
 </html>
@@ -617,10 +617,21 @@ def build():
         return (f'<blockquote class="latest"><p>{e(txt)}</p><p class="meta">{as_of(m["date"], "said on")}<span>to {e(m["to"])}</span>'
                 f'{"<span>as " + e(m["from"]) + "</span>" if m["from"] != n else ""}<a href="{href(m["id"], "../", "team/")}">in Team chat</a></p></blockquote>')
     def tcard(n, t, r, o, f):
+        # Compact role card (visual review V3, Comms): name, title, a one-sentence bio, the current objective and the level stay
+        # visible; what the role owns, its limits, latest handoff, research and wins sit one tap away; the full record is on the sheet.
         w = [x for x in wins if x["role"] == n][:3]
         wl = "".join(f'<li><a href="{e(x["pr"])}">{e(x["title"])}</a> <time datetime="{x["date"]}">{x["date"]}</time></li>' for x in w) or '<li class="empty">No merged PRs yet. Shipped work shows up here after CI passes and the PR is squash-merged.</li>'
-        return (f'<article class="card lead" style="border-top:4px solid {color(n)}">{avatar(n, "../", 72)}<h2><a href="{REPO}/blob/main/bots/{f}">{e(n)}</a></h2>'
-                f'<p class="title">{e(t)}</p>{home.objective(objectives[n], "../", href) if n in objectives else ""}<p class="xp"><a href="{f[:-3]}/">Character sheet</a>: {xp_line(n, "")}</p><p>{e(bio(n))}</p><p><strong>Owns:</strong> {e(o)}</p><h3>Latest handoff</h3>{latest_msg(n)}{researched(n)}<h3>Recent wins</h3><ul>{wl}</ul></article>')
+        x = totals.get(n, 0)
+        k, lv, nxt = level_for(x, levels)
+        pct = 100 if not nxt else int(100 * (x - lv["xp"]) / (nxt["xp"] - lv["xp"]))
+        cant = re.search(r"\*\*Can't:\*\*\s*(.+)", (ROOT / "bots" / f).read_text())
+        return (f'<article class="card lead" id="{f[:-3]}" style="border-top:4px solid {color(n)}"><div class="hd">{avatar(n, "../", 56)}<div><h2><a href="{f[:-3]}/">{e(n)}</a></h2>'
+                f'<p class="title">{e(t)}</p></div></div><p class="bio">{e(bio(n))}</p>{home.objective(objectives[n], "../", href) if n in objectives else ""}'
+                f'<p class="lv"><span>{xp_line(n, "")}</span></p><div class="bar" aria-hidden="true"><span style="width:{pct}%"></span></div>'
+                f'<details class="more"><summary>More about {e(n)}</summary><p><strong>Owns:</strong> {e(o)}</p>'
+                + (f"<p><strong>Can't:</strong> {e(cant.group(1))}</p>" if cant else "")
+                + f'<h3>Latest handoff</h3>{latest_msg(n)}{researched(n)}<h3>Recent wins</h3><ul>{wl}</ul>'
+                f'<p class="links"><a href="{f[:-3]}/">Character sheet</a> <a href="{REPO}/blob/main/bots/{f}">Role file</a></p></details></article>')
     # Character sheets (i34, Week 1): every number is computed here from data/xp_ledger.json and data/progression.json.
     prog, ledger_all = load("progression"), load("xp_ledger")
     totals, levels = xp_totals(ledger_all), prog["levels"]
@@ -664,7 +675,7 @@ def build():
         claimed = ('<ul class="worklist">' + "".join(f'<li><time datetime="{s["date"]}">{s["date"]}</time> {e(s["did"])}</li>' for s in said) + "</ul>") if said else '<p class="empty">No standup claims.</p>'
         body = (f'<section class="sheet card" style="border-top:4px solid {color(n)}">{avatar(n, "../../", 96)}<div><p class="title">{e(t)}</p>'
                 f'<p class="lvl">Level {num} · {e(lv["name"])}</p>{bar}{counted}</div></section>'
-                f'<h2>Next level-up quest</h2><p>{e(quest)}</p><p class="meta">The quest board arrives in Week 2. For now this is the next step, not a tracked quest.</p>'
+                f'<h2>Next level-up quest</h2><p>{e(quest)}</p><p class="meta">Tracked quests start in Week 2 (Oct 22); this is the next step.</p>'
                 f'<h2>Achievements</h2><ul class="achs">{ach}</ul>'
                 f'<h2>Skills</h2><p class="meta">XP by kind of work. Skill trees (three branches, four milestones each) arrive in Week 4.</p>{skills}'
                 f'<h2>Verified work</h2>{label("verified")} <span class="meta">Approved entries, each with its evidence and a reviewer who isn\'t {e(n)}.</span>'
@@ -680,20 +691,21 @@ def build():
         extra = ", ".join(f'{r} {tb[k]}' for r, tb in prog["tables"].items() if r != "default" and k in tb)
         ev_rows += f'<tr><td>{e(v["label"])}</td><td>{d if d is not None else "-"}</td><td>{e(extra) or "-"}</td><td>{e(v["who"])}</td><td>{e(v["reviewer"])}</td></tr>'
     roster = "".join(f'<li><a href="../{stems[n]}/">{e(n)}</a>: {xp_line(n, "")}</li>' for n in sorted(stems))
-    xbody = (f'<p>{e(prog["note"])}</p>'
+    xbody = ("".join(f"<p>{e(x)}</p>" for x in re.split(r"(?<=[.)])\s+(?=[A-Z])", prog["note"])) +
              f'<h2>Levels</h2><div class="scroll fit"><table><thead><tr><th scope="col">Level</th><th scope="col">Name</th><th scope="col">XP needed</th></tr></thead><tbody>'
              + "".join(f'<tr><td>{i + 1}</td><td>{e(l["name"])}</td><td>{l["xp"]}</td></tr>' for i, l in enumerate(levels)) + "</tbody></table></div>"
              f'<h2>What earns XP</h2><div class="scroll"><table><thead><tr><th scope="col">Work</th><th scope="col">XP</th><th scope="col">Role tables</th><th scope="col">Who earns it</th><th scope="col">Reviewer</th></tr></thead><tbody>{ev_rows}</tbody></table></div>'
-             f'<p>Sign-offs count at most {prog["events"]["signoff"]["cap_per_day"]} a day per role; the rest stay in the ledger as rejected, so the cap is visible. {e(prog["quality"]["note"])}</p>'
+             f'<p>Sign-offs count at most {prog["events"]["signoff"]["cap_per_day"]} a day per role; the rest stay in the ledger as rejected, so the cap is visible.</p><p>{e(prog["quality"]["note"])}</p>'
              f'<h2>Fair play</h2><ol>' + "".join(f"<li>{e(r)}</li>" for r in prog["anti_gaming"]) + "</ol>"
              f'<h2>Entry statuses</h2><ul>' + "".join(f"<li><strong>{e(k)}:</strong> {e(v)}</li>" for k, v in prog["statuses"].items()) + "</ul>"
              f'<h2>Achievements</h2><ul>' + "".join(f'<li><strong>{e(a["name"])}:</strong> {e(a["rule"])}</li>' for a in prog["achievements"]) + "</ul>"
              f'<h2>Coming in later weeks</h2><ul><li><strong>Week 2:</strong> {e(prog["later_weeks"]["week2"])}</li><li><strong>Week 3:</strong> {e(prog["later_weeks"]["week3"])}</li><li><strong>Week 4:</strong> {e(prog["later_weeks"]["week4"])}</li></ul>'
              f'<h2>Every character sheet</h2><p class="meta">In name order. Levels describe each role\'s own record.</p><ul>{roster}</ul>'
              f'<p>Rules: <a href="{REPO}/blob/main/data/progression.json">data/progression.json</a> (owned by Game Master). Ledger: <a href="{REPO}/blob/main/data/xp_ledger.json">data/xp_ledger.json</a>, written by <a href="{REPO}/blob/main/scripts/xp.py">scripts/xp.py</a>. Decided in <a href="{href(prog["thread"], "../../", "team/xp/")}">Team chat</a>.</p>')
-    files["team/xp/index.html"] = page("team/xp/", "How XP works", f"Each role earns XP from {len([y for y in ledger_all if y['status'] == 'approved'])} verified pieces of work so far: merged PRs, reviews, Blocks proven right, after-action reviews, research behind accepted decisions, and shipped pitches. Every point links its evidence.", xbody, "data/progression.json")
-    files["team/index.html"] = page("team/", "The team", f"{len(team())} Grok Bot roles in five groups, played by one daily routine. Each has a character sheet with verified XP (<a href=\"xp/\">how XP works</a>); how the team grew is on the <a href=\"../timeline/\">Timeline</a>.",
-                                    "".join(f'<h2 class="group">{e(g)}</h2><div class="grid">' + "".join(tcard(*x) for x in team() if x[0] in members) + "</div>" for g, members in GROUPS) + alumni_html, "bots")
+    files["team/xp/index.html"] = page("team/xp/", "How XP works", f"XP from {len([y for y in ledger_all if y['status'] == 'approved'])} verified pieces of work. Every point links its evidence.", xbody, "data/progression.json")
+    files["team/index.html"] = page("team/", "The team", f"{len(team())} Grok Bot roles in five groups, played by one daily routine, not separate agents. Levels come from verified XP (<a href=\"xp/\">how XP works</a>).",
+                                    "".join(f'<h2 class="group">{e(g)}</h2><div class="grid">' + "".join(tcard(*x) for x in team() if x[0] in members) + "</div>" for g, members in GROUPS) + alumni_html
+                                    + '<p class="next"><a class="more" href="../timeline/">Next: how the team grew, on the Timeline</a></p>', "bots")
 
 
     # Lessons: same-day after-action reviews (AARs), approved by Ryno 2026-10-17. Blameless, and every field cites a real artifact.

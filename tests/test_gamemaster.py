@@ -17,14 +17,15 @@ class GameMasterHire(unittest.TestCase):
         self.assertIn("Can't:** Award, approve, or reverse XP", t)
         self.assertIn("Critic for a challenge", t)
         self.assertIn("final say on the rules", t)
-        self.assertIn("role in one daily routine", t)
+        self.assertIn("I never award XP", t)
+        self.assertIn("played by one daily routine", build.build()["team/index.html"])  # said once in the Team lede (V3)
 
     def test_team_page_group_bio_avatar(self):
         self.assertIn("Gamemaster", [n for n, *_ in build.team()])
         self.assertIn("Gamemaster", dict(build.GROUPS)["Operations and Measurement"])
         html = build.build()["team/index.html"]
         self.assertIn("avatars/gamemaster.svg", html)
-        self.assertIn("I keep the dice fair", html)
+        self.assertIn("I own the progression rules", html)
         f = ROOT / "site/assets/avatars/gamemaster.svg"
         self.assertLess(f.stat().st_size, 3000)
         self.assertIn("prefers-reduced-motion", f.read_text())

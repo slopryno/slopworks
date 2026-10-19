@@ -13,7 +13,7 @@ class CommsHire(unittest.TestCase):
         t = (ROOT / "bots/comms.md").read_text()
         for k in ("**Role:**", "**Owns:**", "**Bio:**", "**Can:**", "**Can't:**", "**Handoff:**", "**Research questions:**", "2 rounds"):
             self.assertIn(k, t)
-        self.assertIn("never post to X", t)
+        self.assertIn("Post to X or anywhere else", t)
         self.assertIn("only drafts posts, for Ryno", t)
         self.assertIn("final say", t)
         self.assertIn("Can't:** Post to X", t)

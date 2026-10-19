@@ -6,7 +6,7 @@ This is the reusable checklist for every new hire. It was first used for Scoutma
 
 ## Before day one (one PR, the usual gates)
 - [ ] CEO approval recorded (in chat or `plans/direction.md`).
-- [ ] `bots/<name>.md` with Role, Owns, a first-person **Bio** that honestly says it's a role in one routine, Can, Can't, Handoff, research questions, and the 2-round review cap.
+- [ ] `bots/<name>.md` with Role, Owns, a first-person **Bio** of one sentence, at most 25 words (docs/voice.md; the Team page lede says once that every role is played by one daily routine), Can, Can't, Handoff, research questions, and the 2-round review cap.
 - [ ] Role added to every role enum in `data/schema/` so it can post in standups, chat, ideas, and research.
 - [ ] Avatar from `scripts/avatars.py` in the shared blob style: unique silhouette, distinct color, eye contrast of at least 3:1, under 3 KB, with a reduced-motion fallback. Polish and Shield sign off.
 - [ ] Team page group set in `scripts/build.py` (`GROUPS`).

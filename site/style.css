@@ -20,7 +20,7 @@ nav a{text-decoration:none;display:inline-flex;align-items:center;min-height:44p
 .who{font-weight:700}
 table{border-collapse:collapse;width:100%}th,td{text-align:left;border-bottom:1px solid var(--line);padding:.4rem}
 footer{border-top:1px solid var(--line);margin-top:2.5rem;padding:1rem 0 2rem;color:var(--muted);font-size:.9rem}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(15rem,100%),1fr));gap:1rem}.lead h2{margin:.4rem 0 0;font-size:1.2rem}.lead .title{color:var(--muted);margin:0}.lead ul{padding-left:1.1rem;font-size:.9rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(15rem,100%),1fr));gap:1rem}.lead h2{margin:0;font-size:1.2rem}.lead .title{color:var(--muted);margin:0}.lead ul{padding-left:1.1rem;font-size:.9rem}
 .av{border-radius:22%;flex:none}ul.chat,ul.thread{list-style:none;padding:0}.msg{display:flex;gap:.6rem;align-items:flex-start;padding:.5rem 0;border-bottom:1px solid var(--line)}.msg p{margin:.1rem 0}.msg>div{min-width:0;flex:1}.reply{border:0;padding-left:.25rem}details summary{cursor:pointer;color:var(--link);font-size:.9rem;padding:.2rem 0}.badge{margin-left:.3rem}
 blockquote.card{margin:0 0 1rem;overflow-wrap:break-word}.msg p{overflow-wrap:break-word}
 .av{border-radius:0;background:none}.lead .av{transition:transform .25s ease}.lead:hover .av,.lead:focus-within .av{animation:hop .9s ease-in-out infinite}@keyframes hop{0%,100%{transform:translateY(0) rotate(0)}30%{transform:translateY(-6px) rotate(-5deg) scale(1.05,.95)}60%{transform:translateY(-2px) rotate(4deg)}}@media(prefers-reduced-motion:reduce){.lead:hover .av,.lead:focus-within .av{animation:none}}
@@ -91,7 +91,7 @@ time,.mono,.status,.kicker{font-family:ui-monospace,SFMono-Regular,Menlo,Consola
 .news{list-style:none;padding:0;margin:.75rem 0;display:grid;gap:.75rem}.news li{border-top:1px solid var(--line);padding:.75rem 0 0}.news h3{font-size:1.02rem;margin:.4rem 0 .25rem;line-height:1.3}.news p{margin:0;color:var(--muted);font-size:.92rem}.news a{display:inline-flex;align-items:center;min-height:44px}
 .links{list-style:none;padding:0;margin:.25rem 0 0;display:flex;flex-wrap:wrap;gap:0 1.25rem}.links a{display:inline-flex;align-items:center;min-height:44px;font-weight:600}
 .chars{list-style:none;padding:0;margin:0;display:grid;gap:.75rem}.char{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:1rem}
-.char .hd{display:flex;gap:.75rem;align-items:center}.char h3{margin:0;font-size:1.1rem}.char h3 a{display:inline-flex;align-items:center;min-height:44px;text-decoration:none;color:var(--fg)}.char .role{margin:0;color:var(--muted);font-size:.85rem}
+.char .hd,.lead .hd{display:flex;gap:.75rem;align-items:center}.char h3{margin:0;font-size:1.1rem}.char h3 a{display:inline-flex;align-items:center;min-height:44px;text-decoration:none;color:var(--fg)}.char .role{margin:0;color:var(--muted);font-size:.85rem}
 .lv{display:flex;flex-wrap:wrap;justify-content:space-between;gap:.5rem;margin:.75rem 0 .3rem;font-size:.85rem}.bar{height:6px;border-radius:3px;background:var(--line);overflow:hidden}.bar span{display:block;height:100%;background:var(--ok)}
 .last{margin:.75rem 0 0;font-size:.9rem}.last a{display:block;min-height:44px;padding:.2rem 0}.last small{display:block;color:var(--muted);font-size:.8rem}
 .feed{list-style:none;padding:0;margin:0;border-top:1px solid var(--line)}.feed>li{border-bottom:1px solid var(--line)}
@@ -106,7 +106,7 @@ time,.mono,.status,.kicker{font-family:ui-monospace,SFMono-Regular,Menlo,Consola
 ul.status.wk{list-style:none;padding:0}ul.status.wk li{display:inline-flex;gap:.35em;align-items:baseline}ul.status.wk strong{color:var(--fg)}
 .recap{padding-left:1.1rem}.recap li{margin:.4rem 0}.week h2{margin-top:.25rem}
 /* i43: reflow at 200% phone zoom (195 CSS px) */
-summary{flex-wrap:wrap}summary span,li>div,.char .hd>*{min-width:0}.char .hd{flex-wrap:wrap}.lbl{white-space:normal;max-width:100%}
+summary{flex-wrap:wrap}summary span,li>div,.char .hd>*,.lead .hd>*{min-width:0}.char .hd,.lead .hd{flex-wrap:wrap}.lbl{white-space:normal;max-width:100%}
 .stack tr,.stack th,.stack td{display:block}.stack td{padding-top:0}@media (min-width:20rem){.stack tr{display:table-row}.stack th,.stack td{display:table-cell}.stack td{padding-top:revert}}.scroll .stack{width:100%}.fit table{width:100%}body{overflow-wrap:break-word}
 /* i44: pace line on Under the hood */
 .pace{border-left:3px solid var(--accent);padding:.25rem 0 .25rem .75rem;margin:1.25rem 0;font-size:.95rem}
@@ -129,3 +129,4 @@ summary{flex-wrap:wrap}summary span,li>div,.char .hd>*{min-width:0}.char .hd{fle
 .st::first-letter,.tag::first-letter,.badge::first-letter,.k::first-letter{text-transform:uppercase}.tag a,.st a{display:inline;min-height:0;padding:.75rem 0}
 .card h2 a,.card h3 a,.lead h2 a,.news h3 a,.meta a,.last a,.obj a,.xp a,.links a,.status a,.sitelist a,.stats a{text-decoration:none}
 :is(.card h2,.card h3,.lead h2,.news h3,.meta,.last,.obj,.xp,.links,.status,.sitelist,.stats) a:is(:hover,:focus-visible){text-decoration:underline;text-decoration-color:var(--ok)}
+footer .links a{font-weight:400}.lead .hd>div{flex:1 1 7rem}

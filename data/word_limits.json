@@ -24,8 +24,29 @@
   "exempt_selectors": ["blockquote", "p.disclaimer"],
   "sitewide": ["page_title"],
   "data_checks": {
+    "bios": 25,
     "updates_summary": {"limit": 30, "from": "2026-10-21"}
   },
   "enforced_pages": [
+    "team/index.html",
+    "team/xp/index.html",
+    "team/advisor/index.html",
+    "team/advocate/index.html",
+    "team/analyst/index.html",
+    "team/atlas/index.html",
+    "team/comms/index.html",
+    "team/coordinator/index.html",
+    "team/critic/index.html",
+    "team/forge/index.html",
+    "team/gamemaster/index.html",
+    "team/lens/index.html",
+    "team/librarian/index.html",
+    "team/polish/index.html",
+    "team/scoutmaster/index.html",
+    "team/shield/index.html",
+    "team/sketch/index.html",
+    "team/strategy/index.html",
+    "team/sweep/index.html",
+    "team/trial/index.html"
   ]
 }

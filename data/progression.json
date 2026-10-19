@@ -151,7 +151,7 @@
   "achievements": [
     {
       "id": "first-blood",
-      "name": "First Blood",
+      "name": "First merge",
       "rule": "First merged PR as maker",
       "event": "pr_merged"
     },
@@ -163,7 +163,7 @@
     },
     {
       "id": "guardian-angel",
-      "name": "Guardian Angel",
+      "name": "First upheld Block",
       "rule": "First Block proven right",
       "event": "block_upheld"
     },
