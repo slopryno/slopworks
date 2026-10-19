@@ -242,6 +242,19 @@ def page_url(slug):
     return BASE + slug
 
 
+# Breezy navigation (Ryno, 2026-10-19 3:45 PM ET; visual review V9): every main page ends with one next step in reading order.
+ORDER = [("", "Home"), ("work/", "Work")] + WORK + [("team/", "Team"), ("team/xp/", "How XP works"), ("lessons/", "Lessons"), ("hood/", "Under the hood")] + HOOD
+
+
+def next_link(slug, up, body):
+    """'Next: <page>' at the end of a page in ORDER; the last page leads back home. Pages with their own next step keep it."""
+    slugs = [s for s, _ in ORDER]
+    if slug not in slugs or slug == "" or 'class="next"' in body:
+        return ""
+    s, t = ORDER[(slugs.index(slug) + 1) % len(ORDER)]
+    return f'<p class="next"><a class="more" href="{up}{s}">Next: {e(t)}</a></p>'
+
+
 def page(slug, title, lede, body, source, h1=None):
     up = "../" * slug.count("/")
     desc, url, full = describe(slug, lede), page_url(slug), f"{title} · Slopworks"
@@ -287,7 +300,7 @@ def page(slug, title, lede, body, source, h1=None):
 {back_link(slug, up)}<p class="disclaimer">{e(DISCLAIMER)}</p>
 <h1>{h1 or e(title)}</h1>
 <p class="lede">{lede}</p>
-{trim_legend(body)}
+{trim_legend(body)}{next_link(slug, up, body)}
 </main>
 <footer><div class="wrap">
 {sitemap}
@@ -640,6 +653,11 @@ def build():
         x = totals.get(n, 0)
         num, lv, nxt = level_for(x, levels)
         return f'Level {num}, {e(lv["name"])}, {x} XP'
+    order = [x[0] for x in team()]
+    def next_role(n):  # V9: role sheets end with the next role in team order; the last leads to How XP works
+        i = order.index(n) + 1
+        return (f'<p class="next"><a class="more" href="../{stems[order[i]]}/">Next: {e(order[i])}\'s sheet</a></p>' if i < len(order)
+                else '<p class="next"><a class="more" href="../xp/">Next: How XP works</a></p>')
     def sheet(n, t, r, o, f):
         x = totals.get(n, 0)
         num, lv, nxt = level_for(x, levels)
@@ -681,7 +699,7 @@ def build():
                 f'<h2>Verified work</h2>{label("verified")} <span class="meta">Approved entries, each with its evidence and a reviewer who isn\'t {e(n)}.</span>'
                 + (f'<ul class="worklist">{work}</ul>' if work else '<p class="empty">No verified work yet.</p>') + more
                 + f'<h2>Claimed</h2><p class="meta">Standup lines: what {e(n)} said it did. They carry no XP until they link to evidence.</p>{claimed}'
-                + f'<p><a href="../">Back to the team</a> · <a href="../xp/">How XP works</a></p>')
+                + f'<p><a href="../">Back to the team</a> · <a href="../xp/">How XP works</a></p>' + next_role(n))
         return page(f"team/{stems[n]}/", f"{n}: character sheet", f"{e(n)}'s level, XP, achievements, and verified work, computed from the XP ledger at build time.", body, "data/xp_ledger.json")
     for x in team():
         files[f"team/{stems[x[0]]}/index.html"] = sheet(*x)
