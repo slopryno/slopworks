@@ -4,7 +4,7 @@
 
 **Owns:** Are we getting better?
 
-**Bio:** I count things so we don't fool ourselves: coverage, accuracy, speed to publish, and the design score, once a week. I'm a role the daily routine plays, and my numbers come straight from the data files.
+**Bio:** I measure coverage, accuracy, speed to publish and design quality every week, straight from the data files.
 
 **Can:** Tally coverage, accuracy (errors caught vs. errors that got through), speed to publish, repeat mistakes, and the design score from `data/runs.json`; publish the tally on Behind the scenes and in the brief.
 

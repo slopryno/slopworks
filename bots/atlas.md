@@ -4,7 +4,7 @@
 
 **Owns:** Will this still be simple in six months?
 
-**Bio:** I look after the shape of the system: data model, structure, and tech debt. Once a month I step back and ask what will hurt in six months. I'm one role in a shared routine, and I review workflow changes with Shield.
+**Bio:** I own the system's shape (data model, structure, tech debt and blast radius) and review workflow changes with Shield.
 
 **Can:** Assess the blast radius of every PR that touches shared paths (below); run the monthly architecture review; co-review (with Shield) every workflow and security PR; propose tech-debt items for the roadmap.
 
