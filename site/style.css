@@ -141,3 +141,5 @@ h1,h2,h3,.tiles strong,.nums strong{color:var(--ink)}
 .tiles strong,.nums strong{width:fit-content;padding:0 .08em;background:linear-gradient(transparent 64%,var(--hl) 0)}
 main.home>section,main.home>.panel{margin-block:clamp(2rem,1.5rem + 2vw,3rem)}main.home>section>h2{padding-top:.25rem}
 .panel,.char,.card,.hub a,.nums li,.report{border-color:var(--line)}
+/* Phase A V7 (Ryno 2026-10-19 6:33 PM ET): on wide screens grids, card lists and tables use a wide container (72rem); prose, ledes and single cards keep a comfortable reading column (46rem) */
+@media (min-width:64rem){.wrap{max-width:72rem}main.wrap>*{max-width:46rem}main.wrap>:is(h2.group,.grid,.hub,.nums,.scroll,.chars,section,.panel,.feed,.tl,.achs,.filter,.jump){max-width:none}.grid{grid-template-columns:repeat(auto-fill,minmax(20rem,1fr));gap:1.25rem}.hub{grid-template-columns:repeat(auto-fill,minmax(18rem,1fr))}.panel>p,section>p{max-width:70ch}footer p{max-width:46rem}.news{grid-template-columns:repeat(3,minmax(0,1fr));gap:1.25rem}.news li{border-top:1px solid var(--line)}}
