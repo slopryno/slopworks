@@ -1012,8 +1012,34 @@ def build():
     backlog = sorted([d for d in design if d["state"] in ("backlog", "in-progress")], key=lambda d: d["rank"])
     card = lambda d: f'<article class="card"><h3>{e(d["idea"])}</h3><p>{e(d["why"])}</p><p class="meta"><span class="tag">effort {d["effort"]}</span><span>{e(d["state"])}{" " + d["shipped"] if d.get("shipped") else ""}</span></p></article>'
     # Hubs (i36): one tap from home to every section, one more to every page. Each row is a full-width link, easy to tap.
+    # Phase A V8 (Ryno 2026-10-19 6:33 PM ET): one card anatomy: a kicker naming the kind of page, the title, a one-line
+    # blurb, and a metric footer counted from the records (none where there is no honest count). A thin rule marks the kind.
+    kinds = {"timeline/": ("Record", f"{len(wins)} merged PRs"), "weekly/": ("Record", ""), "metrics/": ("Measure", ""),
+             "cases/": ("Proof", f"{len(cases)} case files"), "arena/": ("Research", (lambda n: f"{n} research {'round' if n == 1 else 'rounds'}")(len(load("arena")))),
+             "challenges/": ("Demo", "Labeled demo"), "how/": ("Guide", ""), "updates/": ("Tracker", f"{len(ups)} updates"),
+             "issues/": ("Tracker", f"{sum(x['state'] == 'open' for x in iss)} open"), "chat/": ("Record", f"{len(chat)} messages"),
+             "schedule/": ("Guide", ""), "behind/": ("Record", ""), "design/": ("Log", f"{len(shipped)} shipped")}
+
+    blurb = {"timeline/": "What shipped, what Ryno decided and what was learned, newest first.",
+             "weekly/": "Each week from the records: PRs, sprints, research and lessons.",
+             "metrics/": "Merge time, CI catches, failures, reverts and AARs, from records.",
+             "cases/": "Real decisions replayed step by step, from problem to shipped change.",
+             "arena/": "Independent reports, a challenge, scores and the decision.",
+             "challenges/": "A fictional brief, worked the way the team works.",
+             "how/": "One daily run, a team of roles, and where Ryno steps in.",
+             "updates/": "Grok Bot updates from public sources, confirmed or reported.",
+             "issues/": "Public bug reports by area, fixed only when a source says so.",
+             "chat/": "Standups, pitches and the real handoffs between roles.",
+             "schedule/": "When each run happens and the limits the team works within.",
+             "behind/": "What each role found, dropped or stripped in every run.",
+             "design/": "What Polish changed and what's next, one change a week at most."}
+
     def hub(pages):
-        return '<ul class="hub">' + "".join(f'<li><a href="../{s}"><strong>{e(t)}</strong><span>{e(DESCRIPTIONS[s])}</span></a></li>' for s, t in pages) + "</ul>"
+        def item(s, t):
+            k, m = kinds.get(s, ("", ""))
+            return (f'<li><a class="hc hc-{e(k.lower())}" href="../{s}">' + (f'<span class="kick">{e(k)}</span>' if k else "")
+                    + f'<strong>{e(t)}</strong><span>{e(blurb.get(s, DESCRIPTIONS[s]))}</span>' + (f'<small class="mono">{e(m)}</small>' if m else "") + "</a></li>")
+        return '<ul class="hub">' + "".join(item(s, t) for s, t in pages) + "</ul>"
     files["work/index.html"] = page("work/", "Work", "What the team has made, and how it went.", hub(WORK), "data/cases.json")
     files["hood/index.html"] = page("hood/", "Under the hood", "How the site runs: the tracker, the team's chat, and the logs. The site has no forms, scripts, or visitor input.", hub(HOOD) + pace_line(load("tempo"), "../"), "data/runs.json")
     files["how/index.html"] = page("how/", "How this works", "One daily run, a team of roles, and a human CEO who steps in only where the rules say so. Every term below links the rule or record behind it.",
