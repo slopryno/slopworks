@@ -1,0 +1,13 @@
+{
+  "approved": "2026-10-19",
+  "approved_by": "Ryno",
+  "idea": "i60",
+  "owner": "Strategy",
+  "start": "2026-10-19",
+  "due": "2026-11-18",
+  "goals": [
+    {"id": "G1", "title": "Get found", "target": "50 unique repo visitors in GitHub's 14-day window, 5 stars, 2 outside referrer domains", "source": "data/reach.json"},
+    {"id": "G2", "title": "New showcase formats", "target": "12 real-trace showcase entries (6 new), with at least 1 new format", "baseline": 6, "goal": 12, "source": "data/cases.json, data/arena.json, data/challenges.json"},
+    {"id": "G3", "title": "Fast on Grok Bot features", "target": "Every new tracker item logged within 1 day, and 2 features demoed within 7 days of entry", "source": "data/updates.json, data/cases.json"}
+  ]
+}

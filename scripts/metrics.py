@@ -38,7 +38,7 @@ def minutes(a, b):
     return (datetime.fromisoformat(b) - datetime.fromisoformat(a)).total_seconds() / 60
 
 
-def derive(wins, aars, ci, ideas, refusals, tempo, blast=()):
+def derive(wins, aars, ci, ideas, refusals, tempo, blast=(), month1=None):
     by_num = {int(w["pr"].rsplit("/", 1)[1]): w for w in wins}
     cid = {c["date"]: c for c in ci["days"]}
     start = min(w["date"] for w in wins)
@@ -73,6 +73,7 @@ def derive(wins, aars, ci, ideas, refusals, tempo, blast=()):
             way = "n/a" if a is None or b is None else ("flat" if a == b else ("up" if b > a else "down"))
             verdict = None if better is None or way in ("flat", "n/a") else ("better" if way == better else "worse")
             trends.append({"key": key, "label": label + (" per 10 PRs" if rate else ""), "prev": a, "new": b, "direction": way, "verdict": verdict})
+    extra = {"goals": goal_progress(**month1)} if month1 else {}
     return {"as_of": max(w["merged"] for w in wins), "newest_day": dates[-1], "days_of_history": len(days),
             "ci_window_start": ci["window_start"],
             "totals": {"prs": len(wins), "open_to_merge_min": round(statistics.median(waits)) if waits else None,
@@ -82,7 +83,50 @@ def derive(wins, aars, ci, ideas, refusals, tempo, blast=()):
                        "blast_checked": len(blast), "blast_matched": sum(b["result"] == "matched" for b in blast)},
             "pace": {"mode": tempo["mode"], "clean_prs": tempo["clean_prs"], "clean_needed": tempo["clean_needed"]},
             "days": days, "sprints": sprints, "trends": trends,
-            "worsening": [t["key"] for t in trends if t["verdict"] == "worse"]}
+            "worsening": [t["key"] for t in trends if t["verdict"] == "worse"], **extra}
+
+
+# ---------- Month-1 goals (Strategy's G1 to G3, Ryno approved 2026-10-19, i60): progress from records only ----------
+def month1_inputs(load, exists):
+    """The records goal_progress reads. reach.json holds aggregate GitHub traffic counts only, and doesn't exist until Ryno picks the access route."""
+    return {"goals": load("goals"), "cases": load("cases"), "arena": load("arena"), "challenges": load("challenges"),
+            "updates": load("updates"), "reach": load("reach") if exists("reach") else None}
+
+
+def goal_progress(goals, cases, arena, challenges, updates, reach=None):
+    start, out = goals["start"], []
+    for g in goals["goals"]:
+        row = {"id": g["id"], "title": g["title"], "target": g["target"], "source": g["source"]}
+        if g["id"] == "G1":
+            if not reach:
+                row.update(status="not measured yet", source="", now="No traffic record yet. Reading GitHub's traffic numbers needs access that Ryno hasn't approved yet.")
+            else:
+                r = reach[-1]
+                met = r["uniques_14d"] >= 50 and r["stars"] >= 5 and len(r["outside_referrers"]) >= 2
+                row.update(status="met" if met else "in progress",
+                           now=f'{r["uniques_14d"]} unique repo visitors in the 14 days to {nice(r["date"])}, {r["stars"]} stars, '
+                               f'{len(r["outside_referrers"])} outside referrer domains. These are repo visitors, not site visitors.')
+        elif g["id"] == "G2":
+            n = len(cases) + len(arena) + len(challenges)
+            row.update(status="met" if n >= g["goal"] else "in progress", now=f'{n} of {g["goal"]} entries ({n - g["baseline"]} new since {nice(start)}). New formats: none yet.')
+        elif g["id"] == "G3":
+            new = [u for u in updates if u["added"] >= start]
+            fast = sum((datetime.fromisoformat(u["added"]) - datetime.fromisoformat(u["date"])).days <= 1 for u in new)
+            demos = sum(1 for c in cases if c.get("update") in {u["id"] for u in new})
+            met = new and fast == len(new) and demos >= 2
+            row.update(status="met" if met else "in progress",
+                       now=f'{fast} of {len(new)} new tracker items logged within 1 day since {nice(start)}; {demos} of 2 demos.')
+        out.append(row)
+    return out
+
+
+def goals_html(m, src):
+    if not m.get("goals"):
+        return ""
+    items = "".join(f'<li><strong>{e(g["id"])} {e(g["title"])}: {e(g["status"])}</strong>. {e(g["now"])} '
+                    f'<span class="def">Target by Nov 18: {e(g["target"])}. {" Source: " + ", ".join(src(s.strip()) for s in g["source"].split(",")) if g["source"] else ""}</span></li>' for g in m["goals"])
+    return (f'<h2 id="goals">Month-1 goals</h2><p>Strategy\'s 3 goals for Oct 19 to Nov 18, approved by Ryno and tracked from records. '
+            f'Defined in {src("data/goals.json")}.</p><ul class="sprints">{items}</ul>')
 
 
 def hm(m):
@@ -100,6 +144,7 @@ def render(m, up="../"):
            (t["blocks"], "Blocks upheld", "A reviewer stopped a merge and was proven right.", "data/aars.json"),
            (m["pace"]["mode"], "pace", f'Slowed until {m["pace"]["clean_needed"]} clean PRs; {m["pace"]["clean_prs"]} so far.' if m["pace"]["mode"] == "slowed" else "Up to 18 merged PRs a day.", "data/tempo.json")]
     out = ['<ul class="nums">' + "".join(f'<li><strong>{e(str(v))}</strong> <span class="lbl-n">{e(l)}</span><span class="def">{e(d)} Source: {src(f)}</span></li>' for v, l, d, f in big) + "</ul>"]
+    out.append(goals_html(m, src))  # i60
     n, newest = m["days_of_history"], nice(m["newest_day"])
     if m["trends"]:
         p = nice(m["days"][-2]["date"])
@@ -130,7 +175,8 @@ def render(m, up="../"):
 def write():
     load = lambda n: json.loads((ROOT / f"data/{n}.json").read_text())
     m = derive(load("wins"), load("aars"), load("ci"), load("ideas"), load("refusals"), load("tempo"),
-               load("blast_checks") if (ROOT / "data/blast_checks.json").exists() else ())  # i46: Atlas's predictions checked after merge
+               load("blast_checks") if (ROOT / "data/blast_checks.json").exists() else (),  # i46: Atlas's predictions checked after merge
+               month1_inputs(load, lambda n: (ROOT / f"data/{n}.json").exists()))  # i60
     (ROOT / "data/metrics.json").write_text(json.dumps(m, indent=2, ensure_ascii=False) + "\n")
 
 

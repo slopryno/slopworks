@@ -58,6 +58,45 @@
       "items": {
         "type": "string"
       }
+    },
+    "goals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "title",
+          "target",
+          "status",
+          "now"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "target": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "not measured yet",
+              "in progress",
+              "met"
+            ]
+          },
+          "now": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string"
+          }
+        }
+      }
     }
   }
 }

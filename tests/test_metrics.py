@@ -17,7 +17,8 @@ class Metrics(unittest.TestCase):
 
     def test_generated_from_records(self):
         self.assertEqual(self.m, metrics.derive(load("wins"), load("aars"), load("ci"), load("ideas"), load("refusals"), load("tempo"),
-                                                   load("blast_checks")))  # i46: blast-radius compares count too
+                                                   load("blast_checks"),  # i46: blast-radius compares count too
+                                                   metrics.month1_inputs(load, lambda n: (ROOT / f"data/{n}.json").exists())))  # i60
         for n in ("ci", "metrics", "wins"):
             self.assertEqual(check.validate(load(n), check.load_schema(n)), [], n)
 
@@ -63,3 +64,31 @@ class Metrics(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class MonthOneGoals(unittest.TestCase):
+    """i60: Strategy's goals show progress from records only; nothing is shown for G1 until a traffic record exists."""
+    def inputs(self, **kw):
+        d = metrics.month1_inputs(load, lambda n: (ROOT / f"data/{n}.json").exists())
+        d.update(kw)
+        return d
+
+    def test_g1_waits_for_a_record(self):
+        g1 = metrics.goal_progress(**self.inputs(reach=None))[0]
+        self.assertEqual((g1["status"], g1["source"]), ("not measured yet", ""))
+
+    def test_g1_from_aggregate_counts(self):
+        r = [{"date": "2026-10-30", "views_14d": 120, "uniques_14d": 51, "stars": 5, "outside_referrers": ["news.ycombinator.com", "reddit.com"]}]
+        self.assertEqual(metrics.goal_progress(**self.inputs(reach=r))[0]["status"], "met")
+
+    def test_g2_and_g3_count_the_records(self):
+        g = {x["id"]: x for x in metrics.goal_progress(**self.inputs())}
+        n = len(load("cases")) + len(load("arena")) + len(load("challenges"))
+        self.assertTrue(g["G2"]["now"].startswith(f"{n} of 12 entries"))
+        new = [u for u in load("updates") if u["added"] >= "2026-10-19"]
+        self.assertIn(f"of {len(new)} new tracker items", g["G3"]["now"])
+
+    def test_the_page_shows_the_goals(self):
+        page = build.build()["metrics/index.html"]
+        self.assertIn('id="goals"', page)
+        self.assertNotIn("reach.json", page)
