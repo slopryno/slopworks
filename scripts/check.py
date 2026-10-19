@@ -6,6 +6,7 @@ Usage:
   check.py paths             bot/data-* branches may only touch data/ and site/
   check.py review-gate       role sign-offs on the PR (needs PR context in env)
   check.py guardrail-gate    flags changes that loosen safety checks (needs PR context in env)
+  check.py ceo-label         ceo-approved only with Ryno's quoted yes (EA rule; needs PR or push context in env)
 """
 import html.parser, json, os, re, subprocess, sys, urllib.parse, urllib.request
 from pathlib import Path
@@ -25,6 +26,7 @@ DATA_FILES += ["alumni"]
 DATA_FILES += ["arena", "cases", "challenges"]  # showcase data (i22), added in sprint PR 8
 DATA_FILES += ["aars"]  # same-day after-action reviews (Ryno, 2026-10-17)
 ALIASES = {"verify": "Lens", "scout": "Sketch", "publish": "Forge", "privacy": "Shield"}
+ALIASES["ea"] = "Assistant"  # the Executive Assistant (Ryno 2026-10-19 5:28 PM ET)
 
 
 # ---------- schema ----------
@@ -984,6 +986,8 @@ def loosening(path, added, removed):
         return bool(real(removed))
     if path in ("data/word_limits.json", "data/voice.json"):
         return words_loosened(added, removed)
+    if path == "data/ceo_decisions.json":  # Ryno 2026-10-19 5:28 PM ET: the EA's decision log is add-only
+        return bool(real(removed))
     return False
 
 
@@ -1046,6 +1050,87 @@ def override_errors(root=None):
     except (OSError, ValueError, KeyError, TypeError) as err:
         errs = [f"data/ceo_overrides.json: {err}"]
     return errs
+
+
+# ---------- Executive Assistant (Ryno 2026-10-19 5:28 PM ET: "EA applies ceo-approved only after my explicit yes in
+# chat, quoted on the PR") ----------
+EA_PREFIX = "Executive Assistant applying ceo-approved on Ryno's explicit instruction"
+EA_QUOTE = re.compile(r'Ryno \(CEO\)[^\n]*\d{1,2}:\d{2} [AP]M ET[^\n]*"[^"\n]+"')
+EA_FROM = "2026-10-19T17:28-04:00"  # the decision granting the EA this power
+EA_RULE_FROM_PR = 109  # the first PR opened after that decision; older merges are not judged again (no retroactive failures)
+ET_MINUTE = r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}-0[45]:00$"
+
+
+def ea_quote_comment(body):
+    """A PR comment that starts with the EA line and quotes Ryno word for word with his ET time."""
+    return (body or "").startswith(EA_PREFIX) and bool(EA_QUOTE.search(body))
+
+
+def ceo_decision_errors(root=None):
+    """data/ceo_decisions.json: one record per PR that got ceo-approved. The EA's records carry Ryno's verbatim quote,
+    when and where he said it, and a log line in bots/assistant.md. Add-only (see loosening)."""
+    root = root or ROOT
+    p = root / "data/ceo_decisions.json"
+    if not p.exists():
+        return ["data/ceo_decisions.json: missing (the EA's decision log)"]
+    try:
+        recs = json.loads(p.read_text())
+    except ValueError as err:
+        return [f"data/ceo_decisions.json: {err}"]
+    errs = [f"data/ceo_decisions.json {e}" for e in validate(recs, load_schema("ceo_decisions"))]
+    if errs:
+        return errs
+    log = (root / "bots/assistant.md").read_text() if (root / "bots/assistant.md").exists() else ""
+    seen = set()
+    for r in recs:
+        n = r["pr"]
+        if n in seen:
+            errs.append(f"data/ceo_decisions.json: #{n} recorded twice")
+        seen.add(n)
+        if not r["evidence"].startswith(f"https://github.com/slopryno/slopworks/pull/{n}"):
+            errs.append(f"data/ceo_decisions.json #{n}: evidence must link PR #{n}")
+        if r["applied_by"] == "Executive Assistant":
+            if not (r["quote"] or "").strip() or not r["said_at"] or not r.get("authority"):
+                errs.append(f"data/ceo_decisions.json #{n}: the EA needs Ryno's verbatim quote, its ET time and the authority line")
+            elif not (r["said_at"] <= r["applied_at"] and r["applied_at"] >= EA_FROM):
+                errs.append(f"data/ceo_decisions.json #{n}: the EA applies the label after Ryno's yes, and only from {EA_FROM}")
+            if f"[#{n}](" not in log:
+                errs.append(f"data/ceo_decisions.json #{n}: no matching line in the log in bots/assistant.md")
+    return errs
+
+
+def ceo_label_errors(pr, labels, comments, decisions):
+    """Fail closed: a PR from #109 on that carries ceo-approved needs a data/ceo_decisions.json record for it or an EA
+    quote comment on it. Earlier PRs are not judged again."""
+    if "ceo-approved" not in labels or pr < EA_RULE_FROM_PR:
+        return []
+    if any(d.get("pr") == pr and (d.get("quote") or "").strip() for d in decisions):
+        return []
+    if any(ea_quote_comment(c.get("body")) for c in comments):
+        return []
+    return [f"#{pr} has ceo-approved without Ryno's quoted yes: no data/ceo_decisions.json record and no comment "
+            f"starting '{EA_PREFIX}' that quotes him with his ET time (only the Executive Assistant applies it)"]
+
+
+def run_ceo_label():
+    """On a PR (any label change too) and on each push to main. Any API failure fails the check (fail closed)."""
+    n = os.environ.get("PR", "")
+    if not n:
+        pulls = gh("GET", f"/commits/{os.environ['SHA']}/pulls")
+        if not pulls:
+            print("ceo-label: no PR behind this push; nothing carries the label")
+            return []
+        n = str(pulls[0]["number"])
+    labels = [l["name"] for l in gh("GET", f"/issues/{n}/labels")]
+    comments, page = [], 1
+    while True:
+        batch = gh("GET", f"/issues/{n}/comments?per_page=100&page={page}")
+        comments += batch
+        if len(batch) < 100:
+            break
+        page += 1
+    decisions = json.loads((ROOT / "data/ceo_decisions.json").read_text())
+    return ceo_label_errors(int(n), labels, comments, decisions)
 
 
 def tempo_errors(root=None):
@@ -1249,6 +1334,7 @@ def run_repo():
     errs += chat_future_errors(data.get("chat", []))
     errs += tempo_errors()
     errs += override_errors()
+    errs += ceo_decision_errors()
     errs += blast_check_errors()
     errs += training_errors()
     errs += comms_feed_errors(files)
@@ -1359,6 +1445,15 @@ def main():
     if cmd == "x-draft":
         problems = x_draft_errors(" ".join(sys.argv[2:]))
         print("\n".join(problems) or "x-draft: ok")
+        sys.exit(1 if problems else 0)
+    if cmd == "ceo-label":
+        try:
+            problems = run_ceo_label()
+        except Exception as err:  # fail closed: no answer from GitHub is not a pass
+            problems = [f"ceo-label: could not verify ({err})"]
+        for p in problems:
+            print(f"::error::{p}")
+        print(f"ceo-label: {'FAIL' if problems else 'ok'} ({len(problems)} problems)")
         sys.exit(1 if problems else 0)
     errs = {"repo": run_repo, "paths": run_paths, "review-gate": run_review_gate, "guardrail-gate": run_guardrail_gate}[cmd]()
     for e in errs:
