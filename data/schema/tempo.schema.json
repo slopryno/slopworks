@@ -15,6 +15,8 @@
     "trip_at": {"type": ["string", "null"]},
     "as_of_pr": {"type": ["integer", "null"]},
     "days": {"type": "array", "items": {"type": "object"}},
-    "violations": {"type": "array", "items": {"type": "string"}}
+    "violations": {"type": "array", "items": {"type": "string"}},
+    "excused": {"type": "array", "items": {"type": "string"}},
+    "ceo_overrides": {"type": "array", "items": {"type": "object"}}
   }
 }
