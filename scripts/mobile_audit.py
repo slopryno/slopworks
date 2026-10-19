@@ -60,7 +60,11 @@ function measure(frame, job){
   const tw = d.createTreeWalker(d.body, NodeFilter.SHOW_TEXT); let n;
   while ((n = tw.nextNode())) { const p = n.parentElement; if (!p || p.closest('[hidden], .skip, details:not([open]) > :not(summary)')) continue;
     const rg = d.createRange(); rg.selectNodeContents(n); const b = rg.getBoundingClientRect();
-    if (b.height && b.top < job.fold && b.bottom > 0) words += (n.textContent.match(/\S+/g) || []).length; }
+    if (!b.height || b.top >= job.fold || b.bottom <= 0) continue;
+    if (b.bottom <= job.fold) { words += (n.textContent.match(/\S+/g) || []).length; continue; }
+    const wre = /\S+/g; let wm;  // a paragraph cut by the fold: count only the words on lines that show (Comms first-screen budget)
+    while ((wm = wre.exec(n.textContent))) { const wr = d.createRange(); wr.setStart(n, wm.index); wr.setEnd(n, wm.index + wm[0].length);
+      const q = wr.getBoundingClientRect(); if (q.height && q.top < job.fold && q.bottom > 0) words++; } }
   r.min_font_px = minFont === 99 ? null : minFont; r.tiny_text = tiny; r.max_line_chars = maxChars; r.low_contrast = lowContrast; r.words_above_fold = words;
   const nav = d.querySelector('header'); r.header_px = nav ? Math.round(nav.getBoundingClientRect().height) : 0;
   let tables = 0, wide = 0, wideUnscrolled = 0;
@@ -196,6 +200,7 @@ def summary(rows):
         s["pages_with_small_targets"] += r["small_targets"] > 0; s["inline_links"] += r["inline_links"]; s["tiny_text"] += r["tiny_text"]
         s["low_contrast"] += r["low_contrast"]; s["wide_tables_unscrolled"] += r["wide_tables_unscrolled"]; s["tables"] += r["tables"]
         s["max_line_chars"] = max(s["max_line_chars"], r["max_line_chars"])
+        s["words_first_screen"] = max(s.get("words_first_screen", 0), r.get("words_above_fold", 0))  # Comms budget: data/word_limits.json first_screen
         for k in ("midword_breaks", "box_overflow", "past_right_edge", "narrow_text"):
             s[k] = s.get(k, 0) + len(r.get(k, []))
     return by

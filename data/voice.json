@@ -1,0 +1,28 @@
+{
+  "_note": "Comms's banned phrases (docs/voice.md). Checked on enforced pages outside records and quotes, and in role bios once bios are enforced. Add-only: removing a phrase is loosening.",
+  "banned": [
+    "let's have fun",
+    "keep the dice",
+    "I'm new here",
+    "keep the lights on",
+    "guard the doors",
+    "goof",
+    "goofed",
+    "oops",
+    "whoops",
+    "First Blood",
+    "Guardian Angel",
+    "I'm Scout",
+    "I'm Verify",
+    "awesome",
+    "epic",
+    "Bring your best"
+  ],
+  "bio_only": [
+    "honestly",
+    "I'm a role in"
+  ],
+  "patterns": [
+    {"re": "\\bslop(py)?\\b", "why": "slop used about the work (Slopworks is the brand)"}
+  ]
+}

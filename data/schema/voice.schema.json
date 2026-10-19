@@ -1,0 +1,11 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["banned", "bio_only", "patterns"],
+  "properties": {
+    "_note": {"type": "string"},
+    "banned": {"type": "array", "items": {"type": "string"}},
+    "bio_only": {"type": "array", "items": {"type": "string"}},
+    "patterns": {"type": "array", "items": {"type": "object", "additionalProperties": false, "required": ["re", "why"], "properties": {"re": {"type": "string"}, "why": {"type": "string"}}}}
+  }
+}

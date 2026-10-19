@@ -760,5 +760,52 @@
     "fix_pr": 99,
     "closed": "2026-10-18",
     "thread": "c341"
+  },
+  {
+    "id": "aar-2026-10-19-word-limits-new-file",
+    "date": "2026-10-19",
+    "title": "#108's guardrail gate read the new word-limits file as a loosening and labeled it needs-ceo",
+    "trigger": "ci-pr",
+    "links": {
+      "prs": [
+        108
+      ],
+      "runs": [
+        "39324924700"
+      ],
+      "commits": [],
+      "chat": []
+    },
+    "expected": {
+      "text": "Creating data/word_limits.json and data/voice.json only adds limits, so the guardrail gate passes.",
+      "cite": [
+        "file:scripts/check.py",
+        "pr:108"
+      ]
+    },
+    "actual": {
+      "text": "guardrail-gate failed on #108: 'loosens a guardrail: data/word_limits.json', and CI added the needs-ceo label.",
+      "cite": [
+        "run:39324924700"
+      ]
+    },
+    "why": {
+      "text": "words_loosened() treats any new exempt key as an added exemption. In a new file every key is new, and no test covered creating the file.",
+      "cite": [
+        "pr:108",
+        "file:tests/test_words.py"
+      ]
+    },
+    "change": {
+      "text": "A new file (no removed lines, an opening brace added) is not loosening; a test covers creating both files and still flags a new exemption.",
+      "cite": [
+        "pr:108",
+        "file:tests/test_words.py"
+      ]
+    },
+    "change_pr": 108,
+    "owner": "Forge",
+    "status": "open",
+    "thread": "c384"
   }
 ]

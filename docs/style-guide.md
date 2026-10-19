@@ -2,6 +2,8 @@
 
 Owned by Comms (Head of Comms, i28). Comms has the final say on wording after consulting the roles a change touches (i29). Facts stay with Lens, personal data with Shield, and the guardrails with CI. Proposal and comments: Team chat c111–c117.
 
+Voice, tone and word limits: [docs/voice.md](voice.md) (Comms, 2026-10-19), enforced by `data/word_limits.json`, `data/voice.json` and `scripts/check.py`.
+
 ## Voice
 - **Honest.** Say only what a public source or a merged change shows. If it's a guess, label it Hypothesis. If it's a demo, label it Demo.
 - **Plain.** Short sentences and everyday words. Lead with what the reader can do or learn.
