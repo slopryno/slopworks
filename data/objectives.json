@@ -20,5 +20,21 @@
     "source": "data/schedule.json",
     "assigned": "2026-10-17",
     "ref": "c253"
+  },
+  {
+    "role": "Strategy",
+    "objective": "Get Ryno's call on month 1 goals and the Feature Lab bet",
+    "source": "data/chat.json",
+    "assigned": "2026-10-19",
+    "ref": "c348",
+    "idea": "i47"
+  },
+  {
+    "role": "Trial",
+    "objective": "Compare Atlas's blast notes on #100 and #101 with what happened",
+    "source": "data/chat.json",
+    "assigned": "2026-10-19",
+    "ref": "c346",
+    "idea": "i46"
   }
 ]

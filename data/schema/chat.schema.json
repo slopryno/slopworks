@@ -44,7 +44,8 @@
           "Advocate",
           "Librarian",
           "Comms",
-          "Gamemaster"
+          "Gamemaster",
+          "Strategy"
         ]
       },
       "to": {
@@ -74,7 +75,8 @@
           "Advocate",
           "Librarian",
           "Comms",
-          "Gamemaster"
+          "Gamemaster",
+          "Strategy"
         ]
       },
       "text": {
