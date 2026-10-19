@@ -116,7 +116,7 @@ summary{flex-wrap:wrap}summary span,li>div,.char .hd>*,.lead .hd>*{min-width:0}.
 .nums strong{display:block;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:clamp(1.6rem,7vw,2.2rem);line-height:1.1;color:var(--fg)}
 .lbl-n{display:block;font-weight:700;margin-top:.2rem}.def{display:block;color:var(--muted);font-size:.85rem;margin-top:.35rem}
 .nums a{display:inline-flex;align-items:center;min-height:44px}
-.days .bar{display:inline-block;vertical-align:middle;height:.6rem;width:calc(var(--w) * .05rem);min-width:2px;margin-right:.45rem;border-radius:2px;background:var(--accent)}
+.days .bar{display:inline-block;vertical-align:middle;height:.6rem;width:calc(var(--w) * .05rem);min-width:2px;margin-right:.45rem;border-radius:2px;background:var(--ok)}
 .warn-t{border-left:3px solid var(--warn);padding-left:.75rem}.days td:nth-child(2){white-space:nowrap}
 .sprints{padding-left:1.1rem}.sprints li{margin:.3rem 0}
 /* i48 How this works (Comms, design huddle c366): glossary terms stand out; definitions sit flush on phones */

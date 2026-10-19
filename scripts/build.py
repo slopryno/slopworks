@@ -746,8 +746,14 @@ def build():
         rows = "".join(f'<dt>{t}</dt><dd>{e(a[k]["text"])} <span class="meta">' + " · ".join(cite(c) for c in a[k]["cite"]) + "</span></dd>"
                        for k, t in (("expected", "What was supposed to happen"), ("actual", "What actually happened"), ("why", "Why (blameless, with evidence)"), ("change", "What we change")))
         st = (f'closed {e(a["closed"])} · fix <a href="{REPO}/pull/{a["fix_pr"]}">#{a["fix_pr"]}</a>' if a["status"] == "closed" else "open")
+        lead, sents = [], re.split(r"(?<=[.)])\s+(?=[A-Z#])", a["change"]["text"])
+        for x in sents:  # visual review V5: what changed, in about one sentence; the whole review is one tap away
+            if lead and len(" ".join(lead + [x]).split()) > 20:
+                break
+            lead.append(x)
         return (f'<article class="card aar" id="{e(a["id"])}"><h2>{e(a["title"])}</h2><p class="meta">{as_of(a["date"], "happened")}<span class="tag">{e(TRIGGERS[a["trigger"]])}</span>'
-                f'<span class="tag">{st}</span><span>owner {e(a["owner"])}</span><a href="{href(a["thread"], "../", "lessons/")}">Team chat thread</a></p><dl>{rows}</dl></article>')
+                f'<span class="tag">{st}</span></p><p><strong>What we change:</strong> {e(" ".join(lead))}</p>'
+                f'<details><summary>The full review, with receipts</summary><p class="meta"><span>owner {e(a["owner"])}</span><a href="{href(a["thread"], "../", "lessons/")}">Team chat thread</a></p><dl>{rows}</dl></details></article>')
     aars = sorted(load("aars"), key=lambda a: (a["date"], a["id"]), reverse=True)
     n_open = sum(a["status"] == "open" for a in aars)
     # Lessons archive rollover (sprint i31): the shared rollover() helper, in the Team chat pattern. Open reviews stay on the main page.
@@ -763,10 +769,9 @@ def build():
     l_arch = ('<h2 id="archive">Archive</h2><p>Older reviews move to archive pages automatically, so this page stays light. Nothing is removed, and each review keeps its own permalink.</p><ul>'
               + "".join(f'<li><a href="archive/{k}.html">{e(k)}</a>: {len(us)} {"review" if len(us) == 1 else "reviews"}</li>' for k, m, n, us in reversed(l_parts)) + "</ul>") if l_parts else ""
     files["lessons/index.html"] = page("lessons/", "Lessons",
-        "When something goes wrong, the team writes a blameless after-action review the same run: what was expected, what happened, why, and what changes. Every line links its record.",
-        "<p>The Friday retro reviews the week's reviews and closes them, and Advisor turns repeats into rules or CI checks.</p>"
+        "Same-day, blameless after-action reviews: what was expected, what happened, why, and what changed. Every line links its record.",
         f'<p class="meta"><span>{len(aars)} reviews</span><span>{n_open} open</span><span>newest first</span></p>'
-        + ("".join(aar(u[1]) for u in l_main) or '<p class="empty">No after-action reviews yet. One appears here the same day something goes wrong.</p>') + l_arch, "data/aars.json")
+        + ("".join(aar(u[1]) for u in l_main) or '<p class="empty">No after-action reviews yet. One appears here the same day something goes wrong.</p>') + "<p>The Friday retro reviews the week's reviews and closes them, and Advisor turns repeats into rules or CI checks.</p>" + l_arch, "data/aars.json")
     for k, (key, m, n, us) in enumerate(l_parts):
         slug = f"lessons/archive/{key}.html"
         nav_l = ['<a href="../">Lessons (latest)</a>'] + [f'<a href="{p[0]}.html">{"Newer" if j > k else "Older"}: {e(p[0])}</a>' for j, p in enumerate(l_parts) if abs(j - k) == 1]
@@ -816,26 +821,27 @@ def build():
     def case_card(c):
         st = "".join(f'<li>{avatar(x["role"], "../", 28)}<div><p>{label(x["label"])} <strong class="who" style="--c:{color(x["role"])}">{e(x["role"])}</strong></p><p>{e(x["text"])} <a href="{e(x["link"])}">{"PR #" + x["link"].rsplit("/", 1)[1] if "/pull/" in x["link"] else "record"}</a></p></div></li>' for x in c["steps"])
         return (f'<article class="card case" id="{e(c["id"])}"><h2>{e(c["title"])}</h2><p class="meta">{as_of(c["date"], "shipped")}<span>real work, not a demo</span></p>'
-                f'<p>{e(c["summary"])}</p><p><strong>What it shows:</strong> {e(c["shows"])}</p><ol class="trace">{st}</ol><p><strong>Outcome:</strong> {e(c["outcome"])} <a href="{REPO}/pull/{c["pr"]}">PR #{c["pr"]}</a></p></article>')
+                f'<p>{e(c["summary"])}</p><p><strong>Outcome:</strong> {e(c["outcome"])} <a href="{REPO}/pull/{c["pr"]}">PR #{c["pr"]}</a></p>'
+                f'<details><summary>How it happened, in {len(c["steps"])} steps</summary><p><strong>What it shows:</strong> {e(c["shows"])}</p><ol class="trace">{st}</ol></details></article>')
     cases = load("cases")
-    files["cases/index.html"] = page("cases/", "Case files", "Real decisions, replayed step by step from the problem to what shipped. Every step links its PR or Team chat message.",
+    files["cases/index.html"] = page("cases/", "Case files", "Real decisions, replayed from the problem to what shipped. Every step links its record.",
                                      legend() + ("".join(map(case_card, cases)) or '<p class="empty">No case files yet. A case file is added after a decision ships.</p>') + '<p>Want to see how a decision gets made before anything ships? Visit the <a href="../arena/">Research Arena</a>.</p>', "data/cases.json")
 
     # Demo challenges (i22, PR 7 of 8): worked examples on fictional briefs, labeled Demo everywhere. Not advice, quotes, or client work.
-    DEMO_NOTE = "Demo: a worked example the team researched on a fictional brief. It is not advice, not a quote, and not client work."
+    DEMO_NOTE = "A worked example on a fictional brief: not advice, not a quote, and not client work."
     def challenge(c):
-        secs = "".join(f'<section><h3>{e(s["name"])}</h3><ul class="outcome">' + "".join(
-            f'<li>{label({"Problem definition": "demo", "Expected benefits": "hypothesis"}.get(s["name"], "recommendation"))} {e(x["text"])} <span class="meta">{e(x["role"])} · <a href="#{e(x["research"])}">report</a></span></li>' for x in s["items"]) + "</ul></section>" for s in c["sections"])
+        secs = "".join(f'<details class="sec"><summary>{e(s["name"])}</summary><ul class="outcome">' + "".join(
+            f'<li>{label({"Problem definition": "demo", "Expected benefits": "hypothesis"}.get(s["name"], "recommendation"))} {e(x["text"])} <span class="meta">{e(x["role"])} · <a href="#{e(x["research"])}">report</a></span></li>' for x in s["items"]) + "</ul></details>" for s in c["sections"])
         reps = [rmap[x] for x in sorted({x["research"] for s in c["sections"] for x in s["items"]}) if x in rmap]
         srcs = sorted({u for rr in reps for u in rr["evidence"]})
-        return (f'<article class="card challenge" id="{e(c["id"])}"><p class="demo-banner">{label("demo")} {e(DEMO_NOTE)}</p><h2>{label("demo")} {e(c["title"])}</h2>'
-                f'<p class="meta">{as_of(c["date"], "researched")}<span>{len(c["roles"])} roles: {e(", ".join(c["roles"]))}</span><span>{len(srcs)} public sources</span></p>'
-                f'<p><strong>The brief (fictional):</strong> {e(c["brief"])}</p>{secs}'
-                f'<h3>The {len(reps)} research reports</h3>' + "".join(rnote(rr) for rr in reps) +
-                f'<h3>Sources</h3><ul class="meta">' + "".join(f'<li><a href="{e(u)}">{e(u)}</a></li>' for u in srcs) + "</ul>"
-                f'<p>How it was run: <a href="{href(c["thread"], "../", "challenges/")}">Team chat thread</a> · <a href="{REPO}/pull/{c["pr"]}">research PR #{c["pr"]}</a></p></article>')
+        return (f'<article class="card challenge" id="{e(c["id"])}"><p class="demo-banner">{label("demo")} {e(DEMO_NOTE)}</p><h2>{e(c["title"])}</h2>'
+                f'<p class="meta">{as_of(c["date"], "researched")}<span>{len(c["roles"])} roles</span><span>{len(srcs)} public sources</span></p>'
+                f'<details class="brief"><summary>The brief (fictional)</summary><p>{e(c["brief"])}</p></details>{secs}'
+                f'<details><summary>The {len(reps)} research reports</summary><p class="meta">By {e(", ".join(c["roles"]))}.</p>' + "".join(f'<details class="report"><summary>{e(rr["role"])}: {e(rr["question"])}</summary><div class="report-body">{rnote(rr)}</div></details>' for rr in reps) + "</details>"
+                f'<details><summary>The {len(srcs)} sources</summary><ul class="meta">' + "".join(f'<li><a href="{e(u)}">{e(u)}</a></li>' for u in srcs) + "</ul></details>"
+                f'<details><summary>How it was run</summary><p><a href="{href(c["thread"], "../", "challenges/")}">Team chat thread</a> · <a href="{REPO}/pull/{c["pr"]}">research PR #{c["pr"]}</a></p></details></article>')
     chs = load("challenges")
-    files["challenges/index.html"] = page("challenges/", "Demo challenge", "A labeled demo of working with the team: a fictional brief goes in, roles research it, a critic challenges it, and a structured outcome comes back.",
+    files["challenges/index.html"] = page("challenges/", "Demo challenge", "A labeled demo: a fictional brief goes in, roles research it, a critic challenges it, and a structured outcome comes back.",
                                           legend() + ("".join(map(challenge, chs)) or '<p class="empty">No demo challenges yet. Each one is researched by the team and labeled Demo.</p>'), "data/challenges.json")
 
     # ---------- Timeline (i32): generated from the records, newest first, grouped by day (Comms wording, c136-c142) ----------

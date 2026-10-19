@@ -59,5 +59,13 @@
     "rank": 0,
     "state": "shipped",
     "shipped": "2026-10-15"
+  },
+  {
+    "id": "d7",
+    "idea": "Cases and Lessons: first phone screen within Comms's 110 words",
+    "why": "At 390x844, Cases shows 125 words and Lessons 120 (the next card's title shows above the fold). Both stay unenforced, with no limit raised, until Comms trims copy to fit (Ryno's review, Oct 19).",
+    "effort": "S",
+    "rank": 7,
+    "state": "backlog"
   }
 ]
