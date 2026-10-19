@@ -93,3 +93,56 @@ class Records(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class CeoOverride(unittest.TestCase):
+    """Ryno 2026-10-19 4:31 PM ET: "Im lifting the slowdown for this work only." Scoped, expiring, add-only."""
+    O = {"id": "ovr-2026-10-19-t", "kind": "lift-slowdown", "by": "Ryno (CEO)", "quote": "Im lifting the slowdown for this work only.",
+         "source": "test", "at": "2026-10-19T16:31-04:00", "expires": "2026-10-19T23:59-04:00",
+         "branches": ["bot/design-a", "bot/design-b"], "max_prs": 2}
+    TRIP = [aar("data-correction", 1)]
+    WINS = [pr(1, "18T09:00"), pr(2, "19T09:00"), pr(3, "19T10:00"), pr(4, "19T11:00")]  # slowed, 3 of 3 used on the 19th
+    at = lambda self, h, m=0: datetime(2026, 10, 19, h, m, tzinfo=ET)
+
+    def test_lifts_only_named_branches_inside_the_window(self):
+        o = [self.O]
+        self.assertEqual(tempo.today(self.WINS, self.TRIP, self.at(17), "bot/design-a", o)[2], 18)
+        self.assertEqual(tempo.today(self.WINS, self.TRIP, self.at(17), "bot/data-daily", o), ("slowed", 3, 3))
+        self.assertEqual(tempo.today(self.WINS, self.TRIP, self.at(17), None, o), ("slowed", 3, 3))
+        self.assertEqual(tempo.today(self.WINS, self.TRIP, self.at(16, 30), "bot/design-a", o), ("slowed", 3, 3))
+        self.assertEqual(tempo.today(self.WINS, self.TRIP, datetime(2026, 10, 20, 0, 1, tzinfo=ET), "bot/design-a", o)[2], 3)
+
+    def test_capped_at_max_prs(self):
+        wins = self.WINS + [pr(5, "19T16:40"), pr(6, "19T16:50")]
+        self.assertEqual(tempo.today(wins, self.TRIP, self.at(17), "bot/design-b", [self.O]), ("slowed", 5, 3))
+
+    def test_tripwires_stay(self):
+        self.assertEqual(tempo.today(self.WINS, self.TRIP + [aar("revert", 99)], self.at(17), "bot/design-a", [self.O]), ("slowed", 0, 3))
+        wins = self.WINS + [pr(5, "19T16:40")]  # a new trip merged after the override started ends it
+        self.assertEqual(tempo.today(wins, self.TRIP + [aar("ci-main", 5)], self.at(17), "bot/design-a", [self.O]), ("slowed", 0, 3))
+
+    def test_violations_excused_only_inside_the_cap(self):
+        wins = self.WINS + [pr(5, "19T16:40"), pr(6, "19T16:50"), pr(7, "19T17:00")]
+        t = tempo.derive(wins, self.TRIP, [self.O])
+        self.assertEqual(len(t["excused"]), 2)
+        self.assertEqual([v.split()[0] for v in t["violations"]], ["#7"])
+        self.assertEqual(len(tempo.derive(wins, self.TRIP, [])["violations"]), 3)
+        self.assertEqual(t["ceo_overrides"][0]["quote"], self.O["quote"])
+
+    def test_records_are_strict(self):
+        for bad in ({"expires": "2026-10-20T09:00-04:00"}, {"expires": "2026-10-19T16:00-04:00"}, {"by": "Advisor"},
+                    {"quote": " "}, {"branches": ["main"]}, {"branches": []}, {"max_prs": 3}, {"kind": "bypass"}):
+            with tempfile.TemporaryDirectory() as d:
+                (Path(d) / "data").mkdir()
+                (Path(d) / tempo.OVERRIDES).write_text(json.dumps([{**self.O, **bad}]))
+                with self.assertRaises(ValueError, msg=bad):
+                    tempo.load_overrides(Path(d))
+
+    def test_override_file_is_add_only(self):
+        self.assertTrue(check.loosening("data/ceo_overrides.json", [], ['    "expires": "2026-10-19T23:59-04:00",']))
+        self.assertFalse(check.loosening("data/ceo_overrides.json", ['  {"id": "ovr-2026-10-20-x"}'], []))
+
+    def test_the_repo_record_is_valid_and_expires_tonight(self):
+        self.assertEqual(check.override_errors(), [])
+        for o in tempo.load_overrides():
+            self.assertLessEqual(o["expires"][:10], o["at"][:10])

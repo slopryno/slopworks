@@ -1,0 +1,23 @@
+[
+  {
+    "id": "ovr-2026-10-19-phase-b",
+    "kind": "lift-slowdown",
+    "by": "Ryno (CEO)",
+    "quote": "Im lifting the slowdown for this work only.",
+    "source": "CEO instruction, Mon 2026-10-19 4:31 PM ET: ship the 3 prepared Oct 20 PRs and Phase B (V1, V2, V3, V9, V5) today, plus this override; nothing else",
+    "at": "2026-10-19T16:31-04:00",
+    "expires": "2026-10-19T23:59-04:00",
+    "branches": [
+      "bot/ops-ceo-tempo-override",
+      "bot/feature-tempo-day-count",
+      "bot/ops-training-rules",
+      "bot/feature-month1-goals",
+      "bot/design-xp-bars-chips",
+      "bot/feature-word-limits",
+      "bot/design-team-cards",
+      "bot/design-nav-disclaimer",
+      "bot/design-details-cards"
+    ],
+    "max_prs": 9
+  }
+]
