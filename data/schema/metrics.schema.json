@@ -85,6 +85,7 @@
             "type": "string",
             "enum": [
               "not measured yet",
+              "On hold (CEO decision, Oct 19)",
               "in progress",
               "met"
             ]

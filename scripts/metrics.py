@@ -99,7 +99,7 @@ def goal_progress(goals, cases, arena, challenges, updates, reach=None):
         row = {"id": g["id"], "title": g["title"], "target": g["target"], "source": g["source"]}
         if g["id"] == "G1":
             if not reach:
-                row.update(status="not measured yet", source="", now="No traffic record yet. Reading GitHub's traffic numbers needs access that Ryno hasn't approved yet.")
+                row.update(status="On hold (CEO decision, Oct 19)", source="", now="Ryno put visitor measurement on hold on Oct 19. Nothing reads, fetches or counts traffic until he decides.")
             else:
                 r = reach[-1]
                 met = r["uniques_14d"] >= 50 and r["stars"] >= 5 and len(r["outside_referrers"]) >= 2

@@ -248,8 +248,8 @@
       "title": "Get found",
       "target": "50 unique repo visitors in GitHub's 14-day window, 5 stars, 2 outside referrer domains",
       "source": "",
-      "status": "not measured yet",
-      "now": "No traffic record yet. Reading GitHub's traffic numbers needs access that Ryno hasn't approved yet."
+      "status": "On hold (CEO decision, Oct 19)",
+      "now": "Ryno put visitor measurement on hold on Oct 19. Nothing reads, fetches or counts traffic until he decides."
     },
     {
       "id": "G2",

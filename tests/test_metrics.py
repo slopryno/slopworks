@@ -75,7 +75,7 @@ class MonthOneGoals(unittest.TestCase):
 
     def test_g1_waits_for_a_record(self):
         g1 = metrics.goal_progress(**self.inputs(reach=None))[0]
-        self.assertEqual((g1["status"], g1["source"]), ("not measured yet", ""))
+        self.assertEqual((g1["status"], g1["source"]), ("On hold (CEO decision, Oct 19)", ""))
 
     def test_g1_from_aggregate_counts(self):
         r = [{"date": "2026-10-30", "views_14d": 120, "uniques_14d": 51, "stars": 5, "outside_referrers": ["news.ycombinator.com", "reddit.com"]}]
