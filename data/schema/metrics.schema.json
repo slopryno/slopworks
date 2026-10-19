@@ -58,6 +58,46 @@
       "items": {
         "type": "string"
       }
+    },
+    "goals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "title",
+          "target",
+          "status",
+          "now"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "target": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "not measured yet",
+              "On hold (CEO decision, Oct 19)",
+              "in progress",
+              "met"
+            ]
+          },
+          "now": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string"
+          }
+        }
+      }
     }
   }
 }
