@@ -1,10 +1,10 @@
 {
-  "as_of": "2026-10-18T09:17-04:00",
+  "as_of": "2026-10-18T09:26-04:00",
   "newest_day": "2026-10-18",
   "days_of_history": 4,
   "ci_window_start": "2026-10-15T23:00-04:00",
   "totals": {
-    "prs": 92,
+    "prs": 93,
     "open_to_merge_min": 1,
     "ci_catches": 20,
     "main_failures": 0,
@@ -12,7 +12,9 @@
     "aars": 14,
     "escaped": 11,
     "blocks": 1,
-    "refusals": 1
+    "refusals": 1,
+    "blast_checked": 0,
+    "blast_matched": 0
   },
   "pace": {
     "mode": "slowed",
@@ -64,7 +66,7 @@
     },
     {
       "date": "2026-10-18",
-      "prs": 9,
+      "prs": 10,
       "open_to_merge_min": 1,
       "escaped": 3,
       "corrections": 3,
@@ -156,7 +158,7 @@
       "key": "prs",
       "label": "Merged PRs",
       "prev": 60,
-      "new": 9,
+      "new": 10,
       "direction": "down",
       "verdict": null
     },
@@ -172,7 +174,7 @@
       "key": "escaped",
       "label": "Incidents and data corrections per 10 PRs",
       "prev": 1.2,
-      "new": 3.3,
+      "new": 3.0,
       "direction": "up",
       "verdict": "worse"
     },
@@ -180,7 +182,7 @@
       "key": "corrections",
       "label": "Data corrections per 10 PRs",
       "prev": 0.7,
-      "new": 3.3,
+      "new": 3.0,
       "direction": "up",
       "verdict": "worse"
     },
@@ -188,7 +190,7 @@
       "key": "aars",
       "label": "AARs per 10 PRs",
       "prev": 1.5,
-      "new": 3.3,
+      "new": 3.0,
       "direction": "up",
       "verdict": "worse"
     },
@@ -196,7 +198,7 @@
       "key": "ci_catches",
       "label": "CI catches before merge per 10 PRs",
       "prev": 1.0,
-      "new": 2.2,
+      "new": 2.0,
       "direction": "up",
       "verdict": null
     },
