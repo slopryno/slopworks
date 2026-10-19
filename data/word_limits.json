@@ -28,6 +28,8 @@
     "updates_summary": {"limit": 30, "from": "2026-10-21"}
   },
   "enforced_pages": [
+    "challenges/index.html",
+    "metrics/index.html",
     "team/index.html",
     "team/xp/index.html",
     "team/advisor/index.html",

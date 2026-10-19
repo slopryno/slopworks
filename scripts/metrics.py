@@ -143,7 +143,7 @@ def render(m, up="../"):
            (t["aars"], "AARs", f"After-action reviews; {t['escaped']} were incidents or data corrections.", "data/aars.json"),
            (t["blocks"], "Blocks upheld", "A reviewer stopped a merge and was proven right.", "data/aars.json"),
            (m["pace"]["mode"], "pace", f'Slowed until {m["pace"]["clean_needed"]} clean PRs; {m["pace"]["clean_prs"]} so far.' if m["pace"]["mode"] == "slowed" else "Up to 18 merged PRs a day.", "data/tempo.json")]
-    out = ['<ul class="nums">' + "".join(f'<li><strong>{e(str(v))}</strong> <span class="lbl-n">{e(l)}</span><span class="def">{e(d)} Source: {src(f)}</span></li>' for v, l, d, f in big) + "</ul>"]
+    out = ['<ul class="nums">' + "".join(f'<li><strong>{e(str(v))}</strong> <span class="lbl-n">{e(l)}</span><details><summary>What it counts</summary><p class="def">{e(d)} Source: {src(f)}</p></details></li>' for v, l, d, f in big) + "</ul>"]
     out.append(goals_html(m, src))  # i60
     n, newest = m["days_of_history"], nice(m["newest_day"])
     if m["trends"]:
@@ -151,9 +151,8 @@ def render(m, up="../"):
         arrow = {"up": "\u2191 up", "down": "\u2193 down", "flat": "\u2192 flat", "n/a": "n/a"}
         rows = "".join(f'<tr><th scope="row">{e(x["label"])}</th><td>{"" if x["prev"] is None else x["prev"]}</td><td>{"" if x["new"] is None else x["new"]}</td>'
                        f'<td>{arrow[x["direction"]]}{", " + x["verdict"] if x["verdict"] else ""}</td></tr>' for x in m["trends"])
-        out.append(f'<h2 id="trends">Trends</h2><p>{newest} so far against {p}. Counts that depend on volume are per 10 merged PRs. '
-                   f'<strong>Only {n} days of history</strong>: one AAR moves a day\'s rate a lot, so read these as early signals, not proof. '
-                   f'"Better" or "worse" appears only where the right direction is clear.</p>'
+        out.append(f'<h2 id="trends">Trends</h2><p>{newest} so far against {p}; volume counts are per 10 merged PRs. <strong>Only {n} days of history</strong>: early signals, not proof.</p>'
+                   f'<details><summary>How to read the trends</summary><p>One AAR moves a day\'s rate a lot. "Better" or "worse" appears only where the right direction is clear.</p></details>'
                    f'<div class="scroll fit"><table class="trend"><caption>Newest day against the day before</caption><thead><tr><th scope="col">Metric</th>'
                    f'<th scope="col">{p}</th><th scope="col">{newest} (so far)</th><th scope="col">Direction</th></tr></thead><tbody>{rows}</tbody></table></div>'
                    + (f'<p class="warn-t"><strong>Getting worse:</strong> {e(", ".join(x["label"] for x in m["trends"] if x["verdict"] == "worse"))}. '
