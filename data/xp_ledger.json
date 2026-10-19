@@ -6153,6 +6153,30 @@
     "status": "approved"
   },
   {
+    "id": "pitch_shipped-i48",
+    "agent": "Coordinator",
+    "task": "Pitch i48 shipped: Visitors meet AAR, tempo, sign-off, Block and needs-ceo on 25 of 47 pages, and no page explains the daily loop or defines the terms",
+    "type": "pitch_shipped",
+    "base_xp": 50,
+    "quality_pct": 100,
+    "reviewer": "Trial",
+    "evidence": "https://slopryno.github.io/slopworks/chat/#i48",
+    "timestamp": "2026-10-19",
+    "status": "approved"
+  },
+  {
+    "id": "pitch_shipped-i49",
+    "agent": "Coordinator",
+    "task": "Pitch i49 shipped: Home leads with process meta (the latest sprint) before the Grok Bot tracker; two outside reviews ask for the latest confirmed updates to lea",
+    "type": "pitch_shipped",
+    "base_xp": 50,
+    "quality_pct": 100,
+    "reviewer": "Trial",
+    "evidence": "https://slopryno.github.io/slopworks/chat/#i49",
+    "timestamp": "2026-10-19",
+    "status": "approved"
+  },
+  {
     "id": "signoff-pr100-atlas",
     "agent": "Atlas",
     "task": "Signed off #100: Forge: Atlas owns blast radius, enforced in bot.py and the review gate (i46)",
@@ -6318,6 +6342,66 @@
     "reviewer": "Forge",
     "evidence": "https://github.com/slopryno/slopworks/pull/101#issuecomment-6259487104",
     "timestamp": "2026-10-19T00:13-04:00",
+    "status": "approved"
+  },
+  {
+    "id": "ci_test_added-test_how",
+    "agent": "Trial",
+    "task": "Added tests/test_how.py in #102",
+    "type": "ci_test_added",
+    "base_xp": 15,
+    "quality_pct": 100,
+    "reviewer": "Lens",
+    "evidence": "https://github.com/slopryno/slopworks/pull/102",
+    "timestamp": "2026-10-19T00:32-04:00",
+    "status": "approved"
+  },
+  {
+    "id": "pr_merged-pr102",
+    "agent": "Comms",
+    "task": "#102: Comms: How this works, tracker-first home, review intake and activation (i48, i49)",
+    "type": "pr_merged",
+    "base_xp": 25,
+    "quality_pct": 100,
+    "reviewer": "Lens",
+    "evidence": "https://github.com/slopryno/slopworks/pull/102",
+    "timestamp": "2026-10-19T00:32-04:00",
+    "status": "approved"
+  },
+  {
+    "id": "signoff-pr102-lens",
+    "agent": "Lens",
+    "task": "Signed off #102: Comms: How this works, tracker-first home, review intake and activation (i48, i49)",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Comms",
+    "evidence": "https://github.com/slopryno/slopworks/pull/102#issuecomment-6259707167",
+    "timestamp": "2026-10-19T00:32-04:00",
+    "status": "approved"
+  },
+  {
+    "id": "signoff-pr102-polish",
+    "agent": "Polish",
+    "task": "Signed off #102: Comms: How this works, tracker-first home, review intake and activation (i48, i49)",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Comms",
+    "evidence": "https://github.com/slopryno/slopworks/pull/102#issuecomment-6259707474",
+    "timestamp": "2026-10-19T00:32-04:00",
+    "status": "approved"
+  },
+  {
+    "id": "signoff-pr102-trial",
+    "agent": "Trial",
+    "task": "Signed off #102: Comms: How this works, tracker-first home, review intake and activation (i48, i49)",
+    "type": "signoff",
+    "base_xp": 5,
+    "quality_pct": 100,
+    "reviewer": "Comms",
+    "evidence": "https://github.com/slopryno/slopworks/pull/102#issuecomment-6259707732",
+    "timestamp": "2026-10-19T00:32-04:00",
     "status": "approved"
   }
 ]

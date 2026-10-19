@@ -4,7 +4,9 @@ Normal: up to 6 PRs a sprint and 3 sprints a day, so at most 18 merged PRs a day
 Slowed: 1 sprint of 3 PRs a day. Any revert, CI failure on main, failed deploy, or incident or data-correction AAR
 trips it (each of those gets a same-day AAR, so the AAR record is the trigger). The trip happens when the AAR's
 change PR merges. It stays slowed until 10 clean PRs merge after the latest trip; a new trip resets the count.
-On the trip day, only PRs merged after the trip count toward the slowed day's 3.
+On the trip day, only PRs merged after the trip count toward the slowed day's 3 (through Oct 18). From Oct 19 on
+(Ryno 2026-10-19 7:27 AM ET, approving the training plan), every PR merged that ET day counts, before or after a trip:
+a trip can't reopen a day that already used its slowed limit.
 
 Everything here comes from records (data/wins.json, data/aars.json), so anyone can re-derive the mode.
 wins.py writes data/tempo.json; check.py and tests recompute it; bot.py pr refuses a PR over today's limit.
@@ -19,6 +21,7 @@ LIMITS = {"normal": {"prs_per_day": 18, "sprints_per_day": 3, "prs_per_sprint": 
           "slowed": {"prs_per_day": 3, "sprints_per_day": 1, "prs_per_sprint": 3}}
 CLEAN_NEEDED = 10
 EFFECTIVE = "2026-10-18T08:35-04:00"  # Ryno's decision (i44); earlier days aren't held to it
+WHOLE_DAY_FROM = "2026-10-19"  # loophole fix: from this ET day, a trip no longer resets the day's count
 PENDING = "9999-12-31T23:59-04:00"    # an AAR whose change PR hasn't merged yet trips "now"
 
 
@@ -45,7 +48,7 @@ def state_at(prs, tr, when):
 
 def used_on(prs, mode, last, day, before):
     """PRs merged on ET `day` before `before` that count toward that day's limit."""
-    since = last[0] if (mode == "slowed" and last and last[0][:10] == day) else ""
+    since = last[0] if (mode == "slowed" and last and last[0][:10] == day and day < WHOLE_DAY_FROM) else ""
     return sum(1 for _, m in prs if m[:10] == day and since < m < before)
 
 
@@ -79,8 +82,10 @@ def today(wins, aars, now):
     """(mode, used, limit) for a new PR at `now` (an aware datetime), for bot.py pr."""
     prs, tr = merged(wins), trips(wins, aars)
     when = now.isoformat(timespec="minutes")
-    if any(t[0] == PENDING for t in tr):  # the AAR rides in an unmerged PR: slowed from now, nothing counted yet
-        return "slowed", 0, LIMITS["slowed"]["prs_per_day"]
+    if any(t[0] == PENDING for t in tr):  # the AAR rides in an unmerged PR: slowed from now
+        day = when[:10]
+        used = sum(1 for _, m in prs if m[:10] == day and m < when) if day >= WHOLE_DAY_FROM else 0
+        return "slowed", used, LIMITS["slowed"]["prs_per_day"]
     mode, last, _ = state_at(prs, tr, when)
     return mode, used_on(prs, mode, last, when[:10], when), LIMITS[mode]["prs_per_day"]
 

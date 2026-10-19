@@ -1215,7 +1215,7 @@
     "helps": "New visitors and clients: one plain page explains how the team works, with a glossary linked to the records",
     "effort": "S",
     "builder": "Forge",
-    "state": "yes",
+    "state": "shipped",
     "comments": [],
     "evidence": [
       "Ryno's external review, shared 2026-10-18 11:13 PM ET as research input (kept on the box; Librarian logged it, c-thread)"
@@ -1243,7 +1243,9 @@
       "Tempo numbers are generated from scripts/tempo.py",
       "Linked from Under the hood and home; no header nav change, and the tracker section is unmoved",
       "No scripts; 0 overflow and 0 small taps at 195 plus 7 widths, light and dark"
-    ]
+    ],
+    "acceptance_verified_by": "Trial",
+    "shipped": "#102: /how/ with the daily run, the role cycle, where Ryno decides, and a glossary whose tempo numbers come from scripts/tempo.py"
   },
   {
     "id": "i49",
@@ -1254,7 +1256,7 @@
     "helps": "Visitors who come for the tracker, without burying the team",
     "effort": "S",
     "builder": "Comms",
-    "state": "yes",
+    "state": "shipped",
     "comments": [],
     "evidence": [
       "Ryno's external review, shared 2026-10-18 11:13 PM ET as research input (kept on the box; Librarian logged it, c-thread)"
@@ -1280,7 +1282,9 @@
       "Home order: hero, tracker, team, latest sprint, activity",
       "'Meet the team' stays the first button; the team is the 2nd section",
       "No CSS change; 0 overflow at 195 plus 7 widths, light and dark"
-    ]
+    ],
+    "acceptance_verified_by": "Trial",
+    "shipped": "#102: home order is now tracker, team, latest sprint, activity; 'Meet the team' stays the first button"
   },
   {
     "id": "i50",
@@ -1569,5 +1573,51 @@
       "recommendation": "reject",
       "summary": "Reject: it already exists."
     }
+  },
+  {
+    "date": "2026-10-19",
+    "by": "CEO",
+    "source": "ceo",
+    "effort": "M",
+    "builder": "Forge",
+    "state": "yes",
+    "comments": [],
+    "decided": "2026-10-19",
+    "decided_by": "CEO",
+    "target_sprint": "W43",
+    "id": "i59",
+    "short_title": "Team training plan",
+    "problem": "Recurring slips in the records: unverified counts (3 AARs), stale records (3) and a duplicate post (1); 6 roles under 100 XP with no clear objective",
+    "helps": "The team: fewer corrections per 10 PRs, and every role with a measurable objective",
+    "reason": "Ryno in Grok Bot chat 2026-10-19 7:27 AM ET: 'Approve both the month-1 goals and the training plan.' Plan drafted by Advisor with Coordinator, Game Master, Analyst and Lens from the AARs, CI catches and /metrics/ trends.",
+    "acceptance_criteria": [
+      "Tempo counts every PR merged that day, even after a trip",
+      "bot.py re-runs Derived: lines in sign-offs and refuses a mismatch",
+      "bot.py resume with a lock skips sign-offs already posted",
+      "Retro close-the-loop check in code",
+      "Drills recorded; one objective per role in data/objectives.json"
+    ]
+  },
+  {
+    "date": "2026-10-19",
+    "by": "CEO",
+    "source": "ceo",
+    "effort": "M",
+    "builder": "Analyst",
+    "state": "yes",
+    "comments": [],
+    "decided": "2026-10-19",
+    "decided_by": "CEO",
+    "target_sprint": "W43",
+    "id": "i60",
+    "short_title": "Month-1 goals",
+    "problem": "Sprints are judged by PR count; there are no measurable monthly goals",
+    "helps": "Ryno and visitors: progress toward reach, showcase depth and speed on Grok Bot features, shown from records",
+    "reason": "Ryno in Grok Bot chat 2026-10-19 7:27 AM ET approved Strategy's month-1 goals (Oct 19 to Nov 18): G1 get found, G2 new showcase formats, G3 fast on Grok Bot features, plus the Feature Lab experiment.",
+    "acceptance_criteria": [
+      "Each goal shows its target, baseline and current value from records on /metrics/",
+      "G1 stores aggregate GitHub traffic counts only, no visitor data",
+      "No new secret without Ryno"
+    ]
   }
 ]
