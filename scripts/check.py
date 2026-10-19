@@ -666,6 +666,8 @@ def loosening(path, added, removed):
         return path.endswith("ci.yml") and bool(real(removed))
     if path == ".github/CODEOWNERS" or path == ".gitignore":
         return bool(real(removed))
+    if path == "data/ceo_overrides.json":  # Ryno 2026-10-19: CEO overrides are add-only; an edit or removal needs-ceo
+        return bool(real(removed))
     return False
 
 
@@ -712,6 +714,22 @@ def tracked_ignored():
 def tracked_files():
     out = subprocess.run(["git", "ls-files"], capture_output=True, text=True, cwd=ROOT).stdout.split()
     return [f for f in out if (ROOT / f).is_file()]
+
+
+def override_errors(root=None):
+    """Ryno 2026-10-19 4:31 PM ET: CEO tempo overrides (data/ceo_overrides.json) match their schema and tempo.py's
+    rules: named branches, the CEO's quote, an expiry the same ET day. They are add-only (see loosening)."""
+    import tempo
+    root = root or ROOT
+    p = root / "data/ceo_overrides.json"
+    if not p.exists():
+        return []
+    try:
+        errs = [f"data/ceo_overrides.json {e}" for e in validate(json.loads(p.read_text()), load_schema("ceo_overrides"))]
+        tempo.load_overrides(root)
+    except (OSError, ValueError, KeyError, TypeError) as err:
+        errs = [f"data/ceo_overrides.json: {err}"]
+    return errs
 
 
 def tempo_errors(root=None):
@@ -846,6 +864,7 @@ def run_repo():
     errs += aar_errors(data.get("aars", []), data.get("chat", []), data.get("runs", []))
     errs += chat_future_errors(data.get("chat", []))
     errs += tempo_errors()
+    errs += override_errors()
     errs += blast_check_errors()
     errs += comms_feed_errors(files)
     css = sum((ROOT / f).stat().st_size for f in files if f.startswith("site/") and f.endswith(".css"))
