@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["approved", "approved_by", "idea", "owner", "start", "due", "goals"],
+  "properties": {
+    "approved": {"type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$"},
+    "approved_by": {"type": "string", "enum": ["Ryno"]},
+    "idea": {"type": "string", "pattern": "^i\\d+$"},
+    "owner": {"type": "string"},
+    "start": {"type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$"},
+    "due": {"type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$"},
+    "goals": {"type": "array", "items": {"type": "object", "additionalProperties": false, "required": ["id", "title", "target", "source"],
+      "properties": {"id": {"type": "string", "enum": ["G1", "G2", "G3"]}, "title": {"type": "string", "maxLength": 60},
+                     "target": {"type": "string", "maxLength": 140}, "baseline": {"type": "integer"}, "goal": {"type": "integer"},
+                     "source": {"type": "string"}}}}
+  }
+}
