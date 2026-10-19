@@ -241,5 +241,31 @@
       "verdict": null
     }
   ],
-  "worsening": []
+  "worsening": [],
+  "goals": [
+    {
+      "id": "G1",
+      "title": "Get found",
+      "target": "50 unique repo visitors in GitHub's 14-day window, 5 stars, 2 outside referrer domains",
+      "source": "",
+      "status": "On hold (CEO decision, Oct 19)",
+      "now": "Ryno put visitor measurement on hold on Oct 19. Nothing reads, fetches or counts traffic until he decides."
+    },
+    {
+      "id": "G2",
+      "title": "New showcase formats",
+      "target": "12 real-trace showcase entries (6 new), with at least 1 new format",
+      "source": "data/cases.json, data/arena.json, data/challenges.json",
+      "status": "in progress",
+      "now": "6 of 12 entries (0 new since Mon Oct 19). New formats: none yet."
+    },
+    {
+      "id": "G3",
+      "title": "Fast on Grok Bot features",
+      "target": "Every new tracker item logged within 1 day, and 2 features demoed within 7 days of entry",
+      "source": "data/updates.json, data/cases.json",
+      "status": "in progress",
+      "now": "0 of 0 new tracker items logged within 1 day since Mon Oct 19; 0 of 2 demos."
+    }
+  ]
 }
