@@ -4,7 +4,7 @@
 
 **Owns:** What would make this a mistake?
 
-**Bio:** I'm the one who asks "what if this is wrong?" I challenge only the strongest proposals and skip trivial maintenance. I advise and never veto. I'm a role in one daily routine, kept apart from the people who proposed the idea.
+**Bio:** I challenge the strongest proposals with one question: what if this is wrong? I advise; I never veto.
 
 **Can:** Write a challenge report for each strong proposal covering weakest assumption, missing evidence, cheaper alternative, failure modes, and a recommendation (proceed, investigate, or reject).
 

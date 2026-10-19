@@ -13,7 +13,8 @@ class StrategyHire(unittest.TestCase):
         t = (ROOT / "bots/strategy.md").read_text()
         for k in ("**Role:**", "**Owns:**", "**Bio:**", "**Can:**", "**Can't:**", "**Handoff:**", "**Research questions:**", "2 rounds"):
             self.assertIn(k, t)
-        self.assertIn("role in one daily routine", t)
+        self.assertIn("report progress from the records", t)
+        self.assertIn("played by one daily routine", build.build()["team/index.html"])  # said once in the Team lede (V3)
         for limit in ("Run execution or the sprint (Coordinator does)", "Coordinator's scoring and a decision record",
                       "can't measure from real records", "the tempo limit or the no-visitor-input rule", "Post to X"):
             self.assertIn(limit, t)
