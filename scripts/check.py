@@ -735,6 +735,74 @@ def tempo_errors(root=None):
     return errs
 
 
+# ---------- blast radius (Ryno, 2026-10-18 10:48 PM ET, i46): additions only, these only tighten ----------
+BLAST_SHARED = ("scripts/", ".github/", "data/schema/", "site/style.css", ".gitignore")  # shared by every page, feed, record or run
+BLAST_FIELDS = ("Scope", "Could break", "Rollback", "Size")  # the template in bots/atlas.md
+BLAST_SIZES = ("small", "medium", "large")
+BLAST_CHECKERS = ("Trial", "Lens")
+BLAST_RESULTS = ("matched", "bigger", "smaller")
+
+
+def blast_shared(paths):
+    return [p for p in paths if p.startswith(BLAST_SHARED) or p in BLAST_SHARED]
+
+
+def blast_note_errors(text):
+    """Problems with an Atlas blast-radius note: 'Blast radius: Atlas', then Scope, Could break, Rollback and Size lines."""
+    if not re.match(r"^\s*Blast radius:\s*Atlas\b", text or "", re.I):
+        return ["the note must start with 'Blast radius: Atlas'"]
+    errs = [f"the note needs a '{f}: ...' line" for f in BLAST_FIELDS
+            if not re.search(rf"^\s*{re.escape(f)}:\s*\S", text, re.M | re.I)]
+    size = re.search(r"^\s*Size:\s*(\w+)", text, re.M | re.I)
+    if size and size.group(1).lower() not in BLAST_SIZES:
+        errs.append(f"Size must be one of {', '.join(BLAST_SIZES)}, not {size.group(1)!r}")
+    return errs
+
+
+def blast_size(text):
+    m = re.search(r"^\s*Size:\s*(small|medium|large)\b", text or "", re.M | re.I)
+    return m.group(1).lower() if m else None
+
+
+def blast_radius_errors(paths, pr_body, comments):
+    """A PR that touches shared paths merges only after Atlas, not the maker, posts a blast-radius note on it."""
+    shared = blast_shared(paths)
+    if not shared:
+        return []
+    m = re.search(r"^\s*Maker:\s*(\S+)", pr_body or "", re.M | re.I)
+    if m and _role(m.group(1)) == "Atlas":
+        return ["Atlas made this PR, so it can't assess its own blast radius; another role builds shared-path changes"]
+    notes = [c.get("body", "") for c in trusted(comments) if re.match(r"^\s*Blast radius:\s*Atlas\b", c.get("body", ""), re.I)]
+    if not notes:
+        return [f"missing Atlas blast-radius note (shared paths: {', '.join(shared[:5])}); see bots/atlas.md"]
+    return [f"Atlas blast-radius note: {e}" for e in blast_note_errors(notes[-1])]
+
+
+def blast_check_errors(root=None):
+    """data/blast_checks.json: Trial or Lens compares Atlas's prediction with what happened, after the PR merged."""
+    root = root or ROOT
+    p = root / "data/blast_checks.json"
+    if not p.exists():
+        return []
+    try:
+        checks = json.loads(p.read_text())
+    except ValueError as err:
+        return [f"data/blast_checks.json: {err}"]
+    errs = [f"data/blast_checks.json {e}" for e in validate(checks, load_schema("blast_checks"))]
+    if errs or not isinstance(checks, list):
+        return errs
+    merged = {int(str(w.get("pr", "")).rsplit("/", 1)[-1]) for w in json.loads((root / "data/wins.json").read_text())
+              if str(w.get("pr", "")).rsplit("/", 1)[-1].isdigit()}
+    for c in checks:
+        if c.get("pr") not in merged:
+            errs.append(f"data/blast_checks.json: PR {c.get('pr')} isn't merged (compare after merge)")
+        if c.get("by") not in BLAST_CHECKERS:
+            errs.append(f"data/blast_checks.json PR {c.get('pr')}: by must be Trial or Lens")
+    seen = [c.get("pr") for c in checks]
+    errs += [f"data/blast_checks.json: PR {n} checked twice" for n in sorted({n for n in seen if seen.count(n) > 1})]
+    return errs
+
+
 def run_repo():
     errs = []
     files = tracked_files()
@@ -778,6 +846,7 @@ def run_repo():
     errs += aar_errors(data.get("aars", []), data.get("chat", []), data.get("runs", []))
     errs += chat_future_errors(data.get("chat", []))
     errs += tempo_errors()
+    errs += blast_check_errors()
     errs += comms_feed_errors(files)
     css = sum((ROOT / f).stat().st_size for f in files if f.startswith("site/") and f.endswith(".css"))
     for f in files:
@@ -846,6 +915,7 @@ def run_review_gate():
         print("review-gate: draft PR, sign-offs are checked when it is marked ready for review")
         return []
     errs = review_gate(changed(base, head), pr.get("body") or "", comments)
+    errs += blast_radius_errors(changed(base, head), pr.get("body") or "", comments)
     repeat = {r: n for r, n in block_count(comments).items() if n >= 2}
     if repeat:
         flag_ceo("Disagreement: " + ", ".join(f"{r} blocked {n} times" for r, n in repeat.items()) + ". Each side's position is in the comments above.")

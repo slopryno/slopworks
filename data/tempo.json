@@ -25,12 +25,12 @@
   "clean_prs": 0,
   "tripped_by": "aar-2026-10-18-signoff-doubles",
   "trip_pr": 99,
-  "trip_at": null,
-  "as_of_pr": 98,
+  "trip_at": "2026-10-18T09:26-04:00",
+  "as_of_pr": 99,
   "days": [
     {
       "date": "2026-10-18",
-      "prs": 2
+      "prs": 3
     }
   ],
   "violations": []
