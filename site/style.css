@@ -130,3 +130,9 @@ summary{flex-wrap:wrap}summary span,li>div,.char .hd>*,.lead .hd>*{min-width:0}.
 .card h2 a,.card h3 a,.lead h2 a,.news h3 a,.meta a,.last a,.obj a,.xp a,.links a,.status a,.sitelist a,.stats a{text-decoration:none}
 :is(.card h2,.card h3,.lead h2,.news h3,.meta,.last,.obj,.xp,.links,.status,.sitelist,.stats) a:is(:hover,:focus-visible){text-decoration:underline;text-decoration-color:var(--ok)}
 footer .links a{font-weight:400}.next{margin:2rem 0 0}.lead .hd>div{flex:1 1 7rem}
+/* Phase A V4 (Ryno 2026-10-19 6:33 PM ET): home hero. Numbers carry the weight through type; hairlines, no colour fills. One primary button, text links for the rest */
+.tiles{list-style:none;padding:0;margin:1.5rem 0 0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-block:1px solid var(--line)}.tiles li{padding:.8rem 0 .8rem .9rem;color:var(--muted);font-size:.85rem;line-height:1.3}.tiles li:first-child{padding-left:0}.tiles li+li{border-left:1px solid var(--line)}
+.tiles strong{display:block;color:var(--fg);font-size:clamp(1.9rem,1.3rem + 2.6vw,2.75rem);font-weight:800;letter-spacing:-.035em;line-height:1.05;font-variant-numeric:tabular-nums}
+.asof{margin:.4rem 0 0;color:var(--muted);font-size:.8rem}.asof a{display:inline-flex;align-items:center;min-height:44px;color:var(--fg);text-decoration:none}.asof a:is(:hover,:focus-visible){text-decoration:underline;text-decoration-color:var(--ok)}
+.cta{align-items:center;gap:.25rem 1.5rem}.cta .txt{flex:none}.cta .txt a{display:inline-flex;align-items:center;min-height:44px;font-weight:600}
+.asof time{font-family:inherit;font-size:inherit;white-space:nowrap}
