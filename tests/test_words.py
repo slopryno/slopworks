@@ -119,6 +119,12 @@ class Loosening(unittest.TestCase):
 
     def test_adding_an_exemption_is_loosening(self):
         self.assertTrue(check.words_loosened(['"exempt": ["chat/", "timeline/archive/", "team/"],'], ['"exempt": ["chat/", "timeline/archive/"],']))
+
+    def test_creating_the_file_is_not_loosening(self):  # AAR 2026-10-19-word-limits-new-file (#108)
+        new = (ROOT / "data/word_limits.json").read_text().splitlines()
+        self.assertFalse(check.words_loosened(new, []))
+        self.assertFalse(check.words_loosened((ROOT / "data/voice.json").read_text().splitlines(), []))
+        self.assertTrue(check.words_loosened(['  "exempt_selectors": ["blockquote", "p"],'], []))
         self.assertTrue(check.words_loosened(['"exempt_selectors": ["blockquote", "p.disclaimer", "article"],'], ['"exempt_selectors": ["blockquote", "p.disclaimer"],']))
         self.assertFalse(check.words_loosened(['"exempt": ["chat/"],'], ['"exempt": ["chat/", "timeline/archive/"],']))
 

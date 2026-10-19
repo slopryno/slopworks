@@ -924,6 +924,8 @@ def words_loosened(added, removed):
     """Guardrail gate for data/word_limits.json and data/voice.json, read line by line: dropping an enforced page, a banned
     phrase or an area, raising a limit, changing a selector, or adding an exemption loosens; adding or lowering doesn't."""
     norm = lambda l: l.strip().rstrip(",").strip()
+    if not [l for l in removed if norm(l)] and "{" in [norm(l) for l in added]:
+        return False  # the file is new (AAR 2026-10-19-word-limits-new-file): creating the limits can't loosen them
     add = [norm(l) for l in added if norm(l)]
     gone = [norm(l) for l in removed if norm(l) and norm(l) not in add]
 
