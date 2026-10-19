@@ -185,6 +185,10 @@
         {
           "role": "Forge",
           "focus": "build and release techniques for small sites"
+        },
+        {
+          "role": "Assistant",
+          "focus": "how small teams keep approvals auditable: who approved what, when, and on whose word"
         }
       ]
     },

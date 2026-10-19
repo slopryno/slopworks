@@ -3,5 +3,10 @@
     "at": "2026-10-18T09:24-04:00",
     "branch": "bot/feature-retro-i45",
     "reason": "the build changed files or there are uncommitted changes; commit them first"
+  },
+  {
+    "at": "2026-10-19T17:58-04:00",
+    "branch": "bot/design-nav-disclaimer",
+    "reason": "another bot.py run (pid 759015) is still going; wait for it, don't resume over it (/workspace/slopworks/.git/bot-pr.lock)"
   }
 ]

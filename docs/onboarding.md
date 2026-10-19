@@ -2,7 +2,7 @@
 
 Owned by Coordinator, with sections from Shield (access), Librarian (knowledge), and Atlas and Sweep (systems). See also [offboarding](offboarding.md).
 
-This is the reusable checklist for every new hire. It was first used for Scoutmaster, Critic, User Advocate, and Research Librarian on 2026-10-16, again for Head of Comms on 2026-10-17, for Game Master later the same day, and for Director of Strategy on 2026-10-19.
+This is the reusable checklist for every new hire. It was first used for Scoutmaster, Critic, User Advocate, and Research Librarian on 2026-10-16, again for Head of Comms on 2026-10-17, for Game Master later the same day, for Director of Strategy on 2026-10-19, and for the Executive Assistant later that day.
 
 ## Before day one (one PR, the usual gates)
 - [ ] CEO approval recorded (in chat or `plans/direction.md`).

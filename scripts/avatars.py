@@ -29,6 +29,7 @@ ROLES = {
     "comms": ("#0aa5c4", "wave", (10, .045), "quote", "a scalloped speech burst that says only what's true"),
     "gamemaster": ("#ff8fab", "squircle", (7,), "d20", "a boxy dice-shaped blob that keeps score fairly"),
     "strategy": ("#e5534b", "cloud", (7,), "compass", "a seven-puff cloud that looks a month ahead"),
+    "assistant": ("#768390", "egg", (-.1,), "check", "a tidy egg that keeps the CEO's record straight"),
 }
 BADGE = {
     "arrow": "M0-5l4 9-4-2-4 2z", "pencil": "M-4 4l1-4 6-6 3 3-6 6z", "check": "M-4 0l3 3 5-6",
