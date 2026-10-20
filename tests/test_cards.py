@@ -37,7 +37,7 @@ class Cards(unittest.TestCase):
     def test_one_card_per_role_that_opens_without_script(self):
         for s, doc in self.pages.items():
             self.assertNotIn("<script", doc.lower(), s)
-            self.assertEqual(doc.count('class="o" id="'), len(self.roles), s)
+            self.assertEqual(doc.count('class="o" id="'), len(self.roles) + 1, s)  # plus Ryno's CEO card (scripts/ceo.py)
             for f in (ROOT / "bots").glob("*.md"):
                 self.assertIn(f'href="#{f.stem}"', doc)
                 self.assertIn(f'href="#m-{f.stem}"', doc)

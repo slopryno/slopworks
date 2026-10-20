@@ -89,7 +89,8 @@ class Sets(unittest.TestCase):
     def test_normal_set_is_the_v2_blob(self):
         out = avatars.files("normal")
         for i, (n, spec) in enumerate(avatars.ROLES.items()):
-            self.assertEqual(out[f"{n}.svg"], avatars.svg(i, n, *spec))
+            if n not in avatars.FIXED:  # the CEO is one drawing all year (tests/test_ceo_card.py)
+                self.assertEqual(out[f"{n}.svg"], avatars.svg(i, n, *spec))
 
     def test_every_team_role_has_both_costumes(self):
         for n, *_ in build.team():

@@ -12,7 +12,7 @@
     "aars": 16,
     "escaped": 12,
     "blocks": 1,
-    "refusals": 7,
+    "refusals": 10,
     "blast_checked": 2,
     "blast_matched": 2
   },
@@ -104,7 +104,7 @@
       "main_failures": 0,
       "reverts": 0,
       "blocks": 0,
-      "refusals": 3
+      "refusals": 6
     }
   ],
   "sprints": [

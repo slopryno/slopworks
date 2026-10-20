@@ -39,7 +39,7 @@ ROLES = {
     "critic": ("#f0883e", "wave", (3, .12), "bang", "a three-cornered challenger"),
     "advocate": ("#3fb8af", "cloud", (6,), "heart", "a six-puff blob that speaks for readers"),
     "librarian": ("#c9a26b", "drop", (1.6,), "stack", "a settled droplet that keeps the record"),
-    "ceo": ("#d4a72c", "drop", (-0.8,), "star", "a gold droplet placeholder for the CEO, not a photo"),
+    "ceo": ("#d4a72c", "drop", (-0.8,), "star", "the human CEO: drawn as FIXED['ceo'] below, the same in every set"),
     "comms": ("#0aa5c4", "wave", (10, .045), "quote", "a scalloped speech burst that says only what's true"),
     "gamemaster": ("#ff8fab", "squircle", (7,), "d20", "a boxy dice-shaped blob that keeps score fairly"),
     "strategy": ("#e5534b", "cloud", (7,), "compass", "a seven-puff cloud that looks a month ahead"),
@@ -427,23 +427,35 @@ PROPER = ("Santa", "Rudolph", "Frankenstein's monster", "North Star", "Scrooge i
 def costume_svg(i, name, season):
     """One role in its seasonal character: flat, transparent, eyes #1b1f24, CSS-only motion, still under reduced motion."""
     ch = COSTUMES[season][name]
-    color, badge = ROLES[name][0], ROLES[name][3]
+    n = ch["name"]
+    who = name.capitalize() if name != "gamemaster" else "Game Master"
+    label = f"{who} as {n if n in PROPER else ('an ' if n[0] in 'AEIOU' else 'a ') + n[0].lower() + n[1:]}, {'Halloween' if season == 'halloween' else 'winter holidays'}"
+    return character(i, ch, label, shade(ROLES[name][0]), ROLES[name][3])
+
+
+def character(i, ch, label, badge_fill, badge):
+    """A drawn character (costume or fixed): the shared motion, eyes and job badge around ch["body"]."""
     m, dur = ch["m"], ch["m"]["dur"]
     lag = round((i * .37) % dur, 2)
     a = f"{dur}s{f' -{lag}s' if lag else ''} ease-in-out infinite"  # negative delay: out of step, already moving
     cy, xl, xr, rx, ry = ch["eyes"]
     k = 3.2 if rx < 3.4 else 4
-    (qn, qs), n = (m["qN"], m["qS"]), ch["name"]
+    qn, qs = m["qN"], m["qS"]
     # One shared timing for the four loops, then each loop's name and origin (same motion as four full shorthands).
-    css = (f".s,.q,.g,.e{{animation:{a}}}.s{{animation-name:s;transform-origin:{m['o']}}}.q{{animation-name:q;transform-origin:50px 90px}}"
-           f".g{{animation-name:g}}.e{{animation-name:e;transform-box:fill-box;transform-origin:center}}"
-           f"@keyframes s{{0%,50%,to{{transform:{m['N']}}}25%{{transform:{m['L']}}}75%{{transform:{m['R']}}}}}"
-           f"@keyframes q{{0%,50%,to{{transform:scale({qn[0]},{qn[1]})}}25%,75%{{transform:scale({qs[0]},{qs[1]})}}}}"
-           f"@keyframes g{{0%,50%,to{{transform:none}}25%{{transform:translateX(-{k}px)}}75%{{transform:translateX({k}px)}}}}"
-           f"@keyframes e{{0%,10%,50%,60%,to{{transform:none}}25%,75%{{transform:scale(1.32,.7)}}}}"
-           + ch.get("css", "") + "@media(prefers-reduced-motion:reduce){*{animation:none!important}}")
-    who = name.capitalize() if name != "gamemaster" else "Game Master"
-    label = f"{who} as {n if n in PROPER else ('an ' if n[0] in 'AEIOU' else 'a ') + n[0].lower() + n[1:]}, {'Halloween' if season == 'halloween' else 'winter holidays'}"
+    # Keyframes leave out 0% and 100% where the pose is the resting one: a missing end keyframe is the element's own
+    # transform (none), so it draws the same (page budget, Oct 20 3:54 PM ET).
+    if ch.get("calm"):  # a slow sway and the blink only (the CEO: calm motion, fewer bytes on the Team page)
+        css = (f".s,.e{{animation:{a}}}.s{{animation-name:s;transform-origin:{m['o']}}}.e{{animation-name:e;transform-box:fill-box;transform-origin:center}}"
+               f"@keyframes s{{50%{{transform:{m['N']}}}25%{{transform:{m['L']}}}75%{{transform:{m['R']}}}}}"
+               f"@keyframes e{{10%,50%,60%{{transform:none}}25%,75%{{transform:scale(1.32,.7)}}}}@media(prefers-reduced-motion:reduce){{*{{animation:none!important}}}}")
+    else:
+        css = (f".s,.q,.g,.e{{animation:{a}}}.s{{animation-name:s;transform-origin:{m['o']}}}.q{{animation-name:q;transform-origin:50px 90px}}"
+               f".g{{animation-name:g}}.e{{animation-name:e;transform-box:fill-box;transform-origin:center}}"
+               f"@keyframes s{{50%{{transform:{m['N']}}}25%{{transform:{m['L']}}}75%{{transform:{m['R']}}}}}"
+               f"@keyframes q{{0%,50%,to{{transform:scale({qn[0]},{qn[1]})}}25%,75%{{transform:scale({qs[0]},{qs[1]})}}}}"
+               f"@keyframes g{{50%{{transform:none}}25%{{transform:translateX(-{k}px)}}75%{{transform:translateX({k}px)}}}}"
+               f"@keyframes e{{10%,50%,60%{{transform:none}}25%,75%{{transform:scale(1.32,.7)}}}}"
+               + ch.get("css", "") + "@media(prefers-reduced-motion:reduce){*{animation:none!important}}")
     glyph = (f'<path d="{BADGE[badge]}" fill="none" stroke="#fff" stroke-width="1.8"/>'
              if badge in STROKED else f'<path d="{BADGE[badge]}" fill="#fff"/>')
     eyes = "".join(f'<ellipse class="e" cx="{x}" cy="{cy}" rx="{rx}" ry="{ry}"/>' for x in (xl, xr))
@@ -451,8 +463,33 @@ def costume_svg(i, name, season):
     # eye group (SVG attributes inherit; the stills keep them because still() only drops <style>). Same pixels, fewer bytes.
     return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="{label}"'
             f' stroke-linecap="round" stroke-linejoin="round"><style>{css}</style>'
-            f'<g class="s"><g class="q">{ch["body"]}<g class="g" fill="{EYE}">{eyes}</g></g></g>'
-            f'<g transform="translate(80 82)"><circle r="10" fill="{shade(color)}"/>{glyph}</g></svg>\n')
+            + (f'<g class="s">{ch["body"]}<g fill="{EYE}">{eyes}</g></g>' if ch.get("calm") else f'<g class="s"><g class="q">{ch["body"]}<g class="g" fill="{EYE}">{eyes}</g></g></g>')
+            + f'<g transform="translate(80 82)"><circle r="10" fill="{badge_fill}"/>{glyph}</g></svg>\n')
+
+
+# Ryno, the human CEO (Oct 20, 2026: 3:45 PM ET "Rhino b no glasses"; 3:48 PM ET "lets let the rhino be the every day look
+# and the trading card background only changes with holiday theme"). One drawing all year: it is never in a costume set, and
+# files() writes the same file for every season. Slate body (#748699, darkened for the Management card and still 3:1 with
+# the eyes) with a dark slate outline (#2e3a48) so he reads on the light lilac art window; gold crown; CEO star badge.
+CEO_SLATE, CEO_LINE = "#748699", "#2e3a48"
+
+
+def _ceo(d, f=CEO_SLATE):
+    return f'<path d="{d}" fill="{f}" stroke="{CEO_LINE}" stroke-width="3" paint-order="stroke"/>'
+
+
+FIXED = {"ceo": dict(label="Ryno, the human CEO, as a crowned rhino", badge="#146fac", i=17, ch=dict(
+    body=_ceo("M22 36L18 22L32 30ZM78 36L82 22L68 30ZM18 52Q18 28 50 28Q82 28 82 52Q84 70 72 82Q62 90 50 90Q38 90 28 82Q16 70 18 52Z")  # ears + head
+    + P("M30 74Q30 62 50 62Q70 62 70 74Q70 86 50 86Q30 86 30 74Z", "#9fb0c2", True)
+    + P("M43 66Q45 40 50 26Q55 40 57 66Z", "#ece6d6") + P("M46 40Q48 32 50 26Q52 32 54 40Z", "#d8d0bc", True)
+    + P("M40 78a2 3 0 1 0 4 0a2 3 0 1 0-4 0M56 78a2 3 0 1 0 4 0a2 3 0 1 0-4 0", "#5d6d80", True)  # nostrils
+    + P("M42 26l-1-10.8 4.48 5.4 3.52-12 3.52 12 4.48-5.4-1 10.8Z", "#f2c14e"),
+    eyes=(50, 33, 67, 2.8, 4.8), face=CEO_SLATE, m=dance(6, .06, 3.4), calm=True))}
+
+
+def fixed_svg(name):
+    f = FIXED[name]
+    return character(f["i"], f["ch"], f["label"], f["badge"], ROLES[name][3])
 
 
 def still(s):
@@ -464,7 +501,7 @@ def files(season):
     """{relative path: svg} for a whole set: one animated and one still file per role."""
     out = {}
     for i, (n, spec) in enumerate(ROLES.items()):
-        s = costume_svg(i, n, season) if n in COSTUMES.get(season, {}) else svg(i, n, *spec)
+        s = fixed_svg(n) if n in FIXED else costume_svg(i, n, season) if n in COSTUMES.get(season, {}) else svg(i, n, *spec)
         out[f"{n}.svg"], out[f"still/{n}.svg"] = s, still(s)
     return out
 

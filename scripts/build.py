@@ -781,8 +781,16 @@ def build():
     tbody = (f'<p class="set">Set 1, {len(seq)} cards: {summ}.' + (" October edition: Halloween art." if season == "halloween" else "") + " Tap a card to open it.</p>"
              + cardmod.sprite()
              + "".join(f'<h2 class="group">{e(g)}</h2><div class="deck">' + "".join(tslot(x, seq.index(x) + 1) for x in seq if x[0] in members) + "</div>" for g, members in GROUPS))
+    # Ryno's CEO card and sheet (scripts/ceo.py; Ryno, Oct 20 3:54 PM ET): a CEO group above Leadership, his avatar the same all year.
+    import ceo
+    g0 = tbody.index('<h2 class="group">')
+    tbody = (tbody[:g0].replace(" Tap a card to open it.</p>", " Plus one human: Ryno, the CEO. Tap a card to open it.</p>", 1)
+             + f'<h2 class="group">CEO</h2><div class="deck">{ceo.card(cardmod, cspec, season, len(seq), "../assets/avatars/ceo.svg")}</div>' + tbody[g0:])
+    first = seq[0][0]
+    files[f"team/{ceo.STEM}/index.html"] = page(f"team/{ceo.STEM}/", "Ryno: character sheet", "The human CEO: his real powers and every time he used them, counted from the records at build time.",
+                                                ceo.sheet(REPO, len(seq), f'<p class="next"><a class="more" href="../{stems[first]}/">Next: {e(first)}\'s sheet</a></p>'), "data/ceo_decisions.json")
     files["team/index.html"] = page("team/", "The team", f"{len(team())} Grok Bot roles in five groups, played by one daily routine, not separate agents. Levels come from verified XP (<a href=\"xp/\">how XP works</a>).",
-                                    tbody + alumni_html + '<p class="next"><a class="more" href="../timeline/">Next: how the team grew, on the Timeline</a></p>', "bots").replace("</head>", f"<style>{cardmod.css(cspec, season, stems)}</style>\n</head>", 1)
+                                    tbody + alumni_html + '<p class="next"><a class="more" href="../timeline/">Next: how the team grew, on the Timeline</a></p>', "bots").replace("</head>", f"<style>{cardmod.css(cspec, season, stems)}{ceo.css(season)}</style>\n</head>", 1)
 
 
     # Lessons: same-day after-action reviews (AARs), approved by Ryno 2026-10-17. Blameless, and every field cites a real artifact.
