@@ -84,8 +84,8 @@ class FollowUp(unittest.TestCase):
             self.assertIn(o["role"], roles)
             self.assertTrue((ROOT / o["source"]).exists(), o["source"])
             self.assertIn(o["ref"], self.chat)
-        team = self.files["team/index.html"]
-        self.assertEqual(team.count('class="obj"'), len(self.objectives))
+        sheets = [v for k, v in self.files.items() if re.fullmatch(r"team/\w+/index.html", k) and k != "team/xp/index.html"]
+        self.assertEqual(sum(s.count('class="obj"') for s in sheets), len(self.objectives))  # on the sheets since the trading cards (Oct 20)
         cards = re.findall(r'<li class="char">.*?</li>', self.doc, re.S)
         with_obj = {re.search(r"<h3><a[^>]*>(\w+)</a>", c).group(1) for c in cards if 'class="obj"' in c}
         self.assertTrue(with_obj <= {o["role"] for o in self.objectives})
