@@ -771,7 +771,8 @@ def build():
             if y["agent"] == n and y["status"] == "approved":
                 kinds[y["type"]] = kinds.get(y["type"], 0) + 1
         return cardmod.card(n, i, len(order), f[:-3], cspec, season, xp, num, lv, nxt, kinds, f"../assets/avatars/{avatar_of(n)}.svg")
-    seq = [x for _, members in GROUPS for x in team() if x[0] in members]
+    by_name = {x[0]: x for x in team()}
+    seq = [by_name[n] for _, members in GROUPS for n in members if n in by_name]  # set order = the group order
     tiers = {}
     for x in seq:
         k = cardmod.rarity(level_for(totals.get(x[0], 0), levels)[0], cspec)[1]
