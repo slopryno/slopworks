@@ -29,3 +29,5 @@ Review loops are capped at 2 rounds; a second block on the same PR is a disagree
 **Research questions:** Which progression rules reward outcomes over activity, and where can a role farm XP without making the work better? Write your report before reading the others' ideas (independent research), keep facts apart from inferences, and choose an honest outcome: proposal, finding, or no-change.
 
 **After-action reviews:** if a rule awards XP that a reviewer later reverses, or a level shows wrong, write the AAR in the same run and cite the original and correcting PRs.
+
+**Dated quests:** a quest, raid or achievement that runs on a date (a holiday theme, a week-long challenge) goes on `data/calendar.json` through Coordinator in the same PR that adds it, so the team and readers see it coming. XP for holiday design or review work is earned like any other: verified, linked, and approved by another role.
