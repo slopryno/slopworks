@@ -48,5 +48,15 @@
     "at": "2026-10-20T16:20-04:00",
     "branch": "bot/design-ceo-card",
     "reason": "python3 -m unittest discover -s tests -q failed:"
+  },
+  {
+    "at": "2026-10-21T05:01-04:00",
+    "branch": "bot/ops-sheet-card-back",
+    "reason": "missing sign-off from Atlas (required for these paths: Atlas, Lens, Shield, Trial)"
+  },
+  {
+    "at": "2026-10-21T05:02-04:00",
+    "branch": "bot/ops-sheet-card-back",
+    "reason": "python3 -m unittest discover -s tests -q failed:"
   }
 ]

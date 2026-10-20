@@ -473,7 +473,7 @@ def build():
     # Case-file steps link ../chat/#id literally (and CI checks that anchor), so those items and open ideas stay pinned on the main page.
     # Every other link (team cards, arena, demo challenge, feeds, badges) goes through href(), which points at wherever the item lives now.
     budget = json.loads((ROOT / "scripts/patterns.json").read_text())["max_page_bytes"]
-    css_bytes = sum(p.stat().st_size for p in SITE.glob("*.css"))
+    css_bytes = (SITE / "style.css").stat().st_size  # the stylesheet these pages load; site/sheets.css loads on the sheets only
     page_target = int(budget * CHAT_TARGET) - css_bytes
     ideas = sorted(load("ideas"), key=lambda i: i["date"], reverse=True)
     idea_state = {i["id"]: i["state"] for i in ideas}
@@ -621,15 +621,6 @@ def build():
     research = sorted(load("research"), key=lambda r: r["date"], reverse=True)
     rot = {r["role"]: (d["day"], r["focus"]) for d in sched.get("research", []) for r in d["roles"]}
     TEAM_ROLE = {"Sketch": "Scout", "Lens": "Verify"}
-    def researched(n, up="../"):
-        # On the character sheet since the page-budget change (Ryno, Oct 20 7:27 AM ET); Team links here.
-        r = TEAM_ROLE.get(n, n)
-        day, focus = rot.get(r, ("", ""))
-        last = next((x for x in research if x["role"] == r), None)
-        in_arena = last and any(last["id"] in a["reports"] for a in load("arena"))
-        lt = f' Last: <a href="{up + "arena/#" + e(last["id"]) if in_arena else href(last["id"], up, "team/")}">{e(last["question"])}</a> ({last["date"]}).' if last else " No notes yet. The weekly rotation adds one."
-        return (f'<h2 id="research">Research</h2><p>Every {e(day)}, on the weekly research rotation.</p>'
-                f'<p>{e(focus[:1].upper() + focus[1:])}.{lt}</p>') if day else ""
     # Living Team (i22, PR 5 of 8): each card shows the role's latest real handoff from data/chat.json, with its date. No live claims.
     def latest_msg(n, up="../", here="team/"):
         m = latest_of(n)
@@ -644,29 +635,6 @@ def build():
     learned = lambda f: skillmod.role_skills((ROOT / "bots" / f).read_text()) or []
     # Training tracks (Ryno, 2026-10-20 7:05 AM ET): a role's **Training track:** lines name tracks in data/skills.json.
     tracked = lambda f: [(tid, kit["tracks"][tid]) for tid in skillmod.role_tracks((ROOT / "bots" / f).read_text()) if tid in kit.get("tracks", {})]
-    def track_html(n, tid, t):
-        mods = skillmod.track_modules(t, n)
-        src = t["sources"]
-        li = "".join(f'<li><strong>{e(m["title"])}.</strong> {e(m["practice"])} <a href="{e(src[m["sources"][0]]["url"])}">{e(src[m["sources"][0]]["title"])}</a></li>' for m in mods)
-        x = t["exercises"][n]
-        grade = {"pending": f'grade pending from {x["grade"]["by"]}', "pass": f'passed, graded by {x["grade"]["by"]}', "redo": f'redo asked by {x["grade"]["by"]}'}[x["grade"]["state"]]
-        kinds = {"defect": "Defect", "risk": "Risk", "pass": "Pass"}
-        fl = "".join(f'<li><strong>{kinds[g["kind"]]}:</strong> {e(g["what"])}</li>' for g in x["findings"])
-        day = datetime.fromisoformat(x["date"]).strftime("%b %-d")
-        return (f'<h3 id="track-{tid}">{e(t["title"])} track</h3><p class="meta"><span>{len(mods)} modules from public guides, asked by Ryno on '
-                f'{e(datetime.fromisoformat(t["trained"]).strftime("%b %-d"))}.</span><a href="{REPO}/blob/main/data/skills.json">Modules and sources</a></p>'
-                f'<details><summary>The {len(mods)} modules</summary><ol class="worklist">{li}</ol></details>'
-                f'<details><summary>Audit of the live site at {x["width"]}px, {day}: {len(x["findings"])} findings</summary>'
-                f'<p class="meta">{x["pages"]} pages, light and dark; {e(grade)}.</p><ul class="worklist">{fl}</ul></details>')
-    def about(n, o, f):
-        # Moved here from the Team card when the trading cards shipped (Ryno, Oct 20 12:18 PM ET): bio, objective, what the
-        # role owns, its limits, the latest handoff and the role file, one tap away on the sheet.
-        cant = re.search(r"\*\*Can't:\*\*\s*(.+)", (ROOT / "bots" / f).read_text())
-        return (f'<h2 id="about">About the role</h2><p class="bio">{e(bio(n))}</p>{home.objective(objectives[n], "../../", href) if n in objectives else ""}'
-                f'<details class="more"><summary>Owns, limits and latest handoff</summary><p><strong>Owns:</strong> {e(o)}</p>'
-                + (f"<p><strong>Can't:</strong> {e(cant.group(1))}</p>" if cant else "")
-                + f'<h3>Latest handoff</h3>{latest_msg(n, "../../", "team/" + f[:-3] + "/")}'
-                f'<p class="links"><a href="{REPO}/blob/main/bots/{f}">Role file</a></p></details>')
     # Character sheets (i34, Week 1): every number is computed here from data/xp_ledger.json and data/progression.json.
     prog, ledger_all = load("progression"), load("xp_ledger")
     totals, levels = xp_totals(ledger_all), prog["levels"]
@@ -676,70 +644,72 @@ def build():
         num, lv, nxt = level_for(x, levels)
         return f'Level {num}, {e(lv["name"])}, {x} XP'
     order = [x[0] for x in team()]
-    def next_role(n):  # V9: role sheets end with the next role in team order; the last leads to How XP works
-        i = order.index(n) + 1
-        return (f'<p class="next"><a class="more" href="../{stems[order[i]]}/">Next: {e(order[i])}\'s sheet</a></p>' if i < len(order)
-                else '<p class="next"><a class="more" href="../xp/">Next: How XP works</a></p>')
-    def training(f):
-        got = learned(f)
-        if not got:
-            return ""
-        rows = "".join(f'<li><a href="{e(u)}">{e(k)}</a> <span class="meta">{e(src)}</span> {e(use)}</li>' for k, u, src, use in got)
-        return (f'<h2 id="training">Training</h2><p class="meta"><span>Trained {e(datetime.fromisoformat(kit["trained"]).strftime("%b %-d, %Y"))} from pinned, MIT-licensed toolkits. '
-                f'Training earns no XP; first real use counts under the normal rules.</span><a href="{REPO}/blob/main/data/skills.json">Sources and pins</a></p><ul class="worklist">{rows}</ul>'
-                + "".join(track_html(next(r for r in tt["roles"] if r.lower() == f[:-3]), tid, tt) for tid, tt in tracked(f)))
     def sheet(n, t, r, o, f):
         x = totals.get(n, 0)
         num, lv, nxt = level_for(x, levels)
         mine = [y for y in ledger_all if y["agent"] == n]
         ok = [y for y in mine if y["status"] == "approved"]
         pct = 100 if not nxt else int(100 * (x - lv["xp"]) / (nxt["xp"] - lv["xp"]))
-        togo = f'{nxt["xp"] - x} XP to {e(nxt["name"])} ({nxt["xp"]} XP)' if nxt else "Top level reached"
-        bar = (f'<div class="xpbar" aria-hidden="true"><span style="width:{pct}%;background:{color(n)}"></span></div>'
-               f'<p class="xpnum"><strong>{x} XP</strong> · {togo}</p>')
-        if not x:
-            bar += '<p class="empty">No XP yet. Every role starts here.</p>'
         skipped = {s: sum(y["status"] == s for y in mine) for s in ("rejected", "pending", "reversed")}
         notes = sorted({y.get("note", "") for y in mine if y["status"] != "approved"} - {""})
-        counted = (f'<p>{len(ok)} entries count. ' + (", ".join(f"{v} {k}" for k, v in skipped.items() if v) + " don't" if any(skipped.values()) else "Nothing was turned away")
-                   + (f' ({e("; ".join(notes))})' if notes else "") + '. <a href="../xp/">How XP works</a></p>')
         kinds = {}
         for y in ok:
             k = kinds.setdefault(y["type"], [0, 0]); k[0] += 1; k[1] += y["base_xp"] * y["quality_pct"] // 100
-        skills = ("<div class=\"scroll fit\"><table><thead><tr><th scope=\"col\">Kind of work</th><th scope=\"col\">Entries</th><th scope=\"col\">XP</th></tr></thead><tbody>"
-                  + "".join(f'<tr><td>{e(prog["events"][k]["label"])}</td><td>{c}</td><td>{v}</td></tr>' for k, (c, v) in sorted(kinds.items(), key=lambda kv: -kv[1][1]))
-                  + "</tbody></table></div>") if kinds else '<p class="empty">No verified work yet.</p>'
-        ach = ""
-        for a in prog["achievements"]:
-            got = next((y for y in ok if y["type"] == a["event"]), None)
-            ach += (f'<li class="ach got"><a href="{e(got["evidence"])}"><span aria-hidden="true">★</span> {e(a["name"])}</a> <span class="meta">{e(a["rule"])}, {got["timestamp"][:10]}</span></li>' if got
-                    else f'<li class="ach"><span aria-hidden="true">○</span> {e(a["name"])} <span class="meta">not yet: {e(a["rule"][0].lower() + a["rule"][1:])}</span></li>')
         quest = prog["quests"].get(n, prog["quests"]["default"])
         newest = sorted(ok, key=lambda y: y["timestamp"], reverse=True)
         # The role's 3 latest merged PRs always show (they moved here from the Team page), even when sign-offs fill the newest 15.
         shipped = [y for y in newest if y["type"] == "pr_merged"][:3]
         shown = newest[:15] + [y for y in shipped if y not in newest[:15]]
-        work = "".join(f'<li><time datetime="{y["timestamp"]}">{y["timestamp"][:10]}</time> <a href="{e(y["evidence"])}">{e(y["task"])}</a> '
-                       f'<span class="meta">+{y["base_xp"] * y["quality_pct"] // 100} XP · {e(prog["events"][y["type"]]["label"])} · reviewed by {e(y["reviewer"])}</span></li>'
-                       for y in shown)
         extra = len(shown) - 15
         plus = f", plus {extra} older merged {'PR' if extra == 1 else 'PRs'}" if extra > 0 else ""
-        more = f'<p class="meta">Showing the newest {min(15, len(ok))} of {len(ok)}{plus}. <a href="{REPO}/blob/main/data/xp_ledger.json">Full record: data/xp_ledger.json</a></p>' if ok else ""
-        said = [s for s in load("standup") if s["role"] == n]
-        claimed = ('<ul class="worklist">' + "".join(f'<li><time datetime="{s["date"]}">{s["date"]}</time> {e(s["did"])}</li>' for s in said) + "</ul>") if said else '<p class="empty">No standup claims.</p>'
-        body = (f'<section class="sheet card" style="border-top:4px solid {color(n)}">{avatar(n, "../../", 96, True)}<div><p class="title">{e(t)}</p>'
-                f'<p class="lvl">Level {num} · {e(lv["name"])}</p>{bar}{counted}</div></section>'
-                f'<h2>Next level-up quest</h2><p>{e(quest)}</p><p class="meta">Tracked quests start in Week 2 (Oct 22); this is the next step.</p>'
-                f'<h2>Achievements</h2><ul class="achs">{ach}</ul>' + about(n, o, f) + f'{training(f)}'
-                + researched(n, "../../")
-                + f'<h2>Skills</h2><p class="meta">XP by kind of work. Skill trees (three branches, four milestones each) arrive in Week 4.</p>{skills}'
-                f'<h2>Verified work</h2>{label("verified")} <span class="meta">Approved entries, each with its evidence and a reviewer who isn\'t {e(n)}.</span>'
-                + (f'<ul class="worklist">{work}</ul>' if work else '<p class="empty">No verified work yet.</p>') + more
-                + f'<h2>Claimed</h2><p class="meta">Standup lines: what {e(n)} said it did. They carry no XP until they link to evidence.</p>{claimed}'
-                + f'<p><a href="../">Back to the team</a> · <a href="../xp/">How XP works</a></p>' + next_role(n))
-        return page(f"team/{stems[n]}/", f"{n}: character sheet", f"{e(n)}'s level, XP, achievements, and verified work, computed from the XP ledger at build time.", body, "data/xp_ledger.json")
+        # The card back (Ryno, Oct 20 3:06 PM ET: "Go with B, the card back"): scripts/sheets.py renders, site/sheets.css styles.
+        r = cspec["roles"][n]
+        ty = next(z for z in cspec["types"] if z["name"] == r["type"])
+        art = r.get("art", {}).get(season)
+        rk, rname = cardmod.rarity(num, cspec)
+        cant = re.search(r"\*\*Can't:\*\*\s*(.+)", (ROOT / "bots" / f).read_text())
+        tracks = []
+        for tid, tt in tracked(f):
+            rn = next(z for z in tt["roles"] if z.lower() == f[:-3])
+            xx, mods, src = tt["exercises"][rn], skillmod.track_modules(tt, rn), tt["sources"]
+            g = xx["grade"]
+            tracks.append(dict(id=tid, title=tt["title"], mods=mods, grade=g, findings=xx["findings"], width=xx["width"], pages=xx["pages"],
+                grade_text={"pending": f'Grade pending from {g["by"]}', "pass": f'Passed, graded by {g["by"]}', "redo": f'Redo asked by {g["by"]}'}[g["state"]],
+                day=datetime.fromisoformat(xx["date"]).strftime("%b %-d"),
+                mods_html="".join(f'<li><strong>{e(m["title"])}.</strong> {e(m["practice"])} <a href="{e(src[m["sources"][0]]["url"])}">{e(src[m["sources"][0]]["title"])}</a></li>' for m in mods),
+                findings_html="".join(f'<li><strong>{ {"defect": "Defect", "risk": "Risk", "pass": "Pass"}[x2["kind"]]}:</strong> {e(x2["what"])}</li>' for x2 in xx["findings"])))
+        rr = TEAM_ROLE.get(n, n)
+        rday, rfocus = rot.get(rr, ("", ""))
+        rlast = next((z for z in research if z["role"] == rr), None)
+        in_arena = rlast and any(rlast["id"] in a["reports"] for a in load("arena"))
+        i = order.index(n) + 1
+        set_order = [m for _, ms in GROUPS for m in ms]
+        c = dict(n=n, stem=stems[n], title=t, role=r, ty=ty, ti=[z["name"] for z in cspec["types"]].index(r["type"]), art=art,
+                 pk=art["particles"] if art else ty["particles"], av=f"../../assets/avatars/{avatar_of(n)}.svg", xp=x, level=num, lvname=lv["name"], pct=pct,
+                 togo=(f'{nxt["xp"] - x} XP to {e(nxt["name"])} ({nxt["xp"]} XP)' if nxt else "Top level reached"), rk=rk, rname=rname,
+                 set=set_order.index(n) + 1, total=len(order), flavour=r["flavour"].get(season) or r["flavour"]["normal"],
+                 counts={k: v[0] for k, v in kinds.items()}, kinds=sorted(kinds.items(), key=lambda kv: -kv[1][1]),
+                 labels={k: v["label"] for k, v in prog["events"].items()}, ok=len(ok), skipped=skipped, notes="; ".join(notes),
+                 quest=quest, quest_note=shmod.quest_note(prog),
+                 ach=[dict(name=a["name"], rule=a["rule"], got=next((z for z in ok if z["type"] == a["event"]), None)) for a in prog["achievements"]], badges=None,
+                 bio=bio(n), objective=home.objective(objectives[n], "../../", href) if n in objectives else "", owns=o, cant=cant.group(1) if cant else "",
+                 latest=latest_msg(n, "../../", "team/" + f[:-3] + "/"), rolefile=f"{REPO}/blob/main/bots/{f}",
+                 skills=learned(f) or [], tracks=tracks, trained=datetime.fromisoformat(kit["trained"]).strftime("%b %-d, %Y"), skills_src=f"{REPO}/blob/main/data/skills.json",
+                 rday=rday, rfocus=rfocus[:1].upper() + rfocus[1:], rlast=rlast,
+                 rlast_href=(("../../arena/#" + e(rlast["id"])) if in_arena else href(rlast["id"], "../../", "team/")) if rlast else "",
+                 work=[dict(y, gain=y["base_xp"] * y["quality_pct"] // 100) for y in shown], verified=label("verified"),
+                 shown_line=f"Showing the newest {min(15, len(ok))} of {len(ok)}{plus}." if ok else "", ledger=f"{REPO}/blob/main/data/xp_ledger.json",
+                 claimed=[s for s in load("standup") if s["role"] == n],
+                 next_href=f"../{stems[order[i]]}/" if i < len(order) else "../xp/", next_text=f"Next: {order[i]}'s sheet" if i < len(order) else "Next: How XP works")
+        return page(f"team/{stems[n]}/", f"{n}: character sheet", f"{e(n)}'s level, XP, achievements, and verified work, computed from the XP ledger at build time.",
+                    shmod.render(c), "data/xp_ledger.json").replace("</head>", '<link rel="stylesheet" href="../../sheets.css">\n</head>', 1)
+    import cards as cardmod
+    import avatars as avmod
+    import sheets as shmod
+    cspec, season = cardmod.load(), avmod.committed_season() or "normal"
     for x in team():
         files[f"team/{stems[x[0]]}/index.html"] = sheet(*x)
+    files["sheets.css"] = shmod.css(cspec, season, stems)
     ev_rows = ""
     for k, v in prog["events"].items():
         d = prog["tables"]["default"].get(k)
@@ -759,9 +729,6 @@ def build():
              f'<p>Rules: <a href="{REPO}/blob/main/data/progression.json">data/progression.json</a> (owned by Game Master). Ledger: <a href="{REPO}/blob/main/data/xp_ledger.json">data/xp_ledger.json</a>, written by <a href="{REPO}/blob/main/scripts/xp.py">scripts/xp.py</a>. Decided in <a href="{href(prog["thread"], "../../", "team/xp/")}">Team chat</a>.</p>')
     files["team/xp/index.html"] = page("team/xp/", "How XP works", f"XP from {len([y for y in ledger_all if y['status'] == 'approved'])} verified pieces of work. Every point links its evidence.", xbody, "data/progression.json")
     # Team trading cards (Ryno, Oct 20 12:18 PM ET: design locked; Comms wording). scripts/cards.py renders; no script.
-    import cards as cardmod
-    import avatars as avmod
-    cspec, season = cardmod.load(), avmod.committed_season() or "normal"
     def tslot(x, i):
         n, f = x[0], x[4]
         xp = totals.get(n, 0)
