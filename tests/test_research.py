@@ -54,7 +54,12 @@ class Site(unittest.TestCase):
     def test_views_and_feeds(self):
         files = build.build()
         self.assertIn("Research", files["chat/index.html"])
-        self.assertIn("Researches", files["team/index.html"])
+        # Page budget (Ryno, Oct 20 7:27 AM ET): each role's research rotation and latest note live on its character sheet.
+        sheets = [k for k in files if k.startswith("team/") and k.count("/") == 2 and k.endswith("/index.html") and k != "team/xp/index.html"]
+        with_research = [k for k in sheets if 'id="research"' in files[k]]
+        self.assertGreaterEqual(len(with_research), 10)
+        self.assertTrue(all("on the weekly research rotation" in files[k] for k in with_research))
+        self.assertNotIn("Researches", files["team/index.html"])
 
     def test_every_bot_file_mentions_research(self):
         for f in (ROOT / "bots").glob("*.md"):
