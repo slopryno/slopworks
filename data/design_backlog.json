@@ -67,5 +67,37 @@
     "effort": "S",
     "rank": 7,
     "state": "backlog"
+  },
+  {
+    "id": "d8",
+    "idea": "Links inside role objectives: underlined, and plain inline text instead of 44px boxes",
+    "why": "Mobile UI/UX audit at 390 (P1, P2): 15 'assigned in Team chat' links on Home and Team have no underline and the text colour, and their 44px box opens a gap mid-sentence. WCAG 2.5.8 exempts inline links.",
+    "effort": "S",
+    "rank": 8,
+    "state": "backlog"
+  },
+  {
+    "id": "d9",
+    "idea": "Team card avatars hop once on focus, not on an endless loop",
+    "why": "Mobile UI/UX audit at 390 (P5): focusing 'More about' starts a 0.9 s hop that repeats until focus leaves. Reduced motion already stops it; this keeps the default calm.",
+    "effort": "S",
+    "rank": 9,
+    "state": "backlog"
+  },
+  {
+    "id": "d10",
+    "idea": "XP bars on Home and Team say what they fill toward",
+    "why": "Mobile UI/UX audit at 390 (G1, G2): 25 bars are aria-hidden with no 'XP to next level' text, and the track is 1.32:1 on light cards and 1.35:1 on dark. Add the text sheets already show; the track then stays decorative.",
+    "effort": "S",
+    "rank": 10,
+    "state": "backlog"
+  },
+  {
+    "id": "d11",
+    "idea": "How XP works at 390: rules a reader can see without sideways scrolling",
+    "why": "Mobile UI/UX audit at 390 (G3, G4): 'Who earns it' and 'Reviewer' start off-screen in a 640px table, and short names in the sheet list get a gap before the colon from a 44px min-width.",
+    "effort": "M",
+    "rank": 11,
+    "state": "backlog"
   }
 ]
