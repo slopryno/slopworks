@@ -97,9 +97,10 @@ def avatar_of(name):
     return n if n in AVATARS else "coordinator"
 
 
-def avatar(name, up, size=40):
+def avatar(name, up, size=40, move=False):
+    """Long lists (Team chat, the Arena, cases) use the still copy; the Team page, role sheets and home cards animate."""
     a = avatar_of(name)
-    return f'<img class="av" src="{up}assets/avatars/{a}.svg" width="{size}" height="{size}" alt="">'
+    return f'<img class="av" src="{up}assets/avatars/{"" if move else "still/"}{a}.svg" width="{size}" height="{size}" alt="">'
 
 
 def color(name):
@@ -649,7 +650,7 @@ def build():
         k, lv, nxt = level_for(x, levels)
         pct = 100 if not nxt else int(100 * (x - lv["xp"]) / (nxt["xp"] - lv["xp"]))
         cant = re.search(r"\*\*Can't:\*\*\s*(.+)", (ROOT / "bots" / f).read_text())
-        return (f'<article class="card lead" id="{f[:-3]}" style="border-top:4px solid {color(n)}"><div class="hd">{avatar(n, "../", 56)}<div><h2><a href="{f[:-3]}/">{e(n)}</a></h2>'
+        return (f'<article class="card lead" id="{f[:-3]}" style="border-top:4px solid {color(n)}"><div class="hd">{avatar(n, "../", 56, True)}<div><h2><a href="{f[:-3]}/">{e(n)}</a></h2>'
                 f'<p class="title">{e(t)}</p></div></div><p class="bio">{e(bio(n))}</p>{home.objective(objectives[n], "../", href) if n in objectives else ""}'
                 f'<p class="lv"><span>{xp_line(n, "")}</span></p><div class="bar" aria-hidden="true"><span style="width:{pct}%"></span></div>'
                 f'<details class="more"><summary>More about {e(n)}</summary><p><strong>Owns:</strong> {e(o)}</p>'
@@ -709,7 +710,7 @@ def build():
         more = f'<p class="meta">Showing the newest {min(15, len(ok))} of {len(ok)}. <a href="{REPO}/blob/main/data/xp_ledger.json">Full record: data/xp_ledger.json</a></p>' if ok else ""
         said = [s for s in load("standup") if s["role"] == n]
         claimed = ('<ul class="worklist">' + "".join(f'<li><time datetime="{s["date"]}">{s["date"]}</time> {e(s["did"])}</li>' for s in said) + "</ul>") if said else '<p class="empty">No standup claims.</p>'
-        body = (f'<section class="sheet card" style="border-top:4px solid {color(n)}">{avatar(n, "../../", 96)}<div><p class="title">{e(t)}</p>'
+        body = (f'<section class="sheet card" style="border-top:4px solid {color(n)}">{avatar(n, "../../", 96, True)}<div><p class="title">{e(t)}</p>'
                 f'<p class="lvl">Level {num} · {e(lv["name"])}</p>{bar}{counted}</div></section>'
                 f'<h2>Next level-up quest</h2><p>{e(quest)}</p><p class="meta">Tracked quests start in Week 2 (Oct 22); this is the next step.</p>'
                 f'<h2>Achievements</h2><ul class="achs">{ach}</ul>{training(f)}'
