@@ -18,5 +18,10 @@
     "at": "2026-10-19T19:55-04:00",
     "branch": "bot/design-theme-flip",
     "reason": "Lens's sign-off: Derived: count site/style.css 'theme-flip:checked' is 2, not 4"
+  },
+  {
+    "at": "2026-10-20T10:49-04:00",
+    "branch": "bot/feature-aar-run-interrupted",
+    "reason": "tempo: slowed mode allows 3 merged PRs today and 8 already count; wait for tomorrow (ET) or 10 clean PRs (scripts/tempo.py, data/tempo.json)"
   }
 ]

@@ -1620,6 +1620,33 @@ def html_escape(s):
     return h.escape(s, quote=True)
 
 
+def shipped_in_errors():
+    """Ryno 2026-10-20 11:02 AM ET: "Yes, let same-day incident write-ups through the PR limit". An AAR that newly
+    carries shipped_in rode that exception past the day's limit, so its PR must be a same-day-AAR-only PR (one new
+    same-day entry in data/aars.json and its Team chat thread, plus derived records and the rebuilt site), and
+    shipped_in must be this PR's number (tempo.aar_exception_problems). Runs on pull requests in CI."""
+    import tempo
+    from datetime import datetime
+    from zoneinfo import ZoneInfo
+    base, head = pr_context()
+    m = re.match(r"refs/pull/(\d+)/", os.environ.get("GITHUB_REF", ""))
+
+    def show(ref, path):
+        out = subprocess.run(["git", "show", f"{ref}:{path}"], capture_output=True, text=True, cwd=ROOT).stdout
+        return json.loads(out) if out.strip() else []
+    base_aars, head_aars = show(base, "data/aars.json"), show(head, "data/aars.json")
+    had = {a.get("id") for a in base_aars if a.get("shipped_in")}
+    newly = [a for a in head_aars if a.get("shipped_in") and a.get("id") not in had]
+    if not newly:
+        return []
+    if not m:
+        return [f"data/aars.json {a.get('id')}: shipped_in needs the pull request number (GITHUB_REF)" for a in newly]
+    day = datetime.now(ZoneInfo("America/New_York")).strftime("%Y-%m-%d")
+    probs = tempo.aar_exception_problems(changed(base, head), base_aars, head_aars, show(base, "data/chat.json"),
+                                         show(head, "data/chat.json"), day, int(m.group(1)))
+    return [f"data/aars.json {newly[0].get('id')}: shipped_in marks a same-day-AAR-only PR, but this PR {p}" for p in probs]
+
+
 def pr_context():
     return os.environ["BASE"], os.environ["HEAD"]
 
@@ -1691,6 +1718,9 @@ def run_guardrail_gate():
 
 def run_paths():
     branch = os.environ.get("BRANCH", "")
+    aar = shipped_in_errors() if os.environ.get("BASE") else []  # Ryno 2026-10-20 11:02 AM ET: the same-day AAR exception
+    if aar:
+        return aar
     if not branch.startswith("bot/data-"):
         return []
     base, head = pr_context()

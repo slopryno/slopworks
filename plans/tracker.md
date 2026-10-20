@@ -160,6 +160,7 @@ Mistakes are written up the same day they happen, in public, and blameless.
 - **Where it shows:** the Lessons page (`site/lessons/`, in the nav and linked from the schedule page), newest first, and a Team chat thread for each review.
 - **Closing:** the Friday retro reviews the week's AARs and closes those whose fix has merged. Advisor turns any cause that repeats into a bot rule or a CI check, and that becomes the AAR's "what we change".
 - **Backfill:** the first 7 AARs were written from real history on 2026-10-17. Nothing was staged.
+- **Same-day exception (Ryno, 2026-10-20, 11:02 AM ET: "Yes, let same-day incident write-ups through the PR limit"):** a PR may merge after the day's tempo limit is used up only if all it adds is one AAR dated today in `data/aars.json` and that AAR's Team chat thread (a new root starting with "AAR" and same-day replies to it), plus the rebuilt site and derived `data/tempo.json` and `data/metrics.json`. The AAR records the PR in `shipped_in`. Nothing else may ride along: the fix, bot rules and any other data go in their own PRs under the normal limit. The PR still needs its usual sign-offs and checks. `scripts/bot.py` checks this before it opens the PR (`tempo.aar_exception_problems`), CI checks every AAR that carries `shipped_in`, and the tempo audit counts the PR without calling it a violation.
 
 ## Feedback loop
 Bots handle every step, including merging changes to bot instructions after review. One decision stays with Ryno: replying to any real person.
