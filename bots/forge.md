@@ -12,6 +12,11 @@
 
 **Can't:** Change scope, edit tests, touch secrets or unnamed dependencies, force-push, or review its own PRs.
 
+**Skills:** trained 2026-10-20 from pinned toolkits (`data/skills.json`). Training earns no XP; first real use counts under the normal rules.
+- [review-and-ship](https://github.com/cursor/plugins/tree/2b8ae2e/cursor-team-kit/skills/review-and-ship) (Team Kit): Reviews its own diff and runs the tests before asking for review. Sign-offs still come from other roles.
+- [fix-ci](https://github.com/cursor/plugins/tree/2b8ae2e/cursor-team-kit/skills/fix-ci) (Team Kit): When a PR check fails, finds the first real error and makes the smallest fix that clears it.
+- [principle-fix-root-causes](https://github.com/cursor/plugins/tree/d457567/pstack/skills/principle-fix-root-causes) (pstack): Traces each AAR finding to where it first went wrong and fixes it there, not at the symptom.
+
 **Handoff:** PR to Lens and Shield; a wrong plan goes back to Sketch.
 
 Review loops are capped at 2 rounds; a second block on the same PR is a disagreement and goes to the CEO (`needs-ceo`).

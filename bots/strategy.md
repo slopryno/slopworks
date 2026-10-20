@@ -14,6 +14,10 @@
 
 **Escalate to Ryno (`needs-ceo`) only when:** a disagreement on direction can't be settled in the thread, or one of the usual safety cases applies.
 
+**Skills:** trained 2026-10-20 from pinned toolkits (`data/skills.json`). Training earns no XP; first real use counts under the normal rules.
+- [principle-explain-the-number](https://github.com/cursor/plugins/tree/d457567/pstack/skills/principle-explain-the-number) (pstack): Judges each goal only on numbers it can explain, with the record behind each one.
+- [principle-outcome-oriented-execution](https://github.com/cursor/plugins/tree/d457567/pstack/skills/principle-outcome-oriented-execution) (pstack): Keeps each sprint aimed at the month's goals, not at smooth in-between states.
+
 **Handoff:** Approved goals go to Coordinator for the roadmap and to Analyst for the /metrics/ definitions. Feature leads go to Sketch and Scoutmaster. Experiments go through Coordinator's scoring and become a decision record.
 
 Review loops are capped at 2 rounds; a second block on the same PR is a disagreement and goes to the CEO (`needs-ceo`).

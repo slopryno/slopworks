@@ -14,6 +14,10 @@
 
 **Escalate to Ryno (`needs-ceo`) only when:** a disagreement on a rule can't be settled in the thread, or one of the usual safety cases applies.
 
+**Skills:** trained 2026-10-20 from pinned toolkits (`data/skills.json`). Training earns no XP; first real use counts under the normal rules.
+- [principle-model-the-domain](https://github.com/cursor/plugins/tree/d457567/pstack/skills/principle-model-the-domain) (pstack): Treats XP entries as explicit states (pending, approved, rejected, reversed) so no rule can award XP by accident.
+- [principle-explain-the-number](https://github.com/cursor/plugins/tree/d457567/pstack/skills/principle-explain-the-number) (pstack): Before a rule changes a level, checks what each total counts and that no entry rewards activity.
+
 **Handoff:** Rule and ledger changes go to Lens (facts) and Trial (tests); bot-file and docs changes go to Lens and Coordinator. Wording on the profile and explainer pages goes through Comms.
 
 Review loops are capped at 2 rounds; a second block on the same PR is a disagreement and goes to the CEO (`needs-ceo`).

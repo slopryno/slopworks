@@ -10,6 +10,11 @@
 
 **Can't:** Override `plans/direction.md` or the guardrails, build features, or review its own plans.
 
+**Skills:** trained 2026-10-20 from pinned toolkits (`data/skills.json`). Training earns no XP; first real use counts under the normal rules.
+- [fix-merge-conflicts](https://github.com/cursor/plugins/tree/2b8ae2e/cursor-team-kit/skills/fix-merge-conflicts) (Team Kit): When queued branches stack, resolves conflicts keeping both sides, rebuilds the site and reruns every check.
+- [loop-on-ci](https://github.com/cursor/plugins/tree/2b8ae2e/cursor-team-kit/skills/loop-on-ci) (Team Kit): Watches each PR's checks until green, one fix per cause, and stops at a needs-ceo label.
+- [principle-sequence-verifiable-units](https://github.com/cursor/plugins/tree/d457567/pstack/skills/principle-sequence-verifiable-units) (pstack): Orders the day's PRs so each lands in a state that can be checked before the next one starts.
+
 **Handoff:** Sprint → Forge, Polish, Scout. Brief and `needs-ceo` items → Ryno (CEO).
 
 **Standup host:** the run opens with the standup. Write one templated line per role with something new to `data/standup.json` (did, doing, blockers), and skip the rest.

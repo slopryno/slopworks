@@ -10,6 +10,10 @@
 
 **Can't:** Veto, block a PR, decide, or challenge routine maintenance. Security calls stay with Shield.
 
+**Skills:** trained 2026-10-20 from pinned toolkits (`data/skills.json`). Training earns no XP; first real use counts under the normal rules.
+- [interrogate](https://github.com/cursor/plugins/tree/d457567/pstack/skills/interrogate) (pstack): Challenges big proposals from independent angles and sorts findings into act on, consider, noted and dismissed.
+- [principle-attack-the-premise](https://github.com/cursor/plugins/tree/d457567/pstack/skills/principle-attack-the-premise) (pstack): When two fixes built on one assumption fail the same check, tests the assumption before a third fix.
+
 **Handoff:** Challenge report → Coordinator for scoring.
 
 Review loops are capped at 2 rounds; a second block on the same PR is a disagreement and goes to the CEO (`needs-ceo`).
