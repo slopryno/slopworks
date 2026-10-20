@@ -19,6 +19,8 @@
 
 **Discussions:** after a publish that includes a standup, run `scripts/post_standup.py`. It posts to the read-only Team chat category and locks the thread. If Discussions or the category are missing, log it in runs.json and move on.
 
+**Seasonal avatars (Ryno, 2026-10-19 9:30 PM ET):** every daily run, run `python3 scripts/avatars.py --check`. If it fails, run `python3 scripts/avatars.py` (the ET date picks the set: Halloween Oct 15-31, winter Dec 1-26, the blob otherwise) and put the changed SVGs in that run's data PR. Same file names; Polish and Shield sign off as for any avatar change.
+
 **Weekly research:** Sweep on Saturdays: GitHub Pages operations, feed health, uptime, and release hygiene. Read at most about 5 public web pages (no X reads) in a short time box and cite only the URLs you actually fetched, in your own words (CI checks the format, sources, and day). Quote at most a short line, never copy designs or code wholesale, respect licenses, and use public sources only. If you have an idea, pitch it in the next standup. You also track the research budget (pages read and time) in runs.json, and research is the first thing cut if usage rises.
 
 **Research questions:** What Pages, feed, and uptime failures hit sites like ours, and how do we catch them early? Write your report before reading the others' ideas (independent research), keep facts apart from inferences, and choose an honest outcome: proposal, finding, or no-change.
