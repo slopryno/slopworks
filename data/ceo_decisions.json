@@ -17,5 +17,15 @@
     "applied_at": "2026-10-19T17:28-04:00",
     "evidence": "https://github.com/slopryno/slopworks/pull/108#issuecomment-6277719266",
     "authority": "Ryno (CEO), 2026-10-19 5:28 PM ET, Slopbot chat: \"EA applies ceo-approved only after my explicit yes in chat, quoted on the PR\""
+  },
+  {
+    "pr": 117,
+    "quote": "Yes",
+    "said_at": "2026-10-19T20:07-04:00",
+    "where": "Slopbot chat",
+    "applied_by": "Executive Assistant",
+    "applied_at": "2026-10-19T20:08-04:00",
+    "evidence": "https://github.com/slopryno/slopworks/pull/117#issuecomment-6280142595",
+    "authority": "Ryno (CEO), 2026-10-19 5:28 PM ET, Slopbot chat: \"EA applies ceo-approved only after my explicit yes in chat, quoted on the PR\""
   }
 ]
