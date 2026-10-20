@@ -347,7 +347,7 @@ class _A11y(html.parser.HTMLParser):
             self.issues.append("scripts are not allowed (static, no external code)")
         if tag in ("link",) and a.get("rel") == "stylesheet" and re.match(r"https?://", a.get("href", "")):
             self.issues.append("external stylesheet")
-        if tag in ("iframe", "form", "input"):
+        if tag in ("iframe", "form") or (tag == "input" and (a.get("type"), a.get("id")) != ("checkbox", "theme-flip")):  # Ryno 2026-10-19 7:12 PM ET: the one header theme-flip checkbox, no script
             self.issues.append(f"<{tag}> not allowed: the site only displays")
         if tag == "title":
             self._in_title = True

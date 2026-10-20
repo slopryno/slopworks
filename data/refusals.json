@@ -8,5 +8,15 @@
     "at": "2026-10-19T17:58-04:00",
     "branch": "bot/design-nav-disclaimer",
     "reason": "another bot.py run (pid 759015) is still going; wait for it, don't resume over it (/workspace/slopworks/.git/bot-pr.lock)"
+  },
+  {
+    "at": "2026-10-19T19:53-04:00",
+    "branch": "bot/design-theme-flip",
+    "reason": "missing sign-off from Atlas, Coordinator (required for these paths: Atlas, Coordinator, Lens, Shield, Trial)"
+  },
+  {
+    "at": "2026-10-19T19:55-04:00",
+    "branch": "bot/design-theme-flip",
+    "reason": "Lens's sign-off: Derived: count site/style.css 'theme-flip:checked' is 2, not 4"
   }
 ]
