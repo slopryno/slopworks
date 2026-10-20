@@ -6,6 +6,19 @@
   "description": "Unofficial, fan-built project. Not affiliated with or endorsed by Grok Bot, SpaceX, or X.",
   "items": [
     {
+      "id": "update-2112252507762368684",
+      "url": "https://slopryno.github.io/slopworks/updates/#e2112252507762368684",
+      "external_url": "https://x.com/bot/status/2112252507762368684",
+      "title": "Grok Bot on the iPhone Action Button",
+      "content_text": "You can set Grok Bot as your iPhone's Action Button and press it to talk with your Bot.",
+      "date_published": "2026-10-19T12:00:00+00:00",
+      "tags": [
+        "update",
+        "app",
+        "confirmed"
+      ]
+    },
+    {
       "id": "issue-2111250428595929141",
       "url": "https://slopryno.github.io/slopworks/issues/#e2111250428595929141",
       "external_url": "https://x.com/i/status/2111250428595929141",
@@ -176,6 +189,19 @@
         "billing",
         "reported",
         "open"
+      ]
+    },
+    {
+      "id": "update-changelog-0-71-2",
+      "url": "https://slopryno.github.io/slopworks/updates/#echangelog-0-71-2",
+      "external_url": "https://x.ai/changelog/bot",
+      "title": "Bigger attachments, desktop notifications, and more plugin skills",
+      "content_text": "Version 0.71.2 lets you attach files up to 250 MB and videos up to 1 GB, and up to 20 attachments per message. Replies notify you on your Mac or PC while you use it, Bots can use up to 200 plugin skills instead of 24, and team admins can turn off messaging between Bots.",
+      "date_published": "2026-10-14T12:00:00+00:00",
+      "tags": [
+        "update",
+        "app",
+        "confirmed"
       ]
     },
     {
