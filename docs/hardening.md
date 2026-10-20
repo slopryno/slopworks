@@ -87,7 +87,7 @@ Each distinct rule in `bots/*.md`, `plans/tracker.md`, and `docs/onboarding.md` 
 | 20 | Only Coordinator decides team pitches; Shield vetoes; 2 strong opposes mean `needs-ceo`; only Ryno decides CEO pitches | tracker, coordinator, shield | CI | CI |
 | 21 | AAR fields cite real artifacts; closed means a fix PR; the thread starts with "AAR" | tracker | CI | CI |
 | 22 | Secret, personal-data, and blocked-file scans; 1 MB limit | tracker | CI | CI |
-| 23 | No scripts or inputs; page weight; contrast | tracker, polish | CI | CI |
+| 23 | No scripts or inputs (one exception: the header theme-flip checkbox, CSS only); page weight; contrast | tracker, polish | CI | CI |
 | 24 | Schedule page matches the schedule data | tracker | CI | CI |
 | 25 | Sitemap, titles, descriptions, banned hype | comms | CI | CI |
 | 26 | Demo labels; no "live" wording | tracker | CI | CI |
