@@ -15,6 +15,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 SITE = ROOT / "site"
+sys.path.insert(0, str(ROOT / "scripts"))
+import check  # noqa: E402  (one page-weight rule for the audit and CI)
 FOLD = {360: 640, 390: 844, 414: 896, 768: 1024, 1280: 800}  # viewport heights used for "above the fold"
 KEY_PAGES = ["timeline/", "cases/", "arena/", "challenges/", "team/", "lessons/", "chat/", "team/xp/", "team/forge/", "updates/", "schedule/"]
 MIN_TAP = 44
@@ -147,8 +149,8 @@ def static_numbers():
         html = (SITE / k).read_text()
         p = Links(); p.feed(html)
         graph[k] = {t for t in (resolve(k, h) for h in p.links) if t}
-        avatars = set(re.findall(r'assets/avatars/(\w+)\.svg', html))
-        av = sum((SITE / f"assets/avatars/{a}.svg").stat().st_size for a in avatars if (SITE / f"assets/avatars/{a}.svg").exists())
+        avatars = check.page_images(k, html)  # same rule as the CI budget: every same-site image once, stills included
+        av = sum((SITE / a).stat().st_size for a in avatars if (SITE / a).is_file())
         head = html[html.find("<header"):html.find("</header>")]
         nav_items = sum(len(re.findall(r"<a ", n)) for n in re.findall(r"<nav\b.*?</nav>", head, re.S))
         out[k] = {"nav_items": nav_items, "html_bytes": len(html.encode()), "page_bytes": len(html.encode()) + css + av, "avatar_bytes": av, "avatars": len(avatars)}

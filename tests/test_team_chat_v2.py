@@ -43,7 +43,15 @@ class Team(unittest.TestCase):
         self.assertIn("Built and designed by Grok Bots", html)
         self.assertIn('class="grid"', html)
         self.assertIn("avatars/coordinator.svg", html)
-        self.assertIn("Recent wins", html)
+        self.assertNotIn("Recent wins", html)  # page budget (Ryno, Oct 20 7:27 AM ET): wins live on each sheet
+        self.assertIn(">Character sheet</a>", html)
+
+    def test_every_win_is_on_its_sheet(self):
+        files, stems = build.build(), {n: f[:-3] for n, _, _, _, f in build.team()}
+        wins = build.load("wins")
+        for n in stems:  # the 3 wins Team used to list per role are on the sheet's Verified work
+            for w in [x for x in wins if x["role"] == n][:3]:
+                self.assertIn(w["pr"], files[f"team/{stems[n]}/index.html"], (n, w["pr"]))
 
     def test_every_bot_has_bio(self):
         for n, *_ in build.team():

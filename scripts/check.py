@@ -1222,6 +1222,50 @@ def blast_check_errors(root=None):
     return errs
 
 
+# ---------- page weight with images (Ryno, 2026-10-20 7:27 AM ET: "Yes, count avatar images in the page budget and slim the
+# Team page down"): a page's weight is its HTML, the site CSS, and every same-site image it loads, each file once ----------
+IMG_REF = re.compile(r'\b(?:src|href)="([^"#?]+\.(?:svg|png|jpe?g|webp|gif|avif|ico))"', re.I)
+IMG_SRCSET = re.compile(r'\bsrcset="([^"]+)"', re.I)
+CSS_URL = re.compile(r'url\(\s*[\'"]?([^\'")#?]+)', re.I)
+
+
+def page_images(rel, doc):
+    """{site-relative path} of the same-site images a built page loads (img src, srcset, icon links); external URLs skipped."""
+    import posixpath
+    refs = IMG_REF.findall(doc) + [u.split()[0] for s in IMG_SRCSET.findall(doc) for u in s.split(",") if u.strip()]
+    base = posixpath.dirname(rel)
+    return {posixpath.normpath(posixpath.join(base, r)) for r in refs if not re.match(r"(?:[a-z]+:)?//|data:|[a-z]+:", r, re.I)}
+
+
+def page_weight(rel, doc, css_bytes, root=None):
+    """(bytes, missing): HTML + CSS + each same-site image once; missing lists image paths that don't exist."""
+    site = (root or ROOT) / "site"
+    total, missing = len(doc.encode()) + css_bytes, []
+    for img in sorted(page_images(rel, doc)):
+        f = site / img
+        if f.is_file():
+            total += f.stat().st_size
+        else:
+            missing.append(img)
+    return total, missing
+
+
+def page_weight_errors(root=None, limit=None):
+    """Every built page, images included, stays within PATTERNS['max_page_bytes']; CSS url() images count on every page."""
+    site, errs = (root or ROOT) / "site", []
+    limit = limit or PATTERNS["max_page_bytes"]
+    css = sum(p.stat().st_size for p in site.glob("*.css"))
+    css += sum((site / u).stat().st_size for p in site.glob("*.css") for u in set(CSS_URL.findall(p.read_text()))
+               if not re.match(r"(?:[a-z]+:)?//|data:", u, re.I) and (site / u).is_file())
+    for p in sorted(site.rglob("*.html")):
+        rel = str(p.relative_to(site))
+        total, missing = page_weight(rel, p.read_text(), css, root)
+        errs += [f"site/{rel}: loads missing image {m}" for m in missing]
+        if total > limit:
+            errs.append(f"site/{rel}: page weight with images {total:,} bytes is over the {limit // 1024} KB budget")
+    return errs
+
+
 # ---------- role skills (Ryno, 2026-10-19 10:06 PM ET): every skill in bots/*.md is in the pinned data/skills.json ----------
 def skills_errors(root=None):
     import skills
@@ -1514,6 +1558,7 @@ def run_repo():
     errs += blast_check_errors()
     errs += training_errors()
     errs += skills_errors()
+    errs += page_weight_errors()  # Ryno 2026-10-20 7:27 AM ET: images count toward the page budget
     errs += comms_feed_errors(files)
     errs += word_limit_errors()
     errs += voice_errors()
