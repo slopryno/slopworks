@@ -18,7 +18,7 @@ CORRECTIONS = "slopryno+corrections@mail.grokbot.com"
 # Information architecture (i36, Team chat c210 to c214): 4 top items plus the brand as Home. Deeper pages sit one tap
 # from their hub, every deep page has one "Back to" link, and the footer lists every page. No URL moved.
 WORK = [("timeline/", "Timeline"), ("weekly/", "Weekly recap"), ("metrics/", "Metrics"), ("cases/", "Case files"), ("arena/", "Research Arena"), ("challenges/", "Demo challenge")]
-HOOD = [("how/", "How this works"), ("updates/", "What's new"), ("issues/", "Known issues"), ("chat/", "Team chat"), ("schedule/", "Schedule and limits"), ("behind/", "Behind the scenes"), ("design/", "Design log")]
+HOOD = [("how/", "How this works"), ("updates/", "What's new"), ("issues/", "Known issues"), ("chat/", "Team chat"), ("schedule/", "Schedule and limits"), ("calendar/", "Calendar"), ("behind/", "Behind the scenes"), ("design/", "Design log")]
 TOP = [("work/", "Work"), ("team/", "Team"), ("lessons/", "Lessons"), ("hood/", "Under the hood")]
 NAV = [("", "Home")] + WORK + [("team/", "Team"), ("lessons/", "Lessons"), ("how/", "How this works")]  # every visitor page, for llms.txt and the footer
 OPS = HOOD
@@ -228,6 +228,7 @@ DESCRIPTIONS = {
     "hood/": "How Slopworks runs: the Grok Bot tracker, the bots' own chat, the schedule and limits, and the run and design logs.",
     "how/": "How the Slopworks bot team works, in plain words: the daily run, the weekly role cycle, where Ryno (the human CEO) decides, and a glossary.",
     "schedule/": "When Slopworks runs, what each run does, and the limits the bot team works within.",
+    "calendar/": "The Slopworks team calendar: this month and the next two, with runs, reviews, releases and holiday character themes, plus a subscribe feed.",
 }
 
 
@@ -1023,6 +1024,14 @@ def build():
     files["index.html"] = page("", home.TITLE, f"{len(team())} Grok Bot roles run a real product, an unofficial Grok Bot tracker, and publish every decision behind it.",
                                home.render(sys.modules[__name__], items, wins, ups, iss, totals, levels, team(), dropped, screened, tl_where, objectives, href), "data", h1=home.HEADLINE)
 
+    # Team calendar (Ryno, 2026-10-19 9:34 PM ET): month grids and a subscribe feed from data/calendar.json and the schedule.
+    import cal
+    from datetime import date as _date
+    calendar = load("calendar")
+    today = _date.fromisoformat(state.get("updated") or state["last_run"])
+    files["calendar/index.html"] = page("calendar/", "Team calendar", f"Runs, reviews, releases and holiday themes, month by month. As of {cal.nice(today)}.",
+                                        cal.render(calendar, sched, today), "data/calendar.json")
+    files["calendar.ics"] = cal.ics(calendar, sched, today, BASE)
     shipped = [d for d in design if d["state"] == "shipped"]
     backlog = sorted([d for d in design if d["state"] in ("backlog", "in-progress")], key=lambda d: d["rank"])
     card = lambda d: f'<article class="card"><h3>{e(d["idea"])}</h3><p>{e(d["why"])}</p><p class="meta"><span class="tag">effort {d["effort"]}</span><span>{e(d["state"])}{" " + d["shipped"] if d.get("shipped") else ""}</span></p></article>'
@@ -1033,7 +1042,7 @@ def build():
              "cases/": ("Proof", f"{len(cases)} case files"), "arena/": ("Research", (lambda n: f"{n} research {'round' if n == 1 else 'rounds'}")(len(load("arena")))),
              "challenges/": ("Demo", "Labeled demo"), "how/": ("Guide", ""), "updates/": ("Tracker", f"{len(ups)} updates"),
              "issues/": ("Tracker", f"{sum(x['state'] == 'open' for x in iss)} open"), "chat/": ("Record", f"{len(chat)} messages"),
-             "schedule/": ("Guide", ""), "behind/": ("Record", ""), "design/": ("Log", f"{len(shipped)} shipped")}
+             "schedule/": ("Guide", ""), "calendar/": ("Guide", (lambda n: f"{n} dates ahead")(cal.upcoming(calendar, today))), "behind/": ("Record", ""), "design/": ("Log", f"{len(shipped)} shipped")}
 
     blurb = {"timeline/": "What shipped, what Ryno decided and what was learned, newest first.",
              "weekly/": "Each week from the records: PRs, sprints, research and lessons.",
@@ -1046,6 +1055,7 @@ def build():
              "issues/": "Public bug reports by area, fixed only when a source says so.",
              "chat/": "Standups, pitches and the real handoffs between roles.",
              "schedule/": "When each run happens and the limits the team works within.",
+             "calendar/": "This month and the next two: runs, reviews and holiday themes.",
              "behind/": "What each role found, dropped or stripped in every run.",
              "design/": "What Polish changed and what's next, one change a week at most."}
 
@@ -1069,7 +1079,7 @@ def build():
     last = runs[0] if runs else None
     status = f'Last run: <strong>{e(last["date"])}</strong> ({e(last["kind"])}), status <strong>{e(last["status"])}</strong>. Next: the daily run, around 9:15 AM ET.' if last else '<span class="empty">No runs yet. The first daily run is around 9:15 AM ET.</span>'
     files["schedule/index.html"] = page("schedule/", "Schedule and limits", "What to expect and when. Generated from the same schedule file the routines use.",
-                                        f'<p class="card">{status}</p><div class="scroll"><table class="stack"><tbody>{srows}</tbody></table></div><p>When something goes wrong, the after-action review is on the <a href="../lessons/">Lessons</a> page the same day.</p>' + rot_html + f'<h2>Limits, in plain words</h2><ul>{lim}</ul>', "data/schedule.json")
+                                        f'<p class="card">{status}</p><div class="scroll"><table class="stack"><tbody>{srows}</tbody></table></div><p>When something goes wrong, the after-action review is on the <a href="../lessons/">Lessons</a> page the same day.</p><p>Dated plans, reviews and holiday themes are on the <a href="../calendar/">Calendar</a>.</p>' + rot_html + f'<h2>Limits, in plain words</h2><ul>{lim}</ul>', "data/schedule.json")
 
     feed = sorted([("update", x) for x in ups] + [("issue", x) for x in iss], key=lambda p: (p[1]["date"], p[1]["id"]), reverse=True)[:50]
     link = lambda k, x: f'{BASE}{"issues/" if k == "issue" else "updates/"}#e{x["id"]}'
@@ -1098,7 +1108,8 @@ def build():
         "The site has no forms, scripts or analytics. Its one control, the theme button, only changes how the page looks and sends nothing.\n\n## Pages\n\n"
         + "".join(f"- [{t}]({BASE}{s}): {DESCRIPTIONS.get(s, '')}\n" for s, t in main_pages)
         + f"\n## Feeds and data\n\n- [Updates RSS]({BASE}feed.xml): Grok Bot updates and known issues\n- [Updates JSON Feed]({BASE}feed.json): the same items as JSON Feed 1.1\n"
-        f"- [Team chat JSON Feed]({BASE}chat.json): standups, pitches, research, and handoffs\n- [Source repository]({REPO}): data in data/*.json, the generator in scripts/build.py\n"
+        f"- [Team chat JSON Feed]({BASE}chat.json): standups, pitches, research, and handoffs\n"
+        f"- [Team calendar]({BASE}calendar.ics): the team's dated plans, reviews and holiday themes (iCalendar)\n- [Source repository]({REPO}): data in data/*.json, the generator in scripts/build.py\n"
         f"\n## Optional\n\n- [Style guide]({REPO}/blob/main/docs/style-guide.md): the voice and terms the team writes by\n")
     return files
 
@@ -1109,11 +1120,11 @@ def main():
     for rel, content in files.items():
         p = SITE / rel
         if "--check" in sys.argv:
-            if not p.exists() or p.read_text() != content:
+            if not p.exists() or p.read_bytes() != content.encode():  # bytes: calendar.ics keeps its CRLF line ends
                 stale.append(rel)
         else:
             p.parent.mkdir(parents=True, exist_ok=True)
-            p.write_text(content)
+            p.write_bytes(content.encode())
     if stale:
         print("Site is out of date; run python3 scripts/build.py:", *stale)
         sys.exit(1)

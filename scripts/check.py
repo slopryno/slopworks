@@ -1296,6 +1296,176 @@ def training_errors(root=None):
     return objective_loop_errors(load("objectives"), load("ideas")) + drill_errors(root)
 
 
+# ---------- team calendar (Ryno, 2026-10-19 9:34 PM ET): holiday character themes need plan, design and review on the calendar ----------
+CAL_OWNERS_EXTRA = {"Ryno", "Pixel", "Core"}  # the CEO, and Forge's specialists (bots/forge.md)
+CAL_STEPS = ("plan", "design", "review", "ceo-yes")  # required before a holiday avatar set can exist or a switch be configured
+CAL_DESIGNERS = {"Polish", "Sketch", "Pixel"}
+CAL_REVIEWERS = {"Lens", "Critic", "Trial"}
+CAL_TITLE_WORDS, CAL_NOTE_WORDS = 8, 20  # Comms: a calendar entry is a glance, not a paragraph
+
+
+CAL_AVATAR_DIRS_OK = {"still"}  # still/: motionless copies of the current set for long lists (bot/design-holiday-blobs), not a set
+
+
+def avatar_seasons(root=None):
+    """{season: ((m, d), (m, d))} from scripts/avatars.py SEASONS, the date switch the daily run uses, read without importing it."""
+    import ast
+    p = (root or ROOT) / "scripts/avatars.py"
+    if not p.exists():
+        return {}
+    for node in ast.walk(ast.parse(p.read_text())):
+        if isinstance(node, ast.Assign) and any(isinstance(t, ast.Name) and t.id == "SEASONS" for t in node.targets):
+            return ast.literal_eval(node.value)
+    return {}
+
+
+def avatar_sets(root=None):
+    """{set: [files]} for holiday avatar files: site/assets/avatars/<role>-<set>.svg or site/assets/avatars/<set>/<role>.svg."""
+    base, out = (root or ROOT) / "site/assets/avatars", {}
+    if not base.is_dir():
+        return out
+    for f in sorted(base.rglob("*.svg")):
+        rel = f.relative_to(base)
+        if len(rel.parts) > 1 and rel.parts[0] in CAL_AVATAR_DIRS_OK:
+            continue
+        name = rel.parts[-2] if len(rel.parts) > 1 else (rel.stem.split("-", 1)[1] if "-" in rel.stem else None)
+        if name:
+            out.setdefault(name, []).append(str(rel))
+    return out
+
+
+def ics_errors(text):
+    """site/calendar.ics: CRLF line ends, folded at 75 octets, balanced blocks, unique UIDs, and no personal data in it."""
+    errs = []
+    if "\n" in text.replace("\r\n", ""):
+        errs.append("site/calendar.ics: every line must end in CRLF")
+    lines = text.split("\r\n")
+    errs += [f"site/calendar.ics: line {n + 1} is over 75 octets" for n, l in enumerate(lines) if len(l.encode()) > 75]
+    if not text.startswith("BEGIN:VCALENDAR\r\n") or not text.endswith("END:VCALENDAR\r\n"):
+        errs.append("site/calendar.ics: must be one VCALENDAR")
+    if text.count("BEGIN:VEVENT") != text.count("END:VEVENT"):
+        errs.append("site/calendar.ics: unbalanced VEVENT blocks")
+    uids = [l[4:] for l in lines if l.startswith("UID:")]
+    if len(uids) != len(set(uids)) or len(uids) != text.count("BEGIN:VEVENT"):
+        errs.append("site/calendar.ics: every event needs one unique UID")
+    return errs
+
+
+def calendar_errors(root=None):
+    """data/calendar.json: schema, owners, word limits, done-not-in-the-future, routines that exist, and the holiday rule:
+    a holiday avatar set on disk, or a theme with switch dates, needs plan, design, review and Ryno's yes on the calendar,
+    in order, by the switch; design and review by different roles; placeholders stay plan-only with no set or switch."""
+    root = root or ROOT
+    p = root / "data/calendar.json"
+    sets = avatar_sets(root)
+    if not p.exists():
+        return [f"site/assets/avatars: holiday set '{s}' has no data/calendar.json plan, design and review" for s in sets]
+    try:
+        cal = json.loads(p.read_text())
+        sched = json.loads((root / "data/schedule.json").read_text())
+        state = json.loads((root / "data/state.json").read_text())
+    except ValueError as err:
+        return [f"data/calendar.json: {err}"]
+    errs = [f"data/calendar.json {x}" for x in validate(cal, json.loads((root / "data/schema/calendar.schema.json").read_text()))]
+    if errs:
+        return errs
+    import datetime as _dt
+    day = lambda s: _dt.date.fromisoformat(s)
+    try:
+        for x in cal["events"]:
+            day(x["date"])
+        for t in cal["themes"]:
+            for k in ("switch_on", "switch_off", "live_from"):
+                if t.get(k):
+                    day(t[k])
+        day(cal["recurring_from"])
+    except ValueError as err:
+        return [f"data/calendar.json: bad date ({err})"]
+    today = day(state.get("updated") or state["last_run"])
+    owners = {m.group(1) for f in (root / "bots").glob("*.md") if (m := re.match(r"#\s*(\w+)", f.read_text()))} | CAL_OWNERS_EXTRA
+    sched_ids = {i["id"] for i in sched["items"]}
+    errs += [f"data/calendar.json duplicate id {i}" for i in duplicate_ids(cal["events"])]
+    errs += [f"data/calendar.json duplicate theme {i}" for i in duplicate_ids(cal["themes"])]
+    for r in cal["recurring"]:
+        if r["schedule_id"] not in sched_ids:
+            errs.append(f"data/calendar.json recurring {r['schedule_id']}: not an item in data/schedule.json")
+        if r["owner"] not in owners:
+            errs.append(f"data/calendar.json recurring {r['schedule_id']}: owner {r['owner']} isn't a role")
+    themes = {t["id"]: t for t in cal["themes"]}
+    for x in cal["events"]:
+        i = x["id"]
+        for who in [x["owner"]] + list(x.get("with", [])):
+            if who not in owners:
+                errs.append(f"data/calendar.json {i}: {who} isn't a role (bots/*.md) or Ryno")
+        if word_count(x["title"]) > CAL_TITLE_WORDS:
+            errs.append(f"data/calendar.json {i}: title over {CAL_TITLE_WORDS} words")
+        if word_count(x.get("note", "")) > CAL_NOTE_WORDS:
+            errs.append(f"data/calendar.json {i}: note over {CAL_NOTE_WORDS} words")
+        if x["status"] == "done" and day(x["date"]) > today:
+            errs.append(f"data/calendar.json {i}: marked done on {x['date']}, after the newest record ({today})")
+        if (x["type"] == "holiday-theme") != bool(x.get("theme")) or bool(x.get("theme")) != bool(x.get("step")):
+            errs.append(f"data/calendar.json {i}: holiday-theme events, and only they, carry a theme and a step")
+        if x.get("theme") and x["theme"] not in themes:
+            errs.append(f"data/calendar.json {i}: theme {x['theme']} isn't in themes")
+        if x.get("step") == "ceo-yes" and x["owner"] != "Ryno":
+            errs.append(f"data/calendar.json {i}: only Ryno gives the yes on a holiday theme")
+    by_set = {}
+    for t in cal["themes"]:
+        tid, steps = t["id"], {}
+        for x in cal["events"]:
+            if x.get("theme") == tid:
+                steps.setdefault(x["step"], []).append(x)
+        if t["status"] == "placeholder":
+            if any(t.get(k) for k in ("avatar_set", "switch_on", "switch_off", "live_from")):
+                errs.append(f"data/calendar.json theme {tid}: a placeholder has no avatar set or switch until Ryno says yes")
+            if set(steps) - {"plan"} or any(x["status"] == "done" for x in steps.get("plan", [])):
+                errs.append(f"data/calendar.json theme {tid}: a placeholder only has planned plan events")
+            if not steps:
+                errs.append(f"data/calendar.json theme {tid}: a placeholder needs its plan date on the calendar")
+            continue
+        if t.get("avatar_set"):
+            by_set[t["avatar_set"]] = tid
+        if not (t.get("switch_on") and t.get("switch_off")) or day(t["switch_off"]) < day(t["switch_on"]):
+            errs.append(f"data/calendar.json theme {tid}: a {t['status']} theme needs switch_on on or before switch_off")
+            continue
+        for s in CAL_STEPS:
+            if s not in steps:
+                errs.append(f"data/calendar.json theme {tid}: switch configured without a {s} event on the calendar")
+        if any(s not in steps for s in CAL_STEPS):
+            continue
+        first = {s: min(day(x["date"]) for x in steps[s]) for s in CAL_STEPS}
+        last = {s: max(day(x["date"]) for x in steps[s]) for s in CAL_STEPS}
+        start = max(day(t["switch_on"]), day(t["live_from"])) if t.get("live_from") else day(t["switch_on"])
+        if not first["plan"] <= first["design"] <= first["review"]:
+            errs.append(f"data/calendar.json theme {tid}: plan, design and review must be in that order")
+        if last["review"] > start or last["ceo-yes"] > start:
+            errs.append(f"data/calendar.json theme {tid}: review and Ryno's yes must be on or before the switch ({start})")
+        if not t.get("live_from") and (start - last["review"]).days < 7:
+            errs.append(f"data/calendar.json theme {tid}: review at least a week before the switch (or record a late start in live_from)")
+        designers = {w for x in steps["design"] for w in [x["owner"]] + list(x.get("with", []))}
+        reviewers = {w for x in steps["review"] for w in [x["owner"]] + list(x.get("with", []))}
+        if not designers <= CAL_DESIGNERS or not reviewers <= CAL_REVIEWERS or designers & reviewers:
+            errs.append(f"data/calendar.json theme {tid}: design by Polish or Sketch, review by Lens or Critic, never the same role")
+    for s, files in sets.items():
+        if s not in by_set:
+            errs.append(f"site/assets/avatars: holiday set '{s}' ({len(files)} files) has no scheduled theme with plan, design and review on data/calendar.json")
+    md = lambda v: (day(v).month, day(v).day)
+    for season, (on, off) in avatar_seasons(root).items():
+        mine = [t for t in cal["themes"] if t["status"] != "placeholder" and t.get("avatar_set") == season and t.get("switch_on")]
+        if not mine:
+            errs.append(f"scripts/avatars.py: season '{season}' switches with no scheduled theme on data/calendar.json (plan, design, review, Ryno's yes)")
+            continue
+        for t in mine:
+            if (md(t["switch_on"]), md(t["switch_off"])) != (tuple(on), tuple(off)):
+                errs.append(f"data/calendar.json theme {t['id']}: window {t['switch_on']} to {t['switch_off']} doesn't match scripts/avatars.py SEASONS['{season}'] {on} to {off}")
+        if not any(day(t["switch_off"]) >= today for t in mine):
+            errs.append(f"data/calendar.json: season '{season}' has no current or upcoming theme; add next year's plan, design, review and yes")
+    ics = root / "site/calendar.ics"
+    if ics.exists():
+        errs += ics_errors(ics.read_bytes().decode())
+    return errs
+
+
 def run_repo():
     errs = []
     files = tracked_files()
@@ -1347,6 +1517,7 @@ def run_repo():
     errs += comms_feed_errors(files)
     errs += word_limit_errors()
     errs += voice_errors()
+    errs += calendar_errors()
     css = sum((ROOT / f).stat().st_size for f in files if f.startswith("site/") and f.endswith(".css"))
     for f in files:
         if f.startswith("site/") and f.endswith(".html"):
