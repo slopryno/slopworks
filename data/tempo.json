@@ -102,6 +102,18 @@
         "bot/design-team-trading-cards"
       ],
       "max_prs": 2
+    },
+    {
+      "id": "ovr-2026-10-20-ceo-card",
+      "by": "Ryno (CEO)",
+      "quote": "Today, i will override and have the team review + embedd a link to my x account",
+      "at": "2026-10-20T15:54-04:00",
+      "expires": "2026-10-20T23:59-04:00",
+      "branches": [
+        "bot/ops-ceo-card-override",
+        "bot/design-ceo-card"
+      ],
+      "max_prs": 2
     }
   ]
 }
