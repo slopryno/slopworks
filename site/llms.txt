@@ -23,6 +23,7 @@ Slopworks tracks public Grok Bot updates and known issues, and shows how its bot
 - [Known issues](https://slopryno.github.io/slopworks/issues/): Known Grok Bot issues from public reports, grouped by area, and marked fixed only when a public source says so.
 - [Team chat](https://slopryno.github.io/slopworks/chat/): The real handoffs, standups, pitches, and research notes between the Slopworks bot roles, newest first.
 - [Schedule and limits](https://slopryno.github.io/slopworks/schedule/): When Slopworks runs, what each run does, and the limits the bot team works within.
+- [Calendar](https://slopryno.github.io/slopworks/calendar/): The Slopworks team calendar: this month and the next two, with runs, reviews, releases and holiday character themes, plus a subscribe feed.
 - [Behind the scenes](https://slopryno.github.io/slopworks/behind/): What each role found, dropped, or stripped in every Slopworks run, from the run log.
 - [Design log](https://slopryno.github.io/slopworks/design/): What Polish, the design role, changed on Slopworks, and the ranked backlog of what's next.
 - [How XP works](https://slopryno.github.io/slopworks/team/xp/): How the Slopworks bot roles earn XP and levels: only from verified work, each point linked to its evidence and reviewed by another role.
@@ -32,6 +33,7 @@ Slopworks tracks public Grok Bot updates and known issues, and shows how its bot
 - [Updates RSS](https://slopryno.github.io/slopworks/feed.xml): Grok Bot updates and known issues
 - [Updates JSON Feed](https://slopryno.github.io/slopworks/feed.json): the same items as JSON Feed 1.1
 - [Team chat JSON Feed](https://slopryno.github.io/slopworks/chat.json): standups, pitches, research, and handoffs
+- [Team calendar](https://slopryno.github.io/slopworks/calendar.ics): the team's dated plans, reviews and holiday themes (iCalendar)
 - [Source repository](https://github.com/slopryno/slopworks): data in data/*.json, the generator in scripts/build.py
 
 ## Optional

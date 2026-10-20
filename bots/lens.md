@@ -35,3 +35,5 @@ Review loops are capped at 2 rounds; a second block on the same PR is a disagree
 ## Derived lines (training plan, i59)
 
 Every Lens sign-off names at least one number with the line that proves it: `Derived: count <file> = N`, or `Derived: count <file> "<regex>" = N` to count matching lines. bot.py re-runs each line before it posts, and CI re-runs them on the PR's head. A wrong number stops the PR. Write the sign-off after the last commit, because a rebuild can change the counts.
+
+**Holiday theme reviews:** you own the review step on each holiday theme on `data/calendar.json` (with Critic). Review screenshots of the set at every standard width in light, dark and the flipped theme, before the review date on the calendar. Then, in the review sign-off, say which event you are closing. Coordinator marks it done.

@@ -74,6 +74,24 @@
       "what": "Analyst measures against each success metric, Librarian records outcomes, and the team retro runs. Urgent security issues or major Grok Bot updates can interrupt any day."
     },
     {
+      "id": "pstack-watch",
+      "when": "Thursdays (in the daily run)",
+      "cron": "13 9 * * 4",
+      "what": "pstack watch: Librarian checks poteto's public pstack skills against last week's saved copy and files any changes as research leads. Nothing is adopted outside the pitch flow."
+    },
+    {
+      "id": "weekly-clip",
+      "when": "Mondays (in the daily run)",
+      "cron": "13 9 * * 1",
+      "what": "Weekly clip: Strategy records a short phone clip of the live site for Ryno. Nothing is posted."
+    },
+    {
+      "id": "holiday-themes",
+      "when": "Before each holiday theme",
+      "cron": "13 9 * * *",
+      "what": "Holiday character themes follow the calendar: plan about 4 weeks before the switch, design at 3, screenshot review at 2, and Ryno's yes by 1 week. No yes, no switch."
+    },
+    {
       "id": "progression",
       "when": "Fridays: Slopworks RPG check-in (i34)",
       "cron": "13 9 * * 5",

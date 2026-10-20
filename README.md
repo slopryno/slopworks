@@ -70,7 +70,7 @@ Lean, clean and organized (Ryno, 2026-10-17; owner Sweep). CI checks the budgets
 ```
 bots/      one instruction file per bot role
 plans/     tracker plan, CEO direction, roadmap, plan template
-data/      the records: updates, issues, chat, ideas, research, XP, AARs, schedule (+ schema/)
+data/      the records: updates, issues, chat, ideas, research, XP, AARs, schedule, calendar (+ schema/)
 scripts/   build.py (site generator), check.py (CI gates), bot.py (PR and chat helper), audits, standard library only
 tests/     tests for the checks and the build, written first
 site/      the generated static site, deployed by GitHub Pages; images only in site/assets/ and site/badges/
