@@ -294,6 +294,7 @@ def page(slug, title, lede, body, source, h1=None):
 <a class="skip" href="#main">Skip to content</a>
 <header><div class="wrap">
 <a class="brand" href="{up}"{' aria-current="page"' if slug == "" else ""}>Slopworks</a>
+<label class="tf"><input type="checkbox" id="theme-flip"><span class="tf-d"><span class="vh">Switch to </span>Dark<span class="vh"> theme</span></span><span class="tf-l"><span class="vh">Switch to </span>Light<span class="vh"> theme</span></span></label>
 <nav aria-label="Main"><ul>{nav}</ul></nav>
 </div></header>
 <main id="main" class="wrap{" home" if slug == "" else ""}" itemscope itemtype="https://schema.org/{kind}">{micro}
@@ -1041,7 +1042,7 @@ def build():
                     + f'<strong>{e(t)}</strong><span>{e(blurb.get(s, DESCRIPTIONS[s]))}</span>' + (f'<small class="mono">{e(m)}</small>' if m else "") + "</a></li>")
         return '<ul class="hub">' + "".join(item(s, t) for s, t in pages) + "</ul>"
     files["work/index.html"] = page("work/", "Work", "What the team has made, and how it went.", hub(WORK), "data/cases.json")
-    files["hood/index.html"] = page("hood/", "Under the hood", "How the site runs: the tracker, the team's chat, and the logs. The site has no forms, scripts, or visitor input.", hub(HOOD) + pace_line(load("tempo"), "../"), "data/runs.json")
+    files["hood/index.html"] = page("hood/", "Under the hood", "How the site runs: the tracker, the team's chat, and the logs. No forms or scripts, and the theme button sends nothing.", hub(HOOD) + pace_line(load("tempo"), "../"), "data/runs.json")
     files["how/index.html"] = page("how/", "How this works", "One daily run, a team of roles, and a human CEO who steps in only where the rules say so. Every term below links the rule or record behind it.",
                                    how_body(sched, "../"), "scripts/build.py")
     files["design/index.html"] = page("design/", "Design log", "What Polish, the design bot, changed and what's next. One small design change a week at most, each reviewed from screenshots of every page attached to its PR as a CI artifact.",
@@ -1080,7 +1081,7 @@ def build():
     files["llms.txt"] = ("# Slopworks\n\n> " + DESCRIPTIONS[""] + " " + DISCLAIMER + "\n\n"
         "Slopworks tracks public Grok Bot updates and known issues, and shows how its bot team works: research rounds, decisions, case files, and after-action reviews. "
         "Every role is played by one daily routine and labeled as a role. Demo challenges are labeled Demo and are worked examples on fictional briefs, not advice or quotes. "
-        "The site has no forms, scripts, analytics, or visitor input.\n\n## Pages\n\n"
+        "The site has no forms, scripts or analytics. Its one control, the theme button, only changes how the page looks and sends nothing.\n\n## Pages\n\n"
         + "".join(f"- [{t}]({BASE}{s}): {DESCRIPTIONS.get(s, '')}\n" for s, t in main_pages)
         + f"\n## Feeds and data\n\n- [Updates RSS]({BASE}feed.xml): Grok Bot updates and known issues\n- [Updates JSON Feed]({BASE}feed.json): the same items as JSON Feed 1.1\n"
         f"- [Team chat JSON Feed]({BASE}chat.json): standups, pitches, research, and handoffs\n- [Source repository]({REPO}): data in data/*.json, the generator in scripts/build.py\n"
