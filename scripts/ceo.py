@@ -98,7 +98,7 @@ def sheet(repo, total, next_html, root=None):
                   f'<span class="meta">label by {"the Assistant, after his yes in chat" if x["applied_by"] == "Executive Assistant" else "Ryno"}</span></li>'
                   for x in reversed(dec))
     ov = "".join(f'<li><time datetime="{x["at"][:10]}">{_day(x["at"])}</time> {e(chr(8220) + x["quote"] + chr(8221))} '
-                 f'<span class="meta">up to {x["max_prs"]} PRs, named work only, ended 11:59 PM ET that day</span></li>' for x in reversed(ovr))
+                 f'<span class="meta">up to {x["max_prs"]} PRs, named work only, until 11:59 PM ET that day</span></li>' for x in reversed(ovr))
     return (f'<section class="sheet card" style="border-top:4px solid #b8860b"><img class="av" src="../../assets/avatars/ceo.svg" width="96" height="96" alt="">'
             f'<div><p class="title">CEO · human, not a bot</p><p class="lvl">The owner · one of one, 00/{total}</p>'
             f'<p>{e(FLAVOUR)}</p><p><a href="../#{STEM}">See his card</a> · {X_LINK}</p></div></section>'
