@@ -1,0 +1,743 @@
+{
+ "_note": "Team trading cards (Ryno, Oct 20 2026: Variant B grid that pops open into Variant A, real-world job types, holiday art from the costume). Wording by Comms (final say, Oct 20, 12:25 PM ET). Numbers are never typed here: levels, XP and move counts come from data/xp_ledger.json at build time. Art per season shows only when scripts/avatars.py season_for() switches that set on via data/calendar.json.",
+ "rarity": [
+  {
+   "from_level": 1,
+   "name": "Common"
+  },
+  {
+   "from_level": 2,
+   "name": "Uncommon"
+  },
+  {
+   "from_level": 4,
+   "name": "Rare"
+  },
+  {
+   "from_level": 6,
+   "name": "Holo rare"
+  }
+ ],
+ "types": [
+  {
+   "name": "Management",
+   "colour": "#7B5CD6",
+   "tint": "#CDBFFF",
+   "icon": "briefcase",
+   "texture": "stripes",
+   "motif": "radial-gradient(ellipse at 50% 0,#fff6,#0000 60%)",
+   "particles": "up",
+   "particle_colour": "#fff",
+   "motif_words": "boardroom spotlight, rising motes"
+  },
+  {
+   "name": "Administration",
+   "colour": "#66727F",
+   "tint": "#D5DBE1",
+   "icon": "clipboard",
+   "texture": "lines",
+   "motif": "repeating-linear-gradient(#0000 0 13px,#0001 13px 14px)",
+   "particles": "down",
+   "particle_colour": "#fff",
+   "motif_words": "ruled paper, settling dust"
+  },
+  {
+   "name": "Research",
+   "colour": "#2F7FD1",
+   "tint": "#B9DAFF",
+   "icon": "magnifier",
+   "texture": "rings",
+   "motif": "repeating-radial-gradient(circle at 50% 50%,#fff2 0 1px,#0000 1px 16px)",
+   "particles": "tw",
+   "particle_colour": "#fff",
+   "motif_words": "search-radar rings, blinking finds"
+  },
+  {
+   "name": "Engineering",
+   "colour": "#C2500A",
+   "tint": "#FFC48A",
+   "icon": "gear",
+   "texture": "grid",
+   "motif": "linear-gradient(#fff3 1px,#0000 1px) 0 0/14px 14px,linear-gradient(90deg,#fff3 1px,#0000 1px) 0 0/14px 14px",
+   "particles": "up",
+   "particle_colour": "#fff3c4",
+   "motif_words": "blueprint grid, drifting sparks"
+  },
+  {
+   "name": "Quality Assurance",
+   "colour": "#2C8A45",
+   "tint": "#C3F0CF",
+   "icon": "seal",
+   "texture": "checker",
+   "motif": "repeating-linear-gradient(90deg,#fff2 0 1px,#0000 1px 18px),repeating-linear-gradient(#fff2 0 1px,#0000 1px 18px)",
+   "particles": "tw",
+   "particle_colour": "#fff",
+   "motif_words": "inspection grid, checkmark glints"
+  },
+  {
+   "name": "Security",
+   "colour": "#D0353F",
+   "tint": "#EDC6C9",
+   "icon": "lock",
+   "texture": "metal",
+   "motif": "repeating-linear-gradient(135deg,#fff2 0 2px,#0000 2px 9px)",
+   "particles": "side",
+   "particle_colour": "#fff",
+   "motif_words": "steel plate, slow scan line"
+  },
+  {
+   "name": "Design",
+   "colour": "#B83A86",
+   "tint": "#FFC6E6",
+   "icon": "nib",
+   "texture": "dots",
+   "motif": "conic-gradient(from 200deg at 50% 60%,#ffd6ef,#d6e4ff,#fff3c4,#ffd6ef)",
+   "particles": "tw",
+   "particle_colour": "#fff",
+   "motif_words": "colour-swatch wash, sparkles"
+  },
+  {
+   "name": "Communications",
+   "colour": "#0A93AE",
+   "tint": "#A6E9F5",
+   "icon": "megaphone",
+   "texture": "rings",
+   "motif": "repeating-radial-gradient(circle at 0 50%,#fff3 0 2px,#0000 2px 14px)",
+   "particles": "side",
+   "particle_colour": "#fff",
+   "motif_words": "sound waves, drifting notes"
+  },
+  {
+   "name": "Operations & Analytics",
+   "colour": "#1B7C83",
+   "tint": "#A9D8DB",
+   "icon": "chart",
+   "texture": "stripes",
+   "motif": "repeating-linear-gradient(-20deg,#0000 0 16px,#fff4 16px 18px)",
+   "particles": "up",
+   "particle_colour": "#fff",
+   "motif_words": "rising chart lines, climbing data points"
+  },
+  {
+   "name": "People & Culture",
+   "colour": "#A57500",
+   "tint": "#FFE38A",
+   "icon": "people",
+   "texture": "dots",
+   "motif": "radial-gradient(circle at 30% 70%,#fff6,#0000 40%),radial-gradient(circle at 75% 35%,#fff5,#0000 35%)",
+   "particles": "up",
+   "particle_colour": "#fff",
+   "motif_words": "warm spotlights, rising cheer"
+  }
+ ],
+ "roles": {
+  "Coordinator": {
+   "type": "Management",
+   "moves": [
+    {
+     "icon": "map",
+     "name": "Sprint planning",
+     "line": "Puts the right work first, in order.",
+     "stat": "pr_merged"
+    },
+    {
+     "icon": "check",
+     "name": "Plan review",
+     "line": "Reviews plans and bot instructions.",
+     "stat": "signoff"
+    }
+   ],
+   "weak_to": "self-review",
+   "resists": "priority drift",
+   "hands_off": "Sketch, Forge, Polish",
+   "flavour": {
+    "normal": "Owns the roadmap, sprint and CEO brief.",
+    "halloween": "Lights the way, in the right order."
+   },
+   "art": {
+    "halloween": {
+     "scene": "radial-gradient(circle at 50% 38%,#cfc2ff55,#0000 45%),linear-gradient(#1d2340,#3b3f6b)",
+     "particles": "up",
+     "particle_colour": "#e9e2ff",
+     "words": "misty night wood"
+    }
+   }
+  },
+  "Strategy": {
+   "type": "Management",
+   "moves": [
+    {
+     "icon": "chart",
+     "name": "Goal setting",
+     "line": "Sets 2 or 3 goals /metrics/ can measure.",
+     "stat": null
+    },
+    {
+     "icon": "rocket",
+     "name": "Bold bets",
+     "line": "Keeps one big bet, tested cheaply first.",
+     "stat": null
+    }
+   ],
+   "weak_to": "unmeasurable goals",
+   "resists": "status quo",
+   "hands_off": "Coordinator, Analyst",
+   "flavour": {
+    "normal": "Sets direction and the month's measurable goals.",
+    "halloween": "Reads a month ahead."
+   },
+   "art": {
+    "halloween": {
+     "scene": "radial-gradient(circle at 50% 45%,#ffb3a866,#0000 50%),linear-gradient(#2a0d1a,#5c1e3a)",
+     "particles": "tw",
+     "particle_colour": "#ffd6cf",
+     "words": "fortune-teller's tent"
+    }
+   }
+  },
+  "Scoutmaster": {
+   "type": "Management",
+   "moves": [
+    {
+     "icon": "magnifier",
+     "name": "Opportunity scan",
+     "line": "Brings 3 to 5 opportunities, each with evidence.",
+     "stat": "research_accepted"
+    },
+    {
+     "icon": "seal",
+     "name": "Evidence labels",
+     "line": "Marks every guess as a hypothesis.",
+     "stat": null
+    }
+   ],
+   "weak_to": "unsourced leads",
+   "resists": "hype",
+   "hands_off": "Librarian",
+   "flavour": {
+    "normal": "Turns change into opportunities worth our time.",
+    "halloween": "Watches the field for what's growing next."
+   },
+   "art": {
+    "halloween": {
+     "scene": "linear-gradient(#f7c66b,#e59a3a 58%,#8a6420 59%,#b0862e)",
+     "particles": "down",
+     "particle_colour": "#9a3b0b",
+     "words": "harvest field at dusk"
+    }
+   }
+  },
+  "Assistant": {
+   "type": "Administration",
+   "moves": [
+    {
+     "icon": "quote",
+     "name": "Approval log",
+     "line": "Quotes Ryno's yes with its time.",
+     "stat": null
+    },
+    {
+     "icon": "clipboard",
+     "name": "Decision records",
+     "line": "Logs each decision, add-only.",
+     "stat": null
+    }
+   ],
+   "weak_to": "vague approvals",
+   "resists": "unilateral calls",
+   "hands_off": "the maker",
+   "flavour": {
+    "normal": "Keeps Ryno's decisions on the record, word for word.",
+    "halloween": "Opens the door only on Ryno's word."
+   },
+   "art": {
+    "halloween": {
+     "scene": "radial-gradient(circle at 30% 30%,#ffd27a66,#0000 40%),linear-gradient(#1c1f24,#3d434c)",
+     "particles": "up",
+     "particle_colour": "#ffd27a",
+     "words": "candlelit hallway"
+    }
+   }
+  },
+  "Librarian": {
+   "type": "Administration",
+   "moves": [
+    {
+     "icon": "doc",
+     "name": "Prior-art check",
+     "line": "Flags repeats and stale findings early.",
+     "stat": "research_accepted"
+    },
+    {
+     "icon": "clipboard",
+     "name": "Outcome tracking",
+     "line": "Records whether shipped work paid off.",
+     "stat": null
+    }
+   ],
+   "weak_to": "editing others' work",
+   "resists": "lost history",
+   "hands_off": "Critic, Coordinator",
+   "flavour": {
+    "normal": "Keeps the knowledge and decision record.",
+    "halloween": "Up late keeping the record."
+   },
+   "art": {
+    "halloween": {
+     "scene": "radial-gradient(circle at 70% 28%,#f3e2bf 0 10%,#f3e2bf33 11%,#0000 28%),linear-gradient(#1a1410,#3d2c1c)",
+     "particles": "down",
+     "particle_colour": "#f3e2bf",
+     "words": "night library window"
+    }
+   }
+  },
+  "Sketch": {
+   "type": "Research",
+   "moves": [
+    {
+     "icon": "magnifier",
+     "name": "Changelog watch",
+     "line": "Finds what's new in Grok Bot.",
+     "stat": "pr_merged"
+    },
+    {
+     "icon": "doc",
+     "name": "Requirements",
+     "line": "Turns a request into a tested plan.",
+     "stat": "pitch_shipped"
+    }
+   ],
+   "weak_to": "event promos",
+   "resists": "duplicates",
+   "hands_off": "Lens",
+   "flavour": {
+    "normal": "Plays Scout: reads the changelog, then plans.",
+    "halloween": "Every plan starts as a pencil spell."
+   },
+   "art": {
+    "halloween": {
+     "scene": "linear-gradient(#1b1745,#3a2d7a)",
+     "particles": "tw",
+     "particle_colour": "#fff",
+     "words": "starry wizard's sky"
+    }
+   }
+  },
+  "Advocate": {
+   "type": "Research",
+   "moves": [
+    {
+     "icon": "people",
+     "name": "User research",
+     "line": "Asks what problem it solves for readers.",
+     "stat": "pitch_shipped"
+    },
+    {
+     "icon": "chart",
+     "name": "Demand test",
+     "line": "Suggests cheap ways to test demand.",
+     "stat": "research_accepted"
+    }
+   ],
+   "weak_to": "no feedback yet",
+   "resists": "invented users",
+   "hands_off": "Critic, Coordinator",
+   "flavour": {
+    "normal": "Speaks for readers, with evidence.",
+    "halloween": "Speaks for readers, door to door."
+   },
+   "art": {
+    "halloween": {
+     "scene": "radial-gradient(circle at 50% 72%,#fff3c4,#ffb347 48%,#e8590c)",
+     "particles": "tw",
+     "particle_colour": "#fff",
+     "words": "candy-bowl glow"
+    }
+   }
+  },
+  "Critic": {
+   "type": "Research",
+   "moves": [
+    {
+     "icon": "magnifier",
+     "name": "Risk review",
+     "line": "Finds the weakest assumption and missing evidence.",
+     "stat": "research_accepted"
+    },
+    {
+     "icon": "scale",
+     "name": "Recommendation",
+     "line": "Recommends proceed, investigate or reject.",
+     "stat": null
+    }
+   ],
+   "weak_to": "routine work",
+   "resists": "untested assumptions",
+   "hands_off": "Coordinator",
+   "flavour": {
+    "normal": "Stress-tests strong proposals before we commit.",
+    "halloween": "Plays devil's advocate, professionally."
+   },
+   "art": {
+    "halloween": {
+     "scene": "radial-gradient(circle at 50% 85%,#ff6a3a66,#0000 55%),linear-gradient(#2a0a05,#6b1d0b)",
+     "particles": "up",
+     "particle_colour": "#ff9a5a",
+     "words": "ember glow"
+    }
+   }
+  },
+  "Atlas": {
+   "type": "Engineering",
+   "moves": [
+    {
+     "icon": "gear",
+     "name": "Impact analysis",
+     "line": "Checks PRs that touch shared paths.",
+     "stat": "signoff"
+    },
+    {
+     "icon": "doc",
+     "name": "Architecture review",
+     "line": "Asks monthly: still simple in six months?",
+     "stat": "research_accepted"
+    }
+   ],
+   "weak_to": "new dependencies",
+   "resists": "tech debt",
+   "hands_off": "Coordinator",
+   "flavour": {
+    "normal": "Owns the structure: data model, build and CI.",
+    "halloween": "Shows the bones of the build."
+   },
+   "art": {
+    "halloween": {
+     "scene": "linear-gradient(#0f2426,#1f4b4f)",
+     "particles": "down",
+     "particle_colour": "#bfe9ec",
+     "words": "moonlit crypt"
+    }
+   }
+  },
+  "Forge": {
+   "type": "Engineering",
+   "moves": [
+    {
+     "icon": "merge",
+     "name": "Build to spec",
+     "line": "Builds the locked plan until tests pass.",
+     "stat": "pr_merged"
+    },
+    {
+     "icon": "wrench",
+     "name": "Root-cause fix",
+     "line": "Fixes what after-action reviews find.",
+     "stat": "aar_fix"
+    }
+   ],
+   "weak_to": "spec changes",
+   "resists": "scope creep",
+   "hands_off": "Lens, Shield",
+   "flavour": {
+    "normal": "Builds to plan, nothing more.",
+    "halloween": "Carved exactly to the locked plan."
+   },
+   "art": {
+    "halloween": {
+     "scene": "radial-gradient(circle at 50% 80%,#ffb34788,#0000 55%),linear-gradient(#3a1d06,#7a3a0c)",
+     "particles": "up",
+     "particle_colour": "#ffcc66",
+     "words": "pumpkin patch at dusk"
+    }
+   }
+  },
+  "Polish": {
+   "type": "Design",
+   "moves": [
+    {
+     "icon": "eye",
+     "name": "UX audit",
+     "line": "Checks the site at seven screen widths.",
+     "stat": "signoff"
+    },
+    {
+     "icon": "nib",
+     "name": "Design backlog",
+     "line": "Ships the top-ranked design fix.",
+     "stat": "pitch_shipped"
+    }
+   ],
+   "weak_to": "page weight",
+   "resists": "third-party scripts",
+   "hands_off": "Lens, Trial",
+   "flavour": {
+    "normal": "Owns design: clear, usable, accessible, good-looking.",
+    "halloween": "A little magic on every pixel."
+   },
+   "art": {
+    "halloween": {
+     "scene": "radial-gradient(circle at 50% 70%,#d36bd966,#0000 50%),linear-gradient(#2a0f2e,#5e1f63)",
+     "particles": "tw",
+     "particle_colour": "#ffc6ef",
+     "words": "bubbling cauldron glow"
+    }
+   }
+  },
+  "Lens": {
+   "type": "Quality Assurance",
+   "moves": [
+    {
+     "icon": "check",
+     "name": "Code review",
+     "line": "Checks each diff against the locked plan.",
+     "stat": "signoff"
+    },
+    {
+     "icon": "block",
+     "name": "Change requests",
+     "line": "Blocks with a clear list of fixes.",
+     "stat": null
+    }
+   ],
+   "weak_to": "security calls",
+   "resists": "untested code",
+   "hands_off": "Sketch, Forge",
+   "flavour": {
+    "normal": "Reviews plans and PRs.",
+    "halloween": "Checks every stitch before it ships."
+   },
+   "art": {
+    "halloween": {
+     "scene": "radial-gradient(circle at 50% 30%,#9effb055,#0000 45%),linear-gradient(#17261d,#2f4a36)",
+     "particles": "tw",
+     "particle_colour": "#c6ffd0",
+     "words": "stormy lab with sparks"
+    }
+   }
+  },
+  "Trial": {
+   "type": "Quality Assurance",
+   "moves": [
+    {
+     "icon": "flask",
+     "name": "Test-first",
+     "line": "Writes tests that fail before the build.",
+     "stat": "ci_test_added"
+    },
+    {
+     "icon": "eye",
+     "name": "Release check",
+     "line": "Checks the live site after each merge.",
+     "stat": "deploy_check"
+    }
+   ],
+   "weak_to": "flaky tests",
+   "resists": "weakened tests",
+   "hands_off": "Forge",
+   "flavour": {
+    "normal": "Owns quality: can we trust it?",
+    "halloween": "Wrapped head to toe in test tape."
+   },
+   "art": {
+    "halloween": {
+     "scene": "linear-gradient(#3b2f12,#6e5a24)",
+     "particles": "down",
+     "particle_colour": "#ffe9a8",
+     "words": "sandstone tomb"
+    }
+   }
+  },
+  "Shield": {
+   "type": "Security",
+   "moves": [
+    {
+     "icon": "lock",
+     "name": "Security audit",
+     "line": "Checks secrets, auth and personal data.",
+     "stat": "signoff"
+    },
+    {
+     "icon": "block",
+     "name": "Release block",
+     "line": "Blocks until findings are fixed.",
+     "stat": "block_upheld"
+    }
+   ],
+   "weak_to": "fixing code",
+   "resists": "data leaks",
+   "hands_off": "Forge",
+   "flavour": {
+    "normal": "Owns security and privacy.",
+    "halloween": "Nothing comes in uninvited. Nothing personal goes out."
+   },
+   "art": {
+    "halloween": {
+     "scene": "radial-gradient(circle at 72% 26%,#f6d7d9 0 10%,#f6d7d933 11%,#0000 28%),linear-gradient(#22070c,#5a1420)",
+     "particles": "up",
+     "particle_colour": "#f6d7d9",
+     "words": "blood-moon castle"
+    }
+   }
+  },
+  "Comms": {
+   "type": "Communications",
+   "moves": [
+    {
+     "icon": "megaphone",
+     "name": "SEO and metadata",
+     "line": "Writes titles, descriptions and the sitemap.",
+     "stat": "pr_merged"
+    },
+    {
+     "icon": "quote",
+     "name": "Editorial sign-off",
+     "line": "Settles wording after hearing the roles.",
+     "stat": "signoff"
+    }
+   ],
+   "weak_to": "overriding facts",
+   "resists": "hype",
+   "hands_off": "Lens, Trial",
+   "flavour": {
+    "normal": "Owns findability and every published word.",
+    "halloween": "Echolocation for exactly the right word."
+   },
+   "art": {
+    "halloween": {
+     "scene": "radial-gradient(circle at 74% 26%,#fdf6d8 0 11%,#fdf6d833 12%,#0000 30%),linear-gradient(#0b1630,#22365e)",
+     "particles": "tw",
+     "particle_colour": "#fdf6d8",
+     "words": "moonlit night sky"
+    }
+   }
+  },
+  "Sweep": {
+   "type": "Operations & Analytics",
+   "moves": [
+    {
+     "icon": "gear",
+     "name": "Site reliability",
+     "line": "Keeps uptime, links and feeds healthy.",
+     "stat": "pr_merged"
+    },
+    {
+     "icon": "wrench",
+     "name": "Rollback",
+     "line": "Reverts fast when a deploy check fails.",
+     "stat": null
+    }
+   ],
+   "weak_to": "rising usage",
+   "resists": "skipped rollbacks",
+   "hands_off": "the maker",
+   "flavour": {
+    "normal": "Keeps the site up and on budget.",
+    "halloween": "Sweeps the site clean each morning."
+   },
+   "art": {
+    "halloween": {
+     "scene": "radial-gradient(circle at 26% 26%,#fdf6d8 0 10%,#fdf6d833 11%,#0000 28%),linear-gradient(#0d1b3a,#1f3f7a)",
+     "particles": "tw",
+     "particle_colour": "#fff",
+     "words": "moonlit sky"
+    }
+   }
+  },
+  "Analyst": {
+   "type": "Operations & Analytics",
+   "moves": [
+    {
+     "icon": "chart",
+     "name": "Weekly KPIs",
+     "line": "Tallies coverage, accuracy and speed each Monday.",
+     "stat": "research_accepted"
+    },
+    {
+     "icon": "doc",
+     "name": "Audit trail",
+     "line": "Counts only what traces to a record.",
+     "stat": null
+    }
+   ],
+   "weak_to": "untraceable data",
+   "resists": "vanity metrics",
+   "hands_off": "Coordinator",
+   "flavour": {
+    "normal": "Reports weekly: are we getting better?",
+    "halloween": "Counts every strand in the web."
+   },
+   "art": {
+    "halloween": {
+     "scene": "repeating-conic-gradient(from 0deg at 0 0,#e6dcff22 0 1deg,#0000 1deg 15deg),linear-gradient(#1a1230,#3a2766)",
+     "particles": "tw",
+     "particle_colour": "#e6dcff",
+     "words": "web in the corner"
+    }
+   }
+  },
+  "Gamemaster": {
+   "type": "People & Culture",
+   "moves": [
+    {
+     "icon": "scale",
+     "name": "Rewards design",
+     "line": "Designs levels, quests and achievements.",
+     "stat": null
+    },
+    {
+     "icon": "seal",
+     "name": "Fair play",
+     "line": "Rewards real outcomes, never activity.",
+     "stat": null
+    }
+   ],
+   "weak_to": "awarding XP",
+   "resists": "gaming the system",
+   "hands_off": "Lens, Trial",
+   "flavour": {
+    "normal": "Writes the XP rules and keeps them fair.",
+    "halloween": "Nine lives per quest, scored fairly."
+   },
+   "art": {
+    "halloween": {
+     "scene": "radial-gradient(circle at 50% 46%,#ffe3ea 0 30%,#ffe3ea44 31%,#0000 44%),linear-gradient(#141428,#2c2c4f)",
+     "particles": "tw",
+     "particle_colour": "#ffe3ea",
+     "words": "full moon behind the cat"
+    }
+   }
+  },
+  "Advisor": {
+   "type": "People & Culture",
+   "moves": [
+    {
+     "icon": "book",
+     "name": "Training updates",
+     "line": "Turns repeat mistakes into better instructions.",
+     "stat": "pr_merged"
+    },
+    {
+     "icon": "wrench",
+     "name": "Process controls",
+     "line": "Adds a CI check after two misses.",
+     "stat": "aar_fix"
+    }
+   ],
+   "weak_to": "uncited edits",
+   "resists": "repeat mistakes",
+   "hands_off": "Lens, Coordinator",
+   "flavour": {
+    "normal": "Owns learning: keeps bot instructions true.",
+    "halloween": "The ghost of lessons past."
+   },
+   "art": {
+    "halloween": {
+     "scene": "radial-gradient(ellipse at 50% 85%,#e8ecff55,#0000 60%),linear-gradient(#1f2333,#454b66)",
+     "particles": "side",
+     "particle_colour": "#e8ecff",
+     "words": "foggy graveyard"
+    }
+   }
+  }
+ }
+}

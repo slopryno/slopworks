@@ -41,7 +41,7 @@ class Team(unittest.TestCase):
     def test_grid(self):
         html = build.build()["team/index.html"]
         self.assertIn("Built and designed by Grok Bots", html)
-        self.assertIn('class="grid"', html)
+        self.assertIn('class="deck"', html)  # the trading-card grid (Oct 20)
         self.assertIn("avatars/coordinator.svg", html)
         self.assertNotIn("Recent wins", html)  # page budget (Ryno, Oct 20 7:27 AM ET): wins live on each sheet
         self.assertIn(">Character sheet</a>", html)

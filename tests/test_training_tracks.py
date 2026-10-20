@@ -45,8 +45,7 @@ class RepoTrack(unittest.TestCase):
             page = (ROOT / f"site/team/{role}/index.html").read_text()
             self.assertIn('id="track-mobile-uiux"', page)
             self.assertIn("Audit of the live site at 390px", page)
-        team = (ROOT / "site/team/index.html").read_text()
-        self.assertEqual(team.count("the Mobile UI/UX track"), 2)
+        # Trading cards (Oct 20): the track is listed on the sheets only; the Team card links each sheet.
 
 
 class Fixture(unittest.TestCase):

@@ -23,7 +23,7 @@ class CommsHire(unittest.TestCase):
         self.assertIn("Comms", dict(build.GROUPS)["Leadership and Strategy"])
         html = build.build()["team/index.html"]
         self.assertIn("avatars/comms.svg", html)
-        self.assertIn("final call is mine but never a solo one", html)
+        self.assertIn("final call is mine but never a solo one", build.build()["team/comms/index.html"])  # bio on the sheet (trading cards, Oct 20)
         f = ROOT / "site/assets/avatars/comms.svg"
         self.assertLess(f.stat().st_size, 3000)
         self.assertIn("prefers-reduced-motion", f.read_text())

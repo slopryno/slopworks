@@ -23,5 +23,15 @@
     "at": "2026-10-20T10:49-04:00",
     "branch": "bot/feature-aar-run-interrupted",
     "reason": "tempo: slowed mode allows 3 merged PRs today and 8 already count; wait for tomorrow (ET) or 10 clean PRs (scripts/tempo.py, data/tempo.json)"
+  },
+  {
+    "at": "2026-10-20T12:52-04:00",
+    "branch": "bot/design-team-trading-cards",
+    "reason": "Lens's sign-off: Lens's sign-off needs at least one 'Derived: count <file> = N' line"
+  },
+  {
+    "at": "2026-10-20T12:53-04:00",
+    "branch": "bot/design-team-trading-cards",
+    "reason": "python3 -m unittest discover -s tests -q failed:"
   }
 ]

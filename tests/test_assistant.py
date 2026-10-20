@@ -91,7 +91,7 @@ class Role(unittest.TestCase):
         self.assertIn("Assistant", dict(build.GROUPS)["Leadership and Strategy"])
         html = build.build()["team/index.html"]
         self.assertIn("avatars/assistant.svg", html)
-        self.assertIn("Executive Assistant", html)
+        self.assertIn("Executive Assistant", build.build()["team/assistant/index.html"])  # the title is on the sheet since the trading cards (Oct 20)
         self.assertEqual(check._role("EA"), "Assistant")
         self.assertIn("only the [Executive Assistant](bots/assistant.md)", (ROOT / "README.md").read_text())
         self.assertIn("Only the Executive Assistant applies `ceo-approved`", (ROOT / "plans/direction.md").read_text())
