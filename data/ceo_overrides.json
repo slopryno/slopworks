@@ -53,5 +53,19 @@
       "bot/design-team-trading-cards"
     ],
     "max_prs": 2
+  },
+  {
+    "id": "ovr-2026-10-20-ceo-card",
+    "kind": "lift-slowdown",
+    "by": "Ryno (CEO)",
+    "quote": "Today, i will override and have the team review + embedd a link to my x account",
+    "source": "CEO instruction, Tue 2026-10-20 3:54 PM ET, Slopbot chat, answering \"When should your card go live?\" for his CEO card. CEO card PRs only: this override and the card. Not the queued sheet card back, the held mission or badge branches, or anything else.",
+    "at": "2026-10-20T15:54-04:00",
+    "expires": "2026-10-20T23:59-04:00",
+    "branches": [
+      "bot/ops-ceo-card-override",
+      "bot/design-ceo-card"
+    ],
+    "max_prs": 2
   }
 ]
