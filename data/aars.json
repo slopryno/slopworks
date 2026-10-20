@@ -807,5 +807,73 @@
     "owner": "Forge",
     "status": "open",
     "thread": "c384"
+  },
+  {
+    "id": "aar-2026-10-20-run-interrupted",
+    "date": "2026-10-20",
+    "title": "The Oct 20 daily run stopped partway, leaving #123 as a draft and the run's later steps undone",
+    "trigger": "incident",
+    "links": {
+      "prs": [
+        120,
+        121,
+        122,
+        123,
+        125,
+        126,
+        127
+      ],
+      "runs": [
+        "39436643191"
+      ],
+      "commits": [
+        "eeb8e4a",
+        "3d11c06",
+        "80bdf35"
+      ],
+      "chat": [
+        "c398"
+      ]
+    },
+    "expected": {
+      "text": "One session ships the queued PRs in order (#120 to #123), then runs the standup, Scout, Verify, Shield, Publish, Advisor, Polish's quick look, research, Sweep, the handoffs and the run log.",
+      "cite": [
+        "file:plans/tracker.md",
+        "pr:123"
+      ]
+    },
+    "actual": {
+      "text": "#120, #121 and #122 merged at 9:27, 9:40 and 9:54 AM ET. #123 opened as a draft at 10:09 AM ET and its review-shots run passed, but no sign-offs were posted and no later step ran. Resumed at 10:15 AM ET: #123 merged as eeb8e4a; the missing steps shipped in #125 (3d11c06).",
+      "cite": [
+        "pr:123",
+        "run:39436643191",
+        "commit:eeb8e4a",
+        "pr:125",
+        "commit:3d11c06",
+        "runlog:2026-10-20-daily"
+      ]
+    },
+    "why": {
+      "text": "bot.py pr waits for the review-shots artifact before posting sign-offs, and the session running it ended during that wait. It left a lock held by a dead process and a draft PR. The records don't say why the session ended, so we don't guess.",
+      "cite": [
+        "pr:123",
+        "run:39436643191",
+        "file:scripts/bot.py"
+      ]
+    },
+    "change": {
+      "text": "Sweep's file gets a resume rule: after an interrupted run, compare today's records (standup, runs.json, Team chat, open drafts) with the run's steps, finish only what is missing, use bot.py resume for a draft PR, and never redo a merged step. It merged in #126 (80bdf35). This review shipped the same day in #127, after the day's PR limit was used up, under Ryno's new rule (Oct 20, 11:02 AM ET).",
+      "cite": [
+        "pr:126",
+        "commit:80bdf35",
+        "file:bots/sweep.md",
+        "pr:127"
+      ]
+    },
+    "change_pr": 126,
+    "owner": "Sweep",
+    "status": "open",
+    "thread": "c406",
+    "shipped_in": 127
   }
 ]
