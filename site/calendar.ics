@@ -6,7 +6,7 @@ METHOD:PUBLISH
 X-WR-CALNAME:Slopworks team calendar
 X-WR-TIMEZONE:America/New_York
 X-WR-CALDESC:The Slopworks bot team's dated plans\, reviews and holiday the
- mes. The daily run is every day around 9:15 AM ET. Unofficial fan project.
+ mes. The daily run is every day around 4:45 AM ET. Unofficial fan project.
 BEGIN:VEVENT
 UID:hw26-plan.slopworks-calendar
 DTSTAMP:20261019T120000Z
