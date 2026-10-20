@@ -116,8 +116,27 @@ class Sets(unittest.TestCase):
     def test_no_loop_faster_than_0_9s(self):
         for season in ("halloween", "winter"):
             for f, s in avatars.files(season).items():
-                for t in re.findall(r"animation:\w+ ([\d.]+)s", s):
+                for t in re.findall(r"animation:\w+ ([\d.]+)s", s) + re.findall(r"animation:([\d.]+)s", s):  # named, and the shared timing
                     self.assertGreaterEqual(float(t), .9, f)
+                if not f.startswith("still/") and re.search(r'aria-label="[^"]+, (Halloween|winter holidays)"', s):
+                    self.assertRegex(s, r"animation:[\d.]+s", f)  # the shared timing is seen by this test
+
+    def test_slim_markup_is_the_same_drawing(self):
+        # Page budget (Ryno, Oct 20 7:27 AM ET): round caps and joins once on the root, the eye colour once on the eye group,
+        # one shared timing for the four loops. Stills keep the root attributes, so they draw the same.
+        for season in ("halloween", "winter"):
+            for f, s in avatars.files(season).items():
+                if not re.search(r'aria-label="[^"]+, (Halloween|winter holidays)"', s):
+                    continue
+                self.assertRegex(s, r'^<svg [^>]*stroke-linecap="round" stroke-linejoin="round"', f)
+                self.assertNotIn('stroke-linecap="round"', s.split(">", 1)[1], f)
+                self.assertNotIn('stroke-linejoin="round"', s.split(">", 1)[1], f)
+                self.assertIn(f'<g class="g" fill="{avatars.EYE}">', s, f)
+                if not f.startswith("still/"):
+                    for k in "sqge":
+                        self.assertIn(f"animation-name:{k}", s, f)
+        cane = [s for s in avatars.files("winter").values() if "stroke-dasharray" in s]
+        self.assertTrue(cane and all('stroke-linecap="butt" stroke-linejoin="miter"' in s for s in cane))  # dashes stay square
 
     def test_still_copies_are_committed(self):
         for n in avatars.ROLES:

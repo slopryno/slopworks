@@ -179,7 +179,7 @@ def fit(f):
 
 
 def _rim(r):
-    return f' stroke="{r}" stroke-width="{RIM_W}" stroke-linejoin="round" paint-order="stroke"' if r else ""
+    return f' stroke="{r}" stroke-width="{RIM_W}" paint-order="stroke"' if r else ""
 
 
 def _paint(f, inner):
@@ -197,7 +197,7 @@ def R(x, y, w, h, rx, f, inner=False): return f'<rect x="{x}" y="{y}" width="{w}
 
 def S(d, c, w, inner=False, extra=""):
     """A stroked line; out-of-band lines get a wider same-hue line under them."""
-    line = lambda col, wd: f'<path d="{d}" fill="none" stroke="{col}" stroke-width="{wd}" stroke-linecap="round" stroke-linejoin="round"{extra}/>'
+    line = lambda col, wd: f'<path d="{d}" fill="none" stroke="{col}" stroke-width="{wd}"{extra}/>'
     if inner or c == EYE:
         return line(c, w)
     c, r = fit(c)
@@ -207,8 +207,8 @@ def S(d, c, w, inner=False, extra=""):
 def PS(d, f, w):
     """A filled shape with a same-colour stroke (soft corners), plus a rim when needed."""
     f, r = fit(f)
-    under = f'<path d="{d}" fill="{r}" stroke="{r}" stroke-width="{w + RIM_W}" stroke-linejoin="round"/>' if r else ""
-    return under + f'<path d="{d}" fill="{f}" stroke="{f}" stroke-width="{w}" stroke-linejoin="round"/>'
+    under = f'<path d="{d}" fill="{r}" stroke="{r}" stroke-width="{w + RIM_W}"/>' if r else ""
+    return under + f'<path d="{d}" fill="{f}" stroke="{f}" stroke-width="{w}"/>'
 
 
 def M(s): return f'<g transform="matrix(-1 0 0 1 100 0)">{s}</g>'
@@ -417,7 +417,7 @@ WINTER = {
         eyes=(62, 45, 55, 2.8, 5), face="#2f9e4f", m=dance(8, .07, 3.2)),
     "assistant": dict(name="Candy cane", line="Keeps every stripe of the record in order.",
         body=S("M42 90V40C42 22 70 22 70 40V46", "#f6f6f6", 18)
-             + '<path d="M42 90V40C42 22 70 22 70 40V46" fill="none" stroke="#e03a3e" stroke-width="18" stroke-dasharray="6 8"/>',
+             + '<path d="M42 90V40C42 22 70 22 70 40V46" fill="none" stroke="#e03a3e" stroke-width="18" stroke-dasharray="6 8" stroke-linecap="butt" stroke-linejoin="miter"/>',
         eyes=(63, 38, 46, 2.6, 4.6), face="#f6f6f6", m=dance(9, .06, 2.8)),
 }
 COSTUMES = {"halloween": HALLOWEEN, "winter": WINTER}
@@ -429,24 +429,29 @@ def costume_svg(i, name, season):
     ch = COSTUMES[season][name]
     color, badge = ROLES[name][0], ROLES[name][3]
     m, dur = ch["m"], ch["m"]["dur"]
-    a = f" {dur}s -{round((i * .37) % dur, 2)}s ease-in-out infinite"  # negative delay: out of step, already moving
+    lag = round((i * .37) % dur, 2)
+    a = f"{dur}s{f' -{lag}s' if lag else ''} ease-in-out infinite"  # negative delay: out of step, already moving
     cy, xl, xr, rx, ry = ch["eyes"]
     k = 3.2 if rx < 3.4 else 4
     (qn, qs), n = (m["qN"], m["qS"]), ch["name"]
-    css = (f".s{{animation:s{a};transform-origin:{m['o']}}}.q{{animation:q{a};transform-origin:50px 90px}}.g{{animation:g{a}}}"
-           f".e{{animation:e{a};transform-box:fill-box;transform-origin:center}}"
-           f"@keyframes s{{0%,50%,100%{{transform:{m['N']}}}25%{{transform:{m['L']}}}75%{{transform:{m['R']}}}}}"
-           f"@keyframes q{{0%,50%,100%{{transform:scale({qn[0]},{qn[1]})}}25%,75%{{transform:scale({qs[0]},{qs[1]})}}}}"
-           f"@keyframes g{{0%,50%,100%{{transform:none}}25%{{transform:translateX(-{k}px)}}75%{{transform:translateX({k}px)}}}}"
-           f"@keyframes e{{0%,10%,50%,60%,100%{{transform:none}}25%,75%{{transform:scale(1.32,.7)}}}}"
+    # One shared timing for the four loops, then each loop's name and origin (same motion as four full shorthands).
+    css = (f".s,.q,.g,.e{{animation:{a}}}.s{{animation-name:s;transform-origin:{m['o']}}}.q{{animation-name:q;transform-origin:50px 90px}}"
+           f".g{{animation-name:g}}.e{{animation-name:e;transform-box:fill-box;transform-origin:center}}"
+           f"@keyframes s{{0%,50%,to{{transform:{m['N']}}}25%{{transform:{m['L']}}}75%{{transform:{m['R']}}}}}"
+           f"@keyframes q{{0%,50%,to{{transform:scale({qn[0]},{qn[1]})}}25%,75%{{transform:scale({qs[0]},{qs[1]})}}}}"
+           f"@keyframes g{{0%,50%,to{{transform:none}}25%{{transform:translateX(-{k}px)}}75%{{transform:translateX({k}px)}}}}"
+           f"@keyframes e{{0%,10%,50%,60%,to{{transform:none}}25%,75%{{transform:scale(1.32,.7)}}}}"
            + ch.get("css", "") + "@media(prefers-reduced-motion:reduce){*{animation:none!important}}")
     who = name.capitalize() if name != "gamemaster" else "Game Master"
     label = f"{who} as {n if n in PROPER else ('an ' if n[0] in 'AEIOU' else 'a ') + n[0].lower() + n[1:]}, {'Halloween' if season == 'halloween' else 'winter holidays'}"
-    glyph = (f'<path d="{BADGE[badge]}" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>'
+    glyph = (f'<path d="{BADGE[badge]}" fill="none" stroke="#fff" stroke-width="1.8"/>'
              if badge in STROKED else f'<path d="{BADGE[badge]}" fill="#fff"/>')
-    eyes = "".join(f'<ellipse class="e" cx="{x}" cy="{cy}" rx="{rx}" ry="{ry}" fill="{EYE}"/>' for x in (xl, xr))
-    return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="{label}"><style>{css}</style>'
-            f'<g class="s"><g class="q">{ch["body"]}<g class="g">{eyes}</g></g></g>'
+    eyes = "".join(f'<ellipse class="e" cx="{x}" cy="{cy}" rx="{rx}" ry="{ry}"/>' for x in (xl, xr))
+    # Page budget (Ryno, Oct 20 7:27 AM ET): round caps and joins are set once on the root and the eye colour once on the
+    # eye group (SVG attributes inherit; the stills keep them because still() only drops <style>). Same pixels, fewer bytes.
+    return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="{label}"'
+            f' stroke-linecap="round" stroke-linejoin="round"><style>{css}</style>'
+            f'<g class="s"><g class="q">{ch["body"]}<g class="g" fill="{EYE}">{eyes}</g></g></g>'
             f'<g transform="translate(80 82)"><circle r="10" fill="{shade(color)}"/>{glyph}</g></svg>\n')
 
 
