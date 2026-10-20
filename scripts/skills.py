@@ -8,13 +8,20 @@ adding to their profiles"). Standard library only.
 Each role file has a **Skills:** block with 1 to 4 lines: - [name](pinned link) (source): how the role uses it.
 check.py runs errors(): every listed skill is in data/skills.json, under the source it names, with the link pinned to
 that source's commit. A skill nobody uses can't sit in the manifest, and one name can't be both used and skipped.
+
+Training tracks (Ryno, 2026-10-20 7:05 AM ET: "lets send polish and gamemaster to training. Mobile design and
+development. Heavy on UI/UX design principles") live in data/skills.json "tracks": sourced modules, each with a principle,
+how it applies here, a practice item and the check that enforces it, plus one graded audit per role. A role in a track
+names it in a **Training track:** line; track_errors() checks both sides, the sources and the audit. No XP field exists.
 """
-import hashlib, json, re, sys
+import hashlib, json, re, sys, urllib.parse
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 MAX_SKILLS, MAX_WORDS = 4, 25
 BLOCK = re.compile(r"^\*\*Skills:\*\*[^\n]*\n((?:- [^\n]*\n?)*)", re.M)
+TRACK = re.compile(r"^\*\*Training track:\*\* `(?P<id>[a-z0-9-]+)`", re.M)
+BACKLOG_REF = re.compile(r"^d\d+$")
 LINE = re.compile(r"^- \[(?P<name>[a-z0-9-]+)\]\((?P<url>[^)\s]+)\) \((?P<source>[^)]+)\): (?P<use>\S.*)$")
 
 
@@ -34,6 +41,103 @@ def role_skills(text):
         x = LINE.match(line)
         out.append((x["name"], x["url"], x["source"], x["use"]) if x else (None, line, None, None))
     return out
+
+
+def role_tracks(text):
+    """Track ids a role file names in its **Training track:** lines."""
+    return TRACK.findall(text)
+
+
+def track_modules(track, role):
+    return [m for m in track["modules"] if role in m["roles"]]
+
+
+TRACK_HOSTS = ("w3.org", "developer.apple.com", "support.google.com", "developer.android.com", "nngroup.com", "lawsofux.com", "web.dev")
+
+
+def track_source_error(url):
+    """Training sources are the reputable public guides only: https, no query string (tracking), a host on TRACK_HOSTS.
+    A fragment may point at one criterion in a long standard (WCAG 2.2's TR page)."""
+    u = urllib.parse.urlparse(url)
+    host = (u.hostname or "").lower()
+    if u.scheme != "https" or u.query:
+        return "must be an https link with no query string"
+    if not any(host == h or host.endswith("." + h) for h in TRACK_HOSTS):
+        return f"host {host} isn't on TRACK_HOSTS"
+    return ""
+
+
+def track_errors(root=None, validate=None):
+    """data/skills.json tracks: valid shape, real https sources that a module uses, modules tied to the track's roles and to
+    pinned skills, one audit per role graded by another role, findings tied to that role's modules and to real backlog items,
+    and a **Training track:** line in exactly the role files the track names."""
+    root = root or ROOT
+    if validate is None:
+        sys.path.insert(0, str(ROOT / "scripts"))
+        from check import validate
+    man = load(root)
+    defs = json.loads((root / "data/schema/skills.schema.json").read_text())["definitions"]
+    p = root / "data/design_backlog.json"
+    backlog = {d["id"] for d in json.loads(p.read_text())} if p.exists() else set()
+    errs, named = [], {}
+    for f in sorted((root / "bots").glob("*.md")):
+        for t in role_tracks(f.read_text()):
+            named.setdefault(t, set()).add(f.stem)
+    for tid, t in man.get("tracks", {}).items():
+        w = f"data/skills.json tracks.{tid}"
+        e = validate(t, defs["track"], f"$.tracks.{tid}")
+        if e:
+            errs += [f"data/skills.json {x}" for x in e]
+            continue
+        for k, s in t["sources"].items():
+            errs += [f"data/skills.json {x}" for x in validate(s, defs["track_source"], f"$.tracks.{tid}.sources.{k}")]
+            why = track_source_error(s.get("url", "")) if isinstance(s, dict) else None
+            if why:
+                errs.append(f"{w}: source {k} {why}")
+        ids, used = [], set()
+        for m in t["modules"]:
+            e = validate(m, defs["module"], f"$.tracks.{tid}.modules")
+            if e:
+                errs += [f"data/skills.json {x}" for x in e]
+                continue
+            ids.append(m["id"])
+            used |= set(m["sources"])
+            errs += [f"{w} {m['id']}: role {r} isn't in the track" for r in m["roles"] if r not in t["roles"]]
+            errs += [f"{w} {m['id']}: unknown source {k}" for k in m["sources"] if k not in t["sources"]]
+            errs += [f"{w} {m['id']}: {k} isn't a pinned skill" for k in m.get("skills", []) if k not in man["skills"]]
+            if not m["sources"]:
+                errs.append(f"{w} {m['id']}: needs at least one source")
+        errs += [f"{w}: module {i} is listed twice" for i in sorted({i for i in ids if ids.count(i) > 1})]
+        errs += [f"{w}: source {k} isn't used by any module" for k in sorted(set(t["sources"]) - used)]
+        if set(t["exercises"]) != set(t["roles"]):
+            errs.append(f"{w}: needs exactly one audit per role ({', '.join(t['roles'])})")
+        seen = []
+        for role, x in t["exercises"].items():
+            e = validate(x, defs["exercise"], f"$.tracks.{tid}.exercises.{role}")
+            if e:
+                errs += [f"data/skills.json {y}" for y in e]
+                continue
+            if x["grade"]["by"] == role:
+                errs.append(f"{w}: {role} can't grade its own audit")
+            mine = {m["id"] for m in track_modules(t, role)}
+            for g in x["findings"]:
+                e = validate(g, defs["finding"], f"$.tracks.{tid}.exercises.{role}.findings")
+                if e:
+                    errs += [f"data/skills.json {y}" for y in e]
+                    continue
+                seen.append(g["id"])
+                if g["module"] not in mine:
+                    errs.append(f"{w}: {role}'s finding {g['id']} cites {g['module']}, which isn't in {role}'s track")
+                if BACKLOG_REF.match(g["next"]) and g["next"] not in backlog:
+                    errs.append(f"{w}: finding {g['id']} points at {g['next']}, which isn't in data/design_backlog.json")
+            if not x["findings"]:
+                errs.append(f"{w}: {role}'s audit has no findings")
+        errs += [f"{w}: finding {i} is listed twice" for i in sorted({i for i in seen if seen.count(i) > 1})]
+        files = {r.lower() for r in t["roles"]}
+        errs += [f"bots/{r}.md: needs a **Training track:** `{tid}` line" for r in sorted(files - named.get(tid, set()))]
+        errs += [f"bots/{r}.md: names track {tid}, which doesn't list it" for r in sorted(named.get(tid, set()) - files)]
+    errs += [f"bots/{r}.md: names unknown track {tid}" for tid in sorted(set(named) - set(man.get("tracks", {}))) for r in sorted(named[tid])]
+    return errs
 
 
 def load(root=None):
@@ -121,7 +225,8 @@ def main(argv):
         print(f"{len(found)} drift item(s) against the pins in data/skills.json" if found else "no drift: every pinned skill matches")
         return 1 if found else 0
     for f in sorted((ROOT / "bots").glob("*.md")):
-        print(f"{f.stem}: " + ", ".join(g[0] or "?" for g in role_skills(f.read_text()) or []))
+        text = f.read_text()
+        print(f"{f.stem}: " + ", ".join(g[0] or "?" for g in role_skills(text) or []) + "".join(f" + track {t}" for t in role_tracks(text)))
     return 0
 
 
