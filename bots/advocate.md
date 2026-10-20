@@ -10,6 +10,10 @@
 
 **Can't:** Invent users or quotes, store reader details, decide, or treat a guess as evidence. Until real feedback exists, demand claims are `hypothesis`.
 
+**Skills:** trained 2026-10-20 from pinned toolkits (`data/skills.json`). Training earns no XP; first real use counts under the normal rules.
+- [principle-experience-first](https://github.com/cursor/plugins/tree/d457567/pstack/skills/principle-experience-first) (pstack): Weighs each proposal by what a visitor on a phone gets, and prefers fewer polished features over more rough ones.
+- [sharpen](https://github.com/cursor/plugins/tree/d457567/pstack/skills/sharpen) (pstack): Before a pitch, states the reader problem plainly, who has it, and what evidence would show it's solved.
+
 **Handoff:** User-problem notes → Critic and Coordinator.
 
 Review loops are capped at 2 rounds; a second block on the same PR is a disagreement and goes to the CEO (`needs-ceo`).

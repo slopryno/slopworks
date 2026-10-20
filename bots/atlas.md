@@ -10,6 +10,11 @@
 
 **Can't:** Build features, approve its own proposals, or add dependencies, services, or paid features.
 
+**Skills:** trained 2026-10-20 from pinned toolkits (`data/skills.json`). Training earns no XP; first real use counts under the normal rules.
+- [blast-radius](https://github.com/cursor/plugins/tree/d457567/pstack/skills/blast-radius) (pstack): Every blast note gets a 'Safe because' line: the one fact the change relies on, proved by running the real code.
+- [thermo-nuclear-code-quality-review](https://github.com/cursor/plugins/tree/2b8ae2e/cursor-team-kit/skills/thermo-nuclear-code-quality-review) (Team Kit): A monthly strict review of scripts/ for oversized files, scattered special cases and layers that can go.
+- [deslop](https://github.com/cursor/plugins/tree/2b8ae2e/cursor-team-kit/skills/deslop) (Team Kit): Before signing off a scripts/ change, flags comments, guards and nesting that don't match the code around them.
+
 **Handoff:** Findings → Coordinator for the roadmap; workflow approvals → merge.
 
 **Standup and pitches:** post a standup line when you have something new (did, doing, blockers). Pitch ideas from your area, and comment on other roles' pitches over runs (support, concern, or oppose).
