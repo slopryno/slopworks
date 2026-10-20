@@ -638,9 +638,25 @@ def build():
     import skills as skillmod
     kit = skillmod.load()
     learned = lambda f: skillmod.role_skills((ROOT / "bots" / f).read_text()) or []
+    # Training tracks (Ryno, 2026-10-20 7:05 AM ET): a role's **Training track:** lines name tracks in data/skills.json.
+    tracked = lambda f: [(tid, kit["tracks"][tid]) for tid in skillmod.role_tracks((ROOT / "bots" / f).read_text()) if tid in kit.get("tracks", {})]
     def trained_in(f):
-        got = learned(f)
-        return f'<p><strong>Trained in:</strong> {e(", ".join(g[0] for g in got))}. <a href="{f[:-3]}/#training">How it uses them</a></p>' if got else ""
+        got = [g[0] for g in learned(f)] + [f'the {t["title"]} track' for _, t in tracked(f)]
+        return f'<p><strong>Trained in:</strong> {e(", ".join(got))}. <a href="{f[:-3]}/#training">How it uses them</a></p>' if got else ""
+    def track_html(n, tid, t):
+        mods = skillmod.track_modules(t, n)
+        src = t["sources"]
+        li = "".join(f'<li><strong>{e(m["title"])}.</strong> {e(m["practice"])} <a href="{e(src[m["sources"][0]]["url"])}">{e(src[m["sources"][0]]["title"])}</a></li>' for m in mods)
+        x = t["exercises"][n]
+        grade = {"pending": f'grade pending from {x["grade"]["by"]}', "pass": f'passed, graded by {x["grade"]["by"]}', "redo": f'redo asked by {x["grade"]["by"]}'}[x["grade"]["state"]]
+        kinds = {"defect": "Defect", "risk": "Risk", "pass": "Pass"}
+        fl = "".join(f'<li><strong>{kinds[g["kind"]]}:</strong> {e(g["what"])}</li>' for g in x["findings"])
+        day = datetime.fromisoformat(x["date"]).strftime("%b %-d")
+        return (f'<h3 id="track-{tid}">{e(t["title"])} track</h3><p class="meta"><span>{len(mods)} modules from public guides, asked by Ryno on '
+                f'{e(datetime.fromisoformat(t["trained"]).strftime("%b %-d"))}.</span><a href="{REPO}/blob/main/data/skills.json">Modules and sources</a></p>'
+                f'<details><summary>The {len(mods)} modules</summary><ol class="worklist">{li}</ol></details>'
+                f'<details><summary>Audit of the live site at {x["width"]}px, {day}: {len(x["findings"])} findings</summary>'
+                f'<p class="meta">{x["pages"]} pages, light and dark; {e(grade)}.</p><ul class="worklist">{fl}</ul></details>')
     def tcard(n, t, r, o, f):
         # Compact role card (visual review V3, Comms): name, title, a one-sentence bio, the current objective and the level stay
         # visible; what the role owns, its limits, latest handoff and training sit one tap away; research and wins are on the sheet.
@@ -676,7 +692,8 @@ def build():
             return ""
         rows = "".join(f'<li><a href="{e(u)}">{e(k)}</a> <span class="meta">{e(src)}</span> {e(use)}</li>' for k, u, src, use in got)
         return (f'<h2 id="training">Training</h2><p class="meta"><span>Trained {e(datetime.fromisoformat(kit["trained"]).strftime("%b %-d, %Y"))} from pinned, MIT-licensed toolkits. '
-                f'Training earns no XP; first real use counts under the normal rules.</span><a href="{REPO}/blob/main/data/skills.json">Sources and pins</a></p><ul class="worklist">{rows}</ul>')
+                f'Training earns no XP; first real use counts under the normal rules.</span><a href="{REPO}/blob/main/data/skills.json">Sources and pins</a></p><ul class="worklist">{rows}</ul>'
+                + "".join(track_html(next(r for r in tt["roles"] if r.lower() == f[:-3]), tid, tt) for tid, tt in tracked(f)))
     def sheet(n, t, r, o, f):
         x = totals.get(n, 0)
         num, lv, nxt = level_for(x, levels)

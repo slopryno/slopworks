@@ -400,5 +400,515 @@
       "source": "Team Kit",
       "why": "Reads private chat transcripts; a PII risk."
     }
+  },
+  "tracks": {
+    "mobile-uiux": {
+      "title": "Mobile UI/UX",
+      "asked": "Ryno, 2026-10-20 7:05 AM ET: \"lets send polish and gamemaster to training. Mobile design and development. Heavy on UI/UX design principles\"",
+      "trained": "2026-10-20",
+      "roles": [
+        "Polish",
+        "Gamemaster"
+      ],
+      "note": "Shared fundamentals m1 to m5, then a focus per role. Summaries are in our own words; every source was read on 2026-10-20. Training earns no XP (Gamemaster ruling, c393).",
+      "sources": {
+        "wcag-reflow": {
+          "publisher": "W3C",
+          "title": "WCAG 2.2: 1.4.10 Reflow",
+          "url": "https://www.w3.org/WAI/WCAG22/Understanding/reflow.html"
+        },
+        "wcag-target-min": {
+          "publisher": "W3C",
+          "title": "WCAG 2.2: 2.5.8 Target Size (Minimum)",
+          "url": "https://www.w3.org/TR/WCAG22/#target-size-minimum"
+        },
+        "wcag-target-enh": {
+          "publisher": "W3C",
+          "title": "WCAG 2.2: 2.5.5 Target Size (Enhanced)",
+          "url": "https://www.w3.org/TR/WCAG22/#target-size-enhanced"
+        },
+        "wcag-contrast": {
+          "publisher": "W3C",
+          "title": "WCAG 2.2: 1.4.3 Contrast (Minimum)",
+          "url": "https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html"
+        },
+        "wcag-nontext": {
+          "publisher": "W3C",
+          "title": "WCAG 2.2: 1.4.11 Non-text Contrast",
+          "url": "https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html"
+        },
+        "wcag-color": {
+          "publisher": "W3C",
+          "title": "WCAG 2.2: 1.4.1 Use of Color",
+          "url": "https://www.w3.org/WAI/WCAG22/Understanding/use-of-color.html"
+        },
+        "wcag-motion": {
+          "publisher": "W3C",
+          "title": "WCAG 2.2: 2.3.3 Animation from Interactions",
+          "url": "https://www.w3.org/TR/WCAG22/#animation-from-interactions"
+        },
+        "wcag-spacing": {
+          "publisher": "W3C",
+          "title": "WCAG 2.2: 1.4.12 Text Spacing",
+          "url": "https://www.w3.org/WAI/WCAG22/Understanding/text-spacing.html"
+        },
+        "hig-a11y": {
+          "publisher": "Apple",
+          "title": "Human Interface Guidelines: Accessibility",
+          "url": "https://developer.apple.com/design/human-interface-guidelines/accessibility"
+        },
+        "android-touch": {
+          "publisher": "Google",
+          "title": "Android Accessibility Help: Touch target size (Material guidance)",
+          "url": "https://support.google.com/accessibility/android/answer/7101858"
+        },
+        "nng-heuristics": {
+          "publisher": "Nielsen Norman Group",
+          "title": "10 Usability Heuristics for User Interface Design",
+          "url": "https://www.nngroup.com/articles/ten-usability-heuristics/"
+        },
+        "nng-touch": {
+          "publisher": "Nielsen Norman Group",
+          "title": "Touch Targets on Touchscreens",
+          "url": "https://www.nngroup.com/articles/touch-target-size/"
+        },
+        "nng-progressive": {
+          "publisher": "Nielsen Norman Group",
+          "title": "Progressive Disclosure",
+          "url": "https://www.nngroup.com/articles/progressive-disclosure/"
+        },
+        "nng-accordions": {
+          "publisher": "Nielsen Norman Group",
+          "title": "Accordions on Mobile",
+          "url": "https://www.nngroup.com/articles/mobile-accordions/"
+        },
+        "nng-progress": {
+          "publisher": "Nielsen Norman Group",
+          "title": "Progress Indicators Make a Slow System Less Insufferable",
+          "url": "https://www.nngroup.com/articles/progress-indicators/"
+        },
+        "lux-fitts": {
+          "publisher": "Laws of UX",
+          "title": "Fitts's Law",
+          "url": "https://lawsofux.com/fittss-law/"
+        },
+        "lux-hick": {
+          "publisher": "Laws of UX",
+          "title": "Hick's Law",
+          "url": "https://lawsofux.com/hicks-law/"
+        },
+        "lux-cognitive-load": {
+          "publisher": "Laws of UX",
+          "title": "Cognitive Load",
+          "url": "https://lawsofux.com/cognitive-load/"
+        },
+        "lux-goal-gradient": {
+          "publisher": "Laws of UX",
+          "title": "Goal-Gradient Effect",
+          "url": "https://lawsofux.com/goal-gradient-effect/"
+        },
+        "lux-zeigarnik": {
+          "publisher": "Laws of UX",
+          "title": "Zeigarnik Effect",
+          "url": "https://lawsofux.com/zeigarnik-effect/"
+        },
+        "lux-peak-end": {
+          "publisher": "Laws of UX",
+          "title": "Peak-End Rule",
+          "url": "https://lawsofux.com/peak-end-rule/"
+        },
+        "lux-von-restorff": {
+          "publisher": "Laws of UX",
+          "title": "Von Restorff Effect",
+          "url": "https://lawsofux.com/von-restorff-effect/"
+        },
+        "webdev-responsive": {
+          "publisher": "web.dev",
+          "title": "Responsive web design basics",
+          "url": "https://web.dev/articles/responsive-web-design-basics"
+        },
+        "webdev-tap": {
+          "publisher": "web.dev",
+          "title": "Accessible tap targets",
+          "url": "https://web.dev/articles/accessible-tap-targets"
+        },
+        "webdev-vitals": {
+          "publisher": "web.dev",
+          "title": "Web Vitals",
+          "url": "https://web.dev/articles/vitals"
+        },
+        "webdev-budgets": {
+          "publisher": "web.dev",
+          "title": "Performance budgets 101",
+          "url": "https://web.dev/articles/performance-budgets-101"
+        },
+        "webdev-cls": {
+          "publisher": "web.dev",
+          "title": "Optimize Cumulative Layout Shift",
+          "url": "https://web.dev/articles/optimize-cls"
+        },
+        "webdev-motion": {
+          "publisher": "web.dev",
+          "title": "prefers-reduced-motion: Sometimes less movement is more",
+          "url": "https://web.dev/articles/prefers-reduced-motion"
+        },
+        "webdev-scheme": {
+          "publisher": "web.dev",
+          "title": "prefers-color-scheme: Hello darkness, my old friend",
+          "url": "https://web.dev/articles/prefers-color-scheme"
+        }
+      },
+      "modules": [
+        {
+          "id": "m1",
+          "title": "Mobile first and reflow",
+          "roles": [
+            "Polish",
+            "Gamemaster"
+          ],
+          "principle": "Content fits a 320 CSS px screen with vertical scrolling only (WCAG 1.4.10). Start from the phone and add room with min-width queries.",
+          "slopworks": "Built for 320 first and checked at 320, 360, 390, 430, 768, 1024 and 1440. Width queries are min-width only, and the viewport meta must allow zoom.",
+          "practice": "At 320 and 390, no page you touch scrolls sideways, and pinch zoom still works.",
+          "sources": [
+            "wcag-reflow",
+            "webdev-responsive"
+          ],
+          "check": {
+            "state": "enforced",
+            "where": "tests/test_mobile.py (no overflow, min-width queries only); check.py a11y: a viewport meta that blocks zoom fails (added with this track)"
+          }
+        },
+        {
+          "id": "m2",
+          "title": "Touch targets",
+          "roles": [
+            "Polish",
+            "Gamemaster"
+          ],
+          "principle": "Targets need size or spacing: 24 by 24 CSS px at WCAG AA (2.5.8), 44 by 44 at AAA (2.5.5). Apple uses 44x44 pt, Google 48dp, NN/g about 1 cm.",
+          "slopworks": "We hold standalone controls to 44px (MIN_TAP in scripts/mobile_audit.py). Links inside a sentence are exempt and should stay plain inline text, not 44px boxes.",
+          "practice": "Standalone links and buttons are at least 44px tall; links inside a sentence keep the line's rhythm.",
+          "sources": [
+            "wcag-target-min",
+            "wcag-target-enh",
+            "hig-a11y",
+            "android-touch",
+            "nng-touch",
+            "webdev-tap",
+            "lux-fitts"
+          ],
+          "check": {
+            "state": "enforced",
+            "where": "tests/test_mobile.py test_tap_targets_at_least_44px. Proposed: fail an in-sentence link that is given a 44px box"
+          }
+        },
+        {
+          "id": "m3",
+          "title": "Contrast and colour",
+          "roles": [
+            "Polish",
+            "Gamemaster"
+          ],
+          "principle": "Text needs 4.5:1 (3:1 when large), graphics people must read need 3:1, and colour is never the only cue (WCAG 1.4.3, 1.4.11, 1.4.1).",
+          "slopworks": "Both themes' text tokens are checked by tests/test_contrast.py. --link is the text colour, so a link inside a sentence needs its underline to be seen.",
+          "practice": "Every new colour pair passes in light and dark, and every link inside a sentence is underlined.",
+          "sources": [
+            "wcag-contrast",
+            "wcag-nontext",
+            "wcag-color",
+            "hig-a11y"
+          ],
+          "check": {
+            "state": "enforced",
+            "where": "tests/test_contrast.py for text tokens. Proposed: non-text pairs such as the XP bar track at 3:1, and an underline check for in-sentence links"
+          }
+        },
+        {
+          "id": "m4",
+          "title": "Motion, theme and calm",
+          "roles": [
+            "Polish",
+            "Gamemaster"
+          ],
+          "principle": "Let people turn motion off (WCAG 2.3.3, prefers-reduced-motion) and follow the device's light or dark setting (prefers-color-scheme). Apple warns against fast or repeating motion.",
+          "slopworks": "One global reduced-motion rule stops every CSS animation and transition, avatars carry their own fallback, and the theme follows the device with the no-script flip.",
+          "practice": "Any new motion is slow, short and stops under reduced motion; check every change in both themes.",
+          "sources": [
+            "wcag-motion",
+            "webdev-motion",
+            "webdev-scheme",
+            "hig-a11y"
+          ],
+          "check": {
+            "state": "enforced",
+            "where": "check.py motion_errors(): a stylesheet that animates without the global reduced-motion rule fails (added with this track)"
+          }
+        },
+        {
+          "id": "m5",
+          "title": "Heuristics and less to read",
+          "roles": [
+            "Polish",
+            "Gamemaster"
+          ],
+          "principle": "Show status, use the reader's words, stay consistent, prefer recognition over recall, keep only what matters (NN/g). More choices slow decisions (Hick's law).",
+          "slopworks": "One primary action per screen, details for the rest, Comms's 110-word first screen, and pstack's principle-experience-first: fewer, finished features.",
+          "practice": "Name the one job of each screen you touch, then cut or fold away anything that doesn't serve it.",
+          "sources": [
+            "nng-heuristics",
+            "lux-hick",
+            "lux-cognitive-load",
+            "nng-progressive"
+          ],
+          "check": {
+            "state": "enforced",
+            "where": "check.py word_limit_errors() on data/word_limits.json enforced_pages. Proposed: enforce more pages as Comms trims them (d7)"
+          },
+          "skills": [
+            "principle-experience-first"
+          ]
+        },
+        {
+          "id": "m6",
+          "title": "Reading on a phone",
+          "roles": [
+            "Polish"
+          ],
+          "principle": "A comfortable column holds about 70 to 80 characters (web.dev), and text must survive wider line, letter and word spacing (WCAG 1.4.12).",
+          "slopworks": "System fonts, a 46rem prose column, and 12px as the smallest text at 390. scripts/mobile_audit.py --font stress-tests a wide fallback font.",
+          "practice": "Before a type change, measure the longest line at 390 and 1440 and run the wide-font stress test.",
+          "sources": [
+            "webdev-responsive",
+            "wcag-spacing"
+          ],
+          "check": {
+            "state": "enforced",
+            "where": "tests/test_mobile.py (no mid-word breaks, no narrow text columns). Proposed: a 1.4.12 text-spacing run in scripts/mobile_audit.py"
+          }
+        },
+        {
+          "id": "m7",
+          "title": "Weight and speed",
+          "roles": [
+            "Polish"
+          ],
+          "principle": "Core Web Vitals: LCP within 2.5 s, INP of 200 ms or less, CLS of 0.1 or less, at the 75th percentile. Size budgets catch heavy pages early; images need width and height.",
+          "slopworks": "No scripts, system fonts, and a 100 KB page budget counted as HTML plus CSS in check.py. Avatar images are not counted yet.",
+          "practice": "Report a page's bytes, with its images, before and after any design change.",
+          "sources": [
+            "webdev-vitals",
+            "webdev-budgets",
+            "webdev-cls"
+          ],
+          "check": {
+            "state": "enforced",
+            "where": "check.py page budget; check.py a11y: every img needs width and height (added with this track). Proposed: count same-site images in the budget"
+          }
+        },
+        {
+          "id": "m8",
+          "title": "Review like a tester",
+          "roles": [
+            "Polish"
+          ],
+          "principle": "Judge a design against named heuristics with evidence, compare options side by side, and give one verdict per claim.",
+          "slopworks": "control-ui shots at the seven widths in both themes, kept on the box; verify-this for a single verdict; principle-exhaust-the-design-space for new patterns.",
+          "practice": "Each sign-off lists the screenshots reviewed, the problems found and one VERIFIED or NOT VERIFIED line.",
+          "sources": [
+            "nng-heuristics"
+          ],
+          "check": {
+            "state": "enforced",
+            "where": "scripts/bot.py pr --review needs Screenshots reviewed and Problems found"
+          },
+          "skills": [
+            "control-ui",
+            "verify-this",
+            "principle-exhaust-the-design-space"
+          ]
+        },
+        {
+          "id": "m9",
+          "title": "Progress people can read",
+          "roles": [
+            "Gamemaster"
+          ],
+          "principle": "Keep people informed of status (NN/g heuristic 1). Effort rises near a goal (goal-gradient), so show the real distance. Laws of UX's artificial-progress tip is out: real data only.",
+          "slopworks": "XP bars on Home and Team are hidden from screen readers and carry no text for what they fill toward; only character sheets say how many XP to the next level.",
+          "practice": "Every bar has visible text naming its goal, and its track meets 3:1 or the text carries the meaning.",
+          "sources": [
+            "nng-heuristics",
+            "nng-progress",
+            "lux-goal-gradient",
+            "wcag-nontext"
+          ],
+          "check": {
+            "state": "proposed",
+            "where": "Proposed: build.py fails an XP bar with no text naming the next level"
+          }
+        },
+        {
+          "id": "m10",
+          "title": "Rewards without pressure",
+          "roles": [
+            "Gamemaster"
+          ],
+          "principle": "Unfinished tasks stay in mind (Zeigarnik), people judge by peaks and endings (peak-end), and the one item that differs gets noticed (Von Restorff).",
+          "slopworks": "Quests start in Week 2. Locked achievements say 'not yet' in text, not colour alone. One highlight per card, and no streaks or countdowns, which reward activity.",
+          "practice": "For each new quest or badge, write its outcome rule and how it could be farmed before any UI.",
+          "sources": [
+            "lux-zeigarnik",
+            "lux-peak-end",
+            "lux-von-restorff",
+            "wcag-color"
+          ],
+          "check": {
+            "state": "enforced",
+            "where": "tests/test_xp.py (evidence for every entry, no self-review, XP only from the rules table)"
+          },
+          "skills": [
+            "principle-explain-the-number",
+            "principle-model-the-domain",
+            "principle-experience-first"
+          ]
+        },
+        {
+          "id": "m11",
+          "title": "Dense rules on a small screen",
+          "roles": [
+            "Gamemaster"
+          ],
+          "principle": "Tables may scroll sideways (a WCAG 1.4.10 exception), but hidden columns cost recall. Progressive disclosure and accordions put details one tap away (NN/g).",
+          "slopworks": "The rules table on /team/xp/ is 640px wide in a 358px box at 390, so 'Who earns it' and 'Reviewer' start off-screen.",
+          "practice": "At 390, the column a reader needs most shows without sideways scrolling.",
+          "sources": [
+            "wcag-reflow",
+            "nng-progressive",
+            "nng-accordions",
+            "nng-heuristics"
+          ],
+          "check": {
+            "state": "proposed",
+            "where": "Proposed: scripts/mobile_audit.py reports tables wider than their box at 390"
+          }
+        }
+      ],
+      "exercises": {
+        "Polish": {
+          "date": "2026-10-20",
+          "width": 390,
+          "site": "23ffd02",
+          "pages": 58,
+          "method": "scripts/mobile_audit.py --widths 390 (light and dark), 58 pages; screenshots and DOM measures on the box",
+          "grade": {
+            "state": "pending",
+            "by": "Lens"
+          },
+          "findings": [
+            {
+              "id": "P1",
+              "module": "m3",
+              "kind": "defect",
+              "what": "15 links inside sentences (the objective's 'assigned in Team chat': 4 on Home, 11 on Team) have no underline and the text colour, so they don't read as links.",
+              "evidence": "site/style.css: .obj a{text-decoration:none}; --link equals --fg in both themes",
+              "next": "d8"
+            },
+            {
+              "id": "P2",
+              "module": "m2",
+              "kind": "defect",
+              "what": "The same links are 44px inline-flex boxes inside a sentence, which opens an uneven gap between the objective's two lines.",
+              "evidence": "site/style.css: .obj a{display:inline-flex;min-height:44px}; WCAG 2.5.8 exempts inline links",
+              "next": "d8"
+            },
+            {
+              "id": "P3",
+              "module": "m7",
+              "kind": "risk",
+              "what": "The budget counts HTML plus CSS only. With its avatars, Team is 96,838 bytes (94.6% of 100 KB); stacked with the holiday blobs it is 102,812, over 100 KB.",
+              "evidence": "mobile_audit.py page_bytes on main and on a trial stack of main, holiday blobs and this branch; check.py counts 69,636",
+              "next": "decided: Ryno, Oct 20 7:27 AM ET, images count; shipped in #121 and #122"
+            },
+            {
+              "id": "P4",
+              "module": "m5",
+              "kind": "risk",
+              "what": "24 of 58 pages show more than 110 words on the first 390x844 screen: How it works 162, Weekly 155, Arena 149, Schedule 147. None are enforced pages.",
+              "evidence": "mobile_audit.py words_above_fold at 390",
+              "next": "d7"
+            },
+            {
+              "id": "P5",
+              "module": "m4",
+              "kind": "risk",
+              "what": "Focusing a Team card's 'More about' makes its avatar hop on an endless 0.9 s loop until focus leaves (19 cards). Reduced motion stops it.",
+              "evidence": "site/style.css: .lead:focus-within .av; computed animation: hop infinite 0.9s",
+              "next": "d9"
+            },
+            {
+              "id": "P6",
+              "module": "m1",
+              "kind": "pass",
+              "what": "0 pages scroll sideways, 0 targets under 44px (1,058 in-sentence links exempt), 0 low-contrast text, 0 mid-word breaks; smallest text 12px, longest line about 60 characters, in both themes.",
+              "evidence": "mobile_audit.py summary at 390, light and dark",
+              "next": "none"
+            }
+          ]
+        },
+        "Gamemaster": {
+          "date": "2026-10-20",
+          "width": 390,
+          "site": "23ffd02",
+          "pages": 58,
+          "method": "scripts/mobile_audit.py --widths 390 (light and dark), 58 pages; screenshots and DOM measures on the box",
+          "grade": {
+            "state": "pending",
+            "by": "Lens"
+          },
+          "findings": [
+            {
+              "id": "G1",
+              "module": "m9",
+              "kind": "defect",
+              "what": "25 XP bars (6 on Home, 19 on Team) are hidden from screen readers and no text says they fill toward the next level; only character sheets do.",
+              "evidence": "site/index.html and site/team/index.html: div.bar aria-hidden, no 'XP to' text",
+              "next": "d10"
+            },
+            {
+              "id": "G2",
+              "module": "m9",
+              "kind": "defect",
+              "what": "The bar track is 1.32:1 on the light card and 1.35:1 on dark, under the 3:1 a meaningful graphic needs; the fill passes at 7.34:1 and 12.25:1.",
+              "evidence": "--line on --card in both themes (WCAG 1.4.11 ratio)",
+              "next": "d10"
+            },
+            {
+              "id": "G3",
+              "module": "m11",
+              "kind": "defect",
+              "what": "The 'What earns XP' table is 640px wide in a 358px box: 'Who earns it' shows 61 of 192px and 'Reviewer' is fully off-screen, with no cue to scroll.",
+              "evidence": "site/team/xp/index.html: table in div.scroll, column edges measured at 390",
+              "next": "d11"
+            },
+            {
+              "id": "G4",
+              "module": "m5",
+              "kind": "defect",
+              "what": "In 'Every character sheet', four short names (Atlas, Critic, Lens, Trial) are padded to 44px, leaving a 6 to 12px gap before the colon.",
+              "evidence": "site/style.css: main li>a:only-child:not(:has(*)){min-width:44px}",
+              "next": "d11"
+            },
+            {
+              "id": "G5",
+              "module": "m10",
+              "kind": "pass",
+              "what": "Locked achievements show a ring and 'not yet:' text, not colour alone, and the levels table fits the screen (3 columns, 358px).",
+              "evidence": "site/team/gamemaster/ and site/team/xp/ at 390",
+              "next": "none"
+            }
+          ]
+        }
+      }
+    }
   }
 }

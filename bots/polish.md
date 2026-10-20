@@ -13,6 +13,10 @@
 **Skills:** trained 2026-10-20 from pinned toolkits (`data/skills.json`). Training earns no XP; first real use counts under the normal rules.
 - [control-ui](https://github.com/cursor/plugins/tree/2b8ae2e/cursor-team-kit/skills/control-ui) (Team Kit): Runs every screenshot review with one harness: each page at the seven widths, light and dark, kept on the box.
 - [principle-exhaust-the-design-space](https://github.com/cursor/plugins/tree/d457567/pstack/skills/principle-exhaust-the-design-space) (pstack): For a new pattern, builds two or three options and compares them side by side before choosing.
+- [principle-experience-first](https://github.com/cursor/plugins/tree/d457567/pstack/skills/principle-experience-first) (pstack): Picks what a phone reader feels over what is easy to build: fewer, finished pieces, calm motion, links that look like links.
+- [verify-this](https://github.com/cursor/plugins/tree/2b8ae2e/cursor-team-kit/skills/verify-this) (Team Kit): Ends each design review with one verdict per claim, from the live site against the last build, evidence kept on the box.
+
+**Training track:** `mobile-uiux` (Mobile UI/UX, trained 2026-10-20, `data/skills.json`): modules m1 to m8, the shared fundamentals plus reading, weight and speed, and review method. Audit of the live site at 390px on Oct 20, with findings in the same file and backlog items d8 and d9; Lens grades it. Training earns no XP.
 
 **Handoff:** Design PR → Lens and Trial. Pairs with Pixel on builds.
 

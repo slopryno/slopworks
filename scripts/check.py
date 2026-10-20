@@ -327,6 +327,27 @@ def blocked_file(path):
     return any(re.search(p, path, re.I) for p in PATTERNS["blocked_files"])
 
 
+def viewport_blocks_zoom(content):
+    """True when a viewport meta stops pinch zoom: user-scalable=no/0, or maximum-scale below 2 (the WCAG ACT rule's line)."""
+    kv = dict((k.strip().lower(), v.strip().lower()) for k, _, v in (x.partition("=") for x in re.split(r"[,;]", content)) if k.strip())
+    if kv.get("user-scalable") in ("no", "0"):
+        return True
+    try:
+        return "maximum-scale" in kv and float(kv["maximum-scale"]) < 2
+    except ValueError:
+        return False
+
+
+REDUCED_MOTION_ALL = re.compile(r"@media\s*\(\s*prefers-reduced-motion\s*:\s*reduce\s*\)\s*\{[^{}]*\{[^}]*animation\s*:\s*none[^}]*transition\s*:\s*none", re.S)
+
+
+def motion_errors(css, name="site/style.css"):
+    """Mobile UI/UX track m4 (WCAG 2.3.3, web.dev prefers-reduced-motion): a stylesheet that animates keeps the one
+    global reduced-motion rule that turns every animation and transition off."""
+    moves = re.search(r"(?<![-\w])(animation|transition)\s*:", re.sub(r"/\*.*?\*/", "", css, flags=re.S))
+    return [f"{name}: animates but has no @media (prefers-reduced-motion:reduce) rule setting animation:none and transition:none"] if moves and not REDUCED_MOTION_ALL.search(css) else []
+
+
 class _A11y(html.parser.HTMLParser):
     def __init__(self):
         super().__init__()
@@ -343,6 +364,10 @@ class _A11y(html.parser.HTMLParser):
             self.h1 += 1
         if tag == "img" and "alt" not in a:
             self.issues.append("img without alt")
+        if tag == "img" and not (a.get("width") and a.get("height")):  # mobile UI/UX track m7 (web.dev CLS): reserve the image's box
+            self.issues.append("img without width and height (layout shift)")
+        if tag == "meta" and a.get("name") == "viewport" and viewport_blocks_zoom(a.get("content", "")):  # track m1 (WCAG 1.4.4, 1.4.10)
+            self.issues.append("viewport meta blocks zoom (user-scalable=no or maximum-scale under 2)")
         if tag == "script":
             self.issues.append("scripts are not allowed (static, no external code)")
         if tag in ("link",) and a.get("rel") == "stylesheet" and re.match(r"https?://", a.get("href", "")):
@@ -1272,6 +1297,12 @@ def skills_errors(root=None):
     return skills.errors(root, validate)
 
 
+# ---------- training tracks (Ryno, 2026-10-20 7:05 AM ET): sourced modules and one graded audit per role, no XP ----------
+def track_errors(root=None):
+    import skills
+    return skills.track_errors(root, validate)
+
+
 # ---------- training plan (Ryno, 2026-10-19 7:27 AM ET, i59): additions only, these only tighten ----------
 DERIVED = re.compile(r'^\s*Derived:\s*count\s+(\S+)(?:\s+"([^"]*)")?\s*=\s*(\d+)\s*$', re.M)
 
@@ -1559,11 +1590,15 @@ def run_repo():
     errs += training_errors()
     errs += skills_errors()
     errs += page_weight_errors()  # Ryno 2026-10-20 7:27 AM ET: images count toward the page budget
+    errs += track_errors()
     errs += comms_feed_errors(files)
     errs += word_limit_errors()
     errs += voice_errors()
     errs += calendar_errors()
     css = sum((ROOT / f).stat().st_size for f in files if f.startswith("site/") and f.endswith(".css"))
+    for f in files:
+        if f.startswith("site/") and f.endswith(".css"):
+            errs += motion_errors((ROOT / f).read_text(), f)
     for f in files:
         if f.startswith("site/") and f.endswith(".html"):
             doc = (ROOT / f).read_text()

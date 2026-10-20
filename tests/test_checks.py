@@ -67,7 +67,7 @@ class Files(unittest.TestCase):
 
 
 class A11y(unittest.TestCase):
-    GOOD = '<!doctype html><html lang="en"><head><title>x</title><meta name="viewport" content="width=device-width"></head><body><main><h1>x</h1><img src="a.png" alt="a"></main></body></html>'
+    GOOD = '<!doctype html><html lang="en"><head><title>x</title><meta name="viewport" content="width=device-width"></head><body><main><h1>x</h1><img src="a.png" alt="a" width="48" height="48"></main></body></html>'
 
     def test_good(self):
         self.assertEqual(check.a11y_issues(self.GOOD), [])
