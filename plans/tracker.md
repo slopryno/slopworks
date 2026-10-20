@@ -149,6 +149,7 @@ One daily routine run by Slopbot plays each role in order, with separate instruc
 6. **Design review (Polish):** looks over the live site on desktop and mobile and checks the layout, readability, accessibility (contrast, headings, alt text, keyboard use), speed, empty or confusing sections, and what readers would expect but can't find. It keeps a ranked backlog in `data/design_backlog.json` with each idea, why it matters, and how much effort it takes. At most **one small design PR a week** (on a `bot/design-*` branch) goes out with before and after screenshots, is reviewed by Lens and Trial, and merges once they approve. Bigger ideas stay in the backlog for a monthly roundup.
 7. **Report:** a short summary to Ryno only if something notable happened: a big update, a new bug, a skill-update PR waiting, or a failure. Quiet days stay quiet.
 8. **After-action reviews (same run):** if anything below happened in this run, the owning role writes an AAR in `data/aars.json` before the run ends and posts it as a Team chat thread that starts with "AAR". Triggers: a revert, a failed deploy or failed post-deploy Trial check, a CI failure on main, a published-data correction (wrong time, wrong fact, or a dropped or removed entry), a Block that proved right after merge, or any other incident. Nothing waits for Friday.
+9. **Calendar (Coordinator, Ryno 2026-10-19 9:34 PM ET):** add a dated event to `data/calendar.json` for anything planned this run (a review, a release, a holiday character theme), and mark done only what the records show happened. Holiday themes need plan, design, review and Ryno's yes on the calendar before a set or switch ships; CI checks it. The run's own date moves the calendar's today forward, and `site/calendar.ics` rebuilds with the site.
 
 ## After-action reviews (2026-10-17, approved by Ryno)
 Mistakes are written up the same day they happen, in public, and blameless.
@@ -322,6 +323,7 @@ Readers see exactly what to expect:
 - **Limits, in plain words:** public sources only, so quiet fixes won't show up. Entries may lag by up to a day. Items are labeled confirmed or reported. A missed run shows as missed. Free-tier hosting. Unofficial project.
 - **Live status:** the time of the last run, the next scheduled run, and whether the last run was OK, skipped, or failed. This is generated from `data/runs.json`.
 - The page is generated from the same config the routines use (`data/schedule.json`), so the published schedule can't drift from the real one. CI checks that they match.
+- **Calendar (`site/calendar/`, Ryno 2026-10-19):** this month and the next two as month grids, with an agenda list on phones, from `data/calendar.json` plus the schedule's routines. A subscribe feed, `site/calendar.ics`, is built with it. No scripts.
 
 ## Known limits
 - Coverage is only as good as public posts. Quiet fixes won't show up.
