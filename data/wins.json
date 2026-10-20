@@ -1,5 +1,239 @@
 [
   {
+    "id": "pr128",
+    "role": "Coordinator",
+    "title": "Coordinator: scoped CEO tempo override for one extra sprint today, up to 6 PRs (Ryno, Oct 20 11:02 AM ET)",
+    "pr": "https://github.com/slopryno/slopworks/pull/128",
+    "date": "2026-10-20",
+    "merged": "2026-10-20T11:33-04:00",
+    "opened": "2026-10-20T11:31-04:00"
+  },
+  {
+    "id": "pr127",
+    "role": "Sweep",
+    "title": "Sweep: AAR for the interrupted Oct 20 run, shipped the same day under Ryno's AAR exception",
+    "pr": "https://github.com/slopryno/slopworks/pull/127",
+    "date": "2026-10-20",
+    "merged": "2026-10-20T11:28-04:00",
+    "opened": "2026-10-20T11:27-04:00"
+  },
+  {
+    "id": "pr126",
+    "role": "Sweep",
+    "title": "Sweep: same-day AARs ship past a used-up PR limit, AAR-only (Ryno, Oct 20 11:02 AM ET), checked in bot.py, CI and the tempo audit",
+    "pr": "https://github.com/slopryno/slopworks/pull/126",
+    "date": "2026-10-20",
+    "merged": "2026-10-20T11:24-04:00",
+    "opened": "2026-10-20T11:13-04:00"
+  },
+  {
+    "id": "pr125",
+    "role": "Forge",
+    "title": "Forge: run data for Tue Oct 20: 2 confirmed updates (changelog 0.71.2, iPhone Action Button), Tuesday research, Polish's quick look, standup, Team chat handoffs",
+    "pr": "https://github.com/slopryno/slopworks/pull/125",
+    "date": "2026-10-20",
+    "merged": "2026-10-20T10:46-04:00",
+    "opened": "2026-10-20T10:45-04:00"
+  },
+  {
+    "id": "pr124",
+    "role": "Sweep",
+    "title": "Sweep: the daily run starts early, around 4:45 AM ET, so visitors get the latest version when they wake up; one run time in data/schedule.json feeds How it work",
+    "pr": "https://github.com/slopryno/slopworks/pull/124",
+    "date": "2026-10-20",
+    "merged": "2026-10-20T10:37-04:00",
+    "opened": "2026-10-20T10:28-04:00"
+  },
+  {
+    "id": "pr123",
+    "role": "Advisor",
+    "title": "Advisor: Polish and Game Master train in mobile UI/UX: a sourced 11-module track (WCAG 2.2, Apple HIG, Google, NN/g, Laws of UX, web.dev), one graded 390px audi",
+    "pr": "https://github.com/slopryno/slopworks/pull/123",
+    "date": "2026-10-20",
+    "merged": "2026-10-20T10:20-04:00",
+    "opened": "2026-10-20T10:09-04:00"
+  },
+  {
+    "id": "pr122",
+    "role": "Forge",
+    "title": "Pixel: holiday avatars: each role becomes its own see-through Halloween (Oct 1-31) and winter (Dec 1-31) character, switched on only after Ryno's yes on the cal",
+    "pr": "https://github.com/slopryno/slopworks/pull/122",
+    "date": "2026-10-20",
+    "merged": "2026-10-20T10:01-04:00",
+    "opened": "2026-10-20T09:54-04:00"
+  },
+  {
+    "id": "pr121",
+    "role": "Forge",
+    "title": "Pixel: images count toward the page budget (HTML, CSS and every same-site image a page loads, within 100 KB), and the Team page slims down: research and recent ",
+    "pr": "https://github.com/slopryno/slopworks/pull/121",
+    "date": "2026-10-20",
+    "merged": "2026-10-20T09:48-04:00",
+    "opened": "2026-10-20T09:40-04:00"
+  },
+  {
+    "id": "pr120",
+    "role": "Forge",
+    "title": "Pixel: a real team calendar: this month and the next two as month grids with an agenda on phones, a subscribe feed (calendar.ics), and full-month holiday themes",
+    "pr": "https://github.com/slopryno/slopworks/pull/120",
+    "date": "2026-10-20",
+    "merged": "2026-10-20T09:35-04:00",
+    "opened": "2026-10-20T09:27-04:00"
+  },
+  {
+    "id": "pr119",
+    "role": "Advisor",
+    "title": "Advisor: the team levels up on pstack and Team Kit: pinned skills per role, a CI check and drift tool, Training on the Team and role pages (no XP for training)",
+    "pr": "https://github.com/slopryno/slopworks/pull/119",
+    "date": "2026-10-20",
+    "merged": "2026-10-20T00:29-04:00",
+    "opened": "2026-10-20T00:21-04:00"
+  },
+  {
+    "id": "pr118",
+    "role": "Assistant",
+    "title": "Assistant: log Ryno's 8:07 PM ET yes for #117 in data/ceo_decisions.json and the bots/assistant.md log (add-only)",
+    "pr": "https://github.com/slopryno/slopworks/pull/118",
+    "date": "2026-10-20",
+    "merged": "2026-10-20T00:15-04:00",
+    "opened": "2026-10-20T00:14-04:00"
+  },
+  {
+    "id": "pr117",
+    "role": "Forge",
+    "title": "Pixel: a no-script theme flip in the header: a real checkbox, styled as a button, shows the opposite of the device theme for this page view (visual review V10)",
+    "pr": "https://github.com/slopryno/slopworks/pull/117",
+    "date": "2026-10-19",
+    "merged": "2026-10-19T20:10-04:00",
+    "opened": "2026-10-19T19:56-04:00"
+  },
+  {
+    "id": "pr116",
+    "role": "Forge",
+    "title": "Pixel: one card anatomy on the Work and Under the hood hubs: kicker, title, one-line blurb, a metric footer from records, a thin rule by kind (visual review V8)",
+    "pr": "https://github.com/slopryno/slopworks/pull/116",
+    "date": "2026-10-19",
+    "merged": "2026-10-19T19:45-04:00",
+    "opened": "2026-10-19T19:38-04:00"
+  },
+  {
+    "id": "pr115",
+    "role": "Forge",
+    "title": "Pixel: wide desktop container for grids, card lists and tables, with a 46rem reading column for prose (visual review V7)",
+    "pr": "https://github.com/slopryno/slopworks/pull/115",
+    "date": "2026-10-19",
+    "merged": "2026-10-19T19:32-04:00",
+    "opened": "2026-10-19T19:24-04:00"
+  },
+  {
+    "id": "pr114",
+    "role": "Forge",
+    "title": "Pixel: calmer light and dark tokens, ink headings, a highlighter under key numbers instead of colour fills (visual review V6)",
+    "pr": "https://github.com/slopryno/slopworks/pull/114",
+    "date": "2026-10-19",
+    "merged": "2026-10-19T19:03-04:00",
+    "opened": "2026-10-19T18:56-04:00"
+  },
+  {
+    "id": "pr113",
+    "role": "Forge",
+    "title": "Pixel: calmer home hero: big numbers set in type with hairlines, one primary button, a live-from-the-records line, a shorter tracker intro (visual review V4)",
+    "pr": "https://github.com/slopryno/slopworks/pull/113",
+    "date": "2026-10-19",
+    "merged": "2026-10-19T18:51-04:00",
+    "opened": "2026-10-19T18:44-04:00"
+  },
+  {
+    "id": "pr112",
+    "role": "Forge",
+    "title": "Assistant: onboard the Executive Assistant (EA), the only role that applies ceo-approved, on Ryno's quoted yes; data/ceo_decisions.json and the ceo-label check",
+    "pr": "https://github.com/slopryno/slopworks/pull/112",
+    "date": "2026-10-19",
+    "merged": "2026-10-19T18:38-04:00",
+    "opened": "2026-10-19T18:30-04:00"
+  },
+  {
+    "id": "pr111",
+    "role": "Comms",
+    "title": "Comms/Pixel: details for long cards on Lessons, Cases, Challenges and Metrics; calmer tone (visual review V5)",
+    "pr": "https://github.com/slopryno/slopworks/pull/111",
+    "date": "2026-10-19",
+    "merged": "2026-10-19T18:15-04:00",
+    "opened": "2026-10-19T18:08-04:00"
+  },
+  {
+    "id": "pr110",
+    "role": "Forge",
+    "title": "Pixel: nav fits one line at 320, slim disclaimer strip with the same text, a next step at the end of every main page (visual review V9)",
+    "pr": "https://github.com/slopryno/slopworks/pull/110",
+    "date": "2026-10-19",
+    "merged": "2026-10-19T17:59-04:00",
+    "opened": "2026-10-19T17:52-04:00"
+  },
+  {
+    "id": "pr109",
+    "role": "Comms",
+    "title": "Comms: compact role cards, one-sentence professional bios, trimmed footer, team pages held to Comms's word limits (visual review V3)",
+    "pr": "https://github.com/slopryno/slopworks/pull/109",
+    "date": "2026-10-19",
+    "merged": "2026-10-19T17:47-04:00",
+    "opened": "2026-10-19T17:40-04:00"
+  },
+  {
+    "id": "pr108",
+    "role": "Forge",
+    "title": "Forge: Comms's word limits and voice check in code: data/word_limits.json, data/voice.json, add-only check.py, docs/voice.md (visual review V2)",
+    "pr": "https://github.com/slopryno/slopworks/pull/108",
+    "date": "2026-10-19",
+    "merged": "2026-10-19T17:29-04:00",
+    "opened": "2026-10-19T17:06-04:00"
+  },
+  {
+    "id": "pr107",
+    "role": "Forge",
+    "title": "Pixel: XP bars render again, one chip style for every status label, card links drop the underline (visual review V1: items 1, 11, 12)",
+    "pr": "https://github.com/slopryno/slopworks/pull/107",
+    "date": "2026-10-19",
+    "merged": "2026-10-19T17:04-04:00",
+    "opened": "2026-10-19T16:58-04:00"
+  },
+  {
+    "id": "pr106",
+    "role": "Strategy",
+    "title": "Strategy/Analyst: month-1 goals on /metrics/, progress from records; G1 on hold (i60)",
+    "pr": "https://github.com/slopryno/slopworks/pull/106",
+    "date": "2026-10-19",
+    "merged": "2026-10-19T16:52-04:00",
+    "opened": "2026-10-19T16:51-04:00"
+  },
+  {
+    "id": "pr105",
+    "role": "Advisor",
+    "title": "Advisor: training rules in code: Derived lines, bot.py resume with a lock, close-the-loop check, drills (i59)",
+    "pr": "https://github.com/slopryno/slopworks/pull/105",
+    "date": "2026-10-19",
+    "merged": "2026-10-19T16:48-04:00",
+    "opened": "2026-10-19T16:47-04:00"
+  },
+  {
+    "id": "pr104",
+    "role": "Advisor",
+    "title": "Advisor: count every PR merged that day, even after a trip (i59); Monday 2026-10-19 run",
+    "pr": "https://github.com/slopryno/slopworks/pull/104",
+    "date": "2026-10-19",
+    "merged": "2026-10-19T16:44-04:00",
+    "opened": "2026-10-19T16:42-04:00"
+  },
+  {
+    "id": "pr103",
+    "role": "Forge",
+    "title": "Forge: CEO tempo override for this work only (Ryno, Oct 19 4:31 PM ET)",
+    "pr": "https://github.com/slopryno/slopworks/pull/103",
+    "date": "2026-10-19",
+    "merged": "2026-10-19T16:38-04:00",
+    "opened": "2026-10-19T16:37-04:00"
+  },
+  {
     "id": "pr102",
     "role": "Comms",
     "title": "Comms: How this works, tracker-first home, review intake and activation (i48, i49)",

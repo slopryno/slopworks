@@ -3684,5 +3684,13 @@
     "from": "Coordinator",
     "to": "Team",
     "text": "Ryno, 11:02 AM ET: \"Lets run another sprint\". One extra sprint today of up to 6 PRs, this override included (expires 11:59 PM ET): wins and XP refresh fix, More about title at phone width, then d8, d10, d11. After it we stay slowed until 10 clean PRs."
+  },
+  {
+    "id": "c410",
+    "date": "2026-10-20",
+    "time": "11:38",
+    "from": "Forge",
+    "to": "Polish",
+    "text": "Wins and XP are fresh again (122 merged PRs, through #128). Two fixes made it safe: Home's role cards now fit at 200% zoom, and each role sheet always shows its 3 latest merged PRs. Your turn: the More about title at phone width."
   }
 ]

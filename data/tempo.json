@@ -22,11 +22,11 @@
     "data-correction"
   ],
   "mode": "slowed",
-  "clean_prs": 0,
+  "clean_prs": 2,
   "tripped_by": "aar-2026-10-20-run-interrupted",
   "trip_pr": 126,
-  "trip_at": null,
-  "as_of_pr": 102,
+  "trip_at": "2026-10-20T11:24-04:00",
+  "as_of_pr": 128,
   "days": [
     {
       "date": "2026-10-18",
@@ -34,11 +34,25 @@
     },
     {
       "date": "2026-10-19",
-      "prs": 3
+      "prs": 18
+    },
+    {
+      "date": "2026-10-20",
+      "prs": 11
     }
   ],
   "violations": [],
-  "excused": [],
+  "excused": [
+    "#103 merged 2026-10-19T16:38-04:00 as PR 4 of the day, over the slowed limit, under ovr-2026-10-19-phase-b (Ryno (CEO), 2026-10-19T16:31-04:00)",
+    "#104 merged 2026-10-19T16:44-04:00 as PR 5 of the day, over the slowed limit, under ovr-2026-10-19-phase-b (Ryno (CEO), 2026-10-19T16:31-04:00)",
+    "#105 merged 2026-10-19T16:48-04:00 as PR 6 of the day, over the slowed limit, under ovr-2026-10-19-phase-b (Ryno (CEO), 2026-10-19T16:31-04:00)",
+    "#106 merged 2026-10-19T16:52-04:00 as PR 7 of the day, over the slowed limit, under ovr-2026-10-19-phase-b (Ryno (CEO), 2026-10-19T16:31-04:00)",
+    "#107 merged 2026-10-19T17:04-04:00 as PR 8 of the day, over the slowed limit, under ovr-2026-10-19-phase-b (Ryno (CEO), 2026-10-19T16:31-04:00)",
+    "#108 merged 2026-10-19T17:29-04:00 as PR 9 of the day, over the slowed limit, under ovr-2026-10-19-phase-b (Ryno (CEO), 2026-10-19T16:31-04:00)",
+    "#109 merged 2026-10-19T17:47-04:00 as PR 10 of the day, over the slowed limit, under ovr-2026-10-19-phase-b (Ryno (CEO), 2026-10-19T16:31-04:00)",
+    "#127 merged 2026-10-20T11:28-04:00 carrying same-day AAR aar-2026-10-20-run-interrupted (Ryno, 2026-10-20 11:02 AM ET)",
+    "#128 merged 2026-10-20T11:33-04:00 as PR 11 of the day, over the slowed limit, under ovr-2026-10-20-extra-sprint (Ryno (CEO), 2026-10-20T11:29-04:00)"
+  ],
   "ceo_overrides": [
     {
       "id": "ovr-2026-10-19-phase-b",

@@ -90,7 +90,7 @@ time,.mono,.status,.kicker{font-family:ui-monospace,SFMono-Regular,Menlo,Consola
 .sub{color:var(--muted);font-size:.95rem}
 .news{list-style:none;padding:0;margin:.75rem 0;display:grid;gap:.75rem}.news li{border-top:1px solid var(--line);padding:.75rem 0 0}.news h3{font-size:1.02rem;margin:.4rem 0 .25rem;line-height:1.3}.news p{margin:0;color:var(--muted);font-size:.92rem}.news a{display:inline-flex;align-items:center;min-height:44px}
 .links{list-style:none;padding:0;margin:.25rem 0 0;display:flex;flex-wrap:wrap;gap:0 1.25rem}.links a{display:inline-flex;align-items:center;min-height:44px;font-weight:600}
-.chars{list-style:none;padding:0;margin:0;display:grid;gap:.75rem}.char{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:1rem}
+.chars{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:minmax(0,1fr);gap:.75rem}.char{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:1rem}
 .char .hd,.lead .hd{display:flex;gap:.75rem;align-items:center}.char h3{margin:0;font-size:1.1rem}.char h3 a{display:inline-flex;align-items:center;min-height:44px;text-decoration:none;color:var(--fg)}.char .role{margin:0;color:var(--muted);font-size:.85rem}
 .lv{display:flex;flex-wrap:wrap;justify-content:space-between;gap:.5rem;margin:.75rem 0 .3rem;font-size:.85rem}.bar{height:6px;border-radius:3px;background:var(--line);overflow:hidden}.bar span{display:block;height:100%;background:var(--ok)}
 .last{margin:.75rem 0 0;font-size:.9rem}.last a{display:block;min-height:44px;padding:.2rem 0}.last small{display:block;color:var(--muted);font-size:.8rem}
@@ -131,7 +131,7 @@ summary{flex-wrap:wrap}summary span,li>div,.char .hd>*,.lead .hd>*{min-width:0}.
 :is(.card h2,.card h3,.lead h2,.news h3,.meta,.last,.obj,.xp,.links,.status,.sitelist,.stats) a:is(:hover,:focus-visible){text-decoration:underline;text-decoration-color:var(--ok)}
 footer .links a{font-weight:400}.next{margin:2rem 0 0}.lead .hd>div{flex:1 1 7rem}
 /* Phase A V4 (Ryno 2026-10-19 6:33 PM ET): home hero. Numbers carry the weight through type; hairlines, no colour fills. One primary button, text links for the rest */
-.tiles{list-style:none;padding:0;margin:1.5rem 0 0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-block:1px solid var(--line)}.tiles li{padding:.8rem 0 .8rem .9rem;color:var(--muted);font-size:.85rem;line-height:1.3}.tiles li:first-child{padding-left:0}.tiles li+li{border-left:1px solid var(--line)}
+.tiles{list-style:none;padding:0;margin:1.5rem 0 0;display:grid;border-block:1px solid var(--line)}.tiles li{padding:.6rem 0;color:var(--muted);font-size:.85rem;line-height:1.3}.tiles li+li{border-top:1px solid var(--line)}@media (min-width:18rem){.tiles{grid-template-columns:repeat(3,minmax(0,1fr))}.tiles li{padding:.8rem 0 .8rem .9rem}.tiles li:first-child{padding-left:0}.tiles li+li{border-top:0;border-left:1px solid var(--line)}}
 .tiles strong{display:block;color:var(--fg);font-size:clamp(1.9rem,1.3rem + 2.6vw,2.75rem);font-weight:800;letter-spacing:-.035em;line-height:1.05;font-variant-numeric:tabular-nums}
 .asof{margin:.4rem 0 0;color:var(--muted);font-size:.8rem}.asof a{display:inline-flex;align-items:center;min-height:44px;color:var(--fg);text-decoration:none}.asof a:is(:hover,:focus-visible){text-decoration:underline;text-decoration-color:var(--ok)}
 .cta{align-items:center;gap:.25rem 1.5rem}.cta .txt{flex:none}.cta .txt a{display:inline-flex;align-items:center;min-height:44px;font-weight:600}
