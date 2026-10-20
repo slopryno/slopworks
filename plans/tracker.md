@@ -140,7 +140,9 @@ CI enforces all of this in `check.py` (`ceo_pitch_errors`).
 ## How the roles run
 One daily routine run by Slopbot plays each role in order, with separate instructions per role from `bots/`. The site labels these as roles, not separate live agents, so Behind the scenes stays honest. Splitting roles into their own bots is a roadmap item once the loop is stable.
 
-## Daily run (one routine, about 9:13 AM ET)
+## Daily run (one routine, about 4:45 AM ET)
+The run starts early so visitors get the latest version when they wake up (Ryno, 2026-10-20 10:15 AM ET: "Lets have runs start early morning so visitors can get the latest version once they wake up"). It moved from about 9:13 AM ET; `data/schedule.json` holds the time, and the site copy reads it from there.
+
 1. **Scout (Sketch):** collects new public posts since the last run and drafts candidate entries.
 2. **Verify (Lens):** checks each entry against its source, drops duplicates and anything unsupported, and checks open issues for fixes.
 3. **Privacy (Shield):** strips handles of regular users, personal data, and anything sensitive.
@@ -315,7 +317,7 @@ Sweep logs reads, run time, and deploys in `data/runs.json`. If usage rises two 
 
 ## Public schedule and limits page (`site/schedule/`, linked in the header)
 Readers see exactly what to expect:
-- **Daily, around 9:15 AM ET:** new updates and issues. Quiet days post nothing, so there are no filler entries.
+- **Daily, around 4:45 AM ET:** new updates and issues. Quiet days post nothing, so there are no filler entries.
 - **Mondays:** the weekly digest, the GitHub release, the design audit score, and the sprint plan.
 - **Fridays:** the team retro, shown in Team chat.
 - **Same run, whenever something goes wrong:** an after-action review on the Lessons page.

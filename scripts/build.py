@@ -47,6 +47,9 @@ def back_link(slug, up):
 e = lambda s: html.escape(str(s), quote=True)
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from avatars import ROLES as AVATARS  # noqa: E402
+from cal import run_time  # noqa: E402
+# The daily run's time comes from data/schedule.json's daily cron, so no page hardcodes it (Ryno, 2026-10-20 10:15 AM ET).
+RUN_TIME = run_time(json.loads((ROOT / "data/schedule.json").read_text()))
 ALIAS = {"scout": "sketch", "verify": "lens", "privacy": "shield", "publish": "forge"}
 GROUPS = [("Leadership and Strategy", ["Coordinator", "Strategy", "Scoutmaster", "Comms", "Assistant"]),
           ("Research and Intelligence", ["Sketch", "Advocate", "Librarian"]),
@@ -200,7 +203,7 @@ def how_body(sched, up):
              ("Tempo", f"How fast the team may ship: up to {n['prs_per_day']} PRs a day normally, {s['prs_per_day']} a day after a revert, failed deploy, failure on main, incident or data correction, until {tempo.CLEAN_NEEDED} clean PRs merge.", f"{up}metrics/"),
              ("XP", "Points a role earns only from verified work, each linked to its evidence and approved by another role.", f"{up}team/xp/")]
     gloss = "".join(f'<dt id="g-{e(t.lower().replace(" ", "-"))}">{e(t)}</dt><dd>{e(d)} <a href="{e(h)}">Source</a></dd>' for t, d, h in terms)
-    return (f'<h2>The daily run</h2><p>Once a day, around 9:15 AM ET, one routine plays every role in turn:</p><ol class="steps">{steps}</ol>'
+    return (f'<h2>The daily run</h2><p>Once a day, around {RUN_TIME}, one routine plays every role in turn:</p><ol class="steps">{steps}</ol>'
             f'<h2>The role cycle</h2><p>Each role also researches its own area once a week, from public web pages only. {days}. '
             f'The full rotation is on <a href="{up}schedule/">Schedule and limits</a>, and who does what is on <a href="{up}team/">Team</a>.</p>'
             f'<h2>Where the human decides</h2><p>Ryno, the CEO, doesn\'t sign off routine work. He decides his own pitches, any real disagreement '
@@ -453,7 +456,7 @@ def build():
     if body:
         fl, st = area_filter(iss)
         body = st + '<div class="filtered">' + fl + body + "</div>"
-    files["issues/index.html"] = page("issues/", "Known issues", f"{sum(x['state']=='open' for x in iss)} open, {sum(x['state']=='fixed' for x in iss)} fixed. Grouped by area. Marked fixed only when a public source says so.", body or '<p class="empty">No known issues right now. Issues land here when a public source reports one; the daily run checks around 9:15 AM ET.</p>', "data/issues.json")
+    files["issues/index.html"] = page("issues/", "Known issues", f"{sum(x['state']=='open' for x in iss)} open, {sum(x['state']=='fixed' for x in iss)} fixed. Grouped by area. Marked fixed only when a public source says so.", body or f'<p class="empty">No known issues right now. Issues land here when a public source reports one; the daily run checks around {RUN_TIME}.</p>', "data/issues.json")
 
     body = ""
     for r in runs:
@@ -532,7 +535,7 @@ def build():
     today = [x for x in standup if x["date"] == last_day]
     sbody = (f'<h2 id="standup">Standup · <time datetime="{last_day}">{last_day}</time></h2><ul class="chat">' + "".join(
         f'<li class="msg">{avatar(x["role"], "../")}<div><strong class="who" style="--c:{color(x["role"])}">{e(x["role"])}</strong><br>Did: {e(x["did"])}<br>Doing: {e(x["doing"])}<br>Blockers: {e(x["blockers"])}</div></li>' for x in today) + "</ul>"
-        if today else "<h2 id=standup>Standup</h2><p class=empty>No standup yet today. The daily run (around 9:15 AM ET) opens with one line per role that has something new.</p>")
+        if today else f"<h2 id=standup>Standup</h2><p class=empty>No standup yet today. The daily run (around {RUN_TIME}) opens with one line per role that has something new.</p>")
     room = max(page_target - CHAT_OVERHEAD - len(sbody.encode()), 0)
     main_units, archived = {}, []
     for kind, share in CHAT_SHARES.items():
@@ -1098,7 +1101,7 @@ def build():
         f'<tr><th scope="row">{e(d["day"])}</th><td>' + "<br>".join(f'<strong>{e(r["role"])}</strong>: {e(r["focus"])}' for r in d["roles"]) + "</td></tr>" for d in sched.get("research", [])) + "</tbody></table></div>"
     lim = "".join(f"<li>{e(l)}</li>" for l in sched["limits"])
     last = runs[0] if runs else None
-    status = f'Last run: <strong>{e(last["date"])}</strong> ({e(last["kind"])}), status <strong>{e(last["status"])}</strong>. Next: the daily run, around 9:15 AM ET.' if last else '<span class="empty">No runs yet. The first daily run is around 9:15 AM ET.</span>'
+    status = f'Last run: <strong>{e(last["date"])}</strong> ({e(last["kind"])}), status <strong>{e(last["status"])}</strong>. Next: the daily run, around {RUN_TIME}.' if last else f'<span class="empty">No runs yet. The first daily run is around {RUN_TIME}.</span>'
     files["schedule/index.html"] = page("schedule/", "Schedule and limits", "What to expect and when. Generated from the same schedule file the routines use.",
                                         f'<p class="card">{status}</p><div class="scroll"><table class="stack"><tbody>{srows}</tbody></table></div><p>When something goes wrong, the after-action review is on the <a href="../lessons/">Lessons</a> page the same day.</p><p>Dated plans, reviews and holiday themes are on the <a href="../calendar/">Calendar</a>.</p>' + rot_html + f'<h2>Limits, in plain words</h2><ul>{lim}</ul>', "data/schedule.json")
 

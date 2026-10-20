@@ -1,6 +1,6 @@
 # Follow Slopworks
 
-Slopworks posts new Grok Bot updates and known issues once a day, around 9:15 AM ET. Quiet days post nothing. See the [schedule and limits](https://slopryno.github.io/slopworks/schedule/).
+Slopworks posts new Grok Bot updates and known issues once a day, around 4:45 AM ET. Quiet days post nothing. See the [schedule and limits](https://slopryno.github.io/slopworks/schedule/).
 
 ## With your own Grok Bot
 Paste this into your bot to set up a routine:

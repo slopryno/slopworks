@@ -61,6 +61,15 @@ def matches(day, expr):
     return ((dom is None or day.day in dom) and (mon is None or day.month in mon) and (dow is None or day.weekday() in dow))
 
 
+def run_time(sched):
+    """The daily run's clock time in words ('4:45 AM ET'), from the daily item's cron, so site copy can't drift from
+    the schedule (Ryno, 2026-10-20 10:15 AM ET: "Lets have runs start early morning so visitors can get the latest
+    version once they wake up")."""
+    item = next(i for i in sched["items"] if i["id"] == "daily")
+    minute, hour = (int(x) for x in item["cron"].split()[:2])
+    return f"{(hour % 12) or 12}:{minute:02d} {'AM' if hour < 12 else 'PM'} ET"
+
+
 def cadence(expr):
     """Plain words for a schedule cron: 'Every Monday', 'First Monday of each month', 'Every day'."""
     dom, mon, dow = parse_cron(expr)
@@ -225,7 +234,7 @@ def render(cal, sched, today, up="../"):
     rows = "".join(f'<li><strong>{e(r["title"])}</strong>: {e(cadence(item["cron"]))}. {e(r["owner"])}.</li>' for r, item in routines(cal, sched) if r["show"] != "note")
     key = "".join(f'<li class="t-{k}">{e(v)}</li>' for k, v in TYPES.items())
     out.append(f'<details><summary>Routines and how to read this</summary><ul>{rows}</ul>'
-               f'<p>{"".join(e(r["title"]) + ": every day, around 9:15 AM ET. " for r in daily)}Times are Eastern. A \u2713 means done. '
+               f'<p>{"".join(e(r["title"]) + f": every day, around {run_time(sched)}. " for r in daily)}Times are Eastern. A \u2713 means done. '
                f'Routines show from {nice(d(cal["recurring_from"]))} on; earlier days show only what\'s on record.</p>'
                f'<p>Holiday themes follow a set lead time: plan 4 weeks out, design at 3, review at 2, Ryno\'s yes by 1. No yes, no switch.</p></details>'
                f'<p>Every routine and limit is on <a href="{up}schedule/">Schedule and limits</a>.</p>')
@@ -271,7 +280,7 @@ def ics(cal, sched, today, base):
     ymd = lambda x: x.strftime("%Y%m%d")
     lines = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Slopworks//Team calendar//EN", "CALSCALE:GREGORIAN", "METHOD:PUBLISH",
              "X-WR-CALNAME:Slopworks team calendar", "X-WR-TIMEZONE:America/New_York",
-             "X-WR-CALDESC:" + _text("The Slopworks bot team's dated plans, reviews and holiday themes. The daily run is every day around 9:15 AM ET. Unofficial fan project.")]
+             "X-WR-CALDESC:" + _text(f"The Slopworks bot team's dated plans, reviews and holiday themes. The daily run is every day around {run_time(sched)}. Unofficial fan project.")]
 
     def event(uid, start, summary, desc, end=None, rule=None, tentative=False):
         lines.extend(["BEGIN:VEVENT", f"UID:{uid}.slopworks-calendar", f"DTSTAMP:{stamp}", f"DTSTART;VALUE=DATE:{ymd(start)}",
