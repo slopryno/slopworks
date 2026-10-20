@@ -19,5 +19,25 @@
       "bot/design-details-cards"
     ],
     "max_prs": 9
+  },
+  {
+    "id": "ovr-2026-10-20-extra-sprint",
+    "kind": "lift-slowdown",
+    "by": "Ryno (CEO)",
+    "quote": "Lets run another sprint",
+    "source": "CEO instruction, Tue 2026-10-20 11:02 AM ET, Slopbot chat: one extra sprint today of up to 6 PRs, after the same-day AAR exception and the run-interrupted AAR ship; the window opens once that AAR (#127) merged. Slowed again after this sprint until 10 clean PRs.",
+    "at": "2026-10-20T11:29-04:00",
+    "expires": "2026-10-20T23:59-04:00",
+    "branches": [
+      "bot/ops-ceo-sprint-override",
+      "bot/feature-wins-xp-refresh",
+      "bot/design-more-about-title",
+      "bot/design-objective-links",
+      "bot/design-xp-bar-track",
+      "bot/design-xp-table-390",
+      "bot/design-cases-first-screen",
+      "bot/design-avatar-hop-once"
+    ],
+    "max_prs": 6
   }
 ]
