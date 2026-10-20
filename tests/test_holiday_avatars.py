@@ -1,4 +1,5 @@
-"""Trial's tests for the seasonal avatar sets (Ryno, 2026-10-19 9:30 PM ET: "Ship tomorrow but make them see-through, no tiles"; 9:52 PM ET: "Should be a full month of themed look so Oct 15 should be Oct 1")."""
+"""Trial's tests for the seasonal avatar sets (Ryno, 2026-10-19 9:30 PM ET: "Ship tomorrow but make them see-through, no tiles"; 9:52 PM ET: "Should be a full month of themed look so Oct 15 should be Oct 1";
+9:56 PM ET: "Yes, holiday looks wait for my yes before switching on")."""
 import re, subprocess, sys, unittest
 from datetime import date
 from pathlib import Path
@@ -16,12 +17,12 @@ class DateSwitch(unittest.TestCase):
                  (11, 30): "normal", (12, 1): "winter", (12, 25): "winter", (12, 26): "winter", (12, 27): "winter", (12, 31): "winter", (1, 1): "normal",
                  (2, 29): "normal", (7, 4): "normal"}
         for (m, d), want in cases.items():
-            self.assertEqual(avatars.season_for(date(2028, m, d)), want, (m, d))
+            self.assertEqual(avatars.in_window(date(2028, m, d)), want, (m, d))
 
     def test_every_year(self):
         for y in (2026, 2027, 2030):
-            self.assertEqual(avatars.season_for(date(y, 10, 1)), "halloween")
-            self.assertEqual(avatars.season_for(date(y, 12, 31)), "winter")
+            self.assertEqual(avatars.in_window(date(y, 10, 1)), "halloween")
+            self.assertEqual(avatars.in_window(date(y, 12, 31)), "winter")
 
     def test_oct_20_build_is_halloween(self):
         got = avatars.files(avatars.season_for(date(2026, 10, 20)))
@@ -34,10 +35,54 @@ class DateSwitch(unittest.TestCase):
     def test_cli_check_matches_committed_set(self):
         have = avatars.committed_season()
         self.assertIsNotNone(have, "committed avatars must be one complete set: run python3 scripts/avatars.py")
-        inside = {"normal": "2026-07-01", "halloween": "2026-10-20", "winter": "2026-12-10"}
-        for season, d in inside.items():
+        for d in ("2026-07-01", "2026-10-20", "2026-12-10"):
+            want = avatars.season_for(date.fromisoformat(d))
             r = subprocess.run([sys.executable, "scripts/avatars.py", "--check", "--date", d], cwd=ROOT, capture_output=True, text=True)
-            self.assertEqual(r.returncode, 0 if season == have else 1, (season, r.stdout))
+            self.assertEqual(r.returncode, 0 if want == have else 1, (d, want, r.stdout))
+
+
+def _cal(yes_status=None, theme="halloween-2028", window=("2028-10-01", "2028-10-31"), avatar_set="halloween"):
+    """A minimal data/calendar.json: one scheduled theme, and its ceo-yes event when yes_status is given."""
+    ev = [{"id": "x-plan", "date": "2028-09-01", "title": "plan", "owner": "Coordinator", "type": "holiday-theme",
+           "status": "done", "theme": theme, "step": "plan"}]
+    if yes_status:
+        ev.append({"id": "x-yes", "date": "2028-09-24", "title": "Ryno's yes", "owner": "Ryno", "type": "holiday-theme",
+                   "status": yes_status, "theme": theme, "step": "ceo-yes"})
+    return {"themes": [{"id": theme, "name": "T", "status": "scheduled", "avatar_set": avatar_set,
+                        "switch_on": window[0], "switch_off": window[1]}], "events": ev}
+
+
+class YesGate(unittest.TestCase):
+    """Ryno, 9:56 PM ET: "Yes, holiday looks wait for my yes before switching on"."""
+    day = date(2028, 10, 20)
+
+    def test_in_window_without_a_yes_is_the_blob(self):
+        self.assertEqual(avatars.season_for(self.day, _cal()), "normal")
+
+    def test_planned_yes_is_not_a_yes(self):
+        self.assertEqual(avatars.season_for(self.day, _cal("planned")), "normal")
+
+    def test_in_window_with_a_yes_is_the_holiday_set(self):
+        self.assertEqual(avatars.season_for(self.day, _cal("done")), "halloween")
+        self.assertEqual(avatars.season_for(date(2028, 10, 1), _cal("done")), "halloween")
+        self.assertEqual(avatars.season_for(date(2028, 10, 31), _cal("done")), "halloween")
+
+    def test_a_yes_does_not_reach_outside_the_window(self):
+        for d in (date(2028, 9, 30), date(2028, 11, 1), date(2029, 10, 20)):
+            self.assertEqual(avatars.season_for(d, _cal("done")), "normal", d)
+
+    def test_a_yes_for_one_theme_does_not_switch_another(self):
+        self.assertEqual(avatars.season_for(date(2028, 12, 10), _cal("done")), "normal")
+        other = _cal("done", theme="winter-2028", window=("2028-12-01", "2028-12-31"), avatar_set="winter")
+        self.assertEqual(avatars.season_for(self.day, other), "normal")
+
+    def test_the_real_calendar(self):
+        """Halloween 2026 has Ryno's 9:30 PM yes. Other themes follow their own ceo-yes event (winter 2026's is due Nov 24)."""
+        cal = avatars.load_calendar()
+        self.assertTrue(avatars.cal_mod.yes_done(cal, "halloween-2026"))
+        self.assertEqual(avatars.season_for(date(2026, 10, 20)), "halloween")
+        for theme, d, s in (("winter-2026", date(2026, 12, 10), "winter"), ("halloween-2027", date(2027, 10, 5), "halloween")):
+            self.assertEqual(avatars.season_for(d), s if avatars.cal_mod.yes_done(cal, theme) else "normal", theme)
 
 
 class Sets(unittest.TestCase):
