@@ -631,22 +631,19 @@ def build():
         return (f'<h2 id="research">Research</h2><p>Every {e(day)}, on the weekly research rotation.</p>'
                 f'<p>{e(focus[:1].upper() + focus[1:])}.{lt}</p>') if day else ""
     # Living Team (i22, PR 5 of 8): each card shows the role's latest real handoff from data/chat.json, with its date. No live claims.
-    def latest_msg(n):
+    def latest_msg(n, up="../", here="team/"):
         m = latest_of(n)
         if not m:
             return '<p class="empty">No handoffs yet. They appear here after the role posts in Team chat.</p>'
         txt = m["text"] if len(m["text"]) <= 140 else m["text"][:137].rsplit(" ", 1)[0] + "\u2026"
         return (f'<blockquote class="latest"><p>{e(txt)}</p><p class="meta">{as_of(m["date"], "said on")}<span>to {e(m["to"])}</span>'
-                f'{"<span>as " + e(m["from"]) + "</span>" if m["from"] != n else ""}<a href="{href(m["id"], "../", "team/")}">in Team chat</a></p></blockquote>')
+                f'{"<span>as " + e(m["from"]) + "</span>" if m["from"] != n else ""}<a href="{href(m["id"], up, here)}">in Team chat</a></p></blockquote>')
     # Role skills (Ryno, 2026-10-19 10:06 PM ET): parsed from each role file's **Skills:** block; scripts/skills.py checks them.
     import skills as skillmod
     kit = skillmod.load()
     learned = lambda f: skillmod.role_skills((ROOT / "bots" / f).read_text()) or []
     # Training tracks (Ryno, 2026-10-20 7:05 AM ET): a role's **Training track:** lines name tracks in data/skills.json.
     tracked = lambda f: [(tid, kit["tracks"][tid]) for tid in skillmod.role_tracks((ROOT / "bots" / f).read_text()) if tid in kit.get("tracks", {})]
-    def trained_in(f):
-        got = [g[0] for g in learned(f)] + [f'the {t["title"]} track' for _, t in tracked(f)]
-        return f'<p><strong>Trained in:</strong> {e(", ".join(got))}. <a href="{f[:-3]}/#training">How it uses them</a></p>' if got else ""
     def track_html(n, tid, t):
         mods = skillmod.track_modules(t, n)
         src = t["sources"]
@@ -661,22 +658,15 @@ def build():
                 f'<details><summary>The {len(mods)} modules</summary><ol class="worklist">{li}</ol></details>'
                 f'<details><summary>Audit of the live site at {x["width"]}px, {day}: {len(x["findings"])} findings</summary>'
                 f'<p class="meta">{x["pages"]} pages, light and dark; {e(grade)}.</p><ul class="worklist">{fl}</ul></details>')
-    def tcard(n, t, r, o, f):
-        # Compact role card (visual review V3, Comms): name, title, a one-sentence bio, the current objective and the level stay
-        # visible; what the role owns, its limits, latest handoff and training sit one tap away; research and wins are on the sheet.
-        # Page budget (Ryno, Oct 20 7:27 AM ET: images count): the wins list repeated the sheet's Verified work, and the research
-        # line moved to the sheet, so Team stays well inside 100 KB with every avatar counted.
-        x = totals.get(n, 0)
-        k, lv, nxt = level_for(x, levels)
-        pct = 100 if not nxt else int(100 * (x - lv["xp"]) / (nxt["xp"] - lv["xp"]))
+    def about(n, o, f):
+        # Moved here from the Team card when the trading cards shipped (Ryno, Oct 20 12:18 PM ET): bio, objective, what the
+        # role owns, its limits, the latest handoff and the role file, one tap away on the sheet.
         cant = re.search(r"\*\*Can't:\*\*\s*(.+)", (ROOT / "bots" / f).read_text())
-        return (f'<article class="card lead" id="{f[:-3]}" style="border-top:4px solid {color(n)}"><div class="hd">{avatar(n, "../", 56, True)}<div><h2><a href="{f[:-3]}/">{e(n)}</a></h2>'
-                f'<p class="title">{e(t)}</p></div></div><p class="bio">{e(bio(n))}</p>{home.objective(objectives[n], "../", href) if n in objectives else ""}'
-                f'<p class="lv"><span>{xp_line(n, "")}</span></p><div class="bar" aria-hidden="true"><span style="width:{pct}%"></span></div>'
-                f'<details class="more"><summary>More about {e(n)}</summary><p><strong>Owns:</strong> {e(o)}</p>'
+        return (f'<h2 id="about">About the role</h2><p class="bio">{e(bio(n))}</p>{home.objective(objectives[n], "../../", href) if n in objectives else ""}'
+                f'<details class="more"><summary>Owns, limits and latest handoff</summary><p><strong>Owns:</strong> {e(o)}</p>'
                 + (f"<p><strong>Can't:</strong> {e(cant.group(1))}</p>" if cant else "")
-                + f'<h3>Latest handoff</h3>{latest_msg(n)}{trained_in(f)}'
-                f'<p class="links"><a href="{f[:-3]}/">Character sheet</a> <a href="{REPO}/blob/main/bots/{f}">Role file</a></p></details></article>')
+                + f'<h3>Latest handoff</h3>{latest_msg(n, "../../", "team/" + f[:-3] + "/")}'
+                f'<p class="links"><a href="{REPO}/blob/main/bots/{f}">Role file</a></p></details>')
     # Character sheets (i34, Week 1): every number is computed here from data/xp_ledger.json and data/progression.json.
     prog, ledger_all = load("progression"), load("xp_ledger")
     totals, levels = xp_totals(ledger_all), prog["levels"]
@@ -740,7 +730,7 @@ def build():
         body = (f'<section class="sheet card" style="border-top:4px solid {color(n)}">{avatar(n, "../../", 96, True)}<div><p class="title">{e(t)}</p>'
                 f'<p class="lvl">Level {num} · {e(lv["name"])}</p>{bar}{counted}</div></section>'
                 f'<h2>Next level-up quest</h2><p>{e(quest)}</p><p class="meta">Tracked quests start in Week 2 (Oct 22); this is the next step.</p>'
-                f'<h2>Achievements</h2><ul class="achs">{ach}</ul>{training(f)}'
+                f'<h2>Achievements</h2><ul class="achs">{ach}</ul>' + about(n, o, f) + f'{training(f)}'
                 + researched(n, "../../")
                 + f'<h2>Skills</h2><p class="meta">XP by kind of work. Skill trees (three branches, four milestones each) arrive in Week 4.</p>{skills}'
                 f'<h2>Verified work</h2>{label("verified")} <span class="meta">Approved entries, each with its evidence and a reviewer who isn\'t {e(n)}.</span>'
@@ -768,9 +758,30 @@ def build():
              f'<h2>Every character sheet</h2><p class="meta">In name order. Levels describe each role\'s own record.</p><ul>{roster}</ul>'
              f'<p>Rules: <a href="{REPO}/blob/main/data/progression.json">data/progression.json</a> (owned by Game Master). Ledger: <a href="{REPO}/blob/main/data/xp_ledger.json">data/xp_ledger.json</a>, written by <a href="{REPO}/blob/main/scripts/xp.py">scripts/xp.py</a>. Decided in <a href="{href(prog["thread"], "../../", "team/xp/")}">Team chat</a>.</p>')
     files["team/xp/index.html"] = page("team/xp/", "How XP works", f"XP from {len([y for y in ledger_all if y['status'] == 'approved'])} verified pieces of work. Every point links its evidence.", xbody, "data/progression.json")
+    # Team trading cards (Ryno, Oct 20 12:18 PM ET: design locked; Comms wording). scripts/cards.py renders; no script.
+    import cards as cardmod
+    import avatars as avmod
+    cspec, season = cardmod.load(), avmod.committed_season() or "normal"
+    def tslot(x, i):
+        n, f = x[0], x[4]
+        xp = totals.get(n, 0)
+        num, lv, nxt = level_for(xp, levels)
+        kinds = {}
+        for y in ledger_all:
+            if y["agent"] == n and y["status"] == "approved":
+                kinds[y["type"]] = kinds.get(y["type"], 0) + 1
+        return cardmod.card(n, i, len(order), f[:-3], cspec, season, xp, num, lv, nxt, kinds, f"../assets/avatars/{avatar_of(n)}.svg")
+    seq = [x for _, members in GROUPS for x in team() if x[0] in members]
+    tiers = {}
+    for x in seq:
+        k = cardmod.rarity(level_for(totals.get(x[0], 0), levels)[0], cspec)[1]
+        tiers[k] = tiers.get(k, 0) + 1
+    summ = ", ".join(f"{tiers[r['name']]} {r['name'].lower()}" for r in reversed(cspec["rarity"]) if r["name"] in tiers)
+    tbody = (f'<p class="set">Set 1, {len(seq)} cards: {summ}.' + (" October edition: Halloween art." if season == "halloween" else "") + " Tap a card to open it.</p>"
+             + cardmod.sprite()
+             + "".join(f'<h2 class="group">{e(g)}</h2><div class="deck">' + "".join(tslot(x, seq.index(x) + 1) for x in seq if x[0] in members) + "</div>" for g, members in GROUPS))
     files["team/index.html"] = page("team/", "The team", f"{len(team())} Grok Bot roles in five groups, played by one daily routine, not separate agents. Levels come from verified XP (<a href=\"xp/\">how XP works</a>).",
-                                    "".join(f'<h2 class="group">{e(g)}</h2><div class="grid">' + "".join(tcard(*x) for x in team() if x[0] in members) + "</div>" for g, members in GROUPS) + alumni_html
-                                    + '<p class="next"><a class="more" href="../timeline/">Next: how the team grew, on the Timeline</a></p>', "bots")
+                                    tbody + alumni_html + '<p class="next"><a class="more" href="../timeline/">Next: how the team grew, on the Timeline</a></p>', "bots").replace("</head>", f"<style>{cardmod.css(cspec, season, stems)}</style>\n</head>", 1)
 
 
     # Lessons: same-day after-action reviews (AARs), approved by Ryno 2026-10-17. Blameless, and every field cites a real artifact.
