@@ -3,98 +3,98 @@
   "items": [
     {
       "id": "daily",
-      "when": "Daily, around 9:15 AM ET",
-      "cron": "13 9 * * *",
+      "when": "Daily, around 4:45 AM ET",
+      "cron": "45 4 * * *",
       "what": "New Grok Bot updates and known issues. Quiet days post nothing."
     },
     {
       "id": "monday",
       "when": "Mondays (in the daily run)",
-      "cron": "13 9 * * 1",
+      "cron": "45 4 * * 1",
       "what": "Weekly digest, GitHub release, design audit score, and the sprint plan."
     },
     {
       "id": "friday",
       "when": "Fridays (in the daily run)",
-      "cron": "13 9 * * 5",
+      "cron": "45 4 * * 5",
       "what": "Team retro, shown in Team chat. It reviews the week's after-action reviews and closes the fixed ones."
     },
     {
       "id": "aar",
       "when": "Same run, whenever something goes wrong",
-      "cron": "13 9 * * *",
+      "cron": "45 4 * * *",
       "what": "After-action review on the Lessons page and in Team chat for any revert, failed deploy or post-deploy check, CI failure on main, data correction, Block proven right, or incident. The Friday retro reviews and closes the week's reviews."
     },
     {
       "id": "monthly",
       "when": "First Monday of the month",
-      "cron": "13 9 1-7 * 1",
+      "cron": "45 4 1-7 * 1",
       "what": "State of Slopworks page, roadmap review, and architecture review."
     },
     {
       "id": "repo-hygiene",
       "when": "First Monday of the month (Sweep)",
-      "cron": "13 9 1-7 * 1",
+      "cron": "45 4 1-7 * 1",
       "what": "Repo hygiene: Sweep checks the tracked tree against the lean budgets and removes stray, duplicate, dead, temp or build files in one ordinary PR. No history rewrites."
     },
     {
       "id": "research",
       "when": "One to three roles a day, all week (in the daily run)",
-      "cron": "13 9 * * *",
+      "cron": "45 4 * * *",
       "what": "Weekly research rotation: each role reads up to about 5 public web pages in its own area and posts a short note. Ideas become pitches in the next standup."
     },
     {
       "id": "week-mon",
       "when": "Mondays: investigations",
-      "cron": "13 9 * * 1",
+      "cron": "45 4 * * 1",
       "what": "Coordinator: select the week's investigations from the consolidated research (on top of the daily run)."
     },
     {
       "id": "week-tue",
       "when": "Tuesdays: focused research",
-      "cron": "13 9 * * 2",
+      "cron": "45 4 * * 2",
       "what": "Assigned roles research the selected questions. Each role's own rotation slot keeps running for independent research."
     },
     {
       "id": "week-wed",
       "when": "Wednesdays: challenge and experiments",
-      "cron": "13 9 * * 3",
+      "cron": "45 4 * * 3",
       "what": "Critic challenges the strongest proposals, User Advocate checks the user problem, Shield and Trial weigh in as relevant, and cheap experiments run."
     },
     {
       "id": "week-thu",
       "when": "Thursdays: build",
-      "cron": "13 9 * * 4",
+      "cron": "45 4 * * 4",
       "what": "Approved, scored ideas with acceptance criteria are built through the usual review gates."
     },
     {
       "id": "week-fri",
       "when": "Fridays: measure and learn",
-      "cron": "13 9 * * 5",
+      "cron": "45 4 * * 5",
       "what": "Analyst measures against each success metric, Librarian records outcomes, and the team retro runs. Urgent security issues or major Grok Bot updates can interrupt any day."
     },
     {
       "id": "pstack-watch",
       "when": "Thursdays (in the daily run)",
-      "cron": "13 9 * * 4",
+      "cron": "45 4 * * 4",
       "what": "pstack watch: Librarian checks poteto's public pstack skills against last week's saved copy and files any changes as research leads. Nothing is adopted outside the pitch flow."
     },
     {
       "id": "weekly-clip",
       "when": "Mondays (in the daily run)",
-      "cron": "13 9 * * 1",
+      "cron": "45 4 * * 1",
       "what": "Weekly clip: Strategy records a short phone clip of the live site for Ryno. Nothing is posted."
     },
     {
       "id": "holiday-themes",
       "when": "Before each holiday theme",
-      "cron": "13 9 * * *",
+      "cron": "45 4 * * *",
       "what": "Holiday character themes follow the calendar: plan about 4 weeks before the switch, design at 3, screenshot review at 2, and Ryno's yes by 1 week. No yes, no switch."
     },
     {
       "id": "progression",
       "when": "Fridays: Slopworks RPG check-in (i34)",
-      "cron": "13 9 * * 5",
+      "cron": "45 4 * * 5",
       "what": "Week 1 shipped: progression rules, the XP ledger, and character sheets; the daily run refreshes the ledger with scripts/xp.py. Next: Week 2 quests, Week 3 the first team raid, Week 4 audit, rebalance, and skill trees. Each step starts on evidence, not the calendar."
     }
   ],
