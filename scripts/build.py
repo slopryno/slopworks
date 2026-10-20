@@ -725,10 +725,16 @@ def build():
             ach += (f'<li class="ach got"><a href="{e(got["evidence"])}"><span aria-hidden="true">★</span> {e(a["name"])}</a> <span class="meta">{e(a["rule"])}, {got["timestamp"][:10]}</span></li>' if got
                     else f'<li class="ach"><span aria-hidden="true">○</span> {e(a["name"])} <span class="meta">not yet: {e(a["rule"][0].lower() + a["rule"][1:])}</span></li>')
         quest = prog["quests"].get(n, prog["quests"]["default"])
+        newest = sorted(ok, key=lambda y: y["timestamp"], reverse=True)
+        # The role's 3 latest merged PRs always show (they moved here from the Team page), even when sign-offs fill the newest 15.
+        shipped = [y for y in newest if y["type"] == "pr_merged"][:3]
+        shown = newest[:15] + [y for y in shipped if y not in newest[:15]]
         work = "".join(f'<li><time datetime="{y["timestamp"]}">{y["timestamp"][:10]}</time> <a href="{e(y["evidence"])}">{e(y["task"])}</a> '
                        f'<span class="meta">+{y["base_xp"] * y["quality_pct"] // 100} XP · {e(prog["events"][y["type"]]["label"])} · reviewed by {e(y["reviewer"])}</span></li>'
-                       for y in sorted(ok, key=lambda y: y["timestamp"], reverse=True)[:15])
-        more = f'<p class="meta">Showing the newest {min(15, len(ok))} of {len(ok)}. <a href="{REPO}/blob/main/data/xp_ledger.json">Full record: data/xp_ledger.json</a></p>' if ok else ""
+                       for y in shown)
+        extra = len(shown) - 15
+        plus = f", plus {extra} older merged {'PR' if extra == 1 else 'PRs'}" if extra > 0 else ""
+        more = f'<p class="meta">Showing the newest {min(15, len(ok))} of {len(ok)}{plus}. <a href="{REPO}/blob/main/data/xp_ledger.json">Full record: data/xp_ledger.json</a></p>' if ok else ""
         said = [s for s in load("standup") if s["role"] == n]
         claimed = ('<ul class="worklist">' + "".join(f'<li><time datetime="{s["date"]}">{s["date"]}</time> {e(s["did"])}</li>' for s in said) + "</ul>") if said else '<p class="empty">No standup claims.</p>'
         body = (f'<section class="sheet card" style="border-top:4px solid {color(n)}">{avatar(n, "../../", 96, True)}<div><p class="title">{e(t)}</p>'
