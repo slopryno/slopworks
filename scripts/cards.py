@@ -120,7 +120,7 @@ def card(n, i, total, stem, spec, season, xp, level, lv, nxt, kinds, avatar_src,
     fl = r["flavour"].get(season) or r["flavour"]["normal"]
     return (f'<div class="slot {cls}"><i class="o" id="{stem}"></i><i class="c" id="m-{stem}"></i><div class="card">'
             f'<a class="open" href="#{stem}"><span class="art {pk}"><img src="{avatar_src}" width="112" height="112" alt=""></span>'
-            f'<span class="nm"><b>{e(n)}</b><span class="ml">{icon(ty["icon"])}Lv {level} · {xp} XP</span></span></a>'
+            f'<span class="nm"><b>{e(n)}</b><span class="ml">{icon(ty["icon"])}Lv\u00a0{level} · {xp}\u00a0XP</span></span></a>'
             f'<div class="body"><a class="cl" href="#m-{stem}"><span class="vh">Close</span></a><p class="ty"><b>{e(r["type"])}</b></p>'
             f'<p class="lv" style="--w:{pct}%">{e(lv["name"])}<span>{togo}</span></p>'
             f'<ul class="mv">{mv}</ul><p class="wr"><span>{e(r["weak_to"])}</span><span>{e(r["resists"])}</span><span>{e(r["hands_off"])}</span></p>'

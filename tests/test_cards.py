@@ -58,7 +58,7 @@ class Cards(unittest.TestCase):
         for n in self.roles:
             num = build.level_for(tot.get(n, 0), levels)[0]
             self.assertIn(f"<b>{n}</b>", doc)
-            self.assertIn(f"Lv {num} · {tot.get(n, 0)} XP", doc, n)
+            self.assertIn(f"Lv\u00a0{num} · {tot.get(n, 0)}\u00a0XP", doc, n)
 
     def test_holiday_art_only_in_its_approved_season(self):
         self.assertIn("October edition: Halloween art.", self.pages["halloween"])
