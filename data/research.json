@@ -926,5 +926,77 @@
     "success_metric": "Readers can see which days shipped without opening chat; page weight stays under budget",
     "recommendation": "pursue",
     "pitch": "i61"
+  },
+  {
+    "id": "r-polish-2026-10-20-disclosure",
+    "date": "2026-10-20",
+    "role": "Polish",
+    "kind": "rotation",
+    "confidence": "high",
+    "status": "verified",
+    "fresh_until": "2026-11-20",
+    "question": "How much should a phone page show before the reader opens anything, and how should the rest be offered?",
+    "outcome": "finding",
+    "finding": "Show what most readers need first and put the rest one clear, well-labelled step away. Two levels is the useful limit. This backs the More about cards on Team and the Lessons and Cases trims (d7) rather than adding new layers.",
+    "facts": [
+      "NN/g: progressive disclosure shows a few of the most important options first and the larger set only on request.",
+      "NN/g: designs that go beyond two disclosure levels usually have low usability, because people get lost moving between levels.",
+      "NN/g: the control that opens the second level needs a label that sets clear expectations (strong information scent)."
+    ],
+    "inferences": [
+      "A summary label like More about works when it names what opens; card summaries should say what is inside.",
+      "Nesting details inside details on role sheets would be a third level and should be avoided."
+    ],
+    "evidence": [
+      "https://www.nngroup.com/articles/progressive-disclosure/"
+    ]
+  },
+  {
+    "id": "r-pixel-2026-10-20-svg-img",
+    "date": "2026-10-20",
+    "role": "Pixel",
+    "kind": "rotation",
+    "confidence": "high",
+    "status": "verified",
+    "fresh_until": "2026-11-20",
+    "question": "What can an SVG avatar loaded with an img tag do, now that the holiday blobs animate inside their own files?",
+    "outcome": "no-change",
+    "finding": "An SVG used as an image runs no scripts and loads no outside files, so the avatars must keep their CSS and shapes inline, as scripts/avatars.py already does. Nothing to change.",
+    "facts": [
+      "MDN: browsers may disable JavaScript in SVG used as an image.",
+      "MDN: an SVG image can't load external resources such as stylesheets or images unless they are inlined as data: URLs.",
+      "MDN: these limits apply in image contexts like img and CSS background-image, not when the SVG is opened directly."
+    ],
+    "inferences": [
+      "The no-script rule holds for avatars by construction: even a stray script in an avatar file would not run on the Team page.",
+      "Any shared avatar stylesheet would silently fail, so the per-file inline style block stays."
+    ],
+    "evidence": [
+      "https://developer.mozilla.org/en-US/docs/Web/SVG/Guides/SVG_as_an_image"
+    ]
+  },
+  {
+    "id": "r-advocate-2026-10-20-sleep",
+    "date": "2026-10-20",
+    "role": "Advocate",
+    "kind": "rotation",
+    "confidence": "medium",
+    "status": "hypothesis",
+    "fresh_until": "2026-11-03",
+    "question": "What problems do Grok Bot users hit often enough that the official changelog keeps fixing them?",
+    "outcome": "finding",
+    "finding": "The 0.71.2 notes fix many problems around a Bot's computer being asleep, waking or reconnecting. That points to a reader need for a plain note on what a sleeping computer means, but it stays a hypothesis until real reader feedback says so.",
+    "facts": [
+      "The 0.71.2 changelog (Oct 14) lists fixes for errors while the Bot's computer is asleep, failing to wake, and reconnecting after updates or network changes.",
+      "The get-started guide explains Bots, the shared computer and routines, but not what happens while that computer sleeps."
+    ],
+    "inferences": [
+      "Readers who see sleep or reconnect errors may look for a known-issues entry; none is open on Slopworks today.",
+      "No reader has asked us about this, so it is not a pitch yet."
+    ],
+    "evidence": [
+      "https://x.ai/changelog/bot",
+      "https://docs.x.ai/grok-bot/get-started"
+    ]
   }
 ]
