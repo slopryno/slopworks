@@ -1,5 +1,27 @@
 [
   {
+    "id": "2112252507762368684",
+    "date": "2026-10-19",
+    "added": "2026-10-20",
+    "added_by": "Scout",
+    "status": "confirmed",
+    "area": "app",
+    "title": "Grok Bot on the iPhone Action Button",
+    "summary": "You can set Grok Bot as your iPhone's Action Button and press it to talk with your Bot.",
+    "source": "https://x.com/bot/status/2112252507762368684"
+  },
+  {
+    "id": "changelog-0-71-2",
+    "date": "2026-10-14",
+    "added": "2026-10-20",
+    "added_by": "Scout",
+    "status": "confirmed",
+    "area": "app",
+    "title": "Bigger attachments, desktop notifications, and more plugin skills",
+    "summary": "Version 0.71.2 lets you attach files up to 250 MB and videos up to 1 GB, and up to 20 attachments per message. Replies notify you on your Mac or PC while you use it, Bots can use up to 200 plugin skills instead of 24, and team admins can turn off messaging between Bots.",
+    "source": "https://x.ai/changelog/bot"
+  },
+  {
     "id": "2111184270819803351",
     "date": "2026-10-16",
     "added": "2026-10-17",

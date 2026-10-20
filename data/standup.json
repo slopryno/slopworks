@@ -110,5 +110,37 @@
     "did": "Hired (#101); month-1 goals approved, G1 visitors on hold",
     "doing": "wait for goals PR after training rules",
     "blockers": "tempo: training then goals after today"
+  },
+  {
+    "id": "s-2026-10-20-coordinator",
+    "date": "2026-10-20",
+    "role": "Coordinator",
+    "did": "Calendar (#120), page budget (#121), Halloween blobs (#122) and training (#123) merged",
+    "doing": "move the daily run to about 4:45 AM ET (Ryno, 10:15 AM)",
+    "blockers": "none"
+  },
+  {
+    "id": "s-2026-10-20-scout",
+    "date": "2026-10-20",
+    "role": "Scout",
+    "did": "Changelog 0.71.2 (Oct 14) and the iPhone Action Button post are new",
+    "doing": "two entries to Verify; RSS answered 403 from the box, page read instead",
+    "blockers": "none"
+  },
+  {
+    "id": "s-2026-10-20-sweep",
+    "date": "2026-10-20",
+    "role": "Sweep",
+    "did": "Resumed the interrupted run: #123 merged with bot.py resume",
+    "doing": "live checks, wins and XP refresh, run log, AAR",
+    "blockers": "AAR waits for the next PR slot (tempo)"
+  },
+  {
+    "id": "s-2026-10-20-polish",
+    "date": "2026-10-20",
+    "role": "Polish",
+    "did": "Mobile UI/UX track done; audit findings are d8 to d11",
+    "doing": "quick look at Team, Calendar and Schedule on the live site",
+    "blockers": "none"
   }
 ]
