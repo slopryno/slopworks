@@ -1,4 +1,4 @@
-"""Trial's tests for the seasonal avatar sets (Ryno, 2026-10-19 9:30 PM ET: "Ship tomorrow but make them see-through, no tiles")."""
+"""Trial's tests for the seasonal avatar sets (Ryno, 2026-10-19 9:30 PM ET: "Ship tomorrow but make them see-through, no tiles"; 9:52 PM ET: "Should be a full month of themed look so Oct 15 should be Oct 1")."""
 import re, subprocess, sys, unittest
 from datetime import date
 from pathlib import Path
@@ -12,16 +12,16 @@ BACKS = (LIGHT, DARK, "#ffffff", "#1c1c22")  # both pages and both card colours
 
 class DateSwitch(unittest.TestCase):
     def test_windows_and_edges(self):
-        cases = {(10, 14): "normal", (10, 15): "halloween", (10, 20): "halloween", (10, 31): "halloween", (11, 1): "normal",
-                 (11, 30): "normal", (12, 1): "winter", (12, 25): "winter", (12, 26): "winter", (12, 27): "normal", (1, 1): "normal",
+        cases = {(9, 30): "normal", (10, 1): "halloween", (10, 14): "halloween", (10, 15): "halloween", (10, 20): "halloween", (10, 31): "halloween", (11, 1): "normal",
+                 (11, 30): "normal", (12, 1): "winter", (12, 25): "winter", (12, 26): "winter", (12, 27): "winter", (12, 31): "winter", (1, 1): "normal",
                  (2, 29): "normal", (7, 4): "normal"}
         for (m, d), want in cases.items():
             self.assertEqual(avatars.season_for(date(2028, m, d)), want, (m, d))
 
     def test_every_year(self):
         for y in (2026, 2027, 2030):
-            self.assertEqual(avatars.season_for(date(y, 10, 15)), "halloween")
-            self.assertEqual(avatars.season_for(date(y, 12, 26)), "winter")
+            self.assertEqual(avatars.season_for(date(y, 10, 1)), "halloween")
+            self.assertEqual(avatars.season_for(date(y, 12, 31)), "winter")
 
     def test_oct_20_build_is_halloween(self):
         got = avatars.files(avatars.season_for(date(2026, 10, 20)))

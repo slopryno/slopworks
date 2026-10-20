@@ -3,8 +3,8 @@
 Transparent, flat, animated with inline CSS only (idle squish, staggered blinks), static under
 prefers-reduced-motion. Inspired by the Grok Bot app style, not copied. Changes need Polish + Shield review.
 
-Seasonal sets (Ryno, 2026-10-19 9:30 PM ET: "Ship tomorrow but make them see-through, no tiles"): from Oct 15 to 31 each
-role becomes its Halloween character and from Dec 1 to 26 its winter one; the rest of the year it's the blob. Same file
+Seasonal sets (Ryno, 2026-10-19 9:30 PM ET: "Ship tomorrow but make them see-through, no tiles"; 9:52 PM ET: full
+months): for all of October each role becomes its Halloween character and for all of December its winter one; the rest of the year it's the blob. Same file
 names, picked by the ET date when this script runs (the daily run). Every file also gets a still copy in still/ (no
 <style>, the neutral pose) for long lists like Team chat.
   avatars.py                     write the set for today's ET date
@@ -108,14 +108,14 @@ def svg(i, name, color, shape, p, badge, why):
 
 # ---------- seasonal sets ----------
 ET = ZoneInfo("America/New_York")
-SEASONS = {"halloween": ((10, 15), (10, 31)), "winter": ((12, 1), (12, 26))}
+SEASONS = {"halloween": ((10, 1), (10, 31)), "winter": ((12, 1), (12, 31))}  # full months (Ryno, Oct 19 9:52 PM ET)
 EYE = "#1b1f24"  # eyes and cut-outs: the blob's own eye colour, the same in both themes
 BAND = (.142, .268)  # relative luminance with 3:1 against both page backgrounds (#F6F5F1, #141418) and both card colours (#FFFFFF, #1C1C22)
 RIM_W = 4  # half shows outside the shape: a soft same-hue edge, only on shapes too light (or dark) for one theme
 
 
 def season_for(d):
-    """'halloween' Oct 15-31, 'winter' Dec 1-26, else 'normal' (inclusive, by calendar date)."""
+    """'halloween' Oct 1-31, 'winter' Dec 1-31, else 'normal' (inclusive, by calendar date)."""
     md = (d.month, d.day)
     return next((n for n, (a, b) in SEASONS.items() if a <= md <= b), "normal")
 
