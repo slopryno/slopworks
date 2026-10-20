@@ -33,5 +33,20 @@
     "at": "2026-10-20T12:53-04:00",
     "branch": "bot/design-team-trading-cards",
     "reason": "python3 -m unittest discover -s tests -q failed:"
+  },
+  {
+    "at": "2026-10-20T16:20-04:00",
+    "branch": "bot/design-ceo-card",
+    "reason": "blast-radius note: the note must start with 'Blast radius: Atlas'"
+  },
+  {
+    "at": "2026-10-20T16:20-04:00",
+    "branch": "bot/design-ceo-card",
+    "reason": "blast-radius note: the note needs a 'Scope: ...' line; the note needs a 'Could break: ...' line; the note needs a 'Rollback: ...' line; the note needs a 'Size: ...' line"
+  },
+  {
+    "at": "2026-10-20T16:20-04:00",
+    "branch": "bot/design-ceo-card",
+    "reason": "python3 -m unittest discover -s tests -q failed:"
   }
 ]
