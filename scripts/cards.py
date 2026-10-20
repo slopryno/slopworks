@@ -7,12 +7,12 @@ window shows the role's costume scene instead. Every number comes from data/xp_l
 
 Badge emblems are a hook only (badges=None): the badge rollout is held, so no badge row renders until it ships.
 """
-import html, json
+import html, json, re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 e = lambda s: html.escape(str(s), quote=False)
-P = "card-"  # sprite ids are prefixed so they can't clash with role anchors such as #forge (Game Master, v2 notes)
+P = "i-"  # sprite ids are prefixed so they can't clash with role anchors such as #forge (Game Master, v2 notes); short to save bytes
 
 ICONS = {
  "briefcase": "M-6-2.5h12v8h-12zM-2.5-2.5v-2.5h5v2.5M-6 1h12",
@@ -71,8 +71,27 @@ def tier(c):  # pips: hollow = no record, 1 = 1-4, 2 = 5-19, 3 = 20+
     return 0 if not c else 1 if c < 5 else 2 if c < 20 else 3
 
 
-def _uri(d):
-    svg = f"<svg xmlns='http://www.w3.org/2000/svg' viewBox='-7 -7 14 14' fill='none' stroke='#000' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'><path d='{d}'/></svg>"
+def _shift(d, dx):
+    """The path moved right by dx: only absolute M and L carry x, every other command in UI is relative."""
+    out, cmd, k = [], "", 0
+    for t in re.findall(r"[A-Za-z]|-?(?:\d+\.?\d*|\.\d+)", d):
+        if t.isalpha():
+            assert t in "MLlhvcz", t
+            cmd, k = t, 0
+            out.append(t)
+            continue
+        n = float(t) + (dx if cmd in "ML" and k % 2 == 0 else 0)
+        k += 1
+        n = f"{n:g}"
+        out.append(n if out[-1].isalpha() or n.startswith("-") else " " + n)
+    return "".join(out)
+
+
+def strip():
+    """The UI icons as one mask strip, 14 units per slot in UI order (page budget, Oct 20 3:54 PM ET: room for the CEO card)."""
+    paths = "<path d='" + "".join(_shift(d, 14 * i) for i, d in enumerate(UI.values())) + "'/>"  # one path: same stroke for all
+    svg = (f"<svg xmlns='http://www.w3.org/2000/svg' viewBox='-7 -7 {14 * len(UI)} 14' fill='none' stroke='#000' stroke-width='1.7'"
+           f" stroke-linecap='round' stroke-linejoin='round'>{paths}</svg>")
     return "data:image/svg+xml," + svg.replace("<", "%3C").replace(">", "%3E").replace("#", "%23")
 
 
@@ -87,15 +106,22 @@ def sprite():
 
 def css(spec, season, stems):
     types = list(spec["types"])
-    t = "".join(f'.t{i}{{--a:{v["colour"]};--b:{v["tint"]};--t:{TEX[v["texture"]]};--m:{v["motif"]};--p:{v["particle_colour"]}}}' for i, v in enumerate(types))
+    t = "".join(f'.t{i}{{--a:{v["colour"]};--b:{v["tint"]};--m:{v["motif"]}}}' for i, v in enumerate(types))
+    for k in ("texture", "particle_colour"):  # a value shared by several types is written once (page budget)
+        vals = {}
+        for i, v in enumerate(types):
+            vals.setdefault(v[k], []).append(f".t{i}")
+        t += "".join(f'{",".join(s)}{{--{k[0]}:{TEX[x] if k == "texture" else x}}}' for x, s in vals.items())
     for n, s in stems.items():
         art = spec["roles"][n].get("art", {}).get(season)
         if art:
             t += f'.g-{s}{{--g:{art["scene"]};--p:{art["particle_colour"]}}}'
     sel = {"lv": ".lv::before", "set": ".sn::before", "close": ".cl::before", "weak": ".wr span:nth-child(1)::before",
            "resist": ".wr span:nth-child(2)::before", "hand": ".wr span:nth-child(3)::before"}
-    t += ",".join(sel.values()) + '{content:"";width:16px;height:16px;flex:none;background:var(--a);mask:var(--u) center/contain no-repeat}'
-    t += "".join(f'{sel[k]}{{--u:url("{_uri(d)}")}}' for k, d in UI.items())
+    # One strip, each rule picks its slot (--x); the close icon is drawn at 18px, so its strip scales to match.
+    t += ",".join(sel.values()) + f'{{content:"";width:16px;height:16px;flex:none;background:var(--a);mask:url("{strip()}") calc(var(--x,0)*-16px) 0/{16 * len(UI)}px 16px no-repeat}}'
+    t += "".join(f'{sel[k]}{{--x:{i}}}' for i, k in enumerate(UI) if i)
+    t += f'.cl::before{{mask-size:{18 * len(UI)}px 18px;mask-position:-{18 * list(UI).index("close")}px 0}}'
     return t + CSS
 
 
@@ -121,7 +147,7 @@ def card(n, i, total, stem, spec, season, xp, level, lv, nxt, kinds, avatar_src,
     return (f'<div class="slot {cls}"><i class="o" id="{stem}"></i><i class="c" id="m-{stem}"></i><div class="card">'
             f'<a class="open" href="#{stem}"><span class="art {pk}"><img src="{avatar_src}" width="112" height="112" alt=""></span>'
             f'<span class="nm"><b>{e(n)}</b><span class="ml">{icon(ty["icon"])}Lv\u00a0{level} · {xp}\u00a0XP</span></span></a>'
-            f'<div class="body"><a class="cl" href="#m-{stem}"><span class="vh">Close</span></a><p class="ty"><b>{e(r["type"])}</b></p>'
+            f'<div class="body"><a class="cl" href="#m-{stem}" aria-label="Close"></a><p class="ty"><b>{e(r["type"])}</b></p>'
             f'<p class="lv" style="--w:{pct}%">{e(lv["name"])}<span>{togo}</span></p>'
             f'<ul class="mv">{mv}</ul><p class="wr"><span>{e(r["weak_to"])}</span><span>{e(r["resists"])}</span><span>{e(r["hands_off"])}</span></p>'
             f'{bd}<p class="ft">{e(rname)}<span class="sn">{i:02d}/{total}</span></p>'
