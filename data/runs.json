@@ -116,5 +116,39 @@
       "i47 marked shipped (#101). i48/i49 shipped with tempo records. i34 RPG remains yes on the roadmap.",
       "Ship slipped: accurate wins show 3/3 PRs already today (#100–#102). Branch bot/feature-tempo-day-count holds tempo+Monday for Oct 20."
     ]
+  },
+  {
+    "id": "2026-10-20-daily",
+    "date": "2026-10-20",
+    "kind": "daily",
+    "status": "ok",
+    "x_reads": 1,
+    "counts": {
+      "posts_screened": 12,
+      "candidates": 2,
+      "published_updates": 2,
+      "published_issues": 0,
+      "corrected": 0,
+      "dropped_verify": 0,
+      "stripped_privacy": 0,
+      "dropped_privacy": 0,
+      "ci_failures": 0,
+      "corrections_mail": 0,
+      "web_reads_sources": 2,
+      "web_reads_research": 3,
+      "research_notes": 3,
+      "pitches": 0
+    },
+    "notes": [
+      "Run started about 9:20 AM ET and stopped partway: #120, #121 and #122 merged (9:27, 9:40 and 9:54 AM ET); #123 opened as a draft at 10:09 AM ET and its bot.py pr process ended before posting sign-offs. Resumed at 10:15 AM ET.",
+      "Recovered: #123 finished with bot.py resume (8 sign-off comments, merged 10:20 AM ET). Live checks passed for #120 to #123: Pages and main CI green, Halloween set live on team/, calendar/ and calendar.ics return 200.",
+      "Scout: changelog 0.71.2 (Oct 14) is new; RSS answered 403 from the box, page read instead. One X search of allowlisted accounts (12 posts): @bot's iPhone Action Button post is new; mattyp's weekly video recaps known items.",
+      "Verify: 2 kept as confirmed; 4 open issues re-checked against 0.71.2, none marked fixed. Shield: 0 strips.",
+      "Tuesday research: Polish, Pixel, Advocate (3 pages, plus the changelog Scout read). No pitches.",
+      "Polish quick look on the build at 360 and 390: 59 pages, 0 overflow, 0 small targets, 0 low contrast; Team 88,995 of 102,400 bytes.",
+      "Sweep: wins.py and xp.py ran, but the refresh is held: with it, Home's team tiles scroll sideways at 200% zoom and role sheets drop their last 3 merged PRs. Both need a code fix first; wins and XP stay as of the last refresh.",
+      "Schedule: Ryno moved the daily run to about 4:45 AM ET (10:15 AM ET); #124. The routine trigger moves outside the repo.",
+      "Incident AAR (interrupted run) written today; tempo is past the slowed limit, so it ships as the first PR on Oct 21."
+    ]
   }
 ]
