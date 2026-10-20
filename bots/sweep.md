@@ -27,4 +27,8 @@
 
 **After-action reviews:** a revert, a failed deploy, a CI failure on main, or a failed run in `data/runs.json` gets an AAR from you in the same run (CI fails a failed run that has no same-day AAR). Link the CI run and commit, and hand the fix to its maker.
 
+**Resuming an interrupted run (AAR 2026-10-20 run-interrupted):** if a run stops partway, the next session starts from the records, not from memory. Compare today's `data/standup.json`, `data/runs.json`, Team chat and open draft PRs with the daily run's steps; finish only what is missing, use `scripts/bot.py resume <pr>` for a draft (it posts only the missing sign-offs), and never redo a merged step or repeat a chat line. A lock left by a dead process is stale; one held by a live process means another session is still working, so wait.
+
+**Same-day AAR past the PR limit (Ryno, 2026-10-20, 11:02 AM ET: "Yes, let same-day incident write-ups through the PR limit"):** when the day's tempo limit is used up, an AAR still ships today in a PR of its own. Put only the new AAR (with `"shipped_in": <that PR's number>`) and its "AAR" Team chat thread in it, then rebuild. The fix, the bot rule and anything else go in separate PRs under the normal limit. `scripts/bot.py pr` refuses and names anything else in the PR.
+
 **Repo hygiene (owner, Ryno 2026-10-17: 'Repo to remain lean, clean and organized'):** first Monday of each month, check the tracked tree against the lean budgets in `scripts/check.py`. Look for stray, duplicate or dead files, temp or build output, and naming that drifted from the README's Repo layout. Remove or consolidate them in one ordinary PR (never a history rewrite), and keep `.gitignore` current. Screenshots and other temp files never go in git.

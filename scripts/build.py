@@ -160,6 +160,7 @@ def pace_line(t, up):
     return (f'<p class="pace"><strong>Pace: {e(t["mode"])}</strong>{clean}. Up to {lim["prs_per_day"]} merged PRs a day '
             f'({lim["sprints_per_day"]} {"sprint" if lim["sprints_per_day"] == 1 else "sprints"} of up to {lim["prs_per_sprint"]}). '
             f'A revert, CI failure on main, failed deploy, or incident or data-correction AAR slows it until {t["clean_needed"]} clean PRs merge. '
+            f'A same-day after-action review can still ship when the day\'s limit is used up (Ryno, Oct 20). '
             f'<a href="https://github.com/slopryno/slopworks/blob/main/data/tempo.json">Source</a> · <a href="{up}metrics/">Metrics and trends</a></p>')
 
 
@@ -200,7 +201,7 @@ def how_body(sched, up):
              ("Maker", "The role that made a PR. It can't sign off its own work.", gh("scripts/bot.py")),
              ("needs-ceo", "The label for a real disagreement or a safety case. Nothing labelled needs-ceo merges until Ryno decides.", gh(".github/workflows/needs-ceo.yml")),
              ("Sign-off", "A reviewer's approval, posted on the PR. Which roles must sign off depends on the files changed.", gh("scripts/check.py")),
-             ("Tempo", f"How fast the team may ship: up to {n['prs_per_day']} PRs a day normally, {s['prs_per_day']} a day after a revert, failed deploy, failure on main, incident or data correction, until {tempo.CLEAN_NEEDED} clean PRs merge.", f"{up}metrics/"),
+             ("Tempo", f"How fast the team may ship: up to {n['prs_per_day']} PRs a day normally, {s['prs_per_day']} a day after a revert, failed deploy, failure on main, incident or data correction, until {tempo.CLEAN_NEEDED} clean PRs merge. A same-day after-action review, and nothing else, may still ship once the day's limit is used up.", f"{up}metrics/"),
              ("XP", "Points a role earns only from verified work, each linked to its evidence and approved by another role.", f"{up}team/xp/")]
     gloss = "".join(f'<dt id="g-{e(t.lower().replace(" ", "-"))}">{e(t)}</dt><dd>{e(d)} <a href="{e(h)}">Source</a></dd>' for t, d, h in terms)
     return (f'<h2>The daily run</h2><p>Once a day, around {RUN_TIME}, one routine plays every role in turn:</p><ol class="steps">{steps}</ol>'
