@@ -8,7 +8,7 @@ Owned by Polish and User Advocate. Measured on 2026-10-17 with `scripts/mobile_a
 - **Words above the fold:** visible words in the first screen (390 x 844).
 - **Line length:** an estimate (paragraph width divided by half the font size), so read it as a rough guide.
 - **Contrast:** text-color against background ratios under 4.5:1, outside links, in light mode and in forced dark mode at 390. CI's contrast test checks the theme colors too.
-- **Taps from home, nav items, page weight:** counted from the built HTML.
+- **Taps from home, nav items, page weight:** counted from the built HTML. Page weight includes the CSS and each image the page loads, the same rule as CI.
 
 ## Before (commit 49d4137, #70)
 
