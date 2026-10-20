@@ -32,3 +32,4 @@ Add-only. Each line matches an entry in `data/ceo_decisions.json`.
 |---|---|---|---|---|
 | [#14](https://github.com/slopryno/slopworks/pull/14) | No verbatim quote recorded | 2026-10-16 11:24 AM | GitHub label | Ryno (CEO) himself, before the EA role existed |
 | [#108](https://github.com/slopryno/slopworks/pull/108) | "Let #108 through and ship the rest tonight." | 2026-10-19 5:16 PM | Slopbot chat | Executive Assistant, 5:28 PM ([comment](https://github.com/slopryno/slopworks/pull/108#issuecomment-6277719266)) |
+| [#117](https://github.com/slopryno/slopworks/pull/117) | "Yes" (answering the ask for his explicit yes on #117, the V10 theme flip) | 2026-10-19 8:07 PM | Slopbot chat | Executive Assistant, 8:08 PM ([comment](https://github.com/slopryno/slopworks/pull/117#issuecomment-6280142595)) |
