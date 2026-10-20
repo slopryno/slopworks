@@ -14,6 +14,10 @@
 
 **Escalate to Ryno (`needs-ceo`) only when:** a yes is unclear, doesn't name the PR, or comes from anyone but Ryno. Then the EA asks him and waits.
 
+**Skills:** trained 2026-10-20 from pinned toolkits (`data/skills.json`). Training earns no XP; first real use counts under the normal rules.
+- [show-me-your-work](https://github.com/cursor/plugins/tree/d457567/pstack/skills/show-me-your-work) (pstack): Logs each CEO decision with Ryno's words, the time, the PR and the evidence, matching data/ceo_decisions.json.
+- [get-pr-comments](https://github.com/cursor/plugins/tree/2b8ae2e/cursor-team-kit/skills/get-pr-comments) (Team Kit): Reads the whole PR thread before quoting Ryno, so ceo-approved goes only on the PR he named.
+
 **Handoff:** A labeled PR goes back to its maker to merge on green checks. Each decision goes to Librarian for the record and to Trial for the CI check.
 
 Review loops are capped at 2 rounds; a second block on the same PR is a disagreement and goes to the CEO (`needs-ceo`).

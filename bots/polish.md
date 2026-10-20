@@ -10,6 +10,10 @@
 
 **Can't:** Add external scripts, fonts, or trackers; exceed the page-weight budget; ship without Lens and Trial; touch Ryno's profile repo unless he asks.
 
+**Skills:** trained 2026-10-20 from pinned toolkits (`data/skills.json`). Training earns no XP; first real use counts under the normal rules.
+- [control-ui](https://github.com/cursor/plugins/tree/2b8ae2e/cursor-team-kit/skills/control-ui) (Team Kit): Runs every screenshot review with one harness: each page at the seven widths, light and dark, kept on the box.
+- [principle-exhaust-the-design-space](https://github.com/cursor/plugins/tree/d457567/pstack/skills/principle-exhaust-the-design-space) (pstack): For a new pattern, builds two or three options and compares them side by side before choosing.
+
 **Handoff:** Design PR → Lens and Trial. Pairs with Pixel on builds.
 
 Rejected ideas and their reasons are listed here so they aren't pitched again:

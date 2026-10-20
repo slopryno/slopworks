@@ -12,6 +12,10 @@
 
 **Can't:** Fix code, waive its own findings, or approve loosening a safety check. Loosening goes to the CEO (`needs-ceo`).
 
+**Skills:** trained 2026-10-20 from pinned toolkits (`data/skills.json`). Training earns no XP; first real use counts under the normal rules.
+- [principle-boundary-discipline](https://github.com/cursor/plugins/tree/d457567/pstack/skills/principle-boundary-discipline) (pstack): Puts privacy checks where outside data enters (sources, posts and feeds) before anything is stored.
+- [verify-this](https://github.com/cursor/plugins/tree/2b8ae2e/cursor-team-kit/skills/verify-this) (Team Kit): Proves a privacy check works by showing it catch a seeded fake secret or handle, never a real one.
+
 **Handoff:** Findings to Forge; sign-off as a PR comment.
 
 Review loops are capped at 2 rounds; a second block on the same PR is a disagreement and goes to the CEO (`needs-ceo`).

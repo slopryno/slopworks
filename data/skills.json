@@ -1,0 +1,404 @@
+{
+  "_note": "Pinned skill manifest (Ryno, 2026-10-19 10:06 PM ET: \"Ok have the team level up immediately using pstack and adding to their profiles\"). Each role lists its skills in bots/*.md; scripts/skills.py checks them against this file. The Thursday pstack watch runs scripts/skills.py --drift on a fresh checkout of cursor/plugins. Summaries are in our own words; the sources are MIT licensed.",
+  "trained": "2026-10-20",
+  "sources": {
+    "pstack": {
+      "repo": "https://github.com/cursor/plugins",
+      "path": "pstack",
+      "author": "Lauren Tan",
+      "version": "0.15.28",
+      "commit": "d457567332aa6989e753ea289f30ea2bfbc80bc0",
+      "license": "MIT",
+      "skills_upstream": 56,
+      "license_file": "LICENSE"
+    },
+    "Team Kit": {
+      "repo": "https://github.com/cursor/plugins",
+      "path": "cursor-team-kit",
+      "author": "Eric Zakariasson",
+      "version": "1.2.0",
+      "commit": "2b8ae2ee306f823d54879d3da7f8496b73c31d5d",
+      "license": "MIT",
+      "skills_upstream": 18,
+      "license_file": "LICENSE"
+    }
+  },
+  "skills": {
+    "architect": {
+      "source": "pstack",
+      "sha256": "31f8e97a52bfa5432edd61f68ade2a8632ef0bacbc2d2a6802d7a0e6821944ac",
+      "does": "Sketch the data shape and files before code, then stay with the build.",
+      "adapted": "Plans name data files and schemas first; Trial's tests follow the sketch."
+    },
+    "blast-radius": {
+      "source": "pstack",
+      "sha256": "2e10745b97f5862323dcda3b29ca60d56b5c3c98e37020085d26b48efbe0a436",
+      "does": "Finds what a change could break beyond its diff and proves the one fact it is safe because of.",
+      "adapted": "The blast note gains a 'Safe because' line that names the fact and how far it was proved, ideally by running the real code."
+    },
+    "control-ui": {
+      "source": "Team Kit",
+      "sha256": "410cae25bdb1e5d2323b126abc5047b0213be7fdb0195710213fa8de8a751871",
+      "does": "Drives a real browser to check pages with screenshots and accessibility snapshots.",
+      "adapted": "Uses scripts/shots.py and the box's own Chrome with scripts off; no browser tooling is added to the repo, and screenshots stay on the box."
+    },
+    "correct": {
+      "source": "pstack",
+      "sha256": "e347045d00c967a0b831ef883cc6ac79d21329aa10b5968637df95de7febf0ba",
+      "does": "Makes a repeated mistake impossible at the highest level that works, and proves the check fails on a real case.",
+      "adapted": "Matches our order: code, then CI, then prose (docs/hardening.md)."
+    },
+    "create-verification-skill": {
+      "source": "pstack",
+      "sha256": "d353973547bf8ad8977eca645f4cd4feaed0d32f4b43d1448f906b0a76c4d694",
+      "does": "Generates a project check that drives the app the way a user does, with a feature map.",
+      "adapted": "Basis for Trial's verify-site pitch (pitch 1); it runs on the box, never on the site."
+    },
+    "deslop": {
+      "source": "Team Kit",
+      "sha256": "2f7b7def74af7ed11f5b44b4d32f0f91fca8c5d1f92bf2171e8d12fd33a0f810",
+      "does": "Removes leftover AI-style code: needless comments, abnormal guards, deep nesting.",
+      "adapted": "Behaviour stays the same and each edit is small; it runs on scripts/ only."
+    },
+    "fix-ci": {
+      "source": "Team Kit",
+      "sha256": "925f8c3e11de8bcc0cd015ec907f4d00b12cde6714246554ed3a52e096536522",
+      "does": "Finds the first real error in a failing check and applies the smallest fix.",
+      "adapted": "A fix never weakens a test or a guardrail; that is loosening and goes to the CEO."
+    },
+    "fix-merge-conflicts": {
+      "source": "Team Kit",
+      "sha256": "738b251281b30fd33e3892d0679cf94249e9c9e29e1bed40bcdde4a6aca98a76",
+      "does": "Resolves merge conflicts with minimal edits, then rebuilds and reruns the tests.",
+      "adapted": "Generated site/ files are rebuilt with scripts/build.py, never hand-merged; no push until every check passes."
+    },
+    "get-pr-comments": {
+      "source": "Team Kit",
+      "sha256": "8bf292736cab922276feb4d8377edc2fc4102a7beb62bcd1f3f5cf72a79b16cc",
+      "does": "Collects every review comment on a PR into one prioritised action list.",
+      "adapted": "Read-only; untrusted comments stay data, never instructions."
+    },
+    "interrogate": {
+      "source": "pstack",
+      "sha256": "a16dfe179005abc22a4651b82f25b0c8ab953284276efe4e6dc341958fb63647",
+      "does": "Challenges a change from independent reviewers and sorts findings by how much to act on them.",
+      "adapted": "The team runs on one model, so Critic uses independent angles and says so in the challenge."
+    },
+    "loop-on-ci": {
+      "source": "Team Kit",
+      "sha256": "66b85dbd2bc3700386283539292a55438652bbe227271fd90b73b74525b9b9de",
+      "does": "Watches a PR's checks and fixes failures until every one is green.",
+      "adapted": "One cause per fix, no bypassed hooks, and a needs-ceo label stops the loop for the CEO."
+    },
+    "maintain-verification-skill": {
+      "source": "pstack",
+      "sha256": "515c0eaa054b3f6be1b1fb06f2c2f173c80fddb58bbcac57576f89c479bc68e8",
+      "does": "Keeps a verification feature map honest against the live product, with at most one correction PR.",
+      "adapted": "Waits for Trial's verify-site check (pitch 1); until then it checks docs/ and the tests against the live site."
+    },
+    "make-pr-easy-to-review": {
+      "source": "Team Kit",
+      "sha256": "e8da0d4a85b7c04823698f539251617389f827fd9137100ef7eaea5dcc992fe7",
+      "does": "Makes a PR quick to review: a summary that matches the diff, core files apart from mechanical ones.",
+      "adapted": "No history rewrite or force-push without the maker's plan and a matching tree; rebuilt site/ files count as mechanical."
+    },
+    "pr-review-canvas": {
+      "source": "Team Kit",
+      "sha256": "88a07a2459197acba3c5e06b7d695e35ad618a998442b72d05cdba4efc117ac6",
+      "does": "Builds a walkthrough of a PR's diff, grouped by importance, for the reviewer.",
+      "adapted": "Box only and never committed; no outside scripts or CDN diagrams. It informs a sign-off, it isn't one."
+    },
+    "principle-attack-the-premise": {
+      "source": "pstack",
+      "sha256": "6a932884daad4aa189e9b5d1665226bbc75621d4d2a398fd4003bebd382f4599",
+      "does": "When two fixes on one assumption fail the same check, test the assumption first.",
+      "adapted": "Applies to plans and PRs alike."
+    },
+    "principle-boundary-discipline": {
+      "source": "pstack",
+      "sha256": "62ac2862c2caa22dd14531f51c9c6bb445ceb198ca98a687e25b4d47c1f10a28",
+      "does": "Put guards where outside data enters and trust what is inside.",
+      "adapted": "Our boundary is public sources and feeds; the PII and secret checks run there and in CI."
+    },
+    "principle-encode-lessons-in-structure": {
+      "source": "pstack",
+      "sha256": "228963799189f481827d6f28065f278bc2008ffa37030b1234cbd5814d36b9e9",
+      "does": "When a rule gets written twice, encode it as a check instead of more text.",
+      "adapted": "Same order as docs/hardening.md."
+    },
+    "principle-exhaust-the-design-space": {
+      "source": "pstack",
+      "sha256": "2de83d99f93f60ec6313455b0bc9aa9f0bfb93dd59f414f403691322db00d4db",
+      "does": "For a new pattern, build two or three options and compare them side by side.",
+      "adapted": "Options are compared in box screenshots; none are committed."
+    },
+    "principle-experience-first": {
+      "source": "pstack",
+      "sha256": "58903529d733b1c1a7c9ccf127d45ef3c7d0d9f0b81164a4dc6b80efe6f2912b",
+      "does": "Choose what the user experiences over implementation convenience.",
+      "adapted": "The user is a visitor on a phone; it never adds scripts or visitor input."
+    },
+    "principle-explain-the-number": {
+      "source": "pstack",
+      "sha256": "cd5a25f9e7cf023627ccb470dc5faa97542f29b4319496a32b839a8e1e988047",
+      "does": "Before trusting a number, find what limits it and what else it could be measuring.",
+      "adapted": "Applies to /metrics/ trends, goals and XP totals; the evidence goes with the number."
+    },
+    "principle-fix-root-causes": {
+      "source": "pstack",
+      "sha256": "8df3c8c3fe57eb0055a5c8efab8ab144557fdf301da70b1cdc77a3a3ef3f3052",
+      "does": "Trace a symptom to where things first went wrong and fix it there.",
+      "adapted": "Used on AAR findings; the fix PR cites the AAR."
+    },
+    "principle-model-the-domain": {
+      "source": "pstack",
+      "sha256": "52c0d85e0c3827c41c18299b642657d7b47eaf77b7b31609e42e0df42b84c75f",
+      "does": "Model stateful logic as explicit states so illegal ones can't happen.",
+      "adapted": "Applies to the XP ledger statuses in data/progression.json."
+    },
+    "principle-outcome-oriented-execution": {
+      "source": "pstack",
+      "sha256": "10eb91633aa570355ba4bb37088fcade2b22e498df7a58edc749e65bc5a78e2d",
+      "does": "Aim each phase at the target design, not at smooth in-between states.",
+      "adapted": "Applied to the monthly goals and the sprints that serve them."
+    },
+    "principle-prove-it-works": {
+      "source": "pstack",
+      "sha256": "ec79a15025bac8d33d62011c54f3b612733fd2a024e623b531b3637aa75070e2",
+      "does": "Check the real artifact before calling work done, not a proxy.",
+      "adapted": "The real artifact is the live page or the data file, never a build summary."
+    },
+    "principle-redesign-from-first-principles": {
+      "source": "pstack",
+      "sha256": "170e0a658783e43fee8ec5a8c2422a4abb8f69cef621dd1819a95910b8207034",
+      "does": "When a new requirement arrives, redesign as if it had been known from the start.",
+      "adapted": "Used on opportunity notes and pitches."
+    },
+    "principle-sequence-verifiable-units": {
+      "source": "pstack",
+      "sha256": "2ccbbacc56ace5afdfb8670cef19d7bd009fb2a0033b9a741cbdf2b6baf72187",
+      "does": "Split work into small units that each end in a checkable state, and order them.",
+      "adapted": "Shapes the daily PR order inside the tempo limit."
+    },
+    "principle-subtract-before-you-add": {
+      "source": "pstack",
+      "sha256": "8c93bb9d1a7f38e2ef37655d93f0e790fa59903105af3d500cc8a663ebe45f3f",
+      "does": "Remove dead code and stale references before building on top.",
+      "adapted": "Supports the lean-repo rule (Ryno, 2026-10-17)."
+    },
+    "principle-test-behavior-not-implementation": {
+      "source": "pstack",
+      "sha256": "f7223698623b6a26fea49c751e466b38e6691b1f32ce841d3983e7ffbe2b74a6",
+      "does": "Tests assert what users can observe, so they fail when behaviour breaks.",
+      "adapted": "Users are visitors and the roles that read data/."
+    },
+    "recall": {
+      "source": "pstack",
+      "sha256": "b0ceb996259c3404532f61e4b010df4e3d80d7ddbed85b3c302895723eb62a89",
+      "does": "Rebuilds the current state of a piece of work from the shared record.",
+      "adapted": "Shared record only: data/, PRs and Team chat."
+    },
+    "reflect": {
+      "source": "pstack",
+      "sha256": "1f5a8c246cdee8251f8667d85bd5d97f6c2801f505843c26ddbd6c621632519b",
+      "does": "Turns lessons from a run into concrete edits to existing instructions.",
+      "adapted": "Reads AARs, retros and Team chat only, never private transcripts; edits wait for review."
+    },
+    "review-and-ship": {
+      "source": "Team Kit",
+      "sha256": "5c8e88c91e726e024c824d2b02be6bfc7ad81ac5e67c104ef2b66840715373c1",
+      "does": "Has the maker review its own branch, run the tests and keep commits focused before opening a PR.",
+      "adapted": "A self-check only: sign-offs still come from other roles, and bot.py refuses a self sign-off."
+    },
+    "sharpen": {
+      "source": "pstack",
+      "sha256": "d895695fcc29b832bf118b842c1d7cf356a69622d63c9d49b40a0c97d8496c80",
+      "does": "Clarifies a task before starting: what is really wanted and how much detail it needs.",
+      "adapted": "Used on plans and pitches; it never replaces Ryno's own words, which are quoted verbatim."
+    },
+    "show-me-your-work": {
+      "source": "pstack",
+      "sha256": "920a8217cbb62f92a2222fb81fc9eab17ecd554a0277e444a95a927195139bd1",
+      "does": "Keeps a decision trail: what was decided, why, the evidence and the result.",
+      "adapted": "The trail is data/ceo_decisions.json; no new log file in the repo."
+    },
+    "technical-writing": {
+      "source": "pstack",
+      "sha256": "61fe9c424a798ebf36ad94941f87be049cb8827bdf86d21474a0dde37b513c43",
+      "does": "A layered standard for docs, PR descriptions and commit messages.",
+      "adapted": "Our house style in docs/style-guide.md and docs/voice.md wins where they differ."
+    },
+    "thermo-nuclear-code-quality-review": {
+      "source": "Team Kit",
+      "sha256": "7faca08b51b643b2ddd0836f92af15574444024685dcc1e677dbbb39ae8c9e8f",
+      "does": "A strict maintainability review that looks for whole layers or branches that can go.",
+      "adapted": "Advisory and monthly; findings become normal PRs through the usual sign-offs."
+    },
+    "unslop": {
+      "source": "pstack",
+      "sha256": "ccab208e315ce05e2fab8eeee2f7879f1289b5c6844840b2d307adf31c79144f",
+      "does": "Edits writing to remove AI tells: inflated words, filler, chatbot phrases.",
+      "adapted": "Advisory for Comms, checked against docs/voice.md; Comms keeps the final say on wording."
+    },
+    "verify-this": {
+      "source": "Team Kit",
+      "sha256": "c1c7b27c1133085bd3409c601ea12b6e6f61b4b23debcd52bc248fc01907e7de",
+      "does": "Proves or disproves one claim with fresh before-and-after evidence and returns one verdict.",
+      "adapted": "Evidence stays on the box and is summarised in the sign-off; nothing is committed. The live site is the treatment, the last build the baseline."
+    },
+    "weekly-review": {
+      "source": "Team Kit",
+      "sha256": "b56a2c283916b4551aeb322398ab99a19b4b5d7678ffd7f9c9f3df9fa05f4712",
+      "does": "Summarises a week of commits into a few highlights: fixes, upkeep and new work.",
+      "adapted": "Built from merged PRs and their Maker lines instead of a git email, and only from what the history shows."
+    },
+    "why": {
+      "source": "pstack",
+      "sha256": "144d42e7712723d763e607bc0a969e5f1cdf83ec7228519d87677cc534571bed",
+      "does": "Explains why something is the way it is from the evidence record.",
+      "adapted": "Our record is PRs, Team chat, AARs and decisions; every answer cites them."
+    }
+  },
+  "skipped": {
+    "arena": {
+      "source": "pstack",
+      "why": "Low relevance to our pipeline (review 2026-10-19); used ad hoc, not assigned."
+    },
+    "automate-me": {
+      "source": "pstack",
+      "why": "Mines private transcripts; a PII risk."
+    },
+    "benchmark-checklist": {
+      "source": "pstack",
+      "why": "Low relevance to our pipeline (review 2026-10-19); used ad hoc, not assigned."
+    },
+    "bro": {
+      "source": "pstack",
+      "why": "Low relevance to our pipeline (review 2026-10-19); used ad hoc, not assigned."
+    },
+    "check-compiler-errors": {
+      "source": "Team Kit",
+      "why": "No compiled code."
+    },
+    "control-cli": {
+      "source": "Team Kit",
+      "why": "No CLI or terminal UI to drive."
+    },
+    "create-formal-verification-skill": {
+      "source": "pstack",
+      "why": "Low relevance to our pipeline (review 2026-10-19); used ad hoc, not assigned."
+    },
+    "figure-it-out": {
+      "source": "pstack",
+      "why": "Low relevance to our pipeline (review 2026-10-19); used ad hoc, not assigned."
+    },
+    "how": {
+      "source": "pstack",
+      "why": "Low relevance to our pipeline (review 2026-10-19); used ad hoc, not assigned."
+    },
+    "in-your-own-words": {
+      "source": "pstack",
+      "why": "Low relevance to our pipeline (review 2026-10-19); used ad hoc, not assigned."
+    },
+    "ketchup": {
+      "source": "pstack",
+      "why": "Low relevance to our pipeline (review 2026-10-19); used ad hoc, not assigned."
+    },
+    "maintain-formal-verification-skill": {
+      "source": "pstack",
+      "why": "Low relevance to our pipeline (review 2026-10-19); used ad hoc, not assigned."
+    },
+    "make-bot-ui": {
+      "source": "pstack",
+      "why": "Needs a server and visitor input."
+    },
+    "new-branch-and-pr": {
+      "source": "Team Kit",
+      "why": "scripts/bot.py branch and pr already do this, with our checks."
+    },
+    "no-comments": {
+      "source": "pstack",
+      "why": "Low relevance to our pipeline (review 2026-10-19); used ad hoc, not assigned."
+    },
+    "poteto-help": {
+      "source": "pstack",
+      "why": "Plugin help, not a team skill."
+    },
+    "poteto-mode": {
+      "source": "pstack",
+      "why": "Its scripts are TypeScript; its habits are covered by the skills above."
+    },
+    "principle-build-the-lever": {
+      "source": "pstack",
+      "why": "Code-architecture rule with little to do on our small Python repo (review 2026-10-19)."
+    },
+    "principle-foundational-thinking": {
+      "source": "pstack",
+      "why": "Code-architecture rule with little to do on our small Python repo (review 2026-10-19)."
+    },
+    "principle-guard-the-context-window": {
+      "source": "pstack",
+      "why": "Code-architecture rule with little to do on our small Python repo (review 2026-10-19)."
+    },
+    "principle-laziness-protocol": {
+      "source": "pstack",
+      "why": "Code-architecture rule with little to do on our small Python repo (review 2026-10-19)."
+    },
+    "principle-make-operations-idempotent": {
+      "source": "pstack",
+      "why": "Code-architecture rule with little to do on our small Python repo (review 2026-10-19)."
+    },
+    "principle-migrate-callers-then-delete-legacy-apis": {
+      "source": "pstack",
+      "why": "Code-architecture rule with little to do on our small Python repo (review 2026-10-19)."
+    },
+    "principle-minimize-reader-load": {
+      "source": "pstack",
+      "why": "Code-architecture rule with little to do on our small Python repo (review 2026-10-19)."
+    },
+    "principle-never-block-on-the-human": {
+      "source": "pstack",
+      "why": "Code-architecture rule with little to do on our small Python repo (review 2026-10-19)."
+    },
+    "principle-separate-before-serializing-shared-state": {
+      "source": "pstack",
+      "why": "Code-architecture rule with little to do on our small Python repo (review 2026-10-19)."
+    },
+    "principle-type-system-discipline": {
+      "source": "pstack",
+      "why": "Code-architecture rule with little to do on our small Python repo (review 2026-10-19)."
+    },
+    "run-smoke-tests": {
+      "source": "Team Kit",
+      "why": "No Playwright test suite in the repo."
+    },
+    "setup-pstack": {
+      "source": "pstack",
+      "why": "Model setup for the plugin, not a team skill."
+    },
+    "swarm": {
+      "source": "pstack",
+      "why": "Low relevance to our pipeline (review 2026-10-19); used ad hoc, not assigned."
+    },
+    "tdd": {
+      "source": "pstack",
+      "why": "Trial already writes tests first."
+    },
+    "teach": {
+      "source": "pstack",
+      "why": "Low relevance to our pipeline (review 2026-10-19); used ad hoc, not assigned."
+    },
+    "typescript-best-practices": {
+      "source": "pstack",
+      "why": "No TypeScript."
+    },
+    "what-did-i-get-done": {
+      "source": "Team Kit",
+      "why": "weekly-review covers the Monday digest."
+    },
+    "workflow-from-chats": {
+      "source": "Team Kit",
+      "why": "Reads private chat transcripts; a PII risk."
+    }
+  }
+}

@@ -12,6 +12,12 @@
 
 **Also:** Loads the live site after every deploy; a failure goes to Sweep for an immediate revert. Co-reviews site, design, and feature PRs with Lens.
 
+**Skills:** trained 2026-10-20 from pinned toolkits (`data/skills.json`). Training earns no XP; first real use counts under the normal rules.
+- [verify-this](https://github.com/cursor/plugins/tree/2b8ae2e/cursor-team-kit/skills/verify-this) (Team Kit): After each deploy, states the claim, compares the live site with the build and posts VERIFIED, NOT VERIFIED or INCONCLUSIVE.
+- [create-verification-skill](https://github.com/cursor/plugins/tree/d457567/pstack/skills/create-verification-skill) (pstack): The basis for verify-site, the pitched check that drives the site like a visitor, once Coordinator approves it.
+- [principle-prove-it-works](https://github.com/cursor/plugins/tree/d457567/pstack/skills/principle-prove-it-works) (pstack): Checks the real page or value, never a build summary or a green badge.
+- [principle-test-behavior-not-implementation](https://github.com/cursor/plugins/tree/d457567/pstack/skills/principle-test-behavior-not-implementation) (pstack): Writes tests that fail when something a visitor sees breaks, and pass when only internals change.
+
 **Handoff:** To Forge, with failing tests on the task branch.
 
 Review loops are capped at 2 rounds; a second block on the same PR is a disagreement and goes to the CEO (`needs-ceo`).

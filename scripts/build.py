@@ -630,6 +630,13 @@ def build():
         txt = m["text"] if len(m["text"]) <= 140 else m["text"][:137].rsplit(" ", 1)[0] + "\u2026"
         return (f'<blockquote class="latest"><p>{e(txt)}</p><p class="meta">{as_of(m["date"], "said on")}<span>to {e(m["to"])}</span>'
                 f'{"<span>as " + e(m["from"]) + "</span>" if m["from"] != n else ""}<a href="{href(m["id"], "../", "team/")}">in Team chat</a></p></blockquote>')
+    # Role skills (Ryno, 2026-10-19 10:06 PM ET): parsed from each role file's **Skills:** block; scripts/skills.py checks them.
+    import skills as skillmod
+    kit = skillmod.load()
+    learned = lambda f: skillmod.role_skills((ROOT / "bots" / f).read_text()) or []
+    def trained_in(f):
+        got = learned(f)
+        return f'<p><strong>Trained in:</strong> {e(", ".join(g[0] for g in got))}. <a href="{f[:-3]}/#training">How it uses them</a></p>' if got else ""
     def tcard(n, t, r, o, f):
         # Compact role card (visual review V3, Comms): name, title, a one-sentence bio, the current objective and the level stay
         # visible; what the role owns, its limits, latest handoff, research and wins sit one tap away; the full record is on the sheet.
@@ -644,7 +651,7 @@ def build():
                 f'<p class="lv"><span>{xp_line(n, "")}</span></p><div class="bar" aria-hidden="true"><span style="width:{pct}%"></span></div>'
                 f'<details class="more"><summary>More about {e(n)}</summary><p><strong>Owns:</strong> {e(o)}</p>'
                 + (f"<p><strong>Can't:</strong> {e(cant.group(1))}</p>" if cant else "")
-                + f'<h3>Latest handoff</h3>{latest_msg(n)}{researched(n)}<h3>Recent wins</h3><ul>{wl}</ul>'
+                + f'<h3>Latest handoff</h3>{latest_msg(n)}{researched(n)}{trained_in(f)}<h3>Recent wins</h3><ul>{wl}</ul>'
                 f'<p class="links"><a href="{f[:-3]}/">Character sheet</a> <a href="{REPO}/blob/main/bots/{f}">Role file</a></p></details></article>')
     # Character sheets (i34, Week 1): every number is computed here from data/xp_ledger.json and data/progression.json.
     prog, ledger_all = load("progression"), load("xp_ledger")
@@ -659,6 +666,13 @@ def build():
         i = order.index(n) + 1
         return (f'<p class="next"><a class="more" href="../{stems[order[i]]}/">Next: {e(order[i])}\'s sheet</a></p>' if i < len(order)
                 else '<p class="next"><a class="more" href="../xp/">Next: How XP works</a></p>')
+    def training(f):
+        got = learned(f)
+        if not got:
+            return ""
+        rows = "".join(f'<li><a href="{e(u)}">{e(k)}</a> <span class="meta">{e(src)}</span> {e(use)}</li>' for k, u, src, use in got)
+        return (f'<h2 id="training">Training</h2><p class="meta"><span>Trained {e(datetime.fromisoformat(kit["trained"]).strftime("%b %-d, %Y"))} from pinned, MIT-licensed toolkits. '
+                f'Training earns no XP; first real use counts under the normal rules.</span><a href="{REPO}/blob/main/data/skills.json">Sources and pins</a></p><ul class="worklist">{rows}</ul>')
     def sheet(n, t, r, o, f):
         x = totals.get(n, 0)
         num, lv, nxt = level_for(x, levels)
@@ -695,7 +709,7 @@ def build():
         body = (f'<section class="sheet card" style="border-top:4px solid {color(n)}">{avatar(n, "../../", 96)}<div><p class="title">{e(t)}</p>'
                 f'<p class="lvl">Level {num} · {e(lv["name"])}</p>{bar}{counted}</div></section>'
                 f'<h2>Next level-up quest</h2><p>{e(quest)}</p><p class="meta">Tracked quests start in Week 2 (Oct 22); this is the next step.</p>'
-                f'<h2>Achievements</h2><ul class="achs">{ach}</ul>'
+                f'<h2>Achievements</h2><ul class="achs">{ach}</ul>{training(f)}'
                 f'<h2>Skills</h2><p class="meta">XP by kind of work. Skill trees (three branches, four milestones each) arrive in Week 4.</p>{skills}'
                 f'<h2>Verified work</h2>{label("verified")} <span class="meta">Approved entries, each with its evidence and a reviewer who isn\'t {e(n)}.</span>'
                 + (f'<ul class="worklist">{work}</ul>' if work else '<p class="empty">No verified work yet.</p>') + more

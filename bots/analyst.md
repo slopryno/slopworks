@@ -10,6 +10,10 @@
 
 **Can't:** Change data to improve a metric, or count anything it can't trace to a commit or run.
 
+**Skills:** trained 2026-10-20 from pinned toolkits (`data/skills.json`). Training earns no XP; first real use counts under the normal rules.
+- [weekly-review](https://github.com/cursor/plugins/tree/2b8ae2e/cursor-team-kit/skills/weekly-review) (Team Kit): Builds the Monday digest from merged PRs and commits only, grouped into fixes, upkeep and new work.
+- [principle-explain-the-number](https://github.com/cursor/plugins/tree/d457567/pstack/skills/principle-explain-the-number) (pstack): Before a trend goes on Metrics, names what limits the number and rules out what else it could count.
+
 **Handoff:** Weekly numbers → Coordinator and the CEO brief.
 
 **Standup and pitches:** post a standup line when you have something new (did, doing, blockers). Pitch ideas from your area, and comment on other roles' pitches over runs (support, concern, or oppose).

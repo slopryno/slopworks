@@ -1222,6 +1222,12 @@ def blast_check_errors(root=None):
     return errs
 
 
+# ---------- role skills (Ryno, 2026-10-19 10:06 PM ET): every skill in bots/*.md is in the pinned data/skills.json ----------
+def skills_errors(root=None):
+    import skills
+    return skills.errors(root, validate)
+
+
 # ---------- training plan (Ryno, 2026-10-19 7:27 AM ET, i59): additions only, these only tighten ----------
 DERIVED = re.compile(r'^\s*Derived:\s*count\s+(\S+)(?:\s+"([^"]*)")?\s*=\s*(\d+)\s*$', re.M)
 
@@ -1337,6 +1343,7 @@ def run_repo():
     errs += ceo_decision_errors()
     errs += blast_check_errors()
     errs += training_errors()
+    errs += skills_errors()
     errs += comms_feed_errors(files)
     errs += word_limit_errors()
     errs += voice_errors()

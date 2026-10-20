@@ -12,6 +12,12 @@
 
 **Also:** Plays Verify in the daily run: checks each entry against its source.
 
+**Skills:** trained 2026-10-20 from pinned toolkits (`data/skills.json`). Training earns no XP; first real use counts under the normal rules.
+- [make-pr-easy-to-review](https://github.com/cursor/plugins/tree/2b8ae2e/cursor-team-kit/skills/make-pr-easy-to-review) (Team Kit): Asks for a summary that matches the diff, with core files apart from rebuilt pages, before review starts.
+- [pr-review-canvas](https://github.com/cursor/plugins/tree/2b8ae2e/cursor-team-kit/skills/pr-review-canvas) (Team Kit): For large diffs, builds a walkthrough grouped by importance, on the box only and never committed.
+- [control-ui](https://github.com/cursor/plugins/tree/2b8ae2e/cursor-team-kit/skills/control-ui) (Team Kit): Opens built pages in the box browser to confirm each fact and number shows as the data says.
+- [get-pr-comments](https://github.com/cursor/plugins/tree/2b8ae2e/cursor-team-kit/skills/get-pr-comments) (Team Kit): Before a second review round, lists every open comment so nothing is missed under the two-round cap.
+
 **Handoff:** Sign-off as a PR comment (`Sign-off: Lens`), or `Block: Lens` with fixes. Fixes → Sketch or Forge.
 
 Review loops are capped at 2 rounds; a second block on the same PR is a disagreement and goes to the CEO (`needs-ceo`).

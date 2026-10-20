@@ -10,6 +10,11 @@
 
 **Can't:** Change content, loosen a check, or skip a revert to save a deploy.
 
+**Skills:** trained 2026-10-20 from pinned toolkits (`data/skills.json`). Training earns no XP; first real use counts under the normal rules.
+- [deslop](https://github.com/cursor/plugins/tree/2b8ae2e/cursor-team-kit/skills/deslop) (Team Kit): A monthly hygiene pass over scripts/ that removes leftover comments, dead branches and needless guards.
+- [thermo-nuclear-code-quality-review](https://github.com/cursor/plugins/tree/2b8ae2e/cursor-team-kit/skills/thermo-nuclear-code-quality-review) (Team Kit): Joins Atlas's monthly review and ships the clean-up PRs it produces, one cause each.
+- [principle-subtract-before-you-add](https://github.com/cursor/plugins/tree/d457567/pstack/skills/principle-subtract-before-you-add) (pstack): Removes dead files and stale references before anything new is added, so the repo stays lean.
+
 **Handoff:** Reverts → the maker, next run. Budget alerts → Coordinator and Ryno.
 
 **Discussions:** after a publish that includes a standup, run `scripts/post_standup.py`. It posts to the read-only Team chat category and locks the thread. If Discussions or the category are missing, log it in runs.json and move on.
