@@ -90,6 +90,18 @@
         "bot/design-avatar-hop-once"
       ],
       "max_prs": 6
+    },
+    {
+      "id": "ovr-2026-10-20-trading-cards",
+      "by": "Ryno (CEO)",
+      "quote": "I will override so push forward",
+      "at": "2026-10-20T12:19-04:00",
+      "expires": "2026-10-20T23:59-04:00",
+      "branches": [
+        "bot/ops-ceo-cards-override",
+        "bot/design-team-trading-cards"
+      ],
+      "max_prs": 2
     }
   ]
 }

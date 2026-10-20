@@ -39,5 +39,19 @@
       "bot/design-avatar-hop-once"
     ],
     "max_prs": 6
+  },
+  {
+    "id": "ovr-2026-10-20-trading-cards",
+    "kind": "lift-slowdown",
+    "by": "Ryno (CEO)",
+    "quote": "I will override so push forward",
+    "source": "CEO instruction, Tue 2026-10-20 12:19 PM ET, Slopbot chat, in reply to the trading cards shipping in this sprint (12:18 PM ET: \"Add it to this sprint\") with no PR slot left today. Trading-card PRs only: this override and the cards. It does not cover the held mission or badge branches.",
+    "at": "2026-10-20T12:19-04:00",
+    "expires": "2026-10-20T23:59-04:00",
+    "branches": [
+      "bot/ops-ceo-cards-override",
+      "bot/design-team-trading-cards"
+    ],
+    "max_prs": 2
   }
 ]
