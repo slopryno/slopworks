@@ -157,11 +157,11 @@ class Repo(unittest.TestCase):
                 self.assertIn(f'<a href="{url}">{name}</a>', page, f.stem)
 
     def test_team_cards_link_the_training(self):
+        # Trading cards (Oct 20): the card links the sheet, and the sheet's Training section lists the skills.
         page = (ROOT / "site/team/index.html").read_text()
-        self.assertEqual(page.count("<strong>Trained in:</strong>"), len(list((ROOT / "bots").glob("*.md"))))
-        self.assertIn('href="trial/#training"', page)
-        card = re.search(r'<article class="card lead" id="trial".*?</article>', page, re.S).group(0)
-        self.assertIn("verify-this", card.split("<details")[1], "the skill list sits behind More about, not on the card face")
+        self.assertIn('href="trial/">Character sheet', page)
+        self.assertNotIn("verify-this", page, "skills live on the sheet, not the card")
+        self.assertIn("verify-this", (ROOT / "site/team/trial/index.html").read_text().split('id="training"')[1])
 
     def test_training_earns_no_xp_on_its_own(self):
         prog = json.loads((ROOT / "data/progression.json").read_text())
