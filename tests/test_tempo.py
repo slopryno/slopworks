@@ -56,7 +56,7 @@ class Rules(unittest.TestCase):
         wins = [pr(n, f"18T{9 + n:02d}:00") for n in range(1, 6)]
         self.assertEqual(len(tempo.violations(wins, [aar("incident", 1)])), 1)  # Oct 18 rule: #2, #3, #4 ok; #5 is the 4th after the trip
         wins = [pr(n, f"20T{9 + n:02d}:00") for n in range(1, 6)]
-        self.assertEqual(len(tempo.violations(wins, [aar("incident", 1)])), 2)  # from Oct 19 the trip PR counts too: #4 and #5 are over
+        self.assertEqual(len(tempo.violations(wins, [aar("incident", 1)], [])), 2)  # no CEO overrides; from Oct 19 the trip PR counts too: #4 and #5 are over
         self.assertEqual(tempo.violations([pr(n, "17T10:00") for n in range(1, 31)], []), [])  # before 2026-10-18 08:35
 
 
