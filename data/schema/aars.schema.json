@@ -230,6 +230,11 @@
         "items": {
           "type": "string"
         }
+      },
+      "shipped_in": {
+        "type": "integer",
+        "minimum": 1,
+        "description": "The PR that shipped this AAR past a used-up PR limit under the same-day exception (Ryno 2026-10-20 11:02 AM ET). CI checks it was a same-day-AAR-only PR."
       }
     }
   }

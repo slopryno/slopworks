@@ -53,14 +53,70 @@ def used_on(prs, mode, last, day, before):
     return sum(1 for _, m in prs if m[:10] == day and since < m < before)
 
 
+# ---------- Same-day AAR exception (Ryno 2026-10-20 11:02 AM ET) ----------
+# Asked "Should incident write-ups be allowed to ship the same day even when the day's PR limit is used up?", Ryno said:
+# "Yes, let same-day incident write-ups through the PR limit". Narrow on purpose: only a PR whose one real change is a
+# new, same-day entry in data/aars.json plus its Team chat thread may pass a used-up limit. Its sign-offs and checks
+# are unchanged. Anything else in the PR fails the exception, and that PR waits like any other.
+AAR_EXCEPTION_FROM = "2026-10-20"
+AAR_EXCEPTION_QUOTE = "Yes, let same-day incident write-ups through the PR limit"
+# Records the AAR itself recomputes (CI checks they equal the derivation) and the rebuilt site (build.py --check).
+AAR_DERIVED = ("data/tempo.json", "data/metrics.json")
+
+
+def aar_exception_problems(paths, base_aars, head_aars, base_chat, head_chat, day, pr_number):
+    """Why this PR is NOT a same-day-AAR-only PR ([] means it is). paths: every path the PR changes; base_*/head_*:
+    data/aars.json and data/chat.json on main and on the PR; day: today's ET date (YYYY-MM-DD); pr_number: this PR."""
+    out = []
+    if day < AAR_EXCEPTION_FROM:
+        return ["the same-day AAR exception starts 2026-10-20 (Ryno, 11:02 AM ET)"]
+    extra = [p for p in paths if p not in ("data/aars.json", "data/chat.json") + AAR_DERIVED and not p.startswith("site/")]
+    if extra:
+        out.append("changes more than a same-day AAR and its thread: " + ", ".join(sorted(extra)[:5]))
+    if "data/aars.json" not in paths:
+        return out + ["adds no AAR to data/aars.json"]
+    new = head_aars[len(base_aars):]
+    if head_aars[:len(base_aars)] != base_aars:
+        out.append("edits or removes an existing AAR (only one appended entry may pass)")
+    if len(new) != 1:
+        return out + [f"adds {len(new)} AARs; the exception takes exactly one"]
+    a = new[0]
+    if a.get("date") != day:
+        out.append(f"the AAR is dated {a.get('date')}, not today ({day})")
+    if a.get("shipped_in") != pr_number:
+        out.append(f"the AAR's shipped_in must be this PR (#{pr_number})")
+    msgs = head_chat[len(base_chat):]
+    if head_chat[:len(base_chat)] != base_chat:
+        out.append("edits or removes an existing Team chat message")
+    root = [m for m in msgs if m.get("id") == a.get("thread")]
+    if not root or root[0].get("reply_to") or not root[0].get("text", "").startswith("AAR"):
+        out.append(f"the AAR's thread {a.get('thread')} must be a new Team chat root starting with 'AAR'")
+    for m in msgs:
+        if m.get("date") != day:
+            out.append(f"chat {m.get('id')} isn't dated today")
+        if m.get("id") != a.get("thread") and m.get("reply_to") != a.get("thread"):
+            out.append(f"chat {m.get('id')} isn't in the AAR's thread")
+    return out
+
+
+def aar_shipped(aars):
+    """{PR number: AAR id} for AARs that rode the same-day exception (their shipped_in), from the exception's day on."""
+    return {a["shipped_in"]: a for a in aars if a.get("shipped_in") and a.get("date", "") >= AAR_EXCEPTION_FROM}
+
+
 def violations(wins, aars, overrides=None, excused=None):
     """Every merged PR since the decision that went over its day's limit. A PR over the slowed limit is excused only
     inside a CEO override's window, up to its max_prs, under the normal limit, and only if no trip came after the
     override (excused lists them)."""
     prs, tr, out = merged(wins), trips(wins, aars), []
     overrides = load_overrides() if overrides is None else overrides
+    same_day = aar_shipped(aars)
     for n, m in prs:
         if m < EFFECTIVE:
+            continue
+        if n in same_day and same_day[n]["date"] == m[:10]:  # Ryno 2026-10-20 11:02 AM ET: same-day AARs pass the limit
+            if excused is not None:
+                excused.append(f"#{n} merged {m} carrying same-day AAR {same_day[n]['id']} (Ryno, 2026-10-20 11:02 AM ET)")
             continue
         mode, last, _ = state_at(prs, tr, m)
         used = used_on(prs, mode, last, m[:10], m)
