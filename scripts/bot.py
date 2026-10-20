@@ -55,14 +55,36 @@ def merged_now():
     return [{"number": p["number"], "merged": at(p["mergedAt"])} for p in prs]
 
 
-def tempo_gate(prs, aars, now, branch=None):
+def tempo_gate(prs, aars, now, branch=None, exception=None):
     """Refuse a PR over today's limit for the current mode. A CEO override in data/ceo_overrides.json lifts the
-    slowed limit only for a branch it names, inside its window (scripts/tempo.py lifted)."""
+    slowed limit only for a branch it names, inside its window (scripts/tempo.py lifted).
+    exception: tempo.aar_exception_problems for this PR, or None. An empty list means the PR only adds a same-day AAR
+    and its Team chat thread, which passes a used-up limit (Ryno 2026-10-20 11:02 AM ET: "Yes, let same-day incident
+    write-ups through the PR limit"). Its sign-offs and checks still apply."""
     mode, used, limit = tempo.today(prs, aars, now, branch=branch)
+    if used >= limit and exception == []:
+        return f"{mode}, passed by the same-day AAR exception (Ryno, 2026-10-20 11:02 AM ET)", used, limit
     if used >= limit:
+        why = f"; not a same-day-AAR-only PR: {'; '.join(exception)}" if exception else ""
         raise Refused(f"tempo: {mode} mode allows {limit} merged PRs today and {used} already count; "
-                      f"wait for tomorrow (ET){' or 10 clean PRs' if mode == 'slowed' else ''} (scripts/tempo.py, data/tempo.json)")
+                      f"wait for tomorrow (ET){' or 10 clean PRs' if mode == 'slowed' else ''} (scripts/tempo.py, data/tempo.json){why}")
     return mode, used, limit
+
+
+def aar_exception(paths, n, head=None):
+    """tempo.aar_exception_problems for PR #n against origin/main. head: a commit to read the PR's files from
+    (bot.py resume), or None for this checkout's working tree (bot.py pr)."""
+    def read(ref, path):
+        if ref is None:
+            f = ROOT / path
+            return json.loads(f.read_text()) if f.exists() else []
+        try:
+            return json.loads(git("show", f"{ref}:{path}") or "[]")
+        except subprocess.CalledProcessError:
+            return []
+    day = datetime.datetime.now(ET).strftime("%Y-%m-%d")
+    return tempo.aar_exception_problems(paths, read("origin/main", "data/aars.json"), read(head, "data/aars.json"),
+                                        read("origin/main", "data/chat.json"), read(head, "data/chat.json"), day, int(n))
 
 
 def main_red(runs):
@@ -402,7 +424,9 @@ def cmd_resume(a):
         if pr["isDraft"]:
             gh("pr", "ready", n)
         if a.merge:
-            mode, used, limit = tempo_gate(merged_now(), json.loads((ROOT / "data/aars.json").read_text()), datetime.datetime.now(ET), pr["headRefName"])
+            git("fetch", "-q", "origin", pr["headRefName"])
+            mode, used, limit = tempo_gate(merged_now(), json.loads((ROOT / "data/aars.json").read_text()), datetime.datetime.now(ET), pr["headRefName"],
+                                           exception=aar_exception(paths, n, pr["headRefOid"]))
             print(f"tempo: {mode}, this is PR {used + 1} of {limit} today")
             merge_when_green(n)
     finally:
@@ -441,7 +465,8 @@ def _cmd_pr(a):
         comments = [blast] + comments
     plan_review(a.review, m.group(1), paths, signoffs, removed=[p for p in paths if not (ROOT / p).exists()])
     main_red(json.loads(gh("run", "list", "--branch", "main", "--limit", "10", "--json", "name,status,conclusion")))
-    mode, used, limit = tempo_gate(merged_now(), json.loads((ROOT / "data/aars.json").read_text()), datetime.datetime.now(ET), branch)
+    mode, used, limit = tempo_gate(merged_now(), json.loads((ROOT / "data/aars.json").read_text()), datetime.datetime.now(ET), branch,
+                                   exception=aar_exception(paths, next_pr_number()))
     print(f"tempo: {mode}, this is PR {used + 1} of {limit} today")
     if needs_visual_review(m.group(1), paths) and next_pr_number() != a.review:
         raise Refused(f"--review {a.review} but this PR will be #{next_pr_number()}; reshoot into that number")
