@@ -94,8 +94,23 @@ class Card(unittest.TestCase):
         self.assertIn("<title>Ryno: character sheet", s)
         self.assertIn('src="../../assets/avatars/ceo.svg"', s)
         self.assertIn('href="../#ryno"', s)
-        self.assertEqual(re.findall(r'<link rel="stylesheet" href="([^"]+)"', s), ["../../style.css"])
+        self.assertEqual(re.findall(r'<link rel="stylesheet" href="([^"]+)"', s), ["../../style.css", "../../sheets.css"])  # the bots' card back, cached
         self.assertNotIn("<script", s)
+
+    def test_sheet_is_three_power_cards(self):
+        # Cards v6 (CEO direction, Oct 21): his own card back with Safeguard, Unblock and Vision as three cards, each with its
+        # real count and its record behind a fold; no quote of his anywhere on it.
+        s, f = self.sheet, ceo.facts()
+        for (_, name, _, rec, unit) in ceo.MOVES:
+            m = re.search(rf'<li id="{ceo.ABIL[rec]}"><div class="ph">.*?<h2>{name}</h2><p class="n">(\d+)<small>', s)
+            self.assertTrue(m, name)
+            self.assertEqual(int(m.group(1)), f[rec])
+        self.assertEqual(s.count("<summary>The record ("), 3)
+        load = lambda n: json.loads((ROOT / "data" / n).read_text())
+        for r in load("ceo_decisions.json") + load("ceo_overrides.json"):
+            if r.get("quote"):
+                self.assertNotIn(r["quote"], s)
+        self.assertNotIn("\u201c", s)
 
 
 class XLink(unittest.TestCase):
