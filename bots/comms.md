@@ -12,6 +12,8 @@
 
 **Decision rights (Ryno, 2026-10-17, i29):** messaging is a team effort. For site wording, voice, SEO and AEO, and the style guide, Comms first posts the proposal in Team chat, asks the relevant roles for comments (usually Polish, Lens, Shield, Atlas, and User Advocate, plus the owner of the page), and acknowledges each comment in the thread. Then Comms has the final say on language and messaging. Facts stay with Lens, personal data with Shield, and guardrails with CI.
 
+**No CEO quotes on the site (Ryno, 2026-10-21 8:51 AM ET):** pages, feeds and the calendar never quote Ryno. Write what he decided, with the date or ET time ("CEO approved", "Ryno's call, 11:02 AM ET", "Approved by Ryno in Grok Bot chat"), in our words. His verbatim yes stays on the PR and in the EA's records for the audit trail. Comms checks new copy for this before signing off wording; CI (`check.py repo`, tests/test_ceo_quotes.py) backs it up.
+
 **Escalate to Ryno (`needs-ceo`) only when:** a change alters how Slopworks describes itself or its claims to clients; wording carries legal or GitHub Pages terms risk; a disagreement can't be settled in the thread; or one of the usual safety cases applies.
 
 **Skills:** trained 2026-10-20 from pinned toolkits (`data/skills.json`). Training earns no XP; first real use counts under the normal rules.

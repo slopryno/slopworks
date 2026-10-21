@@ -63,5 +63,10 @@
     "at": "2026-10-21T05:02-04:00",
     "branch": "bot/ops-sheet-card-back",
     "reason": "python3 -m unittest discover -s tests -q failed:"
+  },
+  {
+    "at": "2026-10-21T11:38-04:00",
+    "branch": "bot/ops-ceo-no-quotes",
+    "reason": "blast-radius note: the note needs a 'Scope: ...' line; the note needs a 'Rollback: ...' line"
   }
 ]

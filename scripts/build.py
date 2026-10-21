@@ -177,7 +177,14 @@ def load(name):
     errs = check.validate(value, schema)
     if errs:
         raise DataError(f"data/{name}.json doesn't match its schema:\n  " + "\n  ".join(errs[:10]))
-    return _typed(value, schema, f"data/{name}.json")
+    import ceo_quotes  # Ryno, Oct 21 8:51 AM ET: no CEO quotes on the site; his words stay on the PR and in the records
+    global _CEO_REG
+    if _CEO_REG is None:
+        _CEO_REG = ceo_quotes.registry(ROOT)
+    return _typed(ceo_quotes.scrub_all(value, _CEO_REG), schema, f"data/{name}.json")
+
+
+_CEO_REG = None
 
 
 # How this works (i48, Comms; Ryno's external review, c-thread i48): plain words, and the numbers come from code so they can't drift.
