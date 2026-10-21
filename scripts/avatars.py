@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Each role's avatar (v2): a soft single-color blob with two slanted pill eyes and a tiny job badge.
+"""Each role's avatar (v2): a soft single-color blob with two slanted pill eyes; its job badge now sits in the trading card corner, not on the blob.
 Transparent, flat, animated with inline CSS only (idle squish, staggered blinks), static under
 prefers-reduced-motion. Inspired by the Grok Bot app style, not copied. Changes need Polish + Shield review.
 
@@ -11,7 +11,7 @@ on"); the rest of the year, or with no yes, it's the blob. Same file names, pick
   avatars.py                     write the set for today's ET date
   avatars.py --date 2026-10-20   write the set for that date
   avatars.py --check             exit 1 unless the committed files are the set for today's ET date"""
-import json, math, re, sys
+import functools, json, math, re, sys
 from datetime import date, datetime
 from pathlib import Path
 from zoneinfo import ZoneInfo
@@ -470,7 +470,8 @@ def character(i, ch, label, badge_fill, badge):
 # Ryno, the human CEO (Oct 20, 2026: 3:45 PM ET "Rhino b no glasses"; 3:48 PM ET "lets let the rhino be the every day look
 # and the trading card background only changes with holiday theme"). One drawing all year: it is never in a costume set, and
 # files() writes the same file for every season. Slate body (#748699, darkened for the Management card and still 3:1 with
-# the eyes) with a dark slate outline (#2e3a48) so he reads on the light lilac art window; gold crown; CEO star badge.
+# the eyes) with a dark slate outline (#2e3a48) so he reads on the light lilac art window; CEO star badge. No crown on the
+# rhino (Ryno, Oct 20 10:45 PM ET); his trading card shows a gold crown in its corner badge instead (scripts/ceo.py).
 CEO_SLATE, CEO_LINE = "#748699", "#2e3a48"
 
 
@@ -478,18 +479,16 @@ def _ceo(d, f=CEO_SLATE):
     return f'<path d="{d}" fill="{f}" stroke="{CEO_LINE}" stroke-width="3" paint-order="stroke"/>'
 
 
-FIXED = {"ceo": dict(label="Ryno, the human CEO, as a crowned rhino", badge="#146fac", i=17, ch=dict(
+FIXED = {"ceo": dict(label="Ryno, the human CEO, as a rhino", badge="#146fac", i=17, ch=dict(
     body=_ceo("M22 36L18 22L32 30ZM78 36L82 22L68 30ZM18 52Q18 28 50 28Q82 28 82 52Q84 70 72 82Q62 90 50 90Q38 90 28 82Q16 70 18 52Z")  # ears + head
     + P("M30 74Q30 62 50 62Q70 62 70 74Q70 86 50 86Q30 86 30 74Z", "#9fb0c2", True)
     + P("M43 66Q45 40 50 26Q55 40 57 66Z", "#ece6d6") + P("M46 40Q48 32 50 26Q52 32 54 40Z", "#d8d0bc", True)
-    + P("M40 78a2 3 0 1 0 4 0a2 3 0 1 0-4 0M56 78a2 3 0 1 0 4 0a2 3 0 1 0-4 0", "#5d6d80", True)  # nostrils
-    + P("M42 26l-1-10.8 4.48 5.4 3.52-12 3.52 12 4.48-5.4-1 10.8Z", "#f2c14e"),
+    + P("M40 78a2 3 0 1 0 4 0a2 3 0 1 0-4 0M56 78a2 3 0 1 0 4 0a2 3 0 1 0-4 0", "#5d6d80", True),  # nostrils
     eyes=(50, 33, 67, 2.8, 4.8), face=CEO_SLATE, m=dance(6, .06, 3.4), calm=True))}
 
 
 def fixed_svg(name):
-    f = FIXED[name]
-    return character(f["i"], f["ch"], f["label"], f["badge"], ROLES[name][3])
+    return re.sub(BADGE_G, "", full(list(ROLES).index(name), name, "normal"))
 
 
 def still(s):
@@ -497,13 +496,33 @@ def still(s):
     return re.sub(r"<style>.*?</style>", "", s)
 
 
+def full(i, n, season):
+    """A role's drawing with its job badge still on it (the badge then moves to the card corner: card_badge)."""
+    spec = ROLES[n]
+    if n in FIXED:
+        f = FIXED[n]
+        return character(f["i"], f["ch"], f["label"], f["badge"], spec[3])
+    return costume_svg(i, n, season) if n in COSTUMES.get(season, {}) else svg(i, n, *spec)
+
+
 def files(season):
-    """{relative path: svg} for a whole set: one animated and one still file per role."""
+    """{relative path: svg} for a whole set: one animated and one still file per role, without the job badge."""
     out = {}
-    for i, (n, spec) in enumerate(ROLES.items()):
-        s = fixed_svg(n) if n in FIXED else costume_svg(i, n, season) if n in COSTUMES.get(season, {}) else svg(i, n, *spec)
+    for i, n in enumerate(ROLES):
+        s = re.sub(BADGE_G, "", full(i, n, season))
         out[f"{n}.svg"], out[f"still/{n}.svg"] = s, still(s)
     return out
+
+
+# No badge on any blob (Ryno, Oct 20 10:45-10:46 PM ET: "no more type icons attached to blobs"). The job badge is drawn in
+# the trading card's corner instead (bottom right on the mini card, top right open); every page's avatar is the bare blob.
+BADGE_G = r'<g transform="translate\(80 82\)">(.*?)</g>'
+
+
+@functools.lru_cache(None)
+def card_badge(name, season):
+    """The role's job badge as a small inline SVG for the card corner: the same circle and glyph the drawing carries (stripped from every avatar file)."""
+    return f'<svg class="jb" viewBox="-10 -10 20 20">{re.search(BADGE_G, full(list(ROLES).index(name), name, season)).group(1)}</svg>'
 
 
 def today_et():

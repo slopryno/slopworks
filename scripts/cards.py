@@ -131,7 +131,7 @@ def css(spec, season, stems, badges=False):
     return t + CSS + (BADGE_CSS if badges else "")
 
 
-def card(n, i, total, stem, spec, season, xp, level, lv, nxt, kinds, avatar_src, badges=None):
+def card(n, i, total, stem, spec, season, xp, level, lv, nxt, kinds, avatar_src, badges=None, jb=""):
     """One slot: the mini (a link to #stem) and the full card body. badges: {family: count} once the badge engine ships."""
     r = spec["roles"][n]
     tl = [x["name"] for x in spec["types"]]
@@ -151,7 +151,7 @@ def card(n, i, total, stem, spec, season, xp, level, lv, nxt, kinds, avatar_src,
                                      for f, c in badges.items()) + "</p>") if badges else ""
     fl = r["flavour"].get(season) or r["flavour"]["normal"]
     return (f'<div class="slot {cls}"><a class="o" id="{stem}" href="#m-{stem}" tabindex="-1" aria-hidden="true"></a><i class="c" id="m-{stem}"></i><div class="card">'
-            f'<a class="open" href="#{stem}"><span class="art {pk}"><img src="{avatar_src}" width="112" height="112" alt=""></span>'
+            f'<a class="open" href="#{stem}"><span class="art {pk}"><img src="{avatar_src}" width="112" height="112" alt=""></span>{jb}'
             f'<span class="nm"><b>{e(n)}</b><span class="ml" title="{e(r["type"])}">Lv\u00a0{level} · {xp}\u00a0XP</span></span></a>'
             f'<div class="body"><a class="cl" href="#m-{stem}">Close</a><p class="ty"><b>{e(r["type"])}</b></p>'
             f'<p class="lv" style="--w:{pct}%">{e(lv["name"])}<span>{togo}</span></p>'

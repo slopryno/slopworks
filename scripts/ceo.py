@@ -82,6 +82,11 @@ def moves(cm, f):
     return out
 
 
+# His corner badge (Ryno, Oct 20 10:47 PM ET: "For ryno change the star to a crown"): the bots' badge style, a gold crown on
+# his badge blue; the rhino itself has no crown (10:45 PM ET).
+CROWN = '<svg class="jb" viewBox="-10 -10 20 20"><circle r="10" fill="#146fac"/><path d="M-5 5l-.7-6.5 3 3.3 2.7-6.8 2.7 6.8 3-3.3-.7 6.5Z" fill="#f2c14e"/></svg>'
+
+
 def card(cm, spec, season, total, avatar_src, root=None):
     """His slot: the mini (a link to #ryno) and the full card. avatar_src is the same file in every season (HOLIDAY)."""
     types = [x["name"] for x in spec["types"]]
@@ -90,7 +95,7 @@ def card(cm, spec, season, total, avatar_src, root=None):
     pk = art["particles"] if art else ty["particles"]
     cls = f"t{types.index(TYPE)} lead" + (f" g-{STEM}" if art else "") + " holo"
     return (f'<div class="slot {cls}"><a class="o" id="{STEM}" href="#m-{STEM}" tabindex="-1" aria-hidden="true"></a><i class="c" id="m-{STEM}"></i><div class="card">'
-            f'<a class="open" href="#{STEM}"><span class="art {pk}"><img src="{avatar_src}" width="112" height="112" alt=""></span>'
+            f'<a class="open" href="#{STEM}"><span class="art {pk}"><img src="{avatar_src}" width="112" height="112" alt=""></span>{CROWN}'
             f'<span class="nm"><b>{NAME} <span class="hu" title="Human verified">Human verified</span></b><span class="ml" title="{TYPE}">CEO</span>'
             f'</span></a>{X_LINK}'
             f'<div class="body"><a class="cl" href="#m-{STEM}">Close</a>'
