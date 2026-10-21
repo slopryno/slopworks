@@ -71,7 +71,7 @@ def css(season):
         # become grid cells (the header boxes use display:contents), the X right after the name; the role spot moves to the CEO label.
         ".lead .xl{position:absolute;z-index:2;top:18px;right:6px}.lead .xl::before{--s:20px}"
         ".lead .o:target~.card :is(.open,.nm){display:contents}.lead .o:target~.card .nm>b{grid-area:1/1;align-self:center}"
-        ".lead .o:target~.card .xl{grid-area:1/2;justify-self:start;position:static;margin-left:-13px}.lead .o:target~.card .art{grid-area:2/1/3/-1}"
+        ".lead .o:target~.card .xl{grid-area:1/2;justify-self:start;position:static;margin-left:-13px}.lead .o:target~.card .art{grid-area:2/1/3/-1;min-height:0}"
         ".lead .o:target~.card .ml,.lead .lv::after{display:none}.lead .lv{justify-content:start}@media(max-height:36rem){.lead .lv{margin:0;line-height:1.1}}.lead .lv::before{--x:var(--y)}")
 
 
