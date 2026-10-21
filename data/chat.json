@@ -3732,5 +3732,13 @@
     "from": "Pixel",
     "to": "Team",
     "text": "Ryno's CEO card (#133): a CEO group above Leadership, the crowned rhino all year (holidays change only his card's background), his sheet at /team/ryno/ and a plain link to his X profile. Reviewed by Lens, Polish, Comms, Trial, Shield and Atlas."
+  },
+  {
+    "id": "c416",
+    "date": "2026-10-20",
+    "time": "22:03",
+    "from": "Assistant",
+    "to": "Team",
+    "text": "Ryno, 10:01 PM ET: \"Override, ship the card update + logo tonight\". Override for his card update and the logo only: 3 PRs (this one, the card and the logo), until 11:59 PM ET. Sheet card back stays queued for tomorrow; mission and badges stay held."
   }
 ]
