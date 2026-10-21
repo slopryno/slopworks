@@ -779,7 +779,7 @@ def build():
         tiers[k] = tiers.get(k, 0) + 1
     summ = ", ".join(f"{tiers[r['name']]} {r['name'].lower()}" for r in reversed(cspec["rarity"]) if r["name"] in tiers)
     tbody = (f'<p class="set">Set 1, {len(seq)} cards: {summ}.' + (" October edition: Halloween art." if season == "halloween" else "") + " Tap a card to open it.</p>"
-             + cardmod.sprite()
+             
              + "".join(f'<h2 class="group">{e(g)}</h2><div class="deck">' + "".join(tslot(x, seq.index(x) + 1) for x in seq if x[0] in members) + "</div>" for g, members in GROUPS))
     # Ryno's CEO card and sheet (scripts/ceo.py; Ryno, Oct 20 3:54 PM ET): a CEO group above Leadership, his avatar the same all year.
     import ceo
