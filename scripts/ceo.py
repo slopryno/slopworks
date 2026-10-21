@@ -170,7 +170,7 @@ def sheet(repo, total, next_html, root=None):
            f'<a href="{repo}/blob/main/data/ceo_overrides.json">ceo_overrides.json</a> and <a href="{repo}/blob/main/data/ideas.json">ideas.json</a>. Nothing typed by hand.</p>')
     nx = re.search(r'href="([^"]+)">([^<]+)</a>', next_html)
     foot = (f'<nav class="sf" aria-label="More sheets"><a href="../">{ic("back")}Team</a><a href="../../how/">Where the human decides</a>'
-            f'<a class="nx" href="{nx[1]}">{nx[2]}{ic("next")}</a></nav>')
+            + (f'<a class="nx" href="{nx[1]}">{nx[2]}{ic("next")}</a>' if nx else "") + '</nav>')
     jump = "".join(f'<a href="#{i}">{ic(k)}{t}</a>' for i, k, t in (("safeguard", "seal", "Safeguard"), ("unblock", "rocket", "Unblock"), ("vision", "scale", "Vision"), ("human", "user", "The human")))
     body = f'<div class="sb {cls}">{ban}<nav class="jp" aria-label="On this sheet">{jump}</nav><ul class="pw" aria-label="Powers">{pw}</ul>{human}{src}{foot}</div>'
     return sh.sprite(set(re.findall(r'href="#' + re.escape(sh.P) + r'([a-z]+)"', body))) + body
