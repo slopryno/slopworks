@@ -57,10 +57,10 @@ class Card(unittest.TestCase):
         self.assertLess(t.index('<h2 class="group">CEO</h2>'), t.index('<h2 class="group">Leadership and Strategy</h2>'))
         self.assertEqual(t.count('class="slot t'), len(build.team()) + 1)
         slot = t[t.index('<div class="slot t0 lead'):t.index('<h2 class="group">Leadership')]
-        for want in ('id="ryno"', 'href="#m-ryno" aria-label="Close"', "One of one", f"00/{len(build.team())}",
-                     "<b>Management</b>", "Human, not a bot", 'src="../assets/avatars/ceo.svg"', 'href="ryno/">Character sheet'):
+        for want in ('id="ryno"', 'href="#m-ryno">Close</a>', "One of one", f"00/{len(build.team())}",
+                     "<b>Management</b>", "Human verified", '<p class="lv" title="Management">CEO</p>', "Safeguard", "Unblock", "Vision", 'src="../assets/avatars/ceo.svg"', 'href="ryno/">Character sheet'):
             self.assertIn(want, slot)
-        for no in ("\u00a0XP", "Lv\u00a0", "class=\"lv\"", "<script"):
+        for no in ("\u00a0XP", "Lv\u00a0", "--w:", "<script"):
             self.assertNotIn(no, slot)
 
     def test_numbers_come_from_the_records(self):
