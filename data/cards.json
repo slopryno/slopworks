@@ -463,7 +463,7 @@
     {
      "icon": "nib",
      "name": "Design backlog",
-     "line": "Ships the top-ranked design fix.",
+     "line": "Ships the highest-priority design fix.",
      "stat": "pitch_shipped"
     }
    ],

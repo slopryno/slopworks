@@ -109,8 +109,9 @@ class Cards(unittest.TestCase):
         self.assertIn(".o:target~.card .ml{position:static;clip-path:none}", css)  # the open card keeps its level
 
     def test_team_page_fits_100_kb_in_every_season(self):
-        css = sum(p.stat().st_size for p in (ROOT / "site").glob("*.css"))
         for s, doc in self.pages.items():
+            # the stylesheets Team loads (style.css; site/sheets.css loads on the character sheets only, Oct 20 3:06 PM ET)
+            css = check.css_weight(check.page_css("team/index.html", doc, ROOT / "site"), ROOT / "site")
             if s == avatars.committed_season():
                 total = check.page_weight("team/index.html", doc, css)[0]
             else:  # the other sets aren't on disk: count their avatar files from the generator
