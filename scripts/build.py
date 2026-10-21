@@ -770,7 +770,7 @@ def build():
         for y in ledger_all:
             if y["agent"] == n and y["status"] == "approved":
                 kinds[y["type"]] = kinds.get(y["type"], 0) + 1
-        return cardmod.card(n, i, len(order), f[:-3], cspec, season, xp, num, lv, nxt, kinds, f"../assets/avatars/{avatar_of(n)}.svg")
+        return cardmod.card(n, i, len(order), f[:-3], cspec, season, xp, num, lv, nxt, kinds, f"../assets/avatars/{avatar_of(n)}.svg", jb=avmod.card_badge(avatar_of(n), season))
     by_name = {x[0]: x for x in team()}
     seq = [by_name[n] for _, members in GROUPS for n in members if n in by_name]  # set order = the group order
     tiers = {}

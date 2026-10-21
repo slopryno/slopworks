@@ -23,7 +23,8 @@ class Avatar(unittest.TestCase):
         for season, d in avatars.COSTUMES.items():
             self.assertNotIn("ceo", d, season)  # never in a costume set
         self.assertEqual(ceo.HOLIDAY, "background-only")
-        self.assertIn('aria-label="Ryno, the human CEO, as a crowned rhino"', got["normal"]["ceo.svg"])
+        self.assertIn('aria-label="Ryno, the human CEO, as a rhino"', got["normal"]["ceo.svg"])
+        self.assertNotIn("#f2c14e", got["normal"]["ceo.svg"])  # no crown on the rhino (Ryno, Oct 20 10:45 PM ET)
 
     def test_no_photo_no_outside_image(self):
         s = avatars.fixed_svg("ceo")

@@ -36,7 +36,6 @@ MOVES = [  # (icon, name, line, record, unit)
 ]
 WEAK, RESISTS, HANDS_OFF = "routine pings", "overclaiming", "Assistant, Coordinator"
 FLAVOUR = "Makes the call, then leaves the work to the team."
-BLURB = "Owns Slopworks. Steps in only where the rules say."
 ART = {"halloween": {"scene": "radial-gradient(circle at 50% 30%,#66def955,#0000 45%),linear-gradient(#071a33,#173a63)", "particles": "up", "particle_colour": "#bfefff"}}
 
 
@@ -61,17 +60,16 @@ def css(season):
          f'.g-{STEM} .art::before{{--u:url("{BATS}");background:var(--u) 0 0/64px 48px;opacity:.7}}') if art else ""  # drifts up with the card's own particle motion
     return g + (
         # Leader frame: gold foil on the border box (so the corners blend), same card family; the inside keeps the Management colour.
-        ".slot.lead{grid-column:span 2;aspect-ratio:auto;min-height:12rem}"
         ".lead .card{background:linear-gradient(var(--card) 0 0) padding-box,linear-gradient(135deg,#b8860b,#ffe9a8 30%,#c99a2e 50%,#fff3c4 70%,#a8790a) border-box}"
-        ".lead .open{flex-direction:row;gap:.9rem;padding:8px}.lead .art{flex:0 0 40%;min-height:10rem}.lead .nm{align-content:start;gap:.35rem;padding:.3rem 0 3.4rem}.lead .nm b{font-size:1.3rem}"
-        ".lead .nm:after,.lead .ft:before,.o:target~.card .bl{display:none}"
-        ".hu{display:inline-flex;vertical-align:-3px;font-size:0}.hu::before{background:#b8860b;--s:20px}"  # icon only; its words stay as the name
-        ".bl{flex-basis:100%;font-size:.8125rem;color:var(--muted)}.lk{position:absolute;z-index:2;right:12px;bottom:12px;margin:0}.o:target~.card>.lk{grid-column:3;position:static;align-self:center}"
-        # Ryno, 8:59 PM ET: X sits on the top row after his badge. Mini: top right of the card. Open: the header's name and the X
+        ".lead .nm:after,.lead .ft:before{display:none}"
+        ".hu{display:inline-flex;vertical-align:-3px;font-size:0}.hu::before{background:#b8860b;--s:14px}.o:target~.card .hu::before{--s:20px}"  # icon only; its words stay as the name
+        ".lead .card>.xl,.lk{display:none}.o:target~.card>.lk{display:block;grid-column:3;margin:0;align-self:center}"
+        # Ryno, 10:40 PM ET: his mini card matches the bots' (one grid cell, portrait art, name and role under it); the X and sheet
+        # icons show only on the open card. Ryno, 8:59 PM ET: on the open card the X sits on the top row after his badge: the header's name and the X
         # become grid cells (the header boxes use display:contents), the X right after the name; the role spot moves to the CEO label.
-        ".lead .xl{position:absolute;z-index:2;top:18px;right:6px}.lead .xl::before{--s:20px}"
+        ".lead .xl::before{--s:20px}"
         ".lead .o:target~.card :is(.open,.nm){display:contents}.lead .o:target~.card .nm>b{grid-area:1/1;align-self:center}"
-        ".lead .o:target~.card .xl{grid-area:1/2;justify-self:start;position:static;margin-left:-13px}.lead .o:target~.card .art{grid-area:2/1/3/-1;min-height:0}"
+        ".lead .o:target~.card .xl{display:inline-flex;grid-area:1/2;justify-self:start;position:static;margin-left:-13px}.lead .o:target~.card .art{grid-area:2/1/3/-1;min-height:0}"
         ".lead .o:target~.card .ml,.lead .lv::after{display:none}.lead .lv{justify-content:start}@media(max-height:36rem){.lead .lv{margin:0;line-height:1.1}}.lead .lv::before{--x:var(--y)}")
 
 
@@ -84,6 +82,11 @@ def moves(cm, f):
     return out
 
 
+# His corner badge (Ryno, Oct 20 10:47 PM ET: "For ryno change the star to a crown"): the bots' badge style, a gold crown on
+# his badge blue; the rhino itself has no crown (10:45 PM ET).
+CROWN = '<svg class="jb" viewBox="-10 -10 20 20"><circle r="10" fill="#146fac"/><path d="M-5 5l-.7-6.5 3 3.3 2.7-6.8 2.7 6.8 3-3.3-.7 6.5Z" fill="#f2c14e"/></svg>'
+
+
 def card(cm, spec, season, total, avatar_src, root=None):
     """His slot: the mini (a link to #ryno) and the full card. avatar_src is the same file in every season (HOLIDAY)."""
     types = [x["name"] for x in spec["types"]]
@@ -92,9 +95,9 @@ def card(cm, spec, season, total, avatar_src, root=None):
     pk = art["particles"] if art else ty["particles"]
     cls = f"t{types.index(TYPE)} lead" + (f" g-{STEM}" if art else "") + " holo"
     return (f'<div class="slot {cls}"><a class="o" id="{STEM}" href="#m-{STEM}" tabindex="-1" aria-hidden="true"></a><i class="c" id="m-{STEM}"></i><div class="card">'
-            f'<a class="open" href="#{STEM}"><span class="art {pk}"><img src="{avatar_src}" width="112" height="112" alt=""></span>'
+            f'<a class="open" href="#{STEM}"><span class="art {pk}"><img src="{avatar_src}" width="112" height="112" alt=""></span>{CROWN}'
             f'<span class="nm"><b>{NAME} <span class="hu" title="Human verified">Human verified</span></b><span class="ml" title="{TYPE}">CEO</span>'
-            f'<span class="bl">{e(BLURB)}</span></span></a>{X_LINK}'
+            f'</span></a>{X_LINK}'
             f'<div class="body"><a class="cl" href="#m-{STEM}">Close</a>'
             f'<p class="ty"><b>{TYPE}</b></p><p class="lv" title="{TYPE}">CEO</p>'
             f'<ul class="mv">{moves(cm, facts(root))}</ul><p class="wr"><span>{e(WEAK)}</span><span>{e(RESISTS)}</span><span>{e(HANDS_OFF)}</span></p>'
