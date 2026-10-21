@@ -41,8 +41,9 @@ def short(t):
 
 
 def wbr(t):
-    """Escaped text with a break chance after each slash, so paths and "Role/Role:" wrap there, not mid-word."""
-    return e(t).replace("/", "/<wbr>")
+    """Escaped text with a break chance after each slash and underscore, so paths, snake_case file names and "Role/Role:"
+    wrap there, not mid-word (430-1440 tiles split "test_training_tracks.py" mid-word otherwise)."""
+    return e(t).replace("/", "/<wbr>").replace("_", "_<wbr>")
 
 
 def words(markup):

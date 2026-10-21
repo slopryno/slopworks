@@ -106,5 +106,10 @@ class CardBack(unittest.TestCase):
         self.assertIn("sheet_errors()", __import__("inspect").getsource(check.run_repo))
 
 
+    def test_paths_and_file_names_break_at_slash_and_underscore_only(self):
+        self.assertEqual(sheets.wbr("Added tests/test_a_b.py"), "Added tests/<wbr>test_<wbr>a_<wbr>b.py")
+        self.assertEqual(sheets.wbr("a<b"), "a&lt;b")
+
+
 if __name__ == "__main__":
     unittest.main()
