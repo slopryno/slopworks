@@ -37,7 +37,8 @@ class Sheets(unittest.TestCase):
                 self.assertIn(f"{nxt['xp'] - x} XP to {nxt['name']}", doc, n)
             ok = sum(y["agent"] == n and y["status"] == "approved" for y in self.led)
             self.assertIn(f"{ok} entries count", doc, n)
-            self.assertIn(f"Lv\u00a0{num} · {x}\u00a0XP", self.files["team/index.html"], n)  # the trading card (Oct 20)
+            self.assertIn(f">Lv <span>{num}</span></span>", self.files["team/index.html"], n)  # the trading card shows the level (cards v6)
+            self.assertIn('<p class="wr">', doc, n)  # Weak to / Resists / Hands off stay on the sheet (cards v6)
 
     def test_zero_xp_shown_honestly(self):
         zero = [n for n in STEMS if not self.tot.get(n)]
