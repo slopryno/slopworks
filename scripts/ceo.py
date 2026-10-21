@@ -11,7 +11,7 @@ holiday month whose look Ryno approved changes only his card's art-window scene 
 
 His X link is plain text in a normal link: no embed, widget, script or image from X, and it carries rel="noopener noreferrer".
 X_URL is the only x.com address on the site (tests/test_ceo_card.py)."""
-import html, json
+import html, json, re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -20,15 +20,6 @@ STEM, NAME, TYPE = "ryno", "Ryno", "Management"
 X_URL = "https://x.com/slopryno"  # his public profile; Ryno, Oct 20 3:54 PM ET: "embedd a link to my x account"
 X_LINK = f'<a class="xl" href="{X_URL}" rel="noopener noreferrer" title="slopryno on X">slopryno on X</a>'  # an X icon on the card; the text is its name (v5)
 HOLIDAY = "background-only"
-_SVG = '<svg width="{0}" height="{0}" viewBox="-7 -7 14 14" fill="none" stroke="{1}" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{2}"/></svg>'
-# Sheet only (the Team page draws these from the shared mask strip): inline, original, nothing loaded from X.
-ROW = 'style="display:inline-flex;align-items:center;gap:.4rem;min-height:44px"'
-
-
-def _icons():
-    import cards as cm
-    hv = _SVG.format(24, "#b8860b", cm.UI["hv"]).replace('aria-hidden="true">', 'role="img" aria-label="Human verified" style="vertical-align:-4px"><title>Human verified</title>')
-    return hv, _SVG.format(24, "currentColor", cm.UI["x"])
 MOVES = [  # (icon, name, line, record, unit)
     ("seal", "Safeguard", "Only his yes loosens a safety check.", "approvals", ("PR", "PRs")),
     ("rocket", "Unblock", "Lifts the daily PR limit for named work.", "overrides", ("override", "overrides")),
@@ -61,7 +52,7 @@ def css(season):
     return g + (
         # Leader frame: gold foil on the border box (so the corners blend), same card family; the inside keeps the Management colour.
         ".lead .card{background:linear-gradient(var(--card) 0 0) padding-box,linear-gradient(135deg,#b8860b,#ffe9a8 30%,#c99a2e 50%,#fff3c4 70%,#a8790a) border-box}"
-        ".lead .nm:after,.lead .ft:before{display:none}"
+        ".lead .nm:after,.lead .ft:before{display:none}.lead .mv{padding:0;font-size:1rem}.lead .lk{--a:#b8860b}"  # his tap cue is gold, like his frame
         ".hu{display:inline-flex;vertical-align:-3px;font-size:0}.hu::before{background:#b8860b;--s:14px}.o:target~.card .hu::before{--s:20px}"  # icon only; its words stay as the name
         ".lead .card>.xl,.lk{display:none}.o:target~.card>.lk{display:block;grid-column:3;margin:0;align-self:center}"
         # Ryno, 10:40 PM ET: his mini card matches the bots' (one grid cell, portrait art, name and role under it); the X and sheet
@@ -70,14 +61,14 @@ def css(season):
         ".lead .xl::before{--s:20px}"
         ".lead .o:target~.card :is(.open,.nm){display:contents}.lead .o:target~.card .nm>b{grid-area:1/1;align-self:center}"
         ".lead .o:target~.card .xl{display:inline-flex;grid-area:1/2;justify-self:start;position:static;margin-left:-13px}.lead .o:target~.card .art{grid-area:2/1/3/-1;min-height:0}"
-        ".lead .o:target~.card .ml,.lead .lv::after{display:none}.lead .lv{justify-content:start}@media(max-height:36rem){.lead .lv{margin:0;line-height:1.1}}.lead .lv::before{--x:var(--y)}")
+        ".lead .o:target~.card .ml,.lead .lv::after{display:none}@media(max-height:36rem){.lead .lv{margin:0;line-height:1.1}}.lead .lv::before{--x:var(--y)}")
 
 
 def moves(cm, f):
     out = ""
     for k, name, line, rec, unit in MOVES:
         c = f[rec]
-        out += (f'<li>{cm.icon(k)}<b>{e(name)}</b><i class="pp n{cm.tier(c)}"></i>'
+        out += (f'<li>{cm.icon(k)}<b>{e(name)}</b>'
                 f'<em>{c}<small> {unit[0 if c == 1 else 1]}</small></em><span>{e(line)}</span></li>')
     return out
 
@@ -100,7 +91,7 @@ def card(cm, spec, season, total, avatar_src, root=None):
             f'</span></a>{X_LINK}'
             f'<div class="body"><a class="cl" href="#m-{STEM}">Close</a>'
             f'<p class="ty"><b>{TYPE}</b></p><p class="lv" title="{TYPE}">CEO</p>'
-            f'<ul class="mv">{moves(cm, facts(root))}</ul><p class="wr"><span>{e(WEAK)}</span><span>{e(RESISTS)}</span><span>{e(HANDS_OFF)}</span></p>'
+            f'<ul class="mv">{moves(cm, facts(root))}</ul>'
             f'<p class="ft">One of one<span class="sn">00/{total}</span></p>'
             f'<p class="fl">{e(FLAVOUR)}</p></div><p class="lk"><a class="sh" title="Character sheet" href="{STEM}/">Character sheet</a></p></div></div>')
 
@@ -110,34 +101,76 @@ def _day(ts):
     return f"{int(m)}/{int(d)}"
 
 
-def sheet(repo, total, next_html, root=None):
-    """His character sheet, in the same layout as today's role sheets (site/style.css only)."""
-    f = facts(root)
-    hv, xi = _icons()
+GOLD = "linear-gradient(135deg,#b8860b,#ffe9a8 30%,#c99a2e 50%,#fff3c4 70%,#a8790a) border-box"
+ABIL = {"approvals": "safeguard", "overrides": "unblock", "decisions": "vision"}
+HEAD = {"approvals": "Only Ryno's yes lets a change that loosens a safety check through. The Assistant adds the label only after his yes in chat.",
+        "overrides": "Each override lifts the daily PR limit for named work, for that day only.",
+        "decisions": "Ideas the CEO decided, newest first, with where each one stands."}
+STATE = {"shipped": "Shipped", "yes": "In progress", "later": "Later", "no": "No"}
+
+
+def calls(root=None):
+    """His calls from data/ideas.json: (date, short title, state), newest first. Titles are the team's words, never his."""
+    return sorted(((i["decided"], i.get("short_title") or i["id"], i["state"]) for i in load("ideas.json", root) if i.get("decided_by") == "CEO"), reverse=True)
+
+
+def records(root=None):
+    """Each power's uses, newest first, as (ISO date, line). Dates and PR links only: his words stay on the PRs and records."""
     dec, ovr = load("ceo_decisions.json", root), load("ceo_overrides.json", root)
-    data = lambda n: f'<a href="{repo}/blob/main/data/{n}">{n}</a>'
-    pw = "".join(f'<li><strong>{e(name)}</strong>: {e(line)} <span class="meta">{f[rec]} {unit[0 if f[rec] == 1 else 1]} on record</span></li>'
-                 for _, name, line, rec, unit in MOVES)
-    # Ryno, Oct 21 8:51 AM ET: no CEO quotes on the site. Each line says what he decided and when; his exact words and their
-    # ET time stay on the PR and in the add-only records (tests/test_ceo_quotes.py).
-    yes = "".join(f'<li><time datetime="{x["applied_at"][:10]}">{_day(x["applied_at"])}</time> <a href="{e(x["evidence"])}">PR #{x["pr"]}</a> '
-                  f'{"CEO approved in chat." if x["quote"] else "He added the label himself on GitHub."} '
-                  f'<span class="meta">label by {"the Assistant, after his yes in chat" if x["applied_by"] == "Executive Assistant" else "Ryno"}</span></li>'
-                  for x in reversed(dec))
-    ov = "".join(f'<li><time datetime="{x["at"][:10]}">{_day(x["at"])}</time> CEO override '
-                 f'<span class="meta">up to {x["max_prs"]} PR{"" if x["max_prs"] == 1 else "s"}, named work only, until 11:59 PM ET that day</span></li>' for x in reversed(ovr))
-    return (f'<section class="sheet card" style="border-top:4px solid #b8860b;flex-wrap:wrap"><img class="av" src="../../assets/avatars/ceo.svg" width="96" height="96" alt="">'
-            f'<div style="flex-basis:10rem"><p class="title">CEO · one of one, 00/{total}</p><p class="lvl" style="display:flex;align-items:center;gap:.35rem;flex-wrap:wrap">The owner {hv}'
-            f'<a href="{X_URL}" rel="noopener noreferrer" aria-label="slopryno on X" title="slopryno on X" style="display:inline-grid;place-items:center;width:44px;height:44px;margin-left:-.6rem">{xi}</a></p>'
-            f'<p>{e(FLAVOUR)}</p><p style="margin:0"><a href="../#{STEM}" {ROW}>See his card</a></p></div></section>'
-            f'<h2>Powers</h2><ul>{pw}</ul>'
-            f'<p class="meta">Weak to {e(WEAK)}. Resists {e(RESISTS)}. Hands off to {e(HANDS_OFF)}.</p>'
-            f'<h2>Safeguard</h2><p class="meta">Only Ryno\'s yes lets a change that loosens a safety check through. '
-            f'The Assistant adds the label only after his yes in chat; his exact words stay on the PR.</p><ul class="worklist">{yes}</ul>'
-            f'<h2>Unblock</h2><p class="meta">Each override lifts the daily PR limit for named work, for that day only.</p><ul class="worklist">{ov}</ul>'
-            f'<h2>The human</h2><p>Ryno is a person, not a Grok Bot. He owns Slopworks and sets its direction. He doesn\'t sign off routine work: '
-            f'bots review and merge each other\'s. The team pings him only for a real disagreement or a safety case.</p>'
-            f'<p class="meta">The rhino is his look all year. On holidays only his card\'s background changes.</p>'
-            f'<p class="meta">Counted at build time from {data("ceo_decisions.json")}, {data("ceo_overrides.json")} and {data("ideas.json")} '
-            f'({f["decisions"]} calls decided by the CEO). Nothing typed by hand.</p>'
-            f'<p><a href="../">Back to the team</a> · <a href="../../how/">Where the human decides</a></p>' + next_html)
+    return {"approvals": [(x["applied_at"][:10], f'<a href="{e(x["evidence"])}">PR #{x["pr"]}</a> '
+                           + ("CEO approved in chat." if x["quote"] else "He added the label himself on GitHub.")) for x in reversed(dec)],
+            "overrides": [(x["at"][:10], f'CEO override <span class="meta">up to {x["max_prs"]} PR{"" if x["max_prs"] == 1 else "s"}, named work only, that day</span>') for x in reversed(ovr)],
+            "decisions": [(d, f'{e(t)} <span class="meta">{STATE.get(st, e(st))}</span>') for d, t, st in calls(root)]}
+
+
+def sheet_css(season):
+    """Inline on team/ryno/ only; site/sheets.css carries the shared card back. Gold frame, crown, three power cards."""
+    return css(season) + (
+        f".ceo{{--a:#946c0a}}.ceo .cb{{background:linear-gradient(var(--card) 0 0) padding-box,{GOLD}}}.ceo .gm::before,.ceo .id .lv::before{{display:none}}"
+        ".ceo .bn .jb{top:.5rem;right:.5rem;bottom:auto;width:30px;height:30px}.ceo .jr{gap:.25rem}.ceo .jr .xl{margin-left:-.4rem}.ceo .jr .hu::before{--s:20px}"
+        ".worklist time{font-variant-numeric:tabular-nums;color:var(--muted);margin-right:.25rem}"
+        ".sb .pw{list-style:none;margin:1rem 0;padding:0;display:grid;gap:.75rem}"
+        f".pw>li{{border:3px solid #0000;border-radius:14px;background:linear-gradient(var(--card) 0 0) padding-box,{GOLD};padding:.8rem .9rem}}"
+        ".pw .ph{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:.6rem}.pw .ph>svg{width:40px;height:40px;padding:9px;border-radius:12px;background:var(--a);color:#fff}"
+        ".pw h2{margin:0;font-size:1.125rem}.pw .n{font-size:1.75rem;font-weight:800;line-height:1;text-align:right;font-variant-numeric:tabular-nums}.pw .n small{display:block;font-size:.75rem;font-weight:600;color:var(--muted)}"
+        ".pw p{margin:.45rem 0}.pw summary{min-height:44px;display:flex;align-items:center;font-weight:600;cursor:pointer}"
+        "@media(max-width:20rem){.pw .ph{grid-template-columns:minmax(0,1fr) auto}.pw .ph>svg{display:none}.sb .pw>li{padding:.6rem .5rem}}"
+        "@media(min-width:48rem){.sb .pw{grid-template-columns:repeat(3,minmax(0,1fr));align-items:start}}")
+
+
+def sheet(repo, total, next_html, root=None):
+    """His own card back (cards v6, CEO direction Oct 21): the gold banner, then his three powers as three gold cards, each
+    with its count and its record behind a fold. Every number and line comes from the records; no quotes (Oct 21 rule)."""
+    import cards as cm, sheets as sh, avatars
+    f, rec = facts(root), records(root)
+    ic = sh.ic
+    spec = cm.load()
+    types = [x["name"] for x in spec["types"]]
+    season = avatars.committed_season() or "normal"
+    art = ART.get(season)
+    pk = art["particles"] if art else spec["types"][types.index(TYPE)]["particles"]
+    crown = CROWN.replace("<svg ", '<svg role="img" aria-label="CEO" ', 1)
+    cls = f"t{types.index(TYPE)} lead holo ceo" + (f" g-{STEM}" if art else "")
+    ban = (f'<section class="cb" aria-label="Ryno\'s card back"><div class="bn"><span class="art {pk}"><img src="../../assets/avatars/ceo.svg" width="112" height="112" alt=""></span>'
+           f'{crown}<p class="gm">One of one · 00/{total}</p></div>'
+           f'<div class="id"><p class="jr"><span class="hu" title="Human verified">Human verified</span><span class="jt">CEO</span>'
+           f'<a class="xl" href="{X_URL}" rel="noopener noreferrer" aria-label="slopryno on X" title="slopryno on X">slopryno on X</a></p>'
+           f'<p class="lv">The one human on a team of {total} bots</p>'
+           f'<p class="fl">{e(FLAVOUR)} <a class="tc" href="../#{STEM}">{ic("cards")}See the card</a></p></div></section>')
+    pw = "".join(
+        f'<li id="{ABIL[r]}"><div class="ph">{ic(k)}<h2>{e(name)}</h2><p class="n">{f[r]}<small>{unit[0 if f[r] == 1 else 1]}</small></p></div>'
+        f'<p>{e(line)}</p><p class="meta">{HEAD[r]}</p><details><summary>The record ({len(rec[r])})</summary><ul class="worklist">'
+        + "".join(f'<li><time datetime="{d}">{_day(d)}</time> {h}</li>' for d, h in rec[r]) + "</ul></details></li>"
+        for k, name, line, r, unit in MOVES)
+    human = ('<div class="sg"><section class="tile ab" id="human" aria-labelledby="human-h">' + sh.h2("human-h", "user", "The human")
+             + '<p class="bio">Ryno is a person, not a Grok Bot. He owns Slopworks and sets its direction.</p>'
+             '<p>He doesn\'t sign off routine work: bots review and merge each other\'s. The team pings him only for a real disagreement or a safety case.</p>'
+             '<p class="meta">The rhino is his look all year. On holidays only his card\'s background changes.</p></section></div>')
+    src = (f'<p class="meta">Counted at build time from <a href="{repo}/blob/main/data/ceo_decisions.json">ceo_decisions.json</a>, '
+           f'<a href="{repo}/blob/main/data/ceo_overrides.json">ceo_overrides.json</a> and <a href="{repo}/blob/main/data/ideas.json">ideas.json</a>. Nothing typed by hand.</p>')
+    nx = re.search(r'href="([^"]+)">([^<]+)</a>', next_html)
+    foot = (f'<nav class="sf" aria-label="More sheets"><a href="../">{ic("back")}Team</a><a href="../../how/">Where the human decides</a>'
+            + (f'<a class="nx" href="{nx[1]}">{nx[2]}{ic("next")}</a>' if nx else "") + '</nav>')
+    jump = "".join(f'<a href="#{i}">{ic(k)}{t}</a>' for i, k, t in (("safeguard", "seal", "Safeguard"), ("unblock", "rocket", "Unblock"), ("vision", "scale", "Vision"), ("human", "user", "The human")))
+    body = f'<div class="sb {cls}">{ban}<nav class="jp" aria-label="On this sheet">{jump}</nav><ul class="pw" aria-label="Powers">{pw}</ul>{human}{src}{foot}</div>'
+    return sh.sprite(set(re.findall(r'href="#' + re.escape(sh.P) + r'([a-z]+)"', body))) + body

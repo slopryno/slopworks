@@ -763,7 +763,7 @@ def build():
              + f'<h2 class="group">CEO</h2><div class="deck">{ceo.card(cardmod, cspec, season, len(seq), "../assets/avatars/ceo.svg")}</div>' + tbody[g0:])
     first = seq[0][0]
     files[f"team/{ceo.STEM}/index.html"] = page(f"team/{ceo.STEM}/", "Ryno: character sheet", "The human CEO: his real powers and every time he used them, counted from the records at build time.",
-                                                ceo.sheet(REPO, len(seq), f'<p class="next"><a class="more" href="../{stems[first]}/">Next: {e(first)}\'s sheet</a></p>'), "data/ceo_decisions.json")
+                                                ceo.sheet(REPO, len(seq), f'<p class="next"><a class="more" href="../{stems[first]}/">Next: {e(first)}\'s sheet</a></p>'), "data/ceo_decisions.json").replace("</head>", f'<link rel="stylesheet" href="../../sheets.css">\n<style>{ceo.sheet_css(season)}</style>\n</head>', 1)
     files["team/index.html"] = page("team/", "The team", f"{len(team())} Grok Bot roles in five groups, played by one daily routine, not separate agents. Levels come from verified XP (<a href=\"xp/\">how XP works</a>).",
                                     tbody + alumni_html + '<p class="next"><a class="more" href="../timeline/">Next: how the team grew, on the Timeline</a></p>', "bots").replace("</head>", f"<style>{cardmod.css(cspec, season, stems)}{ceo.css(season)}</style>\n</head>", 1)
 
