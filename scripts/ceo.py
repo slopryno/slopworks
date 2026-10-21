@@ -61,7 +61,7 @@ def css(season):
     return g + (
         # Leader frame: gold foil on the border box (so the corners blend), same card family; the inside keeps the Management colour.
         ".lead .card{background:linear-gradient(var(--card) 0 0) padding-box,linear-gradient(135deg,#b8860b,#ffe9a8 30%,#c99a2e 50%,#fff3c4 70%,#a8790a) border-box}"
-        ".lead .nm:after,.lead .ft:before{display:none}"
+        ".lead .nm:after,.lead .ft:before{display:none}.lead .mv{padding:0;font-size:1rem}"
         ".hu{display:inline-flex;vertical-align:-3px;font-size:0}.hu::before{background:#b8860b;--s:14px}.o:target~.card .hu::before{--s:20px}"  # icon only; its words stay as the name
         ".lead .card>.xl,.lk{display:none}.o:target~.card>.lk{display:block;grid-column:3;margin:0;align-self:center}"
         # Ryno, 10:40 PM ET: his mini card matches the bots' (one grid cell, portrait art, name and role under it); the X and sheet
@@ -70,14 +70,14 @@ def css(season):
         ".lead .xl::before{--s:20px}"
         ".lead .o:target~.card :is(.open,.nm){display:contents}.lead .o:target~.card .nm>b{grid-area:1/1;align-self:center}"
         ".lead .o:target~.card .xl{display:inline-flex;grid-area:1/2;justify-self:start;position:static;margin-left:-13px}.lead .o:target~.card .art{grid-area:2/1/3/-1;min-height:0}"
-        ".lead .o:target~.card .ml,.lead .lv::after{display:none}.lead .lv{justify-content:start}@media(max-height:36rem){.lead .lv{margin:0;line-height:1.1}}.lead .lv::before{--x:var(--y)}")
+        ".lead .o:target~.card .ml,.lead .lv::after{display:none}@media(max-height:36rem){.lead .lv{margin:0;line-height:1.1}}.lead .lv::before{--x:var(--y)}")
 
 
 def moves(cm, f):
     out = ""
     for k, name, line, rec, unit in MOVES:
         c = f[rec]
-        out += (f'<li>{cm.icon(k)}<b>{e(name)}</b><i class="pp n{cm.tier(c)}"></i>'
+        out += (f'<li>{cm.icon(k)}<b>{e(name)}</b>'
                 f'<em>{c}<small> {unit[0 if c == 1 else 1]}</small></em><span>{e(line)}</span></li>')
     return out
 
@@ -100,7 +100,7 @@ def card(cm, spec, season, total, avatar_src, root=None):
             f'</span></a>{X_LINK}'
             f'<div class="body"><a class="cl" href="#m-{STEM}">Close</a>'
             f'<p class="ty"><b>{TYPE}</b></p><p class="lv" title="{TYPE}">CEO</p>'
-            f'<ul class="mv">{moves(cm, facts(root))}</ul><p class="wr"><span>{e(WEAK)}</span><span>{e(RESISTS)}</span><span>{e(HANDS_OFF)}</span></p>'
+            f'<ul class="mv">{moves(cm, facts(root))}</ul>'
             f'<p class="ft">One of one<span class="sn">00/{total}</span></p>'
             f'<p class="fl">{e(FLAVOUR)}</p></div><p class="lk"><a class="sh" title="Character sheet" href="{STEM}/">Character sheet</a></p></div></div>')
 

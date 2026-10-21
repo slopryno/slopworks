@@ -71,10 +71,6 @@ def rarity(level, spec):
     return len(tiers), tiers[-1]["name"]
 
 
-def tier(c):  # pips: hollow = no record, 1 = 1-4, 2 = 5-19, 3 = 20+
-    return 0 if not c else 1 if c < 5 else 2 if c < 20 else 3
-
-
 def _shift(d, dx):
     """The path moved right by dx: only absolute M and L carry x, every other command in UI is relative."""
     out, cmd, k = [], "", 0
@@ -139,23 +135,22 @@ def card(n, i, total, stem, spec, season, xp, level, lv, nxt, kinds, avatar_src,
     rk, rname = rarity(level, spec)
     art = r.get("art", {}).get(season)
     pct = 100 if not nxt else int(100 * (xp - lv["xp"]) / (nxt["xp"] - lv["xp"]))
-    togo = f'{nxt["xp"] - xp} XP to {e(nxt["name"])}' if nxt else "Top level"
     cls = f't{tl.index(r["type"])} r{rk}' + (f' g-{stem}' if art else "") + (" holo" if rk >= 3 else "")
     pk = art["particles"] if art else ty["particles"]
     mv = ""
     for m in r["moves"]:
         c = kinds.get(m["stat"]) if m["stat"] else None
         st = f'<em>{c}<small> {SH[m["stat"]][0 if c == 1 else 1]}</small></em>' if c else ""
-        mv += f'<li>{icon(m["icon"])}<b>{e(m["name"])}</b><i class="pp n{tier(c)}"></i>{st}<span>{e(m["line"])}</span></li>'
+        mv += f'<li>{icon(m["icon"])}<b>{e(m["name"])}</b>{st}<span>{e(m["line"])}</span></li>'
     bd = ('<p class="bd">' + "".join(f'<span><img src="{avatar_src.rsplit("avatars/", 1)[0]}badges/{f}.svg" width="24" height="24" alt="{e(f.capitalize())} badges:">{c}</span>'
                                      for f, c in badges.items()) + "</p>") if badges else ""
     fl = r["flavour"].get(season) or r["flavour"]["normal"]
     return (f'<div class="slot {cls}"><a class="o" id="{stem}" href="#m-{stem}" tabindex="-1" aria-hidden="true"></a><i class="c" id="m-{stem}"></i><div class="card">'
             f'<a class="open" href="#{stem}"><span class="art {pk}"><img src="{avatar_src}" width="112" height="112" alt=""></span>{jb}'
-            f'<span class="nm"><b>{e(n)}</b><span class="ml" title="{e(r["type"])}">Lv\u00a0{level} · {xp}\u00a0XP</span></span></a>'
+            f'<span class="nm"><b>{e(n)}</b><span class="ml" title="{e(r["type"])}">Lv <span>{level}</span></span></span></a>'
             f'<div class="body"><a class="cl" href="#m-{stem}">Close</a><p class="ty"><b>{e(r["type"])}</b></p>'
-            f'<p class="lv" style="--w:{pct}%">{e(lv["name"])}<span>{togo}</span></p>'
-            f'<ul class="mv">{mv}</ul><p class="wr"><span>{e(r["weak_to"])}</span><span>{e(r["resists"])}</span><span>{e(r["hands_off"])}</span></p>'
+            f'<p class="lv" style="--w:{pct}%">{e(lv["name"])}</p>'
+            f'<ul class="mv">{mv}</ul>'
             f'{bd}<p class="ft">{e(rname)}<span class="sn">{i:02d}/{total}</span></p>'
             f'<p class="fl">{e(fl)}</p><a class="sh" title="Character sheet" href="{stem}/">Character sheet</a></div></div></div>')
 

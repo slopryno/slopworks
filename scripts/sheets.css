@@ -1,3 +1,4 @@
+.wr{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem;margin:0;padding:.3rem 0 0;border-top:1px solid var(--line);font-size:.8125rem;line-height:1.25}.wr span{display:flex;flex-wrap:wrap;align-items:center;gap:0 .25rem}.wr span::after{order:-1;width:calc(100% - 20px);font-size:.75rem;color:var(--muted)}.wr :nth-child(1)::after{content:"Weak to"}.wr :nth-child(2)::after{content:"Resists"}.wr :nth-child(3)::after{content:"Hands off"}.wr span::before{order:-2}
 main:has(.sb){max-width:72rem}
 .sb[class*=g-]{--m:none}
 .sb svg{width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}

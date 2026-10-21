@@ -95,7 +95,7 @@ def moves(c):
     for m in r["moves"]:
         n = c["counts"].get(m["stat"]) if m["stat"] else None
         st = f'<em>{n}<small> {cardmod.SH[m["stat"]][0 if n == 1 else 1]}</small></em>' if n else ""
-        li += f'<li>{ic(m["icon"])}<b>{e(m["name"])}</b><i class="pp n{cardmod.tier(n)}"></i>{st}<span>{e(m["line"])}</span></li>'
+        li += f'<li>{ic(m["icon"])}<b>{e(m["name"])}</b>{st}<span>{e(m["line"])}</span></li>'
     return (f'<section class="tile mvs" aria-labelledby="moves">{h2("moves", "spark", "Moves")}<ul class="mv">{li}</ul>'
             f'<p class="wr"><span>{e(r["weak_to"])}</span><span>{e(r["resists"])}</span><span>{e(r["hands_off"])}</span></p></section>')
 

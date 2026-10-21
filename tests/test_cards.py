@@ -70,7 +70,19 @@ class Cards(unittest.TestCase):
         for n in self.roles:
             num = build.level_for(tot.get(n, 0), levels)[0]
             self.assertIn(f"<b>{n}</b>", doc)
-            self.assertIn(f"Lv\u00a0{num} · {tot.get(n, 0)}\u00a0XP", doc, n)
+            self.assertIn(f">Lv <span>{num}</span></span>", doc, n)  # cards v6: the level sits in the corner badge; XP lives on the sheet
+
+    def test_cards_v6_stay_uncluttered(self):
+        # Cards v6 (CEO direction, Oct 21): no XP words on a card, no pip bars by the move counts, and Weak to / Resists /
+        # Hands off only on the character sheets.
+        for s, doc in self.pages.items():
+            self.assertNotIn("\u00a0XP</span>", doc, s)
+            self.assertNotIn(" XP to ", doc, s)
+            self.assertNotIn('class="pp', doc, s)
+            self.assertNotIn('<p class="wr">', doc, s)
+        css = (ROOT / "scripts/cards.css").read_text()
+        self.assertNotIn(".wr{", css)  # its rules live in scripts/sheets.css now
+        self.assertIn(".wr{", (ROOT / "scripts/sheets.css").read_text())
 
     def test_holiday_art_only_in_its_approved_season(self):
         self.assertIn("October edition: Halloween art.", self.pages["halloween"])
