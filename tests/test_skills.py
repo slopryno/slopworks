@@ -10,6 +10,7 @@ import skills  # noqa: E402
 
 MAN = json.loads((ROOT / "data/skills.json").read_text())
 PSTACK, TEAMKIT = "d457567332aa6989e753ea289f30ea2bfbc80bc0", "2b8ae2ee306f823d54879d3da7f8496b73c31d5d"
+SUPERPOWERS = "bb92a77741419a4ab5f06e711a283343f1ada0c3"  # obra/superpowers v7.0.0 release commit, reviewed 2026-10-21
 
 
 def role(name, *lines):
@@ -133,6 +134,32 @@ class Drift(Fixture):
                          [("Team Kit", "verify-this", "changed"), ("pstack", "blast-radius", "removed"), ("pstack", "brand-new", "new")])
 
 
+class Superpowers(Fixture):
+    """Superpowers (Ryno, 2026-10-21): skills/ at the repo root, its own trained date, and drift run per repo."""
+    def test_a_root_level_source_links_without_a_dot(self):
+        self.assertEqual(skills.link(MAN, "Superpowers", "brainstorming"), "https://github.com/obra/superpowers/tree/bb92a77/skills/brainstorming")
+
+    def test_a_path_other_than_a_folder_name_or_dot_fails(self):
+        self.man["sources"]["Superpowers"]["path"] = "../x"
+        self.save()
+        self.write(role("Trial", line("verify-this"), line("blast-radius", "pstack")))
+        self.assertTrue(any("path" in e for e in self.errs()))
+
+    def test_drift_compares_only_the_named_repo(self):
+        up = Path(tempfile.mkdtemp())
+        (up / "skills/brainstorming").mkdir(parents=True)
+        (up / "skills/brainstorming/SKILL.md").write_text("x")
+        got = skills.drift(up, ROOT, "https://github.com/obra/superpowers")
+        self.assertEqual({s for s, _, _ in got}, {"Superpowers"})
+        self.assertIn(("Superpowers", "brainstorming", "changed"), got)
+        self.assertIn(("Superpowers", "writing-plans", "removed"), got)
+
+    def test_sheets_show_both_training_days(self):
+        sketch = (ROOT / "site/team/sketch/index.html").read_text().split('id="training"')[1]
+        self.assertIn("Trained Oct 20 and 21, 2026", sketch)
+        self.assertIn("Trained Oct 20, 2026", (ROOT / "site/team/critic/index.html").read_text())
+
+
 class Repo(unittest.TestCase):
     def test_the_repo_passes(self):
         self.assertEqual(check.skills_errors(), [])
@@ -141,6 +168,8 @@ class Repo(unittest.TestCase):
         self.assertEqual(MAN["sources"]["pstack"]["commit"], PSTACK)
         self.assertEqual(MAN["sources"]["pstack"]["version"], "0.15.28")
         self.assertEqual(MAN["sources"]["Team Kit"]["commit"], TEAMKIT)
+        self.assertEqual(MAN["sources"]["Superpowers"]["commit"], SUPERPOWERS)
+        self.assertEqual(MAN["sources"]["Superpowers"]["version"], "7.0.0")
         self.assertEqual({s["license"] for s in MAN["sources"].values()}, {"MIT"})
 
     def test_every_upstream_skill_is_used_or_skipped(self):
