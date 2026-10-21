@@ -1180,7 +1180,7 @@ def tempo_errors(root=None):
 
 
 # ---------- blast radius (Ryno, 2026-10-18 10:48 PM ET, i46): additions only, these only tighten ----------
-BLAST_SHARED = ("scripts/", ".github/", "data/schema/", "site/style.css", ".gitignore")  # shared by every page, feed, record or run
+BLAST_SHARED = ("scripts/", ".github/", "data/schema/", "site/style.css", "site/sheets.css", ".gitignore")  # shared by every page, feed, record or run
 BLAST_FIELDS = ("Scope", "Could break", "Rollback", "Size")  # the template in bots/atlas.md
 BLAST_SIZES = ("small", "medium", "large")
 BLAST_CHECKERS = ("Trial", "Lens")
@@ -1275,20 +1275,53 @@ def page_weight(rel, doc, css_bytes, root=None):
     return total, missing
 
 
+CSS_LINK = re.compile(r'<link\b[^>]*\brel="stylesheet"[^>]*\bhref="([^"#?]+\.css)"', re.I)
+
+
+def page_css(rel, doc, site):
+    """{site-relative path} of the stylesheets a page loads: site/style.css always (every page links it), plus every same-site
+    stylesheet the page links, such as sheets.css on the character sheets (card back, Oct 20 3:06 PM ET). A shared
+    stylesheet counts on the pages that load it, not on every page."""
+    import posixpath
+    base = posixpath.dirname(rel)
+    linked = {posixpath.normpath(posixpath.join(base, h)) for h in CSS_LINK.findall(doc) if not re.match(r"(?:[a-z]+:)?//|data:", h, re.I)}
+    return {"style.css"} | {c for c in linked if (site / c).is_file()}
+
+
+def css_weight(names, site):
+    """Bytes of those stylesheets plus each same-site image their url() loads."""
+    total = 0
+    for n in names:
+        f = site / n
+        if not f.is_file():
+            continue
+        total += f.stat().st_size
+        total += sum((site / u).stat().st_size for u in set(CSS_URL.findall(f.read_text()))
+                     if not re.match(r"(?:[a-z]+:)?//|data:", u, re.I) and (site / u).is_file())
+    return total
+
+
 def page_weight_errors(root=None, limit=None):
-    """Every built page, images included, stays within PATTERNS['max_page_bytes']; CSS url() images count on every page."""
+    """Every built page, images included, stays within PATTERNS['max_page_bytes']: its HTML, the stylesheets it loads
+    (with their url() images) and each same-site image it loads."""
     site, errs = (root or ROOT) / "site", []
     limit = limit or PATTERNS["max_page_bytes"]
-    css = sum(p.stat().st_size for p in site.glob("*.css"))
-    css += sum((site / u).stat().st_size for p in site.glob("*.css") for u in set(CSS_URL.findall(p.read_text()))
-               if not re.match(r"(?:[a-z]+:)?//|data:", u, re.I) and (site / u).is_file())
     for p in sorted(site.rglob("*.html")):
         rel = str(p.relative_to(site))
-        total, missing = page_weight(rel, p.read_text(), css, root)
+        doc = p.read_text()
+        total, missing = page_weight(rel, doc, css_weight(page_css(rel, doc, site), site), root)
         errs += [f"site/{rel}: loads missing image {m}" for m in missing]
         if total > limit:
             errs.append(f"site/{rel}: page weight with images {total:,} bytes is over the {limit // 1024} KB budget")
     return errs
+
+
+# ---------- character sheets as the card back (Ryno, 2026-10-20 3:06 PM ET: "Go with B, the card back") ----------
+def sheet_errors(root=None):
+    """Each sheet links the shared site/sheets.css, has no inline <style>, and its quest note carries no date (scripts/sheets.py)."""
+    import sheets
+    site = (root or ROOT) / "site"
+    return sheets.errors({str(p.relative_to(site)): p.read_text() for p in site.glob("team/*/index.html")})
 
 
 # ---------- role skills (Ryno, 2026-10-19 10:06 PM ET): every skill in bots/*.md is in the pinned data/skills.json ----------
@@ -1590,12 +1623,12 @@ def run_repo():
     errs += training_errors()
     errs += skills_errors()
     errs += page_weight_errors()  # Ryno 2026-10-20 7:27 AM ET: images count toward the page budget
+    errs += sheet_errors()  # Ryno 2026-10-20 3:06 PM ET: the card back
     errs += track_errors()
     errs += comms_feed_errors(files)
     errs += word_limit_errors()
     errs += voice_errors()
     errs += calendar_errors()
-    css = sum((ROOT / f).stat().st_size for f in files if f.startswith("site/") and f.endswith(".css"))
     for f in files:
         if f.startswith("site/") and f.endswith(".css"):
             errs += motion_errors((ROOT / f).read_text(), f)
@@ -1603,6 +1636,7 @@ def run_repo():
         if f.startswith("site/") and f.endswith(".html"):
             doc = (ROOT / f).read_text()
             errs += [f"{f}: a11y: {i}" for i in a11y_issues(doc)]
+            css = sum((ROOT / "site" / c).stat().st_size for c in page_css(f[5:], doc, ROOT / "site"))  # the stylesheets this page loads
             if len(doc.encode()) + css > PATTERNS["max_page_bytes"]:
                 errs.append(f"{f}: page weight over {PATTERNS['max_page_bytes'] // 1024} KB budget")
     sched = ROOT / "site/schedule/index.html"

@@ -5,7 +5,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
-import build, home  # noqa: E402
+import build, check, home  # noqa: E402
 
 
 class Home(unittest.TestCase):
@@ -51,7 +51,7 @@ class Home(unittest.TestCase):
 
     def test_page_budget(self):
         budget = json.loads((ROOT / "scripts/patterns.json").read_text())["max_page_bytes"]
-        css = sum(p.stat().st_size for p in (ROOT / "site").glob("*.css"))
+        css = check.css_weight(check.page_css("index.html", self.doc, ROOT / "site"), ROOT / "site")  # the stylesheets Home loads
         self.assertLess(len(self.doc.encode()) + css, budget // 2)
 
 
