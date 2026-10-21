@@ -1574,6 +1574,24 @@ def calendar_errors(root=None):
     return errs
 
 
+# ---------- no CEO quotes on the site (Ryno, Oct 21, 2026, 8:51 AM ET) ----------
+def ceo_quote_errors(root=None):
+    """Built pages, feeds and the calendar never quote Ryno: not his recorded words (data/ceo_decisions.json,
+    data/ceo_overrides.json, or any quote attributed to him in the data), and no quote attributed to him at all. His exact
+    words and their ET time stay on the PR and in the records; build.py renders a neutral line instead (scripts/ceo_quotes.py)."""
+    import ceo_quotes
+    root = root or ROOT
+    reg = ceo_quotes.registry(root)
+    errs = []
+    for p in sorted((root / "site").rglob("*")):
+        rel = p.relative_to(root).as_posix()
+        if not p.is_file() or not rel.endswith((".html", ".xml", ".json", ".txt", ".ics")):
+            continue
+        for q in ceo_quotes.hits(ceo_quotes.page_text(rel, p.read_text(errors="ignore")), reg):
+            errs.append(f"{rel}: quotes the CEO ({q[:60]!r}); say what he decided, not his words (his quote stays on the PR)")
+    return errs
+
+
 def run_repo():
     errs = []
     files = tracked_files()
@@ -1629,6 +1647,7 @@ def run_repo():
     errs += word_limit_errors()
     errs += voice_errors()
     errs += calendar_errors()
+    errs += ceo_quote_errors()
     for f in files:
         if f.startswith("site/") and f.endswith(".css"):
             errs += motion_errors((ROOT / f).read_text(), f)
