@@ -4,7 +4,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
-import avatars, build, cards, check  # noqa: E402
+import avatars, build, cards, ceo, check  # noqa: E402
 
 
 def team_page(season):
@@ -83,6 +83,19 @@ class Cards(unittest.TestCase):
         css = (ROOT / "scripts/cards.css").read_text()
         self.assertNotIn(".wr{", css)  # its rules live in scripts/sheets.css now
         self.assertIn(".wr{", (ROOT / "scripts/sheets.css").read_text())
+
+    def test_sheet_icon_has_a_calm_tap_cue(self):
+        # Cards v6 (CEO direction, Oct 21): a square outline around the sheet icon, in the card's colour (gold on the CEO's),
+        # pulsing 3 times and then still (under 5 s, WCAG 2.2.2), standing still for reduced motion, inside the 44px tap box.
+        import re as _re
+        css = (ROOT / "scripts/cards.css").read_text()
+        rule = _re.search(r"\.sh::after\{([^}]*)\}", css).group(1)
+        self.assertIn("inset:6px", rule)
+        self.assertIn("border:2px solid var(--a)", rule)
+        dur, n = _re.search(r"animation:rg ([\d.]+)s \S+ (\d+)", rule).groups()
+        self.assertLessEqual(float(dur) * int(n), 5)
+        self.assertRegex(css, r"prefers-reduced-motion:reduce\)\{[^{]*\.sh::after[^{]*\{animation:none")
+        self.assertIn(".lead .lk{--a:#b8860b}", ceo.css("normal"))
 
     def test_holiday_art_only_in_its_approved_season(self):
         self.assertIn("October edition: Halloween art.", self.pages["halloween"])

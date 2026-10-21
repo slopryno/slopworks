@@ -61,7 +61,7 @@ def css(season):
     return g + (
         # Leader frame: gold foil on the border box (so the corners blend), same card family; the inside keeps the Management colour.
         ".lead .card{background:linear-gradient(var(--card) 0 0) padding-box,linear-gradient(135deg,#b8860b,#ffe9a8 30%,#c99a2e 50%,#fff3c4 70%,#a8790a) border-box}"
-        ".lead .nm:after,.lead .ft:before{display:none}.lead .mv{padding:0;font-size:1rem}"
+        ".lead .nm:after,.lead .ft:before{display:none}.lead .mv{padding:0;font-size:1rem}.lead .lk{--a:#b8860b}"  # his tap cue is gold, like his frame
         ".hu{display:inline-flex;vertical-align:-3px;font-size:0}.hu::before{background:#b8860b;--s:14px}.o:target~.card .hu::before{--s:20px}"  # icon only; its words stay as the name
         ".lead .card>.xl,.lk{display:none}.o:target~.card>.lk{display:block;grid-column:3;margin:0;align-self:center}"
         # Ryno, 10:40 PM ET: his mini card matches the bots' (one grid cell, portrait art, name and role under it); the X and sheet
