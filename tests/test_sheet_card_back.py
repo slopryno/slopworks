@@ -23,7 +23,7 @@ class CardBack(unittest.TestCase):
     def test_shared_stylesheet_no_inline_style(self):
         self.assertIn("sheets.css", self.files)
         season = avatars.committed_season() or "normal"
-        self.assertEqual(self.files["sheets.css"], sheets.css(self.spec, season, {n: s for n, s in STEMS.items()}))
+        self.assertEqual(self.files["sheets.css"], sheets.css(self.spec, season, {n: f[:-3] for n, _, _, _, f in build.team()}))
         for n, d in self.sheets.items():
             self.assertIn('<link rel="stylesheet" href="../../sheets.css">', d, n)
             self.assertNotIn("<style", d, n)
