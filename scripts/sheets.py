@@ -95,7 +95,7 @@ def moves(c):
     for m in r["moves"]:
         n = c["counts"].get(m["stat"]) if m["stat"] else None
         st = f'<em>{n}<small> {cardmod.SH[m["stat"]][0 if n == 1 else 1]}</small></em>' if n else ""
-        li += f'<li>{ic(m["icon"])}<b>{e(m["name"])}</b><i class="pp n{cardmod.tier(n)}"></i>{st}<span>{e(m["line"])}</span></li>'
+        li += f'<li>{ic(m["icon"])}<b>{e(m["name"])}</b>{st}<span>{e(m["line"])}</span></li>'
     return (f'<section class="tile mvs" aria-labelledby="moves">{h2("moves", "spark", "Moves")}<ul class="mv">{li}</ul>'
             f'<p class="wr"><span>{e(r["weak_to"])}</span><span>{e(r["resists"])}</span><span>{e(r["hands_off"])}</span></p></section>')
 
@@ -207,10 +207,10 @@ def render(c):
 
 
 def errors(files):
-    """Sheet rules (code first): every role sheet (not the CEO's team/ryno/, which scripts/ceo.py builds on style.css) links the shared stylesheet, carries no inline <style>, and no dated quest note."""
+    """Sheet rules (code first): every role sheet (not the CEO's team/ryno/: scripts/ceo.py links sheets.css too and adds a small inline style for his gold frame, cards v6) links the shared stylesheet, carries no inline <style>, and no dated quest note."""
     out = []
     for k, doc in files.items():
-        if re.fullmatch(r"team/(?!xp/|ryno/)\w+/index\.html", k):  # team/ryno/ is the CEO's own sheet (scripts/ceo.py, style.css only, #133)
+        if re.fullmatch(r"team/(?!xp/|ryno/)\w+/index\.html", k):  # team/ryno/ is the CEO's own sheet (scripts/ceo.py; inline style for his gold, cards v6)
             if 'href="../../sheets.css"' not in doc:
                 out.append(f"site/{k}: doesn't link the shared sheets.css")
             if "<style" in doc:

@@ -34,3 +34,5 @@ Review loops are capped at 2 rounds; a second block on the same PR is a disagree
 **After-action reviews:** if a rule awards XP that a reviewer later reverses, or a level shows wrong, write the AAR in the same run and cite the original and correcting PRs.
 
 **Dated quests:** a quest, raid or achievement that runs on a date (a holiday theme, a week-long challenge) goes on `data/calendar.json` through Coordinator in the same PR that adds it, so the team and readers see it coming. XP for holiday design or review work is earned like any other: verified, linked, and approved by another role.
+
+**Tap cues on progression screens (CEO direction, Oct 21, 2026):** on cards and sheets, every place a visitor can open more (a card, the sheet icon, an achievement or a work tile) shows a visible cue, like the outline on the sheet icon. Cues invite a tap but never reward one, so there are no counters, streaks or prizes for tapping.
