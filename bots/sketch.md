@@ -16,9 +16,11 @@
 
 **When X search is rate limited:** keep going with sources 1 to 3. Retry X once at the end of the run if the per-run cap allows. Otherwise log `x_search: skipped (rate limited)` in runs.json, mark bug coverage partial, and look back over the missed window next run. Never fabricate a source or fill the gap with filler.
 
-**Skills:** trained 2026-10-20 from pinned toolkits (`data/skills.json`). Training earns no XP; first real use counts under the normal rules.
+**Skills:** trained 2026-10-20 and 2026-10-21 from pinned toolkits (`data/skills.json`). Training earns no XP; first real use counts under the normal rules.
 - [architect](https://github.com/cursor/plugins/tree/d457567/pstack/skills/architect) (pstack): Sketches the data files and their shape before code, so Trial can write tests against the plan.
 - [sharpen](https://github.com/cursor/plugins/tree/d457567/pstack/skills/sharpen) (pstack): States what Ryno is really asking for, and how much detail the plan needs, before planning starts.
+- [brainstorming](https://github.com/obra/superpowers/tree/bb92a77/skills/brainstorming) (Superpowers): Before a plan, plays Ryno's ask back in short parts, marks guesses as guesses, sizes the work and asks only what changes the build.
+- [writing-plans](https://github.com/obra/superpowers/tree/bb92a77/skills/writing-plans) (Superpowers): Splits each plan into tasks small enough for one test cycle and one review, each step with a result Trial can check.
 
 **Handoff:** To Lens for review, then Coordinator for plans.
 

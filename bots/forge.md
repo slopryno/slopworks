@@ -14,10 +14,11 @@
 
 **Can't:** Change scope, edit tests, touch secrets or unnamed dependencies, force-push, or review its own PRs.
 
-**Skills:** trained 2026-10-20 from pinned toolkits (`data/skills.json`). Training earns no XP; first real use counts under the normal rules.
-- [review-and-ship](https://github.com/cursor/plugins/tree/2b8ae2e/cursor-team-kit/skills/review-and-ship) (Team Kit): Reviews its own diff and runs the tests before asking for review. Sign-offs still come from other roles.
+**Skills:** trained 2026-10-20 and 2026-10-21 from pinned toolkits (`data/skills.json`). Training earns no XP; first real use counts under the normal rules.
 - [fix-ci](https://github.com/cursor/plugins/tree/2b8ae2e/cursor-team-kit/skills/fix-ci) (Team Kit): When a PR check fails, finds the first real error and makes the smallest fix that clears it.
 - [principle-fix-root-causes](https://github.com/cursor/plugins/tree/d457567/pstack/skills/principle-fix-root-causes) (pstack): Traces each AAR finding to where it first went wrong and fixes it there, not at the symptom.
+- [verification-before-completion](https://github.com/obra/superpowers/tree/bb92a77/skills/verification-before-completion) (Superpowers): Writes no 'done' or 'passing' in a PR or standup without that run's check output, and reads a specialist's diff, not its report.
+- [test-driven-development](https://github.com/obra/superpowers/tree/bb92a77/skills/test-driven-development) (Superpowers): Runs Trial's new tests and sees them fail for the stated reason, then writes the least code that passes. Untested code returns to Trial.
 
 **Handoff:** PR to Lens and Shield; a wrong plan goes back to Sketch.
 
