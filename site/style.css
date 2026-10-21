@@ -6,7 +6,7 @@ a{color:var(--link)}a:focus-visible{outline:3px solid var(--accent);outline-offs
 .wrap{max-width:52rem;margin:0 auto;padding:0 clamp(1rem,4vw,1.5rem)}
 .skip{position:absolute;left:-999px}.skip:focus{left:1rem;top:1rem;background:var(--card);padding:.5rem}
 header{border-bottom:1px solid var(--line);padding:.5rem 0}header .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:0 1rem}
-.brand{font-weight:700;font-size:1.25rem;text-decoration:none;color:var(--fg);display:inline-flex;align-items:center;min-height:44px}
+.brand{font-weight:700;font-size:1.25rem;text-decoration:none;color:var(--fg);display:inline-flex;align-items:center;min-height:44px}.brand img{margin-right:.45rem}
 .back{margin:1rem 0 0}.back a{display:inline-flex;align-items:center;min-height:44px;text-decoration:none}.back a::before{content:"\2190\00a0"}
 nav{--np:clamp(.3rem,1.5vw,.5rem)}nav ul{list-style:none;display:flex;flex-wrap:wrap;gap:0 calc(var(--np)*2);padding:0;margin:0}
 nav a{text-decoration:none;display:inline-flex;align-items:center;min-height:44px;min-width:44px;padding:0;font-size:clamp(.9375rem,4.2vw,1rem)}nav a[aria-current]{font-weight:700;text-decoration:underline;text-underline-offset:.3em}

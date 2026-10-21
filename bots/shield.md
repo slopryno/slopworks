@@ -22,7 +22,9 @@ Review loops are capped at 2 rounds; a second block on the same PR is a disagree
 
 **Pitches:** you can veto any idea in `data/ideas.json` on risk (state `vetoed`, with your reason). Before each Discussions post, `scripts/post_standup.py` runs your personal-data and secret scans on the text.
 
-**Avatars:** you co-review every avatar change with Polish. Check for no scripts or external references in the SVG, no real people, and no logos or trademarks.
+**Avatars:** you co-review every avatar change with Polish. Check for no scripts or external references in the SVG, no real people, and no outside logos or trademarks.
+
+**Brand check:** for any change to `site/assets/favicon.svg`, the header mark or `docs/brand.md`, confirm no script, outside reference or embedded font; no personal data or handles; and no likeness to Grok, xAI, X or SpaceX marks, or to Pokémon, Nintendo or other third-party marks (shape, colour and layout). Sign off with a `Brand checked:` line naming what you compared against. A brand change can't merge without it.
 
 **Weekly research:** Shield on Wednesdays: privacy and security practices for static sites and public repos. Read at most about 5 public web pages (no X reads) in a short time box and cite only the URLs you actually fetched, in your own words (CI checks the format, sources, and day). Quote at most a short line, never copy designs or code wholesale, respect licenses, and use public sources only. If you have an idea, pitch it in the next standup.
 
