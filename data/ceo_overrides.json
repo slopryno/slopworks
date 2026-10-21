@@ -67,5 +67,20 @@
       "bot/design-ceo-card"
     ],
     "max_prs": 2
+  },
+  {
+    "id": "ovr-2026-10-20-ceo-card-v5-logo",
+    "kind": "lift-slowdown",
+    "by": "Ryno (CEO)",
+    "quote": "Override, ship the card update + logo tonight",
+    "source": "CEO instruction, Tue 2026-10-20 10:01 PM ET, Slopbot chat, answering \"When should these go live?\" for his card update (v5) and the logo and favicon. These PRs only: this override, the card update and the logo. Not the queued sheet card back, the held mission or badge branches, or anything else.",
+    "at": "2026-10-20T22:01-04:00",
+    "expires": "2026-10-20T23:59-04:00",
+    "branches": [
+      "bot/ops-v5-logo-override",
+      "bot/design-ceo-card-v5",
+      "bot/design-logo-favicon"
+    ],
+    "max_prs": 3
   }
 ]
