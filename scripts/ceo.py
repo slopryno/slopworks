@@ -125,7 +125,7 @@ def sheet(repo, total, next_html, root=None):
                   f'<span class="meta">label by {"the Assistant, after his yes in chat" if x["applied_by"] == "Executive Assistant" else "Ryno"}</span></li>'
                   for x in reversed(dec))
     ov = "".join(f'<li><time datetime="{x["at"][:10]}">{_day(x["at"])}</time> CEO override '
-                 f'<span class="meta">up to {x["max_prs"]} PRs, named work only, until 11:59 PM ET that day</span></li>' for x in reversed(ovr))
+                 f'<span class="meta">up to {x["max_prs"]} PR{"" if x["max_prs"] == 1 else "s"}, named work only, until 11:59 PM ET that day</span></li>' for x in reversed(ovr))
     return (f'<section class="sheet card" style="border-top:4px solid #b8860b;flex-wrap:wrap"><img class="av" src="../../assets/avatars/ceo.svg" width="96" height="96" alt="">'
             f'<div style="flex-basis:10rem"><p class="title">CEO · one of one, 00/{total}</p><p class="lvl" style="display:flex;align-items:center;gap:.35rem;flex-wrap:wrap">The owner {hv}'
             f'<a href="{X_URL}" rel="noopener noreferrer" aria-label="slopryno on X" title="slopryno on X" style="display:inline-grid;place-items:center;width:44px;height:44px;margin-left:-.6rem">{xi}</a></p>'

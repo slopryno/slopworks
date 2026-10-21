@@ -1,12 +1,12 @@
 {
-  "as_of": "2026-10-20T11:33-04:00",
-  "newest_day": "2026-10-20",
-  "days_of_history": 6,
+  "as_of": "2026-10-21T09:53-04:00",
+  "newest_day": "2026-10-21",
+  "days_of_history": 7,
   "ci_window_start": "2026-10-15T23:00-04:00",
   "totals": {
-    "prs": 122,
+    "prs": 132,
     "open_to_merge_min": 1,
-    "ci_catches": 23,
+    "ci_catches": 27,
     "main_failures": 0,
     "reverts": 0,
     "aars": 16,
@@ -17,8 +17,8 @@
     "blast_matched": 2
   },
   "pace": {
-    "mode": "slowed",
-    "clean_prs": 2,
+    "mode": "normal",
+    "clean_prs": 12,
     "clean_needed": 10
   },
   "days": [
@@ -94,17 +94,31 @@
     },
     {
       "date": "2026-10-20",
-      "prs": 11,
-      "open_to_merge_min": 8,
+      "prs": 18,
+      "open_to_merge_min": 7,
       "escaped": 1,
       "corrections": 0,
       "aars": 1,
-      "ci_catches": 0,
+      "ci_catches": 1,
       "ci_recorded": true,
       "main_failures": 0,
       "reverts": 0,
       "blocks": 0,
       "refusals": 6
+    },
+    {
+      "date": "2026-10-21",
+      "prs": 3,
+      "open_to_merge_min": 181,
+      "escaped": 0,
+      "corrections": 0,
+      "aars": 0,
+      "ci_catches": 3,
+      "ci_recorded": true,
+      "main_failures": 0,
+      "reverts": 0,
+      "blocks": 0,
+      "refusals": 3
     }
   ],
   "sprints": [
@@ -186,7 +200,7 @@
       "key": "prs",
       "label": "Merged PRs",
       "prev": 18,
-      "new": 11,
+      "new": 3,
       "direction": "down",
       "verdict": null
     },
@@ -194,17 +208,17 @@
       "key": "open_to_merge_min",
       "label": "Median open to merge, minutes",
       "prev": 7,
-      "new": 8,
+      "new": 181,
       "direction": "up",
       "verdict": null
     },
     {
       "key": "escaped",
       "label": "Incidents and data corrections per 10 PRs",
-      "prev": 0.0,
-      "new": 0.9,
-      "direction": "up",
-      "verdict": "worse"
+      "prev": 0.6,
+      "new": 0.0,
+      "direction": "down",
+      "verdict": "better"
     },
     {
       "key": "corrections",
@@ -218,16 +232,16 @@
       "key": "aars",
       "label": "AARs per 10 PRs",
       "prev": 0.6,
-      "new": 0.9,
-      "direction": "up",
-      "verdict": "worse"
+      "new": 0.0,
+      "direction": "down",
+      "verdict": "better"
     },
     {
       "key": "ci_catches",
       "label": "CI catches before merge per 10 PRs",
-      "prev": 1.7,
-      "new": 0.0,
-      "direction": "down",
+      "prev": 0.6,
+      "new": 10.0,
+      "direction": "up",
       "verdict": null
     },
     {
@@ -255,10 +269,7 @@
       "verdict": null
     }
   ],
-  "worsening": [
-    "escaped",
-    "aars"
-  ],
+  "worsening": [],
   "goals": [
     {
       "id": "G1",
