@@ -14,15 +14,15 @@ html{scrollbar-gutter:stable}html:has(.o:target){overflow:hidden}
 .art::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 45%,#fff5,#0000 45%) 50% 50%/140% 140% no-repeat;opacity:.25;animation:gl 6s ease-in-out infinite alternate}
 @keyframes pu{to{transform:translateY(-48px)}}@keyframes pd{to{transform:translateY(48px)}}@keyframes ps{to{background-position:-41px 5px,-25px 29px,-7px 17px}}@keyframes pt{from{opacity:.15}to{opacity:.7}}@keyframes gl{to{opacity:.5;background-position:60% 40%}}
 .nm{display:grid;gap:.1rem;padding:.35rem .2rem .1rem;font-size:.8125rem;line-height:1.35}.nm b{font-size:min(.9375rem,13cqi)}.open{container-type:inline-size}
-.ml{display:flex;align-items:center;gap:.3rem;color:var(--muted)}
+.ml{display:flex;align-items:center;gap:.3rem;color:var(--muted)}.card:not(.lead .card) .ml{position:absolute;white-space:nowrap;clip-path:inset(50%)}.o:target~.card .ml{position:static;clip-path:none}
 .nm::after,.ft::before{content:"";display:block;height:10px;width:calc(var(--n)*13px);background:var(--a);mask:url("GEM") 0 0/13px 10px repeat-x}.r1{--n:1}.r2{--n:2}.r3{--n:3}.r4{--n:4}
 .body{display:none}
 .o:target~.card{position:fixed;z-index:9;inset:.75rem;margin:auto;width:min(23rem,100% - 1.5rem);height:fit-content;max-height:calc(100dvh - 1.5rem);overflow:auto;overscroll-behavior:contain;display:grid;grid-template-columns:auto 1fr auto;column-gap:.5rem;padding:.4rem .6rem .3rem;box-shadow:0 0 0 100vmax #000b;animation:po .22s ease-out;transform:none}
 @keyframes po{from{opacity:0;transform:scale(.95)}}
 .o:target~.card .open{display:grid;grid-area:1/1/2/-1;height:auto;padding:0;pointer-events:none;visibility:hidden}.o:target~.card .open>*{visibility:visible}.o:target~.card .art{order:2;flex:none;height:clamp(4.5rem,30dvh - 5rem,10rem);border:2px solid var(--a);margin-top:.15rem}
-.o:target~.card .nm{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;column-gap:.6rem;min-height:2.15rem}.o:target~.card .nm b{font-size:1.2rem}.o:target~.card .ml{font-weight:700;font-size:.95rem;color:var(--fg)}.o:target~.card .nm::after{display:none}
+.o:target~.card .nm{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;column-gap:.6rem;min-height:2.15rem;padding-right:2rem}.o:target~.card .nm b{font-size:1.2rem}.o:target~.card .ml{font-weight:700;font-size:.95rem;color:var(--fg)}.o:target~.card .nm::after{display:none}
 .o:target~.card .body{display:contents}.o:target~.card>*,.body>*{grid-column:1/-1}
-.cl{position:absolute;z-index:2;top:.3rem;right:.3rem;display:grid;place-items:center;min-width:44px;min-height:44px;padding:0 .75rem;border-radius:8px;background:var(--card);color:var(--fg);font-size:.875rem;font-weight:700;text-decoration:none}.cl:not(:focus-visible){clip-path:inset(50%)}
+.cl{position:absolute;z-index:3;top:3rem;right:1rem;display:grid;place-items:center;min-width:44px;min-height:44px;padding:0 .75rem;border-radius:8px;background:var(--card);color:var(--fg);font-size:.875rem;font-weight:700;text-decoration:none}.cl:not(:focus-visible){clip-path:inset(50%)}
 
 .lv{display:flex;flex-wrap:wrap;align-items:center;gap:.3rem;margin:.3rem 0;font-size:.875rem;font-weight:700}.lv span{margin-left:auto;font-weight:400;font-size:.75rem;color:var(--muted)}
 .lv::after{content:"";flex:0 0 100%;height:6px;margin-top:.2rem;border-radius:3px;background:linear-gradient(90deg,var(--a) var(--w),color-mix(in srgb,var(--fg) 18%,var(--card)) 0)}
@@ -39,3 +39,4 @@ html{scrollbar-gutter:stable}html:has(.o:target){overflow:hidden}
 @keyframes sh{from{background-position:100% 0}to{background-position:0 0}}
 @media(max-height:36rem){.mv li{padding:.1rem 0}.mv span,.wr{line-height:1.2}.o:target~.card{inset:.4rem;max-height:calc(100dvh - .8rem)}}@media(prefers-reduced-motion:reduce){.card,.card *,.card::after,.art::before,.art::after{animation:none!important;transition:none!important}}
 @media(min-width:48rem){.deck{grid-template-columns:repeat(auto-fill,minmax(10.5rem,1fr))}.o:target~.card{width:min(25rem,100% - 1.5rem)}}
+.jb{position:absolute;z-index:1;right:6px;bottom:16px;width:22px;height:22px;stroke-linecap:round;stroke-linejoin:round}.o:target~.card .jb{top:.85rem;right:.55rem;bottom:auto;width:24px;height:24px}

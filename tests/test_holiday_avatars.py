@@ -90,7 +90,7 @@ class Sets(unittest.TestCase):
         out = avatars.files("normal")
         for i, (n, spec) in enumerate(avatars.ROLES.items()):
             if n not in avatars.FIXED:  # the CEO is one drawing all year (tests/test_ceo_card.py)
-                self.assertEqual(out[f"{n}.svg"], avatars.svg(i, n, *spec))
+                self.assertEqual(out[f"{n}.svg"], re.sub(avatars.BADGE_G, "", avatars.svg(i, n, *spec)))  # badge: card corner
 
     def test_every_team_role_has_both_costumes(self):
         for n, *_ in build.team():
