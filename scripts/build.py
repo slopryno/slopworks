@@ -641,6 +641,9 @@ def build():
     import skills as skillmod
     kit = skillmod.load()
     learned = lambda f: skillmod.role_skills((ROOT / "bots" / f).read_text()) or []
+    def trained_when(got):  # per-source trained dates, e.g. "Oct 15 and 21, 2026"
+        days = sorted({datetime.fromisoformat(kit["sources"][src].get("trained", kit["trained"])) for _, _, src, _ in got}) or [datetime.fromisoformat(kit["trained"])]
+        return " and ".join(d.strftime("%b %-d") if i == 0 or d.month != days[0].month else d.strftime("%-d") for i, d in enumerate(days)) + f", {days[-1].year}"
     # Training tracks (Ryno, 2026-10-20 7:05 AM ET): a role's **Training track:** lines name tracks in data/skills.json.
     tracked = lambda f: [(tid, kit["tracks"][tid]) for tid in skillmod.role_tracks((ROOT / "bots" / f).read_text()) if tid in kit.get("tracks", {})]
     # Character sheets (i34, Week 1): every number is computed here from data/xp_ledger.json and data/progression.json.
@@ -702,7 +705,7 @@ def build():
                  ach=[dict(name=a["name"], rule=a["rule"], got=next((z for z in ok if z["type"] == a["event"]), None)) for a in prog["achievements"]], badges=None,
                  bio=bio(n), objective=home.objective(objectives[n], "../../", href) if n in objectives else "", owns=o, cant=cant.group(1) if cant else "",
                  latest=latest_msg(n, "../../", "team/" + f[:-3] + "/"), rolefile=f"{REPO}/blob/main/bots/{f}",
-                 skills=learned(f) or [], tracks=tracks, trained=datetime.fromisoformat(kit["trained"]).strftime("%b %-d, %Y"), skills_src=f"{REPO}/blob/main/data/skills.json",
+                 skills=learned(f) or [], tracks=tracks, trained=trained_when(learned(f)), skills_src=f"{REPO}/blob/main/data/skills.json",
                  rday=rday, rfocus=rfocus[:1].upper() + rfocus[1:], rlast=rlast,
                  rlast_href=(("../../arena/#" + e(rlast["id"])) if in_arena else href(rlast["id"], "../../", "team/")) if rlast else "",
                  work=[dict(y, gain=y["base_xp"] * y["quality_pct"] // 100) for y in shown], verified=label("verified"),

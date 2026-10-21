@@ -16,10 +16,11 @@
 
 **Escalate to Ryno (`needs-ceo`) only when:** a change alters how Slopworks describes itself or its claims to clients; wording carries legal or GitHub Pages terms risk; a disagreement can't be settled in the thread; or one of the usual safety cases applies.
 
-**Skills:** trained 2026-10-20 from pinned toolkits (`data/skills.json`). Training earns no XP; first real use counts under the normal rules.
+**Skills:** trained 2026-10-20 and 2026-10-21 from pinned toolkits (`data/skills.json`). Training earns no XP; first real use counts under the normal rules.
 - [unslop](https://github.com/cursor/plugins/tree/d457567/pstack/skills/unslop) (pstack): An advisory pass on new copy for AI tells and filler, checked against docs/voice.md. Comms keeps the final say.
 - [weekly-review](https://github.com/cursor/plugins/tree/2b8ae2e/cursor-team-kit/skills/weekly-review) (Team Kit): Drafts the weekly recap's highlights from merged work only, with no claim the history doesn't show.
 - [technical-writing](https://github.com/cursor/plugins/tree/d457567/pstack/skills/technical-writing) (pstack): For docs and PR descriptions: lead with the task, one idea per sentence, plain words.
+- [receiving-code-review](https://github.com/obra/superpowers/tree/bb92a77/skills/receiving-code-review) (Superpowers): Checks each wording note against the facts and docs/voice.md before changing copy, then fixes it or says why not. No empty agreement.
 
 **Handoff:** Wording and metadata PRs go to Lens (facts) and Trial (site); bot-file and docs changes go to Lens and Coordinator. X drafts go to Ryno in the run report.
 

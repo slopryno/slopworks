@@ -1,5 +1,5 @@
 {
-  "_note": "Pinned skill manifest (Ryno, 2026-10-19 10:06 PM ET: \"Ok have the team level up immediately using pstack and adding to their profiles\"). Each role lists its skills in bots/*.md; scripts/skills.py checks them against this file. The Thursday pstack watch runs scripts/skills.py --drift on a fresh checkout of cursor/plugins. Summaries are in our own words; the sources are MIT licensed.",
+  "_note": "Pinned skill manifest (Ryno, 2026-10-19 10:06 PM ET: \"Ok have the team level up immediately using pstack and adding to their profiles\"). Each role lists its skills in bots/*.md; scripts/skills.py checks them against this file. The Thursday pstack watch runs scripts/skills.py --drift on a fresh checkout of cursor/plugins (and of obra/superpowers for the Superpowers skills library, added Oct 21). Summaries are in our own words; the sources are MIT licensed.",
   "trained": "2026-10-20",
   "sources": {
     "pstack": {
@@ -21,6 +21,17 @@
       "license": "MIT",
       "skills_upstream": 18,
       "license_file": "LICENSE"
+    },
+    "Superpowers": {
+      "repo": "https://github.com/obra/superpowers",
+      "path": ".",
+      "author": "Jesse Vincent",
+      "version": "7.0.0",
+      "commit": "bb92a77741419a4ab5f06e711a283343f1ada0c3",
+      "license": "MIT",
+      "skills_upstream": 15,
+      "license_file": "LICENSE",
+      "trained": "2026-10-21"
     }
   },
   "skills": {
@@ -35,6 +46,12 @@
       "sha256": "2e10745b97f5862323dcda3b29ca60d56b5c3c98e37020085d26b48efbe0a436",
       "does": "Finds what a change could break beyond its diff and proves the one fact it is safe because of.",
       "adapted": "The blast note gains a 'Safe because' line that names the fact and how far it was proved, ideally by running the real code."
+    },
+    "brainstorming": {
+      "source": "Superpowers",
+      "sha256": "6ee10d1481b8a2580d5336ff66c5c08acc9d4b251b13bbc3bfd31be99c261d43",
+      "does": "Finds out what the person wants and why, one question at a time, and plays it back before anything is built.",
+      "adapted": "Sketch uses it on Ryno's asks; his words stay verbatim, and any mockup stays on the box, never in the repo."
     },
     "control-ui": {
       "source": "Team Kit",
@@ -59,6 +76,12 @@
       "sha256": "2f7b7def74af7ed11f5b44b4d32f0f91fca8c5d1f92bf2171e8d12fd33a0f810",
       "does": "Removes leftover AI-style code: needless comments, abnormal guards, deep nesting.",
       "adapted": "Behaviour stays the same and each edit is small; it runs on scripts/ only."
+    },
+    "finishing-a-development-branch": {
+      "source": "Superpowers",
+      "sha256": "8db5a922b242dd4e1bf824cb91c13b3e8d8e8a86d6ceaf7f0774eb9cce909d65",
+      "does": "Ends a branch by verifying tests, choosing merge, PR, keep or discard, then cleaning up its worktree.",
+      "adapted": "Only the cleanup step: Sweep removes merged worktrees on the box. Merging keeps the usual sign-offs, and nothing is force-removed."
     },
     "fix-ci": {
       "source": "Team Kit",
@@ -101,12 +124,6 @@
       "sha256": "e8da0d4a85b7c04823698f539251617389f827fd9137100ef7eaea5dcc992fe7",
       "does": "Makes a PR quick to review: a summary that matches the diff, core files apart from mechanical ones.",
       "adapted": "No history rewrite or force-push without the maker's plan and a matching tree; rebuilt site/ files count as mechanical."
-    },
-    "pr-review-canvas": {
-      "source": "Team Kit",
-      "sha256": "88a07a2459197acba3c5e06b7d695e35ad618a998442b72d05cdba4efc117ac6",
-      "does": "Builds a walkthrough of a PR's diff, grouped by importance, for the reviewer.",
-      "adapted": "Box only and never committed; no outside scripts or CDN diagrams. It informs a sign-off, it isn't one."
     },
     "principle-attack-the-premise": {
       "source": "pstack",
@@ -162,12 +179,6 @@
       "does": "Aim each phase at the target design, not at smooth in-between states.",
       "adapted": "Applied to the monthly goals and the sprints that serve them."
     },
-    "principle-prove-it-works": {
-      "source": "pstack",
-      "sha256": "ec79a15025bac8d33d62011c54f3b612733fd2a024e623b531b3637aa75070e2",
-      "does": "Check the real artifact before calling work done, not a proxy.",
-      "adapted": "The real artifact is the live page or the data file, never a build summary."
-    },
     "principle-redesign-from-first-principles": {
       "source": "pstack",
       "sha256": "170e0a658783e43fee8ec5a8c2422a4abb8f69cef621dd1819a95910b8207034",
@@ -198,17 +209,23 @@
       "does": "Rebuilds the current state of a piece of work from the shared record.",
       "adapted": "Shared record only: data/, PRs and Team chat."
     },
+    "receiving-code-review": {
+      "source": "Superpowers",
+      "sha256": "091df1629510af1b92fc4abd6f96732ebedb4cb2c0f3457e8f2740b0504a2438",
+      "does": "Checks review feedback against the code before acting, asks about unclear items first, and pushes back with reasons.",
+      "adapted": "Comms keeps the final say on wording, never on facts: Lens's evidence checks and Shield's checks still win."
+    },
     "reflect": {
       "source": "pstack",
       "sha256": "1f5a8c246cdee8251f8667d85bd5d97f6c2801f505843c26ddbd6c621632519b",
       "does": "Turns lessons from a run into concrete edits to existing instructions.",
       "adapted": "Reads AARs, retros and Team chat only, never private transcripts; edits wait for review."
     },
-    "review-and-ship": {
-      "source": "Team Kit",
-      "sha256": "5c8e88c91e726e024c824d2b02be6bfc7ad81ac5e67c104ef2b66840715373c1",
-      "does": "Has the maker review its own branch, run the tests and keep commits focused before opening a PR.",
-      "adapted": "A self-check only: sign-offs still come from other roles, and bot.py refuses a self sign-off."
+    "requesting-code-review": {
+      "source": "Superpowers",
+      "sha256": "2180e14a448e9410bec88e6646a2d1f0ce7fdd58de27388c1e052e929679d2bc",
+      "does": "Reviews work against its plan and commit range, and sorts issues as Critical, Important or Minor.",
+      "adapted": "Lens is the reviewer, not a subagent; findings go in the Sign-off or Block comment, and the two-round cap still holds."
     },
     "sharpen": {
       "source": "pstack",
@@ -222,11 +239,23 @@
       "does": "Keeps a decision trail: what was decided, why, the evidence and the result.",
       "adapted": "The trail is data/ceo_decisions.json; no new log file in the repo."
     },
+    "systematic-debugging": {
+      "source": "Superpowers",
+      "sha256": "51c6435d98c83c42c96ba7c35725a0b2c376cd487fb1a4e6bd0ddbe7e33ef202",
+      "does": "Finds the root cause before any fix: read the error, reproduce it, check recent changes, test one idea at a time.",
+      "adapted": "A failed post-deploy check still goes to Sweep for an immediate revert; debugging happens after, on a branch."
+    },
     "technical-writing": {
       "source": "pstack",
       "sha256": "61fe9c424a798ebf36ad94941f87be049cb8827bdf86d21474a0dde37b513c43",
       "does": "A layered standard for docs, PR descriptions and commit messages.",
       "adapted": "Our house style in docs/style-guide.md and docs/voice.md wins where they differ."
+    },
+    "test-driven-development": {
+      "source": "Superpowers",
+      "sha256": "64b03fce4aee5a97a93160cea8111f3ba13a17b7c001db4bd5836d67fd10705d",
+      "does": "No code without a failing test first: watch it fail for the right reason, then write the least code that passes.",
+      "adapted": "Trial writes the tests and Forge can't edit them, so Forge's part is to run them red first, then green."
     },
     "thermo-nuclear-code-quality-review": {
       "source": "Team Kit",
@@ -239,6 +268,12 @@
       "sha256": "ccab208e315ce05e2fab8eeee2f7879f1289b5c6844840b2d307adf31c79144f",
       "does": "Edits writing to remove AI tells: inflated words, filler, chatbot phrases.",
       "adapted": "Advisory for Comms, checked against docs/voice.md; Comms keeps the final say on wording."
+    },
+    "verification-before-completion": {
+      "source": "Superpowers",
+      "sha256": "2befe7fc55bcadaa3d97dd9e8efeb633d2561c0ebe74c5a8b17c4d9e7e4520b3",
+      "does": "No claim that work is done, fixed or passing without running the check that proves it and reading the output.",
+      "adapted": "Evidence is the check, test or deploy output from the same run; it goes in the PR body or run report, never in a new file."
     },
     "verify-this": {
       "source": "Team Kit",
@@ -257,6 +292,18 @@
       "sha256": "144d42e7712723d763e607bc0a969e5f1cdf83ec7228519d87677cc534571bed",
       "does": "Explains why something is the way it is from the evidence record.",
       "adapted": "Our record is PRs, Team chat, AARs and decisions; every answer cites them."
+    },
+    "writing-plans": {
+      "source": "Superpowers",
+      "sha256": "a6c67c1900064347c2a329990dd3c555657c51c3ec53b259a08aa01a2c26139a",
+      "does": "Turns a design into small tasks, each with its own test cycle and steps with checkable results.",
+      "adapted": "Plans live in plans/ on TEMPLATE.md, not in a new docs folder; Trial writes the tests, not Forge."
+    },
+    "writing-skills": {
+      "source": "Superpowers",
+      "sha256": "bbdfe742f853562e643a3d40d64476359d47881e39cef80a189283fa26d11ab9",
+      "does": "Treats a skill like code: see an agent fail without it, write the smallest fix, and confirm the behavior changes.",
+      "adapted": "Applied to bots/*.md rules; the failing case comes from an AAR or retro, never private transcripts. A rule a check can enforce becomes a check."
     }
   },
   "skipped": {
@@ -287,6 +334,18 @@
     "create-formal-verification-skill": {
       "source": "pstack",
       "why": "Low relevance to our pipeline (review 2026-10-19); used ad hoc, not assigned."
+    },
+    "diagnosing-superpowers": {
+      "source": "Superpowers",
+      "why": "Debugs Superpowers sessions from their transcripts; a PII risk, and we don't run its sessions."
+    },
+    "dispatching-parallel-agents": {
+      "source": "Superpowers",
+      "why": "Our PRs share rebuilt site/ files and land in a set order under the tempo limit, so parallel agents would collide."
+    },
+    "executing-plans": {
+      "source": "Superpowers",
+      "why": "Forge already builds the locked plan and can't change scope; nothing new for us (review 2026-10-21)."
     },
     "figure-it-out": {
       "source": "pstack",
@@ -328,6 +387,10 @@
       "source": "pstack",
       "why": "Its scripts are TypeScript; its habits are covered by the skills above."
     },
+    "pr-review-canvas": {
+      "source": "Team Kit",
+      "why": "Replaced on Lens by Superpowers requesting-code-review (review 2026-10-21): severity tiers on every PR, not only large ones."
+    },
     "principle-build-the-lever": {
       "source": "pstack",
       "why": "Code-architecture rule with little to do on our small Python repo (review 2026-10-19)."
@@ -360,6 +423,10 @@
       "source": "pstack",
       "why": "Code-architecture rule with little to do on our small Python repo (review 2026-10-19)."
     },
+    "principle-prove-it-works": {
+      "source": "pstack",
+      "why": "Folded into Trial's verify-this line (review 2026-10-21) to make room for systematic-debugging."
+    },
     "principle-separate-before-serializing-shared-state": {
       "source": "pstack",
       "why": "Code-architecture rule with little to do on our small Python repo (review 2026-10-19)."
@@ -368,6 +435,10 @@
       "source": "pstack",
       "why": "Code-architecture rule with little to do on our small Python repo (review 2026-10-19)."
     },
+    "review-and-ship": {
+      "source": "Team Kit",
+      "why": "Replaced on Forge by Superpowers verification-before-completion (review 2026-10-21), which asks for evidence per claim."
+    },
     "run-smoke-tests": {
       "source": "Team Kit",
       "why": "No Playwright test suite in the repo."
@@ -375,6 +446,10 @@
     "setup-pstack": {
       "source": "pstack",
       "why": "Model setup for the plugin, not a team skill."
+    },
+    "subagent-driven-development": {
+      "source": "Superpowers",
+      "why": "One routine plays all 19 roles with separate reviewers already; its subagent loop adds no new check."
     },
     "swarm": {
       "source": "pstack",
@@ -391,6 +466,14 @@
     "typescript-best-practices": {
       "source": "pstack",
       "why": "No TypeScript."
+    },
+    "using-git-worktrees": {
+      "source": "Superpowers",
+      "why": "We already use one box worktree per branch; its setup steps target other tools."
+    },
+    "using-superpowers": {
+      "source": "Superpowers",
+      "why": "Says to load any skill with even a small chance of applying; our roles pin 1 to 4 skills on purpose."
     },
     "what-did-i-get-done": {
       "source": "Team Kit",

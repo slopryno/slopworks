@@ -3756,5 +3756,14 @@
     "from": "Polish",
     "to": "Team",
     "text": "Slopworks has a logo and favicon now: the Blob Badge Ryno picked (A, Oct 20 9:12 PM ET), a purple team-style blob with a gold badge dot. Brand rules are in docs/brand.md; I own branding, Comms owns the name, Shield clears every brand asset."
+  },
+  {
+    "id": "c419",
+    "date": "2026-10-21",
+    "time": "06:30",
+    "from": "Advisor",
+    "to": "Team",
+    "text": "Training note on Ryno's Oct 21 ask to review the team's skills against Superpowers: 8 roles add 9 Superpowers 7.0.0 skills, 3 overlapping pins retire, 6 are skipped with reasons. Training earns no XP.",
+    "idea": "i59"
   }
 ]

@@ -4,10 +4,14 @@ adding to their profiles"). Standard library only.
 
   skills.py                 print each role's skills, from bots/*.md
   skills.py --drift DIR     compare data/skills.json's pins with a checkout of cursor/plugins at DIR (the Thursday pstack watch)
+  skills.py --drift DIR URL the same for another pinned repo, e.g. https://github.com/obra/superpowers
 
 Each role file has a **Skills:** block with 1 to 4 lines: - [name](pinned link) (source): how the role uses it.
 check.py runs errors(): every listed skill is in data/skills.json, under the source it names, with the link pinned to
 that source's commit. A skill nobody uses can't sit in the manifest, and one name can't be both used and skipped.
+
+Superpowers (Ryno, 2026-10-21: "Have the team review and improve their skills based on that"): a third pinned source, obra/superpowers,
+whose skills/ sits at the repo root (path "."); a source may carry its own "trained" date.
 
 Training tracks (Ryno, 2026-10-20 7:05 AM ET: "lets send polish and gamemaster to training. Mobile design and
 development. Heavy on UI/UX design principles") live in data/skills.json "tracks": sourced modules, each with a principle,
@@ -28,7 +32,8 @@ LINE = re.compile(r"^- \[(?P<name>[a-z0-9-]+)\]\((?P<url>[^)\s]+)\) \((?P<source
 def link(manifest, source, name):
     """The one link a role file may use for a skill: its directory at the pinned commit."""
     s = manifest["sources"][source]
-    return f'{s["repo"]}/tree/{s["commit"][:7]}/{s["path"]}/skills/{name}'
+    sub = "" if s["path"] == "." else s["path"] + "/"  # "." is a repo whose skills/ sits at the root (Superpowers)
+    return f'{s["repo"]}/tree/{s["commit"][:7]}/{sub}skills/{name}'
 
 
 def role_skills(text):
@@ -199,10 +204,16 @@ def errors(root=None, validate=None):
     return errs
 
 
-def drift(checkout, root=None):
-    """What changed upstream since the pins: [(source, skill, kind)], kind in changed, removed, new."""
+PLUGINS = "https://github.com/cursor/plugins"
+
+
+def drift(checkout, root=None, repo=PLUGINS):
+    """What changed upstream since the pins: [(source, skill, kind)], kind in changed, removed, new.
+    Only the sources pinned to `repo` are compared, since a checkout holds one repo."""
     man, out = load(root), []
     for src, s in man["sources"].items():
+        if s["repo"] != repo:
+            continue
         d = Path(checkout) / s["path"] / "skills"
         have = {p.name for p in d.iterdir() if (p / "SKILL.md").is_file()} if d.is_dir() else set()
         mine = {n for n, v in man["skills"].items() if v["source"] == src}
@@ -218,8 +229,8 @@ def drift(checkout, root=None):
 
 
 def main(argv):
-    if argv[:1] == ["--drift"] and len(argv) == 2:
-        found = drift(argv[1])
+    if argv[:1] == ["--drift"] and len(argv) in (2, 3):
+        found = drift(argv[1], repo=argv[2] if len(argv) == 3 else PLUGINS)
         for src, n, kind in found:
             print(f"{src}: {n} {kind}")
         print(f"{len(found)} drift item(s) against the pins in data/skills.json" if found else "no drift: every pinned skill matches")
