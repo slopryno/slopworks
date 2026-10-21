@@ -48,11 +48,20 @@
     },
     {
       "date": "2026-10-20",
-      "main_ci_runs": 10,
+      "main_ci_runs": 18,
       "main_ci_failed": 0,
-      "pages_runs": 10,
+      "pages_runs": 18,
       "pages_failed": 0,
-      "pr_ci_failed_bot": 0,
+      "pr_ci_failed_bot": 1,
+      "pr_ci_failed_dependabot": 0
+    },
+    {
+      "date": "2026-10-21",
+      "main_ci_runs": 3,
+      "main_ci_failed": 0,
+      "pages_runs": 3,
+      "pages_failed": 0,
+      "pr_ci_failed_bot": 3,
       "pr_ci_failed_dependabot": 0
     }
   ]

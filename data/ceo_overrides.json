@@ -82,5 +82,44 @@
       "bot/design-logo-favicon"
     ],
     "max_prs": 3
+  },
+  {
+    "id": "ovr-2026-10-21-superpowers",
+    "kind": "lift-slowdown",
+    "by": "Ryno (CEO)",
+    "quote": "Go with len's findings, i'll override",
+    "source": "CEO instruction, Wed 2026-10-21 6:52 AM ET, Slopbot chat, after the team's Superpowers skills review flagged that Lens's Minor findings would no longer block a PR (Shield blocks unchanged). The Superpowers skills update only. Not the held mission or badge branches, or anything else.",
+    "at": "2026-10-21T06:52-04:00",
+    "expires": "2026-10-21T23:59-04:00",
+    "branches": [
+      "bot/feature-team-superpowers"
+    ],
+    "max_prs": 1
+  },
+  {
+    "id": "ovr-2026-10-21-no-quotes",
+    "kind": "lift-slowdown",
+    "by": "Ryno (CEO)",
+    "quote": "Override, ship it today",
+    "source": "CEO instruction, Wed 2026-10-21 9:02 AM ET, Slopbot chat, answering \"When should the quote removal go live?\". The quote removal PR only, which also carries this record and the other two of today's override records. Not anything else.",
+    "at": "2026-10-21T09:02-04:00",
+    "expires": "2026-10-21T23:59-04:00",
+    "branches": [
+      "bot/ops-ceo-no-quotes"
+    ],
+    "max_prs": 1
+  },
+  {
+    "id": "ovr-2026-10-21-cards-v6",
+    "kind": "lift-slowdown",
+    "by": "Ryno (CEO)",
+    "quote": "Ship it now",
+    "source": "CEO instruction, Wed 2026-10-21 11:20 AM ET, Slopbot chat, answering \"Ship the new card set today?\" for the card set v6 (his power-card sheet, the tap-cue outline, the corner level badge). The card set PR only. Not anything else.",
+    "at": "2026-10-21T11:20-04:00",
+    "expires": "2026-10-21T23:59-04:00",
+    "branches": [
+      "bot/design-cards-v6"
+    ],
+    "max_prs": 1
   }
 ]

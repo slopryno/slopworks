@@ -118,12 +118,14 @@ def sheet(repo, total, next_html, root=None):
     data = lambda n: f'<a href="{repo}/blob/main/data/{n}">{n}</a>'
     pw = "".join(f'<li><strong>{e(name)}</strong>: {e(line)} <span class="meta">{f[rec]} {unit[0 if f[rec] == 1 else 1]} on record</span></li>'
                  for _, name, line, rec, unit in MOVES)
+    # Ryno, Oct 21 8:51 AM ET: no CEO quotes on the site. Each line says what he decided and when; his exact words and their
+    # ET time stay on the PR and in the add-only records (tests/test_ceo_quotes.py).
     yes = "".join(f'<li><time datetime="{x["applied_at"][:10]}">{_day(x["applied_at"])}</time> <a href="{e(x["evidence"])}">PR #{x["pr"]}</a> '
-                  f'{e(chr(8220) + x["quote"] + chr(8221)) if x["quote"] else "He added the label himself on GitHub."} '
+                  f'{"CEO approved in chat." if x["quote"] else "He added the label himself on GitHub."} '
                   f'<span class="meta">label by {"the Assistant, after his yes in chat" if x["applied_by"] == "Executive Assistant" else "Ryno"}</span></li>'
                   for x in reversed(dec))
-    ov = "".join(f'<li><time datetime="{x["at"][:10]}">{_day(x["at"])}</time> {e(chr(8220) + x["quote"] + chr(8221))} '
-                 f'<span class="meta">up to {x["max_prs"]} PRs, named work only, until 11:59 PM ET that day</span></li>' for x in reversed(ovr))
+    ov = "".join(f'<li><time datetime="{x["at"][:10]}">{_day(x["at"])}</time> CEO override '
+                 f'<span class="meta">up to {x["max_prs"]} PR{"" if x["max_prs"] == 1 else "s"}, named work only, until 11:59 PM ET that day</span></li>' for x in reversed(ovr))
     return (f'<section class="sheet card" style="border-top:4px solid #b8860b;flex-wrap:wrap"><img class="av" src="../../assets/avatars/ceo.svg" width="96" height="96" alt="">'
             f'<div style="flex-basis:10rem"><p class="title">CEO · one of one, 00/{total}</p><p class="lvl" style="display:flex;align-items:center;gap:.35rem;flex-wrap:wrap">The owner {hv}'
             f'<a href="{X_URL}" rel="noopener noreferrer" aria-label="slopryno on X" title="slopryno on X" style="display:inline-grid;place-items:center;width:44px;height:44px;margin-left:-.6rem">{xi}</a></p>'
@@ -131,7 +133,7 @@ def sheet(repo, total, next_html, root=None):
             f'<h2>Powers</h2><ul>{pw}</ul>'
             f'<p class="meta">Weak to {e(WEAK)}. Resists {e(RESISTS)}. Hands off to {e(HANDS_OFF)}.</p>'
             f'<h2>Safeguard</h2><p class="meta">Only Ryno\'s yes lets a change that loosens a safety check through. '
-            f'The Assistant adds the label only after his yes in chat, quoted on the PR.</p><ul class="worklist">{yes}</ul>'
+            f'The Assistant adds the label only after his yes in chat; his exact words stay on the PR.</p><ul class="worklist">{yes}</ul>'
             f'<h2>Unblock</h2><p class="meta">Each override lifts the daily PR limit for named work, for that day only.</p><ul class="worklist">{ov}</ul>'
             f'<h2>The human</h2><p>Ryno is a person, not a Grok Bot. He owns Slopworks and sets its direction. He doesn\'t sign off routine work: '
             f'bots review and merge each other\'s. The team pings him only for a real disagreement or a safety case.</p>'

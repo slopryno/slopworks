@@ -1,5 +1,95 @@
 [
   {
+    "id": "pr136",
+    "role": "Forge",
+    "title": "Pixel: character sheets as the card back, one shared sheets.css that loads on the sheets only, holo-rare shine fix, Comms wording (Ryno, Oct 20 3:06 PM ET)",
+    "pr": "https://github.com/slopryno/slopworks/pull/136",
+    "date": "2026-10-21",
+    "merged": "2026-10-21T09:53-04:00",
+    "opened": "2026-10-21T05:03-04:00"
+  },
+  {
+    "id": "pr138",
+    "role": "Forge",
+    "title": "Pixel: Slopworks logo and favicon, the Blob Badge, with Polish as brand owner and Shield's brand check (Ryno, Oct 20 9:06 and 9:12 PM ET)",
+    "pr": "https://github.com/slopryno/slopworks/pull/138",
+    "date": "2026-10-21",
+    "merged": "2026-10-21T08:39-04:00",
+    "opened": "2026-10-21T05:38-04:00"
+  },
+  {
+    "id": "pr137",
+    "role": "Forge",
+    "title": "Pixel: Ryno's mini card matches the team's, X and sheet icons only on the open card, job badges move off the blobs to the card corner with a crown for Ryno, min",
+    "pr": "https://github.com/slopryno/slopworks/pull/137",
+    "date": "2026-10-21",
+    "merged": "2026-10-21T05:23-04:00",
+    "opened": "2026-10-21T05:16-04:00"
+  },
+  {
+    "id": "pr135",
+    "role": "Forge",
+    "title": "Pixel: Ryno's card update (v5) and every card's sheet icon, tap outside to close, no scrolling on phones (Ryno, Oct 20 10:01 PM ET)",
+    "pr": "https://github.com/slopryno/slopworks/pull/135",
+    "date": "2026-10-20",
+    "merged": "2026-10-20T22:29-04:00",
+    "opened": "2026-10-20T22:14-04:00"
+  },
+  {
+    "id": "pr134",
+    "role": "Assistant",
+    "title": "Assistant: scoped CEO tempo override for the card update and logo (Ryno, Oct 20 10:01 PM ET)",
+    "pr": "https://github.com/slopryno/slopworks/pull/134",
+    "date": "2026-10-20",
+    "merged": "2026-10-20T22:06-04:00",
+    "opened": "2026-10-20T22:05-04:00"
+  },
+  {
+    "id": "pr133",
+    "role": "Forge",
+    "title": "Pixel: Ryno's CEO card and sheet, a link to his X profile, the rhino all year (Ryno, Oct 20 3:54 PM ET)",
+    "pr": "https://github.com/slopryno/slopworks/pull/133",
+    "date": "2026-10-20",
+    "merged": "2026-10-20T16:27-04:00",
+    "opened": "2026-10-20T16:21-04:00"
+  },
+  {
+    "id": "pr132",
+    "role": "Coordinator",
+    "title": "Coordinator: scoped CEO tempo override for Ryno's CEO card (Ryno, Oct 20 3:54 PM ET)",
+    "pr": "https://github.com/slopryno/slopworks/pull/132",
+    "date": "2026-10-20",
+    "merged": "2026-10-20T16:00-04:00",
+    "opened": "2026-10-20T15:59-04:00"
+  },
+  {
+    "id": "pr131",
+    "role": "Forge",
+    "title": "Pixel: Team trading cards: tap a card to open it, 10 real-world job types, Halloween art, Comms wording (Ryno, Oct 20 12:18 PM ET)",
+    "pr": "https://github.com/slopryno/slopworks/pull/131",
+    "date": "2026-10-20",
+    "merged": "2026-10-20T13:02-04:00",
+    "opened": "2026-10-20T12:54-04:00"
+  },
+  {
+    "id": "pr130",
+    "role": "Coordinator",
+    "title": "Coordinator: scoped CEO tempo override for the trading cards (Ryno, Oct 20 12:19 PM ET)",
+    "pr": "https://github.com/slopryno/slopworks/pull/130",
+    "date": "2026-10-20",
+    "merged": "2026-10-20T12:36-04:00",
+    "opened": "2026-10-20T12:35-04:00"
+  },
+  {
+    "id": "pr129",
+    "role": "Forge",
+    "title": "Forge: wins and XP refresh (122 merged PRs), Home role cards fit at 200% zoom, role sheets keep their latest merged PRs",
+    "pr": "https://github.com/slopryno/slopworks/pull/129",
+    "date": "2026-10-20",
+    "merged": "2026-10-20T11:50-04:00",
+    "opened": "2026-10-20T11:43-04:00"
+  },
+  {
     "id": "pr128",
     "role": "Coordinator",
     "title": "Coordinator: scoped CEO tempo override for one extra sprint today, up to 6 PRs (Ryno, Oct 20 11:02 AM ET)",

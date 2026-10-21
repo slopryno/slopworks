@@ -72,8 +72,9 @@ class Card(unittest.TestCase):
         self.assertEqual(f["decisions"], sum(1 for i in load("ideas.json") if i.get("decided_by") == "CEO"))
         for (_, _, _, rec, unit) in ceo.MOVES:
             self.assertIn(f'<em>{f[rec]}<small> {unit[0 if f[rec] == 1 else 1]}</small></em>', self.team)
-        for x in load("ceo_overrides.json"):
-            self.assertIn(x["quote"], self.sheet)
+        for x in load("ceo_overrides.json"):  # Ryno, Oct 21 8:51 AM ET: no CEO quotes on the site; each override is listed by its date
+            self.assertNotIn(x["quote"], self.sheet)
+            self.assertIn(f'<time datetime="{x["at"][:10]}">', self.sheet)
         for x in load("ceo_decisions.json"):
             self.assertIn(f'PR #{x["pr"]}', self.sheet)
 

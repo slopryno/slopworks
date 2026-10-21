@@ -21,12 +21,12 @@
     "incident",
     "data-correction"
   ],
-  "mode": "slowed",
-  "clean_prs": 2,
+  "mode": "normal",
+  "clean_prs": 12,
   "tripped_by": "aar-2026-10-20-run-interrupted",
   "trip_pr": 126,
   "trip_at": "2026-10-20T11:24-04:00",
-  "as_of_pr": 128,
+  "as_of_pr": 136,
   "days": [
     {
       "date": "2026-10-18",
@@ -38,7 +38,11 @@
     },
     {
       "date": "2026-10-20",
-      "prs": 11
+      "prs": 18
+    },
+    {
+      "date": "2026-10-21",
+      "prs": 3
     }
   ],
   "violations": [],
@@ -51,7 +55,14 @@
     "#108 merged 2026-10-19T17:29-04:00 as PR 9 of the day, over the slowed limit, under ovr-2026-10-19-phase-b (Ryno (CEO), 2026-10-19T16:31-04:00)",
     "#109 merged 2026-10-19T17:47-04:00 as PR 10 of the day, over the slowed limit, under ovr-2026-10-19-phase-b (Ryno (CEO), 2026-10-19T16:31-04:00)",
     "#127 merged 2026-10-20T11:28-04:00 carrying same-day AAR aar-2026-10-20-run-interrupted (Ryno, 2026-10-20 11:02 AM ET)",
-    "#128 merged 2026-10-20T11:33-04:00 as PR 11 of the day, over the slowed limit, under ovr-2026-10-20-extra-sprint (Ryno (CEO), 2026-10-20T11:29-04:00)"
+    "#128 merged 2026-10-20T11:33-04:00 as PR 11 of the day, over the slowed limit, under ovr-2026-10-20-extra-sprint (Ryno (CEO), 2026-10-20T11:29-04:00)",
+    "#129 merged 2026-10-20T11:50-04:00 as PR 12 of the day, over the slowed limit, under ovr-2026-10-20-extra-sprint (Ryno (CEO), 2026-10-20T11:29-04:00)",
+    "#130 merged 2026-10-20T12:36-04:00 as PR 13 of the day, over the slowed limit, under ovr-2026-10-20-extra-sprint (Ryno (CEO), 2026-10-20T11:29-04:00)",
+    "#131 merged 2026-10-20T13:02-04:00 as PR 14 of the day, over the slowed limit, under ovr-2026-10-20-extra-sprint (Ryno (CEO), 2026-10-20T11:29-04:00)",
+    "#132 merged 2026-10-20T16:00-04:00 as PR 15 of the day, over the slowed limit, under ovr-2026-10-20-extra-sprint (Ryno (CEO), 2026-10-20T11:29-04:00)",
+    "#133 merged 2026-10-20T16:27-04:00 as PR 16 of the day, over the slowed limit, under ovr-2026-10-20-extra-sprint (Ryno (CEO), 2026-10-20T11:29-04:00)",
+    "#134 merged 2026-10-20T22:06-04:00 as PR 17 of the day, over the slowed limit, under ovr-2026-10-20-ceo-card-v5-logo (Ryno (CEO), 2026-10-20T22:01-04:00)",
+    "#135 merged 2026-10-20T22:29-04:00 as PR 18 of the day, over the slowed limit, under ovr-2026-10-20-ceo-card-v5-logo (Ryno (CEO), 2026-10-20T22:01-04:00)"
   ],
   "ceo_overrides": [
     {
@@ -127,6 +138,39 @@
         "bot/design-logo-favicon"
       ],
       "max_prs": 3
+    },
+    {
+      "id": "ovr-2026-10-21-superpowers",
+      "by": "Ryno (CEO)",
+      "quote": "Go with len's findings, i'll override",
+      "at": "2026-10-21T06:52-04:00",
+      "expires": "2026-10-21T23:59-04:00",
+      "branches": [
+        "bot/feature-team-superpowers"
+      ],
+      "max_prs": 1
+    },
+    {
+      "id": "ovr-2026-10-21-no-quotes",
+      "by": "Ryno (CEO)",
+      "quote": "Override, ship it today",
+      "at": "2026-10-21T09:02-04:00",
+      "expires": "2026-10-21T23:59-04:00",
+      "branches": [
+        "bot/ops-ceo-no-quotes"
+      ],
+      "max_prs": 1
+    },
+    {
+      "id": "ovr-2026-10-21-cards-v6",
+      "by": "Ryno (CEO)",
+      "quote": "Ship it now",
+      "at": "2026-10-21T11:20-04:00",
+      "expires": "2026-10-21T23:59-04:00",
+      "branches": [
+        "bot/design-cards-v6"
+      ],
+      "max_prs": 1
     }
   ]
 }

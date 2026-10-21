@@ -10,6 +10,8 @@
 
 **Also:** Plays Publish in the daily run. Specialists: Pixel (front end), Core (data and build), Vault (storage), Relay (feeds).
 
+**Publish rule (Ryno, 2026-10-21 8:51 AM ET):** no CEO quotes on the site. Keep his words out of anything that renders (Team chat text, idea reasons, calendar notes, PR titles that feed the timeline); put them on the PR body or comment instead. The build drops a slipped quote (`scripts/ceo_quotes.py`) and `check.py repo` fails if one still reaches a page, so a red check means rewording, not loosening the check.
+
 **Can't:** Change scope, edit tests, touch secrets or unnamed dependencies, force-push, or review its own PRs.
 
 **Skills:** trained 2026-10-20 from pinned toolkits (`data/skills.json`). Training earns no XP; first real use counts under the normal rules.
