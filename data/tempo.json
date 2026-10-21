@@ -114,6 +114,19 @@
         "bot/design-ceo-card"
       ],
       "max_prs": 2
+    },
+    {
+      "id": "ovr-2026-10-20-ceo-card-v5-logo",
+      "by": "Ryno (CEO)",
+      "quote": "Override, ship the card update + logo tonight",
+      "at": "2026-10-20T22:01-04:00",
+      "expires": "2026-10-20T23:59-04:00",
+      "branches": [
+        "bot/ops-v5-logo-override",
+        "bot/design-ceo-card-v5",
+        "bot/design-logo-favicon"
+      ],
+      "max_prs": 3
     }
   ]
 }
