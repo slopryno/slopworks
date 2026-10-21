@@ -292,6 +292,7 @@ def page(slug, title, lede, body, source, h1=None):
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="{e(full)}">
 <meta name="twitter:description" content="{e(desc)}">
+<link rel="icon" href="{up}assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="{up}style.css">
 <link rel="alternate" type="application/rss+xml" title="Slopworks" href="{up}feed.xml">
 <link rel="alternate" type="application/feed+json" title="Slopworks" href="{up}feed.json">
@@ -299,7 +300,7 @@ def page(slug, title, lede, body, source, h1=None):
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <header><div class="wrap">
-<a class="brand" href="{up}"{' aria-current="page"' if slug == "" else ""}>Slopworks</a>
+<a class="brand" href="{up}"{' aria-current="page"' if slug == "" else ""}><img src="{up}assets/favicon.svg" alt="" width="28" height="28">Slopworks</a>
 <label class="tf"><input type="checkbox" id="theme-flip"><span class="tf-d"><span class="vh">Switch to </span>Dark<span class="vh"> theme</span></span><span class="tf-l"><span class="vh">Switch to </span>Light<span class="vh"> theme</span></span></label>
 <nav aria-label="Main"><ul>{nav}</ul></nav>
 </div></header>
@@ -737,7 +738,7 @@ def build():
         for y in ledger_all:
             if y["agent"] == n and y["status"] == "approved":
                 kinds[y["type"]] = kinds.get(y["type"], 0) + 1
-        return cardmod.card(n, i, len(order), f[:-3], cspec, season, xp, num, lv, nxt, kinds, f"../assets/avatars/{avatar_of(n)}.svg")
+        return cardmod.card(n, i, len(order), f[:-3], cspec, season, xp, num, lv, nxt, kinds, f"../assets/avatars/{avatar_of(n)}.svg", jb=avmod.card_badge(avatar_of(n), season))
     by_name = {x[0]: x for x in team()}
     seq = [by_name[n] for _, members in GROUPS for n in members if n in by_name]  # set order = the group order
     tiers = {}

@@ -94,6 +94,20 @@ class Cards(unittest.TestCase):
         for w in ("official", "endorsed", "real-time", "live agent", "separate agents"):  # unofficial fan project; roles, not live agents
             self.assertNotIn(w, text)
 
+    def test_badges_sit_in_the_card_corner_not_on_the_blob(self):
+        # Ryno, Oct 20 10:45-10:47 PM ET: the job badge moves off every blob to the card's corner; his is a gold crown.
+        for s, doc in self.pages.items():
+            self.assertEqual(doc.count('<svg class="jb" viewBox="-10 -10 20 20">'), len(self.roles) + 1, s)
+        for s in ("normal", "halloween", "winter"):
+            for name, svg in avatars.files(s).items():
+                self.assertNotIn("translate(80 82)", svg, (s, name))
+        self.assertIn('<path d="M-5 5l', self.pages["halloween"])  # his crown badge
+
+    def test_minis_show_dots_not_level_text(self):
+        css = (ROOT / "scripts/cards.css").read_text()
+        self.assertIn(".card:not(.lead .card) .ml{position:absolute;white-space:nowrap;clip-path:inset(50%)}", css)  # read, not shown
+        self.assertIn(".o:target~.card .ml{position:static;clip-path:none}", css)  # the open card keeps its level
+
     def test_team_page_fits_100_kb_in_every_season(self):
         for s, doc in self.pages.items():
             # the stylesheets Team loads (style.css; site/sheets.css loads on the character sheets only, Oct 20 3:06 PM ET)
@@ -103,7 +117,7 @@ class Cards(unittest.TestCase):
             else:  # the other sets aren't on disk: count their avatar files from the generator
                 files = avatars.files(s)
                 imgs = check.page_images("team/index.html", doc)
-                total = len(doc.encode()) + css + sum(len(files[i.rsplit("/", 1)[1]].encode()) for i in imgs if i.startswith("assets/avatars/"))
+                total = len(doc.encode()) + css + sum(len(files[i.split("avatars/", 1)[1]].encode()) for i in imgs if i.startswith("assets/avatars/"))
             self.assertLessEqual(total, 100_000, s)
 
 

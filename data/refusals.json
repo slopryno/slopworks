@@ -50,6 +50,11 @@
     "reason": "python3 -m unittest discover -s tests -q failed:"
   },
   {
+    "at": "2026-10-21T05:37-04:00",
+    "branch": "bot/feature-logo-favicon",
+    "reason": "visual review incomplete:"
+  },
+  {
     "at": "2026-10-21T05:01-04:00",
     "branch": "bot/ops-sheet-card-back",
     "reason": "missing sign-off from Atlas (required for these paths: Atlas, Lens, Shield, Trial)"
