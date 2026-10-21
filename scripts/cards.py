@@ -41,10 +41,12 @@ ICONS = {
 UI = {  # CSS-mask icons for the card chrome
  "lv": "M-4.5 1l4.5-4.5 4.5 4.5M-4.5 5.5l4.5-4.5 4.5 4.5",
  "set": "M-5-4h7v10h-7zM-2.5-6.5h7v10",
- "close": "M-4.5-4.5l9 9M4.5-4.5l-9 9",
  "weak": "M-1-6.5L1.5-1-1.5 1 1 6.5",
  "resist": "M0-6l5 2v3c0 4-3 6-5 7-2-1-5-3-5-7v-3z",
  "hand": "M-6.5 0h11M.5-4.5L5 0 .5 4.5",
+ "sheet": "M-4.5-6h9v12h-9zM-2-3.5h4v3h-4zM-2 2h4M-2 4h4",  # character sheet (Ryno, Oct 20 7:48 PM ET: the link becomes an icon)
+ "x": "M-5.5-5.5h3.2l7.8 11h-3.2zM5-5.5L-5 5.5",  # X mark for his profile link (7:45 PM ET)
+ "hv": "M-1.5-5.5a2.3 2.3 0 1 0 .1 0M-6 6c.3-3.2 2-4.8 4.5-4.8 1.3 0 2.3.4 3 1M1 3.8l1.7 1.7 3.6-3.8",  # human verified: a person and a check, original (Ryno, 8:03 PM ET)
 }
 TEX = {"stripes": "repeating-linear-gradient(135deg,#fff2 0 4px,#0000 4px 12px)", "lines": "repeating-linear-gradient(0deg,#0002 0 1px,#0000 1px 7px)",
        "rings": "repeating-radial-gradient(circle at 50% 0,#fff2 0 2px,#0000 2px 12px)", "grid": "linear-gradient(#fff2 1px,#0000 1px) 0 0/12px 12px,linear-gradient(90deg,#fff2 1px,#0000 1px) 0 0/12px 12px",
@@ -54,6 +56,8 @@ GEM = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0
 SH = {'pr_merged': ('PR', 'PRs'), 'signoff': ('sign-off', 'sign-offs'), 'ci_test_added': ('test', 'tests'), 'pitch_shipped': ('shipped', 'shipped'),
       'research_accepted': ('report', 'reports'), 'aar_fix': ('fix', 'fixes'), 'block_upheld': ('block', 'blocks'), 'deploy_check': ('check', 'checks')}
 CSS = (Path(__file__).with_name("cards.css")).read_text().replace("GEM", GEM).replace("\n", "")
+# The badge row's style ships with the badges (held): no unused CSS on the Team page until then (page budget, v5).
+BADGE_CSS = ".bd{display:flex;flex-wrap:wrap;gap:.5rem;margin:.3rem 0}.bd span{display:inline-flex;align-items:center;gap:.15rem;font-size:.8125rem;font-weight:700}.bd img{width:24px;height:24px}"
 MAX_LINE = 8  # words per move line (Comms)
 
 
@@ -76,37 +80,39 @@ def _shift(d, dx):
     out, cmd, k = [], "", 0
     for t in re.findall(r"[A-Za-z]|-?(?:\d+\.?\d*|\.\d+)", d):
         if t.isalpha():
-            assert t in "MLlhvcz", t
+            assert t in "MLlhvczasq", t  # only M and L are absolute
             cmd, k = t, 0
             out.append(t)
             continue
         n = float(t) + (dx if cmd in "ML" and k % 2 == 0 else 0)
         k += 1
-        n = f"{n:g}"
+        n = f"{n:g}".replace("0.", ".") if abs(n) < 1 else f"{n:g}"
         out.append(n if out[-1].isalpha() or n.startswith("-") else " " + n)
     return "".join(out)
 
 
 def strip():
-    """The UI icons as one mask strip, 14 units per slot in UI order (page budget, Oct 20 3:54 PM ET: room for the CEO card)."""
-    paths = "<path d='" + "".join(_shift(d, 14 * i) for i, d in enumerate(UI.values())) + "'/>"  # one path: same stroke for all
-    svg = (f"<svg xmlns='http://www.w3.org/2000/svg' viewBox='-7 -7 {14 * len(UI)} 14' fill='none' stroke='#000' stroke-width='1.7'"
+    """The UI icons, then the job-type icons, as one mask strip, 14 units per slot (page budget, Oct 20 3:54 PM ET: room for
+    the CEO card; 7:48 PM ET: the type icon moved here from the sprite so every card's markup is shorter)."""
+    ds = list(UI.values()) + list(ICONS.values())  # 7:48 PM ET and 8:06 PM ET: every card icon is a slot here, no sprite
+    paths = "<path d='" + "".join(_shift(d, 14 * i) for i, d in enumerate(ds)) + "'/>"  # one path: same stroke for all
+    svg = (f"<svg xmlns='http://www.w3.org/2000/svg' viewBox='-7 -7 {14 * len(ds)} 14' fill='none' stroke='#000' stroke-width='1.7'"
            f" stroke-linecap='round' stroke-linejoin='round'>{paths}</svg>")
     return "data:image/svg+xml," + svg.replace("<", "%3C").replace(">", "%3E").replace("#", "%23")
 
 
+def slot(k):
+    return len(UI) + list(ICONS).index(k)
+
+
 def icon(k):
-    return f'<svg aria-hidden="true"><use href="#{P}{k}"/></svg>'
+    """A move icon: an empty box whose ::before draws slot --x of the mask strip (decorative; the move name says it)."""
+    return f'<i style="--x:{slot(k)}"></i>'
 
 
-def sprite():
-    return ('<svg width="0" height="0" style="position:absolute" aria-hidden="true">'
-            + "".join(f'<symbol id="{P}{k}" viewBox="-7 -7 14 14"><path d="{d}"/></symbol>' for k, d in ICONS.items()) + "</svg>")
-
-
-def css(spec, season, stems):
+def css(spec, season, stems, badges=False):
     types = list(spec["types"])
-    t = "".join(f'.t{i}{{--a:{v["colour"]};--b:{v["tint"]};--m:{v["motif"]}}}' for i, v in enumerate(types))
+    t = "".join(f'.t{i}{{--a:{v["colour"]};--b:{v["tint"]};--m:{v["motif"]};--y:{slot(v["icon"])}}}' for i, v in enumerate(types))
     for k in ("texture", "particle_colour"):  # a value shared by several types is written once (page budget)
         vals = {}
         for i, v in enumerate(types):
@@ -116,13 +122,13 @@ def css(spec, season, stems):
         art = spec["roles"][n].get("art", {}).get(season)
         if art:
             t += f'.g-{s}{{--g:{art["scene"]};--p:{art["particle_colour"]}}}'
-    sel = {"lv": ".lv::before", "set": ".sn::before", "close": ".cl::before", "weak": ".wr span:nth-child(1)::before",
-           "resist": ".wr span:nth-child(2)::before", "hand": ".wr span:nth-child(3)::before"}
-    # One strip, each rule picks its slot (--x); the close icon is drawn at 18px, so its strip scales to match.
-    t += ",".join(sel.values()) + f'{{content:"";width:16px;height:16px;flex:none;background:var(--a);mask:url("{strip()}") calc(var(--x,0)*-16px) 0/{16 * len(UI)}px 16px no-repeat}}'
-    t += "".join(f'{sel[k]}{{--x:{i}}}' for i, k in enumerate(UI) if i)
-    t += f'.cl::before{{mask-size:{18 * len(UI)}px 18px;mask-position:-{18 * list(UI).index("close")}px 0}}'
-    return t + CSS
+    sel = {"lv": ".lv::before", "set": ".sn::before", "weak": ".wr :nth-child(1)::before",
+           "resist": ".wr :nth-child(2)::before", "hand": ".wr :nth-child(3)::before", "sheet": ".sh::before",
+           "x": ".xl::before", "hv": ".hu::before", "type": ".ml::before", "move": ".mv i[style]::before"}
+    # One strip, each rule picks its slot (--x) at its size (--s, 16px by default; the link icons 20px).
+    t += ",".join(sel.values()) + f'{{content:"";width:var(--s);height:var(--s);flex:none;background:var(--a);mask:url("{strip()}") calc(var(--x,0)*-1*var(--s)) 0/calc({len(UI) + len(ICONS)}*var(--s)) var(--s) no-repeat}}'
+    t += "".join(f'{sel[k]}{{--x:{i}}}' for i, k in enumerate(UI) if i) + ".ml::before{--x:var(--y)}"
+    return t + CSS + (BADGE_CSS if badges else "")
 
 
 def card(n, i, total, stem, spec, season, xp, level, lv, nxt, kinds, avatar_src, badges=None):
@@ -144,14 +150,14 @@ def card(n, i, total, stem, spec, season, xp, level, lv, nxt, kinds, avatar_src,
     bd = ('<p class="bd">' + "".join(f'<span><img src="{avatar_src.rsplit("avatars/", 1)[0]}badges/{f}.svg" width="24" height="24" alt="{e(f.capitalize())} badges:">{c}</span>'
                                      for f, c in badges.items()) + "</p>") if badges else ""
     fl = r["flavour"].get(season) or r["flavour"]["normal"]
-    return (f'<div class="slot {cls}"><i class="o" id="{stem}"></i><i class="c" id="m-{stem}"></i><div class="card">'
+    return (f'<div class="slot {cls}"><a class="o" id="{stem}" href="#m-{stem}" tabindex="-1" aria-hidden="true"></a><i class="c" id="m-{stem}"></i><div class="card">'
             f'<a class="open" href="#{stem}"><span class="art {pk}"><img src="{avatar_src}" width="112" height="112" alt=""></span>'
-            f'<span class="nm"><b>{e(n)}</b><span class="ml">{icon(ty["icon"])}Lv\u00a0{level} · {xp}\u00a0XP</span></span></a>'
-            f'<div class="body"><a class="cl" href="#m-{stem}" aria-label="Close"></a><p class="ty"><b>{e(r["type"])}</b></p>'
+            f'<span class="nm"><b>{e(n)}</b><span class="ml" title="{e(r["type"])}">Lv\u00a0{level} · {xp}\u00a0XP</span></span></a>'
+            f'<div class="body"><a class="cl" href="#m-{stem}">Close</a><p class="ty"><b>{e(r["type"])}</b></p>'
             f'<p class="lv" style="--w:{pct}%">{e(lv["name"])}<span>{togo}</span></p>'
             f'<ul class="mv">{mv}</ul><p class="wr"><span>{e(r["weak_to"])}</span><span>{e(r["resists"])}</span><span>{e(r["hands_off"])}</span></p>'
             f'{bd}<p class="ft">{e(rname)}<span class="sn">{i:02d}/{total}</span></p>'
-            f'<p class="fl">{e(fl)}</p><a class="sh" href="{stem}/">Character sheet</a></div></div></div>')
+            f'<p class="fl">{e(fl)}</p><a class="sh" title="Character sheet" href="{stem}/">Character sheet</a></div></div></div>')
 
 
 def errors(spec=None, roles=None):

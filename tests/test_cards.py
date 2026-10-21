@@ -43,6 +43,18 @@ class Cards(unittest.TestCase):
                 self.assertIn(f'href="#m-{f.stem}"', doc)
                 self.assertIn(f'href="{f.stem}/">Character sheet', doc)
 
+    def test_tap_outside_closes_and_close_link_is_focusable(self):
+        # Ryno, 2026-10-20 9:22 PM ET: no close button; tap outside the card to close. Escape would need script, so it isn't offered.
+        for s, doc in self.pages.items():
+            stems = [f.stem for f in (ROOT / "bots").glob("*.md")] + ["ryno"]
+            for st in stems:  # the backdrop is the open card's own target: a full-screen link back to #m-, out of the tab order and hidden from screen readers
+                self.assertIn(f'<a class="o" id="{st}" href="#m-{st}" tabindex="-1" aria-hidden="true"></a>', doc, (s, st))
+                self.assertIn(f'<a class="cl" href="#m-{st}">Close</a>', doc, (s, st))  # a real link with words: in the tab order
+            self.assertIn(".o:target{inset:0;z-index:8}", doc, s)
+            self.assertIn("position:fixed;z-index:9;", doc, s)  # the open card sits above its backdrop, so taps inside it don't close it
+            self.assertIn(".cl:not(:focus-visible){clip-path:inset(50%)}", doc, s)  # shown only when focused from the keyboard
+            self.assertNotRegex(doc, r'class="cl"[^>]*(tabindex|aria-hidden)')
+
     def test_ids_are_unique_and_sprite_ids_prefixed(self):
         doc = self.pages["halloween"]
         ids = re.findall(r'\bid="([^"]+)"', doc)
