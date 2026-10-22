@@ -875,5 +875,70 @@
     "status": "open",
     "thread": "c406",
     "shipped_in": 127
+  },
+  {
+    "id": "aar-2026-10-21-morning-run-interrupted",
+    "date": "2026-10-21",
+    "title": "The Oct 21 morning run stopped partway, leaving #138 unmerged and the standup and run record unwritten",
+    "trigger": "incident",
+    "links": {
+      "prs": [
+        126,
+        136,
+        137,
+        138
+      ],
+      "runs": [
+        "39576640636",
+        "39601384224"
+      ],
+      "commits": [
+        "f53b5d2",
+        "1b8a9e0"
+      ],
+      "chat": [
+        "c420",
+        "c421"
+      ]
+    },
+    "expected": {
+      "text": "The morning run ships its queued PRs, then writes the day's standup and its record in data/runs.json, as the daily run does in plans/tracker.md.",
+      "cite": [
+        "file:plans/tracker.md",
+        "file:data/runs.json"
+      ]
+    },
+    "actual": {
+      "text": "#136 opened at 5:03 AM ET (needs-ceo), #137 merged at 5:23 AM ET (f53b5d2, Pages run 39576640636 green) and #138 opened at 5:38 AM ET with its sign-offs posted by 5:45 AM ET. Then the run ended: #138 stayed unmerged and no Oct 21 standup or run record was written. The 8:30 AM slot resumed #138 with bot.py resume and merged it at 8:39 AM ET (1b8a9e0, Pages run 39601384224 green).",
+      "cite": [
+        "pr:136",
+        "pr:137",
+        "commit:f53b5d2",
+        "run:39576640636",
+        "pr:138",
+        "commit:1b8a9e0",
+        "run:39601384224",
+        "chat:c420"
+      ]
+    },
+    "why": {
+      "text": "The run was cut off after the #138 sign-offs and before merge_when_green and the later steps. The records don't say why it ended, so we don't guess. It is the second interrupted run in two days (aar-2026-10-20-run-interrupted).",
+      "cite": [
+        "pr:138",
+        "file:scripts/bot.py",
+        "chat:c421"
+      ]
+    },
+    "change": {
+      "text": "No new rule in this review. The resume rule from #126 in bots/sweep.md recovered #138 the same morning without redoing merged work. Because the cause repeated, it stays open for Friday's retro, where Advisor turns it into a rule or CI check that will close it.",
+      "cite": [
+        "pr:126",
+        "file:bots/sweep.md"
+      ]
+    },
+    "change_pr": 126,
+    "owner": "Sweep",
+    "status": "open",
+    "thread": "c420"
   }
 ]
