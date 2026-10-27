@@ -485,6 +485,11 @@ def merge_when_green(n):
         print(f"PR {n} not merged: checks {sorted(states)}, labels {[l['name'] for l in labels]}")
         sys.exit(1)
     gh("pr", "merge", n, "--squash", "--delete-branch")
+    if git("rev-parse", "--git-dir").strip() != git("rev-parse", "--git-common-dir").strip():
+        # A linked worktree can't check out main (the main clone holds it), so only fetch it.
+        git("fetch", "-q", "origin", "main")
+        print(f"merged {n}: {git('log', '--oneline', '-1', 'origin/main').strip()}")
+        return
     git("checkout", "-q", "main")
     git("pull", "-q")
     print(f"merged {n}: {git('log', '--oneline', '-1').strip()}")
