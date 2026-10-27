@@ -1,16 +1,16 @@
 {
-  "as_of": "2026-10-21T09:53-04:00",
+  "as_of": "2026-10-21T18:56-04:00",
   "newest_day": "2026-10-21",
   "days_of_history": 7,
   "ci_window_start": "2026-10-15T23:00-04:00",
   "totals": {
-    "prs": 132,
+    "prs": 135,
     "open_to_merge_min": 1,
     "ci_catches": 27,
     "main_failures": 0,
     "reverts": 0,
-    "aars": 16,
-    "escaped": 12,
+    "aars": 17,
+    "escaped": 13,
     "blocks": 1,
     "refusals": 14,
     "blast_checked": 2,
@@ -18,7 +18,7 @@
   },
   "pace": {
     "mode": "normal",
-    "clean_prs": 12,
+    "clean_prs": 15,
     "clean_needed": 10
   },
   "days": [
@@ -108,11 +108,11 @@
     },
     {
       "date": "2026-10-21",
-      "prs": 3,
-      "open_to_merge_min": 181,
-      "escaped": 0,
+      "prs": 6,
+      "open_to_merge_min": 8,
+      "escaped": 1,
       "corrections": 0,
-      "aars": 0,
+      "aars": 1,
       "ci_catches": 3,
       "ci_recorded": true,
       "main_failures": 0,
@@ -200,7 +200,7 @@
       "key": "prs",
       "label": "Merged PRs",
       "prev": 18,
-      "new": 3,
+      "new": 6,
       "direction": "down",
       "verdict": null
     },
@@ -208,7 +208,7 @@
       "key": "open_to_merge_min",
       "label": "Median open to merge, minutes",
       "prev": 7,
-      "new": 181,
+      "new": 8,
       "direction": "up",
       "verdict": null
     },
@@ -216,9 +216,9 @@
       "key": "escaped",
       "label": "Incidents and data corrections per 10 PRs",
       "prev": 0.6,
-      "new": 0.0,
-      "direction": "down",
-      "verdict": "better"
+      "new": 1.7,
+      "direction": "up",
+      "verdict": "worse"
     },
     {
       "key": "corrections",
@@ -232,15 +232,15 @@
       "key": "aars",
       "label": "AARs per 10 PRs",
       "prev": 0.6,
-      "new": 0.0,
-      "direction": "down",
-      "verdict": "better"
+      "new": 1.7,
+      "direction": "up",
+      "verdict": "worse"
     },
     {
       "key": "ci_catches",
       "label": "CI catches before merge per 10 PRs",
       "prev": 0.6,
-      "new": 10.0,
+      "new": 5.0,
       "direction": "up",
       "verdict": null
     },
@@ -269,7 +269,10 @@
       "verdict": null
     }
   ],
-  "worsening": [],
+  "worsening": [
+    "escaped",
+    "aars"
+  ],
   "goals": [
     {
       "id": "G1",

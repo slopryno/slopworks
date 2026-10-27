@@ -22,11 +22,11 @@
     "data-correction"
   ],
   "mode": "normal",
-  "clean_prs": 12,
-  "tripped_by": "aar-2026-10-20-run-interrupted",
+  "clean_prs": 15,
+  "tripped_by": "aar-2026-10-21-morning-run-interrupted",
   "trip_pr": 126,
   "trip_at": "2026-10-20T11:24-04:00",
-  "as_of_pr": 136,
+  "as_of_pr": 141,
   "days": [
     {
       "date": "2026-10-18",
@@ -42,7 +42,7 @@
     },
     {
       "date": "2026-10-21",
-      "prs": 3
+      "prs": 6
     }
   ],
   "violations": [],
