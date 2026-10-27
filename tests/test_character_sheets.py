@@ -1,6 +1,7 @@
 """Trial's tests for the character sheets and How XP works (i34, Week 1): numbers on the page are the computed ones,
 every link lands, a 0-XP role is shown honestly, and there's no leaderboard wording (Critic, c185)."""
 import json, re, sys, unittest
+from unittest import mock
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -41,10 +42,13 @@ class Sheets(unittest.TestCase):
             self.assertIn('<p class="wr">', doc, n)  # Weak to / Resists / Hands off stay on the sheet (cards v6)
 
     def test_zero_xp_shown_honestly(self):
-        zero = [n for n in STEMS if not self.tot.get(n)]
-        self.assertIn("Gamemaster", zero, "Game Master never awards XP and has no work yet")
+        zero, files = [n for n in STEMS if not self.tot.get(n)], self.files
+        if not zero:  # every role has earned XP (Gamemaster's first was a #140 sign-off), so build once with the lowest role's entries left out
+            low, real = min(STEMS, key=lambda n: self.tot.get(n, 0)), build.load
+            with mock.patch.object(build, "load", lambda k: [y for y in real(k) if y["agent"] != low] if k == "xp_ledger" else real(k)):
+                files, zero = build.build(), [low]
         for n in zero:
-            doc = self.files[f"team/{STEMS[n]}/index.html"]
+            doc = files[f"team/{STEMS[n]}/index.html"]
             self.assertIn("No XP yet. Every role starts here.", doc)
             self.assertIn("width:0%", doc)
 
