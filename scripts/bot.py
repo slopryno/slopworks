@@ -147,29 +147,72 @@ def lock_path():
     return Path(git("rev-parse", "--git-common-dir").strip()).resolve() / "bot-pr.lock"
 
 
+def _holder(path):
+    """The pid in a lock file, or None if it's empty or unreadable."""
+    try:
+        return int(path.read_text().split()[0])
+    except (FileNotFoundError, ValueError, IndexError):
+        return None
+
+
+def _alive(pid):
+    import os
+    try:
+        os.kill(pid, 0)
+    except ProcessLookupError:
+        return False
+    except PermissionError:
+        return True
+    return True
+
+
 def take_lock(path=None, pid=None):
-    """Refuse if another live bot.py pr or resume holds the lock; a lock left by a dead process is replaced."""
+    """Refuse if another live bot.py pr or resume holds the lock; a lock left by a dead process is replaced.
+
+    F2: the claim is atomic. The lock is a hard link to a file that already holds our pid, so two runs
+    can't both create it, and a reader never sees it empty. A stale lock is moved aside first, and put
+    back if what moved turns out to be a live run's fresh lock."""
     import os
     path, pid = Path(path or lock_path()), pid or os.getpid()
-    if path.exists():
-        try:
-            other = int(path.read_text().split()[0])
-            os.kill(other, 0)
-            if other != pid:
-                raise Refused(f"another bot.py run (pid {other}) is still going; wait for it, don't resume over it ({path})")
-        except (ValueError, IndexError, ProcessLookupError):
-            pass  # stale lock
-        except PermissionError:
-            raise Refused(f"another bot.py run holds {path}")
-    path.write_text(f"{pid}\n")
-    return path
-
-
-def release_lock(path):
+    tmp = path.with_name(f"{path.name}.{os.getpid()}.tmp")
+    tmp.write_text(f"{pid}\n")
     try:
-        Path(path).unlink()
-    except FileNotFoundError:
-        pass
+        for _ in range(5):
+            try:
+                os.link(tmp, path)
+                return path
+            except FileExistsError:
+                pass
+            other = _holder(path)
+            if other == pid:
+                return path
+            if other is not None and _alive(other):
+                raise Refused(f"another bot.py run (pid {other}) is still going; wait for it, don't resume over it ({path})")
+            aside = path.with_name(f"{path.name}.{os.getpid()}.stale")
+            try:
+                os.rename(path, aside)
+            except FileNotFoundError:
+                continue
+            moved = _holder(aside)
+            if moved != other and moved is not None and _alive(moved):
+                try:
+                    os.link(aside, path)  # we moved a live run's fresh lock: put it back
+                except FileExistsError:
+                    pass
+                aside.unlink(missing_ok=True)
+                raise Refused(f"another bot.py run (pid {moved}) took the lock first ({path})")
+            aside.unlink(missing_ok=True)
+        raise Refused(f"couldn't take {path} after 5 tries; another run keeps taking it")
+    finally:
+        tmp.unlink(missing_ok=True)
+
+
+def release_lock(path, pid=None):
+    """Delete the lock only if this run holds it (F2): never remove another run's lock."""
+    import os
+    path = Path(path)
+    if _holder(path) == (pid or os.getpid()):
+        path.unlink(missing_ok=True)
 
 
 def missing_comments(planned, posted):
