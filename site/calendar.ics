@@ -15,7 +15,7 @@ DTEND;VALUE=DATE:20261020
 SUMMARY:Halloween costumes planned
 DESCRIPTION:Holiday theme. Coordinator. Ryno asked for holiday blobs\; each
   role picked its own costume.
-URL:https://slopryno.github.io/slopworks/calendar/
+URL:https://slopryno.com/calendar/
 TRANSP:TRANSPARENT
 STATUS:CONFIRMED
 END:VEVENT
@@ -27,7 +27,7 @@ DTEND;VALUE=DATE:20261020
 SUMMARY:Winter costumes picked
 DESCRIPTION:Holiday theme. Coordinator. Picks include Santa\, a snowflake a
  nd a Christmas tree.
-URL:https://slopryno.github.io/slopworks/calendar/
+URL:https://slopryno.com/calendar/
 TRANSP:TRANSPARENT
 STATUS:CONFIRMED
 END:VEVENT
@@ -39,7 +39,7 @@ DTEND;VALUE=DATE:20261020
 SUMMARY:Halloween costumes designed
 DESCRIPTION:Holiday theme. Polish with Sketch. Flat\, animated costumes in 
  the style of Ryno's reference clip.
-URL:https://slopryno.github.io/slopworks/calendar/
+URL:https://slopryno.com/calendar/
 TRANSP:TRANSPARENT
 STATUS:CONFIRMED
 END:VEVENT
@@ -51,7 +51,7 @@ DTEND;VALUE=DATE:20261020
 SUMMARY:Ryno's yes to ship Halloween
 DESCRIPTION:Holiday theme. Ryno. Switch-on decision from Ryno\, Oct 19\, 11
  :40 PM ET\; marked done by the EA. Winter needs its own yes.
-URL:https://slopryno.github.io/slopworks/calendar/
+URL:https://slopryno.com/calendar/
 TRANSP:TRANSPARENT
 STATUS:CONFIRMED
 END:VEVENT
@@ -62,7 +62,7 @@ DTSTART;VALUE=DATE:20261019
 DTEND;VALUE=DATE:20261020
 SUMMARY:Calmer design and theme button live
 DESCRIPTION:Release. Forge. PRs #108 to #117\, merged Oct 19.
-URL:https://slopryno.github.io/slopworks/calendar/
+URL:https://slopryno.com/calendar/
 TRANSP:TRANSPARENT
 STATUS:CONFIRMED
 END:VEVENT
@@ -73,7 +73,7 @@ DTSTART;VALUE=DATE:20261020
 DTEND;VALUE=DATE:20261021
 SUMMARY:Halloween names and lines checked
 DESCRIPTION:Holiday theme. Comms.
-URL:https://slopryno.github.io/slopworks/calendar/
+URL:https://slopryno.com/calendar/
 TRANSP:TRANSPARENT
 STATUS:CONFIRMED
 END:VEVENT
@@ -85,7 +85,7 @@ DTEND;VALUE=DATE:20261021
 SUMMARY:Halloween screenshot review
 DESCRIPTION:Holiday theme. Lens with Critic. Light and dark\; white costume
  s must stand out on light pages.
-URL:https://slopryno.github.io/slopworks/calendar/
+URL:https://slopryno.com/calendar/
 TRANSP:TRANSPARENT
 STATUS:CONFIRMED
 END:VEVENT
@@ -96,7 +96,7 @@ DTSTART;VALUE=DATE:20261020
 DTEND;VALUE=DATE:20261021
 SUMMARY:Halloween blobs on
 DESCRIPTION:Holiday theme. Coordinator. On the site to Sat Oct 31.
-URL:https://slopryno.github.io/slopworks/calendar/
+URL:https://slopryno.com/calendar/
 TRANSP:TRANSPARENT
 STATUS:CONFIRMED
 END:VEVENT
@@ -107,7 +107,7 @@ DTSTART;VALUE=DATE:20261101
 DTEND;VALUE=DATE:20261102
 SUMMARY:Everyday blobs back
 DESCRIPTION:Holiday theme. Coordinator. Halloween set switches off.
-URL:https://slopryno.github.io/slopworks/calendar/
+URL:https://slopryno.com/calendar/
 TRANSP:TRANSPARENT
 STATUS:CONFIRMED
 END:VEVENT
@@ -119,7 +119,7 @@ DTEND;VALUE=DATE:20261104
 SUMMARY:Winter plan confirmed
 DESCRIPTION:Holiday theme. Coordinator. Four weeks before the Dec 1 switch:
   costumes\, owners and dates.
-URL:https://slopryno.github.io/slopworks/calendar/
+URL:https://slopryno.com/calendar/
 TRANSP:TRANSPARENT
 STATUS:CONFIRMED
 END:VEVENT
@@ -131,7 +131,7 @@ DTEND;VALUE=DATE:20261111
 SUMMARY:Winter costumes final design
 DESCRIPTION:Holiday theme. Polish with Sketch. Drafts exist from Oct 19\; r
  efresh them with Halloween feedback.
-URL:https://slopryno.github.io/slopworks/calendar/
+URL:https://slopryno.com/calendar/
 TRANSP:TRANSPARENT
 STATUS:CONFIRMED
 END:VEVENT
@@ -142,7 +142,7 @@ DTSTART;VALUE=DATE:20261112
 DTEND;VALUE=DATE:20261113
 SUMMARY:Winter names and lines checked
 DESCRIPTION:Holiday theme. Comms.
-URL:https://slopryno.github.io/slopworks/calendar/
+URL:https://slopryno.com/calendar/
 TRANSP:TRANSPARENT
 STATUS:CONFIRMED
 END:VEVENT
@@ -154,7 +154,7 @@ DTEND;VALUE=DATE:20261118
 SUMMARY:Winter screenshot review
 DESCRIPTION:Holiday theme. Lens with Critic. Every width\, light and dark\,
   with the theme button.
-URL:https://slopryno.github.io/slopworks/calendar/
+URL:https://slopryno.com/calendar/
 TRANSP:TRANSPARENT
 STATUS:CONFIRMED
 END:VEVENT
@@ -165,7 +165,7 @@ DTSTART;VALUE=DATE:20261124
 DTEND;VALUE=DATE:20261125
 SUMMARY:Ryno's yes for the Dec 1 switch
 DESCRIPTION:Holiday theme. Ryno. The winter set stays off without it.
-URL:https://slopryno.github.io/slopworks/calendar/
+URL:https://slopryno.com/calendar/
 TRANSP:TRANSPARENT
 STATUS:CONFIRMED
 END:VEVENT
@@ -177,7 +177,7 @@ DTEND;VALUE=DATE:20261202
 SUMMARY:Winter holiday blobs on
 DESCRIPTION:Holiday theme. Coordinator. On the site to Thu Dec 31. Only af
  ter Ryno's yes.
-URL:https://slopryno.github.io/slopworks/calendar/
+URL:https://slopryno.com/calendar/
 TRANSP:TRANSPARENT
 STATUS:CONFIRMED
 END:VEVENT
@@ -188,7 +188,7 @@ DTSTART;VALUE=DATE:20270101
 DTEND;VALUE=DATE:20270102
 SUMMARY:Everyday blobs back
 DESCRIPTION:Holiday theme. Coordinator. Winter holiday set switches off.
-URL:https://slopryno.github.io/slopworks/calendar/
+URL:https://slopryno.com/calendar/
 TRANSP:TRANSPARENT
 STATUS:CONFIRMED
 END:VEVENT
@@ -200,7 +200,7 @@ DTEND;VALUE=DATE:20270105
 SUMMARY:Valentine's theme: pitch to Ryno
 DESCRIPTION:Holiday theme. Coordinator. Placeholder: would run all of Febru
  ary. Nothing is designed unless Ryno says yes.
-URL:https://slopryno.github.io/slopworks/calendar/
+URL:https://slopryno.com/calendar/
 TRANSP:TRANSPARENT
 STATUS:CONFIRMED
 END:VEVENT
@@ -212,7 +212,7 @@ DTEND;VALUE=DATE:20270202
 SUMMARY:St Patrick's theme: pitch to Ryno
 DESCRIPTION:Holiday theme. Coordinator. Placeholder: would run all of March
  . Nothing is designed unless Ryno says yes.
-URL:https://slopryno.github.io/slopworks/calendar/
+URL:https://slopryno.com/calendar/
 TRANSP:TRANSPARENT
 STATUS:CONFIRMED
 END:VEVENT
@@ -224,7 +224,7 @@ DTEND;VALUE=DATE:20270904
 SUMMARY:Halloween 2027 costumes planned
 DESCRIPTION:Holiday theme. Coordinator. Four weeks before the Oct 1 switch.
   Same costumes or new ones.
-URL:https://slopryno.github.io/slopworks/calendar/
+URL:https://slopryno.com/calendar/
 TRANSP:TRANSPARENT
 STATUS:CONFIRMED
 END:VEVENT
@@ -235,7 +235,7 @@ DTSTART;VALUE=DATE:20270910
 DTEND;VALUE=DATE:20270911
 SUMMARY:Halloween 2027 costumes designed
 DESCRIPTION:Holiday theme. Polish with Sketch.
-URL:https://slopryno.github.io/slopworks/calendar/
+URL:https://slopryno.com/calendar/
 TRANSP:TRANSPARENT
 STATUS:CONFIRMED
 END:VEVENT
@@ -246,7 +246,7 @@ DTSTART;VALUE=DATE:20270914
 DTEND;VALUE=DATE:20270915
 SUMMARY:Halloween 2027 names and lines checked
 DESCRIPTION:Holiday theme. Comms.
-URL:https://slopryno.github.io/slopworks/calendar/
+URL:https://slopryno.com/calendar/
 TRANSP:TRANSPARENT
 STATUS:CONFIRMED
 END:VEVENT
@@ -258,7 +258,7 @@ DTEND;VALUE=DATE:20270918
 SUMMARY:Halloween 2027 screenshot review
 DESCRIPTION:Holiday theme. Lens with Critic. Every width\, light and dark\,
   with the theme button.
-URL:https://slopryno.github.io/slopworks/calendar/
+URL:https://slopryno.com/calendar/
 TRANSP:TRANSPARENT
 STATUS:CONFIRMED
 END:VEVENT
@@ -269,7 +269,7 @@ DTSTART;VALUE=DATE:20270924
 DTEND;VALUE=DATE:20270925
 SUMMARY:Ryno's yes for the Oct 1 switch
 DESCRIPTION:Holiday theme. Ryno. The set stays off without it.
-URL:https://slopryno.github.io/slopworks/calendar/
+URL:https://slopryno.com/calendar/
 TRANSP:TRANSPARENT
 STATUS:CONFIRMED
 END:VEVENT
@@ -281,7 +281,7 @@ DTEND;VALUE=DATE:20271002
 SUMMARY:Halloween blobs on
 DESCRIPTION:Holiday theme. Coordinator. On the site to Sun Oct 31. Only af
  ter Ryno's yes.
-URL:https://slopryno.github.io/slopworks/calendar/
+URL:https://slopryno.com/calendar/
 TRANSP:TRANSPARENT
 STATUS:CONFIRMED
 END:VEVENT
@@ -292,7 +292,7 @@ DTSTART;VALUE=DATE:20271101
 DTEND;VALUE=DATE:20271102
 SUMMARY:Everyday blobs back
 DESCRIPTION:Holiday theme. Coordinator. Halloween set switches off.
-URL:https://slopryno.github.io/slopworks/calendar/
+URL:https://slopryno.com/calendar/
 TRANSP:TRANSPARENT
 STATUS:CONFIRMED
 END:VEVENT
@@ -304,7 +304,7 @@ DTEND;VALUE=DATE:20271104
 SUMMARY:Winter 2027 costumes planned
 DESCRIPTION:Holiday theme. Coordinator. Four weeks before the Dec 1 switch.
   Same costumes or new ones.
-URL:https://slopryno.github.io/slopworks/calendar/
+URL:https://slopryno.com/calendar/
 TRANSP:TRANSPARENT
 STATUS:CONFIRMED
 END:VEVENT
@@ -315,7 +315,7 @@ DTSTART;VALUE=DATE:20271110
 DTEND;VALUE=DATE:20271111
 SUMMARY:Winter 2027 costumes designed
 DESCRIPTION:Holiday theme. Polish with Sketch.
-URL:https://slopryno.github.io/slopworks/calendar/
+URL:https://slopryno.com/calendar/
 TRANSP:TRANSPARENT
 STATUS:CONFIRMED
 END:VEVENT
@@ -326,7 +326,7 @@ DTSTART;VALUE=DATE:20271112
 DTEND;VALUE=DATE:20271113
 SUMMARY:Winter 2027 names and lines checked
 DESCRIPTION:Holiday theme. Comms.
-URL:https://slopryno.github.io/slopworks/calendar/
+URL:https://slopryno.com/calendar/
 TRANSP:TRANSPARENT
 STATUS:CONFIRMED
 END:VEVENT
@@ -338,7 +338,7 @@ DTEND;VALUE=DATE:20271118
 SUMMARY:Winter 2027 screenshot review
 DESCRIPTION:Holiday theme. Lens with Critic. Every width\, light and dark\,
   with the theme button.
-URL:https://slopryno.github.io/slopworks/calendar/
+URL:https://slopryno.com/calendar/
 TRANSP:TRANSPARENT
 STATUS:CONFIRMED
 END:VEVENT
@@ -349,7 +349,7 @@ DTSTART;VALUE=DATE:20271124
 DTEND;VALUE=DATE:20271125
 SUMMARY:Ryno's yes for the Dec 1 switch
 DESCRIPTION:Holiday theme. Ryno. The set stays off without it.
-URL:https://slopryno.github.io/slopworks/calendar/
+URL:https://slopryno.com/calendar/
 TRANSP:TRANSPARENT
 STATUS:CONFIRMED
 END:VEVENT
@@ -361,7 +361,7 @@ DTEND;VALUE=DATE:20271202
 SUMMARY:Winter holiday blobs on
 DESCRIPTION:Holiday theme. Coordinator. On the site to Fri Dec 31. Only af
  ter Ryno's yes.
-URL:https://slopryno.github.io/slopworks/calendar/
+URL:https://slopryno.com/calendar/
 TRANSP:TRANSPARENT
 STATUS:CONFIRMED
 END:VEVENT
@@ -372,7 +372,7 @@ DTSTART;VALUE=DATE:20280101
 DTEND;VALUE=DATE:20280102
 SUMMARY:Everyday blobs back
 DESCRIPTION:Holiday theme. Coordinator. Winter holiday set switches off.
-URL:https://slopryno.github.io/slopworks/calendar/
+URL:https://slopryno.com/calendar/
 TRANSP:TRANSPARENT
 STATUS:CONFIRMED
 END:VEVENT
@@ -383,7 +383,7 @@ DTSTART;VALUE=DATE:20261020
 DTEND;VALUE=DATE:20261101
 SUMMARY:Halloween blobs on the site
 DESCRIPTION:Holiday character theme.
-URL:https://slopryno.github.io/slopworks/calendar/
+URL:https://slopryno.com/calendar/
 TRANSP:TRANSPARENT
 STATUS:CONFIRMED
 END:VEVENT
@@ -394,7 +394,7 @@ DTSTART;VALUE=DATE:20261201
 DTEND;VALUE=DATE:20270101
 SUMMARY:Winter holiday blobs on the site
 DESCRIPTION:Holiday character theme. Only after Ryno's yes.
-URL:https://slopryno.github.io/slopworks/calendar/
+URL:https://slopryno.com/calendar/
 TRANSP:TRANSPARENT
 STATUS:TENTATIVE
 END:VEVENT
@@ -405,7 +405,7 @@ DTSTART;VALUE=DATE:20271001
 DTEND;VALUE=DATE:20271101
 SUMMARY:Halloween blobs on the site
 DESCRIPTION:Holiday character theme. Only after Ryno's yes.
-URL:https://slopryno.github.io/slopworks/calendar/
+URL:https://slopryno.com/calendar/
 TRANSP:TRANSPARENT
 STATUS:TENTATIVE
 END:VEVENT
@@ -416,7 +416,7 @@ DTSTART;VALUE=DATE:20271201
 DTEND;VALUE=DATE:20280101
 SUMMARY:Winter holiday blobs on the site
 DESCRIPTION:Holiday character theme. Only after Ryno's yes.
-URL:https://slopryno.github.io/slopworks/calendar/
+URL:https://slopryno.com/calendar/
 TRANSP:TRANSPARENT
 STATUS:TENTATIVE
 END:VEVENT
@@ -429,7 +429,7 @@ RRULE:FREQ=WEEKLY;BYDAY=MO
 SUMMARY:Digest and sprint plan
 DESCRIPTION:Routine. Coordinator. Weekly digest\, GitHub release\, design a
  udit score\, and the sprint plan.
-URL:https://slopryno.github.io/slopworks/calendar/
+URL:https://slopryno.com/calendar/
 TRANSP:TRANSPARENT
 STATUS:CONFIRMED
 END:VEVENT
@@ -442,7 +442,7 @@ RRULE:FREQ=WEEKLY;BYDAY=MO
 SUMMARY:Weekly clip
 DESCRIPTION:Release. Strategy. Weekly clip: Strategy records a short phone 
  clip of the live site for Ryno. Nothing is posted.
-URL:https://slopryno.github.io/slopworks/calendar/
+URL:https://slopryno.com/calendar/
 TRANSP:TRANSPARENT
 STATUS:CONFIRMED
 END:VEVENT
@@ -456,7 +456,7 @@ SUMMARY:pstack watch
 DESCRIPTION:Research. Librarian. pstack watch: Librarian checks poteto's pu
  blic pstack skills against last week's saved copy and files any changes as
   research leads. Nothing is adopted outside the pitch flow.
-URL:https://slopryno.github.io/slopworks/calendar/
+URL:https://slopryno.com/calendar/
 TRANSP:TRANSPARENT
 STATUS:CONFIRMED
 END:VEVENT
@@ -469,7 +469,7 @@ RRULE:FREQ=WEEKLY;BYDAY=FR
 SUMMARY:Team retro
 DESCRIPTION:Review. Coordinator. Team retro\, shown in Team chat. It review
  s the week's after-action reviews and closes the fixed ones.
-URL:https://slopryno.github.io/slopworks/calendar/
+URL:https://slopryno.com/calendar/
 TRANSP:TRANSPARENT
 STATUS:CONFIRMED
 END:VEVENT
@@ -482,7 +482,7 @@ RRULE:FREQ=MONTHLY;BYDAY=1MO
 SUMMARY:Monthly review
 DESCRIPTION:Review. Coordinator. State of Slopworks page\, roadmap review\,
   and architecture review.
-URL:https://slopryno.github.io/slopworks/calendar/
+URL:https://slopryno.com/calendar/
 TRANSP:TRANSPARENT
 STATUS:CONFIRMED
 END:VEVENT
@@ -496,7 +496,7 @@ SUMMARY:Repo hygiene
 DESCRIPTION:Routine. Sweep. Repo hygiene: Sweep checks the tracked tree aga
  inst the lean budgets and removes stray\, duplicate\, dead\, temp or build
   files in one ordinary PR. No history rewrites.
-URL:https://slopryno.github.io/slopworks/calendar/
+URL:https://slopryno.com/calendar/
 TRANSP:TRANSPARENT
 STATUS:CONFIRMED
 END:VEVENT

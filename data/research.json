@@ -734,7 +734,7 @@
     ],
     "evidence": [
       "https://github.com/slopryno/slopworks/actions?query=is%3Afailure",
-      "https://slopryno.github.io/slopworks/lessons/"
+      "https://slopryno.com/lessons/"
     ],
     "existing_work": "review-gate, the path rule, the chat future-time check, and the AAR checks",
     "opportunity": "scripts/bot.py (branch, pr, chat, count) plus strict loaders in build.py; then cut the prose those enforce",
@@ -798,7 +798,7 @@
     ],
     "evidence": [
       "https://github.com/slopryno/slopworks/actions?query=is%3Afailure",
-      "https://slopryno.github.io/slopworks/lessons/"
+      "https://slopryno.com/lessons/"
     ],
     "existing_work": "Atlas and Critic reports",
     "opportunity": "Four PRs: audit, helper, loaders and drift tests, trim",
@@ -831,7 +831,7 @@
     ],
     "evidence": [
       "https://www.w3.org/TR/WCAG22/#target-size-enhanced",
-      "https://slopryno.github.io/slopworks/"
+      "https://slopryno.com/"
     ],
     "existing_work": "i11 mobile nav fix (#24), d4 contrast test, the CSS-only filters (#33)",
     "opportunity": "Simpler nav and hubs, a sharper landing page, mobile-first CSS, and a 360 px check in CI",

@@ -16,7 +16,7 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
 ET = ZoneInfo("America/New_York")
 REPO = "https://github.com/slopryno/slopworks"
-SITE = "https://slopryno.github.io/slopworks/"
+SITE = "https://slopryno.com/"
 ALIAS = {"scout": "Sketch", "verify": "Lens", "privacy": "Shield", "publish": "Forge", "pixel": "Forge", "core": "Forge", "relay": "Forge", "vault": "Forge"}
 TRUSTED = {"OWNER", "MEMBER", "COLLABORATOR"}  # same rule as check.trusted (AAR review-gate-trust)
 ROLES = {f.stem.capitalize() for f in (ROOT / "bots").glob("*.md")}
