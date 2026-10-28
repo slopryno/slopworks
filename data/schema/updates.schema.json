@@ -83,6 +83,10 @@
         "type": "string",
         "maxLength": 90
       },
+      "short_title": {
+        "type": "string",
+        "maxLength": 60
+      },
       "summary": {
         "type": "string",
         "maxLength": 280

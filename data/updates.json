@@ -173,6 +173,7 @@
     "status": "confirmed",
     "area": "billing",
     "title": "One plan for Grok, Grok Bot, Cursor, and X",
+    "short_title": "One plan for Grok, Grok Bot, Cursor, X",
     "summary": "The X Subscription is one plan covering Cursor, Grok, Grok Bot, and X Premium. Every change is opt-in; if you do nothing, nothing changes.",
     "source": "https://x.com/mattyp/status/2109784144649838754"
   },
@@ -470,6 +471,7 @@
     "status": "confirmed",
     "area": "app",
     "title": "Slide decks, formatted emails, and a bigger Bot screen",
+    "short_title": "Slide decks, formatted emails, a bigger screen",
     "summary": "Version 0.68.1: Bots build slide decks and deliver them as PowerPoint or Google Slides, send formatted emails from a draft card, and work on a 1920 × 1200 computer screen, up from 1280 × 800.",
     "source": "https://x.ai/changelog/bot"
   },
@@ -503,6 +505,7 @@
     "status": "confirmed",
     "area": "app",
     "title": "A Vault for logins, cards and contacts, and fewer approval cards",
+    "short_title": "A Vault for logins, plus fewer approval cards",
     "summary": "Version 0.75.5: Bots can save your logins, cards and contact info to a Vault and fill them in, and ask less often for actions you asked for yourself.",
     "source": "https://x.ai/changelog/bot"
   },
@@ -547,6 +550,7 @@
     "status": "confirmed",
     "area": "app",
     "title": "Grok Bot can use Calendar, Reminders and Contacts on your phone",
+    "short_title": "Grok Bot uses phone Calendar, Reminders and Contacts",
     "summary": "Grok Bot can now use Calendar, Reminders, Contacts and more apps on your phone, rolling out on iOS and Android.",
     "source": "https://x.com/bot/status/2113393684209176718"
   }
