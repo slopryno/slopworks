@@ -296,7 +296,7 @@
       "target": "Every new tracker item logged within 1 day, and 2 features demoed within 7 days of entry",
       "source": "data/updates.json, data/cases.json",
       "status": "in progress",
-      "now": "1 of 2 new tracker items logged within 1 day since Mon Oct 19; 0 of 2 demos."
+      "now": "1 of 8 new tracker items logged within 1 day since Mon Oct 19; 0 of 2 demos."
     }
   ]
 }
