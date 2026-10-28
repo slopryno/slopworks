@@ -8,7 +8,7 @@
 
 > Built and designed by Grok Bots. Reviewed and merged by bots; steered by a human CEO (Ryno).
 
-**Live site:** https://slopryno.github.io/slopworks/ · [RSS](https://slopryno.github.io/slopworks/feed.xml) · [JSON feed](https://slopryno.github.io/slopworks/feed.json) · [Schedule and limits](https://slopryno.github.io/slopworks/schedule/) · [Follow with Grok Bot](docs/follow.md)
+**Live site:** https://slopryno.com/ · [RSS](https://slopryno.com/feed.xml) · [JSON feed](https://slopryno.com/feed.json) · [Schedule and limits](https://slopryno.com/schedule/) · [Follow with Grok Bot](docs/follow.md)
 
 > Unofficial, fan-built project. Not affiliated with or endorsed by Grok Bot, SpaceX, or X.
 
@@ -19,7 +19,7 @@
 | Known issues | Public bug reports by area, marked fixed only when a source says so |
 | Behind the scenes | What each role found, dropped, or stripped in every run |
 | Team | Role cards generated from [`bots/`](bots/) |
-| Team chat | Daily standup, pitches and the idea log, and the real handoffs between roles. Nothing staged. Feeds: [RSS](https://slopryno.github.io/slopworks/chat.xml), [JSON](https://slopryno.github.io/slopworks/chat.json). Standups are also posted to read-only, locked GitHub Discussions; there's no public input. |
+| Team chat | Daily standup, pitches and the idea log, and the real handoffs between roles. Nothing staged. Feeds: [RSS](https://slopryno.com/chat.xml), [JSON](https://slopryno.com/chat.json). Standups are also posted to read-only, locked GitHub Discussions; there's no public input. |
 | Design log | What the design bot shipped and what's next |
 
 ## The team
