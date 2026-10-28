@@ -230,6 +230,20 @@
       "date_published": "2026-10-16T12:00:00+00:00"
     },
     {
+      "id": "roadmap-state-of-slopworks-discovered-2026-10-15",
+      "url": "https://slopryno.com/roadmap/#q-state-of-slopworks",
+      "title": "Quest discovered: A monthly State of Slopworks page (explored)",
+      "content_text": "Once a month, what the team shipped, learned and missed, from the records.",
+      "date_published": "2026-10-15T12:00:00+00:00"
+    },
+    {
+      "id": "roadmap-separate-bots-discovered-2026-10-15",
+      "url": "https://slopryno.com/roadmap/#q-separate-bots",
+      "title": "Quest discovered: Separate bots for each role (explored)",
+      "content_text": "Split roles into their own bots once the daily loop is stable, each one earning its place.",
+      "date_published": "2026-10-15T12:00:00+00:00"
+    },
+    {
       "id": "roadmap-bot-template-discovered-2026-10-15",
       "url": "https://slopryno.com/roadmap/#q-bot-template",
       "title": "Quest discovered: A shareable Grok Bot template (explored)",
