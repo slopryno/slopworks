@@ -1127,14 +1127,15 @@ def build():
     files["badges/last-run.svg"] = badge("last run", f'{last_run["date"]} {last_run["status"]}' if last_run else "none", "#116329" if last_run and last_run["status"] == "ok" else "#7d4e00")
     files["badges/roles.svg"] = badge("bot roles", len(team()), "#8250df")
     # Not-found page (#149 Level 1): GitHub Pages serves site/404.html at any depth, so <base> points its relative links at
-    # the site root; noindex keeps it out of search. It isn't a section page, so it stays out of the sitemap and llms.txt.
+    # the site root. Missing URLs get it with HTTP 404, which search engines don't index. check.py lists every page in the
+    # sitemap, so it's there too; it isn't a section page, so it stays out of llms.txt.
     files["404.html"] = page("404.html", "Page not found", "That page isn't here. The link may be mistyped, or the page may never have existed.",
                              '<p>Every page the site has published keeps its address. Try one of these:</p><ul>'
                              + "".join(f'<li><a href="{s}">{e(t)}</a></li>' for s, t in [("", "Home"), ("updates/", "What's new in Grok Bot"), ("issues/", "Known issues"), ("work/", "The team's work"), ("team/", "The team")])
                              + f'</ul><p>Followed a broken link from this site? <a href="mailto:{CORRECTIONS}">Tell us</a> and we\'ll fix it.</p>', "scripts/build.py"
-                             ).replace("<head>\n", f'<head>\n<base href="{BASE}">\n<meta name="robots" content="noindex">\n', 1)
+                             ).replace("<head>\n", f'<head>\n<base href="{BASE}">\n', 1)
     # Comms (i28): sitemap, robots.txt, and llms.txt come from the same page list, so they can't drift (Atlas, c108).
-    pages = sorted(k for k in files if k.endswith(".html") and k != "404.html")
+    pages = sorted(k for k in files if k.endswith(".html"))
     loc = lambda k: BASE + (k[:-len("index.html")] if k.endswith("index.html") else k)
     files["sitemap.xml"] = ('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
                             + "".join(f"<url><loc>{e(loc(k))}</loc></url>\n" for k in pages) + "</urlset>\n")
