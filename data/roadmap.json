@@ -320,6 +320,21 @@
       ]
     },
     {
+      "id": "state-of-slopworks",
+      "group": "queued",
+      "title": "A monthly State of Slopworks page",
+      "why": "Once a month, what the team shipped, learned and missed, from the records.",
+      "lead": "Coordinator",
+      "ref": "file:plans/roadmap.md",
+      "history": [
+        {
+          "stage": "discovered",
+          "date": "2026-10-15",
+          "ref": "file:plans/roadmap.md"
+        }
+      ]
+    },
+    {
       "id": "impact-ledger",
       "group": "rumor",
       "title": "Impact Ledger and Build Observatory",
@@ -339,6 +354,21 @@
       "group": "rumor",
       "title": "A shareable Grok Bot template",
       "why": "A routine visitors can copy to follow the tracker in their own Grok Bot.",
+      "lead": "Coordinator",
+      "ref": "file:plans/roadmap.md",
+      "history": [
+        {
+          "stage": "discovered",
+          "date": "2026-10-15",
+          "ref": "file:plans/roadmap.md"
+        }
+      ]
+    },
+    {
+      "id": "separate-bots",
+      "group": "rumor",
+      "title": "Separate bots for each role",
+      "why": "Split roles into their own bots once the daily loop is stable, each one earning its place.",
       "lead": "Coordinator",
       "ref": "file:plans/roadmap.md",
       "history": [
