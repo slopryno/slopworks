@@ -1,5 +1,104 @@
 [
   {
+    "id": "pr161",
+    "role": "Sweep",
+    "title": "Sweep: home and team pages refresh from the records through #160 (wins, tempo, CI metrics, XP ledger); latest was stuck at #141 (B1)",
+    "pr": "https://github.com/slopryno/slopworks/pull/161",
+    "date": "2026-10-28",
+    "merged": "2026-10-28T12:43-04:00",
+    "opened": "2026-10-28T12:41-04:00"
+  },
+  {
+    "id": "pr160",
+    "role": "Sweep",
+    "title": "Sweep: compact xp_ledger and mobile design JSON (format only, ~83.5 KB)",
+    "pr": "https://github.com/slopryno/slopworks/pull/160",
+    "date": "2026-10-28",
+    "merged": "2026-10-28T12:35-04:00",
+    "opened": "2026-10-28T11:34-04:00"
+  },
+  {
+    "id": "pr152",
+    "role": "Forge",
+    "title": "Forge: xp.py fetches merged PRs in small chunks with retries and a completeness check, so a 502 or the 200 cap can't stall or shorten the XP ledger",
+    "pr": "https://github.com/slopryno/slopworks/pull/152",
+    "date": "2026-10-28",
+    "merged": "2026-10-28T08:38-04:00",
+    "opened": "2026-10-28T08:36-04:00"
+  },
+  {
+    "id": "pr151",
+    "role": "Sweep",
+    "title": "Sweep: plan drafts and the local CLAUDE.md stay off the public repo (Ryno, Oct 28)",
+    "pr": "https://github.com/slopryno/slopworks/pull/151",
+    "date": "2026-10-28",
+    "merged": "2026-10-28T08:11-04:00",
+    "opened": "2026-10-28T07:37-04:00"
+  },
+  {
+    "id": "pr150",
+    "role": "Forge",
+    "title": "Morning scan Oct 28: 6 updates, huddles on #148/#149",
+    "pr": "https://github.com/slopryno/slopworks/pull/150",
+    "date": "2026-10-28",
+    "merged": "2026-10-28T05:00-04:00",
+    "opened": "2026-10-28T04:58-04:00"
+  },
+  {
+    "id": "pr146",
+    "role": "Forge",
+    "title": "Forge: the site moves to slopryno.com, every hardcoded slopryno.github.io/slopworks URL (build, xp, checks, standup post, Coordinator's X-draft link, docs, reco",
+    "pr": "https://github.com/slopryno/slopworks/pull/146",
+    "date": "2026-10-27",
+    "merged": "2026-10-27T22:45-04:00",
+    "opened": "2026-10-27T21:19-04:00"
+  },
+  {
+    "id": "pr147",
+    "role": "Forge",
+    "title": "Forge: CLAUDE.md, PR template and preflight.sh so local Claude edits match team gates (Ryno, Oct 27 10:10 PM ET)",
+    "pr": "https://github.com/slopryno/slopworks/pull/147",
+    "date": "2026-10-27",
+    "merged": "2026-10-27T22:18-04:00",
+    "opened": "2026-10-27T22:16-04:00"
+  },
+  {
+    "id": "pr145",
+    "role": "Forge",
+    "title": "Forge: bot.py merge_when_green no longer crashes after the merge when run from a worktree; Trial's test failed first (git checkout main, exit 128)",
+    "pr": "https://github.com/slopryno/slopworks/pull/145",
+    "date": "2026-10-27",
+    "merged": "2026-10-27T16:38-04:00",
+    "opened": "2026-10-27T16:36-04:00"
+  },
+  {
+    "id": "pr144",
+    "role": "Forge",
+    "title": "Forge: the bot.py run lock is claimed atomically and only its owner removes it; Trial's race test failed first (3 of 4 runs held it at once) (F2)",
+    "pr": "https://github.com/slopryno/slopworks/pull/144",
+    "date": "2026-10-27",
+    "merged": "2026-10-27T12:50-04:00",
+    "opened": "2026-10-27T12:48-04:00"
+  },
+  {
+    "id": "pr143",
+    "role": "Sketch",
+    "title": "Sketch: every plan step in plans/TEMPLATE.md gets You see, Verify live and Weight lines (Ryno, Oct 21 9:00 AM ET)",
+    "pr": "https://github.com/slopryno/slopworks/pull/143",
+    "date": "2026-10-27",
+    "merged": "2026-10-27T08:43-04:00",
+    "opened": "2026-10-27T08:42-04:00"
+  },
+  {
+    "id": "pr142",
+    "role": "Sweep",
+    "title": "Sweep: restart after the Oct 22-26 outage: the Oct 21 morning-run AAR and the Oct 21 evening wrap's XP refresh for #139-#141 (Gamemaster's first 5 XP), with the",
+    "pr": "https://github.com/slopryno/slopworks/pull/142",
+    "date": "2026-10-27",
+    "merged": "2026-10-27T07:59-04:00",
+    "opened": "2026-10-27T07:57-04:00"
+  },
+  {
     "id": "pr141",
     "role": "Advisor",
     "title": "Advisor: the team reviews its skills against the Superpowers skills library (obra/superpowers 7.0.0, pinned at the release commit): 8 roles add 9 skills, 3 over",

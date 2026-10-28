@@ -63,6 +63,24 @@
       "pages_failed": 0,
       "pr_ci_failed_bot": 3,
       "pr_ci_failed_dependabot": 0
+    },
+    {
+      "date": "2026-10-27",
+      "main_ci_runs": 7,
+      "main_ci_failed": 0,
+      "pages_runs": 7,
+      "pages_failed": 0,
+      "pr_ci_failed_bot": 2,
+      "pr_ci_failed_dependabot": 0
+    },
+    {
+      "date": "2026-10-28",
+      "main_ci_runs": 5,
+      "main_ci_failed": 0,
+      "pages_runs": 5,
+      "pages_failed": 0,
+      "pr_ci_failed_bot": 2,
+      "pr_ci_failed_dependabot": 0
     }
   ]
 }
