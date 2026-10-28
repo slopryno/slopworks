@@ -81,6 +81,9 @@ class BrokenBoards(unittest.TestCase):
     def test_abandoned_needs_a_reason(self):
         self.broken(lambda b: quest(b, "nav-tab-bar").pop("reason"), "needs its reason")
 
+    def test_held_needs_a_reason(self):
+        self.broken(lambda b: quest(b, "rpg-quests").pop("reason"), "held quest needs its reason")
+
     def test_unlocks_names_a_quest(self):
         self.broken(lambda b: quest(b, "rpg-quests").update(unlocks="nowhere"), "isn't a quest on the board")
 

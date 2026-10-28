@@ -12,7 +12,8 @@ ROOT = Path(__file__).resolve().parent.parent
 
 # Board vocabulary: key -> (game word, plain word). Gamemaster keeps it consistent with data/progression.json and Comms
 # owns the wording; no game word may be a role name, so a stage never blurs who did the work.
-GROUPS = {"complete": ("Completed quests", "shipped"), "active": ("Active quests", "in progress"), "queued": ("Queued quests", "next"),
+GROUPS = {"complete": ("Completed quests", "shipped"), "active": ("Active quests", "in progress"),
+          "held": ("Held quests", "paused"), "queued": ("Queued quests", "next"),
           "rumor": ("Rumors", "being explored, not committed"), "abandoned": ("Abandoned quests", "dropped, with the reason")}
 STAGES = {"discovered": ("Discovered", "explored"), "challenged": ("Challenged", "challenged by the team"), "crafting": ("Crafting", "building"),
           "inspection": ("Inspection", "in review"), "complete": ("Complete", "shipped")}
@@ -108,6 +109,8 @@ def errors(root=None, validate=None):
             errs.append(f"{at}: a complete quest needs its merged PR (pr<N> in data/wins.json) on the complete step")
         if q["group"] == "abandoned" and not q.get("reason"):
             errs.append(f"{at}: an abandoned quest needs its reason")
+        if q["group"] == "held" and not q.get("reason"):
+            errs.append(f"{at}: a held quest needs its reason")
     for q in board["quests"]:
         if q.get("unlocks") and q["unlocks"] not in seen:
             errs.append(f"{where} quest {q['id']}: unlocks {q['unlocks']}, which isn't a quest on the board")

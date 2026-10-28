@@ -154,7 +154,7 @@
     },
     {
       "id": "rpg-quests",
-      "group": "active",
+      "group": "held",
       "title": "Daily, weekly and level-up quests",
       "why": "Rewards the work that keeps the site accurate, not activity: Week 2 of the Slopworks RPG.",
       "lead": "Gamemaster",
@@ -175,7 +175,8 @@
           "date": "2026-10-17",
           "ref": "c179"
         }
-      ]
+      ],
+      "reason": "Badges and mission rollouts stay HELD (Oct 27 prototype decision). The board tracks it; it is not in progress."
     },
     {
       "id": "run-heartbeat",

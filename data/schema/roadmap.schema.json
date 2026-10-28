@@ -1,46 +1,214 @@
 {
   "type": "object",
   "additionalProperties": false,
-  "required": ["owner", "updated", "quests", "oaths", "camp"],
+  "required": [
+    "owner",
+    "updated",
+    "quests",
+    "oaths",
+    "camp"
+  ],
   "properties": {
-    "owner": {"type": "string", "enum": ["Coordinator"]},
-    "updated": {"type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$"},
-    "quests": {"type": "array", "items": {"type": "object", "additionalProperties": false,
-      "required": ["id", "group", "title", "why", "lead", "ref", "history"],
-      "properties": {
-        "id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]{1,40}$"},
-        "group": {"type": "string", "enum": ["complete", "active", "queued", "rumor", "abandoned"]},
-        "title": {"type": "string", "maxLength": 60},
-        "why": {"type": "string", "maxLength": 160},
-        "lead": {"type": "string"},
-        "party": {"type": "array", "items": {"type": "string"}},
-        "ref": {"type": "string"},
-        "fog": {"type": "string", "maxLength": 120},
-        "unlocks": {"type": "string"},
-        "raid": {"type": "boolean"},
-        "reason": {"type": "string", "maxLength": 160},
-        "history": {"type": "array", "items": {"type": "object", "additionalProperties": false, "required": ["stage", "date", "ref"],
-          "properties": {
-            "stage": {"type": "string", "enum": ["discovered", "challenged", "crafting", "inspection", "complete"]},
-            "date": {"type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$"},
-            "ref": {"type": "string"}}}}}}},
-    "oaths": {"type": "array", "items": {"type": "object", "additionalProperties": false,
-      "required": ["id", "claim", "sworn", "due", "lead", "ref", "verdict"],
-      "properties": {
-        "id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]{1,40}$"},
-        "claim": {"type": "string", "maxLength": 140},
-        "sworn": {"type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$"},
-        "due": {"type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$"},
-        "lead": {"type": "string"},
-        "ref": {"type": "string"},
-        "verdict": {"type": "string", "enum": ["open", "kept", "kept_late", "broken", "withdrawn", "unjudged"]},
-        "judged": {"type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$"},
-        "evidence": {"type": "string"},
-        "aar": {"type": "string"},
-        "reason": {"type": "string", "maxLength": 160},
-        "note": {"type": "string", "maxLength": 160},
-        "corrected": {"type": "string", "maxLength": 200}}}},
-    "camp": {"type": "array", "items": {"type": "object", "additionalProperties": false, "required": ["title", "ref"],
-      "properties": {"title": {"type": "string", "maxLength": 60}, "ref": {"type": "string"}}}}
+    "owner": {
+      "type": "string",
+      "enum": [
+        "Coordinator"
+      ]
+    },
+    "updated": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+    },
+    "quests": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "group",
+          "title",
+          "why",
+          "lead",
+          "ref",
+          "history"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9-]{1,40}$"
+          },
+          "group": {
+            "type": "string",
+            "enum": [
+              "complete",
+              "active",
+              "held",
+              "queued",
+              "rumor",
+              "abandoned"
+            ]
+          },
+          "title": {
+            "type": "string",
+            "maxLength": 60
+          },
+          "why": {
+            "type": "string",
+            "maxLength": 160
+          },
+          "lead": {
+            "type": "string"
+          },
+          "party": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "ref": {
+            "type": "string"
+          },
+          "fog": {
+            "type": "string",
+            "maxLength": 120
+          },
+          "unlocks": {
+            "type": "string"
+          },
+          "raid": {
+            "type": "boolean"
+          },
+          "reason": {
+            "type": "string",
+            "maxLength": 160
+          },
+          "history": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "stage",
+                "date",
+                "ref"
+              ],
+              "properties": {
+                "stage": {
+                  "type": "string",
+                  "enum": [
+                    "discovered",
+                    "challenged",
+                    "crafting",
+                    "inspection",
+                    "complete"
+                  ]
+                },
+                "date": {
+                  "type": "string",
+                  "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+                },
+                "ref": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "oaths": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "claim",
+          "sworn",
+          "due",
+          "lead",
+          "ref",
+          "verdict"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9-]{1,40}$"
+          },
+          "claim": {
+            "type": "string",
+            "maxLength": 140
+          },
+          "sworn": {
+            "type": "string",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+          },
+          "due": {
+            "type": "string",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+          },
+          "lead": {
+            "type": "string"
+          },
+          "ref": {
+            "type": "string"
+          },
+          "verdict": {
+            "type": "string",
+            "enum": [
+              "open",
+              "kept",
+              "kept_late",
+              "broken",
+              "withdrawn",
+              "unjudged"
+            ]
+          },
+          "judged": {
+            "type": "string",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+          },
+          "evidence": {
+            "type": "string"
+          },
+          "aar": {
+            "type": "string"
+          },
+          "reason": {
+            "type": "string",
+            "maxLength": 160
+          },
+          "note": {
+            "type": "string",
+            "maxLength": 160
+          },
+          "corrected": {
+            "type": "string",
+            "maxLength": 200
+          }
+        }
+      }
+    },
+    "camp": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "title",
+          "ref"
+        ],
+        "properties": {
+          "title": {
+            "type": "string",
+            "maxLength": 60
+          },
+          "ref": {
+            "type": "string"
+          }
+        }
+      }
+    }
   }
 }
