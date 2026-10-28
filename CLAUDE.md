@@ -61,15 +61,17 @@ Full list: [`docs/constraints.md`](docs/constraints.md), [`docs/style-guide.md`]
 
 ## Custom domain
 
-The live site is moving to **https://slopryno.com/** (custom domain on GitHub Pages; see open/merged PR work for that switch). Keep `site/CNAME` with `slopryno.com` when that file is present — do not delete it on deploy. Prefer relative links and the repo’s `BASE` / site URL helpers over hard-coding `slopryno.github.io/slopworks`. Until the custom domain’s HTTPS is confirmed, live checks may still use the github.io URL.
+The live site is **https://slopryno.com/** (HTTPS enforced). `www` and the old `slopryno.github.io/slopworks` URL redirect there. Keep `site/CNAME` with `slopryno.com` — do not delete it on deploy. Prefer relative links and the repo’s `BASE` / site URL helpers over hard-coding the old github.io path. Live checks use `https://slopryno.com/`.
 
 ## Tempo
 
 Normal pace: up to 6 PRs per sprint, 3 sprints a day, hard cap **18 merges a day** (`scripts/tempo.py`). Slowed mode drops to 3 PRs a day after a trip. Scoped CEO overrides are add-only in `data/ceo_overrides.json` and expire the same ET day.
 
-## Plans
+## Plans and local notes
 
 New plan steps use [`plans/TEMPLATE.md`](plans/TEMPLATE.md): each step needs **You see**, **Verify live**, and **Weight** lines. Ship through `scripts/bot.py pr` with the required sign-offs for the paths you touch.
+
+Team rules stay in this shared `CLAUDE.md`. Personal or machine-only notes go in `CLAUDE.local.md` (gitignored; Claude Code loads it on that machine). Plan drafts that should not be public go in `docs/plans/` (also gitignored). The team’s live plans stay in `plans/`.
 
 ## What not to do
 
