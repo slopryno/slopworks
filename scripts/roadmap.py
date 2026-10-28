@@ -14,7 +14,7 @@ ROOT = Path(__file__).resolve().parent.parent
 # owns the wording; no game word may be a role name, so a stage never blurs who did the work.
 GROUPS = {"complete": ("Completed quests", "shipped"), "active": ("Active quests", "in progress"), "queued": ("Queued quests", "next"),
           "rumor": ("Rumors", "being explored, not committed"), "abandoned": ("Abandoned quests", "dropped, with the reason")}
-STAGES = {"discovered": ("Discovered", "explored"), "challenged": ("Challenged", "challenged by Critic"), "crafting": ("Crafting", "building"),
+STAGES = {"discovered": ("Discovered", "explored"), "challenged": ("Challenged", "challenged by the team"), "crafting": ("Crafting", "building"),
           "inspection": ("Inspection", "in review"), "complete": ("Complete", "shipped")}
 VERDICTS = {"open": ("Sworn", "not yet due"), "kept": ("Kept", "hit"), "kept_late": ("Kept late", "slipped"), "broken": ("Broken", "missed"),
             "withdrawn": ("Withdrawn", "cut"), "unjudged": ("Unjudged", "can't be measured yet")}
@@ -84,6 +84,9 @@ def errors(root=None, validate=None):
         if q["id"] in seen:
             errs.append(f"{at}: duplicate id")
         seen.add(q["id"])
+        if not q["history"]:
+            errs.append(f"{at}: needs at least one history step")
+            continue
         for ref in [q["ref"]] + [h["ref"] for h in q["history"]]:
             if not ref_ok(ref, refs, root):
                 errs.append(f"{at}: ref {ref} isn't a record (ideas, design backlog, goals, wins, chat, AARs or a repo file)")
@@ -92,7 +95,7 @@ def errors(root=None, validate=None):
                 errs.append(f"{at}: {r} isn't a role in bots/")
         order = [list(STAGES).index(h["stage"]) for h in q["history"]]
         if order != sorted(order) or len(set(order)) != len(order):
-            errs.append(f"{at}: stage history must move forward, one step each")
+            errs.append(f"{at}: stage history must move forward and never repeat a step")
         dates = [h["date"] for h in q["history"]]
         if dates != sorted(dates):
             errs.append(f"{at}: stage history dates go backwards")

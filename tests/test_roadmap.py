@@ -61,6 +61,9 @@ class BrokenBoards(unittest.TestCase):
     def test_stage_dated_after_the_records(self):
         self.broken(lambda b: quest(b, "rpg-quests")["history"].append({"stage": "crafting", "date": "2099-01-01", "ref": "c163"}), "after the newest record")
 
+    def test_empty_history_is_an_error_not_a_crash(self):
+        self.broken(lambda b: quest(b, "social-preview").update(history=[]), "at least one history step")
+
     def test_too_many_active_quests(self):
         def seven(b):
             for q in b["quests"]:
