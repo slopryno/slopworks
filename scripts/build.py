@@ -1133,7 +1133,7 @@ def build():
                              '<p>Every page the site has published keeps its address. Try one of these:</p><ul>'
                              + "".join(f'<li><a href="{s}">{e(t)}</a></li>' for s, t in [("", "Home"), ("updates/", "What's new in Grok Bot"), ("issues/", "Known issues"), ("work/", "The team's work"), ("team/", "The team")])
                              + f'</ul><p>Followed a broken link from this site? <a href="mailto:{CORRECTIONS}">Tell us</a> and we\'ll fix it.</p>', "scripts/build.py"
-                             ).replace("<head>\n", f'<head>\n<base href="{BASE}">\n', 1)
+                             ).replace("<head>\n", f'<head>\n<base href="{BASE}">\n', 1).replace('<a class="skip" href="#main">', '<a class="skip" href="404.html#main">', 1)  # <base> would send #main to the home page
     # Comms (i28): sitemap, robots.txt, and llms.txt come from the same page list, so they can't drift (Atlas, c108).
     pages = sorted(k for k in files if k.endswith(".html"))
     loc = lambda k: BASE + (k[:-len("index.html")] if k.endswith("index.html") else k)
