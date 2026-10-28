@@ -1,0 +1,15 @@
+name: Missed-run heartbeat
+on:
+  schedule:
+    - cron: "0 14 * * *" # about 10 AM ET (9 AM in winter), well after the daily run's time in data/schedule.json
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  heartbeat:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - uses: actions/checkout@v7
+      # Fails (and GitHub emails the repo owner) when data/state.json has no run for the expected day. Read-only: no model, no token, no write.
+      - run: python3 scripts/heartbeat.py
