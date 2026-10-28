@@ -1,5 +1,14 @@
 [
   {
+    "id": "pr161",
+    "role": "Sweep",
+    "title": "Sweep: home and team pages refresh from the records through #160 (wins, tempo, CI metrics, XP ledger); latest was stuck at #141 (B1)",
+    "pr": "https://github.com/slopryno/slopworks/pull/161",
+    "date": "2026-10-28",
+    "merged": "2026-10-28T12:43-04:00",
+    "opened": "2026-10-28T12:41-04:00"
+  },
+  {
     "id": "pr160",
     "role": "Sweep",
     "title": "Sweep: compact xp_ledger and mobile design JSON (format only, ~83.5 KB)",

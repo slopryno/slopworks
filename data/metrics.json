@@ -1,10 +1,10 @@
 {
-  "as_of": "2026-10-28T12:35-04:00",
+  "as_of": "2026-10-28T12:43-04:00",
   "newest_day": "2026-10-28",
   "days_of_history": 9,
   "ci_window_start": "2026-10-15T23:00-04:00",
   "totals": {
-    "prs": 145,
+    "prs": 146,
     "open_to_merge_min": 1,
     "ci_catches": 31,
     "main_failures": 0,
@@ -18,7 +18,7 @@
   },
   "pace": {
     "mode": "normal",
-    "clean_prs": 25,
+    "clean_prs": 26,
     "clean_needed": 10
   },
   "days": [
@@ -136,8 +136,8 @@
     },
     {
       "date": "2026-10-28",
-      "prs": 4,
-      "open_to_merge_min": 18,
+      "prs": 5,
+      "open_to_merge_min": 2,
       "escaped": 0,
       "corrections": 0,
       "aars": 0,
@@ -228,7 +228,7 @@
       "key": "prs",
       "label": "Merged PRs",
       "prev": 6,
-      "new": 4,
+      "new": 5,
       "direction": "down",
       "verdict": null
     },
@@ -236,8 +236,8 @@
       "key": "open_to_merge_min",
       "label": "Median open to merge, minutes",
       "prev": 2,
-      "new": 18,
-      "direction": "up",
+      "new": 2,
+      "direction": "flat",
       "verdict": null
     },
     {
@@ -268,7 +268,7 @@
       "key": "ci_catches",
       "label": "CI catches before merge per 10 PRs",
       "prev": 3.3,
-      "new": 5.0,
+      "new": 4.0,
       "direction": "up",
       "verdict": null
     },
