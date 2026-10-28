@@ -275,12 +275,14 @@ def rrule(expr):
     return None
 
 
-def ics(cal, sched, today, base):
+def ics(cal, sched, today, base, oaths=()):
+    """oaths: (uid, date, summary, description, status, sequence) from roadmap.calendar_events, the Quest board's due dates."""
     stamp = today.strftime("%Y%m%dT120000Z")
     ymd = lambda x: x.strftime("%Y%m%d")
     lines = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Slopworks//Team calendar//EN", "CALSCALE:GREGORIAN", "METHOD:PUBLISH",
              "X-WR-CALNAME:Slopworks team calendar", "X-WR-TIMEZONE:America/New_York",
-             "X-WR-CALDESC:" + _text(f"The Slopworks bot team's dated plans, reviews and holiday themes. The daily run is every day around {run_time(sched)}. Unofficial fan project.")]
+             "X-WR-CALDESC:" + _text(f"The Slopworks bot team's dated plans, reviews and holiday themes. The daily run is every day around {run_time(sched)}. Unofficial fan project."),
+             "REFRESH-INTERVAL;VALUE=DURATION:P1D", "X-PUBLISHED-TTL:P1D"]  # RFC 7986: a hint to check once a day
 
     def event(uid, start, summary, desc, end=None, rule=None, tentative=False):
         lines.extend(["BEGIN:VEVENT", f"UID:{uid}.slopworks-calendar", f"DTSTAMP:{stamp}", f"DTSTART;VALUE=DATE:{ymd(start)}",
@@ -303,5 +305,10 @@ def ics(cal, sched, today, base):
         while not matches(day, item["cron"]):
             day += timedelta(days=1)
         event(f'routine-{r["schedule_id"]}', day, r["title"], f'{TYPES[r["type"]]}. {r["owner"]}. {item["what"]}', rule=rule)
+    for uid, when, summary, desc, status, seq in oaths:  # Quest board oaths: same UID for life, SEQUENCE up once judged
+        start = d(when)
+        lines.extend(["BEGIN:VEVENT", f"UID:{uid}.slopworks-calendar", f"DTSTAMP:{stamp}", f"SEQUENCE:{seq}", f"DTSTART;VALUE=DATE:{ymd(start)}",
+                      f"DTEND;VALUE=DATE:{ymd(start + timedelta(days=1))}", f"SUMMARY:{_text(summary)}", f"DESCRIPTION:{_text(desc)}",
+                      f"URL:{base}roadmap/#{uid}", "TRANSP:TRANSPARENT", f"STATUS:{status}", "END:VEVENT"])
     lines.append("END:VCALENDAR")
     return "\r\n".join(_fold(l) for l in lines) + "\r\n"

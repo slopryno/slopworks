@@ -7,6 +7,8 @@ X-WR-CALNAME:Slopworks team calendar
 X-WR-TIMEZONE:America/New_York
 X-WR-CALDESC:The Slopworks bot team's dated plans\, reviews and holiday the
  mes. The daily run is every day around 4:45 AM ET. Unofficial fan project.
+REFRESH-INTERVAL;VALUE=DURATION:P1D
+X-PUBLISHED-TTL:P1D
 BEGIN:VEVENT
 UID:hw26-plan.slopworks-calendar
 DTSTAMP:20261028T120000Z
@@ -497,6 +499,48 @@ DESCRIPTION:Routine. Sweep. Repo hygiene: Sweep checks the tracked tree aga
  inst the lean budgets and removes stray\, duplicate\, dead\, temp or build
   files in one ordinary PR. No history rewrites.
 URL:https://slopryno.com/calendar/
+TRANSP:TRANSPARENT
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:oath-g1-get-found.slopworks-calendar
+DTSTAMP:20261028T120000Z
+SEQUENCE:0
+DTSTART;VALUE=DATE:20261118
+DTEND;VALUE=DATE:20261119
+SUMMARY:Oath due: 50 unique repo visitors in GitHub's 14-day window\, 5 sta
+ rs\, 2 outside referrer domains
+DESCRIPTION:Sworn (not yet due). Led by Strategy. A dated call the Slopwork
+ s team made about itself.
+URL:https://slopryno.com/roadmap/#oath-g1-get-found
+TRANSP:TRANSPARENT
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:oath-g2-showcase.slopworks-calendar
+DTSTAMP:20261028T120000Z
+SEQUENCE:0
+DTSTART;VALUE=DATE:20261118
+DTEND;VALUE=DATE:20261119
+SUMMARY:Oath due: 12 real-trace showcase entries\, 6 of them new\, with at 
+ least 1 new format
+DESCRIPTION:Sworn (not yet due). Led by Strategy. A dated call the Slopwork
+ s team made about itself.
+URL:https://slopryno.com/roadmap/#oath-g2-showcase
+TRANSP:TRANSPARENT
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:oath-g3-fast-features.slopworks-calendar
+DTSTAMP:20261028T120000Z
+SEQUENCE:0
+DTSTART;VALUE=DATE:20261118
+DTEND;VALUE=DATE:20261119
+SUMMARY:Oath due: Every new tracker item logged within 1 day\, and 2 featur
+ es demoed within 7 days of entry
+DESCRIPTION:Sworn (not yet due). Led by Strategy. A dated call the Slopwork
+ s team made about itself.
+URL:https://slopryno.com/roadmap/#oath-g3-fast-features
 TRANSP:TRANSPARENT
 STATUS:CONFIRMED
 END:VEVENT

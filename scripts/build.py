@@ -17,7 +17,7 @@ DISCLAIMER = "Unofficial, fan-built project. Not affiliated with or endorsed by 
 CORRECTIONS = "slopryno+corrections@mail.grokbot.com"
 # Information architecture (i36, Team chat c210 to c214): 4 top items plus the brand as Home. Deeper pages sit one tap
 # from their hub, every deep page has one "Back to" link, and the footer lists every page. No URL moved.
-WORK = [("timeline/", "Timeline"), ("weekly/", "Weekly recap"), ("metrics/", "Metrics"), ("cases/", "Case files"), ("arena/", "Research Arena"), ("challenges/", "Demo challenge")]
+WORK = [("timeline/", "Timeline"), ("weekly/", "Weekly recap"), ("metrics/", "Metrics"), ("roadmap/", "Quest board"), ("cases/", "Case files"), ("arena/", "Research Arena"), ("challenges/", "Demo challenge")]
 HOOD = [("how/", "How this works"), ("updates/", "What's new"), ("issues/", "Known issues"), ("chat/", "Team chat"), ("schedule/", "Schedule and limits"), ("calendar/", "Calendar"), ("behind/", "Behind the scenes"), ("design/", "Design log")]
 TOP = [("work/", "Work"), ("team/", "Team"), ("lessons/", "Lessons"), ("hood/", "Under the hood")]
 NAV = [("", "Home")] + WORK + [("team/", "Team"), ("lessons/", "Lessons"), ("how/", "How this works")]  # every visitor page, for llms.txt and the footer
@@ -222,6 +222,7 @@ def how_body(sched, up):
 # Comms (i28): one plain, page-true description per page. Pages not listed fall back to their lede.
 DESCRIPTIONS = {
     "": "An unofficial Grok Bot tracker built, designed, and run by Grok Bots, with every claim linked to a public source or a merged change.",
+    "roadmap/": "The Slopworks team's roadmap as a quest board: what shipped, what's in progress and next, what was dropped, and the dated calls it kept or broke.",
     "metrics/": "Slopworks metrics from its records: merged PRs, open-to-merge time, sprint durations, CI catches, failures on main, reverts, AARs, and trends by day.",
     "weekly/": "A weekly recap of the Slopworks bot team from its records: merged PRs, sprints, research, lessons, and next objectives. A running week is labeled so far.",
     "updates/": "Grok Bot updates from the official changelog and team posts, newest first, each labeled confirmed or reported and linked to its source.",
@@ -1060,7 +1061,25 @@ def build():
     today = _date.fromisoformat(state.get("updated") or state["last_run"])
     files["calendar/index.html"] = page("calendar/", "Team calendar", f"Runs, reviews, releases and holiday themes, month by month. As of {cal.nice(today)}.",
                                         cal.render(calendar, sched, today), "data/calendar.json")
-    files["calendar.ics"] = cal.ics(calendar, sched, today, BASE)
+    # Quest board (the public roadmap, data/roadmap.json): the page, a board feed with one item per event, and oath due dates
+    # in calendar.ics. Each lead shows the avatar, name and level from that role's character sheet.
+    import roadmap
+    board = load("roadmap")
+    lead = lambda n: (f'<a href="../team/{stems[n]}/">{avatar(n, "../", 24)}{e(n)}</a>, {xp_line(n, "../").split(",")[0]}' if n in stems else e(n))
+    files["roadmap/index.html"] = page("roadmap/", "Quest board", "The team's roadmap as a quest board: what shipped, what's next, and the oaths it kept or broke.",
+                                       roadmap.render(board, today.isoformat(), lead), "data/roadmap.json").replace(
+        "</head>", '<link rel="alternate" type="application/rss+xml" title="Slopworks Quest board (roadmap)" href="feed.xml">\n</head>', 1)
+    events = roadmap.feed_items(board)[:50]
+    rdt = lambda x: datetime.fromisoformat(x).replace(hour=12, tzinfo=timezone.utc)
+    files["roadmap/feed.json"] = json.dumps({"version": "https://jsonfeed.org/version/1.1", "title": "Slopworks Quest board (roadmap)", "home_page_url": BASE + "roadmap/",
+        "feed_url": BASE + "roadmap/feed.json", "description": "Each completed quest, stage change and judged oath on the Slopworks team's roadmap. " + DISCLAIMER,
+        "items": [{"id": x["id"], "url": f'{BASE}roadmap/#{x["anchor"]}', "title": x["title"], "content_text": x["summary"], "date_published": rdt(x["date"]).isoformat()} for x in events]},
+        indent=2, ensure_ascii=False) + "\n"
+    files["roadmap/feed.xml"] = ('<?xml version="1.0" encoding="utf-8"?>\n<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Slopworks Quest board (roadmap)</title>'
+        f'<link>{BASE}roadmap/</link><atom:link href="{BASE}roadmap/feed.xml" rel="self" type="application/rss+xml"/><description>{e(DISCLAIMER)}</description>\n'
+        + "".join(f'<item><title>{e(x["title"])}</title><link>{BASE}roadmap/#{x["anchor"]}</link><guid isPermaLink="false">{x["id"]}</guid><pubDate>{format_datetime(rdt(x["date"]))}</pubDate><description>{e(x["summary"])}</description></item>\n' for x in events)
+        + "</channel></rss>\n")
+    files["calendar.ics"] = cal.ics(calendar, sched, today, BASE, roadmap.calendar_events(board))
     shipped = [d for d in design if d["state"] == "shipped"]
     backlog = sorted([d for d in design if d["state"] in ("backlog", "in-progress")], key=lambda d: d["rank"])
     card = lambda d: f'<article class="card"><h3>{e(d["idea"])}</h3><p>{e(d["why"])}</p><p class="meta"><span class="tag">effort {d["effort"]}</span><span>{e(d["state"])}{" " + d["shipped"] if d.get("shipped") else ""}</span></p></article>'
@@ -1068,6 +1087,7 @@ def build():
     # Phase A V8 (Ryno 2026-10-19 6:33 PM ET): one card anatomy: a kicker naming the kind of page, the title, a one-line
     # blurb, and a metric footer counted from the records (none where there is no honest count). A thin rule marks the kind.
     kinds = {"timeline/": ("Record", f"{len(wins)} merged PRs"), "weekly/": ("Record", ""), "metrics/": ("Measure", ""),
+             "roadmap/": ("Plan", (lambda n: f"{n} active {'quest' if n == 1 else 'quests'}")(sum(q["group"] == "active" for q in board["quests"]))),
              "cases/": ("Proof", f"{len(cases)} case files"), "arena/": ("Research", (lambda n: f"{n} research {'round' if n == 1 else 'rounds'}")(len(load("arena")))),
              "challenges/": ("Demo", "Labeled demo"), "how/": ("Guide", ""), "updates/": ("Tracker", f"{len(ups)} updates"),
              "issues/": ("Tracker", f"{sum(x['state'] == 'open' for x in iss)} open"), "chat/": ("Record", f"{len(chat)} messages"),
@@ -1076,6 +1096,7 @@ def build():
     blurb = {"timeline/": "What shipped, what Ryno decided and what was learned, newest first.",
              "weekly/": "Each week from the records: PRs, sprints, research and lessons.",
              "metrics/": "Merge time, CI catches, failures, reverts and AARs, from records.",
+             "roadmap/": "Team quests completed, active and rumored, and the oaths we kept or broke.",
              "cases/": "Real decisions replayed step by step, from problem to shipped change.",
              "arena/": "Independent reports, a challenge, scores and the decision.",
              "challenges/": "A fictional brief, worked the way the team works.",
@@ -1138,6 +1159,7 @@ def build():
         + "".join(f"- [{t}]({BASE}{s}): {DESCRIPTIONS.get(s, '')}\n" for s, t in main_pages)
         + f"\n## Feeds and data\n\n- [Updates RSS]({BASE}feed.xml): Grok Bot updates and known issues\n- [Updates JSON Feed]({BASE}feed.json): the same items as JSON Feed 1.1\n"
         f"- [Team chat JSON Feed]({BASE}chat.json): standups, pitches, research, and handoffs\n"
+        f"- [Quest board RSS]({BASE}roadmap/feed.xml): each completed quest, stage change and judged oath on the team's roadmap\n"
         f"- [Team calendar]({BASE}calendar.ics): the team's dated plans, reviews and holiday themes (iCalendar)\n- [Source repository]({REPO}): data in data/*.json, the generator in scripts/build.py\n"
         f"\n## Optional\n\n- [Style guide]({REPO}/blob/main/docs/style-guide.md): the voice and terms the team writes by\n")
     return files
