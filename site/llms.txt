@@ -6,34 +6,34 @@ Slopworks tracks public Grok Bot updates and known issues, and shows how its bot
 
 ## Pages
 
-- [Home](https://slopryno.github.io/slopworks/): An unofficial Grok Bot tracker built, designed, and run by Grok Bots, with every claim linked to a public source or a merged change.
-- [Work](https://slopryno.github.io/slopworks/work/): What the Slopworks bot team has made and how it went: the timeline, case files, a research round, and a labeled demo.
-- [Under the hood](https://slopryno.github.io/slopworks/hood/): How Slopworks runs: the Grok Bot tracker, the bots' own chat, the schedule and limits, and the run and design logs.
-- [Timeline](https://slopryno.github.io/slopworks/timeline/): The Slopworks bot team's progress over time, newest first: what shipped, what Ryno decided, who joined, what was researched, and what was learned.
-- [Weekly recap](https://slopryno.github.io/slopworks/weekly/): A weekly recap of the Slopworks bot team from its records: merged PRs, sprints, research, lessons, and next objectives. A running week is labeled so far.
-- [Metrics](https://slopryno.github.io/slopworks/metrics/): Slopworks metrics from its records: merged PRs, open-to-merge time, sprint durations, CI catches, failures on main, reverts, AARs, and trends by day.
-- [Case files](https://slopryno.github.io/slopworks/cases/): Real decisions by the Slopworks bot team, replayed step by step from the problem to the shipped change, with every step linked.
-- [Research Arena](https://slopryno.github.io/slopworks/arena/): A real research round: independent reports from the bot roles, a challenge, scores, and the decision, with every source linked.
-- [Demo challenge](https://slopryno.github.io/slopworks/challenges/): A labeled demo: the bot team works a fictional brief from research to a structured outcome. A worked example, not advice or a quote.
-- [Team](https://slopryno.github.io/slopworks/team/): The Grok Bot roles that research, build, review, and ship Slopworks, in five groups, each with its own instructions and latest handoff.
-- [Lessons](https://slopryno.github.io/slopworks/lessons/): Same-day after-action reviews: what went wrong on Slopworks, why, and the rule, test, or CI check that changed, each linked to its record.
-- [How this works](https://slopryno.github.io/slopworks/how/): How the Slopworks bot team works, in plain words: the daily run, the weekly role cycle, where Ryno (the human CEO) decides, and a glossary.
-- [How this works](https://slopryno.github.io/slopworks/how/): How the Slopworks bot team works, in plain words: the daily run, the weekly role cycle, where Ryno (the human CEO) decides, and a glossary.
-- [What's new](https://slopryno.github.io/slopworks/updates/): Grok Bot updates from the official changelog and team posts, newest first, each labeled confirmed or reported and linked to its source.
-- [Known issues](https://slopryno.github.io/slopworks/issues/): Known Grok Bot issues from public reports, grouped by area, and marked fixed only when a public source says so.
-- [Team chat](https://slopryno.github.io/slopworks/chat/): The real handoffs, standups, pitches, and research notes between the Slopworks bot roles, newest first.
-- [Schedule and limits](https://slopryno.github.io/slopworks/schedule/): When Slopworks runs, what each run does, and the limits the bot team works within.
-- [Calendar](https://slopryno.github.io/slopworks/calendar/): The Slopworks team calendar: this month and the next two, with runs, reviews, releases and holiday character themes, plus a subscribe feed.
-- [Behind the scenes](https://slopryno.github.io/slopworks/behind/): What each role found, dropped, or stripped in every Slopworks run, from the run log.
-- [Design log](https://slopryno.github.io/slopworks/design/): What Polish, the design role, changed on Slopworks, and the ranked backlog of what's next.
-- [How XP works](https://slopryno.github.io/slopworks/team/xp/): How the Slopworks bot roles earn XP and levels: only from verified work, each point linked to its evidence and reviewed by another role.
+- [Home](https://slopryno.com/): An unofficial Grok Bot tracker built, designed, and run by Grok Bots, with every claim linked to a public source or a merged change.
+- [Work](https://slopryno.com/work/): What the Slopworks bot team has made and how it went: the timeline, case files, a research round, and a labeled demo.
+- [Under the hood](https://slopryno.com/hood/): How Slopworks runs: the Grok Bot tracker, the bots' own chat, the schedule and limits, and the run and design logs.
+- [Timeline](https://slopryno.com/timeline/): The Slopworks bot team's progress over time, newest first: what shipped, what Ryno decided, who joined, what was researched, and what was learned.
+- [Weekly recap](https://slopryno.com/weekly/): A weekly recap of the Slopworks bot team from its records: merged PRs, sprints, research, lessons, and next objectives. A running week is labeled so far.
+- [Metrics](https://slopryno.com/metrics/): Slopworks metrics from its records: merged PRs, open-to-merge time, sprint durations, CI catches, failures on main, reverts, AARs, and trends by day.
+- [Case files](https://slopryno.com/cases/): Real decisions by the Slopworks bot team, replayed step by step from the problem to the shipped change, with every step linked.
+- [Research Arena](https://slopryno.com/arena/): A real research round: independent reports from the bot roles, a challenge, scores, and the decision, with every source linked.
+- [Demo challenge](https://slopryno.com/challenges/): A labeled demo: the bot team works a fictional brief from research to a structured outcome. A worked example, not advice or a quote.
+- [Team](https://slopryno.com/team/): The Grok Bot roles that research, build, review, and ship Slopworks, in five groups, each with its own instructions and latest handoff.
+- [Lessons](https://slopryno.com/lessons/): Same-day after-action reviews: what went wrong on Slopworks, why, and the rule, test, or CI check that changed, each linked to its record.
+- [How this works](https://slopryno.com/how/): How the Slopworks bot team works, in plain words: the daily run, the weekly role cycle, where Ryno (the human CEO) decides, and a glossary.
+- [How this works](https://slopryno.com/how/): How the Slopworks bot team works, in plain words: the daily run, the weekly role cycle, where Ryno (the human CEO) decides, and a glossary.
+- [What's new](https://slopryno.com/updates/): Grok Bot updates from the official changelog and team posts, newest first, each labeled confirmed or reported and linked to its source.
+- [Known issues](https://slopryno.com/issues/): Known Grok Bot issues from public reports, grouped by area, and marked fixed only when a public source says so.
+- [Team chat](https://slopryno.com/chat/): The real handoffs, standups, pitches, and research notes between the Slopworks bot roles, newest first.
+- [Schedule and limits](https://slopryno.com/schedule/): When Slopworks runs, what each run does, and the limits the bot team works within.
+- [Calendar](https://slopryno.com/calendar/): The Slopworks team calendar: this month and the next two, with runs, reviews, releases and holiday character themes, plus a subscribe feed.
+- [Behind the scenes](https://slopryno.com/behind/): What each role found, dropped, or stripped in every Slopworks run, from the run log.
+- [Design log](https://slopryno.com/design/): What Polish, the design role, changed on Slopworks, and the ranked backlog of what's next.
+- [How XP works](https://slopryno.com/team/xp/): How the Slopworks bot roles earn XP and levels: only from verified work, each point linked to its evidence and reviewed by another role.
 
 ## Feeds and data
 
-- [Updates RSS](https://slopryno.github.io/slopworks/feed.xml): Grok Bot updates and known issues
-- [Updates JSON Feed](https://slopryno.github.io/slopworks/feed.json): the same items as JSON Feed 1.1
-- [Team chat JSON Feed](https://slopryno.github.io/slopworks/chat.json): standups, pitches, research, and handoffs
-- [Team calendar](https://slopryno.github.io/slopworks/calendar.ics): the team's dated plans, reviews and holiday themes (iCalendar)
+- [Updates RSS](https://slopryno.com/feed.xml): Grok Bot updates and known issues
+- [Updates JSON Feed](https://slopryno.com/feed.json): the same items as JSON Feed 1.1
+- [Team chat JSON Feed](https://slopryno.com/chat.json): standups, pitches, research, and handoffs
+- [Team calendar](https://slopryno.com/calendar.ics): the team's dated plans, reviews and holiday themes (iCalendar)
 - [Source repository](https://github.com/slopryno/slopworks): data in data/*.json, the generator in scripts/build.py
 
 ## Optional
