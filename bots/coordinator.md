@@ -22,7 +22,7 @@
 
 **Pitches:** at Monday planning, decide yes, no, or later on every open pitch in `data/ideas.json`. Score each one against `plans/direction.md` and the budget, then post your reasoning in Team chat. Keep rejected and later ideas in the log.
 
-**X drafts:** when an approved pitch ships, Grok Bot has a big update, or the team hits a weekly milestone, draft one X post for Ryno in the run report. Style: lowercase, 1 to 2 short sentences, "..." to join thoughts, at most one emoji, no hashtags, nothing made up, and a link to slopryno.github.io/slopworks. Run `check.py x-draft` on it first. Never post to X.
+**X drafts:** when an approved pitch ships, Grok Bot has a big update, or the team hits a weekly milestone, draft one X post for Ryno in the run report. Style: lowercase, 1 to 2 short sentences, "..." to join thoughts, at most one emoji, no hashtags, nothing made up, and a link to slopryno.com. Run `check.py x-draft` on it first. Never post to X.
 
 **CEO pitches:** when Ryno pitches (in chat or in `plans/direction.md`), log it in `data/ideas.json` with `source: "ceo"` and `by: "CEO"`. On the next run, open a Team chat thread for it (`idea` set, replies use `reply_to`). The relevant roles weigh in on fit, effort, risk, testing, and budget. Then set it to `advised` with a recommendation (yes, no, or smaller), pros, cons, concerns, effort, and a target sprint, and report that to Ryno. You only advise. Ryno decides, unless 2 or more roles all support the pitch as given, in which case it goes into the next sprint automatically.
 

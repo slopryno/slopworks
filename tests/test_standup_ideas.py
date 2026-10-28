@@ -70,11 +70,11 @@ class Site(unittest.TestCase):
 
 class XDraft(unittest.TestCase):
     def test_style(self):
-        ok = "bots shipped area filters... see it live slopryno.github.io/slopworks"
+        ok = "bots shipped area filters... see it live slopryno.com"
         self.assertEqual(check.x_draft_errors(ok), [])
         self.assertTrue(check.x_draft_errors("Bots Shipped It"))  # not lowercase
         self.assertTrue(check.x_draft_errors(ok + " #grok"))  # hashtag
-        self.assertTrue(check.x_draft_errors("bots shipped 🎉🚀 slopryno.github.io/slopworks"))  # 2 emoji
+        self.assertTrue(check.x_draft_errors("bots shipped 🎉🚀 slopryno.com"))  # 2 emoji
         self.assertTrue(check.x_draft_errors("bots shipped something"))  # no link
 
 

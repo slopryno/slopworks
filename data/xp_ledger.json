@@ -19,7 +19,7 @@
     "base_xp": 30,
     "quality_pct": 100,
     "reviewer": "Lens",
-    "evidence": "https://slopryno.github.io/slopworks/lessons/archive/2026-10.html#aar-2026-10-15-review-gate-trust",
+    "evidence": "https://slopryno.com/lessons/archive/2026-10.html#aar-2026-10-15-review-gate-trust",
     "timestamp": "2026-10-15",
     "status": "approved"
   },
@@ -187,7 +187,7 @@
     "base_xp": 30,
     "quality_pct": 100,
     "reviewer": "Lens",
-    "evidence": "https://slopryno.github.io/slopworks/lessons/archive/2026-10.html#aar-2026-10-16-research-render",
+    "evidence": "https://slopryno.com/lessons/archive/2026-10.html#aar-2026-10-16-research-render",
     "timestamp": "2026-10-16",
     "status": "approved"
   },
@@ -199,7 +199,7 @@
     "base_xp": 50,
     "quality_pct": 100,
     "reviewer": "Trial",
-    "evidence": "https://slopryno.github.io/slopworks/chat/archive/2026-10-2.html#i10",
+    "evidence": "https://slopryno.com/chat/archive/2026-10-2.html#i10",
     "timestamp": "2026-10-16",
     "status": "approved"
   },
@@ -211,7 +211,7 @@
     "base_xp": 50,
     "quality_pct": 100,
     "reviewer": "Trial",
-    "evidence": "https://slopryno.github.io/slopworks/chat/archive/2026-10-2.html#i11",
+    "evidence": "https://slopryno.com/chat/archive/2026-10-2.html#i11",
     "timestamp": "2026-10-16",
     "status": "approved"
   },
@@ -223,7 +223,7 @@
     "base_xp": 50,
     "quality_pct": 100,
     "reviewer": "Trial",
-    "evidence": "https://slopryno.github.io/slopworks/chat/archive/2026-10-2.html#i12",
+    "evidence": "https://slopryno.com/chat/archive/2026-10-2.html#i12",
     "timestamp": "2026-10-16",
     "status": "approved"
   },
@@ -235,7 +235,7 @@
     "base_xp": 50,
     "quality_pct": 100,
     "reviewer": "Trial",
-    "evidence": "https://slopryno.github.io/slopworks/chat/archive/2026-10-2.html#i13",
+    "evidence": "https://slopryno.com/chat/archive/2026-10-2.html#i13",
     "timestamp": "2026-10-16",
     "status": "approved"
   },
@@ -247,7 +247,7 @@
     "base_xp": 50,
     "quality_pct": 100,
     "reviewer": "Trial",
-    "evidence": "https://slopryno.github.io/slopworks/chat/archive/2026-10-2.html#i14",
+    "evidence": "https://slopryno.com/chat/archive/2026-10-2.html#i14",
     "timestamp": "2026-10-16",
     "status": "approved"
   },
@@ -259,7 +259,7 @@
     "base_xp": 50,
     "quality_pct": 100,
     "reviewer": "Trial",
-    "evidence": "https://slopryno.github.io/slopworks/chat/archive/2026-10-2.html#i15",
+    "evidence": "https://slopryno.com/chat/archive/2026-10-2.html#i15",
     "timestamp": "2026-10-16",
     "status": "approved"
   },
@@ -271,7 +271,7 @@
     "base_xp": 30,
     "quality_pct": 100,
     "reviewer": "Coordinator",
-    "evidence": "https://slopryno.github.io/slopworks/chat/archive/2026-10-2.html#r-polish-2026-10-16",
+    "evidence": "https://slopryno.com/chat/archive/2026-10-2.html#r-polish-2026-10-16",
     "timestamp": "2026-10-16",
     "status": "approved"
   },
@@ -1810,7 +1810,7 @@
     "base_xp": 30,
     "quality_pct": 100,
     "reviewer": "Lens",
-    "evidence": "https://slopryno.github.io/slopworks/lessons/archive/2026-10.html#aar-2026-10-17-chat-budget",
+    "evidence": "https://slopryno.com/lessons/archive/2026-10.html#aar-2026-10-17-chat-budget",
     "timestamp": "2026-10-17",
     "status": "approved"
   },
@@ -1822,7 +1822,7 @@
     "base_xp": 30,
     "quality_pct": 100,
     "reviewer": "Coordinator",
-    "evidence": "https://slopryno.github.io/slopworks/lessons/archive/2026-10.html#aar-2026-10-17-chat-times",
+    "evidence": "https://slopryno.com/lessons/archive/2026-10.html#aar-2026-10-17-chat-times",
     "timestamp": "2026-10-17",
     "status": "approved"
   },
@@ -1834,7 +1834,7 @@
     "base_xp": 30,
     "quality_pct": 100,
     "reviewer": "Lens",
-    "evidence": "https://slopryno.github.io/slopworks/lessons/archive/2026-10.html#aar-2026-10-17-dark-contrast",
+    "evidence": "https://slopryno.com/lessons/archive/2026-10.html#aar-2026-10-17-dark-contrast",
     "timestamp": "2026-10-17",
     "status": "approved"
   },
@@ -1846,7 +1846,7 @@
     "base_xp": 30,
     "quality_pct": 100,
     "reviewer": "Lens",
-    "evidence": "https://slopryno.github.io/slopworks/lessons/archive/2026-10.html#aar-2026-10-17-data-branch-paths",
+    "evidence": "https://slopryno.com/lessons/archive/2026-10.html#aar-2026-10-17-data-branch-paths",
     "timestamp": "2026-10-17",
     "status": "approved"
   },
@@ -1858,7 +1858,7 @@
     "base_xp": 30,
     "quality_pct": 100,
     "reviewer": "Lens",
-    "evidence": "https://slopryno.github.io/slopworks/lessons/#aar-2026-10-17-missing-signoffs",
+    "evidence": "https://slopryno.com/lessons/#aar-2026-10-17-missing-signoffs",
     "timestamp": "2026-10-17",
     "status": "approved"
   },
@@ -1870,7 +1870,7 @@
     "base_xp": 30,
     "quality_pct": 100,
     "reviewer": "Lens",
-    "evidence": "https://slopryno.github.io/slopworks/lessons/#aar-2026-10-17-signoff-count",
+    "evidence": "https://slopryno.com/lessons/#aar-2026-10-17-signoff-count",
     "timestamp": "2026-10-17",
     "status": "approved"
   },
@@ -1882,7 +1882,7 @@
     "base_xp": 30,
     "quality_pct": 100,
     "reviewer": "Lens",
-    "evidence": "https://slopryno.github.io/slopworks/lessons/#aar-2026-10-17-timeline-sprint-groups",
+    "evidence": "https://slopryno.com/lessons/#aar-2026-10-17-timeline-sprint-groups",
     "timestamp": "2026-10-17",
     "status": "approved"
   },
@@ -1894,7 +1894,7 @@
     "base_xp": 30,
     "quality_pct": 100,
     "reviewer": "Lens",
-    "evidence": "https://slopryno.github.io/slopworks/lessons/#aar-2026-10-17-wins-utc-dates",
+    "evidence": "https://slopryno.com/lessons/#aar-2026-10-17-wins-utc-dates",
     "timestamp": "2026-10-17",
     "status": "approved"
   },
@@ -1906,7 +1906,7 @@
     "base_xp": 30,
     "quality_pct": 100,
     "reviewer": "Lens",
-    "evidence": "https://slopryno.github.io/slopworks/lessons/#aar-2026-10-17-work-titles-midword",
+    "evidence": "https://slopryno.com/lessons/#aar-2026-10-17-work-titles-midword",
     "timestamp": "2026-10-17",
     "status": "approved"
   },
@@ -1918,7 +1918,7 @@
     "base_xp": 50,
     "quality_pct": 100,
     "reviewer": "Trial",
-    "evidence": "https://slopryno.github.io/slopworks/chat/#i17",
+    "evidence": "https://slopryno.com/chat/#i17",
     "timestamp": "2026-10-17",
     "status": "approved"
   },
@@ -1930,7 +1930,7 @@
     "base_xp": 50,
     "quality_pct": 100,
     "reviewer": "Trial",
-    "evidence": "https://slopryno.github.io/slopworks/chat/archive/2026-10-10.html#i18",
+    "evidence": "https://slopryno.com/chat/archive/2026-10-10.html#i18",
     "timestamp": "2026-10-17",
     "status": "approved"
   },
@@ -1942,7 +1942,7 @@
     "base_xp": 50,
     "quality_pct": 100,
     "reviewer": "Trial",
-    "evidence": "https://slopryno.github.io/slopworks/chat/archive/2026-10-10.html#i19",
+    "evidence": "https://slopryno.com/chat/archive/2026-10-10.html#i19",
     "timestamp": "2026-10-17",
     "status": "approved"
   },
@@ -1954,7 +1954,7 @@
     "base_xp": 50,
     "quality_pct": 100,
     "reviewer": "Trial",
-    "evidence": "https://slopryno.github.io/slopworks/chat/archive/2026-10-10.html#i20",
+    "evidence": "https://slopryno.com/chat/archive/2026-10-10.html#i20",
     "timestamp": "2026-10-17",
     "status": "approved"
   },
@@ -1966,7 +1966,7 @@
     "base_xp": 50,
     "quality_pct": 100,
     "reviewer": "Trial",
-    "evidence": "https://slopryno.github.io/slopworks/chat/archive/2026-10-10.html#i22",
+    "evidence": "https://slopryno.com/chat/archive/2026-10-10.html#i22",
     "timestamp": "2026-10-17",
     "status": "approved"
   },
@@ -1978,7 +1978,7 @@
     "base_xp": 50,
     "quality_pct": 100,
     "reviewer": "Trial",
-    "evidence": "https://slopryno.github.io/slopworks/chat/archive/2026-10-10.html#i25",
+    "evidence": "https://slopryno.com/chat/archive/2026-10-10.html#i25",
     "timestamp": "2026-10-17",
     "status": "approved"
   },
@@ -1990,7 +1990,7 @@
     "base_xp": 50,
     "quality_pct": 100,
     "reviewer": "Trial",
-    "evidence": "https://slopryno.github.io/slopworks/chat/archive/2026-10-10.html#i26",
+    "evidence": "https://slopryno.com/chat/archive/2026-10-10.html#i26",
     "timestamp": "2026-10-17",
     "status": "approved"
   },
@@ -2002,7 +2002,7 @@
     "base_xp": 30,
     "quality_pct": 100,
     "reviewer": "Coordinator",
-    "evidence": "https://slopryno.github.io/slopworks/arena/#r-advisor-2026-10-17-showcase",
+    "evidence": "https://slopryno.com/arena/#r-advisor-2026-10-17-showcase",
     "timestamp": "2026-10-17",
     "status": "approved"
   },
@@ -2014,7 +2014,7 @@
     "base_xp": 30,
     "quality_pct": 100,
     "reviewer": "Coordinator",
-    "evidence": "https://slopryno.github.io/slopworks/arena/#r-advocate-2026-10-17-showcase",
+    "evidence": "https://slopryno.com/arena/#r-advocate-2026-10-17-showcase",
     "timestamp": "2026-10-17",
     "status": "approved"
   },
@@ -2026,7 +2026,7 @@
     "base_xp": 30,
     "quality_pct": 100,
     "reviewer": "Coordinator",
-    "evidence": "https://slopryno.github.io/slopworks/arena/#r-analyst-2026-10-17-showcase",
+    "evidence": "https://slopryno.com/arena/#r-analyst-2026-10-17-showcase",
     "timestamp": "2026-10-17",
     "status": "approved"
   },
@@ -2038,7 +2038,7 @@
     "base_xp": 30,
     "quality_pct": 100,
     "reviewer": "CEO",
-    "evidence": "https://slopryno.github.io/slopworks/arena/#r-atlas-2026-10-17-hardening",
+    "evidence": "https://slopryno.com/arena/#r-atlas-2026-10-17-hardening",
     "timestamp": "2026-10-17",
     "status": "approved"
   },
@@ -2050,7 +2050,7 @@
     "base_xp": 30,
     "quality_pct": 100,
     "reviewer": "Coordinator",
-    "evidence": "https://slopryno.github.io/slopworks/arena/#r-atlas-2026-10-17-showcase",
+    "evidence": "https://slopryno.com/arena/#r-atlas-2026-10-17-showcase",
     "timestamp": "2026-10-17",
     "status": "approved"
   },
@@ -2062,7 +2062,7 @@
     "base_xp": 30,
     "quality_pct": 100,
     "reviewer": "CEO",
-    "evidence": "https://slopryno.github.io/slopworks/arena/#r-coordinator-2026-10-17-hardening",
+    "evidence": "https://slopryno.com/arena/#r-coordinator-2026-10-17-hardening",
     "timestamp": "2026-10-17",
     "status": "approved"
   },
@@ -2074,7 +2074,7 @@
     "base_xp": 30,
     "quality_pct": 100,
     "reviewer": "none",
-    "evidence": "https://slopryno.github.io/slopworks/arena/#r-coordinator-2026-10-17-showcase",
+    "evidence": "https://slopryno.com/arena/#r-coordinator-2026-10-17-showcase",
     "timestamp": "2026-10-17",
     "status": "pending",
     "note": "no reviewer other than the earner yet"
@@ -2087,7 +2087,7 @@
     "base_xp": 30,
     "quality_pct": 100,
     "reviewer": "CEO",
-    "evidence": "https://slopryno.github.io/slopworks/arena/#r-critic-2026-10-17-hardening",
+    "evidence": "https://slopryno.com/arena/#r-critic-2026-10-17-hardening",
     "timestamp": "2026-10-17",
     "status": "approved"
   },
@@ -2099,7 +2099,7 @@
     "base_xp": 30,
     "quality_pct": 100,
     "reviewer": "Coordinator",
-    "evidence": "https://slopryno.github.io/slopworks/arena/#r-critic-2026-10-17-showcase",
+    "evidence": "https://slopryno.com/arena/#r-critic-2026-10-17-showcase",
     "timestamp": "2026-10-17",
     "status": "approved"
   },
@@ -2111,7 +2111,7 @@
     "base_xp": 30,
     "quality_pct": 100,
     "reviewer": "Coordinator",
-    "evidence": "https://slopryno.github.io/slopworks/arena/#r-forge-2026-10-17-showcase",
+    "evidence": "https://slopryno.com/arena/#r-forge-2026-10-17-showcase",
     "timestamp": "2026-10-17",
     "status": "approved"
   },
@@ -2123,7 +2123,7 @@
     "base_xp": 30,
     "quality_pct": 100,
     "reviewer": "Coordinator",
-    "evidence": "https://slopryno.github.io/slopworks/arena/#r-librarian-2026-10-17-showcase",
+    "evidence": "https://slopryno.com/arena/#r-librarian-2026-10-17-showcase",
     "timestamp": "2026-10-17",
     "status": "approved"
   },
@@ -2135,7 +2135,7 @@
     "base_xp": 30,
     "quality_pct": 100,
     "reviewer": "Coordinator",
-    "evidence": "https://slopryno.github.io/slopworks/arena/#r-polish-2026-10-17-showcase",
+    "evidence": "https://slopryno.com/arena/#r-polish-2026-10-17-showcase",
     "timestamp": "2026-10-17",
     "status": "approved"
   },
@@ -2147,7 +2147,7 @@
     "base_xp": 30,
     "quality_pct": 100,
     "reviewer": "Coordinator",
-    "evidence": "https://slopryno.github.io/slopworks/arena/#r-scout-2026-10-17-showcase",
+    "evidence": "https://slopryno.com/arena/#r-scout-2026-10-17-showcase",
     "timestamp": "2026-10-17",
     "status": "approved"
   },
@@ -2159,7 +2159,7 @@
     "base_xp": 30,
     "quality_pct": 100,
     "reviewer": "Coordinator",
-    "evidence": "https://slopryno.github.io/slopworks/arena/#r-scoutmaster-2026-10-17-showcase",
+    "evidence": "https://slopryno.com/arena/#r-scoutmaster-2026-10-17-showcase",
     "timestamp": "2026-10-17",
     "status": "approved"
   },
@@ -2171,7 +2171,7 @@
     "base_xp": 30,
     "quality_pct": 100,
     "reviewer": "Coordinator",
-    "evidence": "https://slopryno.github.io/slopworks/arena/#r-shield-2026-10-17-showcase",
+    "evidence": "https://slopryno.com/arena/#r-shield-2026-10-17-showcase",
     "timestamp": "2026-10-17",
     "status": "approved"
   },
@@ -2183,7 +2183,7 @@
     "base_xp": 30,
     "quality_pct": 100,
     "reviewer": "Coordinator",
-    "evidence": "https://slopryno.github.io/slopworks/chat/archive/2026-10-13.html#r-sweep-2026-10-17",
+    "evidence": "https://slopryno.com/chat/archive/2026-10-13.html#r-sweep-2026-10-17",
     "timestamp": "2026-10-17",
     "status": "approved"
   },
@@ -2195,7 +2195,7 @@
     "base_xp": 30,
     "quality_pct": 100,
     "reviewer": "Coordinator",
-    "evidence": "https://slopryno.github.io/slopworks/arena/#r-sweep-2026-10-17-showcase",
+    "evidence": "https://slopryno.com/arena/#r-sweep-2026-10-17-showcase",
     "timestamp": "2026-10-17",
     "status": "approved"
   },
@@ -2207,7 +2207,7 @@
     "base_xp": 30,
     "quality_pct": 100,
     "reviewer": "Coordinator",
-    "evidence": "https://slopryno.github.io/slopworks/arena/#r-trial-2026-10-17-showcase",
+    "evidence": "https://slopryno.com/arena/#r-trial-2026-10-17-showcase",
     "timestamp": "2026-10-17",
     "status": "approved"
   },
@@ -2219,7 +2219,7 @@
     "base_xp": 30,
     "quality_pct": 100,
     "reviewer": "Coordinator",
-    "evidence": "https://slopryno.github.io/slopworks/arena/#r-verify-2026-10-17-showcase",
+    "evidence": "https://slopryno.com/arena/#r-verify-2026-10-17-showcase",
     "timestamp": "2026-10-17",
     "status": "approved"
   },
@@ -5648,7 +5648,7 @@
     "base_xp": 30,
     "quality_pct": 100,
     "reviewer": "Coordinator",
-    "evidence": "https://slopryno.github.io/slopworks/lessons/#aar-2026-10-18-signoff-doubles",
+    "evidence": "https://slopryno.com/lessons/#aar-2026-10-18-signoff-doubles",
     "timestamp": "2026-10-18",
     "status": "approved"
   },
@@ -5660,7 +5660,7 @@
     "base_xp": 30,
     "quality_pct": 100,
     "reviewer": "Coordinator",
-    "evidence": "https://slopryno.github.io/slopworks/lessons/#aar-2026-10-18-stale-ideas",
+    "evidence": "https://slopryno.com/lessons/#aar-2026-10-18-stale-ideas",
     "timestamp": "2026-10-18",
     "status": "approved"
   },
@@ -5672,7 +5672,7 @@
     "base_xp": 30,
     "quality_pct": 100,
     "reviewer": "Lens",
-    "evidence": "https://slopryno.github.io/slopworks/lessons/#aar-2026-10-18-tempo-split",
+    "evidence": "https://slopryno.com/lessons/#aar-2026-10-18-tempo-split",
     "timestamp": "2026-10-18",
     "status": "approved"
   },
@@ -6160,7 +6160,7 @@
     "base_xp": 50,
     "quality_pct": 100,
     "reviewer": "Trial",
-    "evidence": "https://slopryno.github.io/slopworks/chat/#i48",
+    "evidence": "https://slopryno.com/chat/#i48",
     "timestamp": "2026-10-19",
     "status": "approved"
   },
@@ -6172,7 +6172,7 @@
     "base_xp": 50,
     "quality_pct": 100,
     "reviewer": "Trial",
-    "evidence": "https://slopryno.github.io/slopworks/chat/#i49",
+    "evidence": "https://slopryno.com/chat/#i49",
     "timestamp": "2026-10-19",
     "status": "approved"
   },

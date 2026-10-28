@@ -34,7 +34,7 @@ class CommsPages(unittest.TestCase):
     def test_sitemap_covers_every_page(self):
         self.assertEqual(check.sitemap_errors(check.tracked_files()), [])
         tmp = Path(tempfile.mkdtemp()); (tmp / "site").mkdir()
-        (tmp / "site/sitemap.xml").write_text("<urlset><url><loc>https://slopryno.github.io/slopworks/</loc></url></urlset>")
+        (tmp / "site/sitemap.xml").write_text("<urlset><url><loc>https://slopryno.com/</loc></url></urlset>")
         errs = check.sitemap_errors(["site/index.html", "site/team/index.html"], tmp)
         self.assertEqual(len(errs), 1); self.assertIn("team/", errs[0])
 
