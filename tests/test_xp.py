@@ -114,3 +114,42 @@ class Script(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class ChunkedFetch(unittest.TestCase):
+    """Trial (Oct 28): xp.py's one 200-PR gh call 502'd and capped the list at 200. fetch_merged() must page by created
+    date, retry a 502, and refuse to write a ledger when a merged PR is missing."""
+
+    def fake(self, n, fail_first=0, drop=()):
+        import subprocess
+        prs = [{"number": i, "createdAt": f"2026-10-{1 + i % 28:02d}T12:00:00Z"} for i in range(1, n + 1)]
+        calls = {"n": 0, "heavy": 0}
+
+        def run(args, **kw):
+            calls["n"] += 1
+            if calls["n"] <= fail_first:
+                raise subprocess.CalledProcessError(1, args, stderr="HTTP 502")
+            if "--search" not in args:
+                out = prs
+            else:
+                calls["heavy"] += 1
+                lo, hi = args[args.index("--search") + 1][len("created:"):].split("..")
+                out = [dict(p, title=f"t{p['number']}") for p in prs if lo <= p["createdAt"][:10] <= hi and p["number"] not in drop]
+            return type("R", (), {"stdout": json.dumps(out)})()
+        return run, calls
+
+    def test_fetches_every_merged_pr_past_200_in_small_chunks(self):
+        run, calls = self.fake(230)
+        got = xp.fetch_merged(run, chunk=40)
+        self.assertEqual([p["number"] for p in got], list(range(1, 231)))
+        self.assertGreaterEqual(calls["heavy"], 6)
+
+    def test_retries_a_502(self):
+        run, _ = self.fake(10, fail_first=2)
+        self.assertEqual(len(xp.fetch_merged(run)), 10)
+
+    def test_a_missing_pr_stops_the_run(self):
+        run, _ = self.fake(50, drop={17})
+        with self.assertRaises(SystemExit) as e:
+            xp.fetch_merged(run)
+        self.assertIn("17", str(e.exception))

@@ -3,7 +3,7 @@
 this script never decides anything: it records events that already happened, each with its evidence and a reviewer who
 isn't the earner. Totals and levels are never stored: build.py and the tests compute them from approved entries.
 
-Sources: merged PRs (one `gh pr list` call: Maker lines, sign-off, Block, and deploy-check comments, added test files),
+Sources: merged PRs (fetch_merged(): a light list of every merged PR, then the heavy fields in small date chunks: Maker lines, sign-off, Block, and deploy-check comments, added test files),
 data/aars.json, data/research.json with data/arena.json, and data/ideas.json. Run with gh auth, like scripts/wins.py.
 """
 import json, re, subprocess, sys
@@ -137,10 +137,40 @@ def ledger(prs, prog, files):
     return sorted(out, key=lambda e: (e["timestamp"], e["id"]))
 
 
+FIELDS = "number,title,body,mergedAt,url,comments,files"
+
+
+def gh_json(run, *args, tries=3):
+    """One gh call parsed as JSON, retried: GitHub's API 502s on heavy PR queries now and then."""
+    for i in range(tries):
+        try:
+            return json.loads(run(["gh", *args], check=True, capture_output=True, text=True).stdout)
+        except subprocess.CalledProcessError:
+            if i == tries - 1:
+                raise
+
+
+def fetch_merged(run=subprocess.run, chunk=40):
+    """Every merged PR with the fields ledger() reads. One 200-PR call with comments and files 502'd (Oct 27) and
+    silently capped the list at 200, so: list numbers and created dates first (cheap, up to 1000), then fetch the heavy
+    fields per window of about `chunk` PRs by created date, and fail if any listed PR is missing."""
+    repo = ["-R", "slopryno/slopworks", "--state", "merged"]
+    light = gh_json(run, "pr", "list", *repo, "--limit", "1000", "--json", "number,createdAt")
+    days = sorted(p["createdAt"][:10] for p in light)
+    prs = {}
+    for i in range(0, len(days), chunk):
+        q = f"created:{days[i]}..{days[min(i + chunk, len(days)) - 1]}"
+        for p in gh_json(run, "pr", "list", *repo, "--limit", "1000", "--search", q, "--json", FIELDS):
+            prs[p["number"]] = p
+    missing = sorted({p["number"] for p in light} - set(prs))
+    if missing:
+        raise SystemExit(f"xp.py: merged PRs missing from the chunked fetch: {missing}")
+    return sorted(prs.values(), key=lambda p: p["number"])
+
+
 if __name__ == "__main__":
     import build
-    prs = json.loads(subprocess.run(["gh", "pr", "list", "-R", "slopryno/slopworks", "--state", "merged", "--limit", "200",
-                                     "--json", "number,title,body,mergedAt,url,comments,files"], check=True, capture_output=True, text=True).stdout)
+    prs = fetch_merged()
     entries = ledger(prs, load("progression"), build.build())
     (ROOT / "data/xp_ledger.json").write_text(json.dumps(entries, indent=2, ensure_ascii=False) + "\n")
     print(f"wrote {len(entries)} XP entries from {len(prs)} merged PRs: " + ", ".join(f"{k} {v}" for k, v in sorted(Counter(e['status'] for e in entries).items())))
