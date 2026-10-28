@@ -150,5 +150,34 @@
       "Schedule: Ryno moved the daily run to about 4:45 AM ET (10:15 AM ET); #124. The routine trigger moves outside the repo.",
       "Incident AAR (interrupted run) written today; tempo is past the slowed limit, so it ships as the first PR on Oct 21."
     ]
+  },
+  {
+    "id": "2026-10-28-daily",
+    "date": "2026-10-28",
+    "kind": "daily",
+    "status": "ok",
+    "x_reads": 1,
+    "counts": {
+      "posts_screened": 7,
+      "candidates": 8,
+      "published_updates": 6,
+      "published_issues": 0,
+      "corrected": 0,
+      "dropped_verify": 2,
+      "stripped_privacy": 0,
+      "dropped_privacy": 0,
+      "ci_failures": 0,
+      "corrections_mail": 0,
+      "web_reads_sources": 1,
+      "web_reads_research": 0,
+      "research_notes": 0,
+      "pitches": 0
+    },
+    "notes": [
+      "Morning scan (split runs since Oct 21). runs.json has no rows for Oct 21 to 27: the split runs and the Oct 22-26 outage weren't logged here.",
+      "Scout: changelog page read (versions 0.75.2, 0.75.5, 0.75.8, 0.77.0 new). One X search of @bot since Oct 19 (7 posts): 1Password, phone apps, Pages and Vault posts; two customer stories skipped.",
+      "Verify: 6 kept as confirmed, 2 dropped as duplicates of changelog entries; 4 open issues re-checked, none named as fixed. Shield: 0 strips. Corrections inbox: no reader mail.",
+      "Huddles on CEO pitches i62 (#148) and i63 (#149): both advised smaller, not unanimous, Ryno decides."
+    ]
   }
 ]

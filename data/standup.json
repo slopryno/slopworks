@@ -142,5 +142,53 @@
     "did": "Mobile UI/UX track done; audit findings are d8 to d11",
     "doing": "quick look at Team, Calendar and Schedule on the live site",
     "blockers": "none"
+  },
+  {
+    "id": "s-2026-10-28-coordinator",
+    "date": "2026-10-28",
+    "role": "Coordinator",
+    "did": "Reviewed Ryno's PRs #148 and #149 last night and drafted an ordered queue",
+    "doing": "Huddles on i62 and i63; advice to Ryno, both smaller",
+    "blockers": "Ryno's calls on roster, review tiers, visitor measurement and badges"
+  },
+  {
+    "id": "s-2026-10-28-scout",
+    "date": "2026-10-28",
+    "role": "Scout",
+    "did": "Read the changelog and one @bot search: 0.75.2 to 0.77.0 and four feature posts are new",
+    "doing": "Next scan at 4:45 AM ET tomorrow",
+    "blockers": "none"
+  },
+  {
+    "id": "s-2026-10-28-lens",
+    "date": "2026-10-28",
+    "role": "Lens",
+    "did": "Verified 6 updates against the changelog and @bot; dropped 2 duplicates",
+    "doing": "Sign-off on this data PR; 4 open issues stay open",
+    "blockers": "#149 needs two Blocking edits before its sign-off"
+  },
+  {
+    "id": "s-2026-10-28-shield",
+    "date": "2026-10-28",
+    "role": "Shield",
+    "did": "Checked the 6 entries: official sources only",
+    "doing": "Privacy sign-off on this PR",
+    "blockers": "none"
+  },
+  {
+    "id": "s-2026-10-28-forge",
+    "date": "2026-10-28",
+    "role": "Forge",
+    "did": "Shipped the slopryno.com move (#146) and the Claude guide (#147) last night",
+    "doing": "Publishing this data PR; xp.py chunked fetch at 8:30 AM ET",
+    "blockers": "none"
+  },
+  {
+    "id": "s-2026-10-28-sweep",
+    "date": "2026-10-28",
+    "role": "Sweep",
+    "did": "Evening wrap: 5 merges on Oct 27, all green",
+    "doing": "Logging this run in runs.json",
+    "blockers": "Ryno's call on an AAR for the Oct 22-26 outage"
   }
 ]

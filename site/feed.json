@@ -6,6 +6,84 @@
   "description": "Unofficial, fan-built project. Not affiliated with or endorsed by Grok Bot, SpaceX, or X.",
   "items": [
     {
+      "id": "update-changelog-0-77-0",
+      "url": "https://slopryno.com/updates/#echangelog-0-77-0",
+      "external_url": "https://x.ai/changelog/bot",
+      "title": "Permissions settings, Vault payments, and multi-question cards",
+      "content_text": "Version 0.77.0: a Permissions section in Settings, a Vault Payments tab (you still approve every purchase), 1Password without a shared vault, and multi-question cards.",
+      "date_published": "2026-10-26T12:00:00+00:00",
+      "tags": [
+        "update",
+        "app",
+        "confirmed"
+      ]
+    },
+    {
+      "id": "update-changelog-0-75-8",
+      "url": "https://slopryno.com/updates/#echangelog-0-75-8",
+      "external_url": "https://x.ai/changelog/bot",
+      "title": "Auto-review rule cards and clearer connector sign-in status",
+      "content_text": "Version 0.75.8: a Bot can offer to add, change or remove an Auto-review rule on a card you confirm, and expired connector sign-ins show Authenticate.",
+      "date_published": "2026-10-24T12:00:00+00:00",
+      "tags": [
+        "update",
+        "app",
+        "confirmed"
+      ]
+    },
+    {
+      "id": "update-changelog-0-75-5",
+      "url": "https://slopryno.com/updates/#echangelog-0-75-5",
+      "external_url": "https://x.ai/changelog/bot",
+      "title": "A Vault for logins, cards and contacts, and fewer approval cards",
+      "content_text": "Version 0.75.5: Bots can save your logins, cards and contact info to a Vault and fill them in, and ask less often for actions you asked for yourself.",
+      "date_published": "2026-10-23T12:00:00+00:00",
+      "tags": [
+        "update",
+        "app",
+        "confirmed"
+      ]
+    },
+    {
+      "id": "update-changelog-0-75-2",
+      "url": "https://slopryno.com/updates/#echangelog-0-75-2",
+      "external_url": "https://x.ai/changelog/bot",
+      "title": "Pages, video creation, and pinned Library items",
+      "content_text": "Version 0.75.2: Bots build Pages (reports, memos and dashboards you edit together or have kept up to date), create videos, and you can pin Library items.",
+      "date_published": "2026-10-22T12:00:00+00:00",
+      "tags": [
+        "update",
+        "app",
+        "confirmed"
+      ]
+    },
+    {
+      "id": "update-2113393684209176718",
+      "url": "https://slopryno.com/updates/#e2113393684209176718",
+      "external_url": "https://x.com/bot/status/2113393684209176718",
+      "title": "Grok Bot can use Calendar, Reminders and Contacts on your phone",
+      "content_text": "Grok Bot can now use Calendar, Reminders, Contacts and more apps on your phone, rolling out on iOS and Android.",
+      "date_published": "2026-10-22T12:00:00+00:00",
+      "tags": [
+        "update",
+        "app",
+        "confirmed"
+      ]
+    },
+    {
+      "id": "update-2113332983226831339",
+      "url": "https://slopryno.com/updates/#e2113332983226831339",
+      "external_url": "https://x.com/bot/status/2113332983226831339",
+      "title": "Grok Bot works with your 1Password account",
+      "content_text": "Grok Bot can now use your 1Password account: you approve the logins you want to share and your Bot signs in for you. It rolls out over a few days.",
+      "date_published": "2026-10-22T12:00:00+00:00",
+      "tags": [
+        "update",
+        "connectors",
+        "confirmed"
+      ]
+    },
+    {
       "id": "update-2112252507762368684",
       "url": "https://slopryno.com/updates/#e2112252507762368684",
       "external_url": "https://x.com/bot/status/2112252507762368684",
@@ -579,71 +657,6 @@
       "tags": [
         "update",
         "coding",
-        "confirmed"
-      ]
-    },
-    {
-      "id": "update-2100659463569170779",
-      "url": "https://slopryno.com/updates/#e2100659463569170779",
-      "external_url": "https://x.com/bot/status/2100659463569170779",
-      "title": "Grok Bot can talk",
-      "content_text": "Grok Bot can now talk.",
-      "date_published": "2026-09-17T12:00:00+00:00",
-      "tags": [
-        "update",
-        "voice",
-        "confirmed"
-      ]
-    },
-    {
-      "id": "update-changelog-2026-09-16-checklist",
-      "url": "https://slopryno.com/updates/#echangelog-2026-09-16-checklist",
-      "external_url": "https://x.ai/changelog/bot",
-      "title": "Regrouped setup checklist for teams",
-      "content_text": "A second Sep 16 release groups the dashboard Setup Checklist into Recommended and Optional, shows the build date in About, and fixes GitHub disconnect and some 1Password sign-in checks.",
-      "date_published": "2026-09-16T12:00:00+00:00",
-      "tags": [
-        "update",
-        "app",
-        "confirmed"
-      ]
-    },
-    {
-      "id": "update-changelog-0-54-0",
-      "url": "https://slopryno.com/updates/#echangelog-0-54-0",
-      "external_url": "https://x.ai/changelog/bot",
-      "title": "Search palette puts Bots and settings first",
-      "content_text": "Version 0.54.0: Cmd/Ctrl+K shows matching Bots, settings, actions, and routines before messages (quote a search to see every message), and iPhone HEIC photos show as images.",
-      "date_published": "2026-09-16T12:00:00+00:00",
-      "tags": [
-        "update",
-        "app",
-        "confirmed"
-      ]
-    },
-    {
-      "id": "update-2100335532597502311",
-      "url": "https://slopryno.com/updates/#e2100335532597502311",
-      "external_url": "https://x.com/bot/status/2100335532597502311",
-      "title": "1Password",
-      "content_text": "Grok Bot can use 1Password: share items in a vault, approve each fill, and the secrets stay in your password manager.",
-      "date_published": "2026-09-16T12:00:00+00:00",
-      "tags": [
-        "update",
-        "connectors",
-        "confirmed"
-      ]
-    },
-    {
-      "id": "update-changelog-0-53-0",
-      "url": "https://slopryno.com/updates/#echangelog-0-53-0",
-      "external_url": "https://x.ai/changelog/bot",
-      "title": "Uploads to Google Drive and OneDrive",
-      "content_text": "Version 0.53.0: Bots can upload files to Google Drive or OneDrive or attach them to a Gmail draft, and a Bot's computer now uses your time zone. The same release added 1Password sign-in on Mac (see the 1Password entry).",
-      "date_published": "2026-09-15T12:00:00+00:00",
-      "tags": [
-        "update",
-        "connectors",
         "confirmed"
       ]
     }
