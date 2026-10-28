@@ -14,7 +14,7 @@ BOARD = json.loads((ROOT / "data/roadmap.json").read_text())
 class Page(unittest.TestCase):
     def test_sections_come_proof_first(self):
         ids = re.findall(r'<h2 id="([a-z]+)"', PAGE)
-        self.assertEqual(ids, ["complete", "active", "queued", "rumor", "abandoned", "oaths", "camp", "follow"])
+        self.assertEqual(ids, ["complete", "active", "held", "queued", "rumor", "abandoned", "oaths", "camp", "follow"])
 
     def test_every_heading_carries_its_plain_word(self):
         for g, (game, plain) in roadmap.GROUPS.items():
@@ -31,7 +31,7 @@ class Page(unittest.TestCase):
     def test_steps_are_text_never_a_percentage(self):
         self.assertNotRegex(re.sub(r"<[^>]+>", " ", PAGE), r"\d+\s*%")
         for q in BOARD["quests"]:
-            if q["group"] not in ("complete", "abandoned"):
+            if q["group"] not in ("complete", "abandoned", "held"):
                 self.assertIn(roadmap.step_label(q["history"][-1]["stage"]), PAGE)
 
     def test_kept_count_is_computed(self):
@@ -56,7 +56,7 @@ class Feed(unittest.TestCase):
         ids = [x["id"] for x in items]
         self.assertEqual(len(ids), len(set(ids)))
         self.assertEqual(ids, [x["id"] for x in roadmap.feed_items(json.loads(json.dumps(BOARD)))])
-        steps = sum(len(q["history"]) for q in BOARD["quests"]) + sum(q["group"] == "abandoned" for q in BOARD["quests"])
+        steps = sum(len(q["history"]) for q in BOARD["quests"]) + sum(q["group"] in ("abandoned", "held") for q in BOARD["quests"])
         self.assertEqual(len(items), steps + len(BOARD["oaths"]) + sum(o["verdict"] != "open" for o in BOARD["oaths"]))
 
     def test_a_judged_oath_adds_an_item_and_keeps_the_sworn_one(self):

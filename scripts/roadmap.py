@@ -215,9 +215,15 @@ def render(board, today, lead, up="../"):
         if q.get("unlocks"):
             extra += f'<p><strong>{WORDS["unlocks"][0]}:</strong> <a href="#q-{esc(q["unlocks"])}">{esc(titles[q["unlocks"]])}</a></p>'
         if q.get("reason"):
-            extra += f'<p><strong>Why it was abandoned:</strong> {esc(q["reason"])}</p>'
+            why = "Why it's held" if q["group"] == "held" else "Why it was abandoned"
+            extra += f'<p><strong>{why}:</strong> {esc(q["reason"])}</p>'
         party = "".join(f"<span>Party: {lead(r)}</span>" for r in q.get("party", []))
-        tags = (f'<span class="tag">{esc(step_label(last["stage"]))}</span>' if q["group"] != "abandoned" else '<span class="tag">Abandoned (dropped)</span>')
+        if q["group"] == "abandoned":
+            tags = '<span class="tag">Abandoned (dropped)</span>'
+        elif q["group"] == "held":
+            tags = '<span class="tag">Held (paused)</span>'
+        else:
+            tags = f'<span class="tag">{esc(step_label(last["stage"]))}</span>'
         tags += f' <span class="tag">{WORDS["raid"][0]}</span>' if q.get("raid") else ""
         return (f'<article class="card" id="q-{esc(q["id"])}"><h3>{esc(q["title"])}</h3><p>{esc(q["why"])}</p>{extra}'
                 f'<p class="meta"><span>{tags}</span><span>Led by {lead(q["lead"])}</span>{party}{link(q["ref"])}</p>'
@@ -238,6 +244,7 @@ def render(board, today, lead, up="../"):
     complete = sorted(by("complete"), key=lambda q: q["history"][-1]["date"], reverse=True)[:10]
     out += section("complete", f'The newest {len(complete)}, each with its PR. <a href="{up}timeline/">All of them</a>.', complete)
     out += section("active", "What the team is working on now. Each step links the record that moved it.", by("active"))
+    out += section("held", "Paused on purpose. The reason is on the card; nothing here is in progress.", by("held"))
     out += section("queued", "Accepted and waiting their turn, in no fixed order.", by("queued"))
     out += section("rumor", "Ideas the team is exploring. Nothing here is promised.", by("rumor"))
     out += section("abandoned", "Quests the team dropped, with the reason. Nothing is removed silently.", by("abandoned"))
@@ -279,6 +286,9 @@ def feed_items(board):
         if q["group"] == "abandoned":
             items.append({"id": f'roadmap-{q["id"]}-abandoned', "date": q["history"][-1]["date"], "anchor": f'q-{q["id"]}',
                           "title": f'Quest abandoned: {q["title"]} (dropped)', "summary": q["reason"]})
+        if q["group"] == "held" and q.get("reason"):
+            items.append({"id": f'roadmap-{q["id"]}-held', "date": q["history"][-1]["date"], "anchor": f'q-{q["id"]}',
+                          "title": f'Quest held: {q["title"]} (paused)', "summary": q["reason"]})
     for o in board["oaths"]:
         items.append({"id": f'roadmap-oath-{o["id"]}-sworn-{o["sworn"]}', "date": o["sworn"], "anchor": f'oath-{o["id"]}',
                       "title": f'Oath sworn: {o["claim"]} (due {day(o["due"])})', "summary": "A dated call the team made about itself."})
