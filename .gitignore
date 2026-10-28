@@ -51,3 +51,6 @@ dist/
 *.tar
 *.tar.gz
 *.tgz
+# Private working files stay off the public repo (Ryno, 2026-10-28): Claude/CEO plan drafts and local Claude Code guidance.
+docs/plans/
+CLAUDE.md
