@@ -8,14 +8,14 @@
     {
       "id": "roadmap-run-heartbeat-challenged-2026-10-28",
       "url": "https://slopryno.com/roadmap/#q-run-heartbeat",
-      "title": "Quest challenged: Notice a missed run and measure each run (challenged by Critic)",
+      "title": "Quest challenged: Notice a missed run and measure each run (challenged by the team)",
       "content_text": "A five-day outage left no record. A heartbeat flags a missed run; a usage ledger records each run's model and minutes.",
       "date_published": "2026-10-28T12:00:00+00:00"
     },
     {
       "id": "roadmap-item-pages-challenged-2026-10-28",
       "url": "https://slopryno.com/roadmap/#q-item-pages",
-      "title": "Quest challenged: A page for every update and issue (challenged by Critic)",
+      "title": "Quest challenged: A page for every update and issue (challenged by the team)",
       "content_text": "One shareable page per tracker entry, with its source and who added it: the front door for getting found.",
       "date_published": "2026-10-28T12:00:00+00:00"
     },
@@ -85,7 +85,7 @@
     {
       "id": "roadmap-weekly-digest-challenged-2026-10-19",
       "url": "https://slopryno.com/roadmap/#q-weekly-digest",
-      "title": "Quest challenged: This week in Grok Bot, with a shipping calendar (challenged by Critic)",
+      "title": "Quest challenged: This week in Grok Bot, with a shipping calendar (challenged by the team)",
       "content_text": "The weekly recap gains the week's Grok Bot updates and a day-by-day view of what shipped.",
       "date_published": "2026-10-19T12:00:00+00:00"
     },
@@ -127,7 +127,7 @@
     {
       "id": "roadmap-nav-tab-bar-challenged-2026-10-19",
       "url": "https://slopryno.com/roadmap/#q-nav-tab-bar",
-      "title": "Quest challenged: A bottom tab bar on phones (challenged by Critic)",
+      "title": "Quest challenged: A bottom tab bar on phones (challenged by the team)",
       "content_text": "Persistent links to six pages at the bottom of every phone screen.",
       "date_published": "2026-10-19T12:00:00+00:00"
     },
@@ -204,7 +204,7 @@
     {
       "id": "roadmap-rpg-quests-challenged-2026-10-17",
       "url": "https://slopryno.com/roadmap/#q-rpg-quests",
-      "title": "Quest challenged: Daily, weekly and level-up quests (challenged by Critic)",
+      "title": "Quest challenged: Daily, weekly and level-up quests (challenged by the team)",
       "content_text": "Rewards the work that keeps the site accurate, not activity: Week 2 of the Slopworks RPG.",
       "date_published": "2026-10-17T12:00:00+00:00"
     },
