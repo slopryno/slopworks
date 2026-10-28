@@ -1330,6 +1330,12 @@ def skills_errors(root=None):
     return skills.errors(root, validate)
 
 
+# ---------- Quest board (the public roadmap): every quest and oath links a real record, moves forward, is judged once ----------
+def roadmap_errors(root=None):
+    import roadmap
+    return roadmap.errors(root, validate)
+
+
 # ---------- training tracks (Ryno, 2026-10-20 7:05 AM ET): sourced modules and one graded audit per role, no XP ----------
 def track_errors(root=None):
     import skills
@@ -1648,6 +1654,7 @@ def run_repo():
     errs += voice_errors()
     errs += calendar_errors()
     errs += ceo_quote_errors()
+    errs += roadmap_errors()
     for f in files:
         if f.startswith("site/") and f.endswith(".css"):
             errs += motion_errors((ROOT / f).read_text(), f)

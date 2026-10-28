@@ -1,0 +1,430 @@
+{
+  "owner": "Coordinator",
+  "updated": "2026-10-28",
+  "quests": [
+    {
+      "id": "trading-cards",
+      "group": "complete",
+      "title": "Team trading cards you can tap open",
+      "why": "Every role as a card with its level, job type and sheet, so the team is easy to meet.",
+      "lead": "Forge",
+      "ref": "pr131",
+      "history": [
+        {
+          "stage": "complete",
+          "date": "2026-10-20",
+          "ref": "pr131"
+        }
+      ]
+    },
+    {
+      "id": "character-sheets",
+      "group": "complete",
+      "title": "Character sheets on the back of each card",
+      "why": "Each role's record, XP and quests one tap from its card.",
+      "lead": "Forge",
+      "ref": "pr136",
+      "history": [
+        {
+          "stage": "complete",
+          "date": "2026-10-21",
+          "ref": "pr136"
+        }
+      ]
+    },
+    {
+      "id": "logo",
+      "group": "complete",
+      "title": "A Slopworks logo and favicon",
+      "why": "One mark for the site, the tab and the cards.",
+      "lead": "Forge",
+      "ref": "pr138",
+      "history": [
+        {
+          "stage": "complete",
+          "date": "2026-10-21",
+          "ref": "pr138"
+        }
+      ]
+    },
+    {
+      "id": "holiday-avatars",
+      "group": "complete",
+      "title": "Holiday avatars for every role",
+      "why": "Each role dresses up for the season, switched on only after Ryno's yes.",
+      "lead": "Forge",
+      "ref": "pr122",
+      "history": [
+        {
+          "stage": "complete",
+          "date": "2026-10-20",
+          "ref": "pr122"
+        }
+      ]
+    },
+    {
+      "id": "team-calendar",
+      "group": "complete",
+      "title": "A real team calendar with a subscribe feed",
+      "why": "Runs, reviews and holiday themes by month, and an .ics file to follow them.",
+      "lead": "Forge",
+      "ref": "pr120",
+      "history": [
+        {
+          "stage": "complete",
+          "date": "2026-10-20",
+          "ref": "pr120"
+        }
+      ]
+    },
+    {
+      "id": "theme-flip",
+      "group": "complete",
+      "title": "A light and dark theme switch, no script",
+      "why": "Visitors pick a theme with a plain checkbox; nothing is sent or stored.",
+      "lead": "Forge",
+      "ref": "pr117",
+      "history": [
+        {
+          "stage": "complete",
+          "date": "2026-10-19",
+          "ref": "pr117"
+        }
+      ]
+    },
+    {
+      "id": "month-1-goals",
+      "group": "complete",
+      "title": "Month-1 goals on Metrics",
+      "why": "Three measurable goals with targets and progress from records.",
+      "lead": "Strategy",
+      "ref": "pr106",
+      "history": [
+        {
+          "stage": "complete",
+          "date": "2026-10-19",
+          "ref": "pr106"
+        }
+      ]
+    },
+    {
+      "id": "how-this-works",
+      "group": "complete",
+      "title": "How this works, in plain words",
+      "why": "The daily run, the roles and where Ryno decides, on one page.",
+      "lead": "Comms",
+      "ref": "pr102",
+      "history": [
+        {
+          "stage": "complete",
+          "date": "2026-10-19",
+          "ref": "pr102"
+        }
+      ]
+    },
+    {
+      "id": "public-metrics",
+      "group": "complete",
+      "title": "Public metrics and trends from records",
+      "why": "Merge time, CI catches, failures and lessons, every number linked to its record.",
+      "lead": "Forge",
+      "ref": "pr98",
+      "history": [
+        {
+          "stage": "complete",
+          "date": "2026-10-18",
+          "ref": "pr98"
+        }
+      ]
+    },
+    {
+      "id": "no-ceo-quotes",
+      "group": "complete",
+      "title": "Decisions paraphrased, never quoted, on the site",
+      "why": "Ryno's exact words stay in the records; the site says what was decided.",
+      "lead": "Forge",
+      "ref": "pr139",
+      "history": [
+        {
+          "stage": "complete",
+          "date": "2026-10-21",
+          "ref": "pr139"
+        }
+      ]
+    },
+    {
+      "id": "rpg-quests",
+      "group": "active",
+      "title": "Daily, weekly and level-up quests",
+      "why": "Rewards the work that keeps the site accurate, not activity: Week 2 of the Slopworks RPG.",
+      "lead": "Gamemaster",
+      "party": [
+        "Critic"
+      ],
+      "ref": "i34",
+      "fog": "How reviewer quality grades work without being gamed",
+      "unlocks": "first-raid",
+      "history": [
+        {
+          "stage": "discovered",
+          "date": "2026-10-17",
+          "ref": "c163"
+        },
+        {
+          "stage": "challenged",
+          "date": "2026-10-17",
+          "ref": "c179"
+        }
+      ]
+    },
+    {
+      "id": "run-heartbeat",
+      "group": "active",
+      "title": "Notice a missed run and measure each run",
+      "why": "A five-day outage left no record. A heartbeat flags a missed run; a usage ledger records each run's model and minutes.",
+      "lead": "Sweep",
+      "party": [
+        "Forge"
+      ],
+      "ref": "i62",
+      "history": [
+        {
+          "stage": "discovered",
+          "date": "2026-10-27",
+          "ref": "i62"
+        },
+        {
+          "stage": "challenged",
+          "date": "2026-10-28",
+          "ref": "c429"
+        }
+      ]
+    },
+    {
+      "id": "item-pages",
+      "group": "active",
+      "title": "A page for every update and issue",
+      "why": "One shareable page per tracker entry, with its source and who added it: the front door for getting found.",
+      "lead": "Forge",
+      "party": [
+        "Strategy"
+      ],
+      "ref": "i63",
+      "history": [
+        {
+          "stage": "discovered",
+          "date": "2026-10-27",
+          "ref": "i63"
+        },
+        {
+          "stage": "challenged",
+          "date": "2026-10-28",
+          "ref": "c436"
+        }
+      ]
+    },
+    {
+      "id": "weekly-digest",
+      "group": "queued",
+      "title": "This week in Grok Bot, with a shipping calendar",
+      "why": "The weekly recap gains the week's Grok Bot updates and a day-by-day view of what shipped.",
+      "lead": "Analyst",
+      "ref": "i61",
+      "history": [
+        {
+          "stage": "discovered",
+          "date": "2026-10-19",
+          "ref": "i61"
+        },
+        {
+          "stage": "challenged",
+          "date": "2026-10-19",
+          "ref": "c381"
+        }
+      ]
+    },
+    {
+      "id": "social-preview",
+      "group": "queued",
+      "title": "A preview image for shared links",
+      "why": "Links shared elsewhere show a blank card today.",
+      "lead": "Polish",
+      "ref": "d2",
+      "history": [
+        {
+          "stage": "discovered",
+          "date": "2026-10-16",
+          "ref": "d2"
+        }
+      ]
+    },
+    {
+      "id": "collapsible-cards",
+      "group": "queued",
+      "title": "Shorter Team and Lessons pages on phones",
+      "why": "Role and lesson cards open on tap, so phone readers scroll less.",
+      "lead": "Polish",
+      "ref": "i58",
+      "history": [
+        {
+          "stage": "discovered",
+          "date": "2026-10-19",
+          "ref": "i58"
+        }
+      ]
+    },
+    {
+      "id": "metric-trends",
+      "group": "queued",
+      "title": "Trend lines on Metrics",
+      "why": "Small static charts next to the numbers, with the values written out.",
+      "lead": "Forge",
+      "ref": "i51",
+      "history": [
+        {
+          "stage": "discovered",
+          "date": "2026-10-19",
+          "ref": "i51"
+        }
+      ]
+    },
+    {
+      "id": "lesson-filters",
+      "group": "queued",
+      "title": "Filter Lessons by type and the Timeline by decision",
+      "why": "One tap to see only incidents, or only what Ryno decided.",
+      "lead": "Polish",
+      "ref": "i52",
+      "history": [
+        {
+          "stage": "discovered",
+          "date": "2026-10-19",
+          "ref": "i52"
+        }
+      ]
+    },
+    {
+      "id": "first-raid",
+      "group": "queued",
+      "title": "The first team raid",
+      "why": "A hard task several roles take on together, picked from the six raids in the RPG plan.",
+      "lead": "Gamemaster",
+      "ref": "i34",
+      "raid": true,
+      "history": [
+        {
+          "stage": "discovered",
+          "date": "2026-10-17",
+          "ref": "c163"
+        }
+      ]
+    },
+    {
+      "id": "impact-ledger",
+      "group": "rumor",
+      "title": "Impact Ledger and Build Observatory",
+      "why": "Showcase pages for real measured impact, once four weeks of showcase data exist.",
+      "lead": "Forge",
+      "ref": "i23",
+      "history": [
+        {
+          "stage": "discovered",
+          "date": "2026-10-17",
+          "ref": "i23"
+        }
+      ]
+    },
+    {
+      "id": "bot-template",
+      "group": "rumor",
+      "title": "A shareable Grok Bot template",
+      "why": "A routine visitors can copy to follow the tracker in their own Grok Bot.",
+      "lead": "Coordinator",
+      "ref": "file:plans/roadmap.md",
+      "history": [
+        {
+          "stage": "discovered",
+          "date": "2026-10-15",
+          "ref": "file:plans/roadmap.md"
+        }
+      ]
+    },
+    {
+      "id": "nav-tab-bar",
+      "group": "abandoned",
+      "title": "A bottom tab bar on phones",
+      "why": "Persistent links to six pages at the bottom of every phone screen.",
+      "lead": "Coordinator",
+      "ref": "i50",
+      "reason": "The four-link top nav stays; a second nav needs evidence that the hubs cost visitors.",
+      "history": [
+        {
+          "stage": "discovered",
+          "date": "2026-10-19",
+          "ref": "i50"
+        },
+        {
+          "stage": "challenged",
+          "date": "2026-10-19",
+          "ref": "c366"
+        }
+      ]
+    },
+    {
+      "id": "dark-mode-option",
+      "group": "abandoned",
+      "title": "A dark mode option",
+      "why": "A static dark theme for readers who prefer it.",
+      "lead": "Coordinator",
+      "ref": "i57",
+      "reason": "It already existed: the site follows the phone's dark setting, with contrast checked in both themes.",
+      "history": [
+        {
+          "stage": "discovered",
+          "date": "2026-10-19",
+          "ref": "i57"
+        }
+      ]
+    }
+  ],
+  "oaths": [
+    {
+      "id": "g1-get-found",
+      "claim": "50 unique repo visitors in GitHub's 14-day window, 5 stars, 2 outside referrer domains",
+      "sworn": "2026-10-19",
+      "due": "2026-11-18",
+      "lead": "Strategy",
+      "ref": "G1",
+      "verdict": "open",
+      "note": "Visitor measurement is on hold, so this may be judged Unjudged."
+    },
+    {
+      "id": "g2-showcase",
+      "claim": "12 real-trace showcase entries, 6 of them new, with at least 1 new format",
+      "sworn": "2026-10-19",
+      "due": "2026-11-18",
+      "lead": "Strategy",
+      "ref": "G2",
+      "verdict": "open"
+    },
+    {
+      "id": "g3-fast-features",
+      "claim": "Every new tracker item logged within 1 day, and 2 features demoed within 7 days of entry",
+      "sworn": "2026-10-19",
+      "due": "2026-11-18",
+      "lead": "Strategy",
+      "ref": "G3",
+      "verdict": "open"
+    }
+  ],
+  "camp": [
+    {
+      "title": "Team training plan",
+      "ref": "i59"
+    },
+    {
+      "title": "A daily run that finishes every day",
+      "ref": "aar-2026-10-21-morning-run-interrupted"
+    }
+  ]
+}
