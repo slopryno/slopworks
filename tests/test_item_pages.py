@@ -49,7 +49,13 @@ class ItemPages(unittest.TestCase):
         for x, issue in ITEMS:
             doc = FILES[("issues" if issue else "updates") + "/index.html"]
             self.assertIn(f'id="e{x["id"]}"', doc)
-            self.assertIn(f'<a href="{x["id"]}/">details</a>', doc)
+            self.assertIn(f'<a href="{x["id"]}/" aria-label="Details on {build.e(x["title"])}">details</a>', doc)
+
+    def test_description_is_escaped_once(self):
+        x = dict(UPS[0], summary='A "quoted" word & more')
+        build.DESCRIPTIONS["updates/t/"] = build.describe(None, x["summary"])
+        doc = build.page("updates/t/", "T", "L", "", "data/updates.json")
+        self.assertIn('content="A &quot;quoted&quot; word &amp; more"', doc)
 
     def test_feeds_link_item_pages_with_unchanged_guids(self):
         feed = json.loads(FILES["feed.json"])

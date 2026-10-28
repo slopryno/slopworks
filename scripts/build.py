@@ -346,7 +346,7 @@ def entry_card(x, issue=False):
         extra += f'<p><strong>Corrected:</strong> {e(x["corrected"])}</p>'
     return (f'<article class="card" id="e{e(x["id"])}" data-area="{e(x["area"])}"><h3>{e(x["title"])}</h3><p>{e(x["summary"])}</p>{extra}'
             f'<p class="meta"><span>{tags}</span><time datetime="{x["date"]}">{x["date"]}</time>'
-            f'<a href="{e(x["source"])}">source</a><a href="{e(x["id"])}/">details</a><span>added {x["added"]} by {e(x["added_by"])}</span></p></article>')
+            f'<a href="{e(x["source"])}">source</a><a href="{e(x["id"])}/" aria-label="Details on {e(x["title"])}">details</a><span>added {x["added"]} by {e(x["added_by"])}</span></p></article>')
 
 
 def item_modified(x, issue=False):
@@ -509,7 +509,7 @@ def build():
     for items, issue in ((ups, False), (iss, True)):
         for x in items:
             near = [r for r in sorted(items, key=lambda r: (r["date"], r["id"]), reverse=True) if r["area"] == x["area"] and r is not x][:3]
-            DESCRIPTIONS[item_slug(x, issue)] = describe(None, e(x["summary"]))
+            DESCRIPTIONS[item_slug(x, issue)] = describe(None, x["summary"])  # raw: page() escapes it once
             files[item_slug(x, issue) + "index.html"] = item_page(x, issue, near)
     files["issues/index.html"] = page("issues/", "Known issues", f"{sum(x['state']=='open' for x in iss)} open, {sum(x['state']=='fixed' for x in iss)} fixed. Grouped by area. Marked fixed only when a public source says so.", body or f'<p class="empty">No known issues right now. Issues land here when a public source reports one; the daily run checks around {RUN_TIME}.</p>', "data/issues.json")
 
