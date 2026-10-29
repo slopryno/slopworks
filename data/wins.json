@@ -1,5 +1,32 @@
 [
   {
+    "id": "pr163",
+    "role": "Forge",
+    "title": "Evening wrap Oct 28: three research notes and Team chat c440 to c448, with Trial's post-deploy check of today's merges",
+    "pr": "https://github.com/slopryno/slopworks/pull/163",
+    "date": "2026-10-28",
+    "merged": "2026-10-28T20:10-04:00",
+    "opened": "2026-10-28T20:09-04:00"
+  },
+  {
+    "id": "pr153",
+    "role": "Sweep",
+    "title": "Sweep: missed-run heartbeat, a read-only scheduled check that fails when the daily run hasn't recorded itself (#148 item 1)",
+    "pr": "https://github.com/slopryno/slopworks/pull/153",
+    "date": "2026-10-28",
+    "merged": "2026-10-28T16:48-04:00",
+    "opened": "2026-10-28T09:41-04:00"
+  },
+  {
+    "id": "pr162",
+    "role": "Librarian",
+    "title": "Librarian: the CEO's Oct 27 prototype-brief decisions go into the decision record as i64, with a records refresh through #161 (B2)",
+    "pr": "https://github.com/slopryno/slopworks/pull/162",
+    "date": "2026-10-28",
+    "merged": "2026-10-28T16:45-04:00",
+    "opened": "2026-10-28T16:43-04:00"
+  },
+  {
     "id": "pr161",
     "role": "Sweep",
     "title": "Sweep: home and team pages refresh from the records through #160 (wins, tempo, CI metrics, XP ledger); latest was stuck at #141 (B1)",

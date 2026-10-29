@@ -1,12 +1,12 @@
 {
-  "as_of": "2026-10-28T12:43-04:00",
+  "as_of": "2026-10-28T20:10-04:00",
   "newest_day": "2026-10-28",
   "days_of_history": 9,
   "ci_window_start": "2026-10-15T23:00-04:00",
   "totals": {
-    "prs": 146,
+    "prs": 149,
     "open_to_merge_min": 1,
-    "ci_catches": 31,
+    "ci_catches": 30,
     "main_failures": 0,
     "reverts": 0,
     "aars": 17,
@@ -18,7 +18,7 @@
   },
   "pace": {
     "mode": "normal",
-    "clean_prs": 26,
+    "clean_prs": 29,
     "clean_needed": 10
   },
   "days": [
@@ -136,12 +136,12 @@
     },
     {
       "date": "2026-10-28",
-      "prs": 5,
+      "prs": 8,
       "open_to_merge_min": 2,
       "escaped": 0,
       "corrections": 0,
       "aars": 0,
-      "ci_catches": 2,
+      "ci_catches": 1,
       "ci_recorded": true,
       "main_failures": 0,
       "reverts": 0,
@@ -228,8 +228,8 @@
       "key": "prs",
       "label": "Merged PRs",
       "prev": 6,
-      "new": 5,
-      "direction": "down",
+      "new": 8,
+      "direction": "up",
       "verdict": null
     },
     {
@@ -268,8 +268,8 @@
       "key": "ci_catches",
       "label": "CI catches before merge per 10 PRs",
       "prev": 3.3,
-      "new": 4.0,
-      "direction": "up",
+      "new": 1.2,
+      "direction": "down",
       "verdict": null
     },
     {
@@ -321,7 +321,7 @@
       "target": "Every new tracker item logged within 1 day, and 2 features demoed within 7 days of entry",
       "source": "data/updates.json, data/cases.json",
       "status": "in progress",
-      "now": "1 of 8 new tracker items logged within 1 day since Mon Oct 19; 0 of 2 demos."
+      "now": "1 of 9 new tracker items logged within 1 day since Mon Oct 19; 0 of 2 demos."
     }
   ]
 }
