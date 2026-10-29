@@ -39,7 +39,7 @@ def back_link(slug, up):
     """One 'Back to' link on deep pages (Comms, c211): archives go back to their page, sheets to Team, the rest to their hub."""
     if slug in ("", "work/", "hood/", "team/", "lessons/"):
         return ""
-    for base, title in (("chat/", "Team chat"), ("timeline/", "Timeline"), ("lessons/", "Lessons"), ("team/", "Team")):
+    for base, title in (("chat/", "Team chat"), ("timeline/", "Timeline"), ("lessons/", "Lessons"), ("team/", "Team"), ("updates/", "What's new"), ("issues/", "Known issues")):
         if slug.startswith(base) and slug != base:
             return f'<p class="back"><a href="{up}{base}">Back to {title}</a></p>'
     hub, title = section(slug)
@@ -268,11 +268,11 @@ def next_link(slug, up, body):
     return f'<p class="next"><a class="more" href="{up}{s}">Next: {e(t)}</a></p>'
 
 
-def page(slug, title, lede, body, source, h1=None):
+def page(slug, title, lede, body, source, h1=None, kind=None):
     up = "../" * slug.count("/")
     desc, url, full = describe(slug, lede), page_url(slug), f"{title} · Slopworks"
     # Structured data as schema.org microdata, not JSON-LD: check.py bans every <script> tag, and that guardrail stays.
-    kind = "WebSite" if slug == "" else ("CollectionPage" if slug in ("updates/", "issues/", "cases/", "lessons/", "chat/") or slug.startswith("chat/archive/") else "WebPage")
+    kind = kind or ("WebSite" if slug == "" else ("CollectionPage" if slug in ("updates/", "issues/", "cases/", "lessons/", "chat/") or slug.startswith("chat/archive/") else "WebPage"))
     micro = (f'<meta itemprop="name" content="{e("Slopworks" if slug == "" else full)}"><meta itemprop="description" content="{e(desc)}"><link itemprop="url" href="{e(url)}">'
              + ('<span hidden itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><meta itemprop="name" content="Slopworks">'
                 f'<link itemprop="url" href="{BASE}"><link itemprop="sameAs" href="{REPO}"></span>' if slug == "" else
@@ -329,6 +329,12 @@ def page(slug, title, lede, body, source, h1=None):
 """
 
 
+def item_slug(x, issue=False):
+    """Item pages (#149 §2.1) live at updates/<id>/ and issues/<id>/: the record id never changes, so a corrected title
+    can't break a published URL."""
+    return f'{"issues" if issue else "updates"}/{x["id"]}/'
+
+
 def entry_card(x, issue=False):
     tags = f'<span class="tag {x["status"]}">{x["status"]}</span> <span class="tag">{e(x["area"])}</span>'
     if issue:
@@ -342,7 +348,41 @@ def entry_card(x, issue=False):
         extra += f'<p><strong>Corrected:</strong> {e(x["corrected"])}</p>'
     return (f'<article class="card" id="e{e(x["id"])}" data-area="{e(x["area"])}"><h3>{e(x["title"])}</h3><p>{e(x["summary"])}</p>{extra}'
             f'<p class="meta"><span>{tags}</span><time datetime="{x["date"]}">{x["date"]}</time>'
-            f'<a href="{e(x["source"])}">source</a><span>added {x["added"]} by {e(x["added_by"])}</span></p></article>')
+            f'<a href="{e(x["source"])}">source</a><a href="{e(x["id"])}/" aria-label="Details on {e(x["title"])}">details</a><span>added {x["added"]} by {e(x["added_by"])}</span></p></article>')
+
+
+def item_modified(x, issue=False):
+    """Newest date the record itself carries: added, or the fix date for a fixed issue."""
+    return max(d for d in (x["added"], x.get("fixed_date") if issue else None) if d)
+
+
+def item_page(x, issue, related):
+    """One page per update or issue (#149 §2.1): the record, where it came from, who added it, and 3 more in its area.
+    Every line comes from the record; nothing is inferred. h1 uses short_title (8-word page_title limit) when set."""
+    day = lambda d: datetime.fromisoformat(d).strftime("%b %-d, %Y")
+    what = "issue" if issue else "update"
+    lede = f'{x["status"].capitalize()} Grok Bot {what} · {e(x["area"])} · {day(x["date"])}'
+    facts = ""
+    if issue:
+        facts += f'<p><strong>State:</strong> {e(x["state"])}' + (f' since {day(x["fixed_date"])}' if x.get("fixed_date") else "") + "</p>"
+        if x.get("workaround"):
+            facts += f'<p><strong>Workaround:</strong> {e(x["workaround"])}</p>'
+        if x.get("fixed_source"):
+            facts += f'<p class="meta"><a href="{e(x["fixed_source"])}">Source for the fix</a></p>'
+    if x.get("corrected"):
+        facts += f'<p><strong>Corrected:</strong> {e(x["corrected"])}</p>'
+    meaning = ("Confirmed means it comes from an official account or the docs." if x["status"] == "confirmed"
+               else "Reported means a community post, not yet confirmed by an official account or the docs.")
+    more = "".join(f'<li><a href="../{e(r["id"])}/">{e(r["title"])}</a></li>' for r in related)
+    body = (f'<meta itemprop="headline" content="{e(x["title"])}"><meta itemprop="datePublished" content="{x["date"]}">'
+            f'<meta itemprop="dateModified" content="{item_modified(x, issue)}">'
+            f'<p>{e(x["summary"])}</p>{facts}'
+            f'<h2>Where this comes from</h2><p><a itemprop="isBasedOn" href="{e(x["source"])}">The public source</a>, dated {day(x["date"])}. {meaning}</p>'
+            f'<p>Added {day(x["added"])} by {e(x["added_by"])}. <a href="../../how/">How the team checks entries</a></p>'
+            + (f'<h2>More in {e(x["area"])}</h2><ul>{more}</ul>' if more else "")
+            + f'<p class="next"><a class="more" href="../">All {"known issues" if issue else "updates"}</a></p>')
+    return page(item_slug(x, issue), x["title"], lede, body, f'data/{"issues" if issue else "updates"}.json',
+                h1=e(x.get("short_title") or x["title"]), kind="Article")
 
 
 def area_filter(items):
@@ -467,6 +507,12 @@ def build():
     if body:
         fl, st = area_filter(iss)
         body = st + '<div class="filtered">' + fl + body + "</div>"
+    # Item pages (#149 §2.1): one per update and issue, with 3 newer-first neighbours from the same area.
+    for items, issue in ((ups, False), (iss, True)):
+        for x in items:
+            near = [r for r in sorted(items, key=lambda r: (r["date"], r["id"]), reverse=True) if r["area"] == x["area"] and r is not x][:3]
+            DESCRIPTIONS[item_slug(x, issue)] = describe(None, x["summary"])  # raw: page() escapes it once
+            files[item_slug(x, issue) + "index.html"] = item_page(x, issue, near)
     files["issues/index.html"] = page("issues/", "Known issues", f"{sum(x['state']=='open' for x in iss)} open, {sum(x['state']=='fixed' for x in iss)} fixed. Grouped by area. Marked fixed only when a public source says so.", body or f'<p class="empty">No known issues right now. Issues land here when a public source reports one; the daily run checks around {RUN_TIME}.</p>', "data/issues.json")
 
     body = ""
@@ -1113,7 +1159,7 @@ def build():
                                         f'<p class="card">{status}</p><div class="scroll"><table class="stack"><tbody>{srows}</tbody></table></div><p>When something goes wrong, the after-action review is on the <a href="../lessons/">Lessons</a> page the same day.</p><p>Dated plans, reviews and holiday themes are on the <a href="../calendar/">Calendar</a>.</p>' + rot_html + f'<h2>Limits, in plain words</h2><ul>{lim}</ul>', "data/schedule.json")
 
     feed = sorted([("update", x) for x in ups] + [("issue", x) for x in iss], key=lambda p: (p[1]["date"], p[1]["id"]), reverse=True)[:50]
-    link = lambda k, x: f'{BASE}{"issues/" if k == "issue" else "updates/"}#e{x["id"]}'
+    link = lambda k, x: BASE + item_slug(x, k == "issue")  # item pages; the GUIDs below don't change
     title = lambda k, x: (f"Issue ({x['state']}): " if k == "issue" else "") + x["title"]
     dt = lambda d: datetime.fromisoformat(d).replace(hour=12, tzinfo=timezone.utc)
     files["feed.json"] = json.dumps({"version": "https://jsonfeed.org/version/1.1", "title": "Slopworks: Grok Bot updates and known issues",
@@ -1137,8 +1183,11 @@ def build():
     # Comms (i28): sitemap, robots.txt, and llms.txt come from the same page list, so they can't drift (Atlas, c108).
     pages = sorted(k for k in files if k.endswith(".html"))
     loc = lambda k: BASE + (k[:-len("index.html")] if k.endswith("index.html") else k)
+    # lastmod only where a record gives a real date (#149): item pages, and the two lists they belong to.
+    lastmod = {item_slug(x, k == "issue") + "index.html": item_modified(x, k == "issue") for k, x in [("update", x) for x in ups] + [("issue", x) for x in iss]}
+    lastmod.update({"updates/index.html": max((x["added"] for x in ups), default=None), "issues/index.html": max((item_modified(x, True) for x in iss), default=None)})
     files["sitemap.xml"] = ('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
-                            + "".join(f"<url><loc>{e(loc(k))}</loc></url>\n" for k in pages) + "</urlset>\n")
+                            + "".join(f"<url><loc>{e(loc(k))}</loc>" + (f"<lastmod>{lastmod[k]}</lastmod>" if lastmod.get(k) else "") + "</url>\n" for k in pages) + "</urlset>\n")
     files["robots.txt"] = f"User-agent: *\nAllow: /\nSitemap: {BASE}sitemap.xml\n"
     main_pages = [("", "Home"), ("work/", "Work"), ("hood/", "Under the hood")] + [p for p in NAV if p[0]] + OPS + [("lessons/", "Lessons")] * ("lessons/" not in dict(NAV)) + [("team/xp/", "How XP works")]
     main_pages = list(dict.fromkeys(main_pages))  # How this works is in both NAV and OPS; list each page once (#149 Level 1)
