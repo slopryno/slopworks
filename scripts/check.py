@@ -25,6 +25,7 @@ DATA_FILES += ["research"]
 DATA_FILES += ["alumni"]
 DATA_FILES += ["arena", "cases", "challenges"]  # showcase data (i22), added in sprint PR 8
 DATA_FILES += ["aars"]  # same-day after-action reviews (Ryno, 2026-10-17)
+DATA_FILES += ["usage"]  # usage ledger (#148 item 2): one row per run, written by bot.py usage
 ALIASES = {"verify": "Lens", "scout": "Sketch", "publish": "Forge", "privacy": "Shield"}
 ALIASES["ea"] = "Assistant"  # the Executive Assistant (Ryno 2026-10-19 5:28 PM ET)
 
