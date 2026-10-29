@@ -172,5 +172,5 @@ if __name__ == "__main__":
     import build
     prs = fetch_merged()
     entries = ledger(prs, load("progression"), build.build())
-    (ROOT / "data/xp_ledger.json").write_text(json.dumps(entries, indent=2, ensure_ascii=False) + "\n")
+    (ROOT / "data/xp_ledger.json").write_text(json.dumps(entries, separators=(",", ":"), ensure_ascii=False) + "\n")
     print(f"wrote {len(entries)} XP entries from {len(prs)} merged PRs: " + ", ".join(f"{k} {v}" for k, v in sorted(Counter(e['status'] for e in entries).items())))

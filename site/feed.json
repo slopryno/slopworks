@@ -6,6 +6,19 @@
   "description": "Unofficial, fan-built project. Not affiliated with or endorsed by Grok Bot, SpaceX, or X.",
   "items": [
     {
+      "id": "update-changelog-0-78-1",
+      "url": "https://slopryno.com/updates/changelog-0-78-1/",
+      "external_url": "https://x.ai/changelog/bot",
+      "title": "Shopping cards, order tracking, and subscription templates",
+      "content_text": "Version 0.78.1 (with 0.78.0): shopping shows product cards, Bots track orders you place, Shop Pay joins the Vault, and new templates find unused subscriptions or watch renewal prices.",
+      "date_published": "2026-10-27T12:00:00+00:00",
+      "tags": [
+        "update",
+        "app",
+        "confirmed"
+      ]
+    },
+    {
       "id": "update-changelog-0-77-0",
       "url": "https://slopryno.com/updates/changelog-0-77-0/",
       "external_url": "https://x.ai/changelog/bot",
@@ -644,19 +657,6 @@
       "tags": [
         "update",
         "voice",
-        "confirmed"
-      ]
-    },
-    {
-      "id": "update-changelog-2026-09-17",
-      "url": "https://slopryno.com/updates/changelog-2026-09-17/",
-      "external_url": "https://x.ai/changelog/bot",
-      "title": "More GitHub actions for Bots",
-      "content_text": "Bots can work with GitHub releases, tags, labels, sub-issues, discussions, and collaborators, create branches, and submit one review across several files. Stopping a Bot also stops the Bots and Cloud Agents it started.",
-      "date_published": "2026-09-17T12:00:00+00:00",
-      "tags": [
-        "update",
-        "coding",
         "confirmed"
       ]
     }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<url><loc>https://slopryno.com/404.html</loc></url>
 <url><loc>https://slopryno.com/arena/</loc></url>
 <url><loc>https://slopryno.com/behind/</loc></url>
 <url><loc>https://slopryno.com/calendar/</loc></url>
@@ -14,6 +15,7 @@
 <url><loc>https://slopryno.com/chat/archive/2026-10-16.html</loc></url>
 <url><loc>https://slopryno.com/chat/archive/2026-10-17.html</loc></url>
 <url><loc>https://slopryno.com/chat/archive/2026-10-18.html</loc></url>
+<url><loc>https://slopryno.com/chat/archive/2026-10-19.html</loc></url>
 <url><loc>https://slopryno.com/chat/archive/2026-10-2.html</loc></url>
 <url><loc>https://slopryno.com/chat/archive/2026-10-3.html</loc></url>
 <url><loc>https://slopryno.com/chat/archive/2026-10-4.html</loc></url>
@@ -105,6 +107,7 @@
 <url><loc>https://slopryno.com/updates/changelog-0-75-5/</loc><lastmod>2026-10-28</lastmod></url>
 <url><loc>https://slopryno.com/updates/changelog-0-75-8/</loc><lastmod>2026-10-28</lastmod></url>
 <url><loc>https://slopryno.com/updates/changelog-0-77-0/</loc><lastmod>2026-10-28</lastmod></url>
+<url><loc>https://slopryno.com/updates/changelog-0-78-1/</loc><lastmod>2026-10-29</lastmod></url>
 <url><loc>https://slopryno.com/updates/changelog-2026-09-16-checklist/</loc><lastmod>2026-10-17</lastmod></url>
 <url><loc>https://slopryno.com/updates/changelog-2026-09-17/</loc><lastmod>2026-10-17</lastmod></url>
 <url><loc>https://slopryno.com/updates/changelog-2026-09-18/</loc><lastmod>2026-10-17</lastmod></url>
@@ -114,7 +117,7 @@
 <url><loc>https://slopryno.com/updates/changelog-2026-09-28/</loc><lastmod>2026-10-17</lastmod></url>
 <url><loc>https://slopryno.com/updates/changelog-2026-09-29/</loc><lastmod>2026-10-17</lastmod></url>
 <url><loc>https://slopryno.com/updates/changelog-2026-10-02/</loc><lastmod>2026-10-17</lastmod></url>
-<url><loc>https://slopryno.com/updates/</loc><lastmod>2026-10-28</lastmod></url>
+<url><loc>https://slopryno.com/updates/</loc><lastmod>2026-10-29</lastmod></url>
 <url><loc>https://slopryno.com/weekly/</loc></url>
 <url><loc>https://slopryno.com/work/</loc></url>
 </urlset>
