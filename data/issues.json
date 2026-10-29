@@ -7,6 +7,7 @@
     "status": "reported",
     "area": "app",
     "title": "Chats and drafts don't always sync to the Grok app",
+    "short_title": "Chats and drafts don't always sync to Grok",
     "summary": "Two users on X reported that, using Grok Bots inside the Grok app, chats don't always sync: drafts the bot says are in the chat show up on one device or app but not the other. Second report: https://x.com/i/status/2111295921539699143",
     "source": "https://x.com/i/status/2111250428595929141",
     "state": "open"
@@ -19,6 +20,7 @@
     "status": "reported",
     "area": "connectors",
     "title": "Plugins page lists fewer Finance accounts than are connected",
+    "short_title": "Plugins page undercounts connected Finance accounts",
     "summary": "A user on X reported that Grok Bot's Your plugins page shows only one of two connected Plaid finance institutions, while Grok's Connectors shows both. They said Grok Bot itself still works; only the page is wrong.",
     "source": "https://x.com/i/status/2111106317590933597",
     "state": "open"

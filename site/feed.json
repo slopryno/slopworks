@@ -7,7 +7,7 @@
   "items": [
     {
       "id": "update-changelog-0-78-1",
-      "url": "https://slopryno.com/updates/#echangelog-0-78-1",
+      "url": "https://slopryno.com/updates/changelog-0-78-1/",
       "external_url": "https://x.ai/changelog/bot",
       "title": "Shopping cards, order tracking, and subscription templates",
       "content_text": "Version 0.78.1 (with 0.78.0): shopping shows product cards, Bots track orders you place, Shop Pay joins the Vault, and new templates find unused subscriptions or watch renewal prices.",
@@ -20,7 +20,7 @@
     },
     {
       "id": "update-changelog-0-77-0",
-      "url": "https://slopryno.com/updates/#echangelog-0-77-0",
+      "url": "https://slopryno.com/updates/changelog-0-77-0/",
       "external_url": "https://x.ai/changelog/bot",
       "title": "Permissions settings, Vault payments, and multi-question cards",
       "content_text": "Version 0.77.0: a Permissions section in Settings, a Vault Payments tab (you still approve every purchase), 1Password without a shared vault, and multi-question cards.",
@@ -33,7 +33,7 @@
     },
     {
       "id": "update-changelog-0-75-8",
-      "url": "https://slopryno.com/updates/#echangelog-0-75-8",
+      "url": "https://slopryno.com/updates/changelog-0-75-8/",
       "external_url": "https://x.ai/changelog/bot",
       "title": "Auto-review rule cards and clearer connector sign-in status",
       "content_text": "Version 0.75.8: a Bot can offer to add, change or remove an Auto-review rule on a card you confirm, and expired connector sign-ins show Authenticate.",
@@ -46,7 +46,7 @@
     },
     {
       "id": "update-changelog-0-75-5",
-      "url": "https://slopryno.com/updates/#echangelog-0-75-5",
+      "url": "https://slopryno.com/updates/changelog-0-75-5/",
       "external_url": "https://x.ai/changelog/bot",
       "title": "A Vault for logins, cards and contacts, and fewer approval cards",
       "content_text": "Version 0.75.5: Bots can save your logins, cards and contact info to a Vault and fill them in, and ask less often for actions you asked for yourself.",
@@ -59,7 +59,7 @@
     },
     {
       "id": "update-changelog-0-75-2",
-      "url": "https://slopryno.com/updates/#echangelog-0-75-2",
+      "url": "https://slopryno.com/updates/changelog-0-75-2/",
       "external_url": "https://x.ai/changelog/bot",
       "title": "Pages, video creation, and pinned Library items",
       "content_text": "Version 0.75.2: Bots build Pages (reports, memos and dashboards you edit together or have kept up to date), create videos, and you can pin Library items.",
@@ -72,7 +72,7 @@
     },
     {
       "id": "update-2113393684209176718",
-      "url": "https://slopryno.com/updates/#e2113393684209176718",
+      "url": "https://slopryno.com/updates/2113393684209176718/",
       "external_url": "https://x.com/bot/status/2113393684209176718",
       "title": "Grok Bot can use Calendar, Reminders and Contacts on your phone",
       "content_text": "Grok Bot can now use Calendar, Reminders, Contacts and more apps on your phone, rolling out on iOS and Android.",
@@ -85,7 +85,7 @@
     },
     {
       "id": "update-2113332983226831339",
-      "url": "https://slopryno.com/updates/#e2113332983226831339",
+      "url": "https://slopryno.com/updates/2113332983226831339/",
       "external_url": "https://x.com/bot/status/2113332983226831339",
       "title": "Grok Bot works with your 1Password account",
       "content_text": "Grok Bot can now use your 1Password account: you approve the logins you want to share and your Bot signs in for you. It rolls out over a few days.",
@@ -98,7 +98,7 @@
     },
     {
       "id": "update-2112252507762368684",
-      "url": "https://slopryno.com/updates/#e2112252507762368684",
+      "url": "https://slopryno.com/updates/2112252507762368684/",
       "external_url": "https://x.com/bot/status/2112252507762368684",
       "title": "Grok Bot on the iPhone Action Button",
       "content_text": "You can set Grok Bot as your iPhone's Action Button and press it to talk with your Bot.",
@@ -111,7 +111,7 @@
     },
     {
       "id": "issue-2111250428595929141",
-      "url": "https://slopryno.com/issues/#e2111250428595929141",
+      "url": "https://slopryno.com/issues/2111250428595929141/",
       "external_url": "https://x.com/i/status/2111250428595929141",
       "title": "Issue (open): Chats and drafts don't always sync to the Grok app",
       "content_text": "Two users on X reported that, using Grok Bots inside the Grok app, chats don't always sync: drafts the bot says are in the chat show up on one device or app but not the other. Second report: https://x.com/i/status/2111295921539699143",
@@ -125,7 +125,7 @@
     },
     {
       "id": "update-2111184284786802881",
-      "url": "https://slopryno.com/updates/#e2111184284786802881",
+      "url": "https://slopryno.com/updates/2111184284786802881/",
       "external_url": "https://x.com/bot/status/2111184284786802881",
       "title": "Robinhood, Coinbase, Trello, and more connectors",
       "content_text": "Grok Bot now connects to Robinhood, Coinbase, Trello, PostHog, beehiiv, eToro, and more. Teams can also now submit connectors to the Grok Bot marketplace.",
@@ -138,7 +138,7 @@
     },
     {
       "id": "update-2111184282903523440",
-      "url": "https://slopryno.com/updates/#e2111184282903523440",
+      "url": "https://slopryno.com/updates/2111184282903523440/",
       "external_url": "https://x.com/bot/status/2111184282903523440",
       "title": "Grok Bot can read X Chat",
       "content_text": "Grok Bot can now read X Chat. Connect X, then ask it to work across your messages.",
@@ -151,7 +151,7 @@
     },
     {
       "id": "update-2111184281636909233",
-      "url": "https://slopryno.com/updates/#e2111184281636909233",
+      "url": "https://slopryno.com/updates/2111184281636909233/",
       "external_url": "https://x.com/bot/status/2111184281636909233",
       "title": "Notifications only on the device you're using",
       "content_text": "Grok Bot notifications now go only to the device you're using.",
@@ -164,7 +164,7 @@
     },
     {
       "id": "update-2111184279938240959",
-      "url": "https://slopryno.com/updates/#e2111184279938240959",
+      "url": "https://slopryno.com/updates/2111184279938240959/",
       "external_url": "https://x.com/bot/status/2111184279938240959",
       "title": "Tag @bot on X to start a task",
       "content_text": "Tag @bot in a post on X and Grok Bot gets to work on it.",
@@ -177,7 +177,7 @@
     },
     {
       "id": "update-2111184276662481202",
-      "url": "https://slopryno.com/updates/#e2111184276662481202",
+      "url": "https://slopryno.com/updates/2111184276662481202/",
       "external_url": "https://x.com/bot/status/2111184276662481202",
       "title": "Faster, more reliable voice calls",
       "content_text": "Voice calls with Grok Bot are faster, more reliable, and better at remembering past conversations.",
@@ -190,7 +190,7 @@
     },
     {
       "id": "update-2111184275374813362",
-      "url": "https://slopryno.com/updates/#e2111184275374813362",
+      "url": "https://slopryno.com/updates/2111184275374813362/",
       "external_url": "https://x.com/bot/status/2111184275374813362",
       "title": "Grok Bot is much faster",
       "content_text": "The Grok Bot team says computer tasks now finish 3x sooner on average, and replies to everything else arrive in less than half the time.",
@@ -203,7 +203,7 @@
     },
     {
       "id": "update-2111184272933748980",
-      "url": "https://slopryno.com/updates/#e2111184272933748980",
+      "url": "https://slopryno.com/updates/2111184272933748980/",
       "external_url": "https://x.com/bot/status/2111184272933748980",
       "title": "Refreshed look with a new typeface and themes",
       "content_text": "Grok Bot has a refreshed look, with a new typeface and themes.",
@@ -216,7 +216,7 @@
     },
     {
       "id": "update-2111184270819803351",
-      "url": "https://slopryno.com/updates/#e2111184270819803351",
+      "url": "https://slopryno.com/updates/2111184270819803351/",
       "external_url": "https://x.com/bot/status/2111184270819803351",
       "title": "Redesigned chat cards",
       "content_text": "Cards in Grok Bot chats have a new design with a cleaner layout, part of an update the team says improves quality, polish, and speed.",
@@ -229,7 +229,7 @@
     },
     {
       "id": "issue-2111106317590933597",
-      "url": "https://slopryno.com/issues/#e2111106317590933597",
+      "url": "https://slopryno.com/issues/2111106317590933597/",
       "external_url": "https://x.com/i/status/2111106317590933597",
       "title": "Issue (open): Plugins page lists fewer Finance accounts than are connected",
       "content_text": "A user on X reported that Grok Bot's Your plugins page shows only one of two connected Plaid finance institutions, while Grok's Connectors shows both. They said Grok Bot itself still works; only the page is wrong.",
@@ -243,7 +243,7 @@
     },
     {
       "id": "issue-2110854830172557475",
-      "url": "https://slopryno.com/issues/#e2110854830172557475",
+      "url": "https://slopryno.com/issues/2110854830172557475/",
       "external_url": "https://x.com/poteto/status/2110854830172557475",
       "title": "Issue (open): Convex plugin stuck on an old version",
       "content_text": "A user replying to the plugin submission post said the Convex plugin is still pinned to version 1.0.0, which ships always-on rules that take about 30k tokens of context, even though the plugin's own project fixed that. A team member acknowledged the report.",
@@ -257,7 +257,7 @@
     },
     {
       "id": "update-2110840796954202186",
-      "url": "https://slopryno.com/updates/#e2110840796954202186",
+      "url": "https://slopryno.com/updates/2110840796954202186/",
       "external_url": "https://x.com/poteto/status/2110840796954202186",
       "title": "Plugins can be submitted",
       "content_text": "A Grok Bot team member shared that anyone can submit plugins for Grok Bot (and Grok and Cursor) through a public submission form.",
@@ -270,7 +270,7 @@
     },
     {
       "id": "issue-2110549555112710377",
-      "url": "https://slopryno.com/issues/#e2110549555112710377",
+      "url": "https://slopryno.com/issues/2110549555112710377/",
       "external_url": "https://x.com/poteto/status/2110549555112710377",
       "title": "Issue (open): Locked out during plan unification",
       "content_text": "A user on X reported being locked out of Grok Bot for about two days while moving to the unified plan. A team member replied that they are looking into it.",
@@ -284,7 +284,7 @@
     },
     {
       "id": "update-changelog-0-71-2",
-      "url": "https://slopryno.com/updates/#echangelog-0-71-2",
+      "url": "https://slopryno.com/updates/changelog-0-71-2/",
       "external_url": "https://x.ai/changelog/bot",
       "title": "Bigger attachments, desktop notifications, and more plugin skills",
       "content_text": "Version 0.71.2 lets you attach files up to 250 MB and videos up to 1 GB, and up to 20 attachments per message. Replies notify you on your Mac or PC while you use it, Bots can use up to 200 plugin skills instead of 24, and team admins can turn off messaging between Bots.",
@@ -297,7 +297,7 @@
     },
     {
       "id": "update-2110496237241667621",
-      "url": "https://slopryno.com/updates/#e2110496237241667621",
+      "url": "https://slopryno.com/updates/2110496237241667621/",
       "external_url": "https://x.com/i/status/2110496237241667621",
       "title": "Plus aliases for Grok Bot email",
       "content_text": "Grok Bot email supports plus aliases: send and receive with dedicated aliases, or set routines that trigger only for mail sent to one alias.",
@@ -310,7 +310,7 @@
     },
     {
       "id": "update-2110469724660441365",
-      "url": "https://slopryno.com/updates/#e2110469724660441365",
+      "url": "https://slopryno.com/updates/2110469724660441365/",
       "external_url": "https://x.com/i/status/2110469724660441365",
       "title": "Basecamp connector launched",
       "content_text": "Basecamp announced an official Grok Bot connector, available from Connect Apps inside Grok Bot.",
@@ -323,7 +323,7 @@
     },
     {
       "id": "issue-2110069342029447452",
-      "url": "https://slopryno.com/issues/#e2110069342029447452",
+      "url": "https://slopryno.com/issues/2110069342029447452/",
       "external_url": "https://x.com/mattyp/status/2110069342029447452",
       "title": "Issue (fixed): 404 errors on unified plan link",
       "content_text": "Users replying to the unified plan announcement got 404 errors from a shared link. A team member said the cause was mitigated.",
@@ -337,7 +337,7 @@
     },
     {
       "id": "update-2110029484758028732",
-      "url": "https://slopryno.com/updates/#e2110029484758028732",
+      "url": "https://slopryno.com/updates/2110029484758028732/",
       "external_url": "https://x.com/poteto/status/2110029484758028732",
       "title": "Grok Bot X Communities",
       "content_text": "The team opened applications for curated Grok Bot group chats on X for GTM, product, marketing, engineering, recruiting, and design.",
@@ -350,7 +350,7 @@
     },
     {
       "id": "update-2110009541760839701",
-      "url": "https://slopryno.com/updates/#e2110009541760839701",
+      "url": "https://slopryno.com/updates/2110009541760839701/",
       "external_url": "https://x.com/mattyp/status/2110009541760839701",
       "title": "Weekly roundup video",
       "content_text": "A team video walks through the week: Bot's own email, better X, Shopify, more color, email drafts, Bot's computer, template search, PR previews, routine right-clicks, and 5 new languages.",
@@ -363,7 +363,7 @@
     },
     {
       "id": "update-2109784144649838754",
-      "url": "https://slopryno.com/updates/#e2109784144649838754",
+      "url": "https://slopryno.com/updates/2109784144649838754/",
       "external_url": "https://x.com/mattyp/status/2109784144649838754",
       "title": "One plan for Grok, Grok Bot, Cursor, and X",
       "content_text": "The X Subscription is one plan covering Cursor, Grok, Grok Bot, and X Premium. Every change is opt-in; if you do nothing, nothing changes.",
@@ -376,7 +376,7 @@
     },
     {
       "id": "update-changelog-0-70-2",
-      "url": "https://slopryno.com/updates/#echangelog-0-70-2",
+      "url": "https://slopryno.com/updates/changelog-0-70-2/",
       "external_url": "https://x.ai/changelog/bot",
       "title": "In-chat app cards, payments, and Find in page",
       "content_text": "Version 0.70.2 (which includes 0.69.0 to 0.70.1): connectors like Figma, Notion, and Canva can show an interactive app card in chat, Bots can pay with X Money or Stripe Link, and Cmd/Ctrl+F opens Find in page.",
@@ -389,7 +389,7 @@
     },
     {
       "id": "update-2108609764766908772",
-      "url": "https://slopryno.com/updates/#e2108609764766908772",
+      "url": "https://slopryno.com/updates/2108609764766908772/",
       "external_url": "https://x.com/bot/status/2108609764766908772",
       "title": "Grok Bot gets its own email",
       "content_text": "Bots can use their own email address to sign up for services, contact businesses for you, or schedule time with someone.",
@@ -402,7 +402,7 @@
     },
     {
       "id": "update-2108228871938359347",
-      "url": "https://slopryno.com/updates/#e2108228871938359347",
+      "url": "https://slopryno.com/updates/2108228871938359347/",
       "external_url": "https://x.com/bot/status/2108228871938359347",
       "title": "Shopify connector",
       "content_text": "Connect Shopify, then ask Grok Bot to check orders, track inventory, and keep product listings up to date.",
@@ -415,7 +415,7 @@
     },
     {
       "id": "update-changelog-0-68-1",
-      "url": "https://slopryno.com/updates/#echangelog-0-68-1",
+      "url": "https://slopryno.com/updates/changelog-0-68-1/",
       "external_url": "https://x.ai/changelog/bot",
       "title": "Slide decks, formatted emails, and a bigger Bot screen",
       "content_text": "Version 0.68.1: Bots build slide decks and deliver them as PowerPoint or Google Slides, send formatted emails from a draft card, and work on a 1920 × 1200 computer screen, up from 1280 × 800.",
@@ -428,7 +428,7 @@
     },
     {
       "id": "update-2107949161878606089",
-      "url": "https://slopryno.com/updates/#e2107949161878606089",
+      "url": "https://slopryno.com/updates/2107949161878606089/",
       "external_url": "https://x.com/bot/status/2107949161878606089",
       "title": "Search, read, and monitor X",
       "content_text": "Grok Bot can now search, read, and monitor X.",
@@ -441,7 +441,7 @@
     },
     {
       "id": "update-changelog-0-68-0",
-      "url": "https://slopryno.com/updates/#echangelog-0-68-0",
+      "url": "https://slopryno.com/updates/changelog-0-68-0/",
       "external_url": "https://x.ai/changelog/bot",
       "title": "Five more languages and Gmail send-as drafts",
       "content_text": "Version 0.68.0 adds Marathi, Tamil, Telugu, Swahili, and Hausa, and lets email drafts go out from a verified Gmail send-as address, with a From picker if you have more than one.",
@@ -454,7 +454,7 @@
     },
     {
       "id": "update-changelog-2026-10-02",
-      "url": "https://slopryno.com/updates/#echangelog-2026-10-02",
+      "url": "https://slopryno.com/updates/changelog-2026-10-02/",
       "external_url": "https://x.ai/changelog/bot",
       "title": "Marketplace becomes Connect Apps",
       "content_text": "An Oct 2 release renames Marketplace to Connect Apps, with category chips and Recommended for you first. Bot status lines use phrases like Thinking it through.",
@@ -467,7 +467,7 @@
     },
     {
       "id": "update-2106083136002310193",
-      "url": "https://slopryno.com/updates/#e2106083136002310193",
+      "url": "https://slopryno.com/updates/2106083136002310193/",
       "external_url": "https://x.com/bot/status/2106083136002310193",
       "title": "Usage limits reset",
       "content_text": "Usage limits were reset for all Grok Bot users.",
@@ -480,7 +480,7 @@
     },
     {
       "id": "update-2105713240701538538",
-      "url": "https://slopryno.com/updates/#e2105713240701538538",
+      "url": "https://slopryno.com/updates/2105713240701538538/",
       "external_url": "https://x.com/bot/status/2105713240701538538",
       "title": "Proactive suggestions",
       "content_text": "Grok Bot can now suggest ways to help without you needing to ask.",
@@ -493,7 +493,7 @@
     },
     {
       "id": "update-changelog-0-65-0",
-      "url": "https://slopryno.com/updates/#echangelog-0-65-0",
+      "url": "https://slopryno.com/updates/changelog-0-65-0/",
       "external_url": "https://x.ai/changelog/bot",
       "title": "Voice chats with Team Bots, automatic updates on",
       "content_text": "Version 0.65.0 lets teammates start a voice chat with a Team Bot and turns Automatic Updates on by default (you can turn it off in Settings, Updates).",
@@ -506,7 +506,7 @@
     },
     {
       "id": "update-changelog-0-64-0",
-      "url": "https://slopryno.com/updates/#echangelog-0-64-0",
+      "url": "https://slopryno.com/updates/changelog-0-64-0/",
       "external_url": "https://x.ai/changelog/bot",
       "title": "Refreshed avatars and Secure Form logins",
       "content_text": "Version 0.64.0 refreshes Bot avatars with bigger eyes and new shapes, opens logins in a Secure Form window that names the site, and lets you turn off drafts for a Bot so it sends directly.",
@@ -519,7 +519,7 @@
     },
     {
       "id": "update-2105373767568621895",
-      "url": "https://slopryno.com/updates/#e2105373767568621895",
+      "url": "https://slopryno.com/updates/2105373767568621895/",
       "external_url": "https://x.com/bot/status/2105373767568621895",
       "title": "Better for building software",
       "content_text": "Bots can hand off coding tasks to Cursor, manage PRs with the GitHub and Origin plugins, and share video demos of what they build.",
@@ -532,7 +532,7 @@
     },
     {
       "id": "update-changelog-2026-09-29",
-      "url": "https://slopryno.com/updates/#echangelog-2026-09-29",
+      "url": "https://slopryno.com/updates/changelog-2026-09-29/",
       "external_url": "https://x.ai/changelog/bot",
       "title": "Approvals in Slack and clearer usage limits",
       "content_text": "In Slack threads, a Bot that needs approval posts a Review an action card only you can answer. When included usage runs out, the app shows the usage limit notice instead of Bot failed to respond.",
@@ -545,7 +545,7 @@
     },
     {
       "id": "update-changelog-2026-09-28",
-      "url": "https://slopryno.com/updates/#echangelog-2026-09-28",
+      "url": "https://slopryno.com/updates/changelog-2026-09-28/",
       "external_url": "https://x.ai/changelog/bot",
       "title": "Quote text and start lists in the composer",
       "content_text": "Select text and press Cmd/Ctrl+L to quote it, type - or 1. to start a list, and get spell check as you type. A Bot's info pane gains a Library tab of the pages, files, and links it has shared.",
@@ -558,7 +558,7 @@
     },
     {
       "id": "update-changelog-2026-09-26-outlook",
-      "url": "https://slopryno.com/updates/#echangelog-2026-09-26-outlook",
+      "url": "https://slopryno.com/updates/changelog-2026-09-26-outlook/",
       "external_url": "https://x.ai/changelog/bot",
       "title": "Email drafts work with Outlook",
       "content_text": "A second Sep 26 release lets you review a Bot's new email in chat and send it from your Outlook account. Wide tables in Bot messages also scroll sideways instead of squeezing.",
@@ -571,7 +571,7 @@
     },
     {
       "id": "update-changelog-0-61-0",
-      "url": "https://slopryno.com/updates/#echangelog-0-61-0",
+      "url": "https://slopryno.com/updates/changelog-0-61-0/",
       "external_url": "https://x.ai/changelog/bot",
       "title": "Team Bots for a whole team",
       "content_text": "Version 0.61.0 adds Team Bots: publish one Bot for your team, and teammates chat with it in the app or Slack, each in their own conversation. Each teammate's use counts against their own allowance.",
@@ -584,7 +584,7 @@
     },
     {
       "id": "update-2103936247995752705",
-      "url": "https://slopryno.com/updates/#e2103936247995752705",
+      "url": "https://slopryno.com/updates/2103936247995752705/",
       "external_url": "https://x.com/bot/status/2103936247995752705",
       "title": "Finance integration",
       "content_text": "Link bank, card, and investment accounts with the new Finance integration, then ask Grok Bot to help manage spending and investments.",
@@ -597,7 +597,7 @@
     },
     {
       "id": "update-changelog-2026-09-25",
-      "url": "https://slopryno.com/updates/#echangelog-2026-09-25",
+      "url": "https://slopryno.com/updates/changelog-2026-09-25/",
       "external_url": "https://x.ai/changelog/bot",
       "title": "Busy Bots answer you first",
       "content_text": "When you message a busy Bot, it answers you before working through queued updates from other Bots and agents. Expired Auto-review cards also offer Always allow, and Enterprise admins can store Team Secrets.",
@@ -610,7 +610,7 @@
     },
     {
       "id": "update-changelog-2026-09-22",
-      "url": "https://slopryno.com/updates/#echangelog-2026-09-22",
+      "url": "https://slopryno.com/updates/changelog-2026-09-22/",
       "external_url": "https://x.ai/changelog/bot",
       "title": "Five more languages and better screen reader support",
       "content_text": "Czech, Danish, Finnish, Hungarian, and Norwegian Bokmål join the language list, screen readers announce more of the app, and a card explains when a usage limit, rate limit, or timeout stops a reply.",
@@ -623,7 +623,7 @@
     },
     {
       "id": "update-2102532697960956074",
-      "url": "https://slopryno.com/updates/#e2102532697960956074",
+      "url": "https://slopryno.com/updates/2102532697960956074/",
       "external_url": "https://x.com/bot/status/2102532697960956074",
       "title": "Cleaner interface",
       "content_text": "Quality-of-life update with a cleaner interface for working with your bots.",
@@ -636,7 +636,7 @@
     },
     {
       "id": "update-changelog-2026-09-18",
-      "url": "https://slopryno.com/updates/#echangelog-2026-09-18",
+      "url": "https://slopryno.com/updates/changelog-2026-09-18/",
       "external_url": "https://x.ai/changelog/bot",
       "title": "Bots can start a Project",
       "content_text": "A Bot can start a Project when you ask: a Cloud Agent that plans the work and runs its own agents. Link previews also show real titles for private Notion, GitHub, and Slack links.",
@@ -649,7 +649,7 @@
     },
     {
       "id": "update-2101014478255247544",
-      "url": "https://slopryno.com/updates/#e2101014478255247544",
+      "url": "https://slopryno.com/updates/2101014478255247544/",
       "external_url": "https://x.com/bot/status/2101014478255247544",
       "title": "Voice notes",
       "content_text": "Grok Bot can now send you voice notes.",
