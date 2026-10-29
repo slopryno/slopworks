@@ -6,8 +6,10 @@
 >
 > **Already decided by Ryno**, paraphrased here as the team's rules require; the Executive Assistant confirms any quote with him before it goes in the records:
 > - No posting on X by Ryno or the bots. Reach comes from visitor-initiated flows: feeds, paste-in routines, and X share links the visitor posts themselves.
-> - The domain is `slopryno.com`, set up Oct 27. HTTPS and the base-URL change are still open (Level 4).
+> - The domain is `slopryno.com`, set up Oct 27. HTTPS and the base-URL change are done via #146 (Level 4).
 > - Scoutmaster is renamed Scout, with daily code trails added (Code trails, D14).
+> - **Roster: undecided, awaits Ryno.** This plan keeps every role (and Scout); #148 proposes about 10 hats with Sketch absorbing Scoutmaster. Neither is chosen; see #148.
+> - **Held items** are labelled HELD below and are not to be queued while their hold stands.
 > - A learning lane that reads only a fixed trust list of X accounts Ryno will supply, with no searching (Learning trust, D13). Approved in principle.
 >
 > The decision list near the end marks every other item as open, and Ryno makes those calls.
@@ -98,6 +100,8 @@ Cheap fixes that count toward G1 before Nov 18. Most of this is settings and sma
 
 #### 1.1 Measure first: `data/reach.json`
 
+> **HELD:** visitor-measurement hold (Ryno, Oct 19; Oct 27: record-based proxies only, no analytics or tracking). Needs a new yes from Ryno.
+
 *Normal PR · G1*
 
 A small `scripts/reach.py` runs in the daily routine. It uses the existing `gh` login to read GitHub's traffic API (views, unique visitors, top referrer domains, popular paths) and appends daily counts. `/metrics/` then shows G1 progress. GitHub keeps only 14 days, so start logging now.
@@ -142,6 +146,8 @@ Keep the H1. Change the `<title>` and description to lead with the product, for 
 - **Done when:** The title names "Grok Bot" plus updates or known issues
 
 #### 1.6 Register with the search consoles
+
+> **HELD** as a G1 measure: visitor-measurement hold. Needs a new yes from Ryno.
 
 *Ryno action · G1*
 
@@ -311,10 +317,10 @@ Web fonts, any JavaScript, gradients and glow, live or pulsing dots, more top-na
 
 ### Decided: slopryno.com (Ryno, Oct 27)
 
-Ryno set up `slopryno.com` (DNS at Namecheap) on GitHub Pages, as recommended, with no change of host. `slopryno.github.io/slopworks/` now redirects there. The site's name stays Slopworks. Checked on Oct 27, two gaps remain:
+Ryno set up `slopryno.com` (DNS at Namecheap) on GitHub Pages, as recommended, with no change of host. `slopryno.github.io/slopworks/` now redirects there. The site's name stays Slopworks. Checked on Oct 27, two gaps remained. **Both done via #146 (Oct 27): HTTPS enforced, `site/CNAME` set, base URL is `https://slopryno.com/`.**
 
-- **No HTTPS yet.** `https://slopryno.com` doesn't answer, and the redirect sends visitors to `http://`. GitHub issues the certificate after its DNS check. Then turn on "Enforce HTTPS" in the Pages settings.
-- **The pages still point to the old address.** Every page's canonical and `og:url`, the sitemap, `robots.txt`, `llms.txt` and the feeds name `slopryno.github.io/slopworks/`, which now redirects. To search engines that's a canonical pointing at a redirect. This is now the most urgent item in the plan: checklist steps 1, 4 and 7, in one PR.
+- **(Done via #146) No HTTPS yet.** `https://slopryno.com` doesn't answer, and the redirect sends visitors to `http://`. GitHub issues the certificate after its DNS check. Then turn on "Enforce HTTPS" in the Pages settings.
+- **(Done via #146) The pages still point to the old address.** Every page's canonical and `og:url`, the sitemap, `robots.txt`, `llms.txt` and the feeds name `slopryno.github.io/slopworks/`, which now redirects. To search engines that's a canonical pointing at a redirect. This is now the most urgent item in the plan: checklist steps 1, 4 and 7, in one PR.
 
 Move hosting only if one of the triggers below fires.
 
@@ -333,14 +339,14 @@ Move hosting only if one of the triggers below fires.
 
 | Step | What | Note · status on Oct 27 |
 | --- | --- | --- |
-| 1 | One base-URL config value (Level 1.3) | **Not done. Urgent.** Point it at `https://slopryno.com/`. |
-| 2 | Set the custom domain in Pages settings and enforce HTTPS | Sites deployed by Actions ignore a `CNAME` file. GitHub then redirects `slopryno.github.io/slopworks/*` to the new domain. **Domain set and redirecting. HTTPS still pending.** |
+| 1 | One base-URL config value (Level 1.3) | **Done via #146.** |
+| 2 | Set the custom domain in Pages settings and enforce HTTPS | Sites deployed by Actions ignore a `CNAME` file. GitHub then redirects `slopryno.github.io/slopworks/*` to the new domain. **Done via #146: domain set, HTTPS enforced.** |
 | 3 | DNS: apex A/AAAA records to GitHub Pages, `www` CNAME, a CAA record, DNSSEC | Verify the domain in GitHub to block takeover. **DNS resolves to GitHub Pages. CAA, DNSSEC and GitHub domain verification not checked.** |
 | 4 | Feeds and calendar | GUIDs and ICS UIDs already don't depend on the domain. Only `home_page_url` and `feed_url` change. **Not done.** |
 | 5 | Search Console Domain property, resubmit the sitemap | The change-of-address tool needs a root-level old property, which a github.io project path isn't. Rely on the redirects and canonical tags. **Not done. Do it after step 1, so the sitemap lists the new address.** |
 | 6 | `corrections@` forwarded to the current inbox, plus `/.well-known/security.txt` | Free forwarding exists (for example Cloudflare Email Routing). Keep the old address working. **Not done.** |
 | 7 | Update README, `llms.txt`, `docs/follow.md`, the Grok Bot routine text, the standup footer, the X bio | Grep for the old host until nothing is left. The X bio is Ryno's own. **Not done.** |
-| 8 | Trial's post-deploy check covers old and new URLs | Expect a 301 from the old URL and a 200 from the new one. **The 301 works. The new URL returns 200 over HTTP only.** |
+| 8 | Trial's post-deploy check covers old and new URLs | Expect a 301 from the old URL and a 200 from the new one. **The 301 works. HTTPS enforced via #146.** |
 
 ### If hosting moves
 
@@ -511,7 +517,7 @@ From each role's file in `bots/`, its approved XP in `data/xp_ledger.json`, and 
 
 **Seen:** RPG Weeks 2 (quests) and 3 (raid) haven't started. Its first 5 XP came in the Oct 26 restart PR.
 
-**Upgrade:** Ship quests and the first raid as pages visitors can follow. Write the rules for the card binder and its achievements. Check every fun feature for ways to farm XP.
+**Upgrade (HELD: badges/missions hold):** Ship quests and the first raid as pages visitors can follow. Write the rules for the card binder and its achievements. Check every fun feature for ways to farm XP.
 
 **Measure:** Quests completed according to the records, and zero XP reversed for gaming
 
@@ -925,11 +931,15 @@ Real catches from the records, replayed as a puzzle: 27 CI catches, 14 refused P
 
 #### F2 Card binder with achievements
 
+> **HELD:** badges and missions hold (Oct 20; Oct 27: progression is ledger levels/XP only). Pitch idea only; do not schedule.
+
 *Normal PR · Goal 2*
 
 A `/team/cards/` collection built on the trading cards that already exist. Rare variants are earned by real events: a first upheld block, a week with zero reverts, 14 clean runs. It stays inside the XP pages, as voice rule 4 requires. Game Master writes the rules.
 
 #### F3 Team raids visitors can follow
+
+> **HELD:** badges and missions hold (Oct 20; Oct 27: progression is ledger levels/XP only). Pitch idea only; do not schedule.
 
 *Normal PR · Goal 2*
 
