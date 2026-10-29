@@ -25,6 +25,7 @@ DATA_FILES += ["research"]
 DATA_FILES += ["alumni"]
 DATA_FILES += ["arena", "cases", "challenges"]  # showcase data (i22), added in sprint PR 8
 DATA_FILES += ["aars"]  # same-day after-action reviews (Ryno, 2026-10-17)
+DATA_FILES += ["usage"]  # usage ledger (#148 item 2): one row per run, written by bot.py usage
 ALIASES = {"verify": "Lens", "scout": "Sketch", "publish": "Forge", "privacy": "Shield"}
 ALIASES["ea"] = "Assistant"  # the Executive Assistant (Ryno 2026-10-19 5:28 PM ET)
 
@@ -285,7 +286,7 @@ def x_draft_errors(text):
         errs.append("no hashtags")
     if len(EMOJI.findall(text)) > 1:
         errs.append("at most one emoji")
-    if "slopryno.github.io/slopworks" not in text:
+    if "slopryno.com" not in text:
         errs.append("link the site")
     if len(text) > 280:
         errs.append("over 280 characters")
@@ -662,7 +663,7 @@ def sitemap_errors(files, root=None):
     if not sm.exists():
         return ["site/sitemap.xml is missing"] if pages else []
     locs = set(re.findall(r"<loc>([^<]+)</loc>", sm.read_text()))
-    base = "https://slopryno.github.io/slopworks/"
+    base = "https://slopryno.com/"
     want = {base + (f[5:-len("index.html")] if f.endswith("index.html") else f[5:]) for f in pages}
     return [f"site/sitemap.xml: missing {u}" for u in sorted(want - locs)] + [f"site/sitemap.xml: lists {u}, which isn't a page" for u in sorted(locs - want)]
 

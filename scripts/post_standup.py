@@ -18,7 +18,7 @@ def body_for(lines):
     day = lines[0]["date"]
     rows = "\n".join(f"- **{l['role']}:** did {l['did']} · doing {l['doing']} · blockers: {l['blockers']}" for l in lines)
     return (f"Standup for {day}, generated from the run's data.\n\n{rows}\n\n"
-            "Read-only: this thread is locked. Full Team chat, pitches, and the idea log: https://slopryno.github.io/slopworks/chat/\n\n"
+            "Read-only: this thread is locked. Full Team chat, pitches, and the idea log: https://slopryno.com/chat/\n\n"
             "Unofficial, fan-built project. Not affiliated with or endorsed by Grok Bot, SpaceX, or X.")
 
 

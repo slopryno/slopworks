@@ -483,5 +483,82 @@
     "title": "In-chat app cards, payments, and Find in page",
     "summary": "Version 0.70.2 (which includes 0.69.0 to 0.70.1): connectors like Figma, Notion, and Canva can show an interactive app card in chat, Bots can pay with X Money or Stripe Link, and Cmd/Ctrl+F opens Find in page.",
     "source": "https://x.ai/changelog/bot"
+  },
+  {
+    "id": "changelog-0-75-2",
+    "date": "2026-10-22",
+    "added": "2026-10-28",
+    "added_by": "Scout",
+    "status": "confirmed",
+    "area": "app",
+    "title": "Pages, video creation, and pinned Library items",
+    "summary": "Version 0.75.2: Bots build Pages (reports, memos and dashboards you edit together or have kept up to date), create videos, and you can pin Library items.",
+    "source": "https://x.ai/changelog/bot"
+  },
+  {
+    "id": "changelog-0-75-5",
+    "date": "2026-10-23",
+    "added": "2026-10-28",
+    "added_by": "Scout",
+    "status": "confirmed",
+    "area": "app",
+    "title": "A Vault for logins, cards and contacts, and fewer approval cards",
+    "summary": "Version 0.75.5: Bots can save your logins, cards and contact info to a Vault and fill them in, and ask less often for actions you asked for yourself.",
+    "source": "https://x.ai/changelog/bot"
+  },
+  {
+    "id": "changelog-0-75-8",
+    "date": "2026-10-24",
+    "added": "2026-10-28",
+    "added_by": "Scout",
+    "status": "confirmed",
+    "area": "app",
+    "title": "Auto-review rule cards and clearer connector sign-in status",
+    "summary": "Version 0.75.8: a Bot can offer to add, change or remove an Auto-review rule on a card you confirm, and expired connector sign-ins show Authenticate.",
+    "source": "https://x.ai/changelog/bot"
+  },
+  {
+    "id": "changelog-0-77-0",
+    "date": "2026-10-26",
+    "added": "2026-10-28",
+    "added_by": "Scout",
+    "status": "confirmed",
+    "area": "app",
+    "title": "Permissions settings, Vault payments, and multi-question cards",
+    "summary": "Version 0.77.0: a Permissions section in Settings, a Vault Payments tab (you still approve every purchase), 1Password without a shared vault, and multi-question cards.",
+    "source": "https://x.ai/changelog/bot"
+  },
+  {
+    "id": "2113332983226831339",
+    "date": "2026-10-22",
+    "added": "2026-10-28",
+    "added_by": "Scout",
+    "status": "confirmed",
+    "area": "connectors",
+    "title": "Grok Bot works with your 1Password account",
+    "summary": "Grok Bot can now use your 1Password account: you approve the logins you want to share and your Bot signs in for you. It rolls out over a few days.",
+    "source": "https://x.com/bot/status/2113332983226831339"
+  },
+  {
+    "id": "2113393684209176718",
+    "date": "2026-10-22",
+    "added": "2026-10-28",
+    "added_by": "Scout",
+    "status": "confirmed",
+    "area": "app",
+    "title": "Grok Bot can use Calendar, Reminders and Contacts on your phone",
+    "summary": "Grok Bot can now use Calendar, Reminders, Contacts and more apps on your phone, rolling out on iOS and Android.",
+    "source": "https://x.com/bot/status/2113393684209176718"
+  },
+  {
+    "id": "changelog-0-78-1",
+    "date": "2026-10-27",
+    "added": "2026-10-29",
+    "added_by": "Scout",
+    "status": "confirmed",
+    "area": "app",
+    "title": "Shopping cards, order tracking, and subscription templates",
+    "summary": "Version 0.78.1 (with 0.78.0): shopping shows product cards, Bots track orders you place, Shop Pay joins the Vault, and new templates find unused subscriptions or watch renewal prices.",
+    "source": "https://x.ai/changelog/bot"
   }
 ]

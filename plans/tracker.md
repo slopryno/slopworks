@@ -233,7 +233,7 @@ Defense in layers: the bots avoid collecting it, Shield strips it, CI blocks it,
 ## Staying updated (documented in `docs/follow.md` and linked on the site)
 - **RSS/Atom feed:** `feed.xml`, generated on every publish, so any feed reader works.
 - **JSON feed:** `feed.json`, for scripts and bots.
-- **Through your own Grok Bot:** copy this into your bot to create a routine: "Every morning, read https://slopryno.github.io/slopworks/feed.json and tell me about any new Grok Bot updates or known issues since yesterday. Stay quiet if nothing's new." Later, a shareable bot template with that routine built in.
+- **Through your own Grok Bot:** copy this into your bot to create a routine: "Every morning, read https://slopryno.com/feed.json and tell me about any new Grok Bot updates or known issues since yesterday. Stay quiet if nothing's new." Later, a shareable bot template with that routine built in.
 - **GitHub:** Watch the repo for releases only. Each Monday, a release tag `weekly-YYYY-MM-DD` summarizes the week.
 - **Weekly digest page:** `site/weekly/` keeps a permanent page for each week.
 

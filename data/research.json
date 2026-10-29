@@ -734,7 +734,7 @@
     ],
     "evidence": [
       "https://github.com/slopryno/slopworks/actions?query=is%3Afailure",
-      "https://slopryno.github.io/slopworks/lessons/"
+      "https://slopryno.com/lessons/"
     ],
     "existing_work": "review-gate, the path rule, the chat future-time check, and the AAR checks",
     "opportunity": "scripts/bot.py (branch, pr, chat, count) plus strict loaders in build.py; then cut the prose those enforce",
@@ -798,7 +798,7 @@
     ],
     "evidence": [
       "https://github.com/slopryno/slopworks/actions?query=is%3Afailure",
-      "https://slopryno.github.io/slopworks/lessons/"
+      "https://slopryno.com/lessons/"
     ],
     "existing_work": "Atlas and Critic reports",
     "opportunity": "Four PRs: audit, helper, loaders and drift tests, trim",
@@ -831,7 +831,7 @@
     ],
     "evidence": [
       "https://www.w3.org/TR/WCAG22/#target-size-enhanced",
-      "https://slopryno.github.io/slopworks/"
+      "https://slopryno.com/"
     ],
     "existing_work": "i11 mobile nav fix (#24), d4 contrast test, the CSS-only filters (#33)",
     "opportunity": "Simpler nav and hubs, a sharper landing page, mobile-first CSS, and a 360 px check in CI",
@@ -997,6 +997,77 @@
     "evidence": [
       "https://x.ai/changelog/bot",
       "https://docs.x.ai/grok-bot/get-started"
+    ]
+  },
+  {
+    "id": "r-shield-2026-10-28-push-protection",
+    "date": "2026-10-28",
+    "role": "Shield",
+    "kind": "rotation",
+    "confidence": "high",
+    "status": "verified",
+    "fresh_until": "2026-11-28",
+    "question": "Does the public repo block secrets before they land, or only alert after?",
+    "outcome": "no-change",
+    "finding": "Push protection is on for slopworks along with secret scanning and Dependabot security updates, so a pushed token is blocked before it reaches history. Nothing to change; the check.py privacy gates still cover personal data, which push protection doesn't.",
+    "facts": [
+      "GitHub docs: repository push protection blocks pushes containing detected secrets and is off by default.",
+      "GitHub docs: bypasses with 'I'll fix it later' leave an open alert; other reasons close it.",
+      "The repo's security settings (GitHub API, Oct 28) show secret scanning and push protection enabled; non-provider patterns and validity checks are off."
+    ],
+    "inferences": [
+      "Non-provider patterns being off means generic keys may slip through; low risk while the site has no keys at all.",
+      "Push protection does not look for personal data, so Shield's own strips stay the only guard there."
+    ],
+    "evidence": [
+      "https://docs.github.com/en/code-security/secret-scanning/introduction/about-push-protection"
+    ]
+  },
+  {
+    "id": "r-trial-2026-10-28-cname",
+    "date": "2026-10-28",
+    "role": "Trial",
+    "kind": "rotation",
+    "confidence": "high",
+    "status": "verified",
+    "fresh_until": "2026-11-28",
+    "question": "After the move to slopryno.com, what actually keeps the custom domain working, and does any test watch it?",
+    "outcome": "finding",
+    "finding": "Our Pages deploy runs from a workflow, and GitHub ignores a CNAME file in that case; the domain lives in the repo's Pages settings. site/CNAME is harmless, but no check or test watches the real setting. Pitch for standup: post-deploy asserts the Pages domain and an HTTPS 200 on slopryno.com.",
+    "facts": [
+      "GitHub docs: when publishing from a custom GitHub Actions workflow, any CNAME file is ignored and not required.",
+      "pages.yml deploys with upload-pages-artifact and deploy-pages; the Pages API reports build_type workflow, cname slopryno.com, https_enforced true.",
+      "No match for CNAME in scripts/check.py or tests/ (grep, Oct 28)."
+    ],
+    "inferences": [
+      "The 'keep site/CNAME' rule guards nothing on its own; a settings change would drop the domain silently.",
+      "A plain-http redirect test can't run from the box: port 80 times out there for every site (example.com too), so it isn't a site fault."
+    ],
+    "evidence": [
+      "https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/troubleshooting-custom-domains-and-github-pages"
+    ]
+  },
+  {
+    "id": "r-critic-2026-10-28-premortem",
+    "date": "2026-10-28",
+    "role": "Critic",
+    "kind": "rotation",
+    "confidence": "medium",
+    "status": "reported",
+    "fresh_until": "2026-11-28",
+    "question": "What cheap habit catches the reasons a small product bet fails before it is built?",
+    "outcome": "finding",
+    "finding": "A premortem asks the team to assume the plan already failed and list why, which makes doubts easy to raise. Our huddles collect concerns but don't ask that question. Idea for standup: one premortem line from each role on the two small builds Ryno approved today (#148 W44, #149 W45).",
+    "facts": [
+      "HBR (Klein, 2007): in a premortem, team members assume the project has just failed and generate plausible reasons for it.",
+      "The same summary says projects fail partly because people hesitate to voice reservations during planning."
+    ],
+    "inferences": [
+      "Only the summary was readable, so this rests on the idea, not the full method.",
+      "The i62/i63 huddles already logged Shield, Critic, Lens and Gamemaster concerns, so the gain is small; worth trying once and keeping only if it finds something new."
+    ],
+    "evidence": [
+      "https://hbr.org/2007/09/performing-a-project-premortem"
     ]
   }
 ]
