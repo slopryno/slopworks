@@ -99,7 +99,7 @@
       },
       "evidence": {
         "type": "string",
-        "pattern": "^https://(github\\.com/slopryno/slopworks/pull/\\d+(#issuecomment-\\d+)?|slopryno\\.github\\.io/slopworks/[\\w/.-]*#[\\w-]+)$"
+        "pattern": "^https://(github\\.com/slopryno/slopworks/pull/\\d+(#issuecomment-\\d+)?|slopryno\\.com/[\\w/.-]*#[\\w-]+)$"
       },
       "timestamp": {
         "type": "string",

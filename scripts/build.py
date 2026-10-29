@@ -10,7 +10,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 SITE = ROOT / "site"
-BASE = "https://slopryno.github.io/slopworks/"
+BASE = "https://slopryno.com/"
 REPO = "https://github.com/slopryno/slopworks"
 CREDIT = "Built and designed by Grok Bots. Reviewed and merged by bots; steered by a human CEO (Ryno)."
 DISCLAIMER = "Unofficial, fan-built project. Not affiliated with or endorsed by Grok Bot, SpaceX, or X."
@@ -300,6 +300,8 @@ def page(slug, title, lede, body, source, h1=None):
 <meta name="twitter:title" content="{e(full)}">
 <meta name="twitter:description" content="{e(desc)}">
 <link rel="icon" href="{up}assets/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#F6F5F1" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#141418" media="(prefers-color-scheme: dark)">
 <link rel="stylesheet" href="{up}style.css">
 <link rel="alternate" type="application/rss+xml" title="Slopworks" href="{up}feed.xml">
 <link rel="alternate" type="application/feed+json" title="Slopworks" href="{up}feed.json">
@@ -606,7 +608,7 @@ def build():
     more = ' <a href="#archive">Older items are in the archive.</a>' if parts else ""
     msec = sections(mu, "../", "chat/", "Nothing here yet. New items appear after the next daily run.")
     msec = msec.replace('<h2 id="ideas">Ideas</h2>', '<h2 id="ideas">Ideas</h2>' + iintro[:-4] + more + "</p>", 1).replace('<h2 id="research">Research</h2>', '<h2 id="research">Research</h2>' + rintro[:-4] + more + "</p>", 1)
-    fl = '<p>Follow Team chat: <a href="../chat.xml">RSS</a>, <a href="../chat.json">JSON</a>. </p><details class="routine"><summary>Follow it with your own Grok Bot</summary><p>Paste this into a routine:</p><blockquote class="card"><p>Every morning, read https://slopryno.github.io/slopworks/chat.json and tell me about new pitches, decisions, and any debate between the Slopworks bots since yesterday: who pitched what, who pushed back, and what Coordinator decided and why. Stay quiet if nothing\'s new.</p></blockquote></details>'
+    fl = '<p>Follow Team chat: <a href="../chat.xml">RSS</a>, <a href="../chat.json">JSON</a>. </p><details class="routine"><summary>Follow it with your own Grok Bot</summary><p>Paste this into a routine:</p><blockquote class="card"><p>Every morning, read https://slopryno.com/chat.json and tell me about new pitches, decisions, and any debate between the Slopworks bots since yesterday: who pitched what, who pushed back, and what Coordinator decided and why. Stay quiet if nothing\'s new.</p></blockquote></details>'
     fl = '<nav class="jump" aria-label="On this page"><a href="#standup">Standup</a><a href="#ideas">Ideas</a><a href="#research">Research</a><a href="#handoffs">Handoffs</a>' + ('<a href="#archive">Archive</a>' if parts else "") + '</nav>' + fl
     files["chat/index.html"] = page("chat/", "Team chat", "The real handoffs between roles, newest first. Nothing is staged, and it never quotes readers or names anyone outside the team.", fl + sbody + msec + arch_list, "data/chat.json")
     url = lambda i: loc.get(i, "chat/") + "#" + i
@@ -1124,6 +1126,14 @@ def build():
     files["badges/issues.svg"] = badge("open issues", n_open, "#7d4e00" if n_open else "#116329")
     files["badges/last-run.svg"] = badge("last run", f'{last_run["date"]} {last_run["status"]}' if last_run else "none", "#116329" if last_run and last_run["status"] == "ok" else "#7d4e00")
     files["badges/roles.svg"] = badge("bot roles", len(team()), "#8250df")
+    # Not-found page (#149 Level 1): GitHub Pages serves site/404.html at any depth, so <base> points its relative links at
+    # the site root. Missing URLs get it with HTTP 404, which search engines don't index. check.py lists every page in the
+    # sitemap, so it's there too; it isn't a section page, so it stays out of llms.txt.
+    files["404.html"] = page("404.html", "Page not found", "That page isn't here. The link may be mistyped, or the page may never have existed.",
+                             '<p>Every page the site has published keeps its address. Try one of these:</p><ul>'
+                             + "".join(f'<li><a href="{s}">{e(t)}</a></li>' for s, t in [("", "Home"), ("updates/", "What's new in Grok Bot"), ("issues/", "Known issues"), ("work/", "The team's work"), ("team/", "The team")])
+                             + f'</ul><p>Followed a broken link from this site? <a href="mailto:{CORRECTIONS}">Tell us</a> and we\'ll fix it.</p>', "scripts/build.py"
+                             ).replace("<head>\n", f'<head>\n<base href="{BASE}">\n', 1).replace('<a class="skip" href="#main">', '<a class="skip" href="404.html#main">', 1)  # <base> would send #main to the home page
     # Comms (i28): sitemap, robots.txt, and llms.txt come from the same page list, so they can't drift (Atlas, c108).
     pages = sorted(k for k in files if k.endswith(".html"))
     loc = lambda k: BASE + (k[:-len("index.html")] if k.endswith("index.html") else k)
@@ -1131,6 +1141,7 @@ def build():
                             + "".join(f"<url><loc>{e(loc(k))}</loc></url>\n" for k in pages) + "</urlset>\n")
     files["robots.txt"] = f"User-agent: *\nAllow: /\nSitemap: {BASE}sitemap.xml\n"
     main_pages = [("", "Home"), ("work/", "Work"), ("hood/", "Under the hood")] + [p for p in NAV if p[0]] + OPS + [("lessons/", "Lessons")] * ("lessons/" not in dict(NAV)) + [("team/xp/", "How XP works")]
+    main_pages = list(dict.fromkeys(main_pages))  # How this works is in both NAV and OPS; list each page once (#149 Level 1)
     files["llms.txt"] = ("# Slopworks\n\n> " + DESCRIPTIONS[""] + " " + DISCLAIMER + "\n\n"
         "Slopworks tracks public Grok Bot updates and known issues, and shows how its bot team works: research rounds, decisions, case files, and after-action reviews. "
         "Every role is played by one daily routine and labeled as a role. Demo challenges are labeled Demo and are worked examples on fictional briefs, not advice or quotes. "

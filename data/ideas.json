@@ -1650,5 +1650,141 @@
       "reversibility": 5
     },
     "librarian_checked": true
+  },
+  {
+    "id": "i62",
+    "date": "2026-10-27",
+    "by": "CEO",
+    "source": "ceo",
+    "short_title": "Team growth research into roadmap",
+    "problem": "Review PR #148 (team growth research: ~10 hats, a usage meter, a missed-run heartbeat, risk-tiered review, drift guards, draft mission and goals) and work it into the roadmap",
+    "helps": "Ryno and every role: missed runs and usage become visible, and the roadmap gets an ordered, checked list of growth work",
+    "effort": "L",
+    "builder": "Sweep",
+    "state": "advised",
+    "ref": "https://github.com/slopryno/slopworks/pull/148",
+    "comments": [
+      {
+        "date": "2026-10-28",
+        "role": "Strategy",
+        "stance": "support",
+        "text": "Heartbeat and the usage meter come first: they make the Oct 22-26 kind of gap visible at almost no cost. Roster changes wait until a month of meter data exists."
+      },
+      {
+        "date": "2026-10-28",
+        "role": "Atlas",
+        "stance": "support",
+        "text": "Merging the doc as a record has no blast radius. The heartbeat workflow and the meter in bot.py are shared paths, so each gets its own blast note."
+      },
+      {
+        "date": "2026-10-28",
+        "role": "Shield",
+        "stance": "concern",
+        "text": "Risk-tiered review and a single-session reviewer loosen review-gate, so they need Ryno's yes. Retiring X-draft duties and the bug-report search fits the no-post and trust-list rules."
+      },
+      {
+        "date": "2026-10-28",
+        "role": "Trial",
+        "stance": "support",
+        "text": "Testable in small slices: a heartbeat test that a missed slot shows up, and an append-only meter with a schema test. No test gets weaker."
+      },
+      {
+        "date": "2026-10-28",
+        "role": "Sweep",
+        "stance": "support",
+        "text": "Budget: the heartbeat needs no model tokens and the meter is a log line per run. The XP ledger rollup is the real risk: the tree is about 82% of the 4 MB budget."
+      },
+      {
+        "date": "2026-10-28",
+        "role": "Critic",
+        "stance": "concern",
+        "text": "Cutting to ~10 hats hides the cast that is the showcase (goal 2). If it happens, keep every character on the site and make some hats part-time."
+      }
+    ],
+    "recommendation": "smaller",
+    "pros": "Turns a missed run into a visible record, meters usage from real data, and gives the roadmap an ordered list with Ryno's decisions marked. Docs-only merge is safe; nothing in it is in force.",
+    "cons": "The full table is 15 items and several reshape the team or its review rules, which would crowd out the prototype B-queue if taken whole.",
+    "concerns": "Review-gate changes, the roster shrink, moving XP rules and any visitor measurement each need Ryno's yes. Roster shrink conflicts with #149's keep-Scout plan. Tree size limits the ledger rollup.",
+    "target_sprint": "W44",
+    "reason": "Huddle on Oct 28 (c422 to c429). Advice: smaller. Ryno merges #148 as a research record; heartbeat, then the usage meter, follow the B-queue in W44 or W45. Everything else waits for Ryno's call. Not unanimous, so Ryno decides."
+  },
+  {
+    "id": "i63",
+    "date": "2026-10-27",
+    "by": "CEO",
+    "source": "ceo",
+    "short_title": "Level-up plan into roadmap",
+    "problem": "Review draft PR #149 (level-up plan: tracker item pages, SEO fixes, Scout trails, quests and pulse signals, with decisions D1 to D14) and work it into the roadmap",
+    "helps": "Visitors who find the tracker through search, and Ryno, who gets a numbered decision list instead of a long draft",
+    "effort": "L",
+    "builder": "Sketch",
+    "state": "advised",
+    "ref": "https://github.com/slopryno/slopworks/pull/149",
+    "comments": [
+      {
+        "date": "2026-10-28",
+        "role": "Lens",
+        "stance": "concern",
+        "text": "Two edits before it can be a record: the Level 4 status line predates #146 (slopryno.com is live now), and it needs a short section on where it conflicts with standing decisions. Sign-offs go on that head."
+      },
+      {
+        "date": "2026-10-28",
+        "role": "Gamemaster",
+        "stance": "concern",
+        "text": "Quests, raids and the card binder need the badges and missions hold lifted. Until then progression stays ledger XP only."
+      },
+      {
+        "date": "2026-10-28",
+        "role": "Analyst",
+        "stance": "concern",
+        "text": "reach.json and Search Console conflict with the visitor-measurement hold and the no-analytics call from the prototype review. Record-based proxies only, unless Ryno lifts it."
+      },
+      {
+        "date": "2026-10-28",
+        "role": "Comms",
+        "stance": "support",
+        "text": "D1 (home title) and D2 (tracker in the nav) are small, plain wins for search. Wording in the draft is clear."
+      },
+      {
+        "date": "2026-10-28",
+        "role": "Strategy",
+        "stance": "support",
+        "text": "Tracker item pages are the best front door for goal 1. Queue them after the B-queue, without reach.json."
+      }
+    ],
+    "recommendation": "smaller",
+    "pros": "Gives search visitors a page per tracker item, small SEO fixes, and a numbered list of decisions for Ryno. Most of Level 2 is additive and static.",
+    "cons": "At 1,100 lines it mixes approved, held and new work; read as a schedule it would restart held badge and measurement work.",
+    "concerns": "Stale Level 4 status after #146; conflicts with the Oct 19 visitor hold, held badges and the #148 roster plan. D1, D2, D4 to D12 each need a yes or no.",
+    "target_sprint": "W45",
+    "reason": "Huddle on Oct 28 (c430 to c436). Advice: smaller. Fix the two Blocking points, then merge as a draft record; tracker item pages and the D1/D2 fixes in W45; Scout trails only if Ryno keeps Scout. Holds stay. Not unanimous, so Ryno decides."
+  },
+  {
+    "id": "i64",
+    "date": "2026-10-27",
+    "by": "CEO",
+    "source": "ceo",
+    "short_title": "Prototype brief: improve the live site",
+    "problem": "The prototype brief needed one answer: rebuild from the retired /prototype/ page, or improve the live site",
+    "helps": "Ryno and every role: one recorded answer on how the brief applies, so held work and retired pages don't come back by accident",
+    "effort": "S",
+    "builder": "Librarian",
+    "state": "shipped",
+    "comments": [],
+    "decided": "2026-10-27",
+    "decided_by": "CEO",
+    "target_sprint": "W44",
+    "ref": "https://github.com/slopryno/slopworks/pull/161",
+    "librarian_checked": true,
+    "reason": "CEO approved the team's review of the prototype brief (Oct 27, 7:57 PM ET, Grok Bot chat): improve the live site in small steps, /prototype/ stays retired (i40, i41); keep charcoal #141418; ledger XP and levels only, badges and missions stay held; no brief wording on the site; record-based measures only, no analytics. B1 shipped in #161; this is B2; B3 optional.",
+    "acceptance_criteria": [
+      "/prototype/ stays a 404 and no site/prototype/ returns on main",
+      "The site background stays #141418",
+      "No badge or mission rollout ships without a new CEO yes",
+      "No CEO quote or brief wording on built pages (check.py repo)",
+      "No analytics, pixels or tracking scripts on any page"
+    ],
+    "acceptance_verified_by": "Trial",
+    "shipped": "#162: the decision is recorded as i64 (its hex typo fixed to #141418 on Oct 29); Trial checked all five criteria live on Oct 29"
   }
 ]
