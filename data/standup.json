@@ -190,5 +190,53 @@
     "did": "Evening wrap: 5 merges on Oct 27, all green",
     "doing": "Logging this run in runs.json",
     "blockers": "Ryno's call on an AAR for the Oct 22-26 outage"
+  },
+  {
+    "id": "s-2026-10-29-coordinator",
+    "date": "2026-10-29",
+    "role": "Coordinator",
+    "did": "Queued Thursday's slots: #155 with ops extra #154",
+    "doing": "8:30 AM slot runs #155 and #154; then #156 to #159",
+    "blockers": "#159 needs Ryno's CODEOWNERS review"
+  },
+  {
+    "id": "s-2026-10-29-scout",
+    "date": "2026-10-29",
+    "role": "Scout",
+    "did": "Read the changelog and one @bot search: 0.78.1 is new",
+    "doing": "Next scan at 4:45 AM ET tomorrow",
+    "blockers": "none"
+  },
+  {
+    "id": "s-2026-10-29-lens",
+    "date": "2026-10-29",
+    "role": "Lens",
+    "did": "Verified 0.78.1 against the changelog",
+    "doing": "Sign-off on this data PR; 4 open issues stay open",
+    "blockers": "none"
+  },
+  {
+    "id": "s-2026-10-29-librarian",
+    "date": "2026-10-29",
+    "role": "Librarian",
+    "did": "Recorded the prototype-brief decision as i64 (#162)",
+    "doing": "Fixed the i64 hex typo to #141418",
+    "blockers": "none"
+  },
+  {
+    "id": "s-2026-10-29-trial",
+    "date": "2026-10-29",
+    "role": "Trial",
+    "did": "Post-deploy check on Oct 28's eight merges, all live",
+    "doing": "Checked i64's criteria and closed it as shipped",
+    "blockers": "none"
+  },
+  {
+    "id": "s-2026-10-29-sweep",
+    "date": "2026-10-29",
+    "role": "Sweep",
+    "did": "Evening wrap: 8 merges on Oct 28, all green",
+    "doing": "Records refresh through #163 in this PR",
+    "blockers": "Heartbeat's first scheduled run is unconfirmed"
   }
 ]
