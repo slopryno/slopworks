@@ -19,6 +19,9 @@
                                     finish an interrupted pr run: takes the same lock, posts only missing comments (i59)
   bot.py blast-check --pr N --by Trial|Lens --result matched|bigger|smaller "what happened"
                                     after merge: compare Atlas's prediction on PR N with what happened (data/blast_checks.json)
+  bot.py usage --model ID --started HH:MM [--run ID] [--tokens-in N] [--tokens-out N] [--note T]
+                                    at the end of a run: one row in data/usage.json with its model, minutes since it
+                                    started (ET) and PRs merged today, so the bill can be measured (#148 item 2)
 
 CI stays the backstop (review-gate, path rule, guardrail-gate). This helper only makes the right path the easy one.
 """
@@ -412,6 +415,29 @@ def new_chat(chat, ideas, frm, to, text, reply_to=None, idea=None, now=None):
     return msg
 
 
+def new_usage(rows, model, started, merged, run=None, tokens_in=None, tokens_out=None, note=None, now=None):
+    """A usage ledger row: minutes from the run's ET start time to now, PRs merged today (ET), checked first."""
+    now = now or datetime.datetime.now(ET)
+    day = now.strftime("%Y-%m-%d")
+    try:
+        h, m = (int(x) for x in started.split(":"))
+        start = now.replace(hour=h, minute=m, second=0, microsecond=0)
+    except ValueError:
+        raise Refused(f"--started must be HH:MM ET, not {started!r}")
+    if start > now:
+        raise Refused(f"--started {started} is later than now ({now.strftime('%H:%M')} ET); a run can't start in the future")
+    row = {"id": run or f"{day}-daily", "date": day, "model": model, "started": started,
+           "minutes": int((now - start).total_seconds() // 60), "prs_merged": sum(p["merged"][:10] == day for p in merged)}
+    row.update({k: v for k, v in (("tokens_in", tokens_in), ("tokens_out", tokens_out), ("note", note)) if v is not None})
+    errs = check.validate([row], check.load_schema("usage"))  # the validator has no minimum, so counts are checked here
+    errs += [f"--{k.replace('_', '-')} can't be negative" for k in ("tokens_in", "tokens_out") if row.get(k, 0) < 0]
+    if any(r["id"] == row["id"] for r in rows):
+        errs.append(f"data/usage.json already has a row for {row['id']}")
+    if errs:
+        raise Refused("; ".join(errs))
+    return row
+
+
 def count(path, pattern=None):
     p = Path(path)
     if pattern:
@@ -556,6 +582,8 @@ def main(argv=None):
     u.add_argument("--blast"); u.add_argument("--merge", action="store_true")
     k = sub.add_parser("blast-check"); k.add_argument("--pr", type=int, required=True); k.add_argument("--by", required=True)
     k.add_argument("--result", required=True, choices=check.BLAST_RESULTS); k.add_argument("note")
+    g = sub.add_parser("usage"); g.add_argument("--model", required=True); g.add_argument("--started", required=True)
+    g.add_argument("--run"); g.add_argument("--tokens-in", type=int); g.add_argument("--tokens-out", type=int); g.add_argument("--note")
     a = p.parse_args(argv)
     sys.stdout.reconfigure(line_buffering=True)  # a quiet log looked like a dead run once (aar-2026-10-18-signoff-doubles)
     try:
@@ -589,6 +617,12 @@ def main(argv=None):
                                     pr["state"] == "MERGED", datetime.datetime.now(ET))
             f.write_text(json.dumps(checks + [entry], indent=2, ensure_ascii=False) + "\n")
             print(f"PR {a.pr}: Atlas said {entry['predicted']}, {entry['by']} says {entry['result']}")
+        elif a.cmd == "usage":
+            f = ROOT / "data/usage.json"
+            rows = json.loads(f.read_text())
+            row = new_usage(rows, a.model, a.started, merged_now(), a.run, a.tokens_in, a.tokens_out, a.note)
+            f.write_text(json.dumps(rows + [row], indent=2, ensure_ascii=False) + "\n")
+            print(f"{row['id']}: {row['model']}, {row['minutes']} min, {row['prs_merged']} PRs merged today")
     except Refused as e:
         if a.cmd in ("pr", "resume"):
             log_refusal(ROOT / "data/refusals.json", git("rev-parse", "--abbrev-ref", "HEAD").strip(), str(e), datetime.datetime.now(ET))
