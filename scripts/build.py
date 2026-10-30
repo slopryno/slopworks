@@ -352,6 +352,20 @@ def entry_card(x, issue=False):
             f'<a href="{e(x["source"])}">source</a><a href="{e(x["id"])}/" aria-label="Details on {e(x["title"])}">details</a><span>added {x["added"]} by {e(x["added_by"])}</span></p></article>')
 
 
+
+def receipt(problem, result, limits, source_html, review=None):
+    """Shareable build receipt (Polish UX depth): problem / result / limits / source, from records only.
+    Optional review line (who checked / which PR) when the record carries it. No invented 'useful' claim."""
+    rev = f'<div><dt>Review</dt><dd>{review}</dd></div>' if review else ""
+    return (f'<aside class="receipt" aria-label="Receipt"><p class="kicker">Receipt</p><dl>'
+            f'<div><dt>Problem</dt><dd>{problem}</dd></div>'
+            f'<div><dt>Result</dt><dd>{result}</dd></div>'
+            f'<div><dt>Limits</dt><dd>{limits}</dd></div>'
+            f'{rev}'
+            f'<div><dt>Source</dt><dd>{source_html}</dd></div>'
+            f'</dl></aside>')
+
+
 def item_modified(x, issue=False):
     """Newest date the record itself carries: added, or the fix date for a fixed issue."""
     return max(d for d in (x["added"], x.get("fixed_date") if issue else None) if d)
@@ -375,11 +389,19 @@ def item_page(x, issue, related):
     meaning = ("Confirmed means it comes from an official account or the docs." if x["status"] == "confirmed"
                else "Reported means a community post, not yet confirmed by an official account or the docs.")
     more = "".join(f'<li><a href="../{e(r["id"])}/">{e(r["title"])}</a></li>' for r in related)
+    # Receipt maps record fields only (Polish UX depth): no invented usefulness claim.
+    if issue:
+        result = f'{e(x["status"].capitalize())} · state {e(x["state"])}' + (f' since {day(x["fixed_date"])}' if x.get("fixed_date") else "")
+        limits = meaning + (" Workaround is community-reported." if x.get("workaround") else "")
+    else:
+        result = f'{e(x["status"].capitalize())}: {e(x["summary"])}'
+        limits = meaning
+    src = f'<a itemprop="isBasedOn" href="{e(x["source"])}">The public source</a>, dated {day(x["date"])}'
+    review = f'Added {day(x["added"])} by {e(x["added_by"])}. <a href="../../how/">How entries are checked</a>'
     body = (f'<meta itemprop="headline" content="{e(x["title"])}"><meta itemprop="datePublished" content="{x["date"]}">'
             f'<meta itemprop="dateModified" content="{item_modified(x, issue)}">'
             f'<p>{e(x["summary"])}</p>{facts}'
-            f'<h2>Where this comes from</h2><p><a itemprop="isBasedOn" href="{e(x["source"])}">The public source</a>, dated {day(x["date"])}. {meaning}</p>'
-            f'<p>Added {day(x["added"])} by {e(x["added_by"])}. <a href="../../how/">How the team checks entries</a></p>'
+            + receipt(e(x["title"]), result, limits, src, review)
             + (f'<h2>More in {e(x["area"])}</h2><ul>{more}</ul>' if more else "")
             + f'<p class="next"><a class="more" href="../">All {"known issues" if issue else "updates"}</a></p>')
     return page(item_slug(x, issue), x["title"], lede, body, f'data/{"issues" if issue else "updates"}.json',
@@ -1042,8 +1064,14 @@ def build():
             ks = x["children"]
             kids = (f'<details><summary>{len(ks)} merged {"PR" if len(ks) == 1 else "PRs"}</summary><ul class="tl-prs">'
                     + "".join(f'<li><a href="{e(k["link"](up))}">{e(k["cue"])}</a> {e(k["title"])}{" <span class=meta>" + e(k["who"]) + "</span>" if k.get("who") else ""}</li>' for k in ks) + "</ul></details>")
+        # Receipt from the Timeline record only: problem=title, result=tag (+ PR count), limits=honest scope, source=cue link.
+        n_kids = len(x.get("children") or [])
+        result = tag + (f' · {n_kids} merged PR{"s" if n_kids != 1 else ""}' if n_kids else "")
+        limits = "From the records when this page was built. Not a live claim."
+        src = f'<a href="{e(x["link"](up))}">{e(x["cue"])}</a>'
+        rec = receipt(e(x["title"]), e(result), limits, src)
         return (f'<li class="tl-item{" tl-mile" if "milestone" in x["types"] else ""}" id="{e(x["id"])}" data-type="{" ".join(x["types"])}">'
-                f'<p class="hd"><span class="tag">{e(tag)}</span>{lbl} {tm}{who}</p><p class="tl-title">{e(x["title"])} <a href="{e(x["link"](up))}">{e(x["cue"])}</a></p>{body}{kids}</li>')
+                f'<p class="hd"><span class="tag">{e(tag)}</span>{lbl} {tm}{who}</p><p class="tl-title">{e(x["title"])} <a href="{e(x["link"](up))}">{e(x["cue"])}</a></p>{body}{kids}{rec}</li>')
     TL_NAMES = {"shipped": "Shipped", "milestone": "Milestone", "decision": "Decision", "team": "Team", "research": "Research", "case": "Case file", "lesson": "Lesson"}
     DAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
     MON = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]

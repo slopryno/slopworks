@@ -277,7 +277,7 @@
     },
     {
       "id": "research-r-trial-2026-10-28-cname",
-      "url": "https://slopryno.com/chat/archive/2026-10-19.html#r-trial-2026-10-28-cname",
+      "url": "https://slopryno.com/chat/archive/2026-10-20.html#r-trial-2026-10-28-cname",
       "title": "Research (Trial): After the move to slopryno.com, what actually keeps the custom domain working, and does any test watch it?",
       "content_text": "Our Pages deploy runs from a workflow, and GitHub ignores a CNAME file in that case; the domain lives in the repo's Pages settings. site/CNAME is harmless, but no check or test watches the real setting. Pitch for standup: post-deploy asserts the Pages domain and an HTTPS 200 on slopryno.com.",
       "date_published": "2026-10-28T12:00:00+00:00",
