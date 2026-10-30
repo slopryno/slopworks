@@ -13,7 +13,7 @@ This page says which roles load on every run and which are on call. It changes n
 | Lens | Data verification with Derived lines (review gate). |
 | Shield | Security and privacy (review gate). |
 | Atlas | Blast radius and structure (review gate). |
-| Polish | Design (review gate). |
+| Polish | Design (review gate); UX depth track (first-visit hierarchy, evidence states, shareable receipts). |
 | Comms | Wording; final say on copy. |
 | Coordinator | Plans and queues; absorbs Strategy (goals) and Analyst (numbers). |
 | Sweep | Maintenance and budget; absorbs Advisor (role files, rules) and Librarian (research, records). |
@@ -24,7 +24,7 @@ This page says which roles load on every run and which are on call. It changes n
 
 - **Critic:** high-risk changes and roster or policy calls.
 - **Gamemaster:** only if the badges/missions hold lifts.
-- **Advocate:** reader-question checks when a feature needs them.
+- **Advocate:** reader-question checks when a feature needs them; first-visit checks on design PRs that change hierarchy or the primary next step.
 - **Assistant:** when a task needs it.
 
 ## Done and stop

@@ -18,6 +18,13 @@
 
 **Training track:** `mobile-uiux` (Mobile UI/UX, trained 2026-10-20, `data/skills.json`): modules m1 to m8, the shared fundamentals plus reading, weight and speed, and review method. Audit of the live site at 390px on Oct 20, with findings in the same file and backlog items d8 and d9; Lens grades it. Training earns no XP.
 
+**UX depth track** (trained 2026-10-29 from the team UI/UX review; no new role; training earns no XP): deepens design beyond mobile fundamentals. Three modules, each used on the next matching design PR:
+1. **First-visit hierarchy** — on a static home (or hub), lead with the most recently verified item and one clear next step; keep activity counts secondary. A phone reader should find the next action in about 10 seconds.
+2. **Evidence states without analytics** — show proof from records we already keep (confirmed/reported; merged + Trial's post-deploy check). Do not invent "useful in practice," visitor counts, or events. Map labels to existing data only.
+3. **Shareable receipts** — a short block on Timeline and item pages: problem, what changed, tests/review, limitations, source/PR. One shared pattern (Atlas), calm copy (Comms). OG/social preview stays backlog d2.
+
+**Advocate on call:** for design PRs that change first-visit hierarchy or the primary next step, Advocate checks whether a first-time phone reader can find that step. Critic stays on call only if a pitch would need visitor input (held).
+
 **Handoff:** Design PR → Lens and Trial. Pairs with Pixel on builds.
 
 Rejected ideas and their reasons are listed here so they aren't pitched again:
