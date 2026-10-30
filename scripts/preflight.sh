@@ -6,6 +6,18 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
 
+
+# Install the commit-msg hook that strips blocked Co-authored-by trailers (Ryno, 2026-10-30, t283u).
+HOOK_SRC="$ROOT/scripts/hooks/commit-msg"
+if [[ -f "$HOOK_SRC" ]]; then
+  HOOK_DIR="$(git rev-parse --git-path hooks 2>/dev/null || echo "$ROOT/.git/hooks")"
+  mkdir -p "$HOOK_DIR"
+  # Copy so worktrees and the main clone share the same strip behavior.
+  cp "$HOOK_SRC" "$HOOK_DIR/commit-msg"
+  chmod +x "$HOOK_DIR/commit-msg"
+  echo "hooks: installed commit-msg (strip blocked Co-authored-by trailers)"
+fi
+
 # Chrome for Testing on the team box (optional). Leave PATH alone on a normal laptop.
 if [[ -d /workspace/tools/bin ]]; then
   export PATH="/workspace/tools/bin:${PATH}"

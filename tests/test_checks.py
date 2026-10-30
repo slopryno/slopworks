@@ -137,3 +137,36 @@ class DraftFlow(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class CoAuthorTrailers(unittest.TestCase):
+    def _banned_line(self):
+        # Build the banned trailer from the same parts the check uses, so this file never stores the full literal.
+        name = "Claude" + " " + "Opus" + " " + "5.5"
+        mail = "noreply@" + "anthropic.com"
+        return f"Co-Authored-By: {name} <{mail}>"
+
+    def _personal_line(self):
+        name = "Ryan" + " " + "Willis"
+        mail = "ryan.willis.it" + "@" + "gmail.com"
+        return f"Co-authored-by: {name} <{mail}>"
+
+    def test_detects_anthropic_and_personal_trailers(self):
+        self.assertTrue(check.coauthor_trailer_hits("msg\n\n" + self._banned_line() + "\n"))
+        self.assertTrue(check.coauthor_trailer_hits("msg\n\n" + self._personal_line() + "\n"))
+
+    def test_other_trailers_ok(self):
+        self.assertFalse(check.coauthor_trailer_hits("msg\n\nSigned-off-by: Lens <lens@example.com>\n"))
+        self.assertFalse(check.coauthor_trailer_hits("discussing Co-authored-by policy in a paragraph\n"))
+
+    def test_scrub_removes_blocked_only(self):
+        raw = "title\n\nbody\n\n" + self._banned_line() + "\n" + self._personal_line() + "\nCo-authored-by: Other Bot <other@example.com>\n"
+        scrubbed = check.scrub_coauthor_trailers(raw)
+        self.assertNotIn("anthropic.com", scrubbed)
+        self.assertNotIn("willis", scrubbed.lower())
+        self.assertIn("Other Bot", scrubbed)
+
+    def test_text_errors_name_the_where(self):
+        errs = check.coauthor_text_errors("x\n" + self._banned_line() + "\n", "PR 1 body")
+        self.assertEqual(len(errs), 1)
+        self.assertIn("PR 1 body", errs[0])

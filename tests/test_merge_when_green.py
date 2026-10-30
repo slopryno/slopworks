@@ -54,8 +54,15 @@ class MergeWhenGreen(unittest.TestCase):
 
         def fake_gh(*args):
             if args[:2] == ("pr", "view"):
-                return '{"labels": []}'
+                anth = "Co-Authored-By: " + "Claude" + " " + "Opus" + " " + "5.5" + " <" + "noreply@" + "anthropic.com>"
+                import json as _json
+                return _json.dumps({"labels": [], "title": "Squashed work", "body": "what\n\n" + anth + "\n"})
             if args[:2] == ("pr", "merge"):
+                self.assertIn("--subject", args)
+                self.assertIn("--body", args)
+                body = args[args.index("--body") + 1]
+                self.assertNotIn("anthropic.com", body.lower())
+                self.assertNotRegex(body, r"(?i)co-authored-by:")
                 self.squash_on_github()
                 return ""
             raise AssertionError(args)

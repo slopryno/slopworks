@@ -19,3 +19,5 @@ Maker: <!-- role name, e.g. Forge -->
 **Checks (this run):** <!-- preflight / check.py repo, unittest, build.py --check -->
 
 **Sign-offs needed:** <!-- from scripts/bot.py roles for these paths; maker cannot sign off -->
+
+**Trailers:** Do not add `Co-authored-by:` lines. Keep Claude Code `includeCoAuthoredBy: false`.
