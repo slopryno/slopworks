@@ -73,9 +73,9 @@ class BrokenBoards(unittest.TestCase):
 
     def test_complete_needs_a_merged_pr(self):
         def fake(b):
-            q = quest(b, "social-preview")
+            q = quest(b, "metric-trends")
             q["group"] = "complete"
-            q["history"].append({"stage": "complete", "date": "2026-10-20", "ref": "d2"})
+            q["history"].append({"stage": "complete", "date": "2026-10-20", "ref": "i51"})
         self.broken(fake, "merged PR")
 
     def test_abandoned_needs_a_reason(self):
