@@ -19,6 +19,9 @@
                                     finish an interrupted pr run: takes the same lock, posts only missing comments (i59)
   bot.py blast-check --pr N --by Trial|Lens --result matched|bigger|smaller "what happened"
                                     after merge: compare Atlas's prediction on PR N with what happened (data/blast_checks.json)
+  bot.py usage --model ID --started HH:MM [--run ID] [--tokens-in N] [--tokens-out N] [--note T]
+                                    at the end of a run: one row in data/usage.json with its model, minutes since it
+                                    started (ET) and PRs merged today, so the bill can be measured (#148 item 2)
 
 CI stays the backstop (review-gate, path rule, guardrail-gate). This helper only makes the right path the easy one.
 """
@@ -170,8 +173,9 @@ def take_lock(path=None, pid=None):
     """Refuse if another live bot.py pr or resume holds the lock; a lock left by a dead process is replaced.
 
     F2: the claim is atomic. The lock is a hard link to a file that already holds our pid, so two runs
-    can't both create it, and a reader never sees it empty. A stale lock is moved aside first, and put
-    back if what moved turns out to be a live run's fresh lock."""
+    can't both create it, and a reader never sees it empty. A missing path is retried with link (never
+    renamed). Unreadable or dead-holder files are re-checked immediately before rename; on put-back
+    conflict, never delete an aside that still names a live run."""
     import os
     path, pid = Path(path or lock_path()), pid or os.getpid()
     tmp = path.with_name(f"{path.name}.{os.getpid()}.tmp")
@@ -188,24 +192,36 @@ def take_lock(path=None, pid=None):
                 return path
             if other is not None and _alive(other):
                 raise Refused(f"another bot.py run (pid {other}) is still going; wait for it, don't resume over it ({path})")
+            if other is None and not path.exists():
+                continue  # vanished between link and read — retry link; do not rename
+            # Dead pid, or unreadable file that still exists. Re-verify immediately before rename (S1).
+            current = _holder(path)
+            if current == pid:
+                return path
+            if current is not None and _alive(current):
+                raise Refused(f"another bot.py run (pid {current}) is still going; wait for it, don't resume over it ({path})")
+            if other is not None and current != other:
+                continue  # identity changed since observe; retry rather than rename the wrong file
+            if current is None and not path.exists():
+                continue
             aside = path.with_name(f"{path.name}.{os.getpid()}.stale")
             try:
                 os.rename(path, aside)
             except FileNotFoundError:
                 continue
             moved = _holder(aside)
-            if moved != other and moved is not None and _alive(moved):
+            if moved is not None and _alive(moved) and moved != pid:
                 try:
                     os.link(aside, path)  # we moved a live run's fresh lock: put it back
+                    aside.unlink(missing_ok=True)
                 except FileExistsError:
+                    # Leave the aside: deleting it would drop the only copy of a live holder's record.
                     pass
-                aside.unlink(missing_ok=True)
                 raise Refused(f"another bot.py run (pid {moved}) took the lock first ({path})")
             aside.unlink(missing_ok=True)
         raise Refused(f"couldn't take {path} after 5 tries; another run keeps taking it")
     finally:
         tmp.unlink(missing_ok=True)
-
 
 def release_lock(path, pid=None):
     """Delete the lock only if this run holds it (F2): never remove another run's lock."""
@@ -412,6 +428,29 @@ def new_chat(chat, ideas, frm, to, text, reply_to=None, idea=None, now=None):
     return msg
 
 
+def new_usage(rows, model, started, merged, run=None, tokens_in=None, tokens_out=None, note=None, now=None):
+    """A usage ledger row: minutes from the run's ET start time to now, PRs merged today (ET), checked first."""
+    now = now or datetime.datetime.now(ET)
+    day = now.strftime("%Y-%m-%d")
+    try:
+        h, m = (int(x) for x in started.split(":"))
+        start = now.replace(hour=h, minute=m, second=0, microsecond=0)
+    except ValueError:
+        raise Refused(f"--started must be HH:MM ET, not {started!r}")
+    if start > now:
+        raise Refused(f"--started {started} is later than now ({now.strftime('%H:%M')} ET); a run can't start in the future")
+    row = {"id": run or f"{day}-daily", "date": day, "model": model, "started": started,
+           "minutes": int((now - start).total_seconds() // 60), "prs_merged": sum(p["merged"][:10] == day for p in merged)}
+    row.update({k: v for k, v in (("tokens_in", tokens_in), ("tokens_out", tokens_out), ("note", note)) if v is not None})
+    errs = check.validate([row], check.load_schema("usage"))  # the validator has no minimum, so counts are checked here
+    errs += [f"--{k.replace('_', '-')} can't be negative" for k in ("tokens_in", "tokens_out") if row.get(k, 0) < 0]
+    if any(r["id"] == row["id"] for r in rows):
+        errs.append(f"data/usage.json already has a row for {row['id']}")
+    if errs:
+        raise Refused("; ".join(errs))
+    return row
+
+
 def count(path, pattern=None):
     p = Path(path)
     if pattern:
@@ -556,6 +595,8 @@ def main(argv=None):
     u.add_argument("--blast"); u.add_argument("--merge", action="store_true")
     k = sub.add_parser("blast-check"); k.add_argument("--pr", type=int, required=True); k.add_argument("--by", required=True)
     k.add_argument("--result", required=True, choices=check.BLAST_RESULTS); k.add_argument("note")
+    g = sub.add_parser("usage"); g.add_argument("--model", required=True); g.add_argument("--started", required=True)
+    g.add_argument("--run"); g.add_argument("--tokens-in", type=int); g.add_argument("--tokens-out", type=int); g.add_argument("--note")
     a = p.parse_args(argv)
     sys.stdout.reconfigure(line_buffering=True)  # a quiet log looked like a dead run once (aar-2026-10-18-signoff-doubles)
     try:
@@ -589,6 +630,12 @@ def main(argv=None):
                                     pr["state"] == "MERGED", datetime.datetime.now(ET))
             f.write_text(json.dumps(checks + [entry], indent=2, ensure_ascii=False) + "\n")
             print(f"PR {a.pr}: Atlas said {entry['predicted']}, {entry['by']} says {entry['result']}")
+        elif a.cmd == "usage":
+            f = ROOT / "data/usage.json"
+            rows = json.loads(f.read_text())
+            row = new_usage(rows, a.model, a.started, merged_now(), a.run, a.tokens_in, a.tokens_out, a.note)
+            f.write_text(json.dumps(rows + [row], indent=2, ensure_ascii=False) + "\n")
+            print(f"{row['id']}: {row['model']}, {row['minutes']} min, {row['prs_merged']} PRs merged today")
     except Refused as e:
         if a.cmd in ("pr", "resume"):
             log_refusal(ROOT / "data/refusals.json", git("rev-parse", "--abbrev-ref", "HEAD").strip(), str(e), datetime.datetime.now(ET))

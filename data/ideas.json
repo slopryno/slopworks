@@ -1758,5 +1758,33 @@
     "concerns": "Stale Level 4 status after #146; conflicts with the Oct 19 visitor hold, held badges and the #148 roster plan. D1, D2, D4 to D12 each need a yes or no.",
     "target_sprint": "W45",
     "reason": "Huddle on Oct 28 (c430 to c436). Advice: smaller. Fix the two Blocking points, then merge as a draft record; tracker item pages and the D1/D2 fixes in W45; Scout trails only if Ryno keeps Scout. Holds stay. Not unanimous, so Ryno decides."
+  },
+  {
+    "id": "i64",
+    "date": "2026-10-27",
+    "by": "CEO",
+    "source": "ceo",
+    "short_title": "Prototype brief: improve the live site",
+    "problem": "The prototype brief needed one answer: rebuild from the retired /prototype/ page, or improve the live site",
+    "helps": "Ryno and every role: one recorded answer on how the brief applies, so held work and retired pages don't come back by accident",
+    "effort": "S",
+    "builder": "Librarian",
+    "state": "shipped",
+    "comments": [],
+    "decided": "2026-10-27",
+    "decided_by": "CEO",
+    "target_sprint": "W44",
+    "ref": "https://github.com/slopryno/slopworks/pull/161",
+    "librarian_checked": true,
+    "reason": "CEO approved the team's review of the prototype brief (Oct 27, 7:57 PM ET, Grok Bot chat): improve the live site in small steps, /prototype/ stays retired (i40, i41); keep charcoal #141418; ledger XP and levels only, badges and missions stay held; no brief wording on the site; record-based measures only, no analytics. B1 shipped in #161; this is B2; B3 optional.",
+    "acceptance_criteria": [
+      "/prototype/ stays a 404 and no site/prototype/ returns on main",
+      "The site background stays #141418",
+      "No badge or mission rollout ships without a new CEO yes",
+      "No CEO quote or brief wording on built pages (check.py repo)",
+      "No analytics, pixels or tracking scripts on any page"
+    ],
+    "acceptance_verified_by": "Trial",
+    "shipped": "#162: the decision is recorded as i64 (its hex typo fixed to #141418 on Oct 29); Trial checked all five criteria live on Oct 29"
   }
 ]

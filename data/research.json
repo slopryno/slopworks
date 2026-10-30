@@ -998,5 +998,148 @@
       "https://x.ai/changelog/bot",
       "https://docs.x.ai/grok-bot/get-started"
     ]
+  },
+  {
+    "id": "r-shield-2026-10-28-push-protection",
+    "date": "2026-10-28",
+    "role": "Shield",
+    "kind": "rotation",
+    "confidence": "high",
+    "status": "verified",
+    "fresh_until": "2026-11-28",
+    "question": "Does the public repo block secrets before they land, or only alert after?",
+    "outcome": "no-change",
+    "finding": "Push protection is on for slopworks along with secret scanning and Dependabot security updates, so a pushed token is blocked before it reaches history. Nothing to change; the check.py privacy gates still cover personal data, which push protection doesn't.",
+    "facts": [
+      "GitHub docs: repository push protection blocks pushes containing detected secrets and is off by default.",
+      "GitHub docs: bypasses with 'I'll fix it later' leave an open alert; other reasons close it.",
+      "The repo's security settings (GitHub API, Oct 28) show secret scanning and push protection enabled; non-provider patterns and validity checks are off."
+    ],
+    "inferences": [
+      "Non-provider patterns being off means generic keys may slip through; low risk while the site has no keys at all.",
+      "Push protection does not look for personal data, so Shield's own strips stay the only guard there."
+    ],
+    "evidence": [
+      "https://docs.github.com/en/code-security/secret-scanning/introduction/about-push-protection"
+    ]
+  },
+  {
+    "id": "r-trial-2026-10-28-cname",
+    "date": "2026-10-28",
+    "role": "Trial",
+    "kind": "rotation",
+    "confidence": "high",
+    "status": "verified",
+    "fresh_until": "2026-11-28",
+    "question": "After the move to slopryno.com, what actually keeps the custom domain working, and does any test watch it?",
+    "outcome": "finding",
+    "finding": "Our Pages deploy runs from a workflow, and GitHub ignores a CNAME file in that case; the domain lives in the repo's Pages settings. site/CNAME is harmless, but no check or test watches the real setting. Pitch for standup: post-deploy asserts the Pages domain and an HTTPS 200 on slopryno.com.",
+    "facts": [
+      "GitHub docs: when publishing from a custom GitHub Actions workflow, any CNAME file is ignored and not required.",
+      "pages.yml deploys with upload-pages-artifact and deploy-pages; the Pages API reports build_type workflow, cname slopryno.com, https_enforced true.",
+      "No match for CNAME in scripts/check.py or tests/ (grep, Oct 28)."
+    ],
+    "inferences": [
+      "The 'keep site/CNAME' rule guards nothing on its own; a settings change would drop the domain silently.",
+      "A plain-http redirect test can't run from the box: port 80 times out there for every site (example.com too), so it isn't a site fault."
+    ],
+    "evidence": [
+      "https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/troubleshooting-custom-domains-and-github-pages"
+    ]
+  },
+  {
+    "id": "r-critic-2026-10-28-premortem",
+    "date": "2026-10-28",
+    "role": "Critic",
+    "kind": "rotation",
+    "confidence": "medium",
+    "status": "reported",
+    "fresh_until": "2026-11-28",
+    "question": "What cheap habit catches the reasons a small product bet fails before it is built?",
+    "outcome": "finding",
+    "finding": "A premortem asks the team to assume the plan already failed and list why, which makes doubts easy to raise. Our huddles collect concerns but don't ask that question. Idea for standup: one premortem line from each role on the two small builds Ryno approved today (#148 W44, #149 W45).",
+    "facts": [
+      "HBR (Klein, 2007): in a premortem, team members assume the project has just failed and generate plausible reasons for it.",
+      "The same summary says projects fail partly because people hesitate to voice reservations during planning."
+    ],
+    "inferences": [
+      "Only the summary was readable, so this rests on the idea, not the full method.",
+      "The i62/i63 huddles already logged Shield, Critic, Lens and Gamemaster concerns, so the gain is small; worth trying once and keeping only if it finds something new."
+    ],
+    "evidence": [
+      "https://hbr.org/2007/09/performing-a-project-premortem"
+    ]
+  },
+  {
+    "id": "r-scout-2026-10-29-rss-agent",
+    "date": "2026-10-29",
+    "role": "Scout",
+    "kind": "rotation",
+    "confidence": "high",
+    "status": "verified",
+    "fresh_until": "2026-11-29",
+    "question": "Why does the official changelog feed fail from the box, and can the daily run read it directly again?",
+    "outcome": "finding",
+    "finding": "The feed isn't down. With curl's default user agent the box gets a 403; with a browser user agent it gets a 200 RSS file listing 0.78.1 first, matching updates.json. Yesterday's 'Cloudflare block' came from the default agent. Pitch: the daily run fetches the feed with a named user agent and says which way it read the changelog.",
+    "facts": [
+      "The changelog page links its feed as rel=alternate application/rss+xml at /changelog/bot/rss.xml.",
+      "From the box on Oct 29: plain curl gets 403; curl with a browser user agent gets 200, application/rss+xml, newest item 0.78.1 dated Oct 27.",
+      "A separate web fetcher got a 500 on the same feed URL."
+    ],
+    "inferences": [
+      "The block depends on the user agent, so it may change without notice; the page fallback should stay.",
+      "No update was missed: the feed's top items match updates.json through 0.78.1."
+    ],
+    "evidence": [
+      "https://x.ai/changelog/bot"
+    ]
+  },
+  {
+    "id": "r-verify-2026-10-29-sift",
+    "date": "2026-10-29",
+    "role": "Verify",
+    "kind": "rotation",
+    "confidence": "medium",
+    "status": "reported",
+    "fresh_until": "2026-11-29",
+    "question": "Which quick fact-checking moves fit how we label known issues as reported or confirmed?",
+    "outcome": "finding",
+    "finding": "SIFT's last two moves are to find better coverage of a claim and trace it to its original context. Our sourcing rules already trace updates to the changelog, but each of the 4 reported issues rests on one source. Idea for standup: when open issues are rechecked, Verify looks for one more independent report and notes it, with no label change on its own.",
+    "facts": [
+      "Caulfield's SIFT: Stop, Investigate the source, Find better coverage, Trace claims, quotes and media to the original context.",
+      "The same post says to look past the source that reached you and scan several sources for the consensus when the claim is what matters.",
+      "data/issues.json on Oct 29: 5 issues, 4 reported and 1 confirmed, each with a single source field."
+    ],
+    "inferences": [
+      "A second report would make a reported label easier to trust without calling it confirmed.",
+      "This is a habit, not a schema change; adding a field can wait until it proves useful."
+    ],
+    "evidence": [
+      "https://hapgood.us/2019/06/19/sift-the-four-moves/"
+    ]
+  },
+  {
+    "id": "r-comms-2026-10-29-llmstxt-v2",
+    "date": "2026-10-29",
+    "role": "Comms",
+    "kind": "rotation",
+    "confidence": "high",
+    "status": "verified",
+    "fresh_until": "2026-11-29",
+    "question": "Does our llms.txt still match the current llms.txt proposal, now that it has a v2?",
+    "outcome": "finding",
+    "finding": "Our file has the shape v2 asks for: an H1, a summary blockquote, notes, H2 link lists and an Optional section. v2 adds two things we don't do: a rel=describedby link from pages to llms.txt, and markdown copies of pages. Pitch: the describedby link in the shared head, one line. Markdown copies stay out; they'd double the site.",
+    "facts": [
+      "llmstxt.org v2 (updated Aug 2026): only the H1 is required; then a blockquote summary, non-heading notes, and H2 file lists, each line a markdown link with a short note.",
+      "v2 recommends rel=alternate type=text/markdown for page copies and rel=describedby pointing to the llms.txt that covers a page.",
+      "Our site/llms.txt has H1, blockquote, Pages, Feeds and data, and Optional sections; no page links to it with describedby (grep of site/index.html)."
+    ],
+    "inferences": [
+      "#155 already removes the duplicate How this works line, so after it ships the file has no known defects.",
+      "Markdown copies would add roughly a page per page against an 87% repo budget, so the cost outweighs the gain for now."
+    ],
+    "evidence": [
+      "https://llmstxt.org/"
+    ]
   }
 ]
