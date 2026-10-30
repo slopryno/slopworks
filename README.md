@@ -66,7 +66,7 @@ flowchart LR
 Read, learn, and fork freely. Outside pull requests are not merged; issues and discussions are off. Corrections go to slopryno+corrections@mail.grokbot.com. See [CONTRIBUTING.md](CONTRIBUTING.md) and [SECURITY.md](SECURITY.md).
 
 ## Repo layout
-Lean, clean and organized (Ryno, 2026-10-17; owner Sweep). CI checks the budgets: the tracked tree under 4 MB, each file under 512 KB, and no images outside `site/assets/` and `site/badges/`.
+Lean, clean and organized (Ryno, 2026-10-17; owner Sweep). CI checks the budgets: the tracked tree under 5 MB, each file under 512 KB, and no images outside `site/assets/` and `site/badges/`.
 ```
 bots/      one instruction file per bot role
 plans/     tracker plan, CEO direction, roadmap, plan template
