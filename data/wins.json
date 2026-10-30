@@ -1,5 +1,77 @@
 [
   {
+    "id": "pr157",
+    "role": "Forge",
+    "title": "Core: Quest board data, team quests, dated oaths and camp duties in data/roadmap.json, checked by scripts/roadmap.py (E1 of 3)",
+    "pr": "https://github.com/slopryno/slopworks/pull/157",
+    "date": "2026-10-29",
+    "merged": "2026-10-29T16:42-04:00",
+    "opened": "2026-10-28T09:58-04:00"
+  },
+  {
+    "id": "pr165",
+    "role": "Sketch",
+    "title": "Roster page: the hybrid (active hats, full cast)",
+    "pr": "https://github.com/slopryno/slopworks/pull/165",
+    "date": "2026-10-29",
+    "merged": "2026-10-29T12:53-04:00",
+    "opened": "2026-10-29T09:19-04:00"
+  },
+  {
+    "id": "pr156",
+    "role": "Forge",
+    "title": "Forge: tracker item pages, one page per update and issue, linked from lists, feeds and the sitemap (#149 §2.1)",
+    "pr": "https://github.com/slopryno/slopworks/pull/156",
+    "date": "2026-10-29",
+    "merged": "2026-10-29T12:49-04:00",
+    "opened": "2026-10-28T09:54-04:00"
+  },
+  {
+    "id": "pr149",
+    "role": "Sketch",
+    "title": "Sketch: level-up plan draft for team review, docs/level-up-plan.md (Ryno, Oct 22-27)",
+    "pr": "https://github.com/slopryno/slopworks/pull/149",
+    "date": "2026-10-29",
+    "merged": "2026-10-29T09:12-04:00",
+    "opened": "2026-10-27T22:31-04:00"
+  },
+  {
+    "id": "pr148",
+    "role": "Forge",
+    "title": "Core: team growth research for review, docs/research/team-growth-plan.md: shrink to ~10 hats, meter every run, a missed-run heartbeat, risk-tiered review, drift",
+    "pr": "https://github.com/slopryno/slopworks/pull/148",
+    "date": "2026-10-29",
+    "merged": "2026-10-29T08:58-04:00",
+    "opened": "2026-10-27T22:27-04:00"
+  },
+  {
+    "id": "pr154",
+    "role": "Forge",
+    "title": "Core: usage ledger, one checked row per run in data/usage.json via bot.py usage (#148 item 2)",
+    "pr": "https://github.com/slopryno/slopworks/pull/154",
+    "date": "2026-10-29",
+    "merged": "2026-10-29T08:52-04:00",
+    "opened": "2026-10-28T09:43-04:00"
+  },
+  {
+    "id": "pr155",
+    "role": "Forge",
+    "title": "Pixel: 404 page, theme-color in both themes, llms.txt lists each page once (#149 Level 1 quick fixes)",
+    "pr": "https://github.com/slopryno/slopworks/pull/155",
+    "date": "2026-10-29",
+    "merged": "2026-10-29T08:49-04:00",
+    "opened": "2026-10-28T09:46-04:00"
+  },
+  {
+    "id": "pr164",
+    "role": "Forge",
+    "title": "Daily run Oct 29: changelog 0.78.1, Scout/Verify/Shield handoffs, i64 hex typo fixed and i64 closed as shipped, records refresh through #163",
+    "pr": "https://github.com/slopryno/slopworks/pull/164",
+    "date": "2026-10-29",
+    "merged": "2026-10-29T05:00-04:00",
+    "opened": "2026-10-29T04:58-04:00"
+  },
+  {
     "id": "pr163",
     "role": "Forge",
     "title": "Evening wrap Oct 28: three research notes and Team chat c440 to c448, with Trial's post-deploy check of today's merges",
