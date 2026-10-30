@@ -1582,7 +1582,7 @@
     "source": "ceo",
     "effort": "M",
     "builder": "Forge",
-    "state": "yes",
+    "state": "shipped",
     "comments": [],
     "decided": "2026-10-19",
     "decided_by": "CEO",
@@ -1598,7 +1598,9 @@
       "bot.py resume with a lock skips sign-offs already posted",
       "Retro close-the-loop check in code",
       "Drills recorded; one objective per role in data/objectives.json"
-    ]
+    ],
+    "acceptance_verified_by": "Trial",
+    "shipped": "#104 tempo day-count; #105 Derived lines, bot.py resume, close-the-loop, drills; plus state.json↔runs.json consistency check (this PR). All acceptance criteria met."
   },
   {
     "date": "2026-10-19",

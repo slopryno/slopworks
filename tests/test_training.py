@@ -72,5 +72,35 @@ class Lock(unittest.TestCase):
         self.assertEqual(bot.missing_comments(planned, ["Sign-off: Lens\nok", "Blast radius: Atlas\nScope: x"]), ["Sign-off: Trial\nok"])
 
 
+
+class StateRuns(unittest.TestCase):
+    def setUp(self):
+        self.root = Path(tempfile.mkdtemp())
+        (self.root / "data").mkdir()
+        self.runs = [{"id": "2026-10-30-daily", "date": "2026-10-30", "kind": "daily", "status": "skipped", "counts": {}}]
+        (self.root / "data/runs.json").write_text(json.dumps(self.runs))
+        (self.root / "data/state.json").write_text(json.dumps({
+            "auto_merge": "on", "paused_reason": None, "last_run": "2026-10-30", "last_status": "skipped", "updated": "2026-10-30"
+        }))
+
+    def test_matching_state_passes(self):
+        self.assertEqual(check.state_runs_errors(self.root), [])
+
+    def test_last_run_behind_runs_fails(self):
+        s = json.loads((self.root / "data/state.json").read_text())
+        s["last_run"] = "2026-10-29"
+        (self.root / "data/state.json").write_text(json.dumps(s))
+        self.assertTrue(any("last_run" in e for e in check.state_runs_errors(self.root)))
+
+    def test_last_status_mismatch_fails(self):
+        s = json.loads((self.root / "data/state.json").read_text())
+        s["last_status"] = "ok"
+        (self.root / "data/state.json").write_text(json.dumps(s))
+        self.assertTrue(any("last_status" in e for e in check.state_runs_errors(self.root)))
+
+    def test_current_records_pass(self):
+        self.assertEqual(check.state_runs_errors(), [])
+
+
 if __name__ == "__main__":
     unittest.main()

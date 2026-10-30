@@ -78,5 +78,30 @@
     "at": "2026-10-30T13:44-04:00",
     "branch": "bot/feature-review-refresh-1030",
     "reason": "python3 -m unittest discover -s tests -q failed:"
+  },
+  {
+    "at": "2026-10-30T14:16-04:00",
+    "branch": "bot/ops-train-state-runs",
+    "reason": "missing sign-off from Atlas, Shield (required for these paths: Atlas, Lens, Shield, Trial)"
+  },
+  {
+    "at": "2026-10-30T14:17-04:00",
+    "branch": "bot/ops-train-state-runs",
+    "reason": "Lens's sign-off: Lens's sign-off needs at least one 'Derived: count <file> = N' line"
+  },
+  {
+    "at": "2026-10-30T14:17-04:00",
+    "branch": "bot/ops-train-state-runs",
+    "reason": "Lens's sign-off: Lens's sign-off needs at least one 'Derived: count <file> = N' line"
+  },
+  {
+    "at": "2026-10-30T14:19-04:00",
+    "branch": "bot/ops-train-state-runs",
+    "reason": "python3 -m unittest discover -s tests -q failed:"
+  },
+  {
+    "at": "2026-10-30T14:20-04:00",
+    "branch": "bot/ops-train-state-runs",
+    "reason": "the build changed files or there are uncommitted changes; commit them first"
   }
 ]
