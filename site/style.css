@@ -23,7 +23,7 @@ footer{border-top:1px solid var(--line);margin-top:2.5rem;padding:1rem 0 2rem;co
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(15rem,100%),1fr));gap:1rem}.lead h2{margin:0;font-size:1.2rem}.lead .title{color:var(--muted);margin:0}.lead ul{padding-left:1.1rem;font-size:.9rem}
 .av{border-radius:22%;flex:none}ul.chat,ul.thread{list-style:none;padding:0}.msg{display:flex;gap:.6rem;align-items:flex-start;padding:.5rem 0;border-bottom:1px solid var(--line)}.msg p{margin:.1rem 0}.msg>div{min-width:0;flex:1}.reply{border:0;padding-left:.25rem}details summary{cursor:pointer;color:var(--link);font-size:.9rem;padding:.2rem 0}.badge{margin-left:.3rem}
 blockquote.card{margin:0 0 1rem;overflow-wrap:break-word}.msg p{overflow-wrap:break-word}
-.av{border-radius:0;background:none}.lead .av{transition:transform .25s ease}.lead:hover .av,.lead:focus-within .av{animation:hop .9s ease-in-out infinite}@keyframes hop{0%,100%{transform:translateY(0) rotate(0)}30%{transform:translateY(-6px) rotate(-5deg) scale(1.05,.95)}60%{transform:translateY(-2px) rotate(4deg)}}@media(prefers-reduced-motion:reduce){.lead:hover .av,.lead:focus-within .av{animation:none}}
+.av{border-radius:0;background:none}.lead .av{transition:transform .25s ease}.lead:hover .av,.lead:focus-within .av{animation:hop .9s ease-in-out 1}@keyframes hop{0%,100%{transform:translateY(0) rotate(0)}30%{transform:translateY(-6px) rotate(-5deg) scale(1.05,.95)}60%{transform:translateY(-2px) rotate(4deg)}}@media(prefers-reduced-motion:reduce){.lead:hover .av,.lead:focus-within .av{animation:none}}
 h2.group{margin-top:2rem;border-bottom:1px solid var(--line);padding-bottom:.3rem}
 .hero{border:1px solid var(--line);border-radius:12px;padding:1rem 1.1rem;margin:1rem 0 1.5rem;background:var(--card)}.intro{font-size:1.1rem;margin:0 0 .75rem}.stats{list-style:none;padding:0;margin:0 0 .75rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(8rem,100%),1fr));gap:.5rem}.stats li{background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:.5rem .7rem}.stats a{text-decoration:none;color:inherit;display:block}.stats strong{display:block;font-size:1.3rem;line-height:1.2}.stats span{color:var(--muted);font-size:.85rem}.stats a:hover span{text-decoration:underline}.cta{margin:0;font-weight:600}
 .empty{border:1px dashed var(--line);border-radius:.5rem;padding:.75rem 1rem;color:var(--muted);list-style:none}
@@ -74,7 +74,7 @@ main.home>h1{font-size:clamp(2.1rem,1.4rem + 3.6vw,3.4rem);line-height:1.04;lett
 main p,main li,main dd,main a,footer{overflow-wrap:break-word}
 details summary{padding:.75rem 0;line-height:1.5}.report>summary{min-height:44px}
 .filter a,.jump a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;min-width:44px}
-.meta a,main li>a:only-child:not(:has(*)),.lead h2 a,.lead li>a{display:inline-flex;align-items:center;min-height:44px;min-width:44px}
+.meta a,main li>a:only-child:not(:has(*)),.lead h2 a,.lead li>a{display:inline-flex;align-items:center;min-height:44px;min-width:44px}.roster a{display:inline;min-height:0;min-width:0}
 .meta>*{min-width:0;max-width:100%}.meta a{max-width:100%;overflow-wrap:anywhere}.scroll table{width:max-content;max-width:max(100%,40rem)}.scroll th,.scroll td{min-width:4.5rem}.cta li{flex:1 1 100%}.cta .btn{width:100%;justify-content:center}
 @media (min-width:40rem){header{padding:.75rem 0}.cta li{flex:none}.cta .btn{width:auto}}
 .worklist{list-style:none;padding:0;margin:.5rem 0 1rem}.worklist li{padding:.6rem 0;border-top:1px solid var(--line)}.worklist li:first-child{border-top:0}.worklist time{display:block;font-size:.8rem;color:var(--muted)}.worklist .meta{display:block;margin-top:.15rem}
@@ -92,7 +92,7 @@ time,.mono,.status,.kicker{font-family:ui-monospace,SFMono-Regular,Menlo,Consola
 .links{list-style:none;padding:0;margin:.25rem 0 0;display:flex;flex-wrap:wrap;gap:0 1.25rem}.links a{display:inline-flex;align-items:center;min-height:44px;font-weight:600}
 .chars{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:minmax(0,1fr);gap:.75rem}.char{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:1rem}
 .char .hd,.lead .hd{display:flex;gap:.75rem;align-items:center}.char h3{margin:0;font-size:1.1rem}.char h3 a{display:inline-flex;align-items:center;min-height:44px;text-decoration:none;color:var(--fg)}.char .role{margin:0;color:var(--muted);font-size:.85rem}
-.lv{display:flex;flex-wrap:wrap;justify-content:space-between;gap:.5rem;margin:.75rem 0 .3rem;font-size:.85rem}.bar{height:6px;border-radius:3px;background:var(--line);overflow:hidden}.bar span{display:block;height:100%;background:var(--ok)}
+.lv{display:flex;flex-wrap:wrap;justify-content:space-between;gap:.5rem;margin:.75rem 0 .3rem;font-size:.85rem}.xp-togo{margin:0 0 .35rem;font-size:.8rem;color:var(--muted)}.bar{height:6px;border-radius:3px;background:var(--line);overflow:hidden}.bar span{display:block;height:100%;background:var(--ok)}
 .last{margin:.75rem 0 0;font-size:.9rem}.last a{display:block;min-height:44px;padding:.2rem 0}.last small{display:block;color:var(--muted);font-size:.8rem}
 .feed{list-style:none;padding:0;margin:0;border-top:1px solid var(--line)}.feed>li{border-bottom:1px solid var(--line)}
 .feed summary{list-style:none;display:grid;grid-template-columns:auto 1fr;gap:.15rem .75rem;padding:.75rem 0;min-height:44px;color:var(--fg);font-size:1rem}.feed summary::-webkit-details-marker{display:none}
@@ -102,7 +102,7 @@ time,.mono,.status,.kicker{font-family:ui-monospace,SFMono-Regular,Menlo,Consola
 @media (min-width:40rem){.chars{grid-template-columns:repeat(2,minmax(0,1fr))}.ev{padding-left:6.35rem}}
 @media (min-width:64rem){.chars{grid-template-columns:repeat(3,minmax(0,1fr))}}
 /* i42: current objective, weekly recap */
-.obj{margin:.6rem 0 0;font-size:.9rem}.obj .kicker{display:block}.obj a,.recap a{display:inline-flex;align-items:center;min-height:44px}
+.obj{margin:.6rem 0 0;font-size:.9rem}.obj .kicker{display:block}.obj a{display:inline;text-decoration:underline;text-underline-offset:.15em}.recap a{display:inline-flex;align-items:center;min-height:44px}
 ul.status.wk{list-style:none;padding:0}ul.status.wk li{display:inline-flex;gap:.35em;align-items:baseline}ul.status.wk strong{color:var(--fg)}
 .recap{padding-left:1.1rem}.recap li{margin:.4rem 0}.week h2{margin-top:.25rem}
 /* i43: reflow at 200% phone zoom (195 CSS px) */
@@ -127,8 +127,8 @@ summary{flex-wrap:wrap}summary span,li>div,.char .hd>*,.lead .hd>*{min-width:0}.
 .st.c,.confirmed,.b-yes,.b-shipped,.k-ok,.fixed.tag{color:var(--ok)}.st.r,.reported,.b-ceo,.k-warn,.open.tag{color:var(--warn)}.k-accent{color:var(--accent)}.b-no,.b-vetoed{color:var(--bad)}.b-open,.k-fg{color:var(--fg)}
 .st.r,.k-warn,.k-accent{border-style:dashed}
 .st::first-letter,.tag::first-letter,.badge::first-letter,.k::first-letter{text-transform:uppercase}.tag a,.st a{display:inline;min-height:0;padding:.75rem 0}
-.card h2 a,.card h3 a,.lead h2 a,.news h3 a,.meta a,.last a,.obj a,.xp a,.links a,.status a,.sitelist a,.stats a{text-decoration:none}
-:is(.card h2,.card h3,.lead h2,.news h3,.meta,.last,.obj,.xp,.links,.status,.sitelist,.stats) a:is(:hover,:focus-visible){text-decoration:underline;text-decoration-color:var(--ok)}
+.card h2 a,.card h3 a,.lead h2 a,.news h3 a,.meta a,.last a,.xp a,.links a,.status a,.sitelist a,.stats a{text-decoration:none}
+:is(.card h2,.card h3,.lead h2,.news h3,.meta,.last,.xp,.links,.status,.sitelist,.stats) a:is(:hover,:focus-visible){text-decoration:underline;text-decoration-color:var(--ok)}.obj a:is(:hover,:focus-visible){text-decoration-color:var(--ok)}
 footer .links a{font-weight:400}.next{margin:2rem 0 0}.lead .hd>div{flex:1 1 7rem}
 /* Phase A V4 (Ryno 2026-10-19 6:33 PM ET): home hero. Numbers carry the weight through type; hairlines, no colour fills. One primary button, text links for the rest */
 .tiles{list-style:none;padding:0;margin:1.5rem 0 0;display:grid;border-block:1px solid var(--line)}.tiles li{padding:.6rem 0;color:var(--muted);font-size:.85rem;line-height:1.3}.tiles li+li{border-top:1px solid var(--line)}@media (min-width:18rem){.tiles{grid-template-columns:repeat(3,minmax(0,1fr))}.tiles li{padding:.8rem 0 .8rem .9rem}.tiles li:first-child{padding-left:0}.tiles li+li{border-top:0;border-left:1px solid var(--line)}}

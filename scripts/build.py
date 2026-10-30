@@ -801,13 +801,13 @@ def build():
     xbody = ("".join(f"<p>{e(x)}</p>" for x in re.split(r"(?<=[.)])\s+(?=[A-Z])", prog["note"])) +
              f'<h2>Levels</h2><div class="scroll fit"><table><thead><tr><th scope="col">Level</th><th scope="col">Name</th><th scope="col">XP needed</th></tr></thead><tbody>'
              + "".join(f'<tr><td>{i + 1}</td><td>{e(l["name"])}</td><td>{l["xp"]}</td></tr>' for i, l in enumerate(levels)) + "</tbody></table></div>"
-             f'<h2>What earns XP</h2><div class="scroll"><table><thead><tr><th scope="col">Work</th><th scope="col">XP</th><th scope="col">Role tables</th><th scope="col">Who earns it</th><th scope="col">Reviewer</th></tr></thead><tbody>{ev_rows}</tbody></table></div>'
+             f'<h2>What earns XP</h2><div class="scroll"><table class="stack"><thead><tr><th scope="col">Work</th><th scope="col">XP</th><th scope="col">Role tables</th><th scope="col">Who earns it</th><th scope="col">Reviewer</th></tr></thead><tbody>{ev_rows}</tbody></table></div>'
              f'<p>Sign-offs count at most {prog["events"]["signoff"]["cap_per_day"]} a day per role; the rest stay in the ledger as rejected, so the cap is visible.</p><p>{e(prog["quality"]["note"])}</p>'
              f'<h2>Fair play</h2><ol>' + "".join(f"<li>{e(r)}</li>" for r in prog["anti_gaming"]) + "</ol>"
              f'<h2>Entry statuses</h2><ul>' + "".join(f"<li><strong>{e(k)}:</strong> {e(v)}</li>" for k, v in prog["statuses"].items()) + "</ul>"
              f'<h2>Achievements</h2><ul>' + "".join(f'<li><strong>{e(a["name"])}:</strong> {e(a["rule"])}</li>' for a in prog["achievements"]) + "</ul>"
              f'<h2>Coming in later weeks</h2><ul><li><strong>Week 2:</strong> {e(prog["later_weeks"]["week2"])}</li><li><strong>Week 3:</strong> {e(prog["later_weeks"]["week3"])}</li><li><strong>Week 4:</strong> {e(prog["later_weeks"]["week4"])}</li></ul>'
-             f'<h2>Every character sheet</h2><p class="meta">In name order. Levels describe each role\'s own record.</p><ul>{roster}</ul>'
+             f'<h2>Every character sheet</h2><p class="meta">In name order. Levels describe each role\'s own record.</p><ul class="roster">{roster}</ul>'
              f'<p>Rules: <a href="{REPO}/blob/main/data/progression.json">data/progression.json</a> (owned by Game Master). Ledger: <a href="{REPO}/blob/main/data/xp_ledger.json">data/xp_ledger.json</a>, written by <a href="{REPO}/blob/main/scripts/xp.py">scripts/xp.py</a>. Decided in <a href="{href(prog["thread"], "../../", "team/xp/")}">Team chat</a>.</p>')
     files["team/xp/index.html"] = page("team/xp/", "How XP works", f"XP from {len([y for y in ledger_all if y['status'] == 'approved'])} verified pieces of work. Every point links its evidence.", xbody, "data/progression.json")
     # Team trading cards (Ryno, Oct 20 12:18 PM ET: design locked; Comms wording). scripts/cards.py renders; no script.
@@ -862,14 +862,11 @@ def build():
         rows = "".join(f'<dt>{t}</dt><dd>{e(a[k]["text"])} <span class="meta">' + " · ".join(cite(c) for c in a[k]["cite"]) + "</span></dd>"
                        for k, t in (("expected", "What was supposed to happen"), ("actual", "What actually happened"), ("why", "Why (blameless, with evidence)"), ("change", "What we change")))
         st = (f'closed {e(a["closed"])} · fix <a href="{REPO}/pull/{a["fix_pr"]}">#{a["fix_pr"]}</a>' if a["status"] == "closed" else "open")
-        lead, sents = [], re.split(r"(?<=[.)])\s+(?=[A-Z#])", a["change"]["text"])
-        for x in sents:  # visual review V5: what changed, in about one sentence; the whole review is one tap away
-            if lead and len(" ".join(lead + [x]).split()) > 20:
-                break
-            lead.append(x)
+        # d7: title + meta stay above the fold; the change text lives in the closed review details
         return (f'<article class="card aar" id="{e(a["id"])}"><h2>{e(a["title"])}</h2><p class="meta">{as_of(a["date"], "happened")}<span class="tag">{e(TRIGGERS[a["trigger"]])}</span>'
-                f'<span class="tag">{st}</span></p><p><strong>What we change:</strong> {e(" ".join(lead))}</p>'
-                f'<details><summary>The full review, with receipts</summary><p class="meta"><span>owner {e(a["owner"])}</span><a href="{href(a["thread"], "../", "lessons/")}">Team chat thread</a></p><dl>{rows}</dl></details></article>')
+                f'<span class="tag">{st}</span></p>'
+                f'<details><summary>The full review, with receipts</summary>'
+                f'<p class="meta"><span>owner {e(a["owner"])}</span><a href="{href(a["thread"], "../", "lessons/")}">Team chat thread</a></p><dl>{rows}</dl></details></article>')
     aars = sorted(load("aars"), key=lambda a: (a["date"], a["id"]), reverse=True)
     n_open = sum(a["status"] == "open" for a in aars)
     # Lessons archive rollover (sprint i31): the shared rollover() helper, in the Team chat pattern. Open reviews stay on the main page.
@@ -882,10 +879,10 @@ def build():
     for key, m, n, us in l_parts:
         for u in us:
             lesson_loc[u[1]["id"]] = f"lessons/archive/{key}.html"
-    l_arch = ('<h2 id="archive">Archive</h2><p>Older reviews move to archive pages automatically, so this page stays light. Nothing is removed, and each review keeps its own permalink.</p><ul>'
+    l_arch = ('<h2 id="archive">Archive</h2><p>Older reviews move to archive pages automatically. Nothing is removed.</p><ul>'
               + "".join(f'<li><a href="archive/{k}.html">{e(k)}</a>: {len(us)} {"review" if len(us) == 1 else "reviews"}</li>' for k, m, n, us in reversed(l_parts)) + "</ul>") if l_parts else ""
     files["lessons/index.html"] = page("lessons/", "Lessons",
-        "Same-day, blameless after-action reviews: what was expected, what happened, why, and what changed. Every line links its record.",
+        "Same-day, blameless after-action reviews. Every line links its record.",
         f'<p class="meta"><span>{len(aars)} reviews</span><span>{n_open} open</span><span>newest first</span></p>'
         + ("".join(aar(u[1]) for u in l_main) or '<p class="empty">No after-action reviews yet. One appears here the same day something goes wrong.</p>') + "<p>The Friday retro reviews the week's reviews and closes them, and Advisor turns repeats into rules or CI checks.</p>" + l_arch, "data/aars.json")
     for k, (key, m, n, us) in enumerate(l_parts):
@@ -937,10 +934,12 @@ def build():
     def case_card(c):
         st = "".join(f'<li>{avatar(x["role"], "../", 28)}<div><p>{label(x["label"])} <strong class="who" style="--c:{color(x["role"])}">{e(x["role"])}</strong></p><p>{e(x["text"])} <a href="{e(x["link"])}">{"PR #" + x["link"].rsplit("/", 1)[1] if "/pull/" in x["link"] else "record"}</a></p></div></li>' for x in c["steps"])
         return (f'<article class="card case" id="{e(c["id"])}"><h2>{e(c["title"])}</h2><p class="meta">{as_of(c["date"], "shipped")}<span>real work, not a demo</span></p>'
-                f'<p>{e(c["summary"])}</p><p><strong>Outcome:</strong> {e(c["outcome"])} <a href="{REPO}/pull/{c["pr"]}">PR #{c["pr"]}</a></p>'
-                f'<details><summary>How it happened, in {len(c["steps"])} steps</summary><p><strong>What it shows:</strong> {e(c["shows"])}</p><ol class="trace">{st}</ol></details></article>')
+                f'<details><summary>How it happened, in {len(c["steps"])} steps</summary>'
+                f'<p>{e(c["summary"])}</p>'
+                f'<p><strong>Outcome:</strong> {e(c["outcome"])} <a href="{REPO}/pull/{c["pr"]}">PR #{c["pr"]}</a></p>'
+                f'<p><strong>What it shows:</strong> {e(c["shows"])}</p><ol class="trace">{st}</ol></details></article>')
     cases = load("cases")
-    files["cases/index.html"] = page("cases/", "Case files", "Real decisions, replayed from the problem to what shipped. Every step links its record.",
+    files["cases/index.html"] = page("cases/", "Case files", "Real decisions, from the problem to what shipped. Every step links its record.",
                                      legend() + ("".join(map(case_card, cases)) or '<p class="empty">No case files yet. A case file is added after a decision ships.</p>') + '<p>Want to see how a decision gets made before anything ships? Visit the <a href="../arena/">Research Arena</a>.</p>', "data/cases.json")
 
     # Demo challenges (i22, PR 7 of 8): worked examples on fictional briefs, labeled Demo everywhere. Not advice, quotes, or client work.
