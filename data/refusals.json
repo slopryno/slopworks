@@ -103,5 +103,15 @@
     "at": "2026-10-30T14:20-04:00",
     "branch": "bot/ops-train-state-runs",
     "reason": "the build changed files or there are uncommitted changes; commit them first"
+  },
+  {
+    "at": "2026-10-30T14:34-04:00",
+    "branch": "bot/design-weekly-digest-pages",
+    "reason": "design or CSS PR (scripts/build.py): pass --review N with the screenshots from scripts/shots.py N, N being this PR's number"
+  },
+  {
+    "at": "2026-10-30T14:41-04:00",
+    "branch": "bot/design-weekly-digest-pages",
+    "reason": "python3 -m unittest discover -s tests -q failed:"
   }
 ]
