@@ -38,6 +38,17 @@ class Home(unittest.TestCase):
         self.assertIn('href="updates/"', self.doc)
         self.assertIn('href="issues/"', self.doc)
 
+    def test_verified_leads_and_counts_stay_secondary(self):
+        """Polish UX depth: latest verified + one next step before the count tiles (Ryno train-up 2026-10-29)."""
+        last = max(self.wins, key=lambda w: w.get("merged") or w["date"])
+        self.assertLess(self.doc.index('id="verified"'), self.doc.index('class="tiles"'))
+        self.assertLess(self.doc.index('id="verified"'), self.doc.index('id="tracker"'))
+        self.assertIn(f'PR #{last["pr"].rsplit("/", 1)[1]}</a>', self.doc[self.doc.index('id="verified"'):self.doc.index('id="tracker"')])
+        # Primary CTA is the tracker (Advocate: use the tracker / follow a build)
+        primary = re.search(r'class="btn primary"[^>]*href="([^"]+)"', self.doc).group(1)
+        self.assertEqual(primary, "updates/")
+        self.assertLess(self.doc.index('class="btn primary"'), self.doc.index('id="tracker"'))
+
     def test_nothing_invented_or_live(self):
         low = self.doc.lower()
         for word in ("current quest", "live now", "<script", "<form"):
@@ -71,7 +82,7 @@ class FollowUp(unittest.TestCase):
         self.assertIn(h2, {i.get("short_title") for i in self.ideas.values()})
 
     def test_featured_count_is_the_retro_range(self):
-        sec = re.search(r'<section class="panel feature".*?</section>', self.doc, re.S).group(0)
+        sec = re.search(r'<section class="panel feature"[^>]*aria-labelledby="feat-t".*?</section>', self.doc, re.S).group(0)
         n = int(re.search(r"<span>(\d+) merged PRs?</span>", sec).group(1))
         m = re.search(r"#(\d+)\s*(?:-|to)\s*#(\d+)", sec)
         if m:
