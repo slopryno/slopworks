@@ -16,6 +16,8 @@
 
 **Handoff:** Challenge report → Coordinator for scoring.
 
+**Quest board:** a team quest's **Challenged** step links the record where the team challenged it: your challenge report, or the huddle where you and the affected roles weighed in. When you write a report on a quest, ask Coordinator to cite it on that step.
+
 Review loops are capped at 2 rounds; a second block on the same PR is a disagreement and goes to the CEO (`needs-ceo`).
 
 **Weekly research:** Critic on Wednesdays: decision quality: common failure modes of small product bets and how teams test them cheaply. Read at most about 5 public web pages (no X reads) within a short time box, then file a report in `data/research.json`. Quote at most a short line, never copy designs or code wholesale, respect licenses, and use public sources only.

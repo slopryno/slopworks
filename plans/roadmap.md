@@ -2,36 +2,15 @@
 
 Owned by Coordinator. Ordered by priority; `plans/direction.md` wins on conflicts. Engineering ships at most one feature PR a week, Polish at most one design PR a week.
 
-## Sprint 2026-W42 (CEO-approved, set up the team for success)
-- [x] Draft-first PR flow so review-gate re-runs after sign-offs, with no manual CI reruns (#9)
-- [x] Dependabot #1-#4 replaced by one reviewed ops PR; action updates come monthly, grouped (#10)
-- [x] Source expansion: official changelog and RSS, docs, status page, and an X rate-limit fallback (this PR)
-- [x] CEO-approved: checkout v7 in ci.yml (#13)
-- [x] CEO-approved: @xai added to the handle allowlist (#14)
+**The roadmap now lives in [`data/roadmap.json`](../data/roadmap.json) and is published as the [Quest board](https://slopryno.com/roadmap/)** (from 2026-10-28). It holds the team quests (completed, active, queued, rumors, abandoned with the reason), the team's dated oaths and how each was judged, and camp duties. Every entry links a real record, and `scripts/roadmap.py` checks it in CI. Coordinator edits it at Monday planning and judges oaths at the Friday retro (`bots/coordinator.md`).
 
-## Now (first two weeks)
-- [ ] Daily run live, with Behind the scenes and Team chat updated from real handoffs
-- [ ] Post-deploy check by Trial, with automatic revert by Sweep
-- [ ] Monday CEO brief, weekly release tag, Friday retro
+The item lists that used to be here are in this file's history. Pace limits are in `data/tempo.json` and `scripts/tempo.py`.
 
-## Slopworks RPG (Ryno's pitch i34, huddle c163 to c179; rules owned by Game Master)
-- [x] Week 1: progression rules (`data/progression.json`), XP ledger backfilled from real records (`scripts/xp.py`), character sheets and How XP works (#67, #68)
-- [ ] Week 2: daily, weekly, and level-up quests ('no meaningful opportunity found' counts), reviewer quality grades, recorded preventions (Lens +75, Trial +40)
-- [ ] Week 3: the first team raid, picked from Reliability Raid, Bug Hunt, Trust Protocol, Experience Upgrade, Efficiency Challenge, Research Expedition
-- [ ] Week 4: audit and rebalance, then skill trees (three branches, four milestones per role) and optional level-up animations that respect reduced motion
-- Each week starts on evidence, not the calendar. Rule changes go through Team chat with the affected roles and Critic first.
+## Items with no other record yet
+The Quest board cites this list (`file:plans/roadmap.md`) until each item gets an idea or design record of its own.
+- Monthly State of Slopworks page (queued)
+- Shareable Grok Bot template that follows the feed (rumor)
+- Split roles into separate bots once the loop is stable; the bot earns its place (rumor)
 
-## Next
-- [ ] Filter updates and issues by area (design backlog d1)
-- [ ] Weekly digest pages under `site/weekly/` (d3)
-- [ ] README badges generated from repo data (d6) and a social preview image (d2)
-- [ ] Automated contrast check in CI (d4)
-- [x] Before and after screenshots for design PRs (d5): attached as the PR's `review-shots-<pr>` CI artifact, never in git
-- [ ] Monthly State of Slopworks page
-
-## Later
-- [ ] Shareable Grok Bot template that follows the feed
-- [ ] Split roles into separate bots once the loop is stable (the bot earns its place)
-
-## Done
-- [x] v1 site, feeds, CI gates, 30-day backfill (2026-10-15)
+## Rules that stay here
+- Slopworks RPG weeks (i34, rules owned by Game Master): each week starts on evidence, not the calendar. Rule changes go through Team chat with the affected roles and Critic first.

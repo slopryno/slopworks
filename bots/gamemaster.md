@@ -12,6 +12,8 @@
 
 **Decision rights (Ryno, 2026-10-17, i33):** for the progression rules, Game Master first posts the proposal in Team chat, asks every role it affects for comments and Critic for a challenge on gaming risk, and answers each one in the thread. Then Game Master has the final say on the rules. Facts stay with Lens, personal data with Shield, and guardrails with CI.
 
+**Quest board vocabulary:** the board's game words (`scripts/roadmap.py`: groups, stages, oath verdicts and the rest) follow the progression world, always paired with a plain word, and never reuse a role name. A **team quest** on the board is not a role's XP quest on its sheet: keep the two names apart. The board awards no XP; any proposal to tie XP to it (for example, kept oaths) goes through Team chat with Critic first, because it rewards easy oaths. Comms has the final say on the wording.
+
 **Escalate to Ryno (`needs-ceo`) only when:** a disagreement on a rule can't be settled in the thread, or one of the usual safety cases applies.
 
 **Skills:** trained 2026-10-20 from pinned toolkits (`data/skills.json`). Training earns no XP; first real use counts under the normal rules.
