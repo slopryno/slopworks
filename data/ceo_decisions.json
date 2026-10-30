@@ -37,5 +37,15 @@
     "applied_at": "2026-10-21T09:48-04:00",
     "evidence": "https://github.com/slopryno/slopworks/pull/136#issuecomment-6317707332",
     "authority": "Ryno (CEO), 2026-10-19 5:28 PM ET, Slopbot chat: \"EA applies ceo-approved only after my explicit yes in chat, quoted on the PR\""
+  },
+  {
+    "pr": 167,
+    "quote": "Raise the repo size limit to 5 MB",
+    "said_at": "2026-10-29T20:35-04:00",
+    "where": "Slopbot widget",
+    "applied_by": "Executive Assistant",
+    "applied_at": "2026-10-29T20:43-04:00",
+    "evidence": "https://github.com/slopryno/slopworks/pull/167#issuecomment-6512055753",
+    "authority": "Ryno (CEO), 2026-10-19 5:28 PM ET, Slopbot chat: \"EA applies ceo-approved only after my explicit yes in chat, quoted on the PR\""
   }
 ]

@@ -1,5 +1,122 @@
 [
   {
+    "id": "pr176",
+    "role": "Forge",
+    "title": "Pixel: Last verified line on home agent cards and trading cards",
+    "pr": "https://github.com/slopryno/slopworks/pull/176",
+    "date": "2026-10-30",
+    "merged": "2026-10-30T06:27-04:00",
+    "opened": "2026-10-30T06:13-04:00"
+  },
+  {
+    "id": "pr175",
+    "role": "Forge",
+    "title": "Pixel: social preview image (d2) — og.png + large share cards",
+    "pr": "https://github.com/slopryno/slopworks/pull/175",
+    "date": "2026-10-30",
+    "merged": "2026-10-30T05:55-04:00",
+    "opened": "2026-10-30T05:42-04:00"
+  },
+  {
+    "id": "pr174",
+    "role": "Forge",
+    "title": "Pixel: mobile d7–d11 (first screen, inline links, one-shot hop, XP togo, XP stack)",
+    "pr": "https://github.com/slopryno/slopworks/pull/174",
+    "date": "2026-10-30",
+    "merged": "2026-10-30T05:38-04:00",
+    "opened": "2026-10-30T05:25-04:00"
+  },
+  {
+    "id": "pr173",
+    "role": "Forge",
+    "title": "Pixel: build receipts (problem / result / limits) on Timeline and item pages",
+    "pr": "https://github.com/slopryno/slopworks/pull/173",
+    "date": "2026-10-30",
+    "merged": "2026-10-30T05:11-04:00",
+    "opened": "2026-10-30T04:56-04:00"
+  },
+  {
+    "id": "pr172",
+    "role": "Forge",
+    "title": "Pixel: home leads with latest verified work and one next step; counts stay secondary",
+    "pr": "https://github.com/slopryno/slopworks/pull/172",
+    "date": "2026-10-30",
+    "merged": "2026-10-30T04:39-04:00",
+    "opened": "2026-10-30T04:26-04:00"
+  },
+  {
+    "id": "pr171",
+    "role": "Forge",
+    "title": "Forge: block and strip banned Co-authored-by trailers (check, hook, squash)",
+    "pr": "https://github.com/slopryno/slopworks/pull/171",
+    "date": "2026-10-30",
+    "merged": "2026-10-30T04:07-04:00",
+    "opened": "2026-10-30T03:40-04:00"
+  },
+  {
+    "id": "pr159",
+    "role": "Sketch",
+    "title": "Sketch: the roadmap moves to the Quest board; Coordinator's Monday and Friday routine, Critic, Game Master and Follow updated (E3 of 3)",
+    "pr": "https://github.com/slopryno/slopworks/pull/159",
+    "date": "2026-10-30",
+    "merged": "2026-10-30T04:02-04:00",
+    "opened": "2026-10-28T10:09-04:00"
+  },
+  {
+    "id": "pr158",
+    "role": "Forge",
+    "title": "Pixel: Quest board page at /roadmap/, a board feed, and oath due dates in calendar.ics (E2 of 3, stacked on #157)",
+    "pr": "https://github.com/slopryno/slopworks/pull/158",
+    "date": "2026-10-30",
+    "merged": "2026-10-30T03:08-04:00",
+    "opened": "2026-10-28T10:05-04:00"
+  },
+  {
+    "id": "pr170",
+    "role": "Forge",
+    "title": "Forge: train reliability checklists from SCR01111's 50",
+    "pr": "https://github.com/slopryno/slopworks/pull/170",
+    "date": "2026-10-29",
+    "merged": "2026-10-29T22:55-04:00",
+    "opened": "2026-10-29T22:53-04:00"
+  },
+  {
+    "id": "pr169",
+    "role": "Forge",
+    "title": "Forge: train Polish UX depth track (first-visit, evidence, receipts)",
+    "pr": "https://github.com/slopryno/slopworks/pull/169",
+    "date": "2026-10-29",
+    "merged": "2026-10-29T22:51-04:00",
+    "opened": "2026-10-29T22:49-04:00"
+  },
+  {
+    "id": "pr168",
+    "role": "Forge",
+    "title": "Forge: close bot.py reclaim steal window (S1)",
+    "pr": "https://github.com/slopryno/slopworks/pull/168",
+    "date": "2026-10-29",
+    "merged": "2026-10-29T20:49-04:00",
+    "opened": "2026-10-29T20:47-04:00"
+  },
+  {
+    "id": "pr167",
+    "role": "Forge",
+    "title": "Forge: raise tracked-tree budget from 4 MB to 5 MB (Ryno, Oct 29 8:35 PM ET)",
+    "pr": "https://github.com/slopryno/slopworks/pull/167",
+    "date": "2026-10-29",
+    "merged": "2026-10-29T20:45-04:00",
+    "opened": "2026-10-29T20:40-04:00"
+  },
+  {
+    "id": "pr166",
+    "role": "Forge",
+    "title": "Evening wrap Oct 29: research notes (Scout, Verify, Comms), Team chat c454 to c460, records refresh through #157",
+    "pr": "https://github.com/slopryno/slopworks/pull/166",
+    "date": "2026-10-29",
+    "merged": "2026-10-29T20:17-04:00",
+    "opened": "2026-10-29T20:13-04:00"
+  },
+  {
     "id": "pr157",
     "role": "Forge",
     "title": "Core: Quest board data, team quests, dated oaths and camp duties in data/roadmap.json, checked by scripts/roadmap.py (E1 of 3)",
