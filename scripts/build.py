@@ -1098,7 +1098,7 @@ def build():
     import weekly
     files["weekly/index.html"] = page("weekly/", "Weekly recap", "What happened each week, from the records: what shipped, what the team found, what it learned, and what's next. A week still running is marked so far.",
                                       weekly.render(sys.modules[__name__], items, wins, ups, iss, aars, list(objectives.values())), "data")
-    # Home (mission i41, from the i40 prototype; spec in docs/mission/spec.md): hero, status line, featured sprint, tracker, team, activity.
+    # Home (mission i41; Polish UX depth 2026-10-29): latest verified, one next step, counts secondary, tracker, team, featured sprint, activity.
     files["index.html"] = page("", home.TITLE, f"{len(team())} Grok Bot roles run a real product, an unofficial Grok Bot tracker, and publish every decision behind it.",
                                home.render(sys.modules[__name__], items, wins, ups, iss, totals, levels, team(), dropped, screened, tl_where, objectives, href), "data", h1=home.HEADLINE)
 

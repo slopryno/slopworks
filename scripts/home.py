@@ -1,8 +1,10 @@
-"""Home page body (mission i41, from the i40 prototype): hero, status line, featured sprint, tracker, team, activity.
+"""Home page body (mission i41, from the i40 prototype): latest verified, one next step, counts secondary,
+tracker, team, featured sprint, activity.
 
-The spec is docs/mission/spec.md. build.py passes in the Timeline records, the ledger totals and the tracker data it has
-already loaded, so nothing is copied or typed by hand. No scripts: the one interaction is details/summary. Times are
-"as of" the records (the last merged PR), never a live clock.
+The spec is docs/mission/spec.md. Polish UX depth (trained 2026-10-29): lead with the most recently verified
+item and one clear next step; keep activity counts secondary. build.py passes in the Timeline records, the
+ledger totals and the tracker data it has already loaded, so nothing is copied or typed by hand. No scripts:
+the one interaction is details/summary. Times are "as of" the records (the last merged PR), never a live clock.
 """
 import re
 from html import escape as e
@@ -31,6 +33,12 @@ def pr_count(f):
     return int(m.group(2)) - int(m.group(1)) + 1 if m else len(f.get("children", []))
 
 
+def short_title(title, n=12):
+    """Comms: keep the lead card title glanceable; full title stays on the PR and Timeline."""
+    words = title.split()
+    return title if len(words) <= n else " ".join(words[:n]) + "\u2026"
+
+
 def render(b, items, wins, ups, iss, totals, levels, team, dropped, screened, tl_where, objectives, chat_href):
     up = ""
     asof = max((w.get("merged") or w["date"]) for w in wins) if wins else ""
@@ -40,13 +48,26 @@ def render(b, items, wins, ups, iss, totals, levels, team, dropped, screened, tl
     latest = {}
     for w in sorted(wins, key=lambda w: w.get("merged") or w["date"]):
         latest[w["role"]] = w
-    # Phase A V4 (Ryno 2026-10-19 6:33 PM ET, "Yes push new design"): big numbers carried by type, not colour fills, and a
-    # thin "live from the records" line. One primary button; the other two destinations are text links.
-    status = (f'<ul class="tiles"><li><strong>{len(team)}</strong> roles</li><li><strong>{len(wins)}</strong> merged PRs</li>'
+    # Polish UX depth (Ryno 2026-10-29 10:07 PM ET train-up): lead with latest verified + one next step;
+    # the three counts stay secondary (below the CTA). Primary action: use the tracker (Advocate on call).
+    lead = ""
+    if last:
+        when = last.get("merged") or last["date"]
+        lead = (f'<section class="panel feature" id="verified" aria-labelledby="verified-t">'
+                f'<p class="kicker">Latest verified</p>'
+                f'<h2 id="verified-t">{e(short_title(last["title"]))}</h2>'
+                f'<p class="meta"><span>{e(last["role"])}</span>'
+                f'<a href="{e(last["pr"])}">PR #{num(last)}</a> '
+                f'<time datetime="{e(when)}">{e(when[:10])} {e(when[11:16]) if len(when) > 10 else ""} ET</time></p>'
+                f'<p class="sub">Merged work, checked in the records. '
+                f'<a href="timeline/">Timeline</a> · <a href="roadmap/">Quest board</a></p></section>')
+    cta = ('<ul class="cta"><li><a class="btn primary" href="updates/">What\'s new in Grok Bot</a></li>'
+           '<li class="txt"><a href="roadmap/">Quest board</a></li><li class="txt"><a href="team/">Meet the team</a></li></ul>')
+    status = (f'<ul class="tiles" aria-label="From the records"><li><strong>{len(team)}</strong> roles</li>'
+              f'<li><strong>{len(wins)}</strong> merged PRs</li>'
               f'<li><strong>{len(done)}</strong> completed sprints</li></ul>'
-              + (f'<p class="asof">Live from the records · latest <a href="{e(last["pr"])}">PR #{num(last)}</a> <time datetime="{e(asof)}">{e(asof[:10])} {e(asof[11:16])} ET</time></p>' if last else ""))
-    cta = ('<ul class="cta"><li><a class="btn primary" href="team/">Meet the team</a></li>'
-           '<li class="txt"><a href="updates/">Grok Bot tracker</a></li><li class="txt"><a href="timeline/">Timeline</a></li></ul>')
+              + (f'<p class="asof">Live from the records · latest <a href="{e(last["pr"])}">PR #{num(last)}</a> '
+                 f'<time datetime="{e(asof)}">{e(asof[:10])} {e(asof[11:16])} ET</time></p>' if last else ""))
     feat = ""
     if done:
         f = max(done, key=lambda x: (x["date"], x["time"] or ""))
@@ -92,6 +113,5 @@ def render(b, items, wins, ups, iss, totals, levels, team, dropped, screened, tl
                 f'<span class="t">{e(x["title"])}{demo}</span></summary><div class="ev">{who}{text}{kids}<p><a href="{e(x["link"](up))}">Evidence: {e(x["cue"])}</a></p></div></details></li>')
     act = (f'<section aria-labelledby="act-t"><h2 id="act-t">Activity</h2><p class="sub">The latest {min(8, len(items))} records, newest first. Open one for who, what, and the evidence.</p>'
            f'<ol class="feed">{"".join(row(x, k == 0) for k, x in enumerate(items[:8]))}</ol><ul class="links"><li><a href="timeline/">Full timeline</a></li><li><a href="weekly/">Weekly recap</a></li><li><a href="metrics/">Metrics and trends</a></li><li><a href="how/">How this works</a></li></ul></section>')
-    # Home order (design huddle on Ryno's design inputs, 2026-10-19): the tracker leads, the team comes right after it and is
-    # never below the fold's second section, and the latest sprint (process meta) follows the team.
-    return status + cta + tracker + teams + feat + act
+    # Hierarchy (Polish UX depth + Advocate): verified lead → primary next step → counts → tracker → team → sprint → activity.
+    return lead + cta + status + tracker + teams + feat + act

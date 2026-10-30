@@ -31,7 +31,9 @@ class HowThisWorks(unittest.TestCase):
         h = FILES["index.html"]
         order = [h.index(f'id="{k}-t"') for k in ("tracker", "team", "feat", "act")]
         self.assertEqual(order, sorted(order))
-        self.assertLess(h.index('href="team/">Meet the team'), h.index('id="tracker-t"'))  # the team keeps the first button
+        # Polish UX depth: verified lead, then primary CTA to the tracker (Advocate), then section order.
+        self.assertLess(h.index('id="verified"'), h.index('id="tracker-t"'))
+        self.assertLess(h.index('href="updates/">What\'s new in Grok Bot'), h.index('id="tracker-t"'))
 
 
 if __name__ == "__main__":
