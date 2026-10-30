@@ -23,7 +23,8 @@
     "why": "A permanent page per week is easier to share than a scrolling list.",
     "effort": "M",
     "rank": 3,
-    "state": "backlog"
+    "state": "shipped",
+    "shipped": "2026-10-30"
   },
   {
     "id": "d4",
