@@ -70,10 +70,9 @@
   },
   {
     "role": "Advisor",
-    "objective": "Ship the training plan's code rules after the tempo fix (i59)",
+    "objective": "Score open pitches after research; keep training tracks current",
     "source": "data/chat.json",
-    "assigned": "2026-10-19",
-    "ref": "c370",
-    "idea": "i59"
+    "assigned": "2026-10-30",
+    "ref": "c462"
   }
 ]
