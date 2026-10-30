@@ -157,3 +157,155 @@ def errors(root=None, validate=None):
 def days_between(a, b):
     from datetime import date
     return (date.fromisoformat(b) - date.fromisoformat(a)).days
+
+
+# ---------- the page, the board feed and the calendar events (built by build.py) ----------
+STALE_DAYS = 14
+REPO = "https://github.com/slopryno/slopworks"
+RECORD_FILE = {"i": "data/ideas.json", "d": "data/design_backlog.json", "c": "data/chat.json", "a": "data/aars.json"}
+
+
+def esc(s):
+    import html
+    return html.escape(str(s), quote=True)
+
+
+def day(s):
+    from datetime import date
+    return date.fromisoformat(s).strftime("%b %-d")
+
+
+def ref_link(ref, up):
+    """(href, label) for a record: merged PRs on GitHub, goals on Metrics, other records in their data file."""
+    if ref.startswith("pr"):
+        return f"{REPO}/pull/{ref[2:]}", f"PR #{ref[2:]}"
+    if ref.startswith("G"):
+        return f"{up}metrics/#goals", f"goal {ref}"
+    if ref.startswith("file:"):
+        return f"{REPO}/blob/main/{ref[5:]}", ref[5:].rsplit("/", 1)[-1]
+    return f"{REPO}/blob/main/{RECORD_FILE[ref[0]]}", ref
+
+
+def next_judging(today):
+    """The Friday retro judges oaths: the next Friday on or after the newest record."""
+    from datetime import date, timedelta
+    d = date.fromisoformat(today)
+    return (d + timedelta(days=(4 - d.weekday()) % 7)).isoformat()
+
+
+def step_label(stage):
+    n = list(STAGES).index(stage) + 1
+    game, plain = STAGES[stage]
+    return f"Step {n} of {len(STAGES)}: {game} ({plain})"
+
+
+def render(board, today, lead, up="../"):
+    """The Quest board body. lead(name) returns the role's avatar, linked name and level from its character sheet."""
+    link = lambda ref: (lambda h, t: f'<a href="{esc(h)}">{esc(t)}</a>')(*ref_link(ref, up))
+    quests = board["quests"]
+    by = lambda g: [q for q in quests if q["group"] == g]
+    titles = {q["id"]: q["title"] for q in quests}
+
+    def card(q):
+        last = q["history"][-1]
+        steps = "".join(f'<li>{esc(STAGES[h["stage"]][0])}, {day(h["date"])} · {link(h["ref"])}</li>' for h in q["history"])
+        extra = ""
+        if q.get("fog"):
+            extra += f'<p><strong>{WORDS["fog"][0]}</strong> ({WORDS["fog"][1]}): {esc(q["fog"])}</p>'
+        if q.get("unlocks"):
+            extra += f'<p><strong>{WORDS["unlocks"][0]}:</strong> <a href="#q-{esc(q["unlocks"])}">{esc(titles[q["unlocks"]])}</a></p>'
+        if q.get("reason"):
+            why = "Why it's held" if q["group"] == "held" else "Why it was abandoned"
+            extra += f'<p><strong>{why}:</strong> {esc(q["reason"])}</p>'
+        party = "".join(f"<span>Party: {lead(r)}</span>" for r in q.get("party", []))
+        if q["group"] == "abandoned":
+            tags = '<span class="tag">Abandoned (dropped)</span>'
+        elif q["group"] == "held":
+            tags = '<span class="tag">Held (paused)</span>'
+        else:
+            tags = f'<span class="tag">{esc(step_label(last["stage"]))}</span>'
+        tags += f' <span class="tag">{WORDS["raid"][0]}</span>' if q.get("raid") else ""
+        return (f'<article class="card" id="q-{esc(q["id"])}"><h3>{esc(q["title"])}</h3><p>{esc(q["why"])}</p>{extra}'
+                f'<p class="meta"><span>{tags}</span><span>Led by {lead(q["lead"])}</span>{party}{link(q["ref"])}</p>'
+                + (f'<ol class="steps">{steps}</ol>' if q["group"] != "complete" else "") + "</article>")
+
+    def section(g, intro, items):
+        game, plain = GROUPS[g]
+        return (f'<h2 id="{g}">{game} <span class="sub">({plain})</span></h2><p>{intro}</p>'
+                + ("".join(card(q) for q in items) if items else '<p class="empty">None right now.</p>'))
+
+    kept, judged = kept_count(board["oaths"])
+    stale = days_between(board["updated"], today) > STALE_DAYS
+    out = (f'<p class="asof">Updated {day(board["updated"])} by <a href="{up}team/{board["owner"].lower()}/">{esc(board["owner"])}</a>. Next oath judging: {day(next_judging(today))}.</p>'
+           + (f'<p class="card"><strong>The board may be out of date.</strong> It was last updated {day(board["updated"])}.</p>' if stale else "")
+           + '<ul class="stats" aria-label="The board at a glance">'
+           + "".join(f'<li><a href="#{g}"><strong>{len(by(g))}</strong><span>{GROUPS[g][0].split()[0].lower()}</span></a></li>' for g in GROUPS)
+           + f'<li><a href="#oaths"><strong>{kept} of {judged}</strong><span>oaths kept</span></a></li></ul>')
+    complete = sorted(by("complete"), key=lambda q: q["history"][-1]["date"], reverse=True)[:10]
+    out += section("complete", f'The newest {len(complete)}, each with its PR. <a href="{up}timeline/">All of them</a>.', complete)
+    out += section("active", "What the team is working on now. Each step links the record that moved it.", by("active"))
+    out += section("held", "Paused on purpose. The reason is on the card; nothing here is in progress.", by("held"))
+    out += section("queued", "Accepted and waiting their turn, in no fixed order.", by("queued"))
+    out += section("rumor", "Ideas the team is exploring. Nothing here is promised.", by("rumor"))
+    out += section("abandoned", "Quests the team dropped, with the reason. Nothing is removed silently.", by("abandoned"))
+    rows = ""
+    for o in board["oaths"]:
+        game, plain = VERDICTS[o["verdict"]]
+        meta = f'<span class="tag">{game} ({plain})</span><span>Sworn {day(o["sworn"])}, due {day(o["due"])}</span><span>Led by {lead(o["lead"])}</span>{link(o["ref"])}'
+        if o.get("evidence"):
+            meta += f'<span>Proof: {link(o["evidence"])}</span>'
+        if o.get("aar"):
+            meta += f'<span>Lesson: {link(o["aar"])}</span>'
+        note = "".join(f'<p>{esc(o[k])}</p>' for k in ("reason", "note", "corrected") if o.get(k))
+        rows += f'<article class="card" id="oath-{esc(o["id"])}"><h3>{esc(o["claim"])}</h3>{note}<p class="meta">{meta}</p></article>'
+    out += (f'<h2 id="oaths">{WORDS["oath"][0]}s <span class="sub">({WORDS["oath"][1]})</span></h2>'
+            f'<p>Oaths kept: {kept} of {judged} judged so far. Withdrawn and unjudged oaths are listed but not counted.</p>' + rows)
+    out += (f'<h2 id="camp">{WORDS["camp"][0]} <span class="sub">({WORDS["camp"][1]})</span></h2><p>Work that keeps the team running, tracked on '
+            f'<a href="{up}lessons/">Lessons</a> and <a href="{up}metrics/">Metrics</a>.</p><ul>'
+            + "".join(f'<li>{esc(c["title"])}: {link(c["ref"])}</li>' for c in board["camp"]) + "</ul>")
+    share = "https://bsky.app/intent/compose?text=" + __import__("urllib.parse").parse.quote("The Slopworks bot team's quest board: https://slopryno.com/roadmap/")
+    out += ('<h2 id="follow">Follow the board</h2><p>Get each completed quest and judged oath without checking back. Nothing here collects anything.</p><ul>'
+            f'<li><a href="feed.xml">Board RSS feed</a></li><li><a href="feed.json">Board JSON Feed</a></li>'
+            f'<li><a href="webcal://slopryno.com/calendar.ics">Subscribe to oath due dates</a></li>'
+            f'<li><a href="{REPO}">Watch on GitHub (Custom, Releases)</a></li><li><a href="https://aboutfeeds.com/">New to feeds?</a></li>'
+            f'<li><a href="mailto:?subject=Slopworks%20quest%20board&amp;body=https%3A%2F%2Fslopryno.com%2Froadmap%2F">Share by email</a></li>'
+            f'<li><a href="{esc(share)}">Share on Bluesky</a></li></ul>'
+            '<p class="sub">Google Calendar subscribes from a desktop browser only, and refreshes about once a day.</p>')
+    return out
+
+
+def feed_items(board):
+    """One item per board event: every stage step and every sworn or judged oath. Ids never change once published."""
+    items = []
+    for q in board["quests"]:
+        for h in q["history"]:
+            game, plain = STAGES[h["stage"]]
+            head = "Quest complete" if h["stage"] == "complete" else f"Quest {game.lower()}"
+            items.append({"id": f'roadmap-{q["id"]}-{h["stage"]}-{h["date"]}', "date": h["date"], "anchor": f'q-{q["id"]}',
+                          "title": f'{head}: {q["title"]} ({plain})', "summary": q["why"]})
+        if q["group"] == "abandoned":
+            items.append({"id": f'roadmap-{q["id"]}-abandoned', "date": q["history"][-1]["date"], "anchor": f'q-{q["id"]}',
+                          "title": f'Quest abandoned: {q["title"]} (dropped)', "summary": q["reason"]})
+        if q["group"] == "held" and q.get("reason"):
+            items.append({"id": f'roadmap-{q["id"]}-held', "date": q["history"][-1]["date"], "anchor": f'q-{q["id"]}',
+                          "title": f'Quest held: {q["title"]} (paused)', "summary": q["reason"]})
+    for o in board["oaths"]:
+        items.append({"id": f'roadmap-oath-{o["id"]}-sworn-{o["sworn"]}', "date": o["sworn"], "anchor": f'oath-{o["id"]}',
+                      "title": f'Oath sworn: {o["claim"]} (due {day(o["due"])})', "summary": "A dated call the team made about itself."})
+        if o["verdict"] != "open":
+            game, plain = VERDICTS[o["verdict"]]
+            items.append({"id": f'roadmap-oath-{o["id"]}-{o["verdict"]}-{o["judged"]}', "date": o["judged"], "anchor": f'oath-{o["id"]}',
+                          "title": f'Oath {game.lower()}: {o["claim"]} ({plain})', "summary": o.get("reason") or o.get("note") or o["claim"]})
+    return sorted(items, key=lambda x: (x["date"], x["id"]), reverse=True)
+
+
+def calendar_events(board):
+    """(uid, date, summary, description, status, sequence) per oath for calendar.ics: a withdrawn oath stays, cancelled."""
+    out = []
+    for o in board["oaths"]:
+        game, plain = VERDICTS[o["verdict"]]
+        status = "CANCELLED" if o["verdict"] == "withdrawn" else "CONFIRMED"
+        summary = f'Oath due: {o["claim"]}' if o["verdict"] == "open" else f'Oath {game.lower()}: {o["claim"]}'
+        out.append((f'oath-{o["id"]}', o["due"], summary, f'{game} ({plain}). Led by {o["lead"]}. A dated call the Slopworks team made about itself.',
+                    status, 0 if o["verdict"] == "open" else 1))
+    return out
