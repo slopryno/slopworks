@@ -1848,11 +1848,10 @@ def run_review_gate():
     if review_deferred(pr):
         print("review-gate: draft PR, sign-offs are checked when it is marked ready for review")
         return []
-    body = pr.get("body") or ""
-    errs = review_gate(changed(base, head), body, comments)
-    errs += blast_radius_errors(changed(base, head), body, comments)
+    errs = review_gate(changed(base, head), pr.get("body") or "", comments)
+    errs += blast_radius_errors(changed(base, head), pr.get("body") or "", comments)
     errs += lens_derived_errors(comments)
-    errs += coauthor_text_errors(body, f"PR {os.environ.get('PR', '?')} body")
+    errs += coauthor_text_errors(pr.get("body") or "", f"PR {os.environ.get('PR', '?')} body")
     errs += coauthor_commit_errors(base, head)
     repeat = {r: n for r, n in block_count(comments).items() if n >= 2}
     if repeat:
