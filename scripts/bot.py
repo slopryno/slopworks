@@ -173,8 +173,9 @@ def take_lock(path=None, pid=None):
     """Refuse if another live bot.py pr or resume holds the lock; a lock left by a dead process is replaced.
 
     F2: the claim is atomic. The lock is a hard link to a file that already holds our pid, so two runs
-    can't both create it, and a reader never sees it empty. A stale lock is moved aside first, and put
-    back if what moved turns out to be a live run's fresh lock."""
+    can't both create it, and a reader never sees it empty. A missing path is retried with link (never
+    renamed). Unreadable or dead-holder files are re-checked immediately before rename; on put-back
+    conflict, never delete an aside that still names a live run."""
     import os
     path, pid = Path(path or lock_path()), pid or os.getpid()
     tmp = path.with_name(f"{path.name}.{os.getpid()}.tmp")
@@ -191,24 +192,36 @@ def take_lock(path=None, pid=None):
                 return path
             if other is not None and _alive(other):
                 raise Refused(f"another bot.py run (pid {other}) is still going; wait for it, don't resume over it ({path})")
+            if other is None and not path.exists():
+                continue  # vanished between link and read — retry link; do not rename
+            # Dead pid, or unreadable file that still exists. Re-verify immediately before rename (S1).
+            current = _holder(path)
+            if current == pid:
+                return path
+            if current is not None and _alive(current):
+                raise Refused(f"another bot.py run (pid {current}) is still going; wait for it, don't resume over it ({path})")
+            if other is not None and current != other:
+                continue  # identity changed since observe; retry rather than rename the wrong file
+            if current is None and not path.exists():
+                continue
             aside = path.with_name(f"{path.name}.{os.getpid()}.stale")
             try:
                 os.rename(path, aside)
             except FileNotFoundError:
                 continue
             moved = _holder(aside)
-            if moved != other and moved is not None and _alive(moved):
+            if moved is not None and _alive(moved) and moved != pid:
                 try:
                     os.link(aside, path)  # we moved a live run's fresh lock: put it back
+                    aside.unlink(missing_ok=True)
                 except FileExistsError:
+                    # Leave the aside: deleting it would drop the only copy of a live holder's record.
                     pass
-                aside.unlink(missing_ok=True)
                 raise Refused(f"another bot.py run (pid {moved}) took the lock first ({path})")
             aside.unlink(missing_ok=True)
         raise Refused(f"couldn't take {path} after 5 tries; another run keeps taking it")
     finally:
         tmp.unlink(missing_ok=True)
-
 
 def release_lock(path, pid=None):
     """Delete the lock only if this run holds it (F2): never remove another run's lock."""
