@@ -131,7 +131,7 @@ Remove the duplicate `llms.txt` line. Add `lastmod` to the sitemap from record d
 
 *Normal PR · G1*
 
-One 1200×630 PNG for the site and one for each top section, with `twitter:card` set to `summary_large_image`. X doesn't render SVG cards. Pages don't load `og:image`, so these images stay outside the 100 KB page budget. Keep each under about 60 KB to protect the 4 MB repo budget.
+One 1200×630 PNG for the site and one for each top section, with `twitter:card` set to `summary_large_image`. X doesn't render SVG cards. Pages don't load `og:image`, so these images stay outside the 100 KB page budget. Keep each under about 60 KB to protect the 5 MB repo budget.
 
 - **Owner:** Polish designs, Shield clears it as a brand asset
 - **Done when:** X's card preview shows an image for Home, Tracker and Team links

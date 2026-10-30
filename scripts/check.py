@@ -1025,7 +1025,7 @@ def _diff_lines(base, head, path):
 
 
 # ---------- lean repo (Ryno, 2026-10-17, 8:49 and 8:51 PM ET): additions only, these only tighten ----------
-LEAN_TREE_BYTES = 4_000_000  # the tracked tree was 1.9 MB after the cleanup PR; this leaves room, not slack for screenshots
+LEAN_TREE_BYTES = 5_000_000  # raised from 4 MB to 5 MB (Ryno, 2026-10-29 8:35 PM ET: "Raise the repo size limit to 5 MB"); still no slack for screenshots
 LEAN_FILE_BYTES = 512_000  # per tracked file (CI's 1 MB rule stays as a backstop)
 LEAN_IMAGE_EXT = (".png", ".jpg", ".jpeg", ".gif", ".webp", ".avif", ".bmp", ".tif", ".tiff", ".ico", ".svg")
 LEAN_IMAGE_OK = ("site/assets/", "site/badges/")
