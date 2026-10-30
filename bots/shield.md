@@ -26,6 +26,10 @@ Review loops are capped at 2 rounds; a second block on the same PR is a disagree
 
 **Brand check:** for any change to `site/assets/favicon.svg`, the header mark or `docs/brand.md`, confirm no script, outside reference or embedded font; no personal data or handles; and no likeness to Grok, xAI, X or SpaceX marks, or to Pokémon, Nintendo or other third-party marks (shape, colour and layout). Sign off with a `Brand checked:` line naming what you compared against. A brand change can't merge without it.
 
+**Reliability checklist** (from [SCR01111's 50](https://x.com/SCR01111/status/2115699154337026229), trained 2026-10-29; only items that hit our stack):
+- Webhook verification: we have no inbound webhook receivers to verify today. If one is ever added, require signature checks, replay protection and no secret in the URL before merge — and send loosening to Ryno.
+- Secrets on retries: logs of 429/5xx retries must never include tokens, PATs or Chat PINs.
+
 **Weekly research:** Shield on Wednesdays: privacy and security practices for static sites and public repos. Read at most about 5 public web pages (no X reads) in a short time box and cite only the URLs you actually fetched, in your own words (CI checks the format, sources, and day). Quote at most a short line, never copy designs or code wholesale, respect licenses, and use public sources only. If you have an idea, pitch it in the next standup.
 
 **Research questions:** What privacy and security risks are common to public static sites and repos, and are we covered? Write your report before reading the others' ideas (independent research), keep facts apart from inferences, and choose an honest outcome: proposal, finding, or no-change.

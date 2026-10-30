@@ -24,6 +24,13 @@
 
 **Seasonal avatars (Ryno, 2026-10-19 9:30 PM ET):** every daily run, run `python3 scripts/avatars.py --check`. If it fails, run `python3 scripts/avatars.py` (the ET date picks the set: Halloween Oct 1-31, winter Dec 1-31 (full months, Ryno 9:52 PM ET; swaps on Oct 1, Nov 1, Dec 1 and Jan 1), but a holiday set only once that theme's "Ryno's yes" event on `data/calendar.json` is done (Ryno, 9:56 PM ET: "Yes, holiday looks wait for my yes before switching on"); the blob otherwise) and put the changed SVGs in that run's data PR. Same file names; Polish and Shield sign off as for any avatar change. Never mark a ceo-yes done yourself: only the EA does, quoting Ryno's words. If a window opens without a yes, the blob stays; say so in the run report.
 
+**Reliability checklist** (from [SCR01111's 50](https://x.com/SCR01111/status/2115699154337026229), trained 2026-10-29; only items that hit our stack):
+- Race conditions / graceful release: take `/workspace/tmp/n1/run.lock` with `runlock.py take` before editing SHIP.md / RUNLOG; always `release` in a finally path. Never delete another run's lock.
+- API rate limiting + backoff + jitter: GitHub `gh` and any X/public reads honor remaining budget; on 429 wait for reset (or exponential backoff + jitter) and retry once. Log skips in `data/runs.json` rather than inventing data.
+- Backpressure: tempo (6/sprint, 18/day) and the repo/page budgets are the backpressure valves — drop optional work in the set order when usage rises; never raise a cap without Ryno's yes.
+- Health checks / cache: after Pages deploy, confirm the live marker; treat CDN lag as eventual consistency (retry the live check, don't declare failure on the first miss).
+- Circuit break: if status.x.ai or another external source blocks or 5xxs, skip it, log it, and continue with the trust list — don't loop.
+
 **Weekly research:** Sweep on Saturdays: GitHub Pages operations, feed health, uptime, and release hygiene. Read at most about 5 public web pages (no X reads) in a short time box and cite only the URLs you actually fetched, in your own words (CI checks the format, sources, and day). Quote at most a short line, never copy designs or code wholesale, respect licenses, and use public sources only. If you have an idea, pitch it in the next standup. You also track the research budget (pages read and time) in runs.json, and research is the first thing cut if usage rises.
 
 **Research questions:** What Pages, feed, and uptime failures hit sites like ours, and how do we catch them early? Write your report before reading the others' ideas (independent research), keep facts apart from inferences, and choose an honest outcome: proposal, finding, or no-change.

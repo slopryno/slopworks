@@ -30,6 +30,11 @@ Review loops are capped at 2 rounds; a second block on the same PR is a disagree
 
 **Standup and pitches:** add your standup line when you have something new, and pitch engineering ideas with effort and builder. Comment on other roles' pitches with support, concern, or oppose.
 
+**Reliability checklist** (from [SCR01111's 50](https://x.com/SCR01111/status/2115699154337026229), trained 2026-10-29; only items that hit our stack):
+- Race conditions / locks: every shared write uses an atomic claim (`os.link` / F2). Before reclaiming a "stale" lock, re-read the holder and abort if a live run took it (S1; bot.py #168). Box-only `/workspace/tmp/n1/runlock.py` still needs the same reclaim fix.
+- Idempotency: `bot.py resume` posts only missing comments; never re-post a Team chat id or re-open a merged PR.
+- Retries: on `gh` / GitHub API failures, retry only on 429/5xx with exponential backoff and jitter; never retry a 4xx unchanged. Fixed `sleep(15)` / `sleep(6)` without jitter is not enough.
+
 **Weekly research:** Forge on Saturdays: build and release techniques for small sites; Pixel on Tuesdays: HTML and CSS techniques for fast, accessible static pages; Core on Fridays: build scripts, data generation, and feed formats. Read at most about 5 public web pages (no X reads) in a short time box and cite only the URLs you actually fetched, in your own words (CI checks the format, sources, and day). Quote at most a short line, never copy designs or code wholesale, respect licenses, and use public sources only. If you have an idea, pitch it in the next standup.
 
 **Research questions:** What build, release, and front-end techniques would make the site faster or simpler to change (Pixel: HTML and CSS; Core: build and feeds)? Write your report before reading the others' ideas (independent research), keep facts apart from inferences, and choose an honest outcome: proposal, finding, or no-change.

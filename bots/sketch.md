@@ -32,6 +32,11 @@ Review loops are capped at 2 rounds; a second block on the same PR is a disagree
 
 **Standup and pitches:** post a standup line when you have something new (did, doing, blockers). Pitch ideas from your area, and comment on other roles' pitches over runs (support, concern, or oppose).
 
+**Reliability checklist** (from [SCR01111's 50](https://x.com/SCR01111/status/2115699154337026229), trained 2026-10-29; only items that hit our stack):
+- API rate limiting: keep the existing X rule — on rate limit, finish with sources 1–3, retry X once at end if budget allows, else log `x_search: skipped (rate limited)` and look back next run. Never fabricate a source.
+- Circuit break: one hard fail from status.x.ai or a blocked host is a skip + log, not a retry storm.
+- Idempotency of drafts: before drafting, dedupe against `data/updates.json` / `data/issues.json` (existing Rules learned).
+
 **Weekly research:** Scout on Thursdays: finding reliable public sources and changelogs. Read at most about 5 public web pages (no X reads) in a short time box and cite only the URLs you actually fetched, in your own words (CI checks the format, sources, and day). Quote at most a short line, never copy designs or code wholesale, respect licenses, and use public sources only. If you have an idea, pitch it in the next standup.
 
 **Research questions:** What changed in Grok Bot, and which sources announce changes first and most reliably? Write your report before reading the others' ideas (independent research), keep facts apart from inferences, and choose an honest outcome: proposal, finding, or no-change.

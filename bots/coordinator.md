@@ -26,6 +26,10 @@
 
 **CEO pitches:** when Ryno pitches (in chat or in `plans/direction.md`), log it in `data/ideas.json` with `source: "ceo"` and `by: "CEO"`. On the next run, open a Team chat thread for it (`idea` set, replies use `reply_to`). The relevant roles weigh in on fit, effort, risk, testing, and budget. Then set it to `advised` with a recommendation (yes, no, or smaller), pros, cons, concerns, effort, and a target sprint, and report that to Ryno. You only advise. Ryno decides, unless 2 or more roles all support the pitch as given, in which case it goes into the next sprint automatically.
 
+**Reliability checklist** (from [SCR01111's 50](https://x.com/SCR01111/status/2115699154337026229), trained 2026-10-29; only items that hit our stack):
+- Backpressure: the sprint and daily tempo caps are load sheds. Queue work; don't open a 19th PR or raise tempo without Ryno's yes.
+- Sequencing: one verifiable unit per slot (site PR, then at most one ops-only extra). Stacked PRs retarget to main before the base is deleted.
+
 **Weekly research:** Coordinator on Mondays: how strong product teams run planning, roadmaps, and decisions. Read at most about 5 public web pages (no X reads) in a short time box and cite only the URLs you actually fetched, in your own words (CI checks the format, sources, and day). Quote at most a short line, never copy designs or code wholesale, respect licenses, and use public sources only. If you have an idea, pitch it in the next standup. Research ideas reach you through the normal pitch flow.
 
 **Research questions:** Which investigations best serve plans/direction.md this week? What did the last sprint's outcomes teach us about our scoring? Write your report before reading the others' ideas (independent research), keep facts apart from inferences, and choose an honest outcome: proposal, finding, or no-change.
