@@ -1,0 +1,261 @@
+{
+  "version": "https://jsonfeed.org/version/1.1",
+  "title": "Slopworks Quest board (roadmap)",
+  "home_page_url": "https://slopryno.com/roadmap/",
+  "feed_url": "https://slopryno.com/roadmap/feed.json",
+  "description": "Each completed quest, stage change and judged oath on the Slopworks team's roadmap. Unofficial, fan-built project. Not affiliated with or endorsed by Grok Bot, SpaceX, or X.",
+  "items": [
+    {
+      "id": "roadmap-run-heartbeat-challenged-2026-10-28",
+      "url": "https://slopryno.com/roadmap/#q-run-heartbeat",
+      "title": "Quest challenged: Notice a missed run and measure each run (challenged by the team)",
+      "content_text": "A five-day outage left no record. A heartbeat flags a missed run; a usage ledger records each run's model and minutes.",
+      "date_published": "2026-10-28T12:00:00+00:00"
+    },
+    {
+      "id": "roadmap-item-pages-challenged-2026-10-28",
+      "url": "https://slopryno.com/roadmap/#q-item-pages",
+      "title": "Quest challenged: A page for every update and issue (challenged by the team)",
+      "content_text": "One shareable page per tracker entry, with its source and who added it: the front door for getting found.",
+      "date_published": "2026-10-28T12:00:00+00:00"
+    },
+    {
+      "id": "roadmap-run-heartbeat-discovered-2026-10-27",
+      "url": "https://slopryno.com/roadmap/#q-run-heartbeat",
+      "title": "Quest discovered: Notice a missed run and measure each run (explored)",
+      "content_text": "A five-day outage left no record. A heartbeat flags a missed run; a usage ledger records each run's model and minutes.",
+      "date_published": "2026-10-27T12:00:00+00:00"
+    },
+    {
+      "id": "roadmap-item-pages-discovered-2026-10-27",
+      "url": "https://slopryno.com/roadmap/#q-item-pages",
+      "title": "Quest discovered: A page for every update and issue (explored)",
+      "content_text": "One shareable page per tracker entry, with its source and who added it: the front door for getting found.",
+      "date_published": "2026-10-27T12:00:00+00:00"
+    },
+    {
+      "id": "roadmap-no-ceo-quotes-complete-2026-10-21",
+      "url": "https://slopryno.com/roadmap/#q-no-ceo-quotes",
+      "title": "Quest complete: Decisions paraphrased, never quoted, on the site (shipped)",
+      "content_text": "Ryno's exact words stay in the records; the site says what was decided.",
+      "date_published": "2026-10-21T12:00:00+00:00"
+    },
+    {
+      "id": "roadmap-logo-complete-2026-10-21",
+      "url": "https://slopryno.com/roadmap/#q-logo",
+      "title": "Quest complete: A Slopworks logo and favicon (shipped)",
+      "content_text": "One mark for the site, the tab and the cards.",
+      "date_published": "2026-10-21T12:00:00+00:00"
+    },
+    {
+      "id": "roadmap-character-sheets-complete-2026-10-21",
+      "url": "https://slopryno.com/roadmap/#q-character-sheets",
+      "title": "Quest complete: Character sheets on the back of each card (shipped)",
+      "content_text": "Each role's record, XP and quests one tap from its card.",
+      "date_published": "2026-10-21T12:00:00+00:00"
+    },
+    {
+      "id": "roadmap-trading-cards-complete-2026-10-20",
+      "url": "https://slopryno.com/roadmap/#q-trading-cards",
+      "title": "Quest complete: Team trading cards you can tap open (shipped)",
+      "content_text": "Every role as a card with its level, job type and sheet, so the team is easy to meet.",
+      "date_published": "2026-10-20T12:00:00+00:00"
+    },
+    {
+      "id": "roadmap-team-calendar-complete-2026-10-20",
+      "url": "https://slopryno.com/roadmap/#q-team-calendar",
+      "title": "Quest complete: A real team calendar with a subscribe feed (shipped)",
+      "content_text": "Runs, reviews and holiday themes by month, and an .ics file to follow them.",
+      "date_published": "2026-10-20T12:00:00+00:00"
+    },
+    {
+      "id": "roadmap-holiday-avatars-complete-2026-10-20",
+      "url": "https://slopryno.com/roadmap/#q-holiday-avatars",
+      "title": "Quest complete: Holiday avatars for every role (shipped)",
+      "content_text": "Each role dresses up for the season, switched on only after Ryno's yes.",
+      "date_published": "2026-10-20T12:00:00+00:00"
+    },
+    {
+      "id": "roadmap-weekly-digest-discovered-2026-10-19",
+      "url": "https://slopryno.com/roadmap/#q-weekly-digest",
+      "title": "Quest discovered: This week in Grok Bot, with a shipping calendar (explored)",
+      "content_text": "The weekly recap gains the week's Grok Bot updates and a day-by-day view of what shipped.",
+      "date_published": "2026-10-19T12:00:00+00:00"
+    },
+    {
+      "id": "roadmap-weekly-digest-challenged-2026-10-19",
+      "url": "https://slopryno.com/roadmap/#q-weekly-digest",
+      "title": "Quest challenged: This week in Grok Bot, with a shipping calendar (challenged by the team)",
+      "content_text": "The weekly recap gains the week's Grok Bot updates and a day-by-day view of what shipped.",
+      "date_published": "2026-10-19T12:00:00+00:00"
+    },
+    {
+      "id": "roadmap-theme-flip-complete-2026-10-19",
+      "url": "https://slopryno.com/roadmap/#q-theme-flip",
+      "title": "Quest complete: A light and dark theme switch, no script (shipped)",
+      "content_text": "Visitors pick a theme with a plain checkbox; nothing is sent or stored.",
+      "date_published": "2026-10-19T12:00:00+00:00"
+    },
+    {
+      "id": "roadmap-oath-g3-fast-features-sworn-2026-10-19",
+      "url": "https://slopryno.com/roadmap/#oath-g3-fast-features",
+      "title": "Oath sworn: Every new tracker item logged within 1 day, and 2 features demoed within 7 days of entry (due Nov 18)",
+      "content_text": "A dated call the team made about itself.",
+      "date_published": "2026-10-19T12:00:00+00:00"
+    },
+    {
+      "id": "roadmap-oath-g2-showcase-sworn-2026-10-19",
+      "url": "https://slopryno.com/roadmap/#oath-g2-showcase",
+      "title": "Oath sworn: 12 real-trace showcase entries, 6 of them new, with at least 1 new format (due Nov 18)",
+      "content_text": "A dated call the team made about itself.",
+      "date_published": "2026-10-19T12:00:00+00:00"
+    },
+    {
+      "id": "roadmap-oath-g1-get-found-sworn-2026-10-19",
+      "url": "https://slopryno.com/roadmap/#oath-g1-get-found",
+      "title": "Oath sworn: 50 unique repo visitors in GitHub's 14-day window, 5 stars, 2 outside referrer domains (due Nov 18)",
+      "content_text": "A dated call the team made about itself.",
+      "date_published": "2026-10-19T12:00:00+00:00"
+    },
+    {
+      "id": "roadmap-nav-tab-bar-discovered-2026-10-19",
+      "url": "https://slopryno.com/roadmap/#q-nav-tab-bar",
+      "title": "Quest discovered: A bottom tab bar on phones (explored)",
+      "content_text": "Persistent links to six pages at the bottom of every phone screen.",
+      "date_published": "2026-10-19T12:00:00+00:00"
+    },
+    {
+      "id": "roadmap-nav-tab-bar-challenged-2026-10-19",
+      "url": "https://slopryno.com/roadmap/#q-nav-tab-bar",
+      "title": "Quest challenged: A bottom tab bar on phones (challenged by the team)",
+      "content_text": "Persistent links to six pages at the bottom of every phone screen.",
+      "date_published": "2026-10-19T12:00:00+00:00"
+    },
+    {
+      "id": "roadmap-nav-tab-bar-abandoned",
+      "url": "https://slopryno.com/roadmap/#q-nav-tab-bar",
+      "title": "Quest abandoned: A bottom tab bar on phones (dropped)",
+      "content_text": "The four-link top nav stays; a second nav needs evidence that the hubs cost visitors.",
+      "date_published": "2026-10-19T12:00:00+00:00"
+    },
+    {
+      "id": "roadmap-month-1-goals-complete-2026-10-19",
+      "url": "https://slopryno.com/roadmap/#q-month-1-goals",
+      "title": "Quest complete: Month-1 goals on Metrics (shipped)",
+      "content_text": "Three measurable goals with targets and progress from records.",
+      "date_published": "2026-10-19T12:00:00+00:00"
+    },
+    {
+      "id": "roadmap-metric-trends-discovered-2026-10-19",
+      "url": "https://slopryno.com/roadmap/#q-metric-trends",
+      "title": "Quest discovered: Trend lines on Metrics (explored)",
+      "content_text": "Small static charts next to the numbers, with the values written out.",
+      "date_published": "2026-10-19T12:00:00+00:00"
+    },
+    {
+      "id": "roadmap-lesson-filters-discovered-2026-10-19",
+      "url": "https://slopryno.com/roadmap/#q-lesson-filters",
+      "title": "Quest discovered: Filter Lessons by type and the Timeline by decision (explored)",
+      "content_text": "One tap to see only incidents, or only what Ryno decided.",
+      "date_published": "2026-10-19T12:00:00+00:00"
+    },
+    {
+      "id": "roadmap-how-this-works-complete-2026-10-19",
+      "url": "https://slopryno.com/roadmap/#q-how-this-works",
+      "title": "Quest complete: How this works, in plain words (shipped)",
+      "content_text": "The daily run, the roles and where Ryno decides, on one page.",
+      "date_published": "2026-10-19T12:00:00+00:00"
+    },
+    {
+      "id": "roadmap-dark-mode-option-discovered-2026-10-19",
+      "url": "https://slopryno.com/roadmap/#q-dark-mode-option",
+      "title": "Quest discovered: A dark mode option (explored)",
+      "content_text": "A static dark theme for readers who prefer it.",
+      "date_published": "2026-10-19T12:00:00+00:00"
+    },
+    {
+      "id": "roadmap-dark-mode-option-abandoned",
+      "url": "https://slopryno.com/roadmap/#q-dark-mode-option",
+      "title": "Quest abandoned: A dark mode option (dropped)",
+      "content_text": "It already existed: the site follows the phone's dark setting, with contrast checked in both themes.",
+      "date_published": "2026-10-19T12:00:00+00:00"
+    },
+    {
+      "id": "roadmap-collapsible-cards-discovered-2026-10-19",
+      "url": "https://slopryno.com/roadmap/#q-collapsible-cards",
+      "title": "Quest discovered: Shorter Team and Lessons pages on phones (explored)",
+      "content_text": "Role and lesson cards open on tap, so phone readers scroll less.",
+      "date_published": "2026-10-19T12:00:00+00:00"
+    },
+    {
+      "id": "roadmap-public-metrics-complete-2026-10-18",
+      "url": "https://slopryno.com/roadmap/#q-public-metrics",
+      "title": "Quest complete: Public metrics and trends from records (shipped)",
+      "content_text": "Merge time, CI catches, failures and lessons, every number linked to its record.",
+      "date_published": "2026-10-18T12:00:00+00:00"
+    },
+    {
+      "id": "roadmap-rpg-quests-held",
+      "url": "https://slopryno.com/roadmap/#q-rpg-quests",
+      "title": "Quest held: Daily, weekly and level-up quests (paused)",
+      "content_text": "Badges and mission rollouts stay HELD (Oct 27 prototype decision). The board tracks it; it is not in progress.",
+      "date_published": "2026-10-17T12:00:00+00:00"
+    },
+    {
+      "id": "roadmap-rpg-quests-discovered-2026-10-17",
+      "url": "https://slopryno.com/roadmap/#q-rpg-quests",
+      "title": "Quest discovered: Daily, weekly and level-up quests (explored)",
+      "content_text": "Rewards the work that keeps the site accurate, not activity: Week 2 of the Slopworks RPG.",
+      "date_published": "2026-10-17T12:00:00+00:00"
+    },
+    {
+      "id": "roadmap-rpg-quests-challenged-2026-10-17",
+      "url": "https://slopryno.com/roadmap/#q-rpg-quests",
+      "title": "Quest challenged: Daily, weekly and level-up quests (challenged by the team)",
+      "content_text": "Rewards the work that keeps the site accurate, not activity: Week 2 of the Slopworks RPG.",
+      "date_published": "2026-10-17T12:00:00+00:00"
+    },
+    {
+      "id": "roadmap-impact-ledger-discovered-2026-10-17",
+      "url": "https://slopryno.com/roadmap/#q-impact-ledger",
+      "title": "Quest discovered: Impact Ledger and Build Observatory (explored)",
+      "content_text": "Showcase pages for real measured impact, once four weeks of showcase data exist.",
+      "date_published": "2026-10-17T12:00:00+00:00"
+    },
+    {
+      "id": "roadmap-first-raid-discovered-2026-10-17",
+      "url": "https://slopryno.com/roadmap/#q-first-raid",
+      "title": "Quest discovered: The first team raid (explored)",
+      "content_text": "A hard task several roles take on together, picked from the six raids in the RPG plan.",
+      "date_published": "2026-10-17T12:00:00+00:00"
+    },
+    {
+      "id": "roadmap-social-preview-discovered-2026-10-16",
+      "url": "https://slopryno.com/roadmap/#q-social-preview",
+      "title": "Quest discovered: A preview image for shared links (explored)",
+      "content_text": "Links shared elsewhere show a blank card today.",
+      "date_published": "2026-10-16T12:00:00+00:00"
+    },
+    {
+      "id": "roadmap-state-of-slopworks-discovered-2026-10-15",
+      "url": "https://slopryno.com/roadmap/#q-state-of-slopworks",
+      "title": "Quest discovered: A monthly State of Slopworks page (explored)",
+      "content_text": "Once a month, what the team shipped, learned and missed, from the records.",
+      "date_published": "2026-10-15T12:00:00+00:00"
+    },
+    {
+      "id": "roadmap-separate-bots-discovered-2026-10-15",
+      "url": "https://slopryno.com/roadmap/#q-separate-bots",
+      "title": "Quest discovered: Separate bots for each role (explored)",
+      "content_text": "Split roles into their own bots once the daily loop is stable, each one earning its place.",
+      "date_published": "2026-10-15T12:00:00+00:00"
+    },
+    {
+      "id": "roadmap-bot-template-discovered-2026-10-15",
+      "url": "https://slopryno.com/roadmap/#q-bot-template",
+      "title": "Quest discovered: A shareable Grok Bot template (explored)",
+      "content_text": "A routine visitors can copy to follow the tracker in their own Grok Bot.",
+      "date_published": "2026-10-15T12:00:00+00:00"
+    }
+  ]
+}
