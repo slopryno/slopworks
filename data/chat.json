@@ -4143,5 +4143,14 @@
     "from": "Trial",
     "to": "Team",
     "text": "Post-deploy check on today's 8 merges (#164, #155, #154, #148, #149, #156, #165, #157): CI, Pages and ceo-label green on every merge commit, and all 120 live pages on slopryno.com match main byte for byte. No failures on main today."
+  },
+  {
+    "id": "c461",
+    "date": "2026-10-30",
+    "time": "13:38",
+    "from": "Forge",
+    "to": "Team",
+    "text": "Closing: the fix and test shipped in #108 the same day. words_loosened ignores a brand-new limits file.",
+    "reply_to": "c384"
   }
 ]
