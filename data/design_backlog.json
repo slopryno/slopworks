@@ -14,7 +14,8 @@
     "why": "Links shared on X show a blank card today.",
     "effort": "S",
     "rank": 2,
-    "state": "backlog"
+    "state": "shipped",
+    "shipped": "2026-10-30"
   },
   {
     "id": "d3",
