@@ -1500,10 +1500,38 @@ def drill_errors(root=None):
     return errs
 
 
+
+def state_runs_errors(root=None):
+    """Training plan (i59): state.json's last_run must match the newest day in runs.json, and last_status
+    must match that day's run. The Oct 20/21 interrupted runs left no record; heartbeat notices a miss, and
+    this check keeps the two files from drifting after a skip or failure is written down."""
+    root = root or ROOT
+    try:
+        state = json.loads((root / "data/state.json").read_text())
+        runs = json.loads((root / "data/runs.json").read_text())
+    except (OSError, ValueError) as err:
+        return [f"data/state.json or data/runs.json: {err}"]
+    if not runs:
+        return []
+    newest = max(r["date"] for r in runs)
+    errs = []
+    if state.get("last_run") != newest:
+        errs.append(f"data/state.json: last_run is {state.get('last_run')!r}, but data/runs.json's newest day is {newest}")
+    day = [r for r in runs if r["date"] == newest]
+    # Prefer a daily run's status when several kinds share the day
+    pick = next((r for r in day if r.get("kind") == "daily"), day[0])
+    if state.get("last_status") != pick.get("status"):
+        errs.append(
+            f"data/state.json: last_status is {state.get('last_status')!r}, "
+            f"but data/runs.json {pick.get('id')} is {pick.get('status')!r}"
+        )
+    return errs
+
+
 def training_errors(root=None):
     root = root or ROOT
     load = lambda n: json.loads((root / f"data/{n}.json").read_text())
-    return objective_loop_errors(load("objectives"), load("ideas")) + drill_errors(root)
+    return objective_loop_errors(load("objectives"), load("ideas")) + drill_errors(root) + state_runs_errors(root)
 
 
 # ---------- team calendar (Ryno, 2026-10-19 9:34 PM ET): holiday character themes need plan, design and review on the calendar ----------
