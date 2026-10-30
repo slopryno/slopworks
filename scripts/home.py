@@ -99,7 +99,7 @@ def render(b, items, wins, ups, iss, totals, levels, team, dropped, screened, tl
                 f'<p class="lv"><span>Level {k} \u00b7 {e(lv["name"])}</span><span class="mono">{x} XP</span></p>'
                 f'<p class="xp-togo">{togo}</p>'
                 f'<div class="bar" aria-hidden="true"><span style="width:{pct}%"></span></div>'
-                f'<p class="last"><a href="{e(w["pr"])}">{e(w["title"])}<small class="mono">PR #{num(w)} \u00b7 merged {e((w.get("merged") or w["date"])[:10])}</small></a></p></li>')
+                f'<p class="last"><span class="kicker">Last verified</span><a href="{e(w["pr"])}">{e(w["title"])}<small class="mono">PR #{num(w)} \u00b7 merged {e((w.get("merged") or w["date"])[:10])}</small></a></p></li>')
     recent = sorted((t for t in team if t[0] in latest), key=lambda t: latest[t[0]].get("merged") or latest[t[0]]["date"], reverse=True)[:6]
     teams = (f'<section aria-labelledby="team-t"><h2 id="team-t">The team</h2><p class="sub">The six roles with the most recent merged work. '
              f'Levels and XP come from the <a href="team/xp/">ledger</a>; every point links its evidence.</p>'

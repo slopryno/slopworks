@@ -127,7 +127,17 @@ def css(spec, season, stems, badges=False):
     return t + CSS + (BADGE_CSS if badges else "")
 
 
-def card(n, i, total, stem, spec, season, xp, level, lv, nxt, kinds, avatar_src, badges=None, jb=""):
+def _last_verified(last):
+    """Compact evidence line; team page must stay ≤100 KB every season."""
+    if not last:
+        return ""
+    when = (last.get("merged") or last["date"])[:10]
+    pr = last["pr"]
+    num = pr.rstrip("/").rsplit("/", 1)[-1]
+    return f'<p class="lvf">Last verified · <a href="{e(pr)}">#{e(num)}</a> <time datetime="{e(when)}">{e(when)}</time></p>'
+
+
+def card(n, i, total, stem, spec, season, xp, level, lv, nxt, kinds, avatar_src, badges=None, jb="", last=None):
     """One slot: the mini (a link to #stem) and the full card body. badges: {family: count} once the badge engine ships."""
     r = spec["roles"][n]
     tl = [x["name"] for x in spec["types"]]
@@ -152,6 +162,7 @@ def card(n, i, total, stem, spec, season, xp, level, lv, nxt, kinds, avatar_src,
             f'<p class="lv" style="--w:{pct}%">{e(lv["name"])}</p>'
             f'<ul class="mv">{mv}</ul>'
             f'{bd}<p class="ft">{e(rname)}<span class="sn">{i:02d}/{total}</span></p>'
+            f'{_last_verified(last)}'
             f'<p class="fl">{e(fl)}</p><a class="sh" title="Character sheet" href="{stem}/">Character sheet</a></div></div></div>')
 
 
