@@ -469,8 +469,50 @@ def local_checks():
         raise Refused("the build changed files or there are uncommitted changes; commit them first")
 
 
-def gh(*args):
-    return subprocess.run(["gh", *args], cwd=ROOT, capture_output=True, text=True, check=True).stdout.strip()
+def _gh_retryable(stderr, returncode=None):
+    """True for 429 / secondary rate limit / 5xx. Other 4xx stay failed (no silent retry of auth or not-found)."""
+    s = (stderr or "")
+    low = s.lower()
+    if "secondary rate limit" in low or "exceeded a secondary rate limit" in low:
+        return True
+    if re.search(r"\b(?:HTTP\s*)?429\b", s, re.I) or "rate limit" in low:
+        return True
+    if re.search(r"\b(?:HTTP\s*)?(?:502|503|504)\b", s, re.I):
+        return True
+    return False
+
+
+def _gh_wait_seconds(stderr, attempt, rand):
+    """Backoff: honor Retry-After or X-RateLimit-Reset when present; else exponential + jitter. attempt is 0-based."""
+    s = stderr or ""
+    m = re.search(r"(?i)retry[- ]after[:\s]+(\d+)", s)
+    if m:
+        return float(max(1, int(m.group(1))))
+    m = re.search(r"(?i)x-ratelimit-reset[:\s]+(\d+)", s)
+    if m:
+        reset = int(m.group(1))
+        now = int(time.time())
+        if reset > now:
+            return float(min(reset - now, 120))
+    base = min(60.0, float(2 ** attempt))
+    return base + float(rand(0.0, base * 0.25))
+
+
+def gh(*args, run=subprocess.run, sleep=time.sleep, tries=5, _rand=None):
+    """Run `gh` with retries on 429 / secondary rate limit / 5xx. Other 4xx raise immediately.
+    sleep/run/_rand are injectable for Trial's fake-429 test."""
+    import random
+    rand = _rand or random.uniform
+    last = None
+    for attempt in range(tries):
+        r = run(["gh", *args], cwd=ROOT, capture_output=True, text=True)
+        if r.returncode == 0:
+            return (r.stdout or "").strip()
+        last = r
+        if not _gh_retryable(r.stderr, r.returncode) or attempt == tries - 1:
+            raise subprocess.CalledProcessError(r.returncode, r.args, output=r.stdout, stderr=r.stderr)
+        sleep(_gh_wait_seconds(r.stderr, attempt, rand))
+    raise subprocess.CalledProcessError(last.returncode, last.args, output=last.stdout, stderr=last.stderr)
 
 
 def cmd_pr(a):
