@@ -334,6 +334,6 @@ Readers see exactly what to expect:
 - The routine depends on Slopbot's computer and X access. A missed day gets reported, not hidden.
 
 ## Repo hygiene (Ryno, 2026-10-17)
-- **Lean, clean and organized.** The repo holds source, data, docs and the built site, nothing else. `scripts/check.py` enforces the budgets on every PR: the tracked tree stays under 4 MB, each file under 512 KB, and no files that `.gitignore` excludes.
+- **Lean, clean and organized.** The repo holds source, data, docs and the built site, nothing else. `scripts/check.py` enforces the budgets on every PR: the tracked tree stays under 5 MB, each file under 512 KB, and no files that `.gitignore` excludes.
 - **No screenshots or temp files in git.** Images live only in `site/assets/` and `site/badges/`. Review screenshots go to the box (`/workspace/slopworks-review/<pr>/`) and to the PR's `review-shots-<pr>` CI artifact. Temp, cache and build output are ignored, and CI fails a PR that adds them.
 - **Owner:** Sweep, with a monthly repo hygiene pass (see the schedule). No history rewrites.
