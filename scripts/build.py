@@ -815,6 +815,14 @@ def build():
              f'<p>Rules: <a href="{REPO}/blob/main/data/progression.json">data/progression.json</a> (owned by Game Master). Ledger: <a href="{REPO}/blob/main/data/xp_ledger.json">data/xp_ledger.json</a>, written by <a href="{REPO}/blob/main/scripts/xp.py">scripts/xp.py</a>. Decided in <a href="{href(prog["thread"], "../../", "team/xp/")}">Team chat</a>.</p>')
     files["team/xp/index.html"] = page("team/xp/", "How XP works", f"XP from {len([y for y in ledger_all if y['status'] == 'approved'])} verified pieces of work. Every point links its evidence.", xbody, "data/progression.json")
     # Team trading cards (Ryno, Oct 20 12:18 PM ET: design locked; Comms wording). scripts/cards.py renders; no script.
+    # Latest verified win per role (for the "Last verified" line on opened cards).
+    latest_win = {}
+    for w in load("wins"):
+        r = w["role"]
+        cur = latest_win.get(r)
+        key = w.get("merged") or w["date"]
+        if cur is None or key > (cur.get("merged") or cur["date"]):
+            latest_win[r] = w
     def tslot(x, i):
         n, f = x[0], x[4]
         xp = totals.get(n, 0)
@@ -823,7 +831,7 @@ def build():
         for y in ledger_all:
             if y["agent"] == n and y["status"] == "approved":
                 kinds[y["type"]] = kinds.get(y["type"], 0) + 1
-        return cardmod.card(n, i, len(order), f[:-3], cspec, season, xp, num, lv, nxt, kinds, f"../assets/avatars/{avatar_of(n)}.svg", jb=avmod.card_badge(avatar_of(n), season))
+        return cardmod.card(n, i, len(order), f[:-3], cspec, season, xp, num, lv, nxt, kinds, f"../assets/avatars/{avatar_of(n)}.svg", jb=avmod.card_badge(avatar_of(n), season), last=latest_win.get(n))
     by_name = {x[0]: x for x in team()}
     seq = [by_name[n] for _, members in GROUPS for n in members if n in by_name]  # set order = the group order
     tiers = {}
