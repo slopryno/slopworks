@@ -10,7 +10,7 @@ Run the full local gate:
 ./scripts/preflight.sh
 ```
 
-It runs the same three checks CI runs: `python3 scripts/check.py repo`, the full unittest suite, and `python3 scripts/build.py --check`. Fix every failure before opening a PR. Optional: a Claude Code `PreToolUse` / stop hook that runs `./scripts/preflight.sh` before `git push` or `gh pr create` (do not commit a `.claude/` settings file unless the team adds one on purpose).
+It runs the same three checks CI runs: `python3 scripts/check.py repo`, the full unittest suite, and `python3 scripts/build.py --check`. Fix every failure before opening a PR. Optional: a Claude Code `PreToolUse` / stop hook that runs `./scripts/preflight.sh` before `git push` or `gh pr create`. The shared `.claude/settings.json` sets `includeCoAuthoredBy: false` so Claude Code does not append Co-authored-by trailers.
 
 ## Team model
 
@@ -73,9 +73,15 @@ New plan steps use [`plans/TEMPLATE.md`](plans/TEMPLATE.md): each step needs **Y
 
 Team rules stay in this shared `CLAUDE.md`. Personal or machine-only notes go in `CLAUDE.local.md` (gitignored; Claude Code loads it on that machine). Plan drafts that should not be public go in `docs/plans/` (also gitignored). The team’s live plans stay in `plans/`.
 
+
+## No Co-authored-by trailers
+
+Do not add `Co-authored-by:` (or `Co-Authored-By:`) trailers to commit messages, PR bodies, or squash merges. Claude Code must keep `includeCoAuthoredBy: false` (see `.claude/settings.json`). `scripts/preflight.sh` installs a `commit-msg` hook that strips blocked trailers, `scripts/check.py` fails CI when a PR commit or body still has one naming a blocked identity, and `scripts/bot.py` scrubs them from squash messages. Rebuild a branch instead of amending history on main.
+
 ## What not to do
 
 - Do not post to X from this repo’s automation or drafts that claim to publish.
 - Do not weaken a test to make preflight green.
 - Do not commit `.env`, tokens, private keys, or personal data.
 - Do not treat a general chat instruction as permission to add `ceo-approved`.
+- Do not add Co-authored-by trailers to commits, PR bodies, or squash merges.

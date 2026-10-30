@@ -519,11 +519,23 @@ def merge_when_green(n):
     time.sleep(6)
     subprocess.run(["gh", "pr", "checks", n, "--watch", "--interval", "8"], cwd=ROOT, capture_output=True)
     states = set(re.findall(r"\t(pass|fail|pending|skipping)\t", subprocess.run(["gh", "pr", "checks", n], cwd=ROOT, capture_output=True, text=True).stdout))
-    labels = json.loads(gh("pr", "view", n, "--json", "labels"))["labels"]
+    meta = json.loads(gh("pr", "view", n, "--json", "labels,title,body"))
+    labels = meta["labels"]
     if "pass" not in states or states - {"pass", "skipping"} or labels:
         print(f"PR {n} not merged: checks {sorted(states)}, labels {[l['name'] for l in labels]}")
         sys.exit(1)
-    gh("pr", "merge", n, "--squash", "--delete-branch")
+    # Squash with an explicit subject/body so GitHub cannot copy blocked Co-authored-by trailers
+    # from PR commits into the merge commit (Ryno, 2026-10-30 ~3:28 AM ET, t283u).
+    subject = f"{meta['title']} (#{n})"
+    body = check.scrub_coauthor_trailers(meta.get("body") or "").strip()
+    # Drop any leftover Co-authored-by lines of any kind from the squash body; keep the PR summary.
+    body = "\n".join(ln for ln in body.splitlines() if not re.match(r"(?i)^\s*co-authored-by:\s*", ln)).strip()
+    args = ["pr", "merge", n, "--squash", "--delete-branch", "--subject", subject]
+    if body:
+        args += ["--body", body]
+    else:
+        args += ["--body", ""]
+    gh(*args)
     if git("rev-parse", "--git-dir").strip() != git("rev-parse", "--git-common-dir").strip():
         # A linked worktree can't check out main (the main clone holds it), so only fetch it.
         git("fetch", "-q", "origin", "main")

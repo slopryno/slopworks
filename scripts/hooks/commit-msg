@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+# Strip blocked Co-authored-by trailers from the commit message (Ryno, 2026-10-30 ~3:28 AM ET, t283u).
+# Installed by scripts/preflight.sh into the repo hooks path (shared across worktrees).
+set -euo pipefail
+MSG_FILE="${1:?commit-msg hook needs the message file}"
+# Prefer the worktree / checkout toplevel so we load THAT tree's scripts/check.py
+ROOT="$(git rev-parse --show-toplevel 2>/dev/null || true)"
+if [[ -z "${ROOT}" || ! -f "$ROOT/scripts/check.py" ]]; then
+  echo "commit-msg: cannot find scripts/check.py; leaving message unchanged" >&2
+  exit 0
+fi
+# Older checkouts may not have the scrub helper yet; never block the commit for that.
+if ! python3 - "$MSG_FILE" "$ROOT" <<'PY'
+import sys
+from pathlib import Path
+msg_file, root = Path(sys.argv[1]), Path(sys.argv[2])
+sys.path.insert(0, str(root / "scripts"))
+try:
+    import check
+except Exception as e:
+    print(f"commit-msg: import check failed ({e}); leaving message unchanged", file=sys.stderr)
+    sys.exit(0)
+if not hasattr(check, "scrub_coauthor_trailers"):
+    print("commit-msg: scrub_coauthor_trailers missing; leaving message unchanged", file=sys.stderr)
+    sys.exit(0)
+import re
+raw = msg_file.read_text()
+clean = check.scrub_coauthor_trailers(raw)
+# Team policy: drop every Co-authored-by line, not only the blocked ones.
+lines = [ln for ln in clean.splitlines(keepends=True) if not re.match(r"(?i)^[ \t]*co-authored-by:[ \t]*", ln)]
+new = "".join(lines)
+if new != raw:
+    msg_file.write_text(new)
+PY
+then
+  echo "commit-msg: scrub failed; leaving message unchanged" >&2
+  exit 0
+fi

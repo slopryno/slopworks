@@ -324,6 +324,101 @@ def pii_hits(text):
     return hits
 
 
+def _blocked_coauthor_needles():
+    """Identities that must never appear on a Co-authored-by trailer.
+
+    Built from parts so the full name/email strings are not stored as literals in the tree
+    (Ryno, 2026-10-30 ~3:28 AM ET, t283u).
+    """
+    person_name = "Ryan" + " " + "Willis"
+    person_email = "ryan.willis.it" + "@" + "gmail.com"
+    model_name = "Claude" + " " + "Opus" + " " + "5.5"
+    anth_mail = "noreply@" + "anthropic.com"
+    return (
+        person_name.lower(),
+        person_email.lower(),
+        model_name.lower(),
+        anth_mail.lower(),
+        "anthropic.com",
+    )
+
+
+_COAUTHOR_LINE = re.compile(r"(?im)^[ \t]*co-authored-by:[ \t]*(.+?)[ \t]*$")
+
+
+def scrub_coauthor_trailers(text):
+    """Drop Co-authored-by lines that name the blocked person, email, model, or anthropic.com noreply."""
+    if not text:
+        return text
+    needles = _blocked_coauthor_needles()
+    out = []
+    for line in text.splitlines(keepends=True):
+        m = _COAUTHOR_LINE.match(line.rstrip("\r\n"))
+        if m and any(n in m.group(1).lower() for n in needles):
+            continue
+        out.append(line)
+    return "".join(out)
+
+
+def coauthor_trailer_hits(text):
+    """Return the blocked Co-authored-by line bodies found in text (lowercased needles only in reports)."""
+    if not text:
+        return []
+    needles = _blocked_coauthor_needles()
+    hits = []
+    for m in _COAUTHOR_LINE.finditer(text):
+        body = m.group(1)
+        if any(n in body.lower() for n in needles):
+            hits.append("blocked-coauthor")
+    return hits
+
+
+def coauthor_text_errors(text, where):
+    return [f"{where}: Co-authored-by trailer names a blocked identity (personal name/email or anthropic.com noreply); remove it"
+            for _ in coauthor_trailer_hits(text)]
+
+
+def coauthor_commit_errors(base=None, head=None):
+    """Fail when a commit in base..head carries a blocked Co-authored-by trailer (PR range only)."""
+    if not base or not head:
+        return []
+    out = subprocess.run(
+        ["git", "log", "--format=%H%n%B%x00", f"{base}..{head}"],
+        cwd=ROOT, capture_output=True, text=True,
+    )
+    if out.returncode != 0:
+        return [f"coauthor: could not read commits {base}..{head}"]
+    errs = []
+    for rec in out.stdout.split("\0"):
+        rec = rec.strip("\n")
+        if not rec:
+            continue
+        sha, _, body = rec.partition("\n")
+        for _ in coauthor_trailer_hits(body):
+            errs.append(
+                f"commit {sha[:12]}: Co-authored-by trailer names a blocked identity; amend or rebuild the branch without it"
+            )
+            break
+    return errs
+
+
+def coauthor_file_errors(files=None):
+    """Scan tracked text files for blocked Co-authored-by trailers."""
+    errs = []
+    for f in files if files is not None else tracked_files():
+        if f.endswith((".png", ".jpg", ".ico", ".webp", ".gif")):
+            continue
+        if f == "scripts/check.py":
+            # this file builds the needles from parts; skip self
+            continue
+        try:
+            text = (ROOT / f).read_text(errors="ignore")
+        except Exception:
+            continue
+        errs += coauthor_text_errors(text, f)
+    return errs
+
+
 def blocked_file(path):
     return any(re.search(p, path, re.I) for p in PATTERNS["blocked_files"])
 
@@ -1656,6 +1751,7 @@ def run_repo():
     errs += calendar_errors()
     errs += ceo_quote_errors()
     errs += roadmap_errors()
+    errs += coauthor_file_errors(files)
     for f in files:
         if f.startswith("site/") and f.endswith(".css"):
             errs += motion_errors((ROOT / f).read_text(), f)
@@ -1752,9 +1848,12 @@ def run_review_gate():
     if review_deferred(pr):
         print("review-gate: draft PR, sign-offs are checked when it is marked ready for review")
         return []
-    errs = review_gate(changed(base, head), pr.get("body") or "", comments)
-    errs += blast_radius_errors(changed(base, head), pr.get("body") or "", comments)
+    body = pr.get("body") or ""
+    errs = review_gate(changed(base, head), body, comments)
+    errs += blast_radius_errors(changed(base, head), body, comments)
     errs += lens_derived_errors(comments)
+    errs += coauthor_text_errors(body, f"PR {os.environ.get('PR', '?')} body")
+    errs += coauthor_commit_errors(base, head)
     repeat = {r: n for r, n in block_count(comments).items() if n >= 2}
     if repeat:
         flag_ceo("Disagreement: " + ", ".join(f"{r} blocked {n} times" for r, n in repeat.items()) + ". Each side's position is in the comments above.")
