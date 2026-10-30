@@ -1,5 +1,5 @@
 """Trial's tests for scripts/bot.py (i30): the helper must agree with CI and refuse the known pitfalls."""
-import datetime, itertools, json, os, sys, unittest
+import datetime, itertools, json, os, subprocess, sys, unittest
 from pathlib import Path
 from unittest import mock
 
@@ -176,3 +176,51 @@ class VisualReview(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class GhRetry(unittest.TestCase):
+    """Forge ops: bot.py gh() backs off on 429 / secondary rate limit / 5xx; other 4xx fail immediately."""
+
+    def _run(self, results):
+        """results: list of CompletedProcess-like objects; each call pops the next."""
+        it = iter(results)
+
+        def run(cmd, **kw):
+            return next(it)
+        return run
+
+    def _cp(self, code, stderr="", stdout=""):
+        return subprocess.CompletedProcess(args=["gh"], returncode=code, stdout=stdout, stderr=stderr)
+
+    def test_retries_a_429_then_succeeds(self):
+        sleeps = []
+        runs = self._run([
+            self._cp(1, stderr="gh: HTTP 429: API rate limit exceeded"),
+            self._cp(0, stdout="ok\n"),
+        ])
+        out = bot.gh("api", "x", run=runs, sleep=sleeps.append, tries=3, _rand=lambda a, b: 0.0)
+        self.assertEqual(out, "ok")
+        self.assertEqual(sleeps, [1.0])  # 2^0 + 0 jitter
+
+    def test_retries_secondary_rate_limit(self):
+        sleeps = []
+        runs = self._run([
+            self._cp(1, stderr="HTTP 403: You have exceeded a secondary rate limit"),
+            self._cp(0, stdout="done"),
+        ])
+        self.assertEqual(bot.gh("pr", "list", run=runs, sleep=sleeps.append, tries=3, _rand=lambda a, b: 0.0), "done")
+        self.assertEqual(len(sleeps), 1)
+
+    def test_honors_retry_after(self):
+        sleeps = []
+        runs = self._run([
+            self._cp(1, stderr="HTTP 429\nRetry-After: 7"),
+            self._cp(0, stdout="y"),
+        ])
+        bot.gh("api", "x", run=runs, sleep=sleeps.append, tries=3, _rand=lambda a, b: 0.0)
+        self.assertEqual(sleeps, [7.0])
+
+    def test_does_not_retry_other_4xx(self):
+        runs = self._run([self._cp(1, stderr="HTTP 404: Not Found")])
+        with self.assertRaises(subprocess.CalledProcessError):
+            bot.gh("api", "missing", run=runs, sleep=lambda s: self.fail("slept"), tries=3)
