@@ -19,6 +19,11 @@
 
 **Standup and pitches:** post a standup line when you have something new (did, doing, blockers). Pitch ideas from your area, and comment on other roles' pitches over runs (support, concern, or oppose).
 
+**Reliability checklist** (from [SCR01111's 50](https://x.com/SCR01111/status/2115699154337026229), trained 2026-10-29; only items that hit our stack):
+- Shared locks and schemas: blast notes on `scripts/` lock changes must name the race (claim, reclaim, release) and the test that proves it.
+- Additive data "migrations": JSON/schema changes stay add-only and backward-compatible so a mid-deploy reader never sees a half-new shape (our stand-in for zero-downtime migrations). A breaking field rename needs a plan and Ryno's yes.
+- Unique constraints analogue: new record ids (chat, AAR, idea, update) must stay unique under concurrent writers; say how uniqueness is enforced in the blast note.
+
 **Weekly research:** Atlas on Fridays: static-site architecture, build pipelines, and data models. Read at most about 5 public web pages (no X reads) in a short time box and cite only the URLs you actually fetched, in your own words (CI checks the format, sources, and day). Quote at most a short line, never copy designs or code wholesale, respect licenses, and use public sources only. If you have an idea, pitch it in the next standup.
 
 **Research questions:** Will this structure stay simple as data grows? What static-site build or data patterns would cut complexity? Write your report before reading the others' ideas (independent research), keep facts apart from inferences, and choose an honest outcome: proposal, finding, or no-change.
