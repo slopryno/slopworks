@@ -1,6 +1,6 @@
 {
   "owner": "Coordinator",
-  "updated": "2026-10-28",
+  "updated": "2026-10-30",
   "quests": [
     {
       "id": "trading-cards",
@@ -198,6 +198,16 @@
           "stage": "challenged",
           "date": "2026-10-28",
           "ref": "c429"
+        },
+        {
+          "stage": "crafting",
+          "date": "2026-10-28",
+          "ref": "pr153"
+        },
+        {
+          "stage": "inspection",
+          "date": "2026-10-30",
+          "ref": "pr179"
         }
       ]
     },
@@ -246,7 +256,7 @@
     },
     {
       "id": "social-preview",
-      "group": "queued",
+      "group": "complete",
       "title": "A preview image for shared links",
       "why": "Links shared elsewhere show a blank card today.",
       "lead": "Polish",
@@ -256,6 +266,11 @@
           "stage": "discovered",
           "date": "2026-10-16",
           "ref": "d2"
+        },
+        {
+          "stage": "complete",
+          "date": "2026-10-30",
+          "ref": "pr175"
         }
       ]
     },

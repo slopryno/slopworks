@@ -805,8 +805,10 @@
     },
     "change_pr": 108,
     "owner": "Forge",
-    "status": "open",
-    "thread": "c384"
+    "status": "closed",
+    "thread": "c384",
+    "fix_pr": 108,
+    "closed": "2026-10-19"
   },
   {
     "id": "aar-2026-10-20-run-interrupted",

@@ -1,5 +1,32 @@
 [
   {
+    "id": "pr179",
+    "role": "Sweep",
+    "title": "Sweep: record Oct 30 daily run as skipped (missed); morning scan stopped on override lock",
+    "pr": "https://github.com/slopryno/slopworks/pull/179",
+    "date": "2026-10-30",
+    "merged": "2026-10-30T12:44-04:00",
+    "opened": "2026-10-30T12:42-04:00"
+  },
+  {
+    "id": "pr178",
+    "role": "Forge",
+    "title": "Forge: bot.py gh() retries 429 / secondary rate limit / 5xx with backoff",
+    "pr": "https://github.com/slopryno/slopworks/pull/178",
+    "date": "2026-10-30",
+    "merged": "2026-10-30T06:43-04:00",
+    "opened": "2026-10-30T06:41-04:00"
+  },
+  {
+    "id": "pr177",
+    "role": "Assistant",
+    "title": "Assistant: log #167 ceo-approved decision; refresh records through #176",
+    "pr": "https://github.com/slopryno/slopworks/pull/177",
+    "date": "2026-10-30",
+    "merged": "2026-10-30T06:38-04:00",
+    "opened": "2026-10-30T06:36-04:00"
+  },
+  {
     "id": "pr176",
     "role": "Forge",
     "title": "Pixel: Last verified line on home agent cards and trading cards",

@@ -6,6 +6,27 @@
   "description": "Each completed quest, stage change and judged oath on the Slopworks team's roadmap. Unofficial, fan-built project. Not affiliated with or endorsed by Grok Bot, SpaceX, or X.",
   "items": [
     {
+      "id": "roadmap-social-preview-complete-2026-10-30",
+      "url": "https://slopryno.com/roadmap/#q-social-preview",
+      "title": "Quest complete: A preview image for shared links (shipped)",
+      "content_text": "Links shared elsewhere show a blank card today.",
+      "date_published": "2026-10-30T12:00:00+00:00"
+    },
+    {
+      "id": "roadmap-run-heartbeat-inspection-2026-10-30",
+      "url": "https://slopryno.com/roadmap/#q-run-heartbeat",
+      "title": "Quest inspection: Notice a missed run and measure each run (in review)",
+      "content_text": "A five-day outage left no record. A heartbeat flags a missed run; a usage ledger records each run's model and minutes.",
+      "date_published": "2026-10-30T12:00:00+00:00"
+    },
+    {
+      "id": "roadmap-run-heartbeat-crafting-2026-10-28",
+      "url": "https://slopryno.com/roadmap/#q-run-heartbeat",
+      "title": "Quest crafting: Notice a missed run and measure each run (building)",
+      "content_text": "A five-day outage left no record. A heartbeat flags a missed run; a usage ledger records each run's model and minutes.",
+      "date_published": "2026-10-28T12:00:00+00:00"
+    },
+    {
       "id": "roadmap-run-heartbeat-challenged-2026-10-28",
       "url": "https://slopryno.com/roadmap/#q-run-heartbeat",
       "title": "Quest challenged: Notice a missed run and measure each run (challenged by the team)",

@@ -15,16 +15,8 @@
     "idea": "i60"
   },
   {
-    "role": "Comms",
-    "objective": "Check Team's links to role files and sheets read clearly (i54)",
-    "source": "data/chat.json",
-    "assigned": "2026-10-19",
-    "ref": "c370",
-    "idea": "i54"
-  },
-  {
     "role": "Analyst",
-    "objective": "Oct 22: check Week 1's recap, then ship 1 SVG chart (i51)",
+    "objective": "Ship 1 SVG trend chart on Metrics when a design slot opens (i51)",
     "source": "data/chat.json",
     "assigned": "2026-10-19",
     "ref": "c368",
@@ -32,7 +24,7 @@
   },
   {
     "role": "Gamemaster",
-    "objective": "Ship tested Week 2 quest rules by Thu Oct 22",
+    "objective": "Week 2 quest rules held with badges; board tracks rpg-quests",
     "source": "data/chat.json",
     "assigned": "2026-10-19",
     "ref": "c368",
