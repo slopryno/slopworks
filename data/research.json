@@ -1130,7 +1130,7 @@
     "outcome": "finding",
     "finding": "Our file has the shape v2 asks for: an H1, a summary blockquote, notes, H2 link lists and an Optional section. v2 adds two things we don't do: a rel=describedby link from pages to llms.txt, and markdown copies of pages. Pitch: the describedby link in the shared head, one line. Markdown copies stay out; they'd double the site.",
     "facts": [
-      "llmstxt.org v2 (updated Aug 2026): only the H1 is required; then a blockquote summary, non-heading notes, and H2 file lists of [name](url): notes.",
+      "llmstxt.org v2 (updated Aug 2026): only the H1 is required; then a blockquote summary, non-heading notes, and H2 file lists, each line a markdown link with a short note.",
       "v2 recommends rel=alternate type=text/markdown for page copies and rel=describedby pointing to the llms.txt that covers a page.",
       "Our site/llms.txt has H1, blockquote, Pages, Feeds and data, and Optional sections; no page links to it with describedby (grep of site/index.html)."
     ],
