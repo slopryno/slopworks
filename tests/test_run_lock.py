@@ -81,5 +81,79 @@ class RunLock(unittest.TestCase):
         self.assertEqual(self.path.read_text().split()[0], str(os.getpid()))
 
 
+    def test_reclaim_three_run_schedule_no_dual_holders(self):
+        """Deterministic S1 replay-step.json schedule against bot.take_lock.
+
+        A holds and releases; B is forced down the reclaim path; A reholds in the
+        observe→rename window; C links into the post-rename gap. Old reclaim deleted
+        the aside on put-back busy and left A believing it still held while C owned
+        the file. Fixed reclaim re-checks before rename and never deletes a live aside.
+        """
+        from unittest import mock
+        sleepers = [subprocess.Popen([sys.executable, "-c", "import time; time.sleep(60)"]) for _ in range(3)]
+        p1, p2, p3 = [s.pid for s in sleepers]
+        took = {"p1": False, "p2": False, "p3": False}
+        try:
+            bot.take_lock(self.path, pid=p1)
+            took["p1"] = True
+            bot.release_lock(self.path, pid=p1)
+            took["p1"] = False
+
+            real_link, real_rename, real_holder = os.link, os.rename, bot._holder
+            phase = {"links": 0, "seen_missing": False}
+
+            def link_hook(src, dst, *a, **kw):
+                if Path(dst) == self.path:
+                    phase["links"] += 1
+                    if phase["links"] == 1:
+                        raise FileExistsError  # force B into observe/reclaim
+                return real_link(src, dst, *a, **kw)
+
+            def holder_hook(path):
+                # After observe saw missing, the next _holder (re-verify) must see A's retake.
+                if phase["seen_missing"] and Path(path) == self.path and not took["p1"]:
+                    with mock.patch("os.link", real_link), mock.patch.object(bot, "_holder", real_holder):
+                        bot.take_lock(self.path, pid=p1)
+                        took["p1"] = True
+                h = real_holder(path)
+                if Path(path) == self.path and h is None:
+                    phase["seen_missing"] = True
+                return h
+
+            def rename_hook(src, dst, *a, **kw):
+                if Path(src) == self.path:
+                    # Old code reaches here without re-verify: plant A, steal, then C fills the gap.
+                    if not self.path.exists():
+                        with mock.patch("os.link", real_link), mock.patch("os.rename", real_rename), mock.patch.object(bot, "_holder", real_holder):
+                            bot.take_lock(self.path, pid=p1)
+                            took["p1"] = True
+                    real_rename(src, dst, *a, **kw)
+                    with mock.patch("os.link", real_link), mock.patch("os.rename", real_rename), mock.patch.object(bot, "_holder", real_holder):
+                        bot.take_lock(self.path, pid=p3)
+                        took["p3"] = True
+                    return
+                return real_rename(src, dst, *a, **kw)
+
+            with mock.patch("os.link", link_hook), mock.patch("os.rename", rename_hook), mock.patch.object(bot, "_holder", holder_hook):
+                try:
+                    bot.take_lock(self.path, pid=p2)
+                    took["p2"] = True
+                except bot.Refused:
+                    took["p2"] = False
+
+            logical = [pid for flag, pid in (("p1", p1), ("p2", p2), ("p3", p3)) if took[flag]]
+            file_holder = int(self.path.read_text().split()[0]) if self.path.exists() else None
+            self.assertLessEqual(
+                len(logical), 1,
+                f"dual holders logical={logical} file={file_holder} (replay-step reclaim steal)",
+            )
+            if logical:
+                self.assertEqual(file_holder, logical[0], f"file holder {file_holder} != logical {logical[0]}")
+        finally:
+            for s in sleepers:
+                s.kill()
+                s.wait()
+
+
 if __name__ == "__main__":
     unittest.main()
