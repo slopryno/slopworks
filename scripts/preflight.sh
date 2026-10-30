@@ -13,9 +13,14 @@ if [[ -f "$HOOK_SRC" ]]; then
   HOOK_DIR="$(git rev-parse --git-path hooks 2>/dev/null || echo "$ROOT/.git/hooks")"
   mkdir -p "$HOOK_DIR"
   # Copy so worktrees and the main clone share the same strip behavior.
-  cp "$HOOK_SRC" "$HOOK_DIR/commit-msg"
+  # When core.hooksPath already points at scripts/hooks, src and dest are the same file.
+  if [[ "$HOOK_SRC" -ef "$HOOK_DIR/commit-msg" ]]; then
+    echo "hooks: commit-msg already in place (hooksPath=scripts/hooks)"
+  else
+    cp "$HOOK_SRC" "$HOOK_DIR/commit-msg"
+    echo "hooks: installed commit-msg (strip blocked Co-authored-by trailers)"
+  fi
   chmod +x "$HOOK_DIR/commit-msg"
-  echo "hooks: installed commit-msg (strip blocked Co-authored-by trailers)"
 fi
 
 # Chrome for Testing on the team box (optional). Leave PATH alone on a normal laptop.

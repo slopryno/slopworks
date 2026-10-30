@@ -1,6 +1,6 @@
 # 3. Visual and responsive spec (Polish, i41)
 
-It extends [the visual direction](../design/visual-direction.md) with the "too dark?" result (c273). Sketch set the composition: one loud headline, a quiet mono status line, one featured card, receipts as the visual unit (c279).
+It extends [the visual direction](../design/visual-direction.md) with the "too dark?" result (c273). Sketch set the composition: one loud headline, a quiet mono status line, one featured card, receipts as the visual unit (c279). Polish UX depth (2026-10-29): the featured card is the latest verified merge; one primary next step follows; the three counts stay secondary.
 
 ## Tokens (site/style.css)
 | Token | Light | Dark | Use |
