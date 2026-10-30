@@ -224,7 +224,7 @@ DESCRIPTIONS = {
     "": "An unofficial Grok Bot tracker built, designed, and run by Grok Bots, with every claim linked to a public source or a merged change.",
     "roadmap/": "The Slopworks team's roadmap as a quest board: what shipped, what's in progress and next, what was dropped, and the dated calls it kept or broke.",
     "metrics/": "Slopworks metrics from its records: merged PRs, open-to-merge time, sprint durations, CI catches, failures on main, reverts, AARs, and trends by day.",
-    "weekly/": "A weekly recap of the Slopworks bot team from its records: merged PRs, sprints, research, lessons, and next objectives. A running week is labeled so far.",
+    "weekly/": "A weekly recap of the Slopworks bot team from its records: merged PRs, sprints, research, lessons, and next objectives. Each week has a permanent page. A running week is labeled so far.",
     "updates/": "Grok Bot updates from the official changelog and team posts, newest first, each labeled confirmed or reported and linked to its source.",
     "issues/": "Known Grok Bot issues from public reports, grouped by area, and marked fixed only when a public source says so.",
     "timeline/": "The Slopworks bot team's progress over time, newest first: what shipped, what Ryno decided, who joined, what was researched, and what was learned.",
@@ -1135,8 +1135,18 @@ def build():
                                        metrics.render(load("metrics")), "data/metrics.json")
     # Weekly recap (i42, Analyst and Comms, c297 and c298): real records only; a running week says "so far".
     import weekly
-    files["weekly/index.html"] = page("weekly/", "Weekly recap", "What happened each week, from the records: what shipped, what the team found, what it learned, and what's next. A week still running is marked so far.",
-                                      weekly.render(sys.modules[__name__], items, wins, ups, iss, aars, list(objectives.values())), "data")
+    # d3 / level-up 2.5: index keeps the recap; each week also gets a permanent /weekly/YYYY-wNN/ page.
+    objs = list(objectives.values())
+    files["weekly/index.html"] = page("weekly/", "Weekly recap", "What happened each week, from the records: what shipped, what the team found, what it learned, and what's next. A week still running is marked so far. Each week has a permanent page you can share.",
+                                      weekly.render(sys.modules[__name__], items, wins, ups, iss, aars, objs), "data")
+    for n, s, t, days, final, key in weekly.iter_weeks(items, wins):
+        slug = f"weekly/{key}/"
+        week_title = f"Week {n} · {weekly.MON[s.month-1]} {s.day}–{weekly.MON[t.month-1]} {t.day}"
+        lede = (f"Slopworks week {n} ({weekly.nice(s)} to {weekly.nice(t)}). Confirmed Grok Bot updates added that week, then the team's recap from the records."
+                + ("" if final else " This week is still running and is labelled so far."))
+        body = weekly.render_page(sys.modules[__name__], n, s, t, days, final, items, wins, ups, iss, aars, objs)
+        body += f'<p class="next"><a class="more" href="../">All weeks</a></p>'
+        files[slug + "index.html"] = page(slug, week_title, lede, body, "data")
     # Home (mission i41; Polish UX depth 2026-10-29): latest verified, one next step, counts secondary, tracker, team, featured sprint, activity.
     files["index.html"] = page("", home.TITLE, f"{len(team())} Grok Bot roles run a real product, an unofficial Grok Bot tracker, and publish every decision behind it.",
                                home.render(sys.modules[__name__], items, wins, ups, iss, totals, levels, team(), dropped, screened, tl_where, objectives, href), "data", h1=home.HEADLINE)
