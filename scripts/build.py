@@ -1141,8 +1141,8 @@ def build():
                                       weekly.render(sys.modules[__name__], items, wins, ups, iss, aars, objs), "data")
     for n, s, t, days, final, key in weekly.iter_weeks(items, wins):
         slug = f"weekly/{key}/"
-        week_title = f"Week {n}: {weekly.nice(s)} to {weekly.nice(t)}"
-        lede = (f"Slopworks week {n} ({week_title.split(': ',1)[1]}). Confirmed Grok Bot updates added that week, then the team's recap from the records."
+        week_title = f"Week {n} · {weekly.MON[s.month-1]} {s.day}–{weekly.MON[t.month-1]} {t.day}"
+        lede = (f"Slopworks week {n} ({weekly.nice(s)} to {weekly.nice(t)}). Confirmed Grok Bot updates added that week, then the team's recap from the records."
                 + ("" if final else " This week is still running and is labelled so far."))
         body = weekly.render_page(sys.modules[__name__], n, s, t, days, final, items, wins, ups, iss, aars, objs)
         body += f'<p class="next"><a class="more" href="../">All weeks</a></p>'
