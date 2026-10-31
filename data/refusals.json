@@ -113,5 +113,15 @@
     "at": "2026-10-30T14:41-04:00",
     "branch": "bot/design-weekly-digest-pages",
     "reason": "python3 -m unittest discover -s tests -q failed:"
+  },
+  {
+    "at": "2026-10-31T08:36-04:00",
+    "branch": "bot/data-records-1031",
+    "reason": "Lens's sign-off: Lens's sign-off needs at least one 'Derived: count <file> = N' line"
+  },
+  {
+    "at": "2026-10-31T08:37-04:00",
+    "branch": "bot/data-records-1031",
+    "reason": "python3 -m unittest discover -s tests -q failed:"
   }
 ]
