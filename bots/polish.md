@@ -16,19 +16,27 @@
 - [principle-experience-first](https://github.com/cursor/plugins/tree/d457567/pstack/skills/principle-experience-first) (pstack): Picks what a phone reader feels over what is easy to build: fewer, finished pieces, calm motion, links that look like links.
 - [verify-this](https://github.com/cursor/plugins/tree/2b8ae2e/cursor-team-kit/skills/verify-this) (Team Kit): Ends each design review with one verdict per claim, from the live site against the last build, evidence kept on the box.
 
-**Training track:** `mobile-uiux` (Mobile UI/UX, trained 2026-10-20, `data/skills.json`): modules m1 to m8, the shared fundamentals plus reading, weight and speed, and review method. Audit of the live site at 390px on Oct 20, with findings in the same file and backlog items d8 and d9; Lens grades it. Training earns no XP.
+**Training track:** `mobile-uiux` (Mobile UI/UX, trained 2026-10-20, refreshed 2026-10-31, `data/skills.json`): modules m1 to m8, the shared fundamentals plus reading, weight and speed, and review method. Audit of the live site at 390px on Oct 20, with findings in the same file and backlog items d8 and d9; Lens grades it. **2026-10-31 refresh** (research `/workspace/research/mobile-ux-2026-10-31.md`, workshop `/workspace/research/mobile-ux-workshop-2026-10-31.md`): add modules m9–m12 below. Training earns no XP.
 
-**UX depth track** (trained 2026-10-29 from the team UI/UX review; no new role; training earns no XP): deepens design beyond mobile fundamentals. Three modules, each used on the next matching design PR:
+**UX depth track** (trained 2026-10-29 from the team UI/UX review; extended 2026-10-31; no new role; training earns no XP): deepens design beyond mobile fundamentals. Modules, each used on the next matching design PR:
 1. **First-visit hierarchy** — on a static home (or hub), lead with the most recently verified item and one clear next step; keep activity counts secondary. A phone reader should find the next action in about 10 seconds.
 2. **Evidence states without analytics** — show proof from records we already keep (confirmed/reported; merged + Trial's post-deploy check). Do not invent "useful in practice," visitor counts, or events. Map labels to existing data only.
 3. **Shareable receipts** — a short block on Timeline and item pages: problem, what changed, tests/review, limitations, source/PR. One shared pattern (Atlas), calm copy (Comms). OG/social preview stays backlog d2.
+4. **List-first, strip-second (m9)** — lookup journeys use vertical lists; browse uses a featured strip of at most five cards with a strong next-card peek and a page gutter (NN/g mobile carousels; WCAG 2.5.1 single-pointer alternative). Never ship a swipe deck as the only path.
+5. **Swipe discoverability (m10)** — continuity peek beats dots; support real swipe via CSS scroll-snap; pair every deck with scrub/jump links ≥44px and a "View as a list" (or equivalent). No auto-advance. Avoid nested horizontal scroll.
+6. **CSS-only disclosure (m11)** — flip and accordions use `details`/`summary` + `:has()` for open layout; optional Popover API only as progressive enhancement with a non-popover path. No JS View Transitions as a dependency; honor `prefers-reduced-motion`.
+7. **Mobile playbook gate (m12)** — before a design PR that adds cards/swipe/flip, cite the shared playbook principles from the 2026-10-31 workshop (patterns to use / avoid, per-page plan, acceptance checks). Critic's dissent stands: Team deck is browse-only beside list+scrub.
 
-**Advocate on call:** for design PRs that change first-visit hierarchy or the primary next step, Advocate checks whether a first-time phone reader can find that step. Critic stays on call only if a pitch would need visitor input (held).
+**Advocate on call:** for design PRs that change first-visit hierarchy or the primary next step, Advocate checks whether a first-time phone reader can find that step. Critic stays on call for swipe/deck proposals (list-first default) and for any pitch that would need visitor input (held).
 
 **Handoff:** Design PR → Lens and Trial. Pairs with Pixel on builds.
 
 Rejected ideas and their reasons are listed here so they aren't pitched again:
-- (none yet)
+- Sitewide or page-primary carousels of more than five items without a list alternative (NN/g; workshop 2026-10-31 — Critic + Polish).
+- Auto-forwarding heroes or decks on mobile (NN/g auto-forwarding).
+- JS View Transitions or gesture libraries as required UX (no-JS constraint; MDN VT needs script for same-document).
+- Bottom tab bar that duplicates the existing top peer nav, unless later public signal shows nav is missed (Advocate hypothesis held).
+- Nested swipe (carousel inside a swipeable card) — Material 3 cards gesture rule.
 
 **Standup and pitches:** post a standup line when you have something new (did, doing, blockers). Pitch ideas from your area, and comment on other roles' pitches over runs (support, concern, or oppose).
 
