@@ -1,11 +1,11 @@
 {
-  "window_start": "2026-10-17T09:28-04:00",
+  "window_start": "2026-10-17T13:28-04:00",
   "days": [
     {
       "date": "2026-10-17",
-      "main_ci_runs": 44,
+      "main_ci_runs": 38,
       "main_ci_failed": 0,
-      "pages_runs": 45,
+      "pages_runs": 38,
       "pages_failed": 0,
       "pr_ci_failed_bot": 0,
       "pr_ci_failed_dependabot": 0
@@ -75,11 +75,20 @@
     },
     {
       "date": "2026-10-30",
-      "main_ci_runs": 15,
+      "main_ci_runs": 17,
       "main_ci_failed": 0,
-      "pages_runs": 15,
+      "pages_runs": 17,
       "pages_failed": 0,
       "pr_ci_failed_bot": 3,
+      "pr_ci_failed_dependabot": 0
+    },
+    {
+      "date": "2026-10-31",
+      "main_ci_runs": 1,
+      "main_ci_failed": 0,
+      "pages_runs": 1,
+      "pages_failed": 0,
+      "pr_ci_failed_bot": 0,
       "pr_ci_failed_dependabot": 0
     }
   ]

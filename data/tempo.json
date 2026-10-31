@@ -26,7 +26,7 @@
   "tripped_by": "aar-2026-10-30-missed-run",
   "trip_pr": 184,
   "trip_at": null,
-  "as_of_pr": 182,
+  "as_of_pr": 186,
   "days": [
     {
       "date": "2026-10-18",
@@ -58,7 +58,11 @@
     },
     {
       "date": "2026-10-30",
-      "prs": 14
+      "prs": 16
+    },
+    {
+      "date": "2026-10-31",
+      "prs": 1
     }
   ],
   "violations": [],
@@ -78,7 +82,8 @@
     "#132 merged 2026-10-20T16:00-04:00 as PR 15 of the day, over the slowed limit, under ovr-2026-10-20-extra-sprint (Ryno (CEO), 2026-10-20T11:29-04:00)",
     "#133 merged 2026-10-20T16:27-04:00 as PR 16 of the day, over the slowed limit, under ovr-2026-10-20-extra-sprint (Ryno (CEO), 2026-10-20T11:29-04:00)",
     "#134 merged 2026-10-20T22:06-04:00 as PR 17 of the day, over the slowed limit, under ovr-2026-10-20-ceo-card-v5-logo (Ryno (CEO), 2026-10-20T22:01-04:00)",
-    "#135 merged 2026-10-20T22:29-04:00 as PR 18 of the day, over the slowed limit, under ovr-2026-10-20-ceo-card-v5-logo (Ryno (CEO), 2026-10-20T22:01-04:00)"
+    "#135 merged 2026-10-20T22:29-04:00 as PR 18 of the day, over the slowed limit, under ovr-2026-10-20-ceo-card-v5-logo (Ryno (CEO), 2026-10-20T22:01-04:00)",
+    "#185 merged 2026-10-30T20:22-04:00 carrying same-day AAR aar-2026-10-30-missed-run (Ryno, 2026-10-20 11:02 AM ET)"
   ],
   "ceo_overrides": [
     {
