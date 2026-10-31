@@ -37,23 +37,25 @@ class Cards(unittest.TestCase):
     def test_one_card_per_role_that_opens_without_script(self):
         for s, doc in self.pages.items():
             self.assertNotIn("<script", doc.lower(), s)
-            self.assertEqual(doc.count('class="o" id="'), len(self.roles) + 1, s)  # plus Ryno's CEO card (scripts/ceo.py)
+            self.assertEqual(doc.count('class="flip"'), len(self.roles) + 1, s)  # plus Ryno's CEO card
+            self.assertIn('class="scrub"', doc, s)
+            self.assertIn('class="list-toggle"', doc, s)
+            self.assertIn('class="deck-wrap"', doc, s)
             for f in (ROOT / "bots").glob("*.md"):
-                self.assertIn(f'href="#{f.stem}"', doc)
-                self.assertIn(f'href="#m-{f.stem}"', doc)
+                self.assertIn(f'id="card-{f.stem}"', doc)
+                self.assertIn(f'href="#{ "card-" + f.stem}"', doc) if False else self.assertIn(f'href="#card-{f.stem}"', doc)
                 self.assertIn(f'href="{f.stem}/">Character sheet', doc)
 
-    def test_tap_outside_closes_and_close_link_is_focusable(self):
-        # Ryno, 2026-10-20 9:22 PM ET: no close button; tap outside the card to close. Escape would need script, so it isn't offered.
+    def test_flip_is_native_details_with_list_and_scrub(self):
+        # Mobile UX playbook 2026-10-31: details/summary flip, scrub chips, list escape — no :target overlay.
         for s, doc in self.pages.items():
             stems = [f.stem for f in (ROOT / "bots").glob("*.md")] + ["ryno"]
-            for st in stems:  # the backdrop is the open card's own target: a full-screen link back to #m-, out of the tab order and hidden from screen readers
-                self.assertIn(f'<a class="o" id="{st}" href="#m-{st}" tabindex="-1" aria-hidden="true"></a>', doc, (s, st))
-                self.assertIn(f'<a class="cl" href="#m-{st}">Close</a>', doc, (s, st))  # a real link with words: in the tab order
-            self.assertIn(".o:target{inset:0;z-index:8}", doc, s)
-            self.assertIn("position:fixed;z-index:9;", doc, s)  # the open card sits above its backdrop, so taps inside it don't close it
-            self.assertIn(".cl:not(:focus-visible){clip-path:inset(50%)}", doc, s)  # shown only when focused from the keyboard
-            self.assertNotRegex(doc, r'class="cl"[^>]*(tabindex|aria-hidden)')
+            for st in stems:
+                self.assertIn(f'id="card-{st}"', doc, (s, st))
+            self.assertIn("Flip", doc, s)  # via CSS content on .face.front::after
+            self.assertIn("List (", doc, s)  # list-toggle summary
+            self.assertIn("scroll-snap-type:x mandatory", doc, s)
+            self.assertNotIn(".o:target{inset:0;z-index:8}", doc, s)
 
     def test_ids_are_unique_and_sprite_ids_prefixed(self):
         doc = self.pages["halloween"]
@@ -69,8 +71,8 @@ class Cards(unittest.TestCase):
         levels = json.loads((ROOT / "data/progression.json").read_text())["levels"]
         for n in self.roles:
             num = build.level_for(tot.get(n, 0), levels)[0]
-            self.assertIn(f"<b>{n}</b>", doc)
-            self.assertIn(f">Lv <span>{num}</span></span>", doc, n)  # cards v6: the level sits in the corner badge; XP lives on the sheet
+            self.assertIn(f">{n}</p>", doc)  # front face name
+            self.assertIn(f"Lv <span>{num}</span>", doc, n)
 
     def test_cards_v6_stay_uncluttered(self):
         # Cards v6 (CEO direction, Oct 21): no XP words on a card, no pip bars by the move counts, and Weak to / Resists /
@@ -99,7 +101,12 @@ class Cards(unittest.TestCase):
 
     def test_holiday_art_only_in_its_approved_season(self):
         self.assertIn("October edition: Halloween art.", self.pages["halloween"])
-        self.assertIn(".g-forge{", self.pages["halloween"])
+        # Team deck uses season avatar SVGs; .g-* holiday scenes stay on character sheets (budget).
+        stems = {n: n.lower() for n in self.spec["roles"]}
+        self.assertIn(".g-forge{", cards.css(self.spec, "halloween", stems))
+        self.assertNotIn(".g-forge{", cards.css_team(self.spec, "halloween", stems))
+        h, n = avatars.files("halloween"), avatars.files("normal")
+        self.assertNotEqual(h["forge.svg"], n["forge.svg"])
         for s in ("normal", "winter"):  # winter has no card art yet: it falls back to the type motif
             self.assertNotIn(".g-forge{", self.pages[s])
             self.assertNotIn("Halloween", self.pages[s])
@@ -128,10 +135,11 @@ class Cards(unittest.TestCase):
                 self.assertNotIn("translate(80 82)", svg, (s, name))
         self.assertIn('<path d="M-5 5l', self.pages["halloween"])  # his crown badge
 
-    def test_minis_show_dots_not_level_text(self):
-        css = (ROOT / "scripts/cards.css").read_text()
-        self.assertIn(".card:not(.lead .card) .ml{position:absolute;white-space:nowrap;clip-path:inset(50%)}", css)  # read, not shown
-        self.assertIn(".o:target~.card .ml{position:static;clip-path:none}", css)  # the open card keeps its level
+    def test_deck_css_ships_with_team_page(self):
+        css = (ROOT / "scripts/deck.css").read_text()
+        self.assertIn("scroll-snap-type:x mandatory", css)
+        self.assertIn(".list-toggle", css)
+        self.assertIn("prefers-reduced-motion", css)
 
     def test_team_page_fits_100_kb_in_every_season(self):
         for s, doc in self.pages.items():

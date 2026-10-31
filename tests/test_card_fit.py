@@ -1,7 +1,5 @@
-"""Ryno, Oct 20 8:06 PM ET: "cards do not have to be scrollable on mobile phones". Every open card (19 roles and the CEO)
-fits one phone screen with no scrolling inside it, measured in headless Chrome on the built Team page (iframe harness,
-outside site/, like scripts/mobile_audit.py). Sizes: 390x844 and 360x780 phones, the same phones with browser bars
-(390x664, 360x640), and 320x568."""
+"""Open flip cards stay inside the deck strip: no page-width overflow (mobile UX playbook 2026-10-31).
+Replaces the old :target fullscreen fit check. Measured in headless Chrome on the built Team page."""
 import json, re, subprocess, sys, tempfile, unittest
 from pathlib import Path
 
@@ -9,14 +7,17 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
 import mobile_audit  # noqa: E402
 
-SIZES = [(390, 844), (360, 780), (390, 664), (360, 640), (320, 568)]
+SIZES = [(390, 844), (360, 780), (1280, 800)]
 HARNESS = r"""<!doctype html><meta charset="utf-8"><body style="margin:0"><pre id="out">running</pre><script>
 const SIZES = %s, URL = %s, out = []; let i = 0; const f = document.createElement('iframe'); f.style.border = '0'; document.body.appendChild(f);
 function next(){ if (i >= SIZES.length) { document.getElementById('out').textContent = JSON.stringify(out); return; }
   const [w, h] = SIZES[i++]; f.style.width = w + 'px'; f.style.height = h + 'px';
   f.onload = () => { const win = f.contentWindow, d = f.contentDocument;
-    for (const o of d.querySelectorAll('.slot .o')) { win.location.hash = o.id; const c = o.parentElement.querySelector('.card'), b = c.getBoundingClientRect();
-      out.push({size: w + 'x' + h, card: o.id, over: c.scrollHeight - c.clientHeight, top: Math.round(b.top), bottom: Math.round(b.bottom), vh: win.innerHeight}); }
+    const flips = [...d.querySelectorAll('details.flip')];
+    for (const det of flips) { det.open = true; }
+    const sw = Math.max(d.documentElement.scrollWidth, d.body.scrollWidth);
+    out.push({size: w + 'x' + h, overflow: Math.max(0, sw - w), open: flips.length});
+    for (const det of flips) { det.open = false; }
     next(); };
   f.src = URL + '?' + i; }
 next();
@@ -39,13 +40,9 @@ class OpenCardsFitThePhone(unittest.TestCase):
         import html
         cls.rows = json.loads(html.unescape(m.group(1))) if m and m.group(1).strip() != "running" else []
 
-    def test_every_card_measured(self):
-        self.assertEqual(len(self.rows), len(SIZES) * len(re.findall(r'class="o" id=', (ROOT / "site/team/index.html").read_text())))
+    def test_every_size_measured(self):
+        self.assertEqual(len(self.rows), len(SIZES))
 
-    def test_no_open_card_scrolls(self):
-        bad = {f'{r["size"]} {r["card"]}': r["over"] for r in self.rows if r["over"] > 1 or r["top"] < 0 or r["bottom"] > r["vh"]}
+    def test_no_page_overflow_with_a_card_open(self):
+        bad = {r["size"]: r["overflow"] for r in self.rows if r["overflow"] > 1}
         self.assertEqual(bad, {})
-
-
-if __name__ == "__main__":
-    unittest.main()

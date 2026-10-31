@@ -40,7 +40,7 @@ class CardBack(unittest.TestCase):
             self.assertNotIn(f"<b>{build.e(r['type'])}</b>", d, n)
             self.assertIn(f'<p class="gm">{cards.rarity(num, self.spec)[1]}</p>', d, n)
             self.assertIn(f">{order.index(n) + 1:02d}/{len(STEMS)}</p>", d, n)
-            self.assertIn(f'href="../#{STEMS[n]}"', d, n)  # back to the open card on Team
+            self.assertIn(f'href="../#card-{STEMS[n]}"', d, n)  # back to the open card on Team
             for m in r["moves"]:
                 self.assertIn(build.e(m["name"]), d, n)
             self.assertIn(' holo"' if num >= 4 else f"r{cards.rarity(num, self.spec)[0]}", d, n)

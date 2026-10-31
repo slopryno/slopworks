@@ -55,11 +55,11 @@ class Card(unittest.TestCase):
 
     def test_ceo_group_comes_first(self):
         t = self.team
-        self.assertLess(t.index('<h2 class="group">CEO</h2>'), t.index('<h2 class="group">Leadership and Strategy</h2>'))
-        self.assertEqual(t.count('class="slot t'), len(build.team()) + 1)
-        slot = t[t.index('<div class="slot t0 lead'):t.index('<h2 class="group">Leadership')]
-        for want in ('id="ryno"', 'href="#m-ryno">Close</a>', "One of one", f"00/{len(build.team())}",
-                     "<b>Management</b>", "Human verified", '<p class="lv" title="Management">CEO</p>', "Safeguard", "Unblock", "Vision", 'src="../assets/avatars/ceo.svg"', 'href="ryno/">Character sheet'):
+        self.assertLess(t.index('id="card-ryno"'), t.index('id="card-coordinator"'))
+        self.assertEqual(t.count('id="card-'), len(build.team()) + 1)
+        slot = t[t.index('<li class="slot t0 lead'):t.index('id="card-coordinator"')]
+        for want in ('id="card-ryno"', "One of one", f"00/{len(build.team())}",
+                     "Management", "Human verified", '<p class="lv" title="Management">CEO</p>', "Safeguard", "Unblock", "Vision", 'src="../assets/avatars/ceo.svg"', 'href="ryno/">Character sheet'):
             self.assertIn(want, slot)
         for no in ("\u00a0XP", "Lv\u00a0", "--w:", "<script"):
             self.assertNotIn(no, slot)
@@ -93,7 +93,7 @@ class Card(unittest.TestCase):
         s = self.sheet
         self.assertIn("<title>Ryno: character sheet", s)
         self.assertIn('src="../../assets/avatars/ceo.svg"', s)
-        self.assertIn('href="../#ryno"', s)
+        self.assertIn('href="../#card-ryno"', s)
         self.assertEqual(re.findall(r'<link rel="stylesheet" href="([^"]+)"', s), ["../../style.css", "../../sheets.css"])  # the bots' card back, cached
         self.assertNotIn("<script", s)
 
