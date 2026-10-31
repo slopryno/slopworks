@@ -9,16 +9,16 @@
     "ci_catches": 19,
     "main_failures": 0,
     "reverts": 0,
-    "aars": 17,
-    "escaped": 13,
+    "aars": 18,
+    "escaped": 14,
     "blocks": 1,
     "refusals": 23,
     "blast_checked": 2,
     "blast_matched": 2
   },
   "pace": {
-    "mode": "normal",
-    "clean_prs": 56,
+    "mode": "slowed",
+    "clean_prs": 0,
     "clean_needed": 10
   },
   "days": [
@@ -166,9 +166,9 @@
       "date": "2026-10-30",
       "prs": 14,
       "open_to_merge_min": 14,
-      "escaped": 0,
+      "escaped": 1,
       "corrections": 0,
-      "aars": 0,
+      "aars": 1,
       "ci_catches": 3,
       "ci_recorded": true,
       "main_failures": 0,
@@ -272,9 +272,9 @@
       "key": "escaped",
       "label": "Incidents and data corrections per 10 PRs",
       "prev": 0.0,
-      "new": 0.0,
-      "direction": "flat",
-      "verdict": null
+      "new": 0.7,
+      "direction": "up",
+      "verdict": "worse"
     },
     {
       "key": "corrections",
@@ -288,9 +288,9 @@
       "key": "aars",
       "label": "AARs per 10 PRs",
       "prev": 0.0,
-      "new": 0.0,
-      "direction": "flat",
-      "verdict": null
+      "new": 0.7,
+      "direction": "up",
+      "verdict": "worse"
     },
     {
       "key": "ci_catches",
@@ -325,7 +325,10 @@
       "verdict": null
     }
   ],
-  "worsening": [],
+  "worsening": [
+    "escaped",
+    "aars"
+  ],
   "goals": [
     {
       "id": "G1",

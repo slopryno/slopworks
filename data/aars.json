@@ -942,5 +942,62 @@
     "owner": "Sweep",
     "status": "open",
     "thread": "c420"
+  },
+  {
+    "id": "aar-2026-10-30-missed-run",
+    "date": "2026-10-30",
+    "title": "The Oct 30 morning scan stopped while another run held the lock, so no daily run was recorded",
+    "trigger": "incident",
+    "links": {
+      "prs": [
+        153,
+        179,
+        184
+      ],
+      "runs": [
+        "41075459636"
+      ],
+      "commits": [
+        "3bd4255"
+      ],
+      "chat": [
+        "c463"
+      ]
+    },
+    "expected": {
+      "text": "The morning scan records the day's run in data/state.json and data/runs.json, so the missed-run heartbeat passes.",
+      "cite": [
+        "file:plans/tracker.md",
+        "file:.github/workflows/heartbeat.yml"
+      ]
+    },
+    "actual": {
+      "text": "No Oct 30 run was recorded and the missed-run heartbeat failed at 10:52 AM ET (last run 2026-10-29). #179 recorded Oct 30 as skipped at 12:44 PM ET (3bd4255), and the heartbeat check passes on main now.",
+      "cite": [
+        "run:41075459636",
+        "pr:179",
+        "commit:3bd4255"
+      ]
+    },
+    "why": {
+      "text": "Another run held the shared lock from about 4:12 to 6:46 AM ET, and the morning scan stopped quietly when it found the lock held, without recording a skip. It is the third run in two weeks to end without a record (Oct 20, Oct 21).",
+      "cite": [
+        "pr:179",
+        "chat:c463"
+      ]
+    },
+    "change": {
+      "text": "Advisor's rule in bots/sweep.md (#184): a run that finds the lock still held after about 20 minutes records the day as skipped (missed) itself, instead of stopping quietly. The heartbeat from #153 stays as the backstop.",
+      "cite": [
+        "pr:184",
+        "file:bots/sweep.md",
+        "pr:153"
+      ]
+    },
+    "change_pr": 184,
+    "owner": "Sweep",
+    "status": "open",
+    "thread": "c463",
+    "shipped_in": 185
   }
 ]
