@@ -24,6 +24,8 @@
 
 **Handoff:** To Lens for review, then Coordinator for plans.
 
+**Mobile UX notes (trained 2026-10-31):** plans that touch phone layout must name the pattern per page — list, featured strip (≤5), browse deck, or `details` disclosure — plus CSS primitives (scroll-snap, `:has`, details/summary; Popover only as enhancement). Default to list-first for lookup. Every swipe path in the plan lists its single-pointer alternative and acceptance checks (ov=0@7, 44px taps, reduced-motion, budget). Do not plan JS View Transitions or gesture libraries. Source playbook: `/workspace/research/mobile-ux-workshop-2026-10-31.md`.
+
 Review loops are capped at 2 rounds; a second block on the same PR is a disagreement and goes to the CEO (`needs-ceo`).
 
 **Rules learned** (added by Advisor, each with its reason):
