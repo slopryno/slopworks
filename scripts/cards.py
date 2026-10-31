@@ -1,7 +1,7 @@
 """Team trading cards (Ryno, 2026-10-20 11:51, 11:53 AM and 12:18 PM ET: "Lock this design, have Comms polish the wording").
 
-The Team page shows a grid of small cards (Variant B). Tapping one opens the full card (Variant A) with CSS :target only:
-no script. Each role has a real-world job type (data/cards.json) that sets the frame colour, icon and the light, moving
+The Team page shows a horizontal swipe deck (scroll-snap) with details/summary flip, scrub chips, and a list
+fallback (mobile UX playbook 2026-10-31). No script. Each role has a real-world job type (data/cards.json) that sets the frame colour, icon and the light, moving
 art-window motif. In a holiday month whose look Ryno approved (scripts/avatars.py season_for, data/calendar.json), the art
 window shows the role's costume scene instead. Every number comes from data/xp_ledger.json and data/progression.json.
 
@@ -9,6 +9,7 @@ Badge emblems are a hook only (badges=None): the badge rollout is held, so no ba
 """
 import html, json, re
 from pathlib import Path
+import re
 
 ROOT = Path(__file__).resolve().parent.parent
 e = lambda s: html.escape(str(s), quote=False)
@@ -56,6 +57,8 @@ GEM = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0
 SH = {'pr_merged': ('PR', 'PRs'), 'signoff': ('sign-off', 'sign-offs'), 'ci_test_added': ('test', 'tests'), 'pitch_shipped': ('shipped', 'shipped'),
       'research_accepted': ('report', 'reports'), 'aar_fix': ('fix', 'fixes'), 'block_upheld': ('block', 'blocks'), 'deploy_check': ('check', 'checks')}
 CSS = (Path(__file__).with_name("cards.css")).read_text().replace("GEM", GEM).replace("\n", "")
+DECK = re.sub(r"/\*.*?\*/", "", (Path(__file__).with_name("deck.css")).read_text(), flags=re.S)
+DECK = re.sub(r"[ \t]*\n[ \t]*", "", DECK)  # drop newlines/indent; keep spaces inside values (e.g. "x mandatory")
 # The badge row's style ships with the badges (held): no unused CSS on the Team page until then (page budget, v5).
 BADGE_CSS = ".bd{display:flex;flex-wrap:wrap;gap:.5rem;margin:.3rem 0}.bd span{display:inline-flex;align-items:center;gap:.15rem;font-size:.8125rem;font-weight:700}.bd img{width:24px;height:24px}"
 MAX_LINE = 8  # words per move line (Comms)
@@ -106,7 +109,8 @@ def icon(k):
     return f'<i style="--x:{slot(k)}"></i>'
 
 
-def css(spec, season, stems, badges=False):
+def _type_vars(spec, season, stems, scenes=True):
+    """Shared type colour / motif variables + the icon strip. scenes=False skips holiday --g (Team deck uses avatar imgs)."""
     types = list(spec["types"])
     t = "".join(f'.t{i}{{--a:{v["colour"]};--b:{v["tint"]};--m:{v["motif"]};--y:{slot(v["icon"])}}}' for i, v in enumerate(types))
     for k in ("texture", "particle_colour"):  # a value shared by several types is written once (page budget)
@@ -114,17 +118,43 @@ def css(spec, season, stems, badges=False):
         for i, v in enumerate(types):
             vals.setdefault(v[k], []).append(f".t{i}")
         t += "".join(f'{",".join(s)}{{--{k[0]}:{TEX[x] if k == "texture" else x}}}' for x, s in vals.items())
-    for n, s in stems.items():
-        art = spec["roles"][n].get("art", {}).get(season)
-        if art:
-            t += f'.g-{s}{{--g:{art["scene"]};--p:{art["particle_colour"]}}}'
+    if scenes:
+        for n, s in stems.items():
+            art = spec["roles"][n].get("art", {}).get(season)
+            if art:
+                t += f'.g-{s}{{--g:{art["scene"]};--p:{art["particle_colour"]}}}'
+    # Team deck only needs move + sheet + x + human-verified icons from the strip.
     sel = {"lv": ".lv::before", "set": ".sn::before", "weak": ".wr :nth-child(1)::before",
            "resist": ".wr :nth-child(2)::before", "hand": ".wr :nth-child(3)::before", "sheet": ".sh::before",
            "x": ".xl::before", "hv": ".hu::before", "type": ".ml::before", "move": ".mv i[style]::before"}
+    if not scenes:
+        sel = {k: sel[k] for k in ("sheet", "x", "hv", "move")}
     # One strip, each rule picks its slot (--x) at its size (--s, 16px by default; the link icons 20px).
     t += ",".join(sel.values()) + f'{{content:"";width:var(--s);height:var(--s);flex:none;background:var(--a);mask:url("{strip()}") calc(var(--x,0)*-1*var(--s)) 0/calc({len(UI) + len(ICONS)}*var(--s)) var(--s) no-repeat}}'
-    t += "".join(f'{sel[k]}{{--x:{i}}}' for i, k in enumerate(UI) if i) + ".ml::before{--x:var(--y)}"
-    return t + CSS + (BADGE_CSS if badges else "")
+    t += "".join(f'{sel[k]}{{--x:{i}}}' for i, k in enumerate(UI) if i and k in sel) + (".ml::before{--x:var(--y)}" if "type" in sel else "")
+    return t
+
+
+def css(spec, season, stems, badges=False):
+    """Character-sheet / legacy :target card CSS (sheets.css)."""
+    return _type_vars(spec, season, stems, scenes=True) + CSS + (BADGE_CSS if badges else "")
+
+
+def css_team(spec, season, stems):
+    """Team page: swipe deck + flip + scrub + list. Budget-critical."""
+    return (
+        _type_vars(spec, season, stems, scenes=False)
+        + DECK
+        + (
+            ".jb{position:absolute;z-index:1;right:10px;top:10px;width:22px;height:22px;pointer-events:none}"
+            ".hu{display:inline-flex;vertical-align:-3px;font-size:0}.hu::before{background:#b8860b;--s:14px}"
+            ".mv i[style]{display:grid;place-items:center;width:24px;height:24px;border-radius:8px;background:var(--a)}"
+            ".mv i[style]::before{background:#fff}"
+            ".acts .sh{display:inline-flex;align-items:center;gap:.35rem;min-height:44px}"
+            ".lead .flip{border-top-color:#b8860b}"
+            ".face.front::after{content:\"Flip\";display:inline-block;margin-top:.6rem;padding:.35rem .7rem;font-size:.8rem;font-weight:600;border:1px solid var(--line);border-radius:999px;background:var(--bg)}"
+        )
+    )
 
 
 def _last_verified(last):
@@ -137,33 +167,38 @@ def _last_verified(last):
     return f'<p class="lvf">Last verified · <a href="{e(pr)}">#{e(num)}</a> <time datetime="{e(when)}">{e(when)}</time></p>'
 
 
-def card(n, i, total, stem, spec, season, xp, level, lv, nxt, kinds, avatar_src, badges=None, jb="", last=None):
-    """One slot: the mini (a link to #stem) and the full card body. badges: {family: count} once the badge engine ships."""
+def card(n, i, total, stem, spec, season, xp, level, lv, nxt, kinds, avatar_src, badges=None, jb="", last=None, group=""):
+    """One deck slot: details/summary flip (mobile UX playbook 2026-10-31). No script. badges unused until badge engine ships."""
     r = spec["roles"][n]
     tl = [x["name"] for x in spec["types"]]
     ty = next(x for x in spec["types"] if x["name"] == r["type"])
     rk, rname = rarity(level, spec)
     art = r.get("art", {}).get(season)
     pct = 100 if not nxt else int(100 * (xp - lv["xp"]) / (nxt["xp"] - lv["xp"]))
-    cls = f't{tl.index(r["type"])} r{rk}' + (f' g-{stem}' if art else "") + (" holo" if rk >= 3 else "")
-    pk = art["particles"] if art else ty["particles"]
+    cls = f't{tl.index(r["type"])} r{rk}' + (" holo" if rk >= 3 else "")  # no g-stem: Team uses avatar imgs, not --g scenes
     mv = ""
     for m in r["moves"]:
         c = kinds.get(m["stat"]) if m["stat"] else None
         st = f'<em>{c}<small> {SH[m["stat"]][0 if c == 1 else 1]}</small></em>' if c else ""
         mv += f'<li>{icon(m["icon"])}<b>{e(m["name"])}</b>{st}<span>{e(m["line"])}</span></li>'
-    bd = ('<p class="bd">' + "".join(f'<span><img src="{avatar_src.rsplit("avatars/", 1)[0]}badges/{f}.svg" width="24" height="24" alt="{e(f.capitalize())} badges:">{c}</span>'
-                                     for f, c in badges.items()) + "</p>") if badges else ""
     fl = r["flavour"].get(season) or r["flavour"]["normal"]
-    return (f'<div class="slot {cls}"><a class="o" id="{stem}" href="#m-{stem}" tabindex="-1" aria-hidden="true"></a><i class="c" id="m-{stem}"></i><div class="card">'
-            f'<a class="open" href="#{stem}"><span class="art {pk}"><img src="{avatar_src}" width="112" height="112" alt=""></span>{jb}'
-            f'<span class="nm"><b>{e(n)}</b><span class="ml" title="{e(r["type"])}">Lv <span>{level}</span></span></span></a>'
-            f'<div class="body"><a class="cl" href="#m-{stem}">Close</a><p class="ty"><b>{e(r["type"])}</b></p>'
-            f'<p class="lv" style="--w:{pct}%">{e(lv["name"])}</p>'
-            f'<ul class="mv">{mv}</ul>'
-            f'{bd}<p class="ft">{e(rname)}<span class="sn">{i:02d}/{total}</span></p>'
-            f'{_last_verified(last)}'
-            f'<p class="fl">{e(fl)}</p><a class="sh" title="Character sheet" href="{stem}/">Character sheet</a></div></div></div>')
+    dg = f' data-group="{e(group)}"' if group else ""
+    # id=card-stem for scrub/list; keep stem id on summary target via card-* only (no :target overlay)
+    return (
+        f'<li class="slot {cls}" id="card-{stem}"{dg}>'
+        f'<details class="flip"><summary><span class="vh">{e(n)}</span>'
+        f'<div class="face front" aria-hidden="true">'
+        f'<img class="av" src="{avatar_src}" width="112" height="112" alt="">{jb}'
+        f'<p class="nm">{e(n)}</p><p class="role">{e(r["type"])}</p>'
+        f'<p class="lv"><span class="ml" title="{e(r["type"])}">Lv <span>{level}</span></span> · {e(lv["name"])}</p>'
+        f'<div class="bar" aria-hidden="true"><span style="width:{pct}%"></span></div>'
+        f'<p class="rar">{e(rname)}</p>'
+        f'</div></summary>'
+        f'<div class="face rear"><p class="role">{e(r["type"])}</p><p class="nm">{e(n)}</p>'
+        f'<ul class="mv">{mv}</ul>{_last_verified(last)}'
+        f'<p class="fl">{e(fl)}</p>'
+        f'<p class="acts"><a class="sh" title="Character sheet" href="{stem}/">Character sheet</a></p>'
+        f'</div></details></li>')
 
 
 def errors(spec=None, roles=None):

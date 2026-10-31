@@ -86,7 +86,7 @@ def banner(c):
             f'<div class="id"><p class="jr"><svg role="img" aria-label="{e(r["type"])}" class=ti><use href="#{P}{ty["icon"]}"/></svg><span class="jt">{e(c["title"])}</span></p>'
             f'<p class="lv">Level {c["level"]} · {e(c["lvname"])}<span><strong>{c["xp"]} XP</strong> · {c["togo"]}</span></p>'
             f'<div class="xpbar" aria-hidden="true"><span style="width:{c["pct"]}%"></span></div>'
-            f'<p class="fl">{e(c["flavour"])} <a class="tc" href="../#{c["stem"]}">{ic("cards")}See the card</a></p></div></section>')
+            f'<p class="fl">{e(c["flavour"])} <a class="tc" href="../#card-{c["stem"]}">{ic("cards")}See the card</a></p></div></section>')
 
 
 def moves(c):
