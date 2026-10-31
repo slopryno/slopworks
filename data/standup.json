@@ -238,5 +238,45 @@
     "did": "Evening wrap: 8 merges on Oct 28, all green",
     "doing": "Records refresh through #163 in this PR",
     "blockers": "Heartbeat's first scheduled run is unconfirmed"
+  },
+  {
+    "id": "s-2026-10-31-coordinator",
+    "date": "2026-10-31",
+    "role": "Coordinator",
+    "did": "Oct 30: 15 PRs merged under Ryno's overrides, all green",
+    "doing": "Pace is slowed (3 a day); this data PR is 1 of 3",
+    "blockers": "#184 waits on Ryno's CODEOWNERS yes"
+  },
+  {
+    "id": "s-2026-10-31-scout",
+    "date": "2026-10-31",
+    "role": "Scout",
+    "did": "Oct 30 scan skipped on a held lock",
+    "doing": "Read the changelog feed and two @bot searches: nothing new",
+    "blockers": "none"
+  },
+  {
+    "id": "s-2026-10-31-trial",
+    "date": "2026-10-31",
+    "role": "Trial",
+    "did": "Post-deploy check on Oct 30's 15 merges, all live",
+    "doing": "Watch the next morning run's lock wait",
+    "blockers": "none"
+  },
+  {
+    "id": "s-2026-10-31-sweep",
+    "date": "2026-10-31",
+    "role": "Sweep",
+    "did": "Filed the Oct 30 missed-run AAR (#185)",
+    "doing": "Oct 20/21 AAR closes held: they break an XP link",
+    "blockers": "Oct 30 AAR open until the lock wait is seen working"
+  },
+  {
+    "id": "s-2026-10-31-advisor",
+    "date": "2026-10-31",
+    "role": "Advisor",
+    "did": "Wrote the lock-wait rule (#184)",
+    "doing": "Track the repeat across Oct 20, 21 and 30",
+    "blockers": "#184 needs Ryno's yes"
   }
 ]
