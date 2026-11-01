@@ -159,14 +159,20 @@ class CoAuthorTrailers(unittest.TestCase):
         self.assertFalse(check.coauthor_trailer_hits("msg\n\nSigned-off-by: Lens <lens@example.com>\n"))
         self.assertFalse(check.coauthor_trailer_hits("discussing Co-authored-by policy in a paragraph\n"))
 
-    def test_scrub_removes_blocked_only(self):
+    def test_detects_any_coauthor_trailer(self):
+        self.assertTrue(check.coauthor_trailer_hits("msg\n\nCo-authored-by: Slopbot (for slopryno) <343292770+slopryno@users.noreply.github.com>\n"))
+        self.assertTrue(check.coauthor_trailer_hits("msg\n\nCo-authored-by: Core <bot@slopworks.local>\n"))
+
+    def test_scrub_removes_all_trailers(self):
         raw = "title\n\nbody\n\n" + self._banned_line() + "\n" + self._personal_line() + "\nCo-authored-by: Other Bot <other@example.com>\n"
         scrubbed = check.scrub_coauthor_trailers(raw)
         self.assertNotIn("anthropic.com", scrubbed)
         self.assertNotIn("willis", scrubbed.lower())
-        self.assertIn("Other Bot", scrubbed)
+        self.assertNotIn("Other Bot", scrubbed)
+        self.assertNotRegex(scrubbed, r"(?i)co-authored-by:")
 
     def test_text_errors_name_the_where(self):
         errs = check.coauthor_text_errors("x\n" + self._banned_line() + "\n", "PR 1 body")
         self.assertEqual(len(errs), 1)
         self.assertIn("PR 1 body", errs[0])
+        self.assertIn("not allowed", errs[0])

@@ -76,7 +76,7 @@ Team rules stay in this shared `CLAUDE.md`. Personal or machine-only notes go in
 
 ## No Co-authored-by trailers
 
-Do not add `Co-authored-by:` (or `Co-Authored-By:`) trailers to commit messages, PR bodies, or squash merges. Claude Code must keep `includeCoAuthoredBy: false` (see `.claude/settings.json`). `scripts/preflight.sh` installs a `commit-msg` hook that strips blocked trailers, `scripts/check.py` fails CI when a PR commit or body still has one naming a blocked identity, and `scripts/bot.py` scrubs them from squash messages. Rebuild a branch instead of amending history on main.
+Do not add `Co-authored-by:` (or `Co-Authored-By:`) trailers to commit messages, PR bodies, or squash merges. Claude Code must keep `includeCoAuthoredBy: false` (see `.claude/settings.json`). `scripts/preflight.sh` installs a `commit-msg` hook that strips blocked trailers, `scripts/check.py` fails CI when a PR commit, title, or body still has any Co-authored-by trailer, and `scripts/bot.py` scrubs them from squash messages. Rebuild a branch instead of amending history on main.
 
 ## What not to do
 
