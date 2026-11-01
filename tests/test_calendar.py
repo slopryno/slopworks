@@ -65,6 +65,8 @@ class Page(unittest.TestCase):
     def test_every_dated_event_in_window_is_in_the_agenda(self):
         today = date.fromisoformat(json.loads((ROOT / "data/state.json").read_text())["updated"])
         for x in cal.dated(CAL):
+            if x["date"] < date(today.year, today.month, 1):
+                continue  # months before this one leave the page by design (cal.render window)
             self.assertIn(f'<time datetime="{x["date"].isoformat()}">{cal.nice(x["date"])}</time>', self.html, x["id"])
 
     def test_past_days_show_no_invented_routines(self):

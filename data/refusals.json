@@ -123,5 +123,25 @@
     "at": "2026-10-31T08:37-04:00",
     "branch": "bot/data-records-1031",
     "reason": "python3 -m unittest discover -s tests -q failed:"
+  },
+  {
+    "at": "2026-11-01T04:55-05:00",
+    "branch": "bot/data-morning-scan-1101",
+    "reason": "bot/data-* can't carry tests/test_calendar.py; use bot/feature-*"
+  },
+  {
+    "at": "2026-11-01T04:56-05:00",
+    "branch": "bot/feature-morning-scan-calendar-1101",
+    "reason": "python3 -m unittest discover -s tests -q failed:"
+  },
+  {
+    "at": "2026-11-01T04:57-05:00",
+    "branch": "bot/feature-morning-scan-calendar-1101",
+    "reason": "python3 -m unittest discover -s tests -q failed:"
+  },
+  {
+    "at": "2026-11-01T04:59-05:00",
+    "branch": "bot/feature-morning-scan-calendar-1101",
+    "reason": "the build changed files or there are uncommitted changes; commit them first"
   }
 ]
