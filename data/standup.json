@@ -278,5 +278,29 @@
     "did": "Wrote the lock-wait rule (#184)",
     "doing": "Track the repeat across Oct 20, 21 and 30",
     "blockers": "#184 needs Ryno's yes"
+  },
+  {
+    "id": "s-2026-11-01-coordinator",
+    "date": "2026-11-01",
+    "role": "Coordinator",
+    "did": "Oct 31: 3 PRs merged (#186 to #188), all green",
+    "doing": "Slowed pace; this data PR is 1 of 3",
+    "blockers": "#184, #189 and #190 wait on Ryno's merge"
+  },
+  {
+    "id": "s-2026-11-01-scout",
+    "date": "2026-11-01",
+    "role": "Scout",
+    "did": "Oct 31 scan: nothing new",
+    "doing": "Read the changelog feed and one @bot search: nothing new",
+    "blockers": "none"
+  },
+  {
+    "id": "s-2026-11-01-pixel",
+    "date": "2026-11-01",
+    "role": "Pixel",
+    "did": "Team deck branch ready (preflight OK)",
+    "doing": "Ships in the next open slot",
+    "blockers": "none"
   }
 ]
