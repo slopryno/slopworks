@@ -1,5 +1,41 @@
 [
   {
+    "id": "pr192",
+    "role": "Forge",
+    "title": "Forge: morning scan Nov 3: standup, no new Grok Bot release, Nov 2 recorded as skipped",
+    "pr": "https://github.com/slopryno/slopworks/pull/192",
+    "date": "2026-11-03",
+    "merged": "2026-11-03T06:44-05:00",
+    "opened": "2026-11-03T06:42-05:00"
+  },
+  {
+    "id": "pr191",
+    "role": "Forge",
+    "title": "Forge: morning scan Nov 1: standup, no new Grok Bot updates, calendar test window fix",
+    "pr": "https://github.com/slopryno/slopworks/pull/191",
+    "date": "2026-11-01",
+    "merged": "2026-11-01T05:02-05:00",
+    "opened": "2026-11-01T05:00-05:00"
+  },
+  {
+    "id": "pr188",
+    "role": "Forge",
+    "title": "Forge: train mobile UX playbook notes (Polish, Advocate, Lens, Sketch)",
+    "pr": "https://github.com/slopryno/slopworks/pull/188",
+    "date": "2026-10-31",
+    "merged": "2026-10-31T11:58-04:00",
+    "opened": "2026-10-31T11:52-04:00"
+  },
+  {
+    "id": "pr187",
+    "role": "Coordinator",
+    "title": "Coordinator: refresh records through #186; research & roles notes for Oct 31",
+    "pr": "https://github.com/slopryno/slopworks/pull/187",
+    "date": "2026-10-31",
+    "merged": "2026-10-31T08:40-04:00",
+    "opened": "2026-10-31T08:39-04:00"
+  },
+  {
     "id": "pr186",
     "role": "Forge",
     "title": "Forge: morning scan Oct 31: standup, no new Grok Bot updates, Friday retro notes",
