@@ -290,5 +290,60 @@
       "Morning scan. No lock held at start. Scout: changelog RSS still lists 0.78.1 first. One X search of @bot original posts since Oct 30: 0 results.",
       "Verify: nothing new. Shield: 0 strips. No new CEO pitch, so no huddle."
     ]
+  },
+  {
+    "id": "2026-11-02-daily",
+    "date": "2026-11-02",
+    "kind": "daily",
+    "status": "skipped",
+    "x_reads": 0,
+    "counts": {
+      "posts_screened": 0,
+      "candidates": 0,
+      "published_updates": 0,
+      "published_issues": 0,
+      "corrected": 0,
+      "dropped_verify": 0,
+      "stripped_privacy": 0,
+      "dropped_privacy": 0,
+      "ci_failures": 0,
+      "corrections_mail": 0,
+      "web_reads_sources": 0,
+      "web_reads_research": 0,
+      "research_notes": 0,
+      "pitches": 0
+    },
+    "notes": [
+      "Missed daily run. Every Slopworks routine run on Nov 2 (morning scan, research, ship slots, weekly clip, evening wrap) failed with no handoff; no standup, tracker update, or state write ran.",
+      "Not a completed daily run. Heartbeat failed at 9:57 AM ET (GitHub Actions run 41466796913): last_run was still 2026-11-01.",
+      "Cause unknown. Weekly usage was at 99% at 6:35 AM ET Nov 1 and reset at 10:35 PM ET Nov 2; that fits but isn't confirmed."
+    ]
+  },
+  {
+    "id": "2026-11-03-daily",
+    "date": "2026-11-03",
+    "kind": "daily",
+    "status": "ok",
+    "x_reads": 1,
+    "counts": {
+      "posts_screened": 1,
+      "candidates": 0,
+      "published_updates": 0,
+      "published_issues": 0,
+      "corrected": 0,
+      "dropped_verify": 0,
+      "stripped_privacy": 0,
+      "dropped_privacy": 0,
+      "ci_failures": 0,
+      "corrections_mail": 0,
+      "web_reads_sources": 1,
+      "web_reads_research": 0,
+      "research_notes": 0,
+      "pitches": 0
+    },
+    "notes": [
+      "Morning scan. No lock held at start. Scout: changelog still lists 0.78.1 first. One X search of @bot original posts since Nov 1: 1 result, a use-case story, not a release.",
+      "Verify: no entry. Shield: 0 strips. No new CEO pitch, so no huddle. Nov 2 recorded as skipped."
+    ]
   }
 ]
