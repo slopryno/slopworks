@@ -146,13 +146,11 @@ def css_team(spec, season, stems):
         _type_vars(spec, season, stems, scenes=False)
         + DECK
         + (
-            ".jb{position:absolute;z-index:1;right:10px;top:10px;width:22px;height:22px;pointer-events:none}"
+            ".jb{position:absolute;z-index:1;right:8px;top:8px;width:22px;height:22px;pointer-events:none}"
             ".hu{display:inline-flex;vertical-align:-3px;font-size:0}.hu::before{background:#b8860b;--s:14px}"
             ".mv i[style]{display:grid;place-items:center;width:24px;height:24px;border-radius:8px;background:var(--a)}"
             ".mv i[style]::before{background:#fff}"
-            ".acts .sh{display:inline-flex;align-items:center;gap:.35rem;min-height:44px}"
             ".lead .flip{border-top-color:#b8860b}"
-            ".face.front::after{content:\"Flip\";display:inline-block;margin-top:.6rem;padding:.35rem .7rem;font-size:.8rem;font-weight:600;border:1px solid var(--line);border-radius:999px;background:var(--bg)}"
         )
     )
 
@@ -188,16 +186,17 @@ def card(n, i, total, stem, spec, season, xp, level, lv, nxt, kinds, avatar_src,
         f'<li class="slot {cls}" id="card-{stem}"{dg}>'
         f'<details class="flip"><summary><span class="vh">{e(n)}</span>'
         f'<div class="face front" aria-hidden="true">'
-        f'<img class="av" src="{avatar_src}" width="112" height="112" alt="">{jb}'
+        f'<div class=id><img class="av" src="{avatar_src}" width="112" height="112" alt="">{jb}'
         f'<p class="nm">{e(n)}</p><p class="role">{e(r["type"])}</p>'
         f'<p class="lv"><span class="ml" title="{e(r["type"])}">Lv <span>{level}</span></span> · {e(lv["name"])}</p>'
         f'<div class="bar" aria-hidden="true"><span style="width:{pct}%"></span></div>'
-        f'<p class="rar">{e(rname)}</p>'
-        f'</div></summary>'
+        f'<p class="rar">{e(rname)}</p></div>'
+        f'<ul class=mv hidden>{mv}</ul></div>'
+        f'<a class="sh" title="Character sheet" href="{stem}/">Character sheet</a>'
+        f'</summary>'
         f'<div class="face rear"><p class="role">{e(r["type"])}</p><p class="nm">{e(n)}</p>'
-        f'<ul class="mv">{mv}</ul>{_last_verified(last)}'
+        f'{_last_verified(last)}'
         f'<p class="fl">{e(fl)}</p>'
-        f'<p class="acts"><a class="sh" title="Character sheet" href="{stem}/">Character sheet</a></p>'
         f'</div></details></li>')
 
 
