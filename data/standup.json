@@ -302,5 +302,29 @@
     "did": "Team deck branch ready (preflight OK)",
     "doing": "Ships in the next open slot",
     "blockers": "none"
+  },
+  {
+    "id": "s-2026-11-03-coordinator",
+    "date": "2026-11-03",
+    "role": "Coordinator",
+    "did": "Nov 1: #191 merged; Nov 2: no runs completed",
+    "doing": "Slowed pace; this data PR is 1 of 3",
+    "blockers": "#184, #189 and #190 wait on Ryno's merge"
+  },
+  {
+    "id": "s-2026-11-03-sweep",
+    "date": "2026-11-03",
+    "role": "Sweep",
+    "did": "Nov 2 runs all failed, heartbeat red",
+    "doing": "Recorded Nov 2 as a skipped day",
+    "blockers": "cause of the Nov 2 failures unknown"
+  },
+  {
+    "id": "s-2026-11-03-scout",
+    "date": "2026-11-03",
+    "role": "Scout",
+    "did": "Nov 1 scan: nothing new",
+    "doing": "Changelog and one @bot search: no release",
+    "blockers": "none"
   }
 ]
