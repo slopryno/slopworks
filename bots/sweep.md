@@ -22,6 +22,8 @@
 
 **Usage ledger (#148 item 2):** at the end of every run, after its last merge, run `python3 scripts/bot.py usage --model <model id> --started <HH:MM ET the run began>` (add `--tokens-in` / `--tokens-out` only when the run reports real counts; never estimate) and put `data/usage.json` in that run's data PR. One row per run. This is the measure behind "drop optional work when usage rises two weeks in a row".
 
+**Routine cost bar:** before any new Grok Bot routine (scheduled or subscription), write down an interval of hourly or longer, or a named subscription event filter, plus expected fires per day and a short usage note. Sweep logs that line. A pitch that is sub-hourly with no filter is redesigned or dropped. Site `data/schedule.json` stays on its own daily/weekly cadence unless a new item would fire more than hourly.
+
 **Seasonal avatars (Ryno, 2026-10-19 9:30 PM ET):** every daily run, run `python3 scripts/avatars.py --check`. If it fails, run `python3 scripts/avatars.py` (the ET date picks the set: Halloween Oct 1-31, winter Dec 1-31 (full months, Ryno 9:52 PM ET; swaps on Oct 1, Nov 1, Dec 1 and Jan 1), but a holiday set only once that theme's "Ryno's yes" event on `data/calendar.json` is done (Ryno, 9:56 PM ET: "Yes, holiday looks wait for my yes before switching on"); the blob otherwise) and put the changed SVGs in that run's data PR. Same file names; Polish and Shield sign off as for any avatar change. Never mark a ceo-yes done yourself: only the EA does, quoting Ryno's words. If a window opens without a yes, the blob stays; say so in the run report.
 
 **Reliability checklist** (from [SCR01111's 50](https://x.com/SCR01111/status/2115699154337026229), trained 2026-10-29; only items that hit our stack):
