@@ -2,7 +2,7 @@
 ceo to the teams page"; 3:48 PM ET the rhino is his everyday look; 3:54 PM ET "Today, i will override and have the team review
 + embedd a link to my x account").
 
-Same card family as scripts/cards.py (a mini in the grid that opens with CSS :target, no script), in its own CEO group above
+Same deck family as scripts/cards.py (details/summary flip in the swipe deck, no script), first in the CEO group above
 Leadership. He's the human owner, so there's no XP, level or rarity: his stats are real records counted at build time from
 data/ceo_decisions.json, data/ceo_overrides.json and data/ideas.json. Wording by Comms.
 
@@ -79,21 +79,25 @@ CROWN = '<svg class="jb" viewBox="-10 -10 20 20"><circle r="10" fill="#146fac"/>
 
 
 def card(cm, spec, season, total, avatar_src, root=None):
-    """His slot: the mini (a link to #ryno) and the full card. avatar_src is the same file in every season (HOLIDAY)."""
+    """His deck slot: details/summary flip. avatar_src is the same file in every season (HOLIDAY)."""
     types = [x["name"] for x in spec["types"]]
-    ty = spec["types"][types.index(TYPE)]
     art = ART.get(season)
-    pk = art["particles"] if art else ty["particles"]
     cls = f"t{types.index(TYPE)} lead" + (f" g-{STEM}" if art else "") + " holo"
-    return (f'<div class="slot {cls}"><a class="o" id="{STEM}" href="#m-{STEM}" tabindex="-1" aria-hidden="true"></a><i class="c" id="m-{STEM}"></i><div class="card">'
-            f'<a class="open" href="#{STEM}"><span class="art {pk}"><img src="{avatar_src}" width="112" height="112" alt=""></span>{CROWN}'
-            f'<span class="nm"><b>{NAME} <span class="hu" title="Human verified">Human verified</span></b><span class="ml" title="{TYPE}">CEO</span>'
-            f'</span></a>{X_LINK}'
-            f'<div class="body"><a class="cl" href="#m-{STEM}">Close</a>'
-            f'<p class="ty"><b>{TYPE}</b></p><p class="lv" title="{TYPE}">CEO</p>'
-            f'<ul class="mv">{moves(cm, facts(root))}</ul>'
-            f'<p class="ft">One of one<span class="sn">00/{total}</span></p>'
-            f'<p class="fl">{e(FLAVOUR)}</p></div><p class="lk"><a class="sh" title="Character sheet" href="{STEM}/">Character sheet</a></p></div></div>')
+    return (
+        f'<li class="slot {cls}" id="card-{STEM}" data-group="CEO">'
+        f'<details class="flip"><summary><span class="vh">{NAME}</span>'
+        f'<div class="face front" aria-hidden="true">'
+        f'<img class="av" src="{avatar_src}" width="112" height="112" alt="">{CROWN}'
+        f'<p class="nm">{NAME} <span class="hu" title="Human verified">Human</span></p>'
+        f'<p class="role">{TYPE}</p><p class="lv" title="{TYPE}">CEO</p>'
+        f'<p class="rar">One of one · 00/{total}</p>'
+        f'</div></summary>'
+        f'<div class="face rear"><p class="role">{TYPE}</p><p class="nm">{NAME}</p>'
+        f'{X_LINK}'
+        f'<ul class="mv">{moves(cm, facts(root))}</ul>'
+        f'<p class="fl">{e(FLAVOUR)}</p>'
+        f'<p class="acts"><a class="sh" title="Character sheet" href="{STEM}/">Character sheet</a></p>'
+        f'</div></details></li>')
 
 
 def _day(ts):
@@ -153,10 +157,10 @@ def sheet(repo, total, next_html, root=None):
     cls = f"t{types.index(TYPE)} lead holo ceo" + (f" g-{STEM}" if art else "")
     ban = (f'<section class="cb" aria-label="Ryno\'s card back"><div class="bn"><span class="art {pk}"><img src="../../assets/avatars/ceo.svg" width="112" height="112" alt=""></span>'
            f'{crown}<p class="gm">One of one · 00/{total}</p></div>'
-           f'<div class="id"><p class="jr"><span class="hu" title="Human verified">Human verified</span><span class="jt">CEO</span>'
+           f'<div class="id"><p class="jr"><span class="hu" title="Human verified">Human</span><span class="jt">CEO</span>'
            f'<a class="xl" href="{X_URL}" rel="noopener noreferrer" aria-label="slopryno on X" title="slopryno on X">slopryno on X</a></p>'
            f'<p class="lv">The one human on a team of {total} bots</p>'
-           f'<p class="fl">{e(FLAVOUR)} <a class="tc" href="../#{STEM}">{ic("cards")}See the card</a></p></div></section>')
+           f'<p class="fl">{e(FLAVOUR)} <a class="tc" href="../#card-{STEM}">{ic("cards")}See the card</a></p></div></section>')
     pw = "".join(
         f'<li id="{ABIL[r]}"><div class="ph">{ic(k)}<h2>{e(name)}</h2><p class="n">{f[r]}<small>{unit[0 if f[r] == 1 else 1]}</small></p></div>'
         f'<p>{e(line)}</p><p class="meta">{HEAD[r]}</p><details><summary>The record ({len(rec[r])})</summary><ul class="worklist">'

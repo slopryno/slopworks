@@ -823,7 +823,7 @@ def build():
         key = w.get("merged") or w["date"]
         if cur is None or key > (cur.get("merged") or cur["date"]):
             latest_win[r] = w
-    def tslot(x, i):
+    def tslot(x, i, group):
         n, f = x[0], x[4]
         xp = totals.get(n, 0)
         num, lv, nxt = level_for(xp, levels)
@@ -831,7 +831,7 @@ def build():
         for y in ledger_all:
             if y["agent"] == n and y["status"] == "approved":
                 kinds[y["type"]] = kinds.get(y["type"], 0) + 1
-        return cardmod.card(n, i, len(order), f[:-3], cspec, season, xp, num, lv, nxt, kinds, f"../assets/avatars/{avatar_of(n)}.svg", jb=avmod.card_badge(avatar_of(n), season), last=latest_win.get(n))
+        return cardmod.card(n, i, len(order), f[:-3], cspec, season, xp, num, lv, nxt, kinds, f"../assets/avatars/{avatar_of(n)}.svg", jb=avmod.card_badge(avatar_of(n), season), last=latest_win.get(n), group=group)
     by_name = {x[0]: x for x in team()}
     seq = [by_name[n] for _, members in GROUPS for n in members if n in by_name]  # set order = the group order
     tiers = {}
@@ -839,19 +839,36 @@ def build():
         k = cardmod.rarity(level_for(totals.get(x[0], 0), levels)[0], cspec)[1]
         tiers[k] = tiers.get(k, 0) + 1
     summ = ", ".join(f"{tiers[r['name']]} {r['name'].lower()}" for r in reversed(cspec["rarity"]) if r["name"] in tiers)
-    tbody = (f'<p class="set">Set 1, {len(seq)} cards: {summ}.' + (" October edition: Halloween art." if season == "halloween" else "") + " Tap a card to open it.</p>"
-             
-             + "".join(f'<h2 class="group">{e(g)}</h2><div class="deck">' + "".join(tslot(x, seq.index(x) + 1) for x in seq if x[0] in members) + "</div>" for g, members in GROUPS))
-    # Ryno's CEO card and sheet (scripts/ceo.py; Ryno, Oct 20 3:54 PM ET): a CEO group above Leadership, his avatar the same all year.
     import ceo
-    g0 = tbody.index('<h2 class="group">')
-    tbody = (tbody[:g0].replace(" Tap a card to open it.</p>", " Plus one human: Ryno, the CEO. Tap a card to open it.</p>", 1)
-             + f'<h2 class="group">CEO</h2><div class="deck">{ceo.card(cardmod, cspec, season, len(seq), "../assets/avatars/ceo.svg")}</div>' + tbody[g0:])
+    # Swipe deck + scrub + list (mobile UX playbook / hardened mock 2026-10-31). CEO first, then group order.
+    n_all = len(seq) + 1
+    scrub = ['<a href="#card-ryno">Ryno</a>'] + [f'<a href="#card-{x[4][:-3]}">{e(x[0])}</a>' for x in seq]
+    roster = ['<li><a href="#card-ryno">Ryno</a></li>'] + [
+        f'<li><a href="#card-{x[4][:-3]}">{e(x[0])}</a></li>'
+        for x in seq]
+    slots = [ceo.card(cardmod, cspec, season, len(seq), "../assets/avatars/ceo.svg")]
+    for g, members in GROUPS:
+        for x in seq:
+            if x[0] in members:
+                slots.append(tslot(x, seq.index(x) + 1, g))
+    tbody = (
+        f'<div class="team-deck">'
+        f'<p class="set">Set 1 · {len(seq)} cards'
+        + (" · Halloween" if season == "halloween" else "")
+        + f' + Ryno.</p>'
+        f'<details class="deck-browse"><summary>Open the deck</summary>'
+        f'<p class="set-detail">{summ}.' + (" October edition: Halloween art." if season == "halloween" else "") + ' Plus Ryno.</p>'
+        f'<nav class="scrub" aria-label="Jump">{"".join(scrub)}</nav>'
+        ''
+        f'<div class="deck-wrap" role="region" aria-label="Card deck">'
+        f'<ul class="deck" aria-label="Cards">{"".join(slots)}</ul></div></details>'
+        f'<details class="list-toggle"><summary>List ({n_all})</summary>'
+        f'<ul class="roster">{"".join(roster)}</ul></details></div>')
     first = seq[0][0]
     files[f"team/{ceo.STEM}/index.html"] = page(f"team/{ceo.STEM}/", "Ryno: character sheet", "The human CEO: his real powers and every time he used them, counted from the records at build time.",
                                                 ceo.sheet(REPO, len(seq), f'<p class="next"><a class="more" href="../{stems[first]}/">Next: {e(first)}\'s sheet</a></p>'), "data/ceo_decisions.json").replace("</head>", f'<link rel="stylesheet" href="../../sheets.css">\n<style>{ceo.sheet_css(season)}</style>\n</head>', 1)
     files["team/index.html"] = page("team/", "The team", f"{len(team())} Grok Bot roles in five groups, played by one daily routine, not separate agents. Levels come from verified XP (<a href=\"xp/\">how XP works</a>).",
-                                    tbody + alumni_html + '<p class="next"><a class="more" href="../timeline/">Next: how the team grew, on the Timeline</a></p>', "bots").replace("</head>", f"<style>{cardmod.css(cspec, season, stems)}{ceo.css(season)}</style>\n</head>", 1)
+                                    tbody + alumni_html + '<p class="next"><a class="more" href="../timeline/">Next: how the team grew, on the Timeline</a></p>', "bots").replace("</head>", f"<style>{cardmod.css_team(cspec, season, stems)}{ceo.css(season)}</style>\n</head>", 1)
 
 
     # Lessons: same-day after-action reviews (AARs), approved by Ryno 2026-10-17. Blameless, and every field cites a real artifact.
