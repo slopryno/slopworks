@@ -146,25 +146,22 @@ def css_team(spec, season, stems):
         _type_vars(spec, season, stems, scenes=False)
         + DECK
         + (
-            ".jb{position:absolute;z-index:1;right:10px;top:10px;width:22px;height:22px;pointer-events:none}"
+            ".jb{position:absolute;z-index:1;right:8px;top:8px;width:22px;height:22px;pointer-events:none}"
             ".hu{display:inline-flex;vertical-align:-3px;font-size:0}.hu::before{background:#b8860b;--s:14px}"
             ".mv i[style]{display:grid;place-items:center;width:24px;height:24px;border-radius:8px;background:var(--a)}"
             ".mv i[style]::before{background:#fff}"
-            ".acts .sh{display:inline-flex;align-items:center;gap:.35rem;min-height:44px}"
             ".lead .flip{border-top-color:#b8860b}"
-            ".face.front::after{content:\"Flip\";display:inline-block;margin-top:.6rem;padding:.35rem .7rem;font-size:.8rem;font-weight:600;border:1px solid var(--line);border-radius:999px;background:var(--bg)}"
         )
     )
 
 
-def _last_verified(last):
-    """Compact evidence line; team page must stay ≤100 KB every season."""
+def _verified_li(last):
+    """Compact verified row for the card rear; team page must stay ≤100 KB every season."""
     if not last:
         return ""
-    when = (last.get("merged") or last["date"])[:10]
     pr = last["pr"]
     num = pr.rstrip("/").rsplit("/", 1)[-1]
-    return f'<p class="lvf">Last verified · <a href="{e(pr)}">#{e(num)}</a> <time datetime="{e(when)}">{e(when)}</time></p>'
+    return f'<li class="lvf">Last verified · <a href="{e(pr)}">#{e(num)}</a></li>'
 
 
 def card(n, i, total, stem, spec, season, xp, level, lv, nxt, kinds, avatar_src, badges=None, jb="", last=None, group=""):
@@ -184,20 +181,23 @@ def card(n, i, total, stem, spec, season, xp, level, lv, nxt, kinds, avatar_src,
     fl = r["flavour"].get(season) or r["flavour"]["normal"]
     dg = f' data-group="{e(group)}"' if group else ""
     # id=card-stem for scrub/list; keep stem id on summary target via card-* only (no :target overlay)
+    # Open flip keeps .front .id painted as the rear identity band (CSS); rear holds stats + flavour only.
     return (
         f'<li class="slot {cls}" id="card-{stem}"{dg}>'
         f'<details class="flip"><summary><span class="vh">{e(n)}</span>'
         f'<div class="face front" aria-hidden="true">'
-        f'<img class="av" src="{avatar_src}" width="112" height="112" alt="">{jb}'
+        f'<div class=id><img class="av" src="{avatar_src}" width="112" height="112" alt="">{jb}'
         f'<p class="nm">{e(n)}</p><p class="role">{e(r["type"])}</p>'
         f'<p class="lv"><span class="ml" title="{e(r["type"])}">Lv <span>{level}</span></span> · {e(lv["name"])}</p>'
         f'<div class="bar" aria-hidden="true"><span style="width:{pct}%"></span></div>'
-        f'<p class="rar">{e(rname)}</p>'
-        f'</div></summary>'
-        f'<div class="face rear"><p class="role">{e(r["type"])}</p><p class="nm">{e(n)}</p>'
-        f'<ul class="mv">{mv}</ul>{_last_verified(last)}'
+        f'<p class="rar">{e(rname)} · {i:02d}/{total}</p></div>'
+        f'<ul class=mv hidden>{mv}</ul></div>'
+        f'<a class="sh" href="{stem}/">Character sheet</a>'
+        f'</summary>'
+        f'<div class="face rear">'
+        f'<ul class=dt><li><b>XP</b><em>{xp}</em></li><li><b>Moves</b><em>{len(r["moves"])}</em></li>'
+        f'{_verified_li(last)}</ul>'
         f'<p class="fl">{e(fl)}</p>'
-        f'<p class="acts"><a class="sh" title="Character sheet" href="{stem}/">Character sheet</a></p>'
         f'</div></details></li>')
 
 
