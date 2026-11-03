@@ -347,39 +347,35 @@ _COAUTHOR_LINE = re.compile(r"(?im)^[ \t]*co-authored-by:[ \t]*(.+?)[ \t]*$")
 
 
 def scrub_coauthor_trailers(text):
-    """Drop Co-authored-by lines that name the blocked person, email, model, or anthropic.com noreply."""
+    """Drop every Co-authored-by line (team policy: no trailers of any kind).
+
+    Blocked personal / anthropic identities (see _blocked_coauthor_needles) stay documented for
+    the history-scrub / Support-purge trail; the scrub itself removes all trailer lines.
+    """
     if not text:
         return text
-    needles = _blocked_coauthor_needles()
     out = []
     for line in text.splitlines(keepends=True):
-        m = _COAUTHOR_LINE.match(line.rstrip("\r\n"))
-        if m and any(n in m.group(1).lower() for n in needles):
+        if _COAUTHOR_LINE.match(line.rstrip("\r\n")):
             continue
         out.append(line)
     return "".join(out)
 
 
 def coauthor_trailer_hits(text):
-    """Return the blocked Co-authored-by line bodies found in text (lowercased needles only in reports)."""
+    """Return a hit marker for every Co-authored-by trailer line in text."""
     if not text:
         return []
-    needles = _blocked_coauthor_needles()
-    hits = []
-    for m in _COAUTHOR_LINE.finditer(text):
-        body = m.group(1)
-        if any(n in body.lower() for n in needles):
-            hits.append("blocked-coauthor")
-    return hits
+    return ["coauthor-trailer" for _ in _COAUTHOR_LINE.finditer(text)]
 
 
 def coauthor_text_errors(text, where):
-    return [f"{where}: Co-authored-by trailer names a blocked identity (personal name/email or anthropic.com noreply); remove it"
+    return [f"{where}: Co-authored-by trailer is not allowed; remove it"
             for _ in coauthor_trailer_hits(text)]
 
 
 def coauthor_commit_errors(base=None, head=None):
-    """Fail when a commit in base..head carries a blocked Co-authored-by trailer (PR range only)."""
+    """Fail when a commit in base..head carries any Co-authored-by trailer (PR range only)."""
     if not base or not head:
         return []
     out = subprocess.run(
@@ -396,14 +392,14 @@ def coauthor_commit_errors(base=None, head=None):
         sha, _, body = rec.partition("\n")
         for _ in coauthor_trailer_hits(body):
             errs.append(
-                f"commit {sha[:12]}: Co-authored-by trailer names a blocked identity; amend or rebuild the branch without it"
+                f"commit {sha[:12]}: Co-authored-by trailer is not allowed; amend or rebuild the branch without it"
             )
             break
     return errs
 
 
 def coauthor_file_errors(files=None):
-    """Scan tracked text files for blocked Co-authored-by trailers."""
+    """Scan tracked text files for Co-authored-by trailer lines."""
     errs = []
     for f in files if files is not None else tracked_files():
         if f.endswith((".png", ".jpg", ".ico", ".webp", ".gif")):
@@ -1879,6 +1875,7 @@ def run_review_gate():
     errs = review_gate(changed(base, head), pr.get("body") or "", comments)
     errs += blast_radius_errors(changed(base, head), pr.get("body") or "", comments)
     errs += lens_derived_errors(comments)
+    errs += coauthor_text_errors(pr.get("title") or "", f"PR {os.environ.get('PR', '?')} title")
     errs += coauthor_text_errors(pr.get("body") or "", f"PR {os.environ.get('PR', '?')} body")
     errs += coauthor_commit_errors(base, head)
     repeat = {r: n for r, n in block_count(comments).items() if n >= 2}
