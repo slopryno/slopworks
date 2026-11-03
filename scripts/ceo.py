@@ -83,6 +83,8 @@ def card(cm, spec, season, total, avatar_src, root=None):
     types = [x["name"] for x in spec["types"]]
     art = ART.get(season)
     cls = f"t{types.index(TYPE)} lead" + (f" g-{STEM}" if art else "") + " holo"
+    mv = moves(cm, facts(root))
+    n_mv = mv.count("<li>")
     return (
         f'<li class="slot {cls}" id="card-{STEM}" data-group="CEO">'
         f'<details class="flip"><summary><span class="vh">{NAME}</span>'
@@ -91,11 +93,12 @@ def card(cm, spec, season, total, avatar_src, root=None):
         f'<p class="nm">{NAME} <span class="hu" title="Human verified">Human</span></p>'
         f'<p class="role">{TYPE}</p><p class="lv" title="{TYPE}">CEO</p>'
         f'<p class="rar">One of one · 00/{total}</p></div>'
-        f'<ul class=mv hidden>{moves(cm, facts(root))}</ul></div>'
-        f'<a class="sh" title="Character sheet" href="{STEM}/">Character sheet</a>'
+        f'<ul class=mv hidden>{mv}</ul></div>'
+        f'<a class="sh" href="{STEM}/">Character sheet</a>'
         f'</summary>'
-        f'<div class="face rear"><p class="role">{TYPE}</p><p class="nm">{NAME}</p>'
-        f'{X_LINK}'
+        f'<div class="face rear">'
+        f'<ul class=dt><li><b>Moves</b><em>{n_mv}</em></li>'
+        f'<li><b>X</b><em>{X_LINK}</em></li></ul>'
         f'<p class="fl">{e(FLAVOUR)}</p>'
         f'</div></details></li>')
 

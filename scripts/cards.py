@@ -155,14 +155,13 @@ def css_team(spec, season, stems):
     )
 
 
-def _last_verified(last):
-    """Compact evidence line; team page must stay ≤100 KB every season."""
+def _verified_li(last):
+    """Compact verified row for the card rear; team page must stay ≤100 KB every season."""
     if not last:
         return ""
-    when = (last.get("merged") or last["date"])[:10]
     pr = last["pr"]
     num = pr.rstrip("/").rsplit("/", 1)[-1]
-    return f'<p class="lvf">Last verified · <a href="{e(pr)}">#{e(num)}</a> <time datetime="{e(when)}">{e(when)}</time></p>'
+    return f'<li class="lvf">Last verified · <a href="{e(pr)}">#{e(num)}</a></li>'
 
 
 def card(n, i, total, stem, spec, season, xp, level, lv, nxt, kinds, avatar_src, badges=None, jb="", last=None, group=""):
@@ -182,6 +181,7 @@ def card(n, i, total, stem, spec, season, xp, level, lv, nxt, kinds, avatar_src,
     fl = r["flavour"].get(season) or r["flavour"]["normal"]
     dg = f' data-group="{e(group)}"' if group else ""
     # id=card-stem for scrub/list; keep stem id on summary target via card-* only (no :target overlay)
+    # Open flip keeps .front .id painted as the rear identity band (CSS); rear holds stats + flavour only.
     return (
         f'<li class="slot {cls}" id="card-{stem}"{dg}>'
         f'<details class="flip"><summary><span class="vh">{e(n)}</span>'
@@ -190,12 +190,13 @@ def card(n, i, total, stem, spec, season, xp, level, lv, nxt, kinds, avatar_src,
         f'<p class="nm">{e(n)}</p><p class="role">{e(r["type"])}</p>'
         f'<p class="lv"><span class="ml" title="{e(r["type"])}">Lv <span>{level}</span></span> · {e(lv["name"])}</p>'
         f'<div class="bar" aria-hidden="true"><span style="width:{pct}%"></span></div>'
-        f'<p class="rar">{e(rname)}</p></div>'
+        f'<p class="rar">{e(rname)} · {i:02d}/{total}</p></div>'
         f'<ul class=mv hidden>{mv}</ul></div>'
-        f'<a class="sh" title="Character sheet" href="{stem}/">Character sheet</a>'
+        f'<a class="sh" href="{stem}/">Character sheet</a>'
         f'</summary>'
-        f'<div class="face rear"><p class="role">{e(r["type"])}</p><p class="nm">{e(n)}</p>'
-        f'{_last_verified(last)}'
+        f'<div class="face rear">'
+        f'<ul class=dt><li><b>XP</b><em>{xp}</em></li><li><b>Moves</b><em>{len(r["moves"])}</em></li>'
+        f'{_verified_li(last)}</ul>'
         f'<p class="fl">{e(fl)}</p>'
         f'</div></details></li>')
 
