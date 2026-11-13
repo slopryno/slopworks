@@ -83,20 +83,23 @@ def card(cm, spec, season, total, avatar_src, root=None):
     types = [x["name"] for x in spec["types"]]
     art = ART.get(season)
     cls = f"t{types.index(TYPE)} lead" + (f" g-{STEM}" if art else "") + " holo"
+    mv = moves(cm, facts(root))
+    n_mv = mv.count("<li>")
     return (
         f'<li class="slot {cls}" id="card-{STEM}" data-group="CEO">'
         f'<details class="flip"><summary><span class="vh">{NAME}</span>'
         f'<div class="face front" aria-hidden="true">'
-        f'<img class="av" src="{avatar_src}" width="112" height="112" alt="">{CROWN}'
+        f'<div class=id><img class="av" src="{avatar_src}" width="112" height="112" alt="">{CROWN}'
         f'<p class="nm">{NAME} <span class="hu" title="Human verified">Human</span></p>'
         f'<p class="role">{TYPE}</p><p class="lv" title="{TYPE}">CEO</p>'
-        f'<p class="rar">One of one · 00/{total}</p>'
-        f'</div></summary>'
-        f'<div class="face rear"><p class="role">{TYPE}</p><p class="nm">{NAME}</p>'
-        f'{X_LINK}'
-        f'<ul class="mv">{moves(cm, facts(root))}</ul>'
+        f'<p class="rar">One of one · 00/{total}</p></div>'
+        f'<ul class=mv hidden>{mv}</ul></div>'
+        f'<a class="sh" href="{STEM}/">Character sheet</a>'
+        f'</summary>'
+        f'<div class="face rear">'
+        f'<ul class=dt><li><b>Moves</b><em>{n_mv}</em></li>'
+        f'<li><b>X</b><em>{X_LINK}</em></li></ul>'
         f'<p class="fl">{e(FLAVOUR)}</p>'
-        f'<p class="acts"><a class="sh" title="Character sheet" href="{STEM}/">Character sheet</a></p>'
         f'</div></details></li>')
 
 
@@ -157,7 +160,7 @@ def sheet(repo, total, next_html, root=None):
     cls = f"t{types.index(TYPE)} lead holo ceo" + (f" g-{STEM}" if art else "")
     ban = (f'<section class="cb" aria-label="Ryno\'s card back"><div class="bn"><span class="art {pk}"><img src="../../assets/avatars/ceo.svg" width="112" height="112" alt=""></span>'
            f'{crown}<p class="gm">One of one · 00/{total}</p></div>'
-           f'<div class="id"><p class="jr"><span class="hu" title="Human verified">Human</span><span class="jt">CEO</span>'
+           f'<div class=id><p class="jr"><span class="hu" title="Human verified">Human</span><span class="jt">CEO</span>'
            f'<a class="xl" href="{X_URL}" rel="noopener noreferrer" aria-label="slopryno on X" title="slopryno on X">slopryno on X</a></p>'
            f'<p class="lv">The one human on a team of {total} bots</p>'
            f'<p class="fl">{e(FLAVOUR)} <a class="tc" href="../#card-{STEM}">{ic("cards")}See the card</a></p></div></section>')
