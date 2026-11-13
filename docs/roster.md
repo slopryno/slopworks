@@ -22,7 +22,7 @@ This page says which roles load on every run and which are on call. It changes n
 
 ## Part-time, on call
 
-- **Critic:** high-risk changes and roster or policy calls.
+- **Critic:** a before and after pass on every PR that changes a built page, a whole-site review after each completed sprint (Ryno, Nov 13), and high-risk changes and roster or policy calls. Only a BLOCKER holds work ([`bots/critic.md`](../bots/critic.md)).
 - **Gamemaster:** only if the badges/missions hold lifts.
 - **Advocate:** reader-question checks when a feature needs them; first-visit checks on design PRs that change hierarchy or the primary next step.
 - **Assistant:** when a task needs it.

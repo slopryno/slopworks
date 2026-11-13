@@ -544,6 +544,9 @@ def review_gate(paths, pr_body, comments):
             errs.append(f"missing sign-off from {role}")
         elif role == maker:
             errs.append(f"self-approval by {role} does not count")
+    if latest.get("Critic") == "block" and "Critic" not in required_roles(paths):
+        # Critic's before/after pass (Ryno, 2026-11-13 3:13 AM ET): a BLOCKER holds any PR until Critic signs off.
+        errs.append("Critic blocked this PR (BLOCKER); a later 'Sign-off: Critic' clears it")
     return sorted(set(errs))
 
 
