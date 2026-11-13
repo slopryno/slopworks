@@ -34,9 +34,13 @@ def pr_count(f):
 
 
 def short_title(title, n=12):
-    """Comms: keep the lead card title glanceable; full title stays on the PR and Timeline."""
-    words = title.split()
-    return title if len(words) <= n else " ".join(words[:n]) + "\u2026"
+    """Comms: keep the lead card title glanceable; full title stays on the PR and Timeline. The maker's 'Role: ' prefix
+    goes (the role is on the meta line), and a long title stops at its first clause rather than mid-sentence (Critic R7)."""
+    t = re.sub(r"^[A-Z][a-z]+: ", "", title)
+    if len(t.split()) > n:
+        head = re.split(r": |; | \u2014 |, ", t, maxsplit=1)[0]
+        t = head if len(head.split()) <= n else " ".join(t.split()[:n]) + "\u2026"
+    return t[:1].upper() + t[1:]
 
 
 def render(b, items, wins, ups, iss, totals, levels, team, dropped, screened, tl_where, objectives, chat_href):

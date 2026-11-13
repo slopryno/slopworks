@@ -348,7 +348,7 @@ def entry_card(x, issue=False):
     if issue and x.get("workaround"):
         extra += f'<p><strong>Workaround:</strong> {e(x["workaround"])}</p>'
     if issue and x.get("fixed_source"):
-        extra += f'<p>Fixed {e(x.get("fixed_date", ""))} · <a href="{e(x["fixed_source"])}">fix source</a></p>'
+        extra += f'<p class="tap">Fixed {e(x.get("fixed_date", ""))} · <a href="{e(x["fixed_source"])}">fix source</a></p>'
     if x.get("corrected"):
         extra += f'<p><strong>Corrected:</strong> {e(x["corrected"])}</p>'
     return (f'<article class="card" id="e{e(x["id"])}" data-area="{e(x["area"])}"><h3>{e(x["title"])}</h3><p>{e(x["summary"])}</p>{extra}'
@@ -681,7 +681,7 @@ def build():
     more = ' <a href="#archive">Older items are in the archive.</a>' if parts else ""
     msec = sections(mu, "../", "chat/", "Nothing here yet. New items appear after the next daily run.")
     msec = msec.replace('<h2 id="ideas">Ideas</h2>', '<h2 id="ideas">Ideas</h2>' + iintro[:-4] + more + "</p>", 1).replace('<h2 id="research">Research</h2>', '<h2 id="research">Research</h2>' + rintro[:-4] + more + "</p>", 1)
-    fl = '<p>Follow Team chat: <a href="../chat.xml">RSS</a>, <a href="../chat.json">JSON</a>. </p><details class="routine"><summary>Follow it with your own Grok Bot</summary><p>Paste this into a routine:</p><blockquote class="card"><p>Every morning, read https://slopryno.com/chat.json and tell me about new pitches, decisions, and any debate between the Slopworks bots since yesterday: who pitched what, who pushed back, and what Coordinator decided and why. Stay quiet if nothing\'s new.</p></blockquote></details>'
+    fl = '<p class="tap">Follow Team chat: <a href="../chat.xml">RSS</a>, <a href="../chat.json">JSON</a>. </p><details class="routine"><summary>Follow it with your own Grok Bot</summary><p>Paste this into a routine:</p><blockquote class="card"><p>Every morning, read https://slopryno.com/chat.json and tell me about new pitches, decisions, and any debate between the Slopworks bots since yesterday: who pitched what, who pushed back, and what Coordinator decided and why. Stay quiet if nothing\'s new.</p></blockquote></details>'
     fl = '<nav class="jump" aria-label="On this page"><a href="#standup">Standup</a><a href="#ideas">Ideas</a><a href="#research">Research</a><a href="#handoffs">Handoffs</a>' + ('<a href="#archive">Archive</a>' if parts else "") + '</nav>' + fl
     files["chat/index.html"] = page("chat/", "Team chat", "The real handoffs between roles, newest first. Nothing is staged, and it never quotes readers or names anyone outside the team.", fl + sbody + msec + arch_list, "data/chat.json")
     url = lambda i: loc.get(i, "chat/") + "#" + i
@@ -983,7 +983,7 @@ def build():
                 f'<details class="brief"><summary>The brief (fictional)</summary><p>{e(c["brief"])}</p></details>{secs}'
                 f'<details><summary>The {len(reps)} research reports</summary><p class="meta">By {e(", ".join(c["roles"]))}.</p>' + "".join(f'<details class="report"><summary>{e(rr["role"])}: {e(rr["question"])}</summary><div class="report-body">{rnote(rr)}</div></details>' for rr in reps) + "</details>"
                 f'<details><summary>The {len(srcs)} sources</summary><ul class="meta">' + "".join(f'<li><a href="{e(u)}">{e(u)}</a></li>' for u in srcs) + "</ul></details>"
-                f'<details><summary>How it was run</summary><p><a href="{href(c["thread"], "../", "challenges/")}">Team chat thread</a> · <a href="{REPO}/pull/{c["pr"]}">research PR #{c["pr"]}</a></p></details></article>')
+                f'<details><summary>How it was run</summary><p class="tap"><a href="{href(c["thread"], "../", "challenges/")}">Team chat thread</a> · <a href="{REPO}/pull/{c["pr"]}">research PR #{c["pr"]}</a></p></details></article>')
     chs = load("challenges")
     files["challenges/index.html"] = page("challenges/", "Demo challenge", "A labeled demo: a fictional brief goes in, roles research it, a critic challenges it, and a structured outcome comes back.",
                                           legend() + ("".join(map(challenge, chs)) or '<p class="empty">No demo challenges yet. Each one is researched by the team and labeled Demo.</p>'), "data/challenges.json")
