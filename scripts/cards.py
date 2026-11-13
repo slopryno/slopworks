@@ -148,7 +148,7 @@ def css_team(spec, season, stems):
         + (
             ".jb{position:absolute;z-index:1;right:8px;top:8px;width:22px;height:22px;pointer-events:none}"
             ".hu{display:inline-flex;vertical-align:-3px;font-size:0}.hu::before{background:#b8860b;--s:14px}"
-            ".mv i[style]{display:grid;place-items:center;width:24px;height:24px;border-radius:8px;background:var(--a)}"
+            ".mv i[style]{--s:16px;display:grid;place-items:center;width:24px;height:24px;border-radius:8px;background:var(--a)}"
             ".mv i[style]::before{background:#fff}"
             ".lead .flip{border-top-color:#b8860b}"
         )
