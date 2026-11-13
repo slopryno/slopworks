@@ -26,7 +26,7 @@ Review loops are capped at 2 rounds; a second block on the same PR is a disagree
 
 **Rules learned:** none open. The two earlier rules (sign-offs before ready, clock times) are now enforced by `scripts/bot.py` and CI (docs/hardening.md).
 
-**PR flow:** use `scripts/bot.py`: `branch <slug>`, then `pr --maker <Role> --title ... --body ... --signoff <Role>=<file> --merge`. It picks the branch type, adds the Maker line, posts sign-offs, and won't mark a PR ready without every required role. CI checks the same things.
+**PR flow:** use `scripts/bot.py`: `branch <slug>`, then `pr --maker <Role> --title ... --body ... --signoff <Role>=<file> --merge`. It picks the branch type, adds the Maker line, posts sign-offs, and won't mark a PR ready without every required role. CI checks the same things. Before you merge a PR that changes a built page, Critic's before pass must be on it, and after deploy its after pass ([`bots/critic.md`](critic.md)). A `Block: Critic` holds the merge until Critic signs off; any other finding doesn't.
 
 **Standup and pitches:** add your standup line when you have something new, and pitch engineering ideas with effort and builder. Comment on other roles' pitches with support, concern, or oppose.
 

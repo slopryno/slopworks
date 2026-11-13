@@ -104,6 +104,14 @@ class ReviewGate(unittest.TestCase):
         c = [{"body": "Sign-off: Lens"}, {"body": "Block: Lens\nsource is dead"}]
         self.assertTrue(check.review_gate(["data/x.json"], "Maker: Scout", c))
 
+    def test_critic_blocker_holds_until_cleared(self):
+        ok = [{"body": "Sign-off: Lens"}]
+        held = ok + [{"body": "Verdict: Critic (before)\nBlock: Critic\nbroken link"}]
+        self.assertIn("Critic blocked this PR (BLOCKER); a later 'Sign-off: Critic' clears it",
+                      check.review_gate(["data/x.json"], "Maker: Scout", held))
+        self.assertEqual(check.review_gate(["data/x.json"], "Maker: Scout", held + [{"body": "Sign-off: Critic\nfixed"}]), [])
+        self.assertEqual(check.review_gate(["data/x.json"], "Maker: Scout", ok + [{"body": "Verdict: Critic\nSIGNIFICANT: x"}]), [])
+
 
 class GuardrailGate(unittest.TestCase):
     def test_loosening(self):
