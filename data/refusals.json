@@ -143,5 +143,15 @@
     "at": "2026-11-01T04:59-05:00",
     "branch": "bot/feature-morning-scan-calendar-1101",
     "reason": "the build changed files or there are uncommitted changes; commit them first"
+  },
+  {
+    "at": "2026-11-14T04:54-05:00",
+    "branch": "bot/data-morning-1114",
+    "reason": "missing sign-off from Trial (required for these paths: Lens, Trial)"
+  },
+  {
+    "at": "2026-11-14T04:55-05:00",
+    "branch": "bot/data-morning-1114",
+    "reason": "python3 -m unittest discover -s tests -q failed:"
   }
 ]
