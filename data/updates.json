@@ -564,5 +564,60 @@
     "title": "Shopping cards, order tracking, and subscription templates",
     "summary": "Version 0.78.1 (with 0.78.0): shopping shows product cards, Bots track orders you place, Shop Pay joins the Vault, and new templates find unused subscriptions or watch renewal prices.",
     "source": "https://x.ai/changelog/bot"
+  },
+  {
+    "id": "changelog-0-78-3",
+    "date": "2026-11-03",
+    "added": "2026-11-14",
+    "added_by": "Scout",
+    "status": "confirmed",
+    "area": "app",
+    "title": "Refund requests, voice memos, and cloud agent chats",
+    "summary": "Version 0.78.3 (with 0.78.2): the Bot can request subscription refunds, dictation can go out as a voice memo, and cloud agent work shows as a conversation.",
+    "source": "https://x.ai/changelog/bot"
+  },
+  {
+    "id": "changelog-2026-11-04",
+    "date": "2026-11-04",
+    "added": "2026-11-14",
+    "added_by": "Scout",
+    "status": "confirmed",
+    "area": "app",
+    "title": "Scheduled reorders and personal tailnets",
+    "summary": "Nov 4 release: scheduled reorders ask one approval per order with the total, and the Tailscale plugin connects your personal tailnet so Bots reach MCP servers on it.",
+    "source": "https://x.ai/changelog/bot"
+  },
+  {
+    "id": "changelog-0-79-1",
+    "date": "2026-11-05",
+    "added": "2026-11-14",
+    "added_by": "Scout",
+    "status": "confirmed",
+    "area": "app",
+    "title": "New app icon, gift requests, and hidden-instruction warnings",
+    "summary": "Version 0.79.1 (with 0.79.0): a new flat app icon, gift requests with budget and deliver-by date, and warnings when a page hides instructions for AI agents.",
+    "source": "https://x.ai/changelog/bot"
+  },
+  {
+    "id": "changelog-2026-11-06",
+    "date": "2026-11-06",
+    "added": "2026-11-14",
+    "added_by": "Scout",
+    "status": "confirmed",
+    "area": "app",
+    "title": "Shared page themes and call card fixes",
+    "summary": "Nov 6 release: shared Pages get a light/dark theme button, people from a shared Slack workspace can message a Team Bot, and phone call cards show No answer correctly.",
+    "source": "https://x.ai/changelog/bot"
+  },
+  {
+    "id": "changelog-1-0-1",
+    "date": "2026-11-11",
+    "added": "2026-11-14",
+    "added_by": "Scout",
+    "status": "confirmed",
+    "area": "app",
+    "title": "Grok Bot 1.0: meetings, Teams, shared connectors",
+    "summary": "Version 1.0.1 (with 1.0.0): on Team, Enterprise and Ultra plans a Bot can join Meet, Zoom or Teams calls, and owners can share app logins as connectors.",
+    "source": "https://x.ai/changelog/bot"
   }
 ]

@@ -6,6 +6,71 @@
   "description": "Unofficial, fan-built project. Not affiliated with or endorsed by Grok Bot, SpaceX, or X.",
   "items": [
     {
+      "id": "update-changelog-1-0-1",
+      "url": "https://slopryno.com/updates/changelog-1-0-1/",
+      "external_url": "https://x.ai/changelog/bot",
+      "title": "Grok Bot 1.0: meetings, Teams, shared connectors",
+      "content_text": "Version 1.0.1 (with 1.0.0): on Team, Enterprise and Ultra plans a Bot can join Meet, Zoom or Teams calls, and owners can share app logins as connectors.",
+      "date_published": "2026-11-11T12:00:00+00:00",
+      "tags": [
+        "update",
+        "app",
+        "confirmed"
+      ]
+    },
+    {
+      "id": "update-changelog-2026-11-06",
+      "url": "https://slopryno.com/updates/changelog-2026-11-06/",
+      "external_url": "https://x.ai/changelog/bot",
+      "title": "Shared page themes and call card fixes",
+      "content_text": "Nov 6 release: shared Pages get a light/dark theme button, people from a shared Slack workspace can message a Team Bot, and phone call cards show No answer correctly.",
+      "date_published": "2026-11-06T12:00:00+00:00",
+      "tags": [
+        "update",
+        "app",
+        "confirmed"
+      ]
+    },
+    {
+      "id": "update-changelog-0-79-1",
+      "url": "https://slopryno.com/updates/changelog-0-79-1/",
+      "external_url": "https://x.ai/changelog/bot",
+      "title": "New app icon, gift requests, and hidden-instruction warnings",
+      "content_text": "Version 0.79.1 (with 0.79.0): a new flat app icon, gift requests with budget and deliver-by date, and warnings when a page hides instructions for AI agents.",
+      "date_published": "2026-11-05T12:00:00+00:00",
+      "tags": [
+        "update",
+        "app",
+        "confirmed"
+      ]
+    },
+    {
+      "id": "update-changelog-2026-11-04",
+      "url": "https://slopryno.com/updates/changelog-2026-11-04/",
+      "external_url": "https://x.ai/changelog/bot",
+      "title": "Scheduled reorders and personal tailnets",
+      "content_text": "Nov 4 release: scheduled reorders ask one approval per order with the total, and the Tailscale plugin connects your personal tailnet so Bots reach MCP servers on it.",
+      "date_published": "2026-11-04T12:00:00+00:00",
+      "tags": [
+        "update",
+        "app",
+        "confirmed"
+      ]
+    },
+    {
+      "id": "update-changelog-0-78-3",
+      "url": "https://slopryno.com/updates/changelog-0-78-3/",
+      "external_url": "https://x.ai/changelog/bot",
+      "title": "Refund requests, voice memos, and cloud agent chats",
+      "content_text": "Version 0.78.3 (with 0.78.2): the Bot can request subscription refunds, dictation can go out as a voice memo, and cloud agent work shows as a conversation.",
+      "date_published": "2026-11-03T12:00:00+00:00",
+      "tags": [
+        "update",
+        "app",
+        "confirmed"
+      ]
+    },
+    {
       "id": "update-changelog-0-78-1",
       "url": "https://slopryno.com/updates/changelog-0-78-1/",
       "external_url": "https://x.ai/changelog/bot",
@@ -592,71 +657,6 @@
       "tags": [
         "update",
         "connectors",
-        "confirmed"
-      ]
-    },
-    {
-      "id": "update-changelog-2026-09-25",
-      "url": "https://slopryno.com/updates/changelog-2026-09-25/",
-      "external_url": "https://x.ai/changelog/bot",
-      "title": "Busy Bots answer you first",
-      "content_text": "When you message a busy Bot, it answers you before working through queued updates from other Bots and agents. Expired Auto-review cards also offer Always allow, and Enterprise admins can store Team Secrets.",
-      "date_published": "2026-09-25T12:00:00+00:00",
-      "tags": [
-        "update",
-        "app",
-        "confirmed"
-      ]
-    },
-    {
-      "id": "update-changelog-2026-09-22",
-      "url": "https://slopryno.com/updates/changelog-2026-09-22/",
-      "external_url": "https://x.ai/changelog/bot",
-      "title": "Five more languages and better screen reader support",
-      "content_text": "Czech, Danish, Finnish, Hungarian, and Norwegian Bokmål join the language list, screen readers announce more of the app, and a card explains when a usage limit, rate limit, or timeout stops a reply.",
-      "date_published": "2026-09-22T12:00:00+00:00",
-      "tags": [
-        "update",
-        "app",
-        "confirmed"
-      ]
-    },
-    {
-      "id": "update-2102532697960956074",
-      "url": "https://slopryno.com/updates/2102532697960956074/",
-      "external_url": "https://x.com/bot/status/2102532697960956074",
-      "title": "Cleaner interface",
-      "content_text": "Quality-of-life update with a cleaner interface for working with your bots.",
-      "date_published": "2026-09-22T12:00:00+00:00",
-      "tags": [
-        "update",
-        "app",
-        "confirmed"
-      ]
-    },
-    {
-      "id": "update-changelog-2026-09-18",
-      "url": "https://slopryno.com/updates/changelog-2026-09-18/",
-      "external_url": "https://x.ai/changelog/bot",
-      "title": "Bots can start a Project",
-      "content_text": "A Bot can start a Project when you ask: a Cloud Agent that plans the work and runs its own agents. Link previews also show real titles for private Notion, GitHub, and Slack links.",
-      "date_published": "2026-09-18T12:00:00+00:00",
-      "tags": [
-        "update",
-        "coding",
-        "confirmed"
-      ]
-    },
-    {
-      "id": "update-2101014478255247544",
-      "url": "https://slopryno.com/updates/2101014478255247544/",
-      "external_url": "https://x.com/bot/status/2101014478255247544",
-      "title": "Voice notes",
-      "content_text": "Grok Bot can now send you voice notes.",
-      "date_published": "2026-09-18T12:00:00+00:00",
-      "tags": [
-        "update",
-        "voice",
         "confirmed"
       ]
     }
