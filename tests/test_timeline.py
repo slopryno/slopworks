@@ -83,6 +83,7 @@ class Timeline(unittest.TestCase):
         self.assertIn('href="../timeline/archive/', self.files["receipts/index.html"])  # the Receipts tab replaced it in the nav and links its archive
         self.assertIn('url=../receipts/index.html', self.files["timeline/index.html"])  # redirects, entries kept
         self.assertIn('href="receipts/"', self.files["index.html"])  # landing: the Receipts tab holds the merged PRs and lessons
+        self.assertNotIn("Back to Under the hood", self.files["updates/index.html"])  # Tracker is a top-level tab
         self.assertIn(build.BASE + "timeline/", self.files["sitemap.xml"])
         self.assertIn(build.BASE + "timeline/", self.files["llms.txt"])
 

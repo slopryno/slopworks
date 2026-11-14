@@ -55,8 +55,8 @@ def section(slug):
 
 
 def back_link(slug, up):
-    """One 'Back to' link on deep pages (Comms, c211): archives go back to their page, sheets to Team, the rest to their hub."""
-    if slug in ("", "work/", "hood/", "team/", "lessons/"):
+    """One 'Back to' link on deep pages (Comms, c211): archives go back to their page, sheets to Team, the rest to their hub. The five top-level tabs have no Back link."""
+    if slug in ("", "work/", "hood/", "team/", "lessons/", "updates/", "receipts/", "more/"):
         return ""
     for base, title in (("chat/", "Team chat"), ("timeline/", "Timeline"), ("lessons/", "Lessons"), ("team/", "Team"), ("updates/", "What's new"), ("issues/", "Known issues")):
         if slug.startswith(base) and slug != base:
