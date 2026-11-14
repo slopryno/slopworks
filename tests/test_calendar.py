@@ -1,7 +1,7 @@
 """Trial's tests for the team calendar (Ryno, 2026-10-19 9:34 PM ET): month grids, the agenda, the .ics feed, routines
 from the schedule, and the holiday-theme rule (no avatar set or switch without plan, design and review on the calendar)."""
 import json, re, shutil, sys, tempfile, unittest
-from datetime import date
+from datetime import date, timedelta
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -217,6 +217,11 @@ class HolidayRule(unittest.TestCase):
 
     def test_done_in_the_future_and_unknown_owner_fail(self):
         x = next(x for x in self.cal["events"] if x["id"] == "wi26-design")
+        # "today" is the newest record, pinned to the day before this event so
+        # a done status is still in the future when the event date moves.
+        state = json.loads((self.tmp / "data/state.json").read_text())
+        state["updated"] = (date.fromisoformat(x["date"]) - timedelta(days=1)).isoformat()
+        (self.tmp / "data/state.json").write_text(json.dumps(state))
         x["status"] = "done"
         self.assertTrue(any("marked done" in e for e in self.errs()))
         x["status"], x["owner"] = "planned", "Santa"

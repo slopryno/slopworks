@@ -126,24 +126,24 @@ TRANSP:TRANSPARENT
 STATUS:CONFIRMED
 END:VEVENT
 BEGIN:VEVENT
-UID:wi26-design.slopworks-calendar
-DTSTAMP:20261114T120000Z
-DTSTART;VALUE=DATE:20261110
-DTEND;VALUE=DATE:20261111
-SUMMARY:Winter costumes final design
-DESCRIPTION:Holiday theme. Polish with Sketch. Drafts exist from Oct 19\; r
- efresh them with Halloween feedback.
-URL:https://slopryno.com/calendar/
-TRANSP:TRANSPARENT
-STATUS:CONFIRMED
-END:VEVENT
-BEGIN:VEVENT
 UID:wi26-words.slopworks-calendar
 DTSTAMP:20261114T120000Z
 DTSTART;VALUE=DATE:20261112
 DTEND;VALUE=DATE:20261113
 SUMMARY:Winter names and lines checked
 DESCRIPTION:Holiday theme. Comms.
+URL:https://slopryno.com/calendar/
+TRANSP:TRANSPARENT
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:wi26-design.slopworks-calendar
+DTSTAMP:20261114T120000Z
+DTSTART;VALUE=DATE:20261116
+DTEND;VALUE=DATE:20261117
+SUMMARY:Winter costumes final design
+DESCRIPTION:Holiday theme. Polish with Sketch. Drafts exist from Oct 19\; r
+ efresh them with Halloween feedback.
 URL:https://slopryno.com/calendar/
 TRANSP:TRANSPARENT
 STATUS:CONFIRMED
