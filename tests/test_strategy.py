@@ -24,7 +24,7 @@ class StrategyHire(unittest.TestCase):
         self.assertIn("Strategy", [n for n, *_ in build.team()])
         self.assertIn("Strategy", dict(build.GROUPS)["Leadership and Strategy"])
         html = build.build()["team/index.html"]
-        self.assertIn("avatars/strategy.svg", html)
+        self.assertIn("avatars/still/strategy.svg", html)
         f = ROOT / "site/assets/avatars/strategy.svg"
         self.assertLess(f.stat().st_size, 3000)
         self.assertIn("prefers-reduced-motion", f.read_text())

@@ -1,7 +1,7 @@
 """Team trading cards (Ryno, 2026-10-20 11:51, 11:53 AM and 12:18 PM ET: "Lock this design, have Comms polish the wording").
 
-The Team page shows a horizontal swipe deck (scroll-snap) with details/summary flip, scrub chips, and a list
-fallback (mobile UX playbook 2026-10-31). No script. Each role has a real-world job type (data/cards.json) that sets the frame colour, icon and the light, moving
+The Team page shows a horizontal swipe deck (scroll-snap) with details/summary flip and scrub chips
+(mobile UX playbook 2026-10-31). No script. Each role has a real-world job type (data/cards.json) that sets the frame colour, icon and the light, moving
 art-window motif. In a holiday month whose look Ryno approved (scripts/avatars.py season_for, data/calendar.json), the art
 window shows the role's costume scene instead. Every number comes from data/xp_ledger.json and data/progression.json.
 

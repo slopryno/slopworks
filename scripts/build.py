@@ -120,7 +120,7 @@ def avatar_of(name):
 
 
 def avatar(name, up, size=40, move=False):
-    """Long lists (Team chat, the Arena, cases) use the still copy; the Team page, role sheets and home cards animate."""
+    """Long lists (Team chat, the Arena, cases) and the Team deck use the still copy; role sheets and home cards animate."""
     a = avatar_of(name)
     return f'<img class="av" src="{up}assets/avatars/{"" if move else "still/"}{a}.svg" width="{size}" height="{size}" alt="">'
 
@@ -882,7 +882,7 @@ def build():
         for y in ledger_all:
             if y["agent"] == n and y["status"] == "approved":
                 kinds[y["type"]] = kinds.get(y["type"], 0) + 1
-        return cardmod.card(n, i, len(order), f[:-3], cspec, season, xp, num, lv, nxt, kinds, f"../assets/avatars/{avatar_of(n)}.svg", jb=avmod.card_badge(avatar_of(n), season), last=latest_win.get(n), group=group)
+        return cardmod.card(n, i, len(order), f[:-3], cspec, season, xp, num, lv, nxt, kinds, f"../assets/avatars/still/{avatar_of(n)}.svg", jb=avmod.card_badge(avatar_of(n), season), last=latest_win.get(n), group=group)
     by_name = {x[0]: x for x in team()}
     seq = [by_name[n] for _, members in GROUPS for n in members if n in by_name]  # set order = the group order
     tiers = {}
@@ -891,13 +891,10 @@ def build():
         tiers[k] = tiers.get(k, 0) + 1
     summ = ", ".join(f"{tiers[r['name']]} {r['name'].lower()}" for r in reversed(cspec["rarity"]) if r["name"] in tiers)
     import ceo
-    # Swipe deck + scrub + list (mobile UX playbook / hardened mock 2026-10-31). CEO first, then group order.
-    n_all = len(seq) + 1
+    # Swipe deck + scrub (mobile UX playbook / hardened mock 2026-10-31). CEO first, then group order.
+    # The Team deck uses still avatars, and the duplicate List (N) toggle is omitted, so the page stays under 100 KB in every season.
     scrub = ['<a href="#card-ryno">Ryno</a>'] + [f'<a href="#card-{x[4][:-3]}">{e(x[0])}</a>' for x in seq]
-    roster = ['<li><a href="#card-ryno">Ryno</a></li>'] + [
-        f'<li><a href="#card-{x[4][:-3]}">{e(x[0])}</a></li>'
-        for x in seq]
-    slots = [ceo.card(cardmod, cspec, season, len(seq), "../assets/avatars/ceo.svg")]
+    slots = [ceo.card(cardmod, cspec, season, len(seq), "../assets/avatars/still/ceo.svg")]
     for g, members in GROUPS:
         for x in seq:
             if x[0] in members:
@@ -912,9 +909,7 @@ def build():
         f'<nav class="scrub" aria-label="Jump">{"".join(scrub)}</nav>'
         ''
         f'<div class="deck-wrap" role="region" aria-label="Card deck">'
-        f'<ul class="deck" aria-label="Cards">{"".join(slots)}</ul></div></details>'
-        f'<details class="list-toggle"><summary>List ({n_all})</summary>'
-        f'<ul class="roster">{"".join(roster)}</ul></details></div>')
+        f'<ul class="deck" aria-label="Cards">{"".join(slots)}</ul></div></details></div>')
     # The redesign's Team tab leads with the six roles with the most recent merged work (the same pick as home), then the full deck.
     r_when = lambda w: w.get("merged") or w["date"]
     num = lambda w: int(w["pr"].rsplit("/", 1)[1])

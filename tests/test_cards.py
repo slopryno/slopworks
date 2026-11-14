@@ -39,7 +39,7 @@ class Cards(unittest.TestCase):
             self.assertNotIn("<script", doc.lower(), s)
             self.assertEqual(doc.count('class="flip"'), len(self.roles) + 1, s)  # plus Ryno's CEO card
             self.assertIn('class="scrub"', doc, s)
-            self.assertIn('class="list-toggle"', doc, s)
+            self.assertNotIn('class="list-toggle"', doc, s)
             self.assertIn('class="deck-wrap"', doc, s)
             for f in (ROOT / "bots").glob("*.md"):
                 self.assertIn(f'id="card-{f.stem}"', doc)
@@ -47,13 +47,14 @@ class Cards(unittest.TestCase):
                 self.assertIn(f'href="{f.stem}/">Character sheet', doc)
 
     def test_flip_is_native_details_with_list_and_scrub(self):
-        # Mobile UX playbook 2026-10-31: details/summary flip, scrub chips, list escape — no :target overlay.
+        # Mobile UX playbook 2026-10-31: details/summary flip and scrub chips — no :target overlay.
+        # The duplicate List (N) toggle was dropped so the page stays under 100 KB in every season.
         for s, doc in self.pages.items():
             stems = [f.stem for f in (ROOT / "bots").glob("*.md")] + ["ryno"]
             for st in stems:
                 self.assertIn(f'id="card-{st}"', doc, (s, st))
             self.assertIn("Flip", doc, s)  # via CSS content on .face.front::after
-            self.assertIn("List (", doc, s)  # list-toggle summary
+            self.assertNotIn("List (", doc, s)
             self.assertIn("scroll-snap-type:x mandatory", doc, s)
             self.assertNotIn(".o:target{inset:0;z-index:8}", doc, s)
 
@@ -138,7 +139,7 @@ class Cards(unittest.TestCase):
     def test_deck_css_ships_with_team_page(self):
         css = (ROOT / "scripts/deck.css").read_text()
         self.assertIn("scroll-snap-type:x mandatory", css)
-        self.assertIn(".list-toggle", css)
+        self.assertNotIn(".list-toggle", css)
         self.assertIn("prefers-reduced-motion", css)
 
     def test_team_page_fits_100_kb_in_every_season(self):
