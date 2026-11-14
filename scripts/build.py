@@ -1197,7 +1197,7 @@ def build():
     # The Receipts tab replaces the Timeline (Nov 14 redesign): timeline/ redirects there, and keeps its entries in place
     # as the record its archive pages and old links point at.
     files["timeline/index.html"] = page("timeline/", "Timeline", e(intro) + (f" Launched {e(day_name(launch))}." if launch else ""),
-        '<p class="moved">The Timeline moved to <a href="../receipts/">Receipts</a>. These entries stay here as the record.</p>' + hero + fcss + '<div class="filtered">' + fhtml + "".join(day_html(dd, "../") for dd in tl_main) + "</div>" + tl_arch + legend(), "data", head=f'<meta http-equiv="refresh" content="0; url=../receipts/">\n<style>{REDESIGN_CSS["moved"]}</style>\n')
+        '<p class="moved">The Timeline moved to <a href="../receipts/">Receipts</a>. These entries stay here as the record.</p>' + hero + fcss + '<div class="filtered">' + fhtml + "".join(day_html(dd, "../") for dd in tl_main) + "</div>" + tl_arch + legend(), "data", head=f'<meta http-equiv="refresh" content="0; url=../receipts/index.html">\n<style>{REDESIGN_CSS["moved"]}</style>\n')
     for k, (key, m, n, us) in enumerate(tl_parts):
         slug = f"timeline/archive/{key}.html"
         nav_l = ['<a href="../">Timeline (latest)</a>'] + [f'<a href="{p[0]}.html">{"Newer" if j > k else "Older"}: {arch_name(p[1], p[2])}</a>' for j, p in enumerate(tl_parts) if abs(j - k) == 1]

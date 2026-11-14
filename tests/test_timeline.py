@@ -81,7 +81,7 @@ class Timeline(unittest.TestCase):
         self.assertNotIn("<script", self.doc)
         self.assertRegex(self.doc, r'data-type="research"[^>]*>.*?lbl-demo.*?Demo challenge')
         self.assertIn('href="../timeline/archive/', self.files["receipts/index.html"])  # the Receipts tab replaced it in the nav and links its archive
-        self.assertIn('url=../receipts/', self.files["timeline/index.html"])  # redirects, entries kept
+        self.assertIn('url=../receipts/index.html', self.files["timeline/index.html"])  # redirects, entries kept
         self.assertIn('href="receipts/"', self.files["index.html"])  # landing: the Receipts tab holds the merged PRs and lessons
         self.assertIn(build.BASE + "timeline/", self.files["sitemap.xml"])
         self.assertIn(build.BASE + "timeline/", self.files["llms.txt"])
