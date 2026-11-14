@@ -59,14 +59,16 @@ function measure(frame, job){
     const fs = parseFloat(cs.fontSize); minFont = Math.min(minFont, fs); if (fs < 12) tiny++;
     if (el.tagName === 'P') maxChars = Math.max(maxChars, Math.round(b.width / (fs * 0.5)));
     if (ratio(cs.color, bg(el, w)) < 4.5 && !el.closest('a')) lowContrast++; });
+  // The phone tab bar is fixed to the bottom of the screen, so whatever sits under it isn't on the first screen.
+  const bar = d.querySelector('nav.tabs'), fold = job.fold - (bar && w.getComputedStyle(bar).position === 'fixed' ? bar.getBoundingClientRect().height : 0);
   const tw = d.createTreeWalker(d.body, NodeFilter.SHOW_TEXT); let n;
   while ((n = tw.nextNode())) { const p = n.parentElement; if (!p || p.closest('[hidden], .skip, details:not([open]) > :not(summary)')) continue;
     const rg = d.createRange(); rg.selectNodeContents(n); const b = rg.getBoundingClientRect();
-    if (!b.height || b.top >= job.fold || b.bottom <= 0) continue;
-    if (b.bottom <= job.fold) { words += (n.textContent.match(/\S+/g) || []).length; continue; }
+    if (!b.height || b.top >= fold || b.bottom <= 0) continue;
+    if (b.bottom <= fold) { words += (n.textContent.match(/\S+/g) || []).length; continue; }
     const wre = /\S+/g; let wm;  // a paragraph cut by the fold: count only the words on lines that show (Comms first-screen budget)
     while ((wm = wre.exec(n.textContent))) { const wr = d.createRange(); wr.setStart(n, wm.index); wr.setEnd(n, wm.index + wm[0].length);
-      const q = wr.getBoundingClientRect(); if (q.height && q.top < job.fold && q.bottom > 0) words++; } }
+      const q = wr.getBoundingClientRect(); if (q.height && q.top < fold && q.bottom > 0) words++; } }
   r.min_font_px = minFont === 99 ? null : minFont; r.tiny_text = tiny; r.max_line_chars = maxChars; r.low_contrast = lowContrast; r.words_above_fold = words;
   const nav = d.querySelector('header'); r.header_px = nav ? Math.round(nav.getBoundingClientRect().height) : 0;
   let tables = 0, wide = 0, wideUnscrolled = 0;

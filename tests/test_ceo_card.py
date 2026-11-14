@@ -94,7 +94,7 @@ class Card(unittest.TestCase):
         self.assertIn("<title>Ryno: character sheet", s)
         self.assertIn('src="../../assets/avatars/ceo.svg"', s)
         self.assertIn('href="../#card-ryno"', s)
-        self.assertEqual(re.findall(r'<link rel="stylesheet" href="([^"]+)"', s), ["../../style.css", "../../sheets.css"])  # the bots' card back, cached
+        self.assertEqual(re.findall(r'<link rel="stylesheet" href="([^"]+)"', s), ["../../style.css", "../../tabs.css", "../../sheets.css"])  # the tab bar, then the bots' card back, cached
         self.assertNotIn("<script", s)
 
     def test_sheet_is_three_power_cards(self):

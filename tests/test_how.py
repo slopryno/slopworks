@@ -25,7 +25,7 @@ class HowThisWorks(unittest.TestCase):
         self.assertEqual(len(build.TOP), 4)
         self.assertIn('href="../how/"', FILES["hood/index.html"])
         self.assertIn('href="how/"', FILES["index.html"])
-        self.assertNotIn('href="how/"', re.search(r'<nav aria-label="Main">.*?</nav>', FILES["index.html"], re.S).group(0))
+        self.assertNotIn('href="how/"', re.search(r'<nav class="tabs" aria-label="Main">.*?</nav>', FILES["index.html"], re.S).group(0))
 
     def test_home_tracker_first_team_second(self):
         h = FILES["index.html"]
