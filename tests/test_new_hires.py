@@ -47,7 +47,7 @@ class Groups(unittest.TestCase):
         html = build.build()["team/index.html"]
         for g in ["Leadership and Strategy", "Research and Intelligence", "Architecture and Development", "Quality and Governance", "Operations and Measurement"]:
             self.assertIn(g, html)
-        self.assertIn("avatars/critic.svg", html)
+        self.assertIn("avatars/still/critic.svg", html)
 
 
 class Onboarding(unittest.TestCase):

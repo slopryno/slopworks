@@ -179,9 +179,10 @@ class Pages(unittest.TestCase):
         self.assertIn("assets/avatars/still/", files["chat/index.html"])
         self.assertNotRegex(files["chat/index.html"], r'assets/avatars/(?!still/)\w+\.svg')
 
-    def test_team_and_role_pages_animate(self):
+    def test_team_deck_uses_still_copies_and_role_pages_animate(self):
         files = build.build()
-        self.assertNotIn("avatars/still/", files["team/index.html"])
+        self.assertIn("avatars/still/", files["team/index.html"])
+        self.assertNotRegex(files["team/index.html"], r'assets/avatars/(?!still/)\w+\.svg')
         self.assertIn("avatars/lens.svg", files["team/lens/index.html"])
         self.assertNotIn("avatars/still/", files["team/lens/index.html"])
 

@@ -1,0 +1,9 @@
+/* Mobile redesign: five tabs; a bottom bar on phones, the header from 40rem. */
+body{padding-bottom:calc(4.5rem + env(safe-area-inset-bottom,0px))}
+.tabs{position:fixed;z-index:20;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);padding:.2rem 0 env(safe-area-inset-bottom,0px)}
+.tabs ul{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:0}
+.tabs a{flex-direction:column;justify-content:center;width:100%;min-width:0;overflow:hidden;min-height:52px;gap:.15rem;font-size:.75rem;font-weight:600;color:var(--muted)}
+.tabs a[aria-current]{color:var(--ok);font-weight:750;text-decoration:none}
+.tabs a::before{content:"";width:20px;height:20px;flex:none;background:currentColor;mask:url(assets/tabs.svg) 0 0/100px 20px}
+.tabs li:nth-child(2) a::before{mask-position:-20px 0}.tabs li:nth-child(3) a::before{mask-position:-40px 0}.tabs li:nth-child(4) a::before{mask-position:-60px 0}.tabs li:nth-child(5) a::before{mask-position:-80px 0}
+@media (min-width:40rem){body{padding-bottom:0}.tabs{position:static;background:none;border:0;padding:0}.tabs ul{display:flex}.tabs a{flex-direction:row;width:auto;min-width:44px;overflow:visible;min-height:44px;gap:.35rem;font-size:1rem;font-weight:inherit;color:inherit}.tabs a[aria-current]{color:inherit;text-decoration:underline;text-underline-offset:.3em}}

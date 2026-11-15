@@ -64,7 +64,7 @@ def render(b, items, wins, ups, iss, totals, levels, team, dropped, screened, tl
                 f'<a href="{e(last["pr"])}">PR #{num(last)}</a> '
                 f'<time datetime="{e(when)}">{e(when[:10])} {e(when[11:16]) if len(when) > 10 else ""} ET</time></p>'
                 f'<p class="sub">Merged work, checked in the records. '
-                f'<a href="timeline/">Timeline</a> · <a href="roadmap/">Quest board</a></p></section>')
+                f'<a href="receipts/">Receipts</a> · <a href="roadmap/">Quest board</a></p></section>')
     cta = ('<ul class="cta"><li><a class="btn primary" href="updates/">What\'s new in Grok Bot</a></li>'
            '<li class="txt"><a href="roadmap/">Quest board</a></li><li class="txt"><a href="team/">Meet the team</a></li></ul>')
     status = (f'<ul class="tiles" aria-label="From the records"><li><strong>{len(team)}</strong> roles</li>'
@@ -118,6 +118,6 @@ def render(b, items, wins, ups, iss, totals, levels, team, dropped, screened, tl
         return (f'<li><details{" open" if first else ""}><summary><span class="k k-{cls}">{word}</span><time>{e(dt)}</time>'
                 f'<span class="t">{e(x["title"])}{demo}</span></summary><div class="ev">{who}{text}{kids}<p><a href="{e(x["link"](up))}">Evidence: {e(x["cue"])}</a></p></div></details></li>')
     act = (f'<section aria-labelledby="act-t"><h2 id="act-t">Activity</h2><p class="sub">The latest {min(8, len(items))} records, newest first. Open one for who, what, and the evidence.</p>'
-           f'<ol class="feed">{"".join(row(x, k == 0) for k, x in enumerate(items[:8]))}</ol><ul class="links"><li><a href="timeline/">Full timeline</a></li><li><a href="weekly/">Weekly recap</a></li><li><a href="metrics/">Metrics and trends</a></li><li><a href="how/">How this works</a></li></ul></section>')
+           f'<ol class="feed">{"".join(row(x, k == 0) for k, x in enumerate(items[:8]))}</ol><ul class="links"><li><a href="receipts/">All receipts</a></li><li><a href="weekly/">Weekly recap</a></li><li><a href="metrics/">Metrics and trends</a></li><li><a href="how/">How this works</a></li></ul></section>')
     # Hierarchy (Polish UX depth + Advocate): verified lead → primary next step → counts → tracker → team → sprint → activity.
     return lead + cta + status + tracker + teams + feat + act
