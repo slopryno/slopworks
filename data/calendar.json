@@ -217,28 +217,28 @@
     },
     {
       "id": "wi26-review",
-      "date": "2026-11-17",
+      "date": "2026-11-14",
       "title": "Winter screenshot review",
       "owner": "Lens",
       "with": [
         "Critic"
       ],
       "type": "holiday-theme",
-      "status": "planned",
+      "status": "done",
       "theme": "winter-2026",
       "step": "review",
-      "note": "Every width, light and dark, with the theme button."
+      "note": "Moved up with Ryno's yes: PR #200 screenshots at every width, light and dark; Critic said yes."
     },
     {
       "id": "wi26-yes",
-      "date": "2026-11-24",
+      "date": "2026-11-14",
       "title": "Ryno's yes for the Dec 1 switch",
       "owner": "Ryno",
       "type": "holiday-theme",
-      "status": "planned",
+      "status": "done",
       "theme": "winter-2026",
       "step": "ceo-yes",
-      "note": "The winter set stays off without it."
+      "note": "Ryno said yes on Nov 14, moving it up from Nov 24. The set turns on Dec 1."
     },
     {
       "id": "vd27-plan",

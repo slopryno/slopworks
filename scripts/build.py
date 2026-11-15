@@ -882,7 +882,7 @@ def build():
         for y in ledger_all:
             if y["agent"] == n and y["status"] == "approved":
                 kinds[y["type"]] = kinds.get(y["type"], 0) + 1
-        return cardmod.card(n, i, len(order), f[:-3], cspec, season, xp, num, lv, nxt, kinds, f"../assets/avatars/still/{avatar_of(n)}.svg", jb=avmod.card_badge(avatar_of(n), season), last=latest_win.get(n), group=group)
+        return cardmod.card(n, i, len(order), f[:-3], cspec, season, xp, num, lv, nxt, kinds, f"../assets/avatars/{avatar_of(n)}.svg", jb=avmod.card_badge(avatar_of(n), season), last=latest_win.get(n), group=group)
     by_name = {x[0]: x for x in team()}
     seq = [by_name[n] for _, members in GROUPS for n in members if n in by_name]  # set order = the group order
     tiers = {}
@@ -892,9 +892,10 @@ def build():
     summ = ", ".join(f"{tiers[r['name']]} {r['name'].lower()}" for r in reversed(cspec["rarity"]) if r["name"] in tiers)
     import ceo
     # Swipe deck + scrub (mobile UX playbook / hardened mock 2026-10-31). CEO first, then group order.
-    # The Team deck uses still avatars, and the duplicate List (N) toggle is omitted, so the page stays under 100 KB in every season.
+    # Every Team card avatar animates all the time (Ryno, Nov 14 11:01 PM ET), and the duplicate List (N) toggle is omitted, so the
+    # page stays under 100 KB in every season (scripts/avatars.py keeps the holiday motion CSS short).
     scrub = ['<a href="#card-ryno">Ryno</a>'] + [f'<a href="#card-{x[4][:-3]}">{e(x[0])}</a>' for x in seq]
-    slots = [ceo.card(cardmod, cspec, season, len(seq), "../assets/avatars/still/ceo.svg")]
+    slots = [ceo.card(cardmod, cspec, season, len(seq), "../assets/avatars/ceo.svg")]
     for g, members in GROUPS:
         for x in seq:
             if x[0] in members:
