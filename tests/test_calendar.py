@@ -240,11 +240,12 @@ class Switch(unittest.TestCase):
     def test_active_set_needs_window_and_yes(self):
         self.assertEqual(cal.active_set(CAL, date(2026, 10, 20)), "halloween")
         self.assertIsNone(cal.active_set(CAL, date(2026, 11, 1)))
-        self.assertIsNone(cal.active_set(CAL, date(2026, 12, 5)))  # winter yes not done yet: stays off
+        self.assertEqual(cal.active_set(CAL, date(2026, 12, 5)), "winter")  # Ryno's yes, Nov 14 (moved up from Nov 24)
         c = json.loads(json.dumps(CAL))
-        next(x for x in c["events"] if x["id"] == "wi26-yes")["status"] = "done"
-        self.assertEqual(cal.active_set(c, date(2026, 12, 31)), "winter")
-        self.assertIsNone(cal.active_set(c, date(2027, 1, 1)))
+        next(x for x in c["events"] if x["id"] == "wi26-yes")["status"] = "planned"
+        self.assertIsNone(cal.active_set(c, date(2026, 12, 5)))  # without the yes: stays off
+        self.assertEqual(cal.active_set(CAL, date(2026, 12, 31)), "winter")
+        self.assertIsNone(cal.active_set(CAL, date(2027, 1, 1)))
         self.assertEqual(cal.active_set(CAL, date(2026, 10, 1)), "halloween")  # full month (Ryno, 9:52 PM ET)
 
 

@@ -59,7 +59,7 @@ class Card(unittest.TestCase):
         self.assertEqual(t.count('id="card-'), len(build.team()) + 1)
         slot = t[t.index('<li class="slot t0 lead'):t.index('id="card-coordinator"')]
         for want in ('id="card-ryno"', "One of one", f"00/{len(build.team())}",
-                     "Management", "Human verified", '<p class="lv" title="Management">CEO</p>', "Safeguard", "Unblock", "Vision", 'src="../assets/avatars/still/ceo.svg"', 'href="ryno/">Character sheet'):
+                     "Management", "Human verified", '<p class="lv" title="Management">CEO</p>', "Safeguard", "Unblock", "Vision", 'src="../assets/avatars/ceo.svg"', 'href="ryno/">Character sheet'):
             self.assertIn(want, slot)
         for no in ("\u00a0XP", "Lv\u00a0", "--w:", "<script"):
             self.assertNotIn(no, slot)

@@ -215,30 +215,49 @@ def M(s): return f'<g transform="matrix(-1 0 0 1 100 0)">{s}</g>'
 def G(c, s): return f'<g class="{c}">{s}</g>'
 
 
+def d1(x):
+    """A path number to one decimal in its shortest form: 26.0 -> 26, -0.4 -> -.4, -0.0 -> 0 (page budget; the same point)."""
+    t = f"{x:.1f}".rstrip("0").rstrip(".")
+    t = "0" if t in ("-0", "") else t
+    return t.replace("0.", ".", 1) if t.startswith(("0.", "-0.")) else t
+
+
+def xy(x, y):
+    """A path coordinate pair; a minus sign already separates the numbers, so the space goes."""
+    y = d1(y)
+    return f"{d1(x)}{'' if y[0] == '-' else ' '}{y}"
+
+
 def star(cx, cy, r, ri):
-    return "M" + "L".join(f"{cx + (r if k % 2 == 0 else ri) * math.cos(-math.pi / 2 + k * math.pi / 5):.1f} "
-                          f"{cy + (r if k % 2 == 0 else ri) * math.sin(-math.pi / 2 + k * math.pi / 5):.1f}" for k in range(10)) + "Z"
+    return "M" + "L".join(xy(cx + (r if k % 2 == 0 else ri) * math.cos(-math.pi / 2 + k * math.pi / 5),
+                             cy + (r if k % 2 == 0 else ri) * math.sin(-math.pi / 2 + k * math.pi / 5)) for k in range(10)) + "Z"
 
 
 # Motions: the pose at 25% (L) and 75% (R), the neutral pose at 0/50/100%, and the squash at each. Eyes slide toward the
 # turn and go from tall pills to circles, like a head turning.
 def dance(a=10, sq=.08, dur=3.0):
-    return dict(L=f"rotate(-{a}deg)", R=f"rotate({a}deg)", N="rotate(0)", o="50px 90px", qN=(1 - sq / 2, 1 + sq / 2), qS=(1 + sq, 1 - sq), dur=dur)
+    return dict(L=f"rotate(-{a}deg)", R=f"rotate({a}deg)", N="none", o="50px 90px", qN=(1 - sq / 2, 1 + sq / 2), qS=(1 + sq, 1 - sq), dur=dur)
 def floaty(a=6, y=5, dur=3.6):
-    return dict(L=f"translateY(-{y}px) rotate(-{a}deg)", R=f"translateY(-{y}px) rotate({a}deg)", N="translateY(0)", o="50px 60px", qN=(.98, 1.03), qS=(1.04, .96), dur=dur)
+    return dict(L=f"translateY(-{y}px) rotate(-{a}deg)", R=f"translateY(-{y}px) rotate({a}deg)", N="none", o="50px 60px", qN=(.98, 1.03), qS=(1.04, .96), dur=dur)
 def hop(a=5, y=8, dur=2.4):
-    return dict(L=f"translateY(-{y}px) rotate(-{a}deg)", R=f"translateY(-{y}px) rotate({a}deg)", N="translateY(0)", o="50px 90px", qN=(1.09, .9), qS=(.95, 1.07), dur=dur)
+    return dict(L=f"translateY(-{y}px) rotate(-{a}deg)", R=f"translateY(-{y}px) rotate({a}deg)", N="none", o="50px 90px", qN=(1.09, .9), qS=(.95, 1.07), dur=dur)
 def swing(a=9, px=50, py=6, dur=3.2):
-    return dict(L=f"rotate({a}deg)", R=f"rotate(-{a}deg)", N="rotate(0)", o=f"{px}px {py}px", qN=(.98, 1.02), qS=(1.03, .97), dur=dur)
+    return dict(L=f"rotate({a}deg)", R=f"rotate(-{a}deg)", N="none", o=f"{px}px {py}px", qN=(.98, 1.02), qS=(1.03, .97), dur=dur)
 def shuffle(x=5, a=4, dur=2.6):
-    return dict(L=f"translateX(-{x}px) rotate({a}deg)", R=f"translateX({x}px) rotate(-{a}deg)", N="translateX(0)", o="50px 90px", qN=(.97, 1.04), qS=(1.06, .93), dur=dur)
+    return dict(L=f"translateX(-{x}px) rotate({a}deg)", R=f"translateX({x}px) rotate(-{a}deg)", N="none", o="50px 90px", qN=(.97, 1.04), qS=(1.06, .93), dur=dur)
 def twinkle(a=8, s=1.07, dur=2.8):
     return dict(L=f"rotate(-{a}deg) scale({s})", R=f"rotate({a}deg) scale({s})", N="rotate(0) scale(1)", o="50px 56px", qN=(1, 1), qS=(1.03, .97), dur=dur)
 
 
+def num(x):
+    """A CSS number in its shortest form: 2.0 -> 2, 0.37 -> .37, -0.5 -> -.5 (page budget; the same value)."""
+    t = f"{x:g}" if isinstance(x, float) else str(x)
+    return t.replace("0.", ".", 1) if t.startswith(("0.", "-0.")) else t
+
+
 def part(cls, dur, origin, frame, extra=""):
     """A part with its own loop (a tail wag, a wing flap), as CSS."""
-    return f".{cls}{{animation:{cls} {dur}s ease-in-out infinite;transform-origin:{origin}{extra}}}@keyframes {cls}{{{frame}}}"
+    return f".{cls}{{animation:{cls} {num(dur)}s ease-in-out infinite;transform-origin:{origin}{extra}}}@keyframes {cls}{{{frame}}}"
 
 
 # Each costume: name, line (the role's own pick, in its words), body (shapes, back to front), eyes (cy, left x, right x,
@@ -336,8 +355,8 @@ HALLOWEEN = {
              + P("M44 60L50 64L44 68ZM56 60L50 64L56 68Z", EYE),
         eyes=(46, 44, 56, 3, 5.4), face="#7d8a99", m=dance(5, .05, 3.6)),
 }
-_flake = "".join(f"M50 56l{30 * math.cos(a):.1f} {30 * math.sin(a):.1f}M{50 + 19 * math.cos(a):.1f} {56 + 19 * math.sin(a):.1f}l{8 * math.cos(a + .9):.1f} {8 * math.sin(a + .9):.1f}"
-                 f"M{50 + 19 * math.cos(a):.1f} {56 + 19 * math.sin(a):.1f}l{8 * math.cos(a - .9):.1f} {8 * math.sin(a - .9):.1f}" for a in (k * math.pi / 3 - math.pi / 2 for k in range(6)))
+_flake = "".join(f"M50 56l{xy(30 * math.cos(a), 30 * math.sin(a))}M{xy(50 + 19 * math.cos(a), 56 + 19 * math.sin(a))}l{xy(8 * math.cos(a + .9), 8 * math.sin(a + .9))}"
+                 f"M{xy(50 + 19 * math.cos(a), 56 + 19 * math.sin(a))}l{xy(8 * math.cos(a - .9), 8 * math.sin(a - .9))}" for a in (k * math.pi / 3 - math.pi / 2 for k in range(6)))
 WINTER = {
     "coordinator": dict(name="Santa", line="Makes the list, checks it twice, ships it in order.",
         body=E(50, 64, 26, 26, "#e03a3e") + P("M28 64C30 82 40 90 50 90C60 90 70 82 72 64Q61 70 50 66Q39 70 28 64Z", "#f4f4f4")
@@ -439,28 +458,35 @@ def character(i, ch, label, badge_fill, badge):
     """A drawn character (costume or fixed): the shared motion, eyes and job badge around ch["body"]."""
     m, dur = ch["m"], ch["m"]["dur"]
     lag = round((i * .37) % dur, 2)
-    a = f"{dur}s{f' -{lag}s' if lag else ''} ease-in-out infinite"  # negative delay: out of step, already moving
+    a = f"{num(dur)}s{f' -{num(lag)}s' if lag else ''} ease-in-out infinite"  # negative delay: out of step, already moving
     cy, xl, xr, rx, ry = ch["eyes"]
     k = 3.2 if rx < 3.4 else 4
-    qn, qs = m["qN"], m["qS"]
+    qn, qs = [num(x) for x in m["qN"]], [num(x) for x in m["qS"]]
     # One shared timing for the four loops, then each loop's name and origin (same motion as four full shorthands).
     # Keyframes leave out 0% and 100% where the pose is the resting one: a missing end keyframe is the element's own
     # transform (none), so it draws the same (page budget, Oct 20 3:54 PM ET).
     if ch.get("calm"):  # a slow sway and the blink only (the CEO: calm motion, fewer bytes on the Team page)
-        css = (f".s,.e{{animation:{a}}}.s{{animation-name:s;transform-origin:{m['o']}}}.e{{animation-name:e;transform-box:fill-box;transform-origin:center}}"
+        css = (f"*{{animation:{a}}}.s{{animation-name:s;transform-origin:{m['o']}}}.e{{animation-name:e;transform-box:fill-box;transform-origin:center}}"
                f"@keyframes s{{50%{{transform:{m['N']}}}25%{{transform:{m['L']}}}75%{{transform:{m['R']}}}}}"
-               f"@keyframes e{{10%,50%,60%{{transform:none}}25%,75%{{transform:scale(1.32,.7)}}}}@media(prefers-reduced-motion:reduce){{*{{animation:none!important}}}}")
+               f"@keyframes e{{10%,50%,60%{{transform:none}}25%,75%{{transform:scale(1.32,.7)}}}}")
     else:
-        css = (f".s,.q,.g,.e{{animation:{a}}}.s{{animation-name:s;transform-origin:{m['o']}}}.q{{animation-name:q;transform-origin:50px 90px}}"
-               f".g{{animation-name:g}}.e{{animation-name:e;transform-box:fill-box;transform-origin:center}}"
+        # *{animation:a} names no keyframes, so only the classes below move; a shared origin is written once.
+        og = ".s,.q{transform-origin:50px 90px}" if m["o"] == "50px 90px" else f".s{{transform-origin:{m['o']}}}.q{{transform-origin:50px 90px}}"
+        css = (f"*{{animation:{a}}}.s{{animation-name:s}}.q{{animation-name:q}}{og}"
+               f".g{{animation-name:g}}.g>*{{animation-name:e;transform-box:fill-box;transform-origin:center}}"
                f"@keyframes s{{50%{{transform:{m['N']}}}25%{{transform:{m['L']}}}75%{{transform:{m['R']}}}}}"
                f"@keyframes q{{0%,50%,to{{transform:scale({qn[0]},{qn[1]})}}25%,75%{{transform:scale({qs[0]},{qs[1]})}}}}"
                f"@keyframes g{{50%{{transform:none}}25%{{transform:translateX(-{k}px)}}75%{{transform:translateX({k}px)}}}}"
                f"@keyframes e{{10%,50%,60%{{transform:none}}25%,75%{{transform:scale(1.32,.7)}}}}"
-               + ch.get("css", "") + "@media(prefers-reduced-motion:reduce){*{animation:none!important}}")
+               + ch.get("css", ""))
+    # Reduced motion: every loop sits inside a no-preference query, so under reduce nothing is set to move (same as the old
+    # reduce rule turning all of it off, fewer bytes per file on the Team page).
+    css = f"@media(prefers-reduced-motion:no-preference){{{css}}}"
     glyph = (f'<path d="{BADGE[badge]}" fill="none" stroke="#fff" stroke-width="1.8"/>'
              if badge in STROKED else f'<path d="{BADGE[badge]}" fill="#fff"/>')
-    eyes = "".join(f'<ellipse class="e" cx="{x}" cy="{cy}" rx="{rx}" ry="{ry}"/>' for x in (xl, xr))
+    # The calm CEO marks his eyes with class e; the others' eyes are the eye group's children (.g>*), so no class per eye.
+    ec = ' class="e"' if ch.get("calm") else ""
+    eyes = "".join(f'<ellipse{ec} cx="{x}" cy="{cy}" rx="{rx}" ry="{ry}"/>' for x in (xl, xr))
     # Page budget (Ryno, Oct 20 7:27 AM ET): round caps and joins are set once on the root and the eye colour once on the
     # eye group (SVG attributes inherit; the stills keep them because still() only drops <style>). Same pixels, fewer bytes.
     return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="{label}"'

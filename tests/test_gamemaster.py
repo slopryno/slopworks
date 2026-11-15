@@ -24,7 +24,7 @@ class GameMasterHire(unittest.TestCase):
         self.assertIn("Gamemaster", [n for n, *_ in build.team()])
         self.assertIn("Gamemaster", dict(build.GROUPS)["Operations and Measurement"])
         html = build.build()["team/index.html"]
-        self.assertIn("avatars/still/gamemaster.svg", html)
+        self.assertIn("avatars/gamemaster.svg", html)
         self.assertIn("I own the progression rules", build.build()["team/gamemaster/index.html"])  # bio on the sheet (trading cards, Oct 20)
         f = ROOT / "site/assets/avatars/gamemaster.svg"
         self.assertLess(f.stat().st_size, 3000)

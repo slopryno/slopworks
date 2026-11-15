@@ -152,11 +152,11 @@ END:VEVENT
 BEGIN:VEVENT
 UID:wi26-review.slopworks-calendar
 DTSTAMP:20261114T120000Z
-DTSTART;VALUE=DATE:20261117
-DTEND;VALUE=DATE:20261118
+DTSTART;VALUE=DATE:20261114
+DTEND;VALUE=DATE:20261115
 SUMMARY:Winter screenshot review
-DESCRIPTION:Holiday theme. Lens with Critic. Every width\, light and dark\,
-  with the theme button.
+DESCRIPTION:Holiday theme. Lens with Critic. Moved up with Ryno's yes: PR #
+ 200 screenshots at every width\, light and dark\; Critic said yes.
 URL:https://slopryno.com/calendar/
 TRANSP:TRANSPARENT
 STATUS:CONFIRMED
@@ -164,10 +164,11 @@ END:VEVENT
 BEGIN:VEVENT
 UID:wi26-yes.slopworks-calendar
 DTSTAMP:20261114T120000Z
-DTSTART;VALUE=DATE:20261124
-DTEND;VALUE=DATE:20261125
+DTSTART;VALUE=DATE:20261114
+DTEND;VALUE=DATE:20261115
 SUMMARY:Ryno's yes for the Dec 1 switch
-DESCRIPTION:Holiday theme. Ryno. The winter set stays off without it.
+DESCRIPTION:Holiday theme. Ryno. Ryno said yes on Nov 14\, moving it up fro
+ m Nov 24. The set turns on Dec 1.
 URL:https://slopryno.com/calendar/
 TRANSP:TRANSPARENT
 STATUS:CONFIRMED
@@ -178,8 +179,7 @@ DTSTAMP:20261114T120000Z
 DTSTART;VALUE=DATE:20261201
 DTEND;VALUE=DATE:20261202
 SUMMARY:Winter holiday blobs on
-DESCRIPTION:Holiday theme. Coordinator. On the site to Thu Dec 31. Only af
- ter Ryno's yes.
+DESCRIPTION:Holiday theme. Coordinator. On the site to Thu Dec 31.
 URL:https://slopryno.com/calendar/
 TRANSP:TRANSPARENT
 STATUS:CONFIRMED
@@ -396,10 +396,10 @@ DTSTAMP:20261114T120000Z
 DTSTART;VALUE=DATE:20261201
 DTEND;VALUE=DATE:20270101
 SUMMARY:Winter holiday blobs on the site
-DESCRIPTION:Holiday character theme. Only after Ryno's yes.
+DESCRIPTION:Holiday character theme.
 URL:https://slopryno.com/calendar/
 TRANSP:TRANSPARENT
-STATUS:TENTATIVE
+STATUS:CONFIRMED
 END:VEVENT
 BEGIN:VEVENT
 UID:halloween-2027-window.slopworks-calendar
