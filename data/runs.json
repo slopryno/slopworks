@@ -345,5 +345,302 @@
       "Morning scan. No lock held at start. Scout: changelog still lists 0.78.1 first. One X search of @bot original posts since Nov 1: 1 result, a use-case story, not a release.",
       "Verify: no entry. Shield: 0 strips. No new CEO pitch, so no huddle. Nov 2 recorded as skipped."
     ]
+  },
+  {
+    "id": "2026-11-04-daily",
+    "date": "2026-11-04",
+    "kind": "daily",
+    "status": "skipped",
+    "x_reads": 0,
+    "counts": {
+      "posts_screened": 0,
+      "candidates": 0,
+      "published_updates": 0,
+      "published_issues": 0,
+      "corrected": 0,
+      "dropped_verify": 0,
+      "stripped_privacy": 0,
+      "dropped_privacy": 0,
+      "ci_failures": 0,
+      "corrections_mail": 0,
+      "web_reads_sources": 0,
+      "web_reads_research": 0,
+      "research_notes": 0,
+      "pitches": 0
+    },
+    "notes": [
+      "Skipped day: the CEO held Slopworks runs from Nov 3 until Nov 13 at 3:13 AM ET. No standup, tracker update or state write ran.",
+      "Not a completed daily run. Heartbeat result for this day: unknown."
+    ]
+  },
+  {
+    "id": "2026-11-05-daily",
+    "date": "2026-11-05",
+    "kind": "daily",
+    "status": "skipped",
+    "x_reads": 0,
+    "counts": {
+      "posts_screened": 0,
+      "candidates": 0,
+      "published_updates": 0,
+      "published_issues": 0,
+      "corrected": 0,
+      "dropped_verify": 0,
+      "stripped_privacy": 0,
+      "dropped_privacy": 0,
+      "ci_failures": 0,
+      "corrections_mail": 0,
+      "web_reads_sources": 0,
+      "web_reads_research": 0,
+      "research_notes": 0,
+      "pitches": 0
+    },
+    "notes": [
+      "Skipped day: the CEO held Slopworks runs from Nov 3 until Nov 13 at 3:13 AM ET. No standup, tracker update or state write ran.",
+      "Not a completed daily run. Heartbeat result for this day: unknown."
+    ]
+  },
+  {
+    "id": "2026-11-06-daily",
+    "date": "2026-11-06",
+    "kind": "daily",
+    "status": "skipped",
+    "x_reads": 0,
+    "counts": {
+      "posts_screened": 0,
+      "candidates": 0,
+      "published_updates": 0,
+      "published_issues": 0,
+      "corrected": 0,
+      "dropped_verify": 0,
+      "stripped_privacy": 0,
+      "dropped_privacy": 0,
+      "ci_failures": 0,
+      "corrections_mail": 0,
+      "web_reads_sources": 0,
+      "web_reads_research": 0,
+      "research_notes": 0,
+      "pitches": 0
+    },
+    "notes": [
+      "Skipped day: the CEO held Slopworks runs from Nov 3 until Nov 13 at 3:13 AM ET. No standup, tracker update or state write ran.",
+      "Not a completed daily run. Heartbeat result for this day: unknown."
+    ]
+  },
+  {
+    "id": "2026-11-07-daily",
+    "date": "2026-11-07",
+    "kind": "daily",
+    "status": "skipped",
+    "x_reads": 0,
+    "counts": {
+      "posts_screened": 0,
+      "candidates": 0,
+      "published_updates": 0,
+      "published_issues": 0,
+      "corrected": 0,
+      "dropped_verify": 0,
+      "stripped_privacy": 0,
+      "dropped_privacy": 0,
+      "ci_failures": 0,
+      "corrections_mail": 0,
+      "web_reads_sources": 0,
+      "web_reads_research": 0,
+      "research_notes": 0,
+      "pitches": 0
+    },
+    "notes": [
+      "Skipped day: the CEO held Slopworks runs from Nov 3 until Nov 13 at 3:13 AM ET. No standup, tracker update or state write ran.",
+      "Not a completed daily run. Heartbeat result for this day: unknown."
+    ]
+  },
+  {
+    "id": "2026-11-08-daily",
+    "date": "2026-11-08",
+    "kind": "daily",
+    "status": "skipped",
+    "x_reads": 0,
+    "counts": {
+      "posts_screened": 0,
+      "candidates": 0,
+      "published_updates": 0,
+      "published_issues": 0,
+      "corrected": 0,
+      "dropped_verify": 0,
+      "stripped_privacy": 0,
+      "dropped_privacy": 0,
+      "ci_failures": 0,
+      "corrections_mail": 0,
+      "web_reads_sources": 0,
+      "web_reads_research": 0,
+      "research_notes": 0,
+      "pitches": 0
+    },
+    "notes": [
+      "Skipped day: the CEO held Slopworks runs from Nov 3 until Nov 13 at 3:13 AM ET. No standup, tracker update or state write ran.",
+      "Not a completed daily run. Heartbeat result for this day: unknown."
+    ]
+  },
+  {
+    "id": "2026-11-09-daily",
+    "date": "2026-11-09",
+    "kind": "daily",
+    "status": "skipped",
+    "x_reads": 0,
+    "counts": {
+      "posts_screened": 0,
+      "candidates": 0,
+      "published_updates": 0,
+      "published_issues": 0,
+      "corrected": 0,
+      "dropped_verify": 0,
+      "stripped_privacy": 0,
+      "dropped_privacy": 0,
+      "ci_failures": 0,
+      "corrections_mail": 0,
+      "web_reads_sources": 0,
+      "web_reads_research": 0,
+      "research_notes": 0,
+      "pitches": 0
+    },
+    "notes": [
+      "Skipped day: the CEO held Slopworks runs from Nov 3 until Nov 13 at 3:13 AM ET. No standup, tracker update or state write ran.",
+      "Not a completed daily run. Heartbeat result for this day: unknown."
+    ]
+  },
+  {
+    "id": "2026-11-10-daily",
+    "date": "2026-11-10",
+    "kind": "daily",
+    "status": "skipped",
+    "x_reads": 0,
+    "counts": {
+      "posts_screened": 0,
+      "candidates": 0,
+      "published_updates": 0,
+      "published_issues": 0,
+      "corrected": 0,
+      "dropped_verify": 0,
+      "stripped_privacy": 0,
+      "dropped_privacy": 0,
+      "ci_failures": 0,
+      "corrections_mail": 0,
+      "web_reads_sources": 0,
+      "web_reads_research": 0,
+      "research_notes": 0,
+      "pitches": 0
+    },
+    "notes": [
+      "Skipped day: the CEO held Slopworks runs from Nov 3 until Nov 13 at 3:13 AM ET. No standup, tracker update or state write ran.",
+      "Not a completed daily run. Heartbeat result for this day: unknown."
+    ]
+  },
+  {
+    "id": "2026-11-11-daily",
+    "date": "2026-11-11",
+    "kind": "daily",
+    "status": "skipped",
+    "x_reads": 0,
+    "counts": {
+      "posts_screened": 0,
+      "candidates": 0,
+      "published_updates": 0,
+      "published_issues": 0,
+      "corrected": 0,
+      "dropped_verify": 0,
+      "stripped_privacy": 0,
+      "dropped_privacy": 0,
+      "ci_failures": 0,
+      "corrections_mail": 0,
+      "web_reads_sources": 0,
+      "web_reads_research": 0,
+      "research_notes": 0,
+      "pitches": 0
+    },
+    "notes": [
+      "Skipped day: the CEO held Slopworks runs from Nov 3 until Nov 13 at 3:13 AM ET. No standup, tracker update or state write ran.",
+      "Not a completed daily run. Heartbeat result for this day: unknown."
+    ]
+  },
+  {
+    "id": "2026-11-12-daily",
+    "date": "2026-11-12",
+    "kind": "daily",
+    "status": "skipped",
+    "x_reads": 0,
+    "counts": {
+      "posts_screened": 0,
+      "candidates": 0,
+      "published_updates": 0,
+      "published_issues": 0,
+      "corrected": 0,
+      "dropped_verify": 0,
+      "stripped_privacy": 0,
+      "dropped_privacy": 0,
+      "ci_failures": 0,
+      "corrections_mail": 0,
+      "web_reads_sources": 0,
+      "web_reads_research": 0,
+      "research_notes": 0,
+      "pitches": 0
+    },
+    "notes": [
+      "Skipped day: the CEO held Slopworks runs from Nov 3 until Nov 13 at 3:13 AM ET. No standup, tracker update or state write ran.",
+      "Not a completed daily run. Heartbeat result for this day: unknown."
+    ]
+  },
+  {
+    "id": "2026-11-13-daily",
+    "date": "2026-11-13",
+    "kind": "daily",
+    "status": "ok",
+    "x_reads": 0,
+    "counts": {
+      "posts_screened": 0,
+      "candidates": 0,
+      "published_updates": 0,
+      "published_issues": 0,
+      "corrected": 0,
+      "dropped_verify": 0,
+      "stripped_privacy": 0,
+      "dropped_privacy": 0,
+      "ci_failures": 0,
+      "corrections_mail": 0,
+      "web_reads_sources": 1,
+      "web_reads_research": 0,
+      "research_notes": 0,
+      "pitches": 0
+    },
+    "notes": [
+      "Morning scan, read-only: the slowed day cap (3) was already used by #195, #197 and #196, so no data PR. Changelog read: 1.0.1 is newest.",
+      "Research rotation skipped for usage (75.8% weekly). Its chat notes ride in the Nov 14 data PR."
+    ]
+  },
+  {
+    "id": "2026-11-14-daily",
+    "date": "2026-11-14",
+    "kind": "daily",
+    "status": "ok",
+    "x_reads": 0,
+    "counts": {
+      "posts_screened": 0,
+      "candidates": 5,
+      "published_updates": 5,
+      "published_issues": 0,
+      "corrected": 0,
+      "dropped_verify": 0,
+      "stripped_privacy": 0,
+      "dropped_privacy": 0,
+      "ci_failures": 0,
+      "corrections_mail": 0,
+      "web_reads_sources": 1,
+      "web_reads_research": 0,
+      "research_notes": 0,
+      "pitches": 0
+    },
+    "notes": [
+      "Morning scan. Lock free at start. Scout: five changelog releases (Nov 3 to Nov 11) added as confirmed entries; no X reads.",
+      "Verify confirmed all five; Shield 0 strips. No new CEO pitch, so no huddle. Nov 4 to Nov 12 recorded as skipped (CEO hold)."
+    ]
   }
 ]

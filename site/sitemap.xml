@@ -19,6 +19,7 @@
 <url><loc>https://slopryno.com/chat/archive/2026-10-2.html</loc></url>
 <url><loc>https://slopryno.com/chat/archive/2026-10-20.html</loc></url>
 <url><loc>https://slopryno.com/chat/archive/2026-10-21.html</loc></url>
+<url><loc>https://slopryno.com/chat/archive/2026-10-22.html</loc></url>
 <url><loc>https://slopryno.com/chat/archive/2026-10-3.html</loc></url>
 <url><loc>https://slopryno.com/chat/archive/2026-10-4.html</loc></url>
 <url><loc>https://slopryno.com/chat/archive/2026-10-5.html</loc></url>
@@ -27,6 +28,7 @@
 <url><loc>https://slopryno.com/chat/archive/2026-10-8.html</loc></url>
 <url><loc>https://slopryno.com/chat/archive/2026-10-9.html</loc></url>
 <url><loc>https://slopryno.com/chat/archive/2026-10.html</loc></url>
+<url><loc>https://slopryno.com/chat/archive/2026-11.html</loc></url>
 <url><loc>https://slopryno.com/chat/</loc></url>
 <url><loc>https://slopryno.com/design/</loc></url>
 <url><loc>https://slopryno.com/hood/</loc></url>
@@ -116,6 +118,9 @@
 <url><loc>https://slopryno.com/updates/changelog-0-75-8/</loc><lastmod>2026-10-28</lastmod></url>
 <url><loc>https://slopryno.com/updates/changelog-0-77-0/</loc><lastmod>2026-10-28</lastmod></url>
 <url><loc>https://slopryno.com/updates/changelog-0-78-1/</loc><lastmod>2026-10-29</lastmod></url>
+<url><loc>https://slopryno.com/updates/changelog-0-78-3/</loc><lastmod>2026-11-14</lastmod></url>
+<url><loc>https://slopryno.com/updates/changelog-0-79-1/</loc><lastmod>2026-11-14</lastmod></url>
+<url><loc>https://slopryno.com/updates/changelog-1-0-1/</loc><lastmod>2026-11-14</lastmod></url>
 <url><loc>https://slopryno.com/updates/changelog-2026-09-16-checklist/</loc><lastmod>2026-10-17</lastmod></url>
 <url><loc>https://slopryno.com/updates/changelog-2026-09-17/</loc><lastmod>2026-10-17</lastmod></url>
 <url><loc>https://slopryno.com/updates/changelog-2026-09-18/</loc><lastmod>2026-10-17</lastmod></url>
@@ -125,7 +130,9 @@
 <url><loc>https://slopryno.com/updates/changelog-2026-09-28/</loc><lastmod>2026-10-17</lastmod></url>
 <url><loc>https://slopryno.com/updates/changelog-2026-09-29/</loc><lastmod>2026-10-17</lastmod></url>
 <url><loc>https://slopryno.com/updates/changelog-2026-10-02/</loc><lastmod>2026-10-17</lastmod></url>
-<url><loc>https://slopryno.com/updates/</loc><lastmod>2026-10-29</lastmod></url>
+<url><loc>https://slopryno.com/updates/changelog-2026-11-04/</loc><lastmod>2026-11-14</lastmod></url>
+<url><loc>https://slopryno.com/updates/changelog-2026-11-06/</loc><lastmod>2026-11-14</lastmod></url>
+<url><loc>https://slopryno.com/updates/</loc><lastmod>2026-11-14</lastmod></url>
 <url><loc>https://slopryno.com/weekly/2026-w42/</loc></url>
 <url><loc>https://slopryno.com/weekly/2026-w43/</loc></url>
 <url><loc>https://slopryno.com/weekly/2026-w44/</loc></url>
