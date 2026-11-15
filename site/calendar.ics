@@ -116,22 +116,11 @@ END:VEVENT
 BEGIN:VEVENT
 UID:wi26-plan-confirm.slopworks-calendar
 DTSTAMP:20261114T120000Z
-DTSTART;VALUE=DATE:20261103
-DTEND;VALUE=DATE:20261104
+DTSTART;VALUE=DATE:20261114
+DTEND;VALUE=DATE:20261115
 SUMMARY:Winter plan confirmed
-DESCRIPTION:Holiday theme. Coordinator. Four weeks before the Dec 1 switch:
-  costumes\, owners and dates.
-URL:https://slopryno.com/calendar/
-TRANSP:TRANSPARENT
-STATUS:CONFIRMED
-END:VEVENT
-BEGIN:VEVENT
-UID:wi26-words.slopworks-calendar
-DTSTAMP:20261114T120000Z
-DTSTART;VALUE=DATE:20261112
-DTEND;VALUE=DATE:20261113
-SUMMARY:Winter names and lines checked
-DESCRIPTION:Holiday theme. Comms.
+DESCRIPTION:Holiday theme. Coordinator. Costumes\, owners and dates confirm
+ ed. The Dec 1 switch still needs Ryno's yes.
 URL:https://slopryno.com/calendar/
 TRANSP:TRANSPARENT
 STATUS:CONFIRMED
@@ -139,11 +128,23 @@ END:VEVENT
 BEGIN:VEVENT
 UID:wi26-design.slopworks-calendar
 DTSTAMP:20261114T120000Z
-DTSTART;VALUE=DATE:20261116
-DTEND;VALUE=DATE:20261117
+DTSTART;VALUE=DATE:20261114
+DTEND;VALUE=DATE:20261115
 SUMMARY:Winter costumes final design
-DESCRIPTION:Holiday theme. Polish with Sketch. Drafts exist from Oct 19\; r
- efresh them with Halloween feedback.
+DESCRIPTION:Holiday theme. Polish with Sketch. Oct 19 drafts refreshed with
+  Halloween feedback. Still and animated copies both work.
+URL:https://slopryno.com/calendar/
+TRANSP:TRANSPARENT
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:wi26-words.slopworks-calendar
+DTSTAMP:20261114T120000Z
+DTSTART;VALUE=DATE:20261114
+DTEND;VALUE=DATE:20261115
+SUMMARY:Winter names and lines checked
+DESCRIPTION:Holiday theme. Comms. Comms checked every name and line. Honest
+ \, and no trademarked characters.
 URL:https://slopryno.com/calendar/
 TRANSP:TRANSPARENT
 STATUS:CONFIRMED
