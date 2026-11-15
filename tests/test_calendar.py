@@ -94,7 +94,7 @@ class Feed(unittest.TestCase):
     def test_routines_recur_and_themes_span_their_window(self):
         self.assertIn("RRULE:FREQ=WEEKLY;BYDAY=FR", self.text)
         self.assertIn("RRULE:FREQ=MONTHLY;BYDAY=1MO", self.text)
-        self.assertIn("DTSTART;VALUE=DATE:20261201\r\nDTEND;VALUE=DATE:20270101", self.text)  # Ryno 9:52 PM ET: Dec 1-31
+        self.assertIn("DTSTART;VALUE=DATE:20261114\r\nDTEND;VALUE=DATE:20270101", self.text)  # Ryno, Nov 14 11:49 PM ET: winter Nov 14-Dec 31
         self.assertIn("DTSTART;VALUE=DATE:20261020\r\nDTEND;VALUE=DATE:20261101", self.text)  # Halloween live from Oct 20
 
     def test_ics_errors_catch_bad_feeds(self):
@@ -166,7 +166,7 @@ class HolidayRule(unittest.TestCase):
         return self.errs()
 
     def test_avatars_py_seasons_must_match_the_calendar(self):
-        ok = 'SEASONS = {"halloween": ((10, 1), (10, 31)), "winter": ((12, 1), (12, 31))}\n'
+        ok = 'SEASONS = {"halloween": ((10, 1), (10, 31)), "winter": ((11, 14), (12, 31))}\n'
         self.assertEqual(self.seasons(ok), [])
         old = 'SEASONS = {"halloween": ((10, 15), (10, 31)), "winter": ((12, 1), (12, 26))}\n'
         self.assertTrue(any("doesn't match scripts/avatars.py" in x for x in self.seasons(old)))
@@ -174,7 +174,7 @@ class HolidayRule(unittest.TestCase):
         self.assertTrue(any("season 'easter' switches with no scheduled theme" in x for x in self.seasons(extra)))
 
     def test_a_season_needs_next_years_dates_once_this_one_ends(self):
-        ok = 'SEASONS = {"halloween": ((10, 1), (10, 31)), "winter": ((12, 1), (12, 31))}\n'
+        ok = 'SEASONS = {"halloween": ((10, 1), (10, 31)), "winter": ((11, 14), (12, 31))}\n'
         self.cal["themes"] = [t for t in self.cal["themes"] if t["id"] != "winter-2027"]
         self.cal["events"] = [x for x in self.cal["events"] if x.get("theme") != "winter-2027"]
         state = json.loads((self.tmp / "data/state.json").read_text())
@@ -206,8 +206,8 @@ class HolidayRule(unittest.TestCase):
         self.assertTrue(any("in that order" in e for e in self.errs()))
 
     def test_review_needs_a_week_of_lead_time(self):
-        x = next(x for x in self.cal["events"] if x["id"] == "wi26-review")
-        x["date"] = "2026-11-28"
+        x = next(x for x in self.cal["events"] if x["id"] == "wi27-review")  # winter 2026 records its Nov 14 start in live_from
+        x["date"] = "2027-11-10"
         self.assertTrue(any("at least a week before" in e for e in self.errs()))
 
     def test_designer_cannot_review_own_set(self):
@@ -241,6 +241,8 @@ class Switch(unittest.TestCase):
         self.assertEqual(cal.active_set(CAL, date(2026, 10, 20)), "halloween")
         self.assertIsNone(cal.active_set(CAL, date(2026, 11, 1)))
         self.assertEqual(cal.active_set(CAL, date(2026, 12, 5)), "winter")  # Ryno's yes, Nov 14 (moved up from Nov 24)
+        self.assertEqual(cal.active_set(CAL, date(2026, 11, 14)), "winter")  # on from Nov 14 (Ryno, Nov 14 11:49 PM ET)
+        self.assertIsNone(cal.active_set(CAL, date(2026, 11, 13)))
         c = json.loads(json.dumps(CAL))
         next(x for x in c["events"] if x["id"] == "wi26-yes")["status"] = "planned"
         self.assertIsNone(cal.active_set(c, date(2026, 12, 5)))  # without the yes: stays off

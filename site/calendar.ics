@@ -120,7 +120,7 @@ DTSTART;VALUE=DATE:20261114
 DTEND;VALUE=DATE:20261115
 SUMMARY:Winter plan confirmed
 DESCRIPTION:Holiday theme. Coordinator. Costumes\, owners and dates confirm
- ed. The Dec 1 switch still needs Ryno's yes.
+ ed. The switch still needs Ryno's yes.
 URL:https://slopryno.com/calendar/
 TRANSP:TRANSPARENT
 STATUS:CONFIRMED
@@ -166,9 +166,9 @@ UID:wi26-yes.slopworks-calendar
 DTSTAMP:20261114T120000Z
 DTSTART;VALUE=DATE:20261114
 DTEND;VALUE=DATE:20261115
-SUMMARY:Ryno's yes for the Dec 1 switch
-DESCRIPTION:Holiday theme. Ryno. Ryno said yes on Nov 14\, moving it up fro
- m Nov 24. The set turns on Dec 1.
+SUMMARY:Ryno's yes for the winter switch
+DESCRIPTION:Holiday theme. Ryno. Ryno said yes on Nov 14 and turned the set
+  on that day instead of Dec 1.
 URL:https://slopryno.com/calendar/
 TRANSP:TRANSPARENT
 STATUS:CONFIRMED
@@ -176,8 +176,8 @@ END:VEVENT
 BEGIN:VEVENT
 UID:winter-2026-on.slopworks-calendar
 DTSTAMP:20261114T120000Z
-DTSTART;VALUE=DATE:20261201
-DTEND;VALUE=DATE:20261202
+DTSTART;VALUE=DATE:20261114
+DTEND;VALUE=DATE:20261115
 SUMMARY:Winter holiday blobs on
 DESCRIPTION:Holiday theme. Coordinator. On the site to Thu Dec 31.
 URL:https://slopryno.com/calendar/
@@ -289,6 +289,40 @@ TRANSP:TRANSPARENT
 STATUS:CONFIRMED
 END:VEVENT
 BEGIN:VEVENT
+UID:wi27-plan.slopworks-calendar
+DTSTAMP:20261114T120000Z
+DTSTART;VALUE=DATE:20271020
+DTEND;VALUE=DATE:20271021
+SUMMARY:Winter 2027 costumes planned
+DESCRIPTION:Holiday theme. Coordinator. Four weeks before the Nov 14 switch
+ . Same costumes or new ones.
+URL:https://slopryno.com/calendar/
+TRANSP:TRANSPARENT
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:wi27-design.slopworks-calendar
+DTSTAMP:20261114T120000Z
+DTSTART;VALUE=DATE:20271027
+DTEND;VALUE=DATE:20271028
+SUMMARY:Winter 2027 costumes designed
+DESCRIPTION:Holiday theme. Polish with Sketch.
+URL:https://slopryno.com/calendar/
+TRANSP:TRANSPARENT
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:wi27-words.slopworks-calendar
+DTSTAMP:20261114T120000Z
+DTSTART;VALUE=DATE:20271029
+DTEND;VALUE=DATE:20271030
+SUMMARY:Winter 2027 names and lines checked
+DESCRIPTION:Holiday theme. Comms.
+URL:https://slopryno.com/calendar/
+TRANSP:TRANSPARENT
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
 UID:halloween-2027-off.slopworks-calendar
 DTSTAMP:20261114T120000Z
 DTSTART;VALUE=DATE:20271101
@@ -300,44 +334,10 @@ TRANSP:TRANSPARENT
 STATUS:CONFIRMED
 END:VEVENT
 BEGIN:VEVENT
-UID:wi27-plan.slopworks-calendar
+UID:wi27-review.slopworks-calendar
 DTSTAMP:20261114T120000Z
 DTSTART;VALUE=DATE:20271103
 DTEND;VALUE=DATE:20271104
-SUMMARY:Winter 2027 costumes planned
-DESCRIPTION:Holiday theme. Coordinator. Four weeks before the Dec 1 switch.
-  Same costumes or new ones.
-URL:https://slopryno.com/calendar/
-TRANSP:TRANSPARENT
-STATUS:CONFIRMED
-END:VEVENT
-BEGIN:VEVENT
-UID:wi27-design.slopworks-calendar
-DTSTAMP:20261114T120000Z
-DTSTART;VALUE=DATE:20271110
-DTEND;VALUE=DATE:20271111
-SUMMARY:Winter 2027 costumes designed
-DESCRIPTION:Holiday theme. Polish with Sketch.
-URL:https://slopryno.com/calendar/
-TRANSP:TRANSPARENT
-STATUS:CONFIRMED
-END:VEVENT
-BEGIN:VEVENT
-UID:wi27-words.slopworks-calendar
-DTSTAMP:20261114T120000Z
-DTSTART;VALUE=DATE:20271112
-DTEND;VALUE=DATE:20271113
-SUMMARY:Winter 2027 names and lines checked
-DESCRIPTION:Holiday theme. Comms.
-URL:https://slopryno.com/calendar/
-TRANSP:TRANSPARENT
-STATUS:CONFIRMED
-END:VEVENT
-BEGIN:VEVENT
-UID:wi27-review.slopworks-calendar
-DTSTAMP:20261114T120000Z
-DTSTART;VALUE=DATE:20271117
-DTEND;VALUE=DATE:20271118
 SUMMARY:Winter 2027 screenshot review
 DESCRIPTION:Holiday theme. Lens with Critic. Every width\, light and dark\,
   with the theme button.
@@ -348,9 +348,9 @@ END:VEVENT
 BEGIN:VEVENT
 UID:wi27-yes.slopworks-calendar
 DTSTAMP:20261114T120000Z
-DTSTART;VALUE=DATE:20271124
-DTEND;VALUE=DATE:20271125
-SUMMARY:Ryno's yes for the Dec 1 switch
+DTSTART;VALUE=DATE:20271110
+DTEND;VALUE=DATE:20271111
+SUMMARY:Ryno's yes for the Nov 14 switch
 DESCRIPTION:Holiday theme. Ryno. The set stays off without it.
 URL:https://slopryno.com/calendar/
 TRANSP:TRANSPARENT
@@ -359,8 +359,8 @@ END:VEVENT
 BEGIN:VEVENT
 UID:winter-2027-on.slopworks-calendar
 DTSTAMP:20261114T120000Z
-DTSTART;VALUE=DATE:20271201
-DTEND;VALUE=DATE:20271202
+DTSTART;VALUE=DATE:20271114
+DTEND;VALUE=DATE:20271115
 SUMMARY:Winter holiday blobs on
 DESCRIPTION:Holiday theme. Coordinator. On the site to Fri Dec 31. Only af
  ter Ryno's yes.
@@ -393,7 +393,7 @@ END:VEVENT
 BEGIN:VEVENT
 UID:winter-2026-window.slopworks-calendar
 DTSTAMP:20261114T120000Z
-DTSTART;VALUE=DATE:20261201
+DTSTART;VALUE=DATE:20261114
 DTEND;VALUE=DATE:20270101
 SUMMARY:Winter holiday blobs on the site
 DESCRIPTION:Holiday character theme.
@@ -415,7 +415,7 @@ END:VEVENT
 BEGIN:VEVENT
 UID:winter-2027-window.slopworks-calendar
 DTSTAMP:20261114T120000Z
-DTSTART;VALUE=DATE:20271201
+DTSTART;VALUE=DATE:20271114
 DTEND;VALUE=DATE:20280101
 SUMMARY:Winter holiday blobs on the site
 DESCRIPTION:Holiday character theme. Only after Ryno's yes.

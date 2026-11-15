@@ -4,7 +4,8 @@ Transparent, flat, animated with inline CSS only (idle squish, staggered blinks)
 prefers-reduced-motion. Inspired by the Grok Bot app style, not copied. Changes need Polish + Shield review.
 
 Seasonal sets (Ryno, 2026-10-19 9:30 PM ET: "Ship tomorrow but make them see-through, no tiles"; 9:52 PM ET: full
-months): for all of October each role becomes its Halloween character and for all of December its winter one, but only once
+months): for all of October each role becomes its Halloween character and from Nov 14 to Dec 31 its winter one (Ryno, Nov 14
+11:49 PM ET: winter on now instead of Dec 1), but only once
 Ryno's yes for that theme is done on data/calendar.json (9:56 PM ET: "Yes, holiday looks wait for my yes before switching
 on"); the rest of the year, or with no yes, it's the blob. Same file names, picked by the ET date when this script runs
 (the daily run). Every file also gets a still copy in still/ (no <style>, the neutral pose) for long lists like Team chat.
@@ -113,14 +114,14 @@ def svg(i, name, color, shape, p, badge, why):
 # ---------- seasonal sets ----------
 ET = ZoneInfo("America/New_York")
 CALENDAR = Path(__file__).resolve().parent.parent / "data/calendar.json"
-SEASONS = {"halloween": ((10, 1), (10, 31)), "winter": ((12, 1), (12, 31))}  # full months (Ryno, Oct 19 9:52 PM ET)
+SEASONS = {"halloween": ((10, 1), (10, 31)), "winter": ((11, 14), (12, 31))}  # Halloween a full month (Ryno, Oct 19 9:52 PM ET); winter from Nov 14 (Ryno, Nov 14 11:49 PM ET: on now, not Dec 1)
 EYE = "#1b1f24"  # eyes and cut-outs: the blob's own eye colour, the same in both themes
 BAND = (.142, .268)  # relative luminance with 3:1 against both page backgrounds (#F6F5F1, #141418) and both card colours (#FFFFFF, #1C1C22)
 RIM_W = 4  # half shows outside the shape: a soft same-hue edge, only on shapes too light (or dark) for one theme
 
 
 def in_window(d):
-    """'halloween' Oct 1-31, 'winter' Dec 1-31, else 'normal' (inclusive, by calendar date). The date alone; see season_for."""
+    """'halloween' Oct 1-31, 'winter' Nov 14-Dec 31, else 'normal' (inclusive, by calendar date). The date alone; see season_for."""
     md = (d.month, d.day)
     return next((n for n, (a, b) in SEASONS.items() if a <= md <= b), "normal")
 
