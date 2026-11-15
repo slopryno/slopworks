@@ -326,5 +326,45 @@
     "did": "Nov 1 scan: nothing new",
     "doing": "Changelog and one @bot search: no release",
     "blockers": "none"
+  },
+  {
+    "id": "s-2026-11-14-forge",
+    "date": "2026-11-14",
+    "role": "Forge",
+    "did": "Nov 13: shipped #195, #197, #196 on the CEO's yes",
+    "doing": "This data PR, 1 of 3 today",
+    "blockers": "none"
+  },
+  {
+    "id": "s-2026-11-14-coordinator",
+    "date": "2026-11-14",
+    "role": "Coordinator",
+    "did": "Nov 13: read-only morning scan, day cap was full",
+    "doing": "Records for Nov 4 to 14 and no huddle (no new CEO pitch)",
+    "blockers": "#184, #189 and #190 wait on Ryno's merge"
+  },
+  {
+    "id": "s-2026-11-14-scout",
+    "date": "2026-11-14",
+    "role": "Scout",
+    "did": "Nov 13: found changelog 1.0.1",
+    "doing": "Five changelog entries, Nov 3 to Nov 11",
+    "blockers": "none"
+  },
+  {
+    "id": "s-2026-11-14-assistant",
+    "date": "2026-11-14",
+    "role": "Assistant",
+    "did": "Nov 13: ceo-approved on #195, #196, #197",
+    "doing": "Decision log follow-up for #195 to #197 in a later PR",
+    "blockers": "needs wins refresh first"
+  },
+  {
+    "id": "s-2026-11-14-sweep",
+    "date": "2026-11-14",
+    "role": "Sweep",
+    "did": "Nov 13: usage 75.8%, research rotation skipped",
+    "doing": "Usage 59% at 4:52 AM ET, resets Mon 10:35 PM ET",
+    "blockers": "none"
   }
 ]
