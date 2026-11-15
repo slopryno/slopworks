@@ -348,9 +348,9 @@ WINTER = {
              + G("tp", P("M30 52Q40 28 73 19Q60 33 70 52Z", "#e03a3e") + C(73, 19, 4, "#f2c14e")) + R(27, 49, 46, 6, 3, "#0969da"),
         eyes=(67, 44, 56, 3.2, 5.6), face="#2f9e4f", m=hop(5, 9, 2.0),
         css=part("tp", 1.2, "50px 52px", "50%{transform:skewX(-7deg)}")),
-    "lens": dict(name="Rudolph", line="A bright red nose that spots problems through the fog.",
+    "lens": dict(name="Reindeer", line="A bright red nose that spots problems through the fog.",
         body=S("M40 38V22M40 31L32 25M40 26L46 18", "#d9b27c", 3.6) + M(S("M40 38V22M40 31L32 25M40 26L46 18", "#d9b27c", 3.6))
-             + E(50, 62, 22, 25, "#a8743f") + R(32, 81, 36, 5, 2.5, "#1a7f37", True) + C(50, 74, 4.6, "#ef4444", True),
+             + E(50, 62, 22, 25, "#a8743f") + R(32, 81, 36, 5, 2.5, "#1a7f37", True) + C(50, 74, 5.4, "#ef4444", True),
         eyes=(59, 44, 56, 3.2, 5.6), face="#a8743f", m=hop(6, 7, 2.5)),
     "shield": dict(name="Nutcracker", line="Stands guard at the door all season.",
         body=R(34, 12, 32, 26, 3, "#cf222e") + R(34, 32, 32, 5, 0, "#f2c14e", True) + R(32, 37, 36, 28, 6, "#f3dcc4") + R(30, 64, 40, 26, 8, "#cf222e")
@@ -362,7 +362,8 @@ WINTER = {
         eyes=(32, 45, 55, 2.6, 4.6), face="#bc6a30", m=dance(10, .07, 2.4)),
     "trial": dict(name="Present", line="Wrapped, tagged, and tested before anyone opens it.",
         body=R(24, 42, 52, 46, 6, "#e0a400") + R(20, 35, 60, 12, 4, "#f0b400") + R(46, 35, 8, 53, 0, "#e03a3e", True)
-             + P("M50 35C40 21 30 27 36 33Q42 37 50 35C60 21 70 27 64 33Q58 37 50 35Z", "#e03a3e"),
+             + P("M50 35C40 21 30 27 36 33Q42 37 50 35C60 21 70 27 64 33Q58 37 50 35Z", "#e03a3e")
+             + R(72, 38, 11, 15, 1.5, "#f4f4f4") + C(77.5, 43, 1.4, "#e03a3e", True),
         eyes=(64, 40, 60, 3.2, 5.8), face="#e0a400", m=hop(6, 6, 2.2)),
     "polish": dict(name="Bauble", line="Adds the finishing sparkle, never more than it needs.",
         body=S("M50 18A4 4 0 1 1 50.1 18", "#f2c14e", 2) + R(42, 20, 16, 8, 2, "#f2c14e")
@@ -379,7 +380,8 @@ WINTER = {
         css=part("sp", 9, "50px 56px", "to{transform:rotate(60deg)}").replace("ease-in-out", "linear")),
     "sweep": dict(name="Snowman", line="Keeps cool under load, all winter.",
         body=E(50, 75, 23, 17, "#f4f6fb") + C(50, 47, 16, "#f4f6fb") + R(32, 30, 36, 5, 2.5, "#218bff") + R(38, 12, 24, 20, 3, "#218bff")
-             + R(33, 59, 34, 6, 3, "#218bff") + P("M50 52L62 54.5L50 57Z", "#f28c28", True),
+             + R(33, 59, 34, 6, 3, "#218bff") + P("M50 52L62 54.5L50 57Z", "#f28c28", True)
+             + C(50, 68, 2, EYE, True) + C(50, 78, 2, EYE, True),
         eyes=(45, 45, 55, 2.6, 4.6), face="#f4f6fb", m=dance(8, .04, 2.4)),
     "analyst": dict(name="Advent calendar", line="Counts down the days, one honest number at a time.",
         body=R(23, 25, 54, 63, 8, "#a371f7") + "".join(R(x, 31, 11, 9, 1.5, "#d3bdff", True) for x in (29, 44.5, 60)) + R(29, 72, 11, 10, 1.5, "#d3bdff", True)
@@ -421,7 +423,7 @@ WINTER = {
         eyes=(63, 38, 46, 2.6, 4.6), face="#f6f6f6", m=dance(9, .06, 2.8)),
 }
 COSTUMES = {"halloween": HALLOWEEN, "winter": WINTER}
-PROPER = ("Santa", "Rudolph", "Frankenstein's monster", "North Star", "Scrooge in his nightcap")
+PROPER = ("Santa", "Frankenstein's monster", "North Star", "Scrooge in his nightcap")
 
 
 def costume_svg(i, name, season):
