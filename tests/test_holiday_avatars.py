@@ -14,7 +14,7 @@ BACKS = (LIGHT, DARK, "#ffffff", "#1c1c22")  # both pages and both card colours
 class DateSwitch(unittest.TestCase):
     def test_windows_and_edges(self):
         cases = {(9, 30): "normal", (10, 1): "halloween", (10, 14): "halloween", (10, 15): "halloween", (10, 20): "halloween", (10, 31): "halloween", (11, 1): "normal",
-                 (11, 30): "normal", (12, 1): "winter", (12, 25): "winter", (12, 26): "winter", (12, 27): "winter", (12, 31): "winter", (1, 1): "normal",
+                 (11, 13): "normal", (11, 14): "winter", (11, 30): "winter", (12, 1): "winter", (12, 25): "winter", (12, 26): "winter", (12, 27): "winter", (12, 31): "winter", (1, 1): "normal",
                  (2, 29): "normal", (7, 4): "normal"}
         for (m, d), want in cases.items():
             self.assertEqual(avatars.in_window(date(2028, m, d)), want, (m, d))

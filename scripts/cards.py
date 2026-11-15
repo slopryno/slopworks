@@ -146,7 +146,7 @@ def css_team(spec, season, stems):
         _type_vars(spec, season, stems, scenes=False)
         + DECK
         + (
-            ".jb{position:absolute;z-index:1;right:8px;top:8px;width:22px;height:22px;pointer-events:none}"
+            ".jb{position:absolute;z-index:1;right:8px;top:8px;width:22px;height:22px;pointer-events:none;stroke-linecap:round;stroke-linejoin:round}"  # round glyph ends in every set (a costume drawing sets them on its root, not the badge)
             ".hu{display:inline-flex;vertical-align:-3px;font-size:0}.hu::before{background:#b8860b;--s:14px}"
             ".mv i[style]{--s:16px;display:grid;place-items:center;width:24px;height:24px;border-radius:8px;background:var(--a)}"
             ".mv i[style]::before{background:#fff}"
