@@ -15,12 +15,13 @@ REPO = "https://github.com/slopryno/slopworks"
 CREDIT = "Built and designed by Grok Bots. Reviewed and merged by bots; steered by a human CEO (Ryno)."
 DISCLAIMER = "Unofficial, fan-built project. Not affiliated with or endorsed by Grok Bot, SpaceX, or X."
 CORRECTIONS = "slopryno+corrections@mail.grokbot.com"
-# Information architecture (i36, Team chat c210 to c214): 4 top items plus the brand as Home. Deeper pages sit one tap
-# from their hub, every deep page has one "Back to" link, and the footer lists every page. No URL moved.
+# Information architecture (i36, then the Nov 14 five-tab redesign): Home, Tracker, Team, Receipts and More are the
+# primary nav and the footer sitelist on every page. Deeper pages sit one tap from their hub or from More, every deep
+# page has one "Back to" link, and work/, lessons/ and hood/ keep their URLs. No URL moved.
 WORK = [("timeline/", "Timeline"), ("weekly/", "Weekly recap"), ("metrics/", "Metrics"), ("roadmap/", "Quest board"), ("cases/", "Case files"), ("arena/", "Research Arena"), ("challenges/", "Demo challenge")]
 HOOD = [("how/", "How this works"), ("updates/", "What's new"), ("issues/", "Known issues"), ("chat/", "Team chat"), ("schedule/", "Schedule and limits"), ("calendar/", "Calendar"), ("behind/", "Behind the scenes"), ("design/", "Design log")]
 TOP = [("work/", "Work"), ("team/", "Team"), ("lessons/", "Lessons"), ("hood/", "Under the hood")]
-NAV = [("", "Home")] + WORK + [("team/", "Team"), ("lessons/", "Lessons"), ("how/", "How this works")]  # every visitor page, for llms.txt and the footer
+NAV = [("", "Home")] + WORK + [("team/", "Team"), ("lessons/", "Lessons"), ("how/", "How this works")]  # visitor pages for llms.txt; the footer uses TABS
 OPS = HOOD
 # Mobile redesign (Ryno's Claude design, Nov 14): five tabs replace the primary nav on every page, a bottom tab bar on phones.
 # Tracker is updates/; Receipts is every merged PR and lesson; More links every section, so no page loses its way in.
@@ -302,9 +303,9 @@ def page(slug, title, lede, body, source, h1=None, kind=None, head=""):
     here = tab_of(slug)
     cur = lambda s: ' aria-current="page"' if s == slug else (' aria-current="true"' if s == here else "")
     nav = "".join(f'<li><a href="{up}{s}"{cur(s)}>{e(t)}</a></li>' for s, t in TABS)
-    # Footer (hotfix after the 2026-10-17 /work/ incident, Comms and Polish): the 5 sections, not every page.
-    sitemap = (f'<nav class="sitelist" aria-label="Sections"><ul><li><a href="{up}">Home</a></li>'
-               + "".join(f'<li><a href="{up}{s}">{e(t)}</a></li>' for s, t in TOP) + "</ul></nav>")
+    # Footer (hotfix after the 2026-10-17 /work/ incident, Comms and Polish): the five tabs, not every page.
+    sitemap = (f'<nav class="sitelist" aria-label="Sections"><ul>'
+               + "".join(f'<li><a href="{up}{s}">{e(t)}</a></li>' for s, t in TABS) + "</ul></nav>")
     return f"""<!doctype html>
 <html lang="en">
 <head>
@@ -1383,8 +1384,8 @@ def build():
     files["sitemap.xml"] = ('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
                             + "".join(f"<url><loc>{e(loc(k))}</loc>" + (f"<lastmod>{lastmod[k]}</lastmod>" if lastmod.get(k) else "") + "</url>\n" for k in pages) + "</urlset>\n")
     files["robots.txt"] = f"User-agent: *\nAllow: /\nSitemap: {BASE}sitemap.xml\n"
-    main_pages = [("", "Home"), ("work/", "Work"), ("hood/", "Under the hood")] + [p for p in NAV if p[0]] + OPS + [("lessons/", "Lessons")] * ("lessons/" not in dict(NAV)) + [("team/xp/", "How XP works")]
-    main_pages = list(dict.fromkeys(main_pages))  # How this works is in both NAV and OPS; list each page once (#149 Level 1)
+    main_pages = list(TABS) + [("work/", "Work"), ("hood/", "Under the hood")] + [p for p in NAV if p[0]] + OPS + [("lessons/", "Lessons")] * ("lessons/" not in dict(NAV)) + [("team/xp/", "How XP works")]
+    main_pages = list(dict.fromkeys(main_pages))  # tabs first; How this works is in both NAV and OPS; list each page once (#149 Level 1)
     files["llms.txt"] = ("# Slopworks\n\n> " + DESCRIPTIONS[""] + " " + DISCLAIMER + "\n\n"
         "Slopworks tracks public Grok Bot updates and known issues, and shows how its bot team works: research rounds, decisions, case files, and after-action reviews. "
         "Every role is played by one daily routine and labeled as a role. Demo challenges are labeled Demo and are worked examples on fictional briefs, not advice or quotes. "

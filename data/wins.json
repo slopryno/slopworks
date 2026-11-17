@@ -1,5 +1,104 @@
 [
   {
+    "id": "pr203",
+    "role": "Forge",
+    "title": "Pixel: winter avatar window is Nov 14-Dec 31 in sweep and polish docs",
+    "pr": "https://github.com/slopryno/slopworks/pull/203",
+    "date": "2026-11-15",
+    "merged": "2026-11-15T15:30-05:00",
+    "opened": "2026-11-15T08:29-05:00"
+  },
+  {
+    "id": "pr202",
+    "role": "Forge",
+    "title": "Pixel: winter looks on now: the winter season runs Nov 14-Dec 31",
+    "pr": "https://github.com/slopryno/slopworks/pull/202",
+    "date": "2026-11-15",
+    "merged": "2026-11-15T00:05-05:00",
+    "opened": "2026-11-14T23:53-05:00"
+  },
+  {
+    "id": "pr201",
+    "role": "Forge",
+    "title": "Pixel: every Team card avatar animates all the time; Ryno's winter yes on Nov 14",
+    "pr": "https://github.com/slopryno/slopworks/pull/201",
+    "date": "2026-11-14",
+    "merged": "2026-11-14T23:43-05:00",
+    "opened": "2026-11-14T23:14-05:00"
+  },
+  {
+    "id": "pr200",
+    "role": "Forge",
+    "title": "Pixel: winter holiday looks refreshed with Halloween feedback; the set stays off until Ryno's yes",
+    "pr": "https://github.com/slopryno/slopworks/pull/200",
+    "date": "2026-11-14",
+    "merged": "2026-11-14T22:59-05:00",
+    "opened": "2026-11-14T22:43-05:00"
+  },
+  {
+    "id": "pr199",
+    "role": "Forge",
+    "title": "Pixel: mobile redesign: five tabs, Tracker chips, Receipts, Team lead, More",
+    "pr": "https://github.com/slopryno/slopworks/pull/199",
+    "date": "2026-11-14",
+    "merged": "2026-11-14T19:18-05:00",
+    "opened": "2026-11-14T11:41-05:00"
+  },
+  {
+    "id": "pr198",
+    "role": "Forge",
+    "title": "Forge: morning scan Nov 14: five changelog entries to 1.0.1, standup, Nov 4-12 skipped, calendar test fix",
+    "pr": "https://github.com/slopryno/slopworks/pull/198",
+    "date": "2026-11-14",
+    "merged": "2026-11-14T19:05-05:00",
+    "opened": "2026-11-14T07:58-05:00"
+  },
+  {
+    "id": "pr196",
+    "role": "Advisor",
+    "title": "Advisor: Critic reviews before and after every PR, and the whole site after each sprint",
+    "pr": "https://github.com/slopryno/slopworks/pull/196",
+    "date": "2026-11-13",
+    "merged": "2026-11-13T04:19-05:00",
+    "opened": "2026-11-13T03:27-05:00"
+  },
+  {
+    "id": "pr197",
+    "role": "Forge",
+    "title": "Pixel: Critic review fixes: move icons, November set, dated labels, quest tiles, one right edge, 44px links",
+    "pr": "https://github.com/slopryno/slopworks/pull/197",
+    "date": "2026-11-13",
+    "merged": "2026-11-13T04:14-05:00",
+    "opened": "2026-11-13T03:41-05:00"
+  },
+  {
+    "id": "pr195",
+    "role": "Forge",
+    "title": "Pixel: Team deck Concept C, same-size full-screen cards",
+    "pr": "https://github.com/slopryno/slopworks/pull/195",
+    "date": "2026-11-13",
+    "merged": "2026-11-13T04:01-05:00",
+    "opened": "2026-11-03T18:06-05:00"
+  },
+  {
+    "id": "pr194",
+    "role": "Assistant",
+    "title": "Assistant: log #188 ceo-approved decision; refresh records through #192",
+    "pr": "https://github.com/slopryno/slopworks/pull/194",
+    "date": "2026-11-03",
+    "merged": "2026-11-03T07:19-05:00",
+    "opened": "2026-11-03T07:13-05:00"
+  },
+  {
+    "id": "pr193",
+    "role": "Forge",
+    "title": "Pixel: Team page swipe deck with details flip, scrub, and list",
+    "pr": "https://github.com/slopryno/slopworks/pull/193",
+    "date": "2026-11-03",
+    "merged": "2026-11-03T07:15-05:00",
+    "opened": "2026-11-03T07:00-05:00"
+  },
+  {
     "id": "pr192",
     "role": "Forge",
     "title": "Forge: morning scan Nov 3: standup, no new Grok Bot release, Nov 2 recorded as skipped",

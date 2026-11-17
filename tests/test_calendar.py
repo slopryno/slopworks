@@ -56,7 +56,8 @@ class Page(unittest.TestCase):
 
     def test_reachable_in_two_taps_with_back_and_next(self):
         self.assertIn('href="../calendar/"', FILES["hood/index.html"])
-        self.assertIn('href="hood/"', FILES["index.html"])
+        self.assertIn('href="more/"', FILES["index.html"])
+        self.assertIn('href="../calendar/"', FILES["more/index.html"])
         self.assertIn('href="../calendar/"', FILES["schedule/index.html"])
         self.assertIn('class="back"><a href="../hood/">', self.html)
         self.assertIn('class="next"', self.html)
