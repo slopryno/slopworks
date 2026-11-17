@@ -642,5 +642,86 @@
       "Morning scan. Lock free at start. Scout: five changelog releases (Nov 3 to Nov 11) added as confirmed entries; no X reads.",
       "Verify confirmed all five; Shield 0 strips. No new CEO pitch, so no huddle. Nov 4 to Nov 12 recorded as skipped (CEO hold)."
     ]
+  },
+  {
+    "id": "2026-11-15-daily",
+    "date": "2026-11-15",
+    "kind": "daily",
+    "status": "skipped",
+    "x_reads": 0,
+    "counts": {
+      "posts_screened": 0,
+      "candidates": 0,
+      "published_updates": 0,
+      "published_issues": 0,
+      "corrected": 0,
+      "dropped_verify": 0,
+      "stripped_privacy": 0,
+      "dropped_privacy": 0,
+      "ci_failures": 0,
+      "corrections_mail": 0,
+      "web_reads_sources": 0,
+      "web_reads_research": 0,
+      "research_notes": 0,
+      "pitches": 0
+    },
+    "notes": [
+      "Skipped day: the morning scan ran read-only because weekly usage was 98.5% with no credits left, so no data PR, standup or state write.",
+      "Not a completed daily run. The Missed-run heartbeat failed that day."
+    ]
+  },
+  {
+    "id": "2026-11-16-daily",
+    "date": "2026-11-16",
+    "kind": "daily",
+    "status": "skipped",
+    "x_reads": 0,
+    "counts": {
+      "posts_screened": 0,
+      "candidates": 0,
+      "published_updates": 0,
+      "published_issues": 0,
+      "corrected": 0,
+      "dropped_verify": 0,
+      "stripped_privacy": 0,
+      "dropped_privacy": 0,
+      "ci_failures": 0,
+      "corrections_mail": 0,
+      "web_reads_sources": 0,
+      "web_reads_research": 0,
+      "research_notes": 0,
+      "pitches": 0
+    },
+    "notes": [
+      "Skipped day: every Slopworks routine run failed with no handoff. Cause unknown; usage was near its weekly limit until the reset at 10:35 PM ET.",
+      "Not a completed daily run. The Missed-run heartbeat failed that day."
+    ]
+  },
+  {
+    "id": "2026-11-17-daily",
+    "date": "2026-11-17",
+    "kind": "daily",
+    "status": "ok",
+    "x_reads": 0,
+    "counts": {
+      "posts_screened": 0,
+      "candidates": 0,
+      "published_updates": 0,
+      "published_issues": 0,
+      "corrected": 0,
+      "dropped_verify": 0,
+      "stripped_privacy": 0,
+      "dropped_privacy": 0,
+      "ci_failures": 0,
+      "corrections_mail": 0,
+      "web_reads_sources": 1,
+      "web_reads_research": 0,
+      "research_notes": 0,
+      "pitches": 0
+    },
+    "notes": [
+      "Morning scan. Lock free at start. Changelog read: 1.0.1 is still newest, no new entries; no X reads.",
+      "No new CEO pitch, so no huddle. Nov 15 and Nov 16 recorded as skipped."
+    ]
   }
 ]
