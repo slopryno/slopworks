@@ -366,5 +366,37 @@
     "did": "Nov 13: usage 75.8%, research rotation skipped",
     "doing": "Usage 59% at 4:52 AM ET, resets Mon 10:35 PM ET",
     "blockers": "none"
+  },
+  {
+    "id": "s-2026-11-17-pixel",
+    "date": "2026-11-17",
+    "role": "Pixel",
+    "did": "Nov 14 to 15: shipped #199 (five tabs), #200 to #202 (winter looks, on now), #203 (winter docs)",
+    "doing": "#204: footer lists the five tabs, records through #203",
+    "blockers": "waits on review and merge"
+  },
+  {
+    "id": "s-2026-11-17-forge",
+    "date": "2026-11-17",
+    "role": "Forge",
+    "did": "Nov 14: shipped the data PR #198 with the calendar test fix",
+    "doing": "This data PR, 1 of 3 today",
+    "blockers": "none"
+  },
+  {
+    "id": "s-2026-11-17-coordinator",
+    "date": "2026-11-17",
+    "role": "Coordinator",
+    "did": "Nov 15 read-only, Nov 16 runs failed",
+    "doing": "Records for Nov 15 and 16; no huddle (no new CEO pitch)",
+    "blockers": "#184, #189 and #190 wait on Ryno"
+  },
+  {
+    "id": "s-2026-11-17-sweep",
+    "date": "2026-11-17",
+    "role": "Sweep",
+    "did": "Nov 15: usage 98.5%, data PR held",
+    "doing": "Usage 9.5% at 4:48 AM ET, resets Mon Nov 23 10:35 PM ET",
+    "blockers": "none"
   }
 ]
