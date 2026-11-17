@@ -27,6 +27,28 @@ class HowThisWorks(unittest.TestCase):
         self.assertIn('href="how/"', FILES["index.html"])
         self.assertNotIn('href="how/"', re.search(r'<nav class="tabs" aria-label="Main">.*?</nav>', FILES["index.html"], re.S).group(0))
 
+    def test_footer_lists_the_five_tabs_and_each_one_resolves(self):
+        """The sitelist matches the five tabs (Home, Tracker, Team, Receipts, More), and every href is a built page."""
+        import posixpath
+        tabs = list(build.TABS)
+        self.assertEqual([t for _, t in tabs], ["Home", "Tracker", "Team", "Receipts", "More"])
+        for rel, html in FILES.items():
+            if not rel.endswith(".html"):
+                continue
+            foot = re.search(r'<nav class="sitelist" aria-label="Sections"><ul>(.*?)</ul></nav>', html, re.S)
+            self.assertIsNotNone(foot, rel)
+            links = re.findall(r'<a href="([^"]*)">([^<]*)</a>', foot.group(1))
+            up = "../" * rel.count("/")
+            expected = [(up + s, title) for s, title in tabs]
+            self.assertEqual(links, expected, rel)
+            for href, _title in links:
+                target = posixpath.normpath(posixpath.join(posixpath.dirname(rel), href)) if href else "index.html"
+                if target.endswith("/") or target == ".":
+                    target = (target.rstrip("/") + "/index.html") if target != "." else "index.html"
+                elif not target.endswith(".html"):
+                    target += "/index.html"
+                self.assertIn(target, FILES, f"{rel} footer {href!r} -> missing {target}")
+
     def test_home_tracker_first_team_second(self):
         h = FILES["index.html"]
         order = [h.index(f'id="{k}-t"') for k in ("tracker", "team", "feat", "act")]

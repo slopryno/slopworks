@@ -74,7 +74,8 @@ class Aars(unittest.TestCase):
         order = [html.index(f'id="{a["id"]}"') for a in sorted(main, key=lambda a: (a["date"], a["id"]), reverse=True)]
         self.assertEqual(order, sorted(order))  # newest first
         self.assertIn("lessons/", FILES["schedule/index.html"])
-        self.assertIn('href="../lessons/"', FILES["team/index.html"])  # in the nav
+        self.assertIn('href="../lessons/"', FILES["more/index.html"])  # Lessons sits under More, not the five-tab nav
+        self.assertIn("lessons/index.html", FILES)
         self.assertIn("site/lessons/index.html", check.SHOWCASE_PAGES)
 
 
