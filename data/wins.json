@@ -1,5 +1,23 @@
 [
   {
+    "id": "pr204",
+    "role": "Forge",
+    "title": "Pixel: footer lists the five tabs; records through #203",
+    "pr": "https://github.com/slopryno/slopworks/pull/204",
+    "date": "2026-11-17",
+    "merged": "2026-11-17T12:44-05:00",
+    "opened": "2026-11-16T23:16-05:00"
+  },
+  {
+    "id": "pr205",
+    "role": "Forge",
+    "title": "Forge: morning scan Nov 17: standup, Nov 15 and 16 recorded as skipped",
+    "pr": "https://github.com/slopryno/slopworks/pull/205",
+    "date": "2026-11-17",
+    "merged": "2026-11-17T04:51-05:00",
+    "opened": "2026-11-17T04:50-05:00"
+  },
+  {
     "id": "pr203",
     "role": "Forge",
     "title": "Pixel: winter avatar window is Nov 14-Dec 31 in sweep and polish docs",
