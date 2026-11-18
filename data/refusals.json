@@ -158,5 +158,20 @@
     "at": "2026-11-14T04:56-05:00",
     "branch": "bot/data-morning-1114",
     "reason": "python3 -m unittest discover -s tests -q failed:"
+  },
+  {
+    "at": "2026-11-17T12:33-05:00",
+    "branch": "HEAD",
+    "reason": "missing sign-off from Lens, Trial (required for these paths: Lens, Trial)"
+  },
+  {
+    "at": "2026-11-18T04:52-05:00",
+    "branch": "bot/data-morning-1118",
+    "reason": "bot/data-* can't carry bots/assistant.md; use bot/feature-*"
+  },
+  {
+    "at": "2026-11-18T04:54-05:00",
+    "branch": "bot/data-morning-1118",
+    "reason": "redacted: the check output named a possible secret or personal data"
   }
 ]

@@ -1,20 +1,20 @@
 {
-  "as_of": "2026-11-15T15:30-05:00",
-  "newest_day": "2026-11-15",
-  "days_of_history": 17,
-  "ci_window_start": "2026-10-17T18:16-04:00",
+  "as_of": "2026-11-17T12:44-05:00",
+  "newest_day": "2026-11-17",
+  "days_of_history": 19,
+  "ci_window_start": "2026-10-19T00:08-04:00",
   "totals": {
-    "prs": 194,
+    "prs": 196,
     "open_to_merge_min": 2,
-    "ci_catches": 24,
+    "ci_catches": 22,
     "main_failures": 0,
     "reverts": 0,
     "aars": 18,
     "escaped": 14,
     "blocks": 1,
-    "refusals": 32,
-    "blast_checked": 2,
-    "blast_matched": 2
+    "refusals": 35,
+    "blast_checked": 3,
+    "blast_matched": 3
   },
   "pace": {
     "mode": "slowed",
@@ -58,7 +58,7 @@
       "corrections": 4,
       "aars": 9,
       "ci_catches": 0,
-      "ci_recorded": true,
+      "ci_recorded": false,
       "main_failures": 0,
       "reverts": 0,
       "blocks": 0,
@@ -71,8 +71,8 @@
       "escaped": 3,
       "corrections": 3,
       "aars": 3,
-      "ci_catches": 2,
-      "ci_recorded": true,
+      "ci_catches": 0,
+      "ci_recorded": false,
       "main_failures": 0,
       "reverts": 0,
       "blocks": 0,
@@ -259,6 +259,34 @@
       "reverts": 0,
       "blocks": 0,
       "refusals": 0
+    },
+    {
+      "date": "2026-11-16",
+      "prs": 0,
+      "open_to_merge_min": null,
+      "escaped": 0,
+      "corrections": 0,
+      "aars": 0,
+      "ci_catches": 0,
+      "ci_recorded": true,
+      "main_failures": 0,
+      "reverts": 0,
+      "blocks": 0,
+      "refusals": 0
+    },
+    {
+      "date": "2026-11-17",
+      "prs": 2,
+      "open_to_merge_min": 404,
+      "escaped": 0,
+      "corrections": 0,
+      "aars": 0,
+      "ci_catches": 0,
+      "ci_recorded": true,
+      "main_failures": 0,
+      "reverts": 0,
+      "blocks": 0,
+      "refusals": 1
     }
   ],
   "sprints": [
@@ -339,49 +367,49 @@
     {
       "key": "prs",
       "label": "Merged PRs",
-      "prev": 4,
+      "prev": 0,
       "new": 2,
-      "direction": "down",
+      "direction": "up",
       "verdict": null
     },
     {
       "key": "open_to_merge_min",
       "label": "Median open to merge, minutes",
-      "prev": 243,
-      "new": 216,
-      "direction": "down",
+      "prev": null,
+      "new": 404,
+      "direction": "n/a",
       "verdict": null
     },
     {
       "key": "escaped",
       "label": "Incidents and data corrections per 10 PRs",
-      "prev": 0.0,
+      "prev": null,
       "new": 0.0,
-      "direction": "flat",
+      "direction": "n/a",
       "verdict": null
     },
     {
       "key": "corrections",
       "label": "Data corrections per 10 PRs",
-      "prev": 0.0,
+      "prev": null,
       "new": 0.0,
-      "direction": "flat",
+      "direction": "n/a",
       "verdict": null
     },
     {
       "key": "aars",
       "label": "AARs per 10 PRs",
-      "prev": 0.0,
+      "prev": null,
       "new": 0.0,
-      "direction": "flat",
+      "direction": "n/a",
       "verdict": null
     },
     {
       "key": "ci_catches",
       "label": "CI catches before merge per 10 PRs",
-      "prev": 0.0,
+      "prev": null,
       "new": 0.0,
-      "direction": "flat",
+      "direction": "n/a",
       "verdict": null
     },
     {
@@ -433,7 +461,7 @@
       "target": "Every new tracker item logged within 1 day, and 2 features demoed within 7 days of entry",
       "source": "data/updates.json, data/cases.json",
       "status": "in progress",
-      "now": "1 of 14 new tracker items logged within 1 day since Mon Oct 19; 0 of 2 demos."
+      "now": "1 of 17 new tracker items logged within 1 day since Mon Oct 19; 0 of 2 demos."
     }
   ]
 }

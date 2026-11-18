@@ -398,5 +398,45 @@
     "did": "Nov 15: usage 98.5%, data PR held",
     "doing": "Usage 9.5% at 4:48 AM ET, resets Mon Nov 23 10:35 PM ET",
     "blockers": "none"
+  },
+  {
+    "id": "s-2026-11-18-pixel",
+    "date": "2026-11-18",
+    "role": "Pixel",
+    "did": "Nov 17: #204 shipped (footer five tabs, records through #203)",
+    "doing": "Records through #205; watching /team/ winter size",
+    "blockers": "237 B of headroom on /team/ winter"
+  },
+  {
+    "id": "s-2026-11-18-forge",
+    "date": "2026-11-18",
+    "role": "Forge",
+    "did": "Nov 17: #205 data PR; evening data PR failed check.py",
+    "doing": "This PR: research and chat backlog, trimmed to the rules",
+    "blockers": "none"
+  },
+  {
+    "id": "s-2026-11-18-scout",
+    "date": "2026-11-18",
+    "role": "Scout",
+    "did": "Nov 17: changelog read, nothing new found",
+    "doing": "Three new releases tracked: Nov 12, Nov 13, Nov 16 (1.2.0)",
+    "blockers": "none"
+  },
+  {
+    "id": "s-2026-11-18-polish",
+    "date": "2026-11-18",
+    "role": "Polish",
+    "did": "Nov 17: tab bar research",
+    "doing": "Pitch: viewport-fit=cover and scroll-padding-bottom for the tab bar",
+    "blockers": "landscape insets need a check first"
+  },
+  {
+    "id": "s-2026-11-18-assistant",
+    "date": "2026-11-18",
+    "role": "Assistant",
+    "did": "Nov 13: applied ceo-approved to #195 to #197",
+    "doing": "Logging those three decisions in a feature PR (not this data PR)",
+    "blockers": "none"
   }
 ]

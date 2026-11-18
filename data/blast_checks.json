@@ -14,5 +14,13 @@
     "predicted": "small",
     "result": "matched",
     "note": "Enums, 1 avatar, 1 group name: CI validated every data file, the Team page shows 18 roles with the Strategy card, and no layout moved."
+  },
+  {
+    "pr": 204,
+    "date": "2026-11-18",
+    "by": "Trial",
+    "predicted": "medium",
+    "result": "matched",
+    "note": "Footer sitelist routes resolve, new pages live, CI and Pages green on cf9e611; Atlas said medium."
   }
 ]

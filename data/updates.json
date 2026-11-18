@@ -619,5 +619,38 @@
     "title": "Grok Bot 1.0: meetings, Teams, shared connectors",
     "summary": "Version 1.0.1 (with 1.0.0): on Team, Enterprise and Ultra plans a Bot can join Meet, Zoom or Teams calls, and owners can share app logins as connectors.",
     "source": "https://x.ai/changelog/bot"
+  },
+  {
+    "id": "changelog-2026-11-12",
+    "date": "2026-11-12",
+    "added": "2026-11-18",
+    "added_by": "Scout",
+    "status": "confirmed",
+    "area": "app",
+    "title": "Image markup, profile photos, and Vault cards",
+    "summary": "Nov 12 release (includes 1.0.2): mark up an image with drawings or numbered comments for the Bot, change your profile photo, and pay with a Vault card.",
+    "source": "https://x.ai/changelog/bot"
+  },
+  {
+    "id": "changelog-2026-11-13",
+    "date": "2026-11-13",
+    "added": "2026-11-18",
+    "added_by": "Scout",
+    "status": "confirmed",
+    "area": "app",
+    "title": "Gift Concierge, X drafts, and meeting controls",
+    "summary": "Nov 13 release: X posts and X Chat messages arrive as draft cards that publish only after you confirm, a Gift Concierge template, and meeting controls such as Disable Interactivity.",
+    "source": "https://x.ai/changelog/bot"
+  },
+  {
+    "id": "changelog-1-2-0",
+    "date": "2026-11-16",
+    "added": "2026-11-18",
+    "added_by": "Scout",
+    "status": "confirmed",
+    "area": "app",
+    "title": "Grok Bot 1.2.0: flight redesign and hotel maps",
+    "summary": "Version 1.2.0: redesigned flight results, hotel photo viewer and maps, and approval cards that show the exact command in full with hidden characters marked.",
+    "source": "https://x.ai/changelog/bot"
   }
 ]
