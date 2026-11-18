@@ -80,12 +80,48 @@ class TabBarClearance(unittest.TestCase):
         self.assertIn(f"html{{scroll-padding-bottom:{PHONE_CLEARANCE}}}", self.css)
 
     def test_wide_screens_drop_the_fixed_bar_and_its_clearance(self):
-        m = re.search(r"@media \(min-width:40rem\)\{(.+)\}\s*$", self.css, re.S)
+        m = re.search(r"@media \(min-width:40rem\)\{((?:[^{}]|\{[^{}]*\})*)\}", self.css)
         self.assertIsNotNone(m, "missing the 40rem desktop reset")
         block = m.group(1)
         self.assertIn("position:static", block)
         self.assertIn("scroll-padding-bottom:0", block)
         self.assertIn("padding-bottom:0", block)
+
+
+class TabSwitchTransitions(unittest.TestCase):
+    """Cross-document view transitions: content fades, the tab bar stays put, reduced motion is off."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.css = TABS_CSS.read_text()
+
+    def _motion_ok_block(self):
+        m = re.search(
+            r"@media\s*\(\s*prefers-reduced-motion\s*:\s*no-preference\s*\)\{((?:[^{}]|\{[^{}]*\})*)\}",
+            self.css,
+        )
+        self.assertIsNotNone(m, "missing the no-preference view-transition block")
+        return m.group(1)
+
+    def test_view_transitions_are_opted_in_only_when_motion_is_ok(self):
+        block = self._motion_ok_block()
+        self.assertIn("@view-transition{navigation:auto}", block)
+        # The opt-in must not leak outside that query (reduced-motion users get a normal load).
+        self.assertEqual(self.css.count("@view-transition"), 1)
+        self.assertEqual(self.css.count("navigation:auto"), 1)
+
+    def test_tab_bar_stays_put_while_content_transitions(self):
+        self.assertIn("view-transition-name:tabs", self.css)
+        self.assertIn("::view-transition-group(tabs){animation-duration:0s}", self._motion_ok_block())
+
+    def test_reduced_motion_query_does_not_enable_view_transitions(self):
+        reduce_blocks = re.findall(
+            r"@media\s*\(\s*prefers-reduced-motion\s*:\s*reduce\s*\)\{((?:[^{}]|\{[^{}]*\})*)\}",
+            self.css,
+        )
+        for block in reduce_blocks:
+            self.assertNotIn("navigation:auto", block)
+            self.assertNotIn("@view-transition", block)
 
 
 if __name__ == "__main__":
