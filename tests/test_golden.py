@@ -1,0 +1,100 @@
+"""Trial's tests for the stdlib golden helper: UPDATE=1 rewrites, otherwise a readable unified diff."""
+import os
+import sys
+import tempfile
+import unittest
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import golden  # noqa: E402
+
+
+class Helper(unittest.TestCase):
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.tmp.cleanup)
+        self.root = Path(self.tmp.name)
+        self._update = os.environ.pop(golden.UPDATE_ENV, None)
+        self.addCleanup(self._restore_env)
+
+    def _restore_env(self):
+        if self._update is None:
+            os.environ.pop(golden.UPDATE_ENV, None)
+        else:
+            os.environ[golden.UPDATE_ENV] = self._update
+
+    def test_mismatch_fails_with_a_unified_diff(self):
+        (self.root / "wired.css").write_text(".ok{color:blue}\n")
+        with self.assertRaises(AssertionError) as ctx:
+            golden.assert_matches(self, "wired.css", ".ok{color:red}\n", root=self.root)
+        msg = str(ctx.exception)
+        self.assertIn("golden wired.css differs", msg)
+        self.assertIn("UPDATE=1", msg)
+        self.assertIn("Read this diff before accepting", msg)
+        self.assertIn("--- goldens/wired.css", msg)
+        self.assertIn("+++ actual", msg)
+        self.assertIn("-.ok{color:blue}", msg)
+        self.assertIn("+.ok{color:red}", msg)
+
+    def test_match_passes(self):
+        (self.root / "ok.txt").write_text("same\n")
+        golden.assert_matches(self, "ok.txt", "same\n", root=self.root)
+
+    def test_update_rewrites_after_you_opt_in(self):
+        path = self.root / "card.html"
+        path.write_text("old\n")
+        os.environ[golden.UPDATE_ENV] = "1"
+        golden.assert_matches(self, "card.html", "new\n", root=self.root)
+        self.assertEqual(path.read_text(), "new\n")
+
+    def test_update_is_only_the_digit_one(self):
+        (self.root / "x.txt").write_text("keep\n")
+        os.environ[golden.UPDATE_ENV] = "yes"
+        with self.assertRaises(AssertionError):
+            golden.assert_matches(self, "x.txt", "no\n", root=self.root)
+        self.assertEqual((self.root / "x.txt").read_text(), "keep\n")
+
+    def test_missing_golden_tells_you_to_opt_in(self):
+        with self.assertRaises(AssertionError) as ctx:
+            golden.assert_matches(self, "missing.html", "<p>hi</p>\n", root=self.root)
+        self.assertIn("missing golden", str(ctx.exception))
+        self.assertIn("UPDATE=1", str(ctx.exception))
+        self.assertFalse((self.root / "missing.html").exists())
+
+
+class Normalize(unittest.TestCase):
+    def test_record_bits_are_stripped_and_wiring_stays(self):
+        a = (
+            '<li class="slot t3 r4 holo" id="card-forge">'
+            '<p class="lv"><span class="ml" title="Engineering">Lv <span>9</span></span> · Grandmaster</p>'
+            '<div class="bar" aria-hidden="true"><span style="width:6%"></span></div>'
+            '<p class="rar">Holo rare · 10/19</p>'
+            '<em>115<small> PRs</small></em>'
+            '<li><b>XP</b><em>3365</em></li>'
+            '<li class="lvf">Last verified · <a href="https://github.com/slopryno/slopworks/pull/204">#204</a></li>'
+            '<ol class="recent"><li><a href="forge/">Forge</a><a href="https://github.com/slopryno/slopworks/pull/204">PR #204</a></li></ol>'
+        )
+        b = (
+            '<li class="slot t3 r1" id="card-forge">'
+            '<p class="lv"><span class="ml" title="Engineering">Lv <span>1</span></span> · Recruit</p>'
+            '<div class="bar" aria-hidden="true"><span style="width:90%"></span></div>'
+            '<p class="rar">Common · 10/19</p>'
+            '<em>1<small> PR</small></em>'
+            '<li><b>XP</b><em>5</em></li>'
+            '<li class="lvf">Last verified · <a href="https://github.com/slopryno/slopworks/pull/1">#1</a></li>'
+            '<ol class="recent"><li><a href="sweep/">Sweep</a><a href="https://github.com/slopryno/slopworks/pull/185">PR #185</a></li></ol>'
+        )
+        self.assertEqual(golden.normalize_team(a), golden.normalize_team(b))
+        self.assertIn('id="card-forge"', golden.normalize_team(a))
+        self.assertIn('class="slot t3"', golden.normalize_team(a))
+        self.assertNotIn("holo", golden.normalize_team(a))
+        self.assertNotIn("r4", golden.normalize_team(a))
+
+    def test_a_real_markup_change_survives_normalize(self):
+        keep = '<details class="flip"><p class="nm">Forge</p></details>'
+        changed = '<details class="flip extra"><p class="nm">Forge</p></details>'
+        self.assertNotEqual(golden.normalize_team(keep), golden.normalize_team(changed))
+
+
+if __name__ == "__main__":
+    unittest.main()
