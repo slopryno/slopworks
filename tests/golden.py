@@ -98,3 +98,37 @@ def normalize_team(html):
     text = re.sub(r'(<p class="rar">)[^·<]+ · (\d+/\d+</p>)', r"\1RARITY · \2", text)
     text = re.sub(r'(<li class="slot)([^"]*)(")', _strip_slot_rarity, text)
     return text
+
+TAB_NAV = re.compile(r'<nav class="tabs" aria-label="Main">.*?</nav>', re.S)
+SITELIST = re.compile(r'<nav class="sitelist" aria-label="Sections">.*?</nav>', re.S)
+
+
+def nav_tabs(html):
+    """The five-tab main nav, or ValueError if the page is missing it."""
+    m = TAB_NAV.search(html)
+    if not m:
+        raise ValueError("page is missing the main tab bar")
+    return m.group(0)
+
+
+def footer_sitelist(html):
+    """The footer section list, or ValueError if the page is missing it."""
+    m = SITELIST.search(html)
+    if not m:
+        raise ValueError("page is missing the footer sitelist")
+    return m.group(0)
+
+
+def normalize_chrome(fragment):
+    """Strip relative-path prefixes so Home, Team, and nested pages share one chrome golden.
+
+    href="../updates/" and href="../../updates/" both become href="updates/"; the home
+    tab's href="../" or href="../../" becomes href="". Nothing record-backed lives in
+    the tab bar or sitelist, so there is nothing else to strip.
+    """
+    return re.sub(r'href="(?:\.\./)+', 'href="', fragment)
+
+
+def tabs_golden_name(slug):
+    """tests/goldens/ name for the tab bar on this hub (Home is tabs-home.html)."""
+    return "tabs-home.html" if slug == "" else f"tabs-{slug.strip('/')}.html"

@@ -96,5 +96,31 @@ class Normalize(unittest.TestCase):
         self.assertNotEqual(golden.normalize_team(keep), golden.normalize_team(changed))
 
 
+class NormalizeChrome(unittest.TestCase):
+    def test_relative_prefixes_collapse_and_a_href_change_survives(self):
+        team = '<nav class="tabs" aria-label="Main"><ul><li><a href="../">Home</a></li><li><a href="../updates/">Tracker</a></li></ul></nav>'
+        nested = '<nav class="tabs" aria-label="Main"><ul><li><a href="../../">Home</a></li><li><a href="../../updates/">Tracker</a></li></ul></nav>'
+        home = '<nav class="tabs" aria-label="Main"><ul><li><a href="">Home</a></li><li><a href="updates/">Tracker</a></li></ul></nav>'
+        self.assertEqual(golden.normalize_chrome(team), home)
+        self.assertEqual(golden.normalize_chrome(nested), home)
+        typo = team.replace("../updates/", "../reciepts/")
+        self.assertNotEqual(golden.normalize_chrome(typo), golden.normalize_chrome(team))
+
+    def test_nav_tabs_and_sitelist_extract_or_raise(self):
+        html = (
+            '<header><nav class="tabs" aria-label="Main"><ul><li><a href="">Home</a></li></ul></nav></header>'
+            '<footer><nav class="sitelist" aria-label="Sections"><ul><li><a href="">Home</a></li></ul></nav></footer>'
+        )
+        self.assertIn('aria-label="Main"', golden.nav_tabs(html))
+        self.assertIn('aria-label="Sections"', golden.footer_sitelist(html))
+        with self.assertRaises(ValueError):
+            golden.nav_tabs("<main></main>")
+        with self.assertRaises(ValueError):
+            golden.footer_sitelist("<main></main>")
+        self.assertEqual(golden.tabs_golden_name(""), "tabs-home.html")
+        self.assertEqual(golden.tabs_golden_name("team/"), "tabs-team.html")
+
+
+
 if __name__ == "__main__":
     unittest.main()
