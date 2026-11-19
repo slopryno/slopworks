@@ -747,7 +747,7 @@ def build():
     cdt = lambda d: datetime.fromisoformat(d).replace(hour=12, tzinfo=timezone.utc)
     files["chat.json"] = json.dumps({"version": "https://jsonfeed.org/version/1.1", "title": "Slopworks Team chat: standups, pitches, and handoffs",
         "home_page_url": BASE + "chat/", "feed_url": BASE + "chat.json", "description": DISCLAIMER,
-        "items": [{"id": f"{k}-{i}", "url": BASE + u, "title": t, "content_text": b, "date_published": cdt(d).isoformat(), "tags": [k]} for k, i, d, t, b, u in citems]}, indent=2, ensure_ascii=False) + "\n"
+        "items": [{"id": f"{k}-{i}", "url": BASE + u, "title": t, "content_text": b, "date_published": cdt(d).isoformat(), "tags": [k]} for k, i, d, t, b, u in citems]}, separators=(",", ":"), ensure_ascii=False) + "\n"
     crss = "".join(f'<item><title>{e(t)}</title><link>{e(BASE + u)}</link><guid isPermaLink="false">{k}-{e(i)}</guid><pubDate>{format_datetime(cdt(d))}</pubDate><description>{e(b)}</description><category>{k}</category></item>\n' for k, i, d, t, b, u in citems)
     files["chat.xml"] = f'<?xml version="1.0" encoding="utf-8"?>\n<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Slopworks Team chat</title><link>{BASE}chat/</link><atom:link href="{BASE}chat.xml" rel="self" type="application/rss+xml"/><description>{e(DISCLAIMER)}</description>\n{crss}</channel></rss>\n'
     wins = load("wins")
@@ -1291,7 +1291,7 @@ def build():
     files["roadmap/feed.json"] = json.dumps({"version": "https://jsonfeed.org/version/1.1", "title": "Slopworks Quest board (roadmap)", "home_page_url": BASE + "roadmap/",
         "feed_url": BASE + "roadmap/feed.json", "description": "Each completed quest, stage change and judged oath on the Slopworks team's roadmap. " + DISCLAIMER,
         "items": [{"id": x["id"], "url": f'{BASE}roadmap/#{x["anchor"]}', "title": x["title"], "content_text": x["summary"], "date_published": rdt(x["date"]).isoformat()} for x in events]},
-        indent=2, ensure_ascii=False) + "\n"
+        separators=(",", ":"), ensure_ascii=False) + "\n"
     files["roadmap/feed.xml"] = ('<?xml version="1.0" encoding="utf-8"?>\n<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Slopworks Quest board (roadmap)</title>'
         f'<link>{BASE}roadmap/</link><atom:link href="{BASE}roadmap/feed.xml" rel="self" type="application/rss+xml"/><description>{e(DISCLAIMER)}</description>\n'
         + "".join(f'<item><title>{e(x["title"])}</title><link>{BASE}roadmap/#{x["anchor"]}</link><guid isPermaLink="false">{x["id"]}</guid><pubDate>{format_datetime(rdt(x["date"]))}</pubDate><description>{e(x["summary"])}</description></item>\n' for x in events)
@@ -1362,7 +1362,7 @@ def build():
     files["feed.json"] = json.dumps({"version": "https://jsonfeed.org/version/1.1", "title": "Slopworks: Grok Bot updates and known issues",
         "home_page_url": BASE, "feed_url": BASE + "feed.json", "description": DISCLAIMER,
         "items": [{"id": f"{k}-{x['id']}", "url": link(k, x), "external_url": x["source"], "title": title(k, x), "content_text": x["summary"],
-                   "date_published": dt(x["date"]).isoformat(), "tags": [k, x["area"], x["status"]] + ([x["state"]] if k == "issue" else [])} for k, x in feed]}, indent=2, ensure_ascii=False) + "\n"
+                   "date_published": dt(x["date"]).isoformat(), "tags": [k, x["area"], x["status"]] + ([x["state"]] if k == "issue" else [])} for k, x in feed]}, separators=(",", ":"), ensure_ascii=False) + "\n"  # compact: the 5 MB tree budget is tight after pages.css and the Metrics sparklines
     rss = "".join(f"<item><title>{e(title(k, x))}</title><link>{e(link(k, x))}</link><guid isPermaLink=\"false\">{k}-{x['id']}</guid><pubDate>{format_datetime(dt(x['date']))}</pubDate><description>{e(x['summary'] + ' Source: ' + x['source'])}</description><category>{e(x['status'])}</category></item>\n" for k, x in feed)
     files["feed.xml"] = f'<?xml version="1.0" encoding="utf-8"?>\n<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Slopworks: Grok Bot updates and known issues</title><link>{BASE}</link><atom:link href="{BASE}feed.xml" rel="self" type="application/rss+xml"/><description>{e(DISCLAIMER)}</description>\n{rss}</channel></rss>\n'
     files["badges/updates.svg"] = badge("updates", len(ups), "#0550ae")

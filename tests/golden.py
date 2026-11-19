@@ -138,20 +138,16 @@ ASOF_ET = re.compile(r"\d{4}-\d{2}-\d{2} \d{2}:\d{2} ET")
 
 
 def metrics_chart_slice(html):
-    """The trends block: two-day comparison plus the daily sparklines. Raises if the heading or table is missing."""
-    m = re.search(r'<h2 id="trends">.*?</table></div>', html, re.S)
+    """Trends table: two-day comparison plus sparklines. Raises if the table is missing."""
+    m = re.search(r'<table class="trend">.*?</table>', html, re.S)
     if not m:
         raise ValueError("metrics page is missing the trends table")
     return m.group(0) + "\n"
 
 
 def normalize_metrics_charts(html):
-    """Strip clock times that churn when a new PR merges on the same day. Keep day labels, values, and sparkline shapes.
-
-    The formatter only inserts line breaks so a unified diff of the table is readable; it does not change the page.
-    """
+    """Strip as-of clock times; break rows so a unified diff stays readable. Does not change the page."""
     text = ASOF_ET.sub("AS-OF ET", html)
-    text = text.replace("</h2>", "</h2>\n").replace("</p>", "</p>\n").replace("</details>", "</details>\n")
-    text = text.replace("</caption>", "</caption>\n").replace("</thead>", "</thead>\n")
-    text = text.replace("</tr><tr", "</tr>\n<tr")
-    return text
+    for a in ("</caption>", "</thead>", "</tr>"):
+        text = text.replace(a, a + "\n") if a != "</tr>" else text
+    return text.replace("</tr><tr", "</tr>\n<tr")

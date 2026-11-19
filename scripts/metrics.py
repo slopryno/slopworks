@@ -134,22 +134,13 @@ def hm(m):
 
 
 def sparkline(values, label):
-    """Compact inline SVG for a daily series. The latest value and the range sit next to the chart as text."""
+    """Inline SVG; latest value and range sit next to the chart. Marks are styled in pages.css."""
     nums = [v for v in values if v is not None]
     if not nums:
-        return f'<span class="spark">no values yet</span>'
-    lo, hi = min(nums), max(nums)
-    span = (hi - lo) or 1
-    w, h, pad = 96, 20, 1
-    n = len(values)
+        return '<span class="spark">no values yet</span>'
+    lo, hi, n = min(nums), max(nums), len(values)
+    span, w, h, pad = (hi - lo) or 1, 96, 20, 1
     dx = (w - 2 * pad) / max(n - 1, 1)
-
-    def x(i):
-        return round(pad + i * dx)
-
-    def y(v):
-        return round(pad + (h - 2 * pad) * (1 - (v - lo) / span))
-
     segs, cur = [], []
     for i, v in enumerate(values):
         if v is None:
@@ -157,24 +148,18 @@ def sparkline(values, label):
                 segs.append(cur)
                 cur = []
             continue
-        cur.append(f"{x(i)},{y(v)}")
+        cur.append(f"{round(pad + i * dx)},{round(pad + (h - 2 * pad) * (1 - (v - lo) / span))}")
     if cur:
         segs.append(cur)
-    lines = "".join(f'<polyline fill="none" stroke="currentColor" stroke-width="1.25" points="{" ".join(s)}"/>' for s in segs)
     latest = next(v for v in reversed(values) if v is not None)
-    if lo == hi:
-        val = e(str(latest))
-        aria = f"{label} over {n} days, {val} each recorded day"
-    else:
-        val = f"{latest} ({lo}–{hi})"
-        aria = f"{label} over {n} days, latest {latest}, range {lo} to {hi}"
-    return (f'<span class="spark">'
-            f'<svg viewBox="0 0 {w} {h}" width="{w}" height="{h}" role="img" aria-label="{e(aria)}">{lines}</svg>'
-            f'<span class="spark-val">{e(val)}</span></span>')
+    val = e(str(latest) if lo == hi else f"{latest} ({lo}–{hi})")
+    lines = "".join(f'<polyline points="{" ".join(s)}"/>' for s in segs)
+    return (f'<span class="spark"><svg viewBox="0 0 {w} {h}" role="img" aria-label="{e(label)}, {n} days">{lines}</svg>'
+            f'<span class="spark-val">{val}</span></span>')
 
 
 def trend_series(days, key, rate):
-    """The same daily series a trend row compares: raw counts, or the per-10-PRs rate, with gaps where there is no record."""
+    """Daily series for a trend row: raw counts or the per-10-PRs rate; gaps where there is no record."""
     out = []
     for d in days:
         if key == "ci_catches" and not d.get("ci_recorded"):

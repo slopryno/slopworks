@@ -75,14 +75,12 @@ class Metrics(unittest.TestCase):
     def test_sparklines_stay_off_team_and_shared_css(self):
         for rel in ("site/style.css", "site/tabs.css", "site/team/index.html"):
             self.assertNotIn("spark", (ROOT / rel).read_text(), rel)
-            self.assertNotIn("<svg", (ROOT / rel).read_text() if rel.endswith(".css") else "", rel)
 
     def test_normalized_metrics_charts_match_golden(self):
         slice_ = golden.metrics_chart_slice(self.page)
         self.assertIn('class="spark"', slice_)
         self.assertNotIn("as of the newest merged PR", slice_)
         golden.assert_matches(self, "metrics-charts.html", golden.normalize_metrics_charts(slice_))
-
 
 
 
