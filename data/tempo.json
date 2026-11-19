@@ -26,7 +26,7 @@
   "tripped_by": "aar-2026-10-30-missed-run",
   "trip_pr": 184,
   "trip_at": null,
-  "as_of_pr": 204,
+  "as_of_pr": 213,
   "days": [
     {
       "date": "2026-10-18",
@@ -87,6 +87,14 @@
     {
       "date": "2026-11-17",
       "prs": 2
+    },
+    {
+      "date": "2026-11-18",
+      "prs": 7
+    },
+    {
+      "date": "2026-11-19",
+      "prs": 1
     }
   ],
   "violations": [],

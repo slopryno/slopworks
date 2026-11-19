@@ -652,5 +652,16 @@
     "title": "Grok Bot 1.2.0: flight redesign and hotel maps",
     "summary": "Version 1.2.0: redesigned flight results, hotel photo viewer and maps, and approval cards that show the exact command in full with hidden characters marked.",
     "source": "https://x.ai/changelog/bot"
+  },
+  {
+    "id": "changelog-1-2-3",
+    "date": "2026-11-18",
+    "added": "2026-11-19",
+    "added_by": "Scout",
+    "status": "confirmed",
+    "area": "app",
+    "title": "Grok Bot 1.2.3: tool permissions and reconnect cards",
+    "summary": "Nov 18 release (includes 1.2.1 and 1.2.2): set each connector tool to Always allow, Auto-review, Needs approval or Blocked; routine reconnect cards arrive as notifications; routines read their chat.",
+    "source": "https://x.ai/changelog/bot"
   }
 ]

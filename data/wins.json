@@ -1,5 +1,77 @@
 [
   {
+    "id": "pr213",
+    "role": "Forge",
+    "title": "Forge: raise tracked-tree budget from 5 MB to 10 MB (Ryno, Nov 19 6:11 AM ET)",
+    "pr": "https://github.com/slopryno/slopworks/pull/213",
+    "date": "2026-11-19",
+    "merged": "2026-11-19T06:24-05:00",
+    "opened": "2026-11-19T06:17-05:00"
+  },
+  {
+    "id": "pr212",
+    "role": "Forge",
+    "title": "Pixel: static SVG sparklines on the Metrics trends table",
+    "pr": "https://github.com/slopryno/slopworks/pull/212",
+    "date": "2026-11-18",
+    "merged": "2026-11-18T21:26-05:00",
+    "opened": "2026-11-18T20:31-05:00"
+  },
+  {
+    "id": "pr211",
+    "role": "Forge",
+    "title": "Pixel: move page-only CSS off the Team budget",
+    "pr": "https://github.com/slopryno/slopworks/pull/211",
+    "date": "2026-11-18",
+    "merged": "2026-11-18T21:00-05:00",
+    "opened": "2026-11-18T19:57-05:00"
+  },
+  {
+    "id": "pr210",
+    "role": "Forge",
+    "title": "Pixel: cross-document view transitions on tab switches",
+    "pr": "https://github.com/slopryno/slopworks/pull/210",
+    "date": "2026-11-18",
+    "merged": "2026-11-18T19:30-05:00",
+    "opened": "2026-11-18T18:56-05:00"
+  },
+  {
+    "id": "pr209",
+    "role": "Forge",
+    "title": "Forge: tab-bar goldens and scroll-padding (hold viewport-fit=cover)",
+    "pr": "https://github.com/slopryno/slopworks/pull/209",
+    "date": "2026-11-18",
+    "merged": "2026-11-18T18:28-05:00",
+    "opened": "2026-11-18T18:13-05:00"
+  },
+  {
+    "id": "pr208",
+    "role": "Forge",
+    "title": "Forge: expect-test pilot for Team goldens",
+    "pr": "https://github.com/slopryno/slopworks/pull/208",
+    "date": "2026-11-18",
+    "merged": "2026-11-18T13:19-05:00",
+    "opened": "2026-11-18T13:13-05:00"
+  },
+  {
+    "id": "pr207",
+    "role": "Assistant",
+    "title": "Assistant: record Ryno's Nov 13 yes for #195, #196 and #197",
+    "pr": "https://github.com/slopryno/slopworks/pull/207",
+    "date": "2026-11-18",
+    "merged": "2026-11-18T12:44-05:00",
+    "opened": "2026-11-18T12:40-05:00"
+  },
+  {
+    "id": "pr206",
+    "role": "Forge",
+    "title": "Forge: morning scan Nov 18: three new releases, research backlog, records through #205",
+    "pr": "https://github.com/slopryno/slopworks/pull/206",
+    "date": "2026-11-18",
+    "merged": "2026-11-18T05:00-05:00",
+    "opened": "2026-11-18T04:58-05:00"
+  },
+  {
     "id": "pr204",
     "role": "Forge",
     "title": "Pixel: footer lists the five tabs; records through #203",
