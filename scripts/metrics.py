@@ -133,6 +133,59 @@ def hm(m):
     return f"{m // 60} h {m % 60} min" if m >= 60 else f"{m} min"
 
 
+def sparkline(values, label):
+    """Compact inline SVG for a daily series. The latest value and the range sit next to the chart as text."""
+    nums = [v for v in values if v is not None]
+    if not nums:
+        return f'<span class="spark">no values yet</span>'
+    lo, hi = min(nums), max(nums)
+    span = (hi - lo) or 1
+    w, h, pad = 96, 20, 1
+    n = len(values)
+    dx = (w - 2 * pad) / max(n - 1, 1)
+
+    def x(i):
+        return round(pad + i * dx)
+
+    def y(v):
+        return round(pad + (h - 2 * pad) * (1 - (v - lo) / span))
+
+    segs, cur = [], []
+    for i, v in enumerate(values):
+        if v is None:
+            if cur:
+                segs.append(cur)
+                cur = []
+            continue
+        cur.append(f"{x(i)},{y(v)}")
+    if cur:
+        segs.append(cur)
+    lines = "".join(f'<polyline fill="none" stroke="currentColor" stroke-width="1.25" points="{" ".join(s)}"/>' for s in segs)
+    latest = next(v for v in reversed(values) if v is not None)
+    if lo == hi:
+        val = e(str(latest))
+        aria = f"{label} over {n} days, {val} each recorded day"
+    else:
+        val = f"{latest} ({lo}–{hi})"
+        aria = f"{label} over {n} days, latest {latest}, range {lo} to {hi}"
+    return (f'<span class="spark">'
+            f'<svg viewBox="0 0 {w} {h}" width="{w}" height="{h}" role="img" aria-label="{e(aria)}">{lines}</svg>'
+            f'<span class="spark-val">{e(val)}</span></span>')
+
+
+def trend_series(days, key, rate):
+    """The same daily series a trend row compares: raw counts, or the per-10-PRs rate, with gaps where there is no record."""
+    out = []
+    for d in days:
+        if key == "ci_catches" and not d.get("ci_recorded"):
+            out.append(None)
+        elif rate:
+            out.append(round(10 * d[key] / d["prs"], 1) if d["prs"] else None)
+        else:
+            out.append(d[key])
+    return out
+
+
 def render(m, up="../"):
     t, src = m["totals"], lambda f: f'<a href="{SRC}{f}">{f}</a>'
     big = [(t["prs"], "PRs merged", "Merged PRs with a Maker line, since the first on Oct 15.", "data/wins.json"),
@@ -149,12 +202,17 @@ def render(m, up="../"):
     if m["trends"]:
         p = nice(m["days"][-2]["date"])
         arrow = {"up": "\u2191 up", "down": "\u2193 down", "flat": "\u2192 flat", "n/a": "n/a"}
-        rows = "".join(f'<tr><th scope="row">{e(x["label"])}</th><td>{"" if x["prev"] is None else x["prev"]}</td><td>{"" if x["new"] is None else x["new"]}</td>'
-                       f'<td>{arrow[x["direction"]]}{", " + x["verdict"] if x["verdict"] else ""}</td></tr>' for x in m["trends"])
+        rate_of = {k: rate for k, _l, rate, _b, _d in TRENDS}
+        rows = "".join(
+            f'<tr><th scope="row">{e(x["label"])}</th><td>{"" if x["prev"] is None else x["prev"]}</td><td>{"" if x["new"] is None else x["new"]}</td>'
+            f'<td>{arrow[x["direction"]]}{", " + x["verdict"] if x["verdict"] else ""}</td>'
+            f'<td>{sparkline(trend_series(m["days"], x["key"], rate_of[x["key"]]), x["label"])}</td></tr>'
+            for x in m["trends"])
         out.append(f'<h2 id="trends">Trends</h2><p>{newest} so far against {p}; volume counts are per 10 merged PRs. <strong>Only {n} days of history</strong>: early signals, not proof.</p>'
-                   f'<details><summary>How to read the trends</summary><p>One AAR moves a day\'s rate a lot. "Better" or "worse" appears only where the right direction is clear.</p></details>'
-                   f'<div class="scroll fit"><table class="trend"><caption>Newest day against the day before</caption><thead><tr><th scope="col">Metric</th>'
-                   f'<th scope="col">{p}</th><th scope="col">{newest} (so far)</th><th scope="col">Direction</th></tr></thead><tbody>{rows}</tbody></table></div>'
+                   f'<details><summary>How to read the trends</summary><p>One AAR moves a day\'s rate a lot. "Better" or "worse" appears only where the right direction is clear. Each sparkline is the same series as its row, with the latest value and the range next to the chart.</p></details>'
+                   f'<div class="scroll fit"><table class="trend"><caption>Newest day against the day before, plus the {n}-day series</caption><thead><tr><th scope="col">Metric</th>'
+                   f'<th scope="col">{p}</th><th scope="col">{newest} (so far)</th><th scope="col">Direction</th>'
+                   f'<th scope="col">{n} days</th></tr></thead><tbody>{rows}</tbody></table></div>'
                    + (f'<p class="warn-t"><strong>Getting worse:</strong> {e(", ".join(x["label"] for x in m["trends"] if x["verdict"] == "worse"))}. '
                       'Advisor turns a worsening trend into a rule or a check at the Friday retro.</p>' if m["worsening"] else "<p>Nothing is getting worse.</p>"))
     top = max(x["prs"] for x in m["days"]) or 1
