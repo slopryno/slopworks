@@ -4,7 +4,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
-import build, check, metrics  # noqa: E402
+sys.path.insert(0, str(ROOT / "tests"))
+import build, check, golden, metrics  # noqa: E402
 
 load = lambda n: json.loads((ROOT / f"data/{n}.json").read_text())
 
@@ -49,9 +50,11 @@ class Metrics(unittest.TestCase):
             self.assertNotIn(word, self.page.lower())
 
     def test_text_not_color_alone(self):
-        for row in re.findall(r"<tr><th scope=\"row\">[^<]+</th>.*?</tr>", self.page):
+        for row in re.findall(r"<tr>.*?</tr>", self.page):
             if 'class="bar"' in row:
                 self.assertRegex(row, r'aria-hidden="true"></span>\d+</td>')
+            if 'class="spark"' in row:
+                self.assertRegex(row, r'class="spark-val">[^<]+<')
         self.assertRegex(self.page, r"\u2191 up|\u2193 down|\u2192 flat")
 
     def test_linked_and_not_burying_the_tracker(self):
@@ -60,6 +63,25 @@ class Metrics(unittest.TestCase):
         self.assertIn('href="../metrics/"', files["hood/index.html"])
         home = files["index.html"]
         self.assertLess(home.index('aria-labelledby="trk"') if 'aria-labelledby="trk"' in home else home.index("Grok Bot tracker"), home.index('href="metrics/"'))
+    def test_sparklines_sit_next_to_text_values(self):
+        wraps = re.findall(r'<span class="spark"[^>]*>.*?</span></span>', self.page)
+        self.assertEqual(len(wraps), len(metrics.TRENDS))
+        for w in wraps:
+            self.assertIn("<svg", w)
+            self.assertRegex(w, r'role="img"')
+            self.assertRegex(w, r'class="spark-val">[^<]+<')
+        self.assertNotIn("<script", self.page.lower())
+
+    def test_sparklines_stay_off_team_and_shared_css(self):
+        for rel in ("site/style.css", "site/tabs.css", "site/team/index.html"):
+            self.assertNotIn("spark", (ROOT / rel).read_text(), rel)
+
+    def test_normalized_metrics_charts_match_golden(self):
+        slice_ = golden.metrics_chart_slice(self.page)
+        self.assertIn('class="spark"', slice_)
+        self.assertNotIn("as of the newest merged PR", slice_)
+        golden.assert_matches(self, "metrics-charts.html", golden.normalize_metrics_charts(slice_))
+
 
 
 if __name__ == "__main__":

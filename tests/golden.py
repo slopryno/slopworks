@@ -132,3 +132,22 @@ def normalize_chrome(fragment):
 def tabs_golden_name(slug):
     """tests/goldens/ name for the tab bar on this hub (Home is tabs-home.html)."""
     return "tabs-home.html" if slug == "" else f"tabs-{slug.strip('/')}.html"
+
+
+ASOF_ET = re.compile(r"\d{4}-\d{2}-\d{2} \d{2}:\d{2} ET")
+
+
+def metrics_chart_slice(html):
+    """Trends table: two-day comparison plus sparklines. Raises if the table is missing."""
+    m = re.search(r'<table class="trend">.*?</table>', html, re.S)
+    if not m:
+        raise ValueError("metrics page is missing the trends table")
+    return m.group(0) + "\n"
+
+
+def normalize_metrics_charts(html):
+    """Strip as-of clock times; break rows so a unified diff stays readable. Does not change the page."""
+    text = ASOF_ET.sub("AS-OF ET", html)
+    for a in ("</caption>", "</thead>", "</tr>"):
+        text = text.replace(a, a + "\n") if a != "</tr>" else text
+    return text.replace("</tr><tr", "</tr>\n<tr")
