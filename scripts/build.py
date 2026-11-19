@@ -1338,7 +1338,7 @@ def build():
     files["more/index.html"] = page("more/", "More", "Every section of the site, one tap away.",
         "".join(f'<section aria-labelledby="g{k}"><h2 id="g{k}">{e(g)}</h2><ul class="hub">' + "".join(f'<li><a href="../{s}"><strong>{e(t)}</strong></a></li>' for s, t in links) + "</ul></section>"
                 for k, (g, links) in enumerate(more_groups)), "scripts/build.py")
-    files["records.json"] = json.dumps(records, indent=1, ensure_ascii=False) + "\n"
+    files["records.json"] = json.dumps(records, separators=(",", ":"), ensure_ascii=False) + "\n"  # compact: the Team CSS split is tight on the 5 MB tree budget
     files["work/index.html"] = page("work/", "Work", "What the team has made, and how it went.", hub(WORK), "data/cases.json")
     files["hood/index.html"] = page("hood/", "Under the hood", "How the site runs: the tracker, the team's chat, and the logs. No forms or scripts, and the theme button sends nothing.", hub(HOOD) + pace_line(load("tempo"), "../"), "data/runs.json")
     files["how/index.html"] = page("how/", "How this works", "One daily run, a team of roles, and a human CEO who steps in only where the rules say so. Every term below links the rule or record behind it.",
