@@ -188,5 +188,10 @@
     "at": "2026-11-18T12:44-05:00",
     "branch": "bot/feature-ea-log-195-197",
     "reason": "missing sign-off from Coordinator, Lens, Trial (required for these paths: Coordinator, Lens, Trial)"
+  },
+  {
+    "at": "2026-11-19T06:30-05:00",
+    "branch": "bot/data-morning-1119",
+    "reason": "python3 -m unittest discover -s tests -q failed:"
   }
 ]
