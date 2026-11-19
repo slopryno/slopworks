@@ -28,8 +28,9 @@ OPS = HOOD
 TABS = [("", "Home"), ("updates/", "Tracker"), ("team/", "Team"), ("receipts/", "Receipts"), ("more/", "More")]
 
 # The tab bar's rules live in site/tabs.css, linked by every page and counted in each page's weight by check.py. The
-# archive rollover targets stay sized on style.css, so archive pages and the XP evidence that links into them keep their URLs.
-# Page-only rules for the redesigned pages, inlined on the page that uses them so the shared style.css stays small.
+# archive rollover targets stay sized on the stylesheets those pages load, so archive pages and the XP evidence that links
+# into them keep their URLs. Page-only rules live in site/pages.css, linked on every page except Team, so the Team budget
+# does not pay for Receipts, Metrics, Home, and chat styles. A few page-only rules also stay inlined on the page that uses them.
 REDESIGN_CSS = {"moved": ".moved{border:1px solid var(--line);background:var(--card);border-radius:12px;padding:.75rem 1rem}", "rc": ".rc{list-style:none;padding:0;margin:0}.rc li{border-bottom:1px solid var(--line);padding:.55rem 0 .55rem .9rem;position:relative}.rc li::before{content:"";position:absolute;left:0;top:1.05rem;width:8px;height:8px;border-radius:50%;background:var(--ok)}.rc li[data-type=lesson]::before{background:var(--warn)}.rc a{display:flex;align-items:center;min-height:44px;min-width:0;overflow-wrap:anywhere;font-weight:600;text-decoration:none;color:var(--fg)}.rc small{display:block;color:var(--muted);font-size:.8rem}", "recent": ".recent{padding:0;display:grid;gap:.4rem;list-style:none}.recent li{display:flex;justify-content:space-between;border:1px solid var(--line);border-radius:12px;padding:0 .75rem;background:var(--card)}.recent a{display:inline-flex;align-items:center;min-height:44px;font-weight:700}.recent a+a{font-weight:400}"}
 
 
@@ -330,7 +331,7 @@ def page(slug, title, lede, body, source, h1=None, kind=None, head=""):
 <meta name="theme-color" content="#F6F5F1" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#141418" media="(prefers-color-scheme: dark)">
 <link rel="stylesheet" href="{up}style.css">
-<link rel="stylesheet" href="{up}tabs.css">
+{"" if slug == "team/" else '<link rel="stylesheet" href="' + up + 'pages.css">\n'}<link rel="stylesheet" href="{up}tabs.css">
 <link rel="alternate" type="application/rss+xml" title="Slopworks" href="{up}feed.xml">
 <link rel="alternate" type="application/feed+json" title="Slopworks" href="{up}feed.json">
 {head}</head>
@@ -608,7 +609,8 @@ def build():
     # Case-file steps link ../chat/#id literally (and CI checks that anchor), so those items and open ideas stay pinned on the main page.
     # Every other link (team cards, arena, demo challenge, feeds, badges) goes through href(), which points at wherever the item lives now.
     budget = json.loads((ROOT / "scripts/patterns.json").read_text())["max_page_bytes"]
-    css_bytes = (SITE / "style.css").stat().st_size  # the stylesheet these pages load; site/sheets.css loads on the sheets only
+    css_bytes = (SITE / "style.css").stat().st_size + (SITE / "pages.css").stat().st_size  # chat pages load both; Team does not load pages.css
+    css_bytes = max(css_bytes, 23_951)  # pre-split style.css size, so the main chat page keeps the same items
     page_target = int(budget * CHAT_TARGET) - css_bytes
     ideas = sorted(load("ideas"), key=lambda i: i["date"], reverse=True)
     idea_state = {i["id"]: i["state"] for i in ideas}
