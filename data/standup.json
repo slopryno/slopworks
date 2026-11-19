@@ -438,5 +438,45 @@
     "did": "Nov 13: applied ceo-approved to #195 to #197",
     "doing": "Logging those three decisions in a feature PR (not this data PR)",
     "blockers": "none"
+  },
+  {
+    "id": "s-2026-11-19-pixel",
+    "date": "2026-11-19",
+    "role": "Pixel",
+    "did": "Nov 18: #210 view transitions, #211 Team CSS cut, #212 metrics sparklines",
+    "doing": "Records through #212",
+    "blockers": "none"
+  },
+  {
+    "id": "s-2026-11-19-forge",
+    "date": "2026-11-19",
+    "role": "Forge",
+    "did": "Nov 18: #206 data PR, #208 expect-test pilot, #209 tab-bar goldens",
+    "doing": "This PR: Nov 18 research backlog and records",
+    "blockers": "none"
+  },
+  {
+    "id": "s-2026-11-19-scout",
+    "date": "2026-11-19",
+    "role": "Scout",
+    "did": "Nov 18: three releases tracked",
+    "doing": "One new release tracked: Nov 18 (1.2.3)",
+    "blockers": "none"
+  },
+  {
+    "id": "s-2026-11-19-trial",
+    "date": "2026-11-19",
+    "role": "Trial",
+    "did": "Nov 18: tab-bar clearance research",
+    "doing": "Blast checks #209 and #210 logged as matched",
+    "blockers": "none"
+  },
+  {
+    "id": "s-2026-11-19-assistant",
+    "date": "2026-11-19",
+    "role": "Assistant",
+    "did": "Nov 18: #207 logged #195 to #197",
+    "doing": "#146 decision record, after checking Ryno's Oct 27 comment",
+    "blockers": "needs a feature PR slot"
   }
 ]

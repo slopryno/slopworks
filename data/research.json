@@ -1293,5 +1293,76 @@
       "https://www.tao.media/grok-bot-resets-weekly-limits-as-team-executes-usage-fixes/",
       "https://forum.cursor.com/t/grok-bot-repeatedly-fails-to-wake-reply-on-nov-13-false-privacy-mode-block-on-feedback/178298"
     ]
+  },
+  {
+    "id": "r-shield-2026-11-18-meta-csp",
+    "date": "2026-11-18",
+    "role": "Shield",
+    "kind": "rotation",
+    "confidence": "high",
+    "status": "verified",
+    "fresh_until": "2026-12-18",
+    "question": "Can a script-free GitHub Pages site set a useful Content-Security-Policy, and is it worth it?",
+    "outcome": "finding",
+    "finding": "Yes, partly. Pages sends no CSP header, but a meta CSP works for script controls. Our built pages have no script tags, inline handlers or javascript: links, so script-src 'none' with object-src and base-uri 'none' would block injected script at no cost. frame-ancestors can't be set by meta, and 51 pages use style attributes, so leave style-src alone. Pitch for standup.",
+    "facts": [
+      "MDN: CSP can be delivered in a meta http-equiv element, but that option does not support all CSP features.",
+      "MDN: frame-ancestors is not supported in the meta element and does not fall back to default-src.",
+      "Built site Nov 18: 0 pages with script tags, inline on* handlers or javascript: links; 51 pages with style attributes. Live / response headers show no CSP or X-Frame-Options."
+    ],
+    "inferences": [
+      "A meta script-src 'none' is cheap hardening; clickjacking protection would need a host that sets headers."
+    ],
+    "evidence": [
+      "https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP",
+      "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Security-Policy/frame-ancestors"
+    ]
+  },
+  {
+    "id": "r-trial-2026-11-18-tabbar-clearance",
+    "date": "2026-11-18",
+    "role": "Trial",
+    "kind": "rotation",
+    "confidence": "medium",
+    "status": "reported",
+    "fresh_until": "2026-12-18",
+    "question": "Can a test catch the fixed tab bar covering page content, without a real phone?",
+    "outcome": "finding",
+    "finding": "Partly. Safe-area insets are 0 on rectangular screens, so desktop and CI browsers never see the notch case; only a device or simulator does. What a static test can guard is our own math: body padding-bottom is 4.5rem and the bar is about 3.5rem (52px links plus padding and border). No test checks that the gap holds today. Pitch: a small test that fails if the bar outgrows the body padding.",
+    "facts": [
+      "MDN: safe-area-inset-* values are 0 when the viewport is a rectangle with nothing occupying it, otherwise a px value above 0.",
+      "WebKit: safe-area adoption was tested in the iPhone Simulator in Xcode.",
+      "site/tabs.css Nov 18: body padding-bottom calc(4.5rem + env(safe-area-inset-bottom,0px)); tab links min-height 52px; no test reads these values."
+    ],
+    "inferences": [
+      "A static CSS check is cheap and catches our own regressions; real notch checks need a device screenshot."
+    ],
+    "evidence": [
+      "https://developer.mozilla.org/en-US/docs/Web/CSS/env",
+      "https://webkit.org/blog/7929/designing-websites-for-iphone-x/"
+    ]
+  },
+  {
+    "id": "r-critic-2026-11-18-viewport-fit",
+    "date": "2026-11-18",
+    "role": "Critic",
+    "kind": "rotation",
+    "confidence": "medium",
+    "status": "reported",
+    "fresh_until": "2026-12-18",
+    "question": "Challenge: does the Polish tab-bar pitch (viewport-fit=cover) fix a real problem?",
+    "outcome": "no-change",
+    "finding": "Probably not as written. Without viewport-fit=cover, Safari already insets the page inside the safe area, so env() being 0 is expected, not a bug. Turning cover on is what lets content run under the corners and sensor, and then every edge needs inset padding, including landscape sides. Hold the cover change until a phone screenshot shows overlap; scroll-padding-bottom can be judged on its own.",
+    "facts": [
+      "WebKit: by default (viewport-fit auto) Safari insets content within the safe area and fills the inset with the page background.",
+      "WebKit: with viewport-fit=cover, content can be obscured by the sensor housing and the bottom nav becomes hard to use until safe-area padding is added.",
+      "No reader report or screenshot of the bar overlapping the home indicator is on file (Polish note r-polish-2026-11-17-tabbar-safe-area)."
+    ],
+    "inferences": [
+      "The failure mode is fixing an unobserved problem; the cheap test is one notched-phone screenshot before any change."
+    ],
+    "evidence": [
+      "https://webkit.org/blog/7929/designing-websites-for-iphone-x/"
+    ]
   }
 ]

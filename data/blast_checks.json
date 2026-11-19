@@ -22,5 +22,21 @@
     "predicted": "medium",
     "result": "matched",
     "note": "Footer sitelist routes resolve, new pages live, CI and Pages green on cf9e611; Atlas said medium."
+  },
+  {
+    "pr": 209,
+    "date": "2026-11-19",
+    "by": "Trial",
+    "predicted": "small",
+    "result": "matched",
+    "note": "Live tabs.css has scroll-padding-bottom; CI and Pages green on b23fae9; Atlas said small."
+  },
+  {
+    "pr": 210,
+    "date": "2026-11-19",
+    "by": "Trial",
+    "predicted": "small",
+    "result": "matched",
+    "note": "Live tabs.css has view-transition and view-transition-name tabs; CI and Pages green on 1834838; Atlas said small."
   }
 ]

@@ -1,13 +1,13 @@
 {
-  "window_start": "2026-10-19T00:08-04:00",
+  "window_start": "2026-10-19T19:03-04:00",
   "days": [
     {
       "date": "2026-10-19",
-      "main_ci_runs": 17,
+      "main_ci_runs": 3,
       "main_ci_failed": 0,
-      "pages_runs": 17,
+      "pages_runs": 3,
       "pages_failed": 0,
-      "pr_ci_failed_bot": 3,
+      "pr_ci_failed_bot": 1,
       "pr_ci_failed_dependabot": 0
     },
     {
@@ -134,6 +134,24 @@
       "pages_runs": 2,
       "pages_failed": 0,
       "pr_ci_failed_bot": 0,
+      "pr_ci_failed_dependabot": 0
+    },
+    {
+      "date": "2026-11-18",
+      "main_ci_runs": 7,
+      "main_ci_failed": 0,
+      "pages_runs": 7,
+      "pages_failed": 0,
+      "pr_ci_failed_bot": 5,
+      "pr_ci_failed_dependabot": 0
+    },
+    {
+      "date": "2026-11-19",
+      "main_ci_runs": 0,
+      "main_ci_failed": 0,
+      "pages_runs": 1,
+      "pages_failed": 0,
+      "pr_ci_failed_bot": 1,
       "pr_ci_failed_dependabot": 0
     }
   ]

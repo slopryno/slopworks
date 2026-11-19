@@ -173,5 +173,20 @@
     "at": "2026-11-18T04:54-05:00",
     "branch": "bot/data-morning-1118",
     "reason": "redacted: the check output named a possible secret or personal data"
+  },
+  {
+    "at": "2026-11-18T12:37-05:00",
+    "branch": "bot/feature-ea-log-195-197",
+    "reason": "missing sign-off from Trial (required for these paths: Coordinator, Lens, Trial)"
+  },
+  {
+    "at": "2026-11-18T12:38-05:00",
+    "branch": "bot/feature-ea-log-195-197",
+    "reason": "python3 -m unittest discover -s tests -q failed:"
+  },
+  {
+    "at": "2026-11-18T12:44-05:00",
+    "branch": "bot/feature-ea-log-195-197",
+    "reason": "missing sign-off from Coordinator, Lens, Trial (required for these paths: Coordinator, Lens, Trial)"
   }
 ]
