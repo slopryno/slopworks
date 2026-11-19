@@ -121,6 +121,54 @@ class NormalizeChrome(unittest.TestCase):
         self.assertEqual(golden.tabs_golden_name("team/"), "tabs-team.html")
 
 
+class NormalizeMetrics(unittest.TestCase):
+    def test_record_churn_is_stripped_and_structure_stays(self):
+        a = (
+            '<table class="trend"><caption>plus the 19-day series under each row</caption>'
+            '<thead><tr><th scope="col">Metric</th><th scope="col">Mon Nov\u00a016</th>'
+            '<th scope="col">Tue Nov\u00a017 (so far)</th><th scope="col">Direction</th></tr></thead>'
+            '<tbody><tr><th scope="row">Merged PRs</th><td>0</td><td>2</td><td>↑ up</td></tr>'
+            '<tr><td colspan="4"><span class="spark"><svg viewBox="0 0 96 20" role="img" '
+            'aria-label="Merged PRs, 19 days"><polyline points="1,18 6,13"/><polyline points="95,18"/>'
+            '</svg><span class="spark-val">2 (0–60)</span></span></td></tr></tbody></table>'
+        )
+        b = (
+            '<table class="trend"><caption>plus the 21-day series under each row</caption>'
+            '<thead><tr><th scope="col">Metric</th><th scope="col">Wed Nov\u00a018</th>'
+            '<th scope="col">Thu Nov\u00a019 (so far)</th><th scope="col">Direction</th></tr></thead>'
+            '<tbody><tr><th scope="row">Merged PRs</th><td>7</td><td>1</td><td>↓ down</td></tr>'
+            '<tr><td colspan="4"><span class="spark"><svg viewBox="0 0 96 20" role="img" '
+            'aria-label="Merged PRs, 21 days"><polyline points="1,18 6,13 10,1 95,19"/>'
+            '</svg><span class="spark-val">1 (0–60)</span></span></td></tr></tbody></table>'
+        )
+        self.assertEqual(golden.normalize_metrics_charts(a), golden.normalize_metrics_charts(b))
+        got = golden.normalize_metrics_charts(a)
+        self.assertIn('scope="row">Merged PRs</th>', got)
+        self.assertIn('class="spark-val">VAL</span>', got)
+        self.assertIn('viewBox="0 0 96 20"', got)
+        self.assertIn('role="img"', got)
+        self.assertIn('<polyline points="PTS"/>', got)
+        self.assertIn("<td>DIR</td>", got)
+        self.assertIn("N-day series", got)
+        self.assertIn("LATEST (so far)", got)
+        self.assertNotIn("↑", got)
+        self.assertNotIn("19 days", got)
+
+    def test_a_real_markup_change_survives_normalize(self):
+        keep = (
+            '<span class="spark"><svg viewBox="0 0 96 20" role="img" aria-label="Merged PRs, 21 days">'
+            '<polyline points="1,18"/></svg><span class="spark-val">1</span></span>'
+        )
+        dropped = '<td colspan="4"></td>'
+        typo = keep.replace("Merged PRs", "Merged PR")
+        tall = keep.replace('viewBox="0 0 96 20"', 'viewBox="0 0 96 40"')
+        color_only = keep.replace('<span class="spark-val">1</span>', "")
+        self.assertNotEqual(golden.normalize_metrics_charts(keep), golden.normalize_metrics_charts(dropped))
+        self.assertNotEqual(golden.normalize_metrics_charts(keep), golden.normalize_metrics_charts(typo))
+        self.assertNotEqual(golden.normalize_metrics_charts(keep), golden.normalize_metrics_charts(tall))
+        self.assertNotEqual(golden.normalize_metrics_charts(keep), golden.normalize_metrics_charts(color_only))
+
+
 
 if __name__ == "__main__":
     unittest.main()
