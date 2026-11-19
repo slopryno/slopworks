@@ -58,6 +58,11 @@ class PII(unittest.TestCase):
         self.assertTrue(check.pii_hits("https://x.com/someuser/status/1"))
         self.assertTrue(check.pii_hits("slopryno@mail.grokbot.com"))
 
+    def test_view_transition_at_rule_is_not_a_handle(self):
+        css = "@media(prefers-reduced-motion:no-preference){@view-transition{navigation:auto}}"
+        self.assertEqual(check.pii_hits(css), [])
+        self.assertTrue(check.pii_hits("see @view for the write-up"))
+
 
 class Files(unittest.TestCase):
     def test_blocked(self):
