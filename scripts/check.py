@@ -16,7 +16,8 @@ PATTERNS = json.loads((ROOT / "scripts/patterns.json").read_text())
 ALLOW = json.loads((ROOT / "data/schema/allowed_handles.json").read_text())
 ALLOWED_HANDLES = {h.lower() for h in ALLOW["handles"]}
 ALLOWED_EMAILS = {e.lower() for e in ALLOW["emails"]}
-CSS_AT_RULES = {"media", "font", "keyframes", "import", "supports", "charset", "page", "layer", "container", "namespace", "view-transition"}
+CSS_AT_RULES = {"media", "font", "keyframes", "import", "supports", "charset", "page", "layer", "container", "namespace"}
+CSS_AT_RULES |= {"view-transition"}
 SOURCE_HOSTS = ("x.com", "github.com", "grokbot.com", "grok.com", "x.ai")
 DATA_FILES = ["updates", "issues", "runs", "chat", "design_backlog", "state", "schedule"]
 DATA_FILES += ["standup", "ideas"]
@@ -315,8 +316,9 @@ def pii_hits(text):
         h = m.group(1).lower()
         # The handle regex stops at a hyphen, so @view-transition is scanned as @view.
         tail = re.match(r"(?:-[A-Za-z0-9]+)+", text[m.end():])
-        at = h + (tail.group(0).lower() if tail else "")
-        if h in CSS_AT_RULES or at in CSS_AT_RULES or h in ALLOWED_HANDLES:
+        if tail and (h + tail.group(0).lower()) in CSS_AT_RULES:
+            continue
+        if h in CSS_AT_RULES or h in ALLOWED_HANDLES:
             continue
         if any(m.start() >= e.start() and m.end() <= e.end() for e in re.finditer(PATTERNS["pii"]["email"], text)):
             continue
