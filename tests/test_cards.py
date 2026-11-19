@@ -125,6 +125,16 @@ class Cards(unittest.TestCase):
         self.assertNotIn(".list-toggle", css)
         self.assertIn("prefers-reduced-motion", css)
 
+    def test_team_does_not_load_page_only_css(self):
+        """pages.css holds rules Team never matches. Team must not link it, or the 100 KB budget pays for Home/Receipts/chat styles."""
+        for s, doc in self.pages.items():
+            self.assertNotIn("pages.css", doc, s)
+            self.assertEqual(check.page_css("team/index.html", doc, ROOT / "site"), {"style.css", "tabs.css"}, s)
+        home = (ROOT / "site/index.html").read_text()
+        metrics = (ROOT / "site/metrics/index.html").read_text()
+        self.assertIn("pages.css", home)
+        self.assertIn("pages.css", metrics)
+
     def test_team_page_fits_100_kb_in_every_season(self):
         for s, doc in self.pages.items():
             # the stylesheets Team loads (style.css; site/sheets.css loads on the character sheets only, Oct 20 3:06 PM ET)
