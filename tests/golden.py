@@ -135,6 +135,11 @@ def tabs_golden_name(slug):
 
 
 ASOF_ET = re.compile(r"\d{4}-\d{2}-\d{2} \d{2}:\d{2} ET")
+# "Wed Nov 18" / "Thu Nov 19 (so far)" — metrics.nice uses a non-breaking space before the day number
+DAY_LABEL = re.compile(
+    r"(Mon|Tue|Wed|Thu|Fri|Sat|Sun) (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[ \u00a0]\d{1,2}( \(so far\))?"
+)
+DIRECTION = re.compile(r"(?:[↑↓→] (?:up|down|flat)|n/a)")
 
 
 def metrics_chart_slice(html):
@@ -145,9 +150,37 @@ def metrics_chart_slice(html):
     return m.group(0) + "\n"
 
 
+def _canonical_svg_marks(match):
+    """Keep mark element types; drop coordinates and how many segments the series needed."""
+    inner = match.group(2)
+    marks = []
+    if re.search(r"<polyline\b", inner):
+        marks.append('<polyline points="PTS"/>')
+    if re.search(r"<polygon\b", inner):
+        marks.append('<polygon points="PTS"/>')
+    if re.search(r"<path\b", inner):
+        marks.append('<path d="D"/>')
+    if not marks:
+        return match.group(0)
+    return match.group(1) + "".join(marks) + match.group(3)
+
+
 def normalize_metrics_charts(html):
-    """Strip as-of clock times; break rows so a unified diff stays readable. Does not change the page."""
+    """Strip daily records so a metrics refresh does not churn the golden.
+
+    Keeps table structure, metric labels, spark-val wrappers, visible direction
+    text (not color alone), and SVG attribute shape (viewBox, role, mark type).
+    Replaces dates, numeric values, polyline points, history length, and how
+    many line segments a series needed. Does not change the page.
+    """
     text = ASOF_ET.sub("AS-OF ET", html)
-    for a in ("</caption>", "</thead>", "</tr>"):
-        text = text.replace(a, a + "\n") if a != "</tr>" else text
+    text = re.sub(r"\d+-day series", "N-day series", text)
+    text = re.sub(r', \d+ days"', ', N days"', text)
+    text = DAY_LABEL.sub(lambda m: "LATEST" + (m.group(3) or "") if m.group(3) else "PREV", text)
+    text = re.sub(r'(class="spark-val">)[^<]+', r"\1VAL", text)
+    text = re.sub(r"(<svg\b[^>]*>)(.*?)(</svg>)", _canonical_svg_marks, text, flags=re.S)
+    # comparison values only (empty or a number); leave direction text for DIRECTION
+    text = re.sub(r"<td>(|\d+(?:\.\d+)?)</td>", "<td>N</td>", text)
+    text = DIRECTION.sub("DIR", text)
+    text = text.replace("</caption>", "</caption>\n").replace("</thead>", "</thead>\n")
     return text.replace("</tr><tr", "</tr>\n<tr")

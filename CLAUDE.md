@@ -14,11 +14,12 @@ It runs the same three checks CI runs: `python3 scripts/check.py repo`, the full
 
 ## Golden tests
 
-A few tests lock down complex Team markup, the five-tab nav, the footer sitelist, and `site/tabs.css` with files under `tests/goldens/` (`tests/golden.py`). They compare normalized output (record-backed Last verified, XP, dates, move counts and rarity are stripped so a daily records refresh does not churn them; tab and footer href prefixes are stripped so Home, Team, and nested pages share one chrome snapshot). On a mismatch the test fails with a unified diff. If the change is intentional, read that diff first, then rewrite the golden:
+A few tests lock down complex Team markup, the five-tab nav, the footer sitelist, `site/tabs.css`, and the Metrics trends table with files under `tests/goldens/` (`tests/golden.py`). They compare normalized output (record-backed Last verified, XP, dates, move counts and rarity are stripped so a daily records refresh does not churn them; tab and footer href prefixes are stripped so Home, Team, and nested pages share one chrome snapshot; the metrics-charts golden keeps structure — chart count, labels, spark-val wrappers, direction text, SVG attribute shape — and strips dates, values, and polyline points). On a mismatch the test fails with a unified diff. If the change is intentional, read that diff first, then rewrite the golden:
 
 ```bash
 UPDATE=1 python3 -m unittest tests.test_cards.Cards.test_normalized_team_html_and_css_team_match_goldens
 UPDATE=1 python3 -m unittest tests.test_tabs.ChromeGoldens
+UPDATE=1 python3 -m unittest tests.test_metrics.Metrics.test_normalized_metrics_charts_match_golden
 ```
 
 Never set `UPDATE=1` to silence a failure you have not read, and never accept a golden in CI. Invariant tests (the 100 KB Team budget, contrast, reduced motion, wiring, tab-bar clearance) stay as assertions; do not replace them with a golden.
