@@ -205,14 +205,14 @@ def render(m, up="../"):
         rate_of = {k: rate for k, _l, rate, _b, _d in TRENDS}
         rows = "".join(
             f'<tr><th scope="row">{e(x["label"])}</th><td>{"" if x["prev"] is None else x["prev"]}</td><td>{"" if x["new"] is None else x["new"]}</td>'
-            f'<td>{arrow[x["direction"]]}{", " + x["verdict"] if x["verdict"] else ""}</td>'
-            f'<td>{sparkline(trend_series(m["days"], x["key"], rate_of[x["key"]]), x["label"])}</td></tr>'
+            f'<td>{arrow[x["direction"]]}{", " + x["verdict"] if x["verdict"] else ""}</td></tr>'
+            f'<tr><td colspan="4">{sparkline(trend_series(m["days"], x["key"], rate_of[x["key"]]), x["label"])}</td></tr>'
             for x in m["trends"])
         out.append(f'<h2 id="trends">Trends</h2><p>{newest} so far against {p}; volume counts are per 10 merged PRs. <strong>Only {n} days of history</strong>: early signals, not proof.</p>'
                    f'<details><summary>How to read the trends</summary><p>One AAR moves a day\'s rate a lot. "Better" or "worse" appears only where the right direction is clear. Each sparkline is the same series as its row, with the latest value and the range next to the chart.</p></details>'
-                   f'<div class="scroll fit"><table class="trend"><caption>Newest day against the day before, plus the {n}-day series</caption><thead><tr><th scope="col">Metric</th>'
+                   f'<div class="scroll fit"><table class="trend"><caption>Newest day against the day before, plus the {n}-day series under each row</caption><thead><tr><th scope="col">Metric</th>'
                    f'<th scope="col">{p}</th><th scope="col">{newest} (so far)</th><th scope="col">Direction</th>'
-                   f'<th scope="col">{n} days</th></tr></thead><tbody>{rows}</tbody></table></div>'
+                   f'</tr></thead><tbody>{rows}</tbody></table></div>'
                    + (f'<p class="warn-t"><strong>Getting worse:</strong> {e(", ".join(x["label"] for x in m["trends"] if x["verdict"] == "worse"))}. '
                       'Advisor turns a worsening trend into a rule or a check at the Friday retro.</p>' if m["worsening"] else "<p>Nothing is getting worse.</p>"))
     top = max(x["prs"] for x in m["days"]) or 1

@@ -50,7 +50,7 @@ class Metrics(unittest.TestCase):
             self.assertNotIn(word, self.page.lower())
 
     def test_text_not_color_alone(self):
-        for row in re.findall(r"<tr><th scope=\"row\">[^<]+</th>.*?</tr>", self.page):
+        for row in re.findall(r"<tr>.*?</tr>", self.page):
             if 'class="bar"' in row:
                 self.assertRegex(row, r'aria-hidden="true"></span>\d+</td>')
             if 'class="spark"' in row:
