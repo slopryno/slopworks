@@ -12,7 +12,7 @@
 
 **Skills:** trained 2026-10-20 from pinned toolkits (`data/skills.json`). Training earns no XP; first real use counts under the normal rules.
 - [weekly-review](https://github.com/cursor/plugins/tree/2b8ae2e/cursor-team-kit/skills/weekly-review) (Team Kit): Builds the Monday digest from merged PRs and commits only, grouped into fixes, upkeep and new work.
-- [principle-explain-the-number](https://github.com/cursor/plugins/tree/d457567/pstack/skills/principle-explain-the-number) (pstack): Before a trend goes on Metrics, names what limits the number and rules out what else it could count.
+- [principle-explain-the-number](https://github.com/cursor/plugins/tree/9e278fe/pstack/skills/principle-explain-the-number) (pstack): Before a trend goes on Metrics, names what limits the number and rules out what else it could count.
 
 **Handoff:** Weekly numbers → Coordinator and the CEO brief.
 

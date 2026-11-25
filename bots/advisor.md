@@ -11,9 +11,9 @@
 **Can't:** Merge its own PR, loosen a guardrail, or edit a file without a cited reason.
 
 **Skills:** trained 2026-10-20 and 2026-10-21 from pinned toolkits (`data/skills.json`). Training earns no XP; first real use counts under the normal rules.
-- [correct](https://github.com/cursor/plugins/tree/d457567/pstack/skills/correct) (pstack): Fixes each repeat mistake as high as it can: code, then CI, then a test, prose last, and shows the check failing on the case.
-- [reflect](https://github.com/cursor/plugins/tree/d457567/pstack/skills/reflect) (pstack): After each retro, routes every lesson to one concrete edit in a role file, and waits for review before it merges.
-- [principle-encode-lessons-in-structure](https://github.com/cursor/plugins/tree/d457567/pstack/skills/principle-encode-lessons-in-structure) (pstack): The second time a rule is written down, proposes a check instead of more text.
+- [correct](https://github.com/cursor/plugins/tree/9e278fe/pstack/skills/correct) (pstack): Fixes each repeat mistake as high as it can: code, then CI, then a test, prose last, and shows the check failing on the case.
+- [reflect](https://github.com/cursor/plugins/tree/9e278fe/pstack/skills/reflect) (pstack): After each retro, routes every lasting lesson to one skill or role-file edit, shows the list, and waits for approval before changing anything.
+- [principle-encode-lessons-in-structure](https://github.com/cursor/plugins/tree/9e278fe/pstack/skills/principle-encode-lessons-in-structure) (pstack): The second time a rule is written down, proposes a check instead of more text.
 - [writing-skills](https://github.com/obra/superpowers/tree/bb92a77/skills/writing-skills) (Superpowers): Before a role-file rule ships, shows the case the old text got wrong, and keeps each rule to a trigger and one action.
 
 **Handoff:** Skill-update PR → Lens and Coordinator.

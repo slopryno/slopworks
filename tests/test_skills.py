@@ -9,7 +9,7 @@ import check  # noqa: E402
 import skills  # noqa: E402
 
 MAN = json.loads((ROOT / "data/skills.json").read_text())
-PSTACK, TEAMKIT = "d457567332aa6989e753ea289f30ea2bfbc80bc0", "2b8ae2ee306f823d54879d3da7f8496b73c31d5d"
+PSTACK, TEAMKIT = "9e278fe4d4ecd8bfe98b1b79bf4be662efb338cc", "2b8ae2ee306f823d54879d3da7f8496b73c31d5d"
 SUPERPOWERS = "bb92a77741419a4ab5f06e711a283343f1ada0c3"  # obra/superpowers v7.0.0 release commit, reviewed 2026-10-21
 
 
@@ -166,7 +166,7 @@ class Repo(unittest.TestCase):
 
     def test_pins_match_the_reviewed_baseline(self):
         self.assertEqual(MAN["sources"]["pstack"]["commit"], PSTACK)
-        self.assertEqual(MAN["sources"]["pstack"]["version"], "0.15.28")
+        self.assertEqual(MAN["sources"]["pstack"]["version"], "0.15.48")
         self.assertEqual(MAN["sources"]["Team Kit"]["commit"], TEAMKIT)
         self.assertEqual(MAN["sources"]["Superpowers"]["commit"], SUPERPOWERS)
         self.assertEqual(MAN["sources"]["Superpowers"]["version"], "7.0.0")

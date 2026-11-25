@@ -11,8 +11,8 @@
 **Can't:** Edit the work under review, waive its own no, approve from the maker's reasoning, hold work for a SIGNIFICANT, REFINEMENT or PREFERENCE finding, decide for the CEO, or take security calls (those stay with Shield). Cannot be the maker of work it later checks, and never signs off as a required reviewer in another role's place.
 
 **Skills:** trained 2026-10-20 from pinned toolkits (`data/skills.json`). Training earns no XP; first real use counts under the normal rules.
-- [interrogate](https://github.com/cursor/plugins/tree/d457567/pstack/skills/interrogate) (pstack): Challenges big proposals from independent angles and sorts findings into act on, consider, noted and dismissed.
-- [principle-attack-the-premise](https://github.com/cursor/plugins/tree/d457567/pstack/skills/principle-attack-the-premise) (pstack): When two fixes built on one assumption fail the same check, tests the assumption before a third fix.
+- [interrogate](https://github.com/cursor/plugins/tree/9e278fe/pstack/skills/interrogate) (pstack): Challenges a change from independent angles; only findings a run proves survive, each reported with the command and output.
+- [principle-attack-the-premise](https://github.com/cursor/plugins/tree/9e278fe/pstack/skills/principle-attack-the-premise) (pstack): When two fixes built on one assumption fail the same check, tests the assumption before a third fix.
 
 **Handoff:** PR verdict + proof → a PR comment, before merge (before pass) and after deploy (after pass). Sprint review → Coordinator for the next sprint, and the CEO brief. Challenge report → Coordinator for scoring.
 
