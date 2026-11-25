@@ -478,5 +478,29 @@
     "did": "Nov 18: #207 logged #195 to #197",
     "doing": "#146 decision record, after checking Ryno's Oct 27 comment",
     "blockers": "needs a feature PR slot"
+  },
+  {
+    "id": "s-2026-11-25-forge",
+    "date": "2026-11-25",
+    "role": "Forge",
+    "did": "Nov 19: #214 data PR, #215 metrics golden fix",
+    "doing": "This PR: skipped days Nov 20 to 24 and records through #215",
+    "blockers": "none"
+  },
+  {
+    "id": "s-2026-11-25-scout",
+    "date": "2026-11-25",
+    "role": "Scout",
+    "did": "Nov 19: tracked 1.2.3",
+    "doing": "Changelog checked: no release after 1.2.3",
+    "blockers": "none"
+  },
+  {
+    "id": "s-2026-11-25-assistant",
+    "date": "2026-11-25",
+    "role": "Assistant",
+    "did": "Nov 19: #213 approval quoted on the PR",
+    "doing": "#146 and #213 decision records",
+    "blockers": "needs a feature PR slot"
   }
 ]
