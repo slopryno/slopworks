@@ -17,9 +17,9 @@
 **Escalate to Ryno (`needs-ceo`) only when:** a disagreement on a rule can't be settled in the thread, or one of the usual safety cases applies.
 
 **Skills:** trained 2026-10-20 from pinned toolkits (`data/skills.json`). Training earns no XP; first real use counts under the normal rules.
-- [principle-model-the-domain](https://github.com/cursor/plugins/tree/d457567/pstack/skills/principle-model-the-domain) (pstack): Treats XP entries as explicit states (pending, approved, rejected, reversed) so no rule can award XP by accident.
-- [principle-explain-the-number](https://github.com/cursor/plugins/tree/d457567/pstack/skills/principle-explain-the-number) (pstack): Before a rule changes a level, checks what each total counts and that no entry rewards activity.
-- [principle-experience-first](https://github.com/cursor/plugins/tree/d457567/pstack/skills/principle-experience-first) (pstack): Designs XP screens for the reader on a phone: real progress in plain text, no streaks or countdowns that reward activity.
+- [principle-model-the-domain](https://github.com/cursor/plugins/tree/9e278fe/pstack/skills/principle-model-the-domain) (pstack): Treats XP entries as explicit states (pending, approved, rejected, reversed) so no rule can award XP by accident.
+- [principle-explain-the-number](https://github.com/cursor/plugins/tree/9e278fe/pstack/skills/principle-explain-the-number) (pstack): Before a rule changes a level, checks what each total counts and that no entry rewards activity.
+- [principle-experience-first](https://github.com/cursor/plugins/tree/9e278fe/pstack/skills/principle-experience-first) (pstack): Designs XP screens for the reader on a phone: real progress in plain text, no streaks or countdowns that reward activity.
 
 **Training track:** `mobile-uiux` (Mobile UI/UX, trained 2026-10-20, `data/skills.json`): modules m1 to m5, m9, m10 and m11, the shared fundamentals plus readable progress, fair rewards and dense rules on a phone. Audit of the live site at 390px on Oct 20, with findings in the same file and backlog items d10 and d11; Lens grades it. Training earns no XP.
 
