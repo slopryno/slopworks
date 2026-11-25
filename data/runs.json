@@ -778,5 +778,167 @@
       "Morning scan. Lock free at start. Changelog read: one untracked release (Nov 18, 1.2.3) published as confirmed; no X reads.",
       "Landed the Nov 18 research notes and chat, refusal lines from #207, blast checks #209 and #210, and records through #212. No new CEO pitch, so no huddle."
     ]
+  },
+  {
+    "id": "2026-11-20-daily",
+    "date": "2026-11-20",
+    "kind": "daily",
+    "status": "skipped",
+    "x_reads": 0,
+    "counts": {
+      "posts_screened": 0,
+      "candidates": 0,
+      "published_updates": 0,
+      "published_issues": 0,
+      "corrected": 0,
+      "dropped_verify": 0,
+      "stripped_privacy": 0,
+      "dropped_privacy": 0,
+      "ci_failures": 0,
+      "corrections_mail": 0,
+      "web_reads_sources": 0,
+      "web_reads_research": 0,
+      "research_notes": 0,
+      "pitches": 0
+    },
+    "notes": [
+      "Skipped day: all Slopworks routines were paused because weekly usage was at 99% until the reset on Mon Nov 23 at 10:35 PM ET.",
+      "Not a completed daily run. The Missed-run heartbeat failed that day."
+    ]
+  },
+  {
+    "id": "2026-11-21-daily",
+    "date": "2026-11-21",
+    "kind": "daily",
+    "status": "skipped",
+    "x_reads": 0,
+    "counts": {
+      "posts_screened": 0,
+      "candidates": 0,
+      "published_updates": 0,
+      "published_issues": 0,
+      "corrected": 0,
+      "dropped_verify": 0,
+      "stripped_privacy": 0,
+      "dropped_privacy": 0,
+      "ci_failures": 0,
+      "corrections_mail": 0,
+      "web_reads_sources": 0,
+      "web_reads_research": 0,
+      "research_notes": 0,
+      "pitches": 0
+    },
+    "notes": [
+      "Skipped day: all Slopworks routines were paused because weekly usage was at 99% until the reset on Mon Nov 23 at 10:35 PM ET.",
+      "Not a completed daily run. The Missed-run heartbeat failed that day."
+    ]
+  },
+  {
+    "id": "2026-11-22-daily",
+    "date": "2026-11-22",
+    "kind": "daily",
+    "status": "skipped",
+    "x_reads": 0,
+    "counts": {
+      "posts_screened": 0,
+      "candidates": 0,
+      "published_updates": 0,
+      "published_issues": 0,
+      "corrected": 0,
+      "dropped_verify": 0,
+      "stripped_privacy": 0,
+      "dropped_privacy": 0,
+      "ci_failures": 0,
+      "corrections_mail": 0,
+      "web_reads_sources": 0,
+      "web_reads_research": 0,
+      "research_notes": 0,
+      "pitches": 0
+    },
+    "notes": [
+      "Skipped day: all Slopworks routines were paused because weekly usage was at 99% until the reset on Mon Nov 23 at 10:35 PM ET.",
+      "Not a completed daily run. The Missed-run heartbeat failed that day."
+    ]
+  },
+  {
+    "id": "2026-11-23-daily",
+    "date": "2026-11-23",
+    "kind": "daily",
+    "status": "skipped",
+    "x_reads": 0,
+    "counts": {
+      "posts_screened": 0,
+      "candidates": 0,
+      "published_updates": 0,
+      "published_issues": 0,
+      "corrected": 0,
+      "dropped_verify": 0,
+      "stripped_privacy": 0,
+      "dropped_privacy": 0,
+      "ci_failures": 0,
+      "corrections_mail": 0,
+      "web_reads_sources": 0,
+      "web_reads_research": 0,
+      "research_notes": 0,
+      "pitches": 0
+    },
+    "notes": [
+      "Skipped day: all Slopworks routines were paused because weekly usage was at 99% until the reset on Mon Nov 23 at 10:35 PM ET.",
+      "Not a completed daily run. The Missed-run heartbeat failed that day."
+    ]
+  },
+  {
+    "id": "2026-11-24-daily",
+    "date": "2026-11-24",
+    "kind": "daily",
+    "status": "skipped",
+    "x_reads": 0,
+    "counts": {
+      "posts_screened": 0,
+      "candidates": 0,
+      "published_updates": 0,
+      "published_issues": 0,
+      "corrected": 0,
+      "dropped_verify": 0,
+      "stripped_privacy": 0,
+      "dropped_privacy": 0,
+      "ci_failures": 0,
+      "corrections_mail": 0,
+      "web_reads_sources": 0,
+      "web_reads_research": 0,
+      "research_notes": 0,
+      "pitches": 0
+    },
+    "notes": [
+      "Partial day: the morning scan, research and ship slot did not run; routines resumed in the afternoon and only the evening wrap ran (7:59 PM ET), with no data PR.",
+      "Not a completed daily run. The Missed-run heartbeat failed that day."
+    ]
+  },
+  {
+    "id": "2026-11-25-daily",
+    "date": "2026-11-25",
+    "kind": "daily",
+    "status": "ok",
+    "x_reads": 0,
+    "counts": {
+      "posts_screened": 0,
+      "candidates": 0,
+      "published_updates": 0,
+      "published_issues": 0,
+      "corrected": 0,
+      "dropped_verify": 0,
+      "stripped_privacy": 0,
+      "dropped_privacy": 0,
+      "ci_failures": 0,
+      "corrections_mail": 0,
+      "web_reads_sources": 1,
+      "web_reads_research": 0,
+      "research_notes": 0,
+      "pitches": 0
+    },
+    "notes": [
+      "Morning scan. Lock free at start. Changelog read: 1.2.3 is still newest, no new entries; no X reads.",
+      "Recorded Nov 20 to 23 as skipped and Nov 24 as a partial day, and records through #215. No new CEO pitch, so no huddle."
+    ]
   }
 ]

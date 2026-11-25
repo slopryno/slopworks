@@ -1,5 +1,23 @@
 [
   {
+    "id": "pr215",
+    "role": "Forge",
+    "title": "Forge: stop the Metrics charts golden from churning on records refreshes",
+    "pr": "https://github.com/slopryno/slopworks/pull/215",
+    "date": "2026-11-19",
+    "merged": "2026-11-19T10:23-05:00",
+    "opened": "2026-11-19T07:43-05:00"
+  },
+  {
+    "id": "pr214",
+    "role": "Forge",
+    "title": "Forge: morning scan Nov 19: Nov 18 release, research backlog, records through #213",
+    "pr": "https://github.com/slopryno/slopworks/pull/214",
+    "date": "2026-11-19",
+    "merged": "2026-11-19T06:38-05:00",
+    "opened": "2026-11-19T06:36-05:00"
+  },
+  {
     "id": "pr213",
     "role": "Forge",
     "title": "Forge: raise tracked-tree budget from 5 MB to 10 MB (Ryno, Nov 19 6:11 AM ET)",
