@@ -121,5 +121,31 @@
       "bot/design-cards-v6"
     ],
     "max_prs": 1
+  },
+  {
+    "id": "ovr-2026-11-25-merge-184",
+    "kind": "lift-slowdown",
+    "by": "Ryno (CEO)",
+    "quote": "Merge #184 on Day 0",
+    "source": "CEO setup pick, Wed 2026-11-25 7:49 PM ET, Slopbot chat: merge #184 (the change PR for aar-2026-10-30-missed-run) as throughput-week Day 0 prep, after the day's 3 slowed merges. At 8:12 PM ET he said: \"Record a CEO override for #184 and #219.\"",
+    "at": "2026-11-25T19:49-05:00",
+    "expires": "2026-11-25T23:59-05:00",
+    "branches": [
+      "bot/feature-rule-lock-wait-missed"
+    ],
+    "max_prs": 1
+  },
+  {
+    "id": "ovr-2026-11-25-merge-219",
+    "kind": "lift-slowdown",
+    "by": "Ryno (CEO)",
+    "quote": "Merge #219",
+    "source": "CEO instruction, Wed 2026-11-25 8:03 PM ET, Slopbot chat: merge #219 (the throughput-week tempo window) as the day's 5th PR; he merged it himself at 8:03 PM ET. At 8:12 PM ET he said: \"Record a CEO override for #184 and #219.\"",
+    "at": "2026-11-25T20:03-05:00",
+    "expires": "2026-11-25T23:59-05:00",
+    "branches": [
+      "bot/feature-tempo-week-window"
+    ],
+    "max_prs": 1
   }
 ]

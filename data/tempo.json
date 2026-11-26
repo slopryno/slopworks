@@ -224,6 +224,28 @@
         "bot/design-cards-v6"
       ],
       "max_prs": 1
+    },
+    {
+      "id": "ovr-2026-11-25-merge-184",
+      "by": "Ryno (CEO)",
+      "quote": "Merge #184 on Day 0",
+      "at": "2026-11-25T19:49-05:00",
+      "expires": "2026-11-25T23:59-05:00",
+      "branches": [
+        "bot/feature-rule-lock-wait-missed"
+      ],
+      "max_prs": 1
+    },
+    {
+      "id": "ovr-2026-11-25-merge-219",
+      "by": "Ryno (CEO)",
+      "quote": "Merge #219",
+      "at": "2026-11-25T20:03-05:00",
+      "expires": "2026-11-25T23:59-05:00",
+      "branches": [
+        "bot/feature-tempo-week-window"
+      ],
+      "max_prs": 1
     }
   ],
   "tempo_windows": [
