@@ -196,6 +196,19 @@ class TempoWindow(unittest.TestCase):
             self.assertEqual(tempo.today(wins, self.TRIP + [aar(trig, 7)], self.at(20), None, [], [self.W])[::2], ("slowed", 3), trig)
             self.assertEqual(tempo.today(wins, self.TRIP + [aar(trig, 7)], self.at(21), None, [], [self.W])[2], 3, trig)
 
+    def test_an_oath_miss_does_not_end_the_window_or_slow_the_day(self):
+        wins = self.WINS + [pr(7, "20T15:00")]
+        aars = self.TRIP + [aar("oath-miss", 7)]
+        mode, used, limit = tempo.today(wins, aars, self.at(20), None, [], [self.W])
+        self.assertIn(self.W["id"], mode)
+        self.assertEqual((used, limit), (6, tempo.NO_CEILING))
+        self.assertNotIn("oath-miss", tempo.TRIPS)
+        # a pending oath-miss (unmerged change_pr) also leaves the window open
+        pending = self.TRIP + [aar("oath-miss", 99)]
+        mode, used, limit = tempo.today(self.WINS, pending, self.at(20), None, [], [self.W])
+        self.assertIn(self.W["id"], mode)
+        self.assertEqual(limit, tempo.NO_CEILING)
+
     def test_violations_excused_only_inside_the_window(self):
         t = tempo.derive(self.WINS, self.TRIP, [], [self.W])
         self.assertEqual(t["violations"], [])

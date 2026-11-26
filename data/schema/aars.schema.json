@@ -41,7 +41,8 @@
           "ci-pr",
           "data-correction",
           "block-upheld",
-          "incident"
+          "incident",
+          "oath-miss"
         ]
       },
       "links": {
