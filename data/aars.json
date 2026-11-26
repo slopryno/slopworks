@@ -999,5 +999,69 @@
     "status": "open",
     "thread": "c463",
     "shipped_in": 185
+  },
+  {
+    "id": "aar-2026-11-25-failed-deploy",
+    "date": "2026-11-25",
+    "title": "The #216 Pages deploy and a later dispatch failed: deploy-pages found 0 artifacts right after a good upload",
+    "trigger": "failed-deploy",
+    "links": {
+      "prs": [
+        216,
+        218
+      ],
+      "runs": [
+        "45590949118",
+        "45618223841",
+        "45631151299",
+        "45675108102"
+      ],
+      "commits": [
+        "6ed273e",
+        "43a894c"
+      ],
+      "chat": [
+        "c553"
+      ]
+    },
+    "expected": {
+      "text": "A push to main, or a dispatch of pages.yml, uploads the site/ artifact and deploy-pages publishes it, so slopryno.com serves the new build.",
+      "cite": [
+        "file:.github/workflows/pages.yml",
+        "pr:216"
+      ]
+    },
+    "actual": {
+      "text": "On #216 (6ed273e) the upload succeeded, then deploy-pages reported Found 0 artifact(s) (run 45590949118). A rerun of that run saw two github-pages artifacts and failed too, and a fresh dispatch at 7:54 AM ET failed the same way (45618223841). The live site stayed on the #215 build until dispatch 45631151299 went green at 9:10 AM ET.",
+      "cite": [
+        "run:45590949118",
+        "run:45618223841",
+        "run:45631151299",
+        "commit:6ed273e"
+      ]
+    },
+    "why": {
+      "text": "pages.yml uploaded and deployed in one job, and deploy-pages looks the artifact up once, under a second after upload, with no retry. GitHub's artifact list now lags longer than that. A rerun keeps the first attempt's artifact, so it sees two.",
+      "cite": [
+        "file:.github/workflows/pages.yml",
+        "run:45590949118",
+        "run:45618223841"
+      ]
+    },
+    "change": {
+      "text": "Trial's fix #218 (43a894c): pages.yml now has a build job that uploads and a separate deploy job that retries once after 60 seconds. Every Pages run on main since has passed, starting with 45675108102. Don't rerun a failed Pages job; dispatch a fresh run.",
+      "cite": [
+        "pr:218",
+        "commit:43a894c",
+        "run:45675108102",
+        "file:.github/workflows/pages.yml"
+      ]
+    },
+    "change_pr": 218,
+    "owner": "Sweep",
+    "status": "closed",
+    "thread": "c553",
+    "fix_pr": 218,
+    "closed": "2026-11-25"
   }
 ]

@@ -1,5 +1,59 @@
 [
   {
+    "id": "pr220",
+    "role": "Assistant",
+    "title": "Assistant: CEO override records for Ryno's Nov 25 merges of #184 and #219",
+    "pr": "https://github.com/slopryno/slopworks/pull/220",
+    "date": "2026-11-26",
+    "merged": "2026-11-26T06:58-05:00",
+    "opened": "2026-11-25T20:13-05:00"
+  },
+  {
+    "id": "pr219",
+    "role": "Advisor",
+    "title": "Advisor: a CEO tempo window for the throughput week (no daily ceiling, gates only)",
+    "pr": "https://github.com/slopryno/slopworks/pull/219",
+    "date": "2026-11-25",
+    "merged": "2026-11-25T20:03-05:00",
+    "opened": "2026-11-25T19:59-05:00"
+  },
+  {
+    "id": "pr184",
+    "role": "Advisor",
+    "title": "Advisor: a run that finds the lock held waits, then records a miss itself (AAR 2026-10-30 missed-run)",
+    "pr": "https://github.com/slopryno/slopworks/pull/184",
+    "date": "2026-11-25",
+    "merged": "2026-11-25T19:57-05:00",
+    "opened": "2026-10-30T20:15-04:00"
+  },
+  {
+    "id": "pr217",
+    "role": "Advisor",
+    "title": "Advisor: refresh pinned pstack skills from 0.15.28 to 0.15.48",
+    "pr": "https://github.com/slopryno/slopworks/pull/217",
+    "date": "2026-11-25",
+    "merged": "2026-11-25T13:26-05:00",
+    "opened": "2026-11-25T09:17-05:00"
+  },
+  {
+    "id": "pr218",
+    "role": "Trial",
+    "title": "Trial: split Pages upload and deploy into two jobs, retry deploy once after 60s",
+    "pr": "https://github.com/slopryno/slopworks/pull/218",
+    "date": "2026-11-25",
+    "merged": "2026-11-25T13:26-05:00",
+    "opened": "2026-11-25T09:21-05:00"
+  },
+  {
+    "id": "pr216",
+    "role": "Forge",
+    "title": "Forge: morning scan Nov 25: skipped days Nov 20\u201324, records through #215",
+    "pr": "https://github.com/slopryno/slopworks/pull/216",
+    "date": "2026-11-25",
+    "merged": "2026-11-25T05:01-05:00",
+    "opened": "2026-11-25T04:58-05:00"
+  },
+  {
     "id": "pr215",
     "role": "Forge",
     "title": "Forge: stop the Metrics charts golden from churning on records refreshes",
@@ -281,7 +335,7 @@
   {
     "id": "pr181",
     "role": "Advisor",
-    "title": "Advisor: state.json↔runs.json consistency check; mark i59 shipped",
+    "title": "Advisor: state.json\u2194runs.json consistency check; mark i59 shipped",
     "pr": "https://github.com/slopryno/slopworks/pull/181",
     "date": "2026-10-30",
     "merged": "2026-10-30T14:27-04:00",
@@ -335,7 +389,7 @@
   {
     "id": "pr175",
     "role": "Forge",
-    "title": "Pixel: social preview image (d2) — og.png + large share cards",
+    "title": "Pixel: social preview image (d2) \u2014 og.png + large share cards",
     "pr": "https://github.com/slopryno/slopworks/pull/175",
     "date": "2026-10-30",
     "merged": "2026-10-30T05:55-04:00",
@@ -344,7 +398,7 @@
   {
     "id": "pr174",
     "role": "Forge",
-    "title": "Pixel: mobile d7–d11 (first screen, inline links, one-shot hop, XP togo, XP stack)",
+    "title": "Pixel: mobile d7\u2013d11 (first screen, inline links, one-shot hop, XP togo, XP stack)",
     "pr": "https://github.com/slopryno/slopworks/pull/174",
     "date": "2026-10-30",
     "merged": "2026-10-30T05:38-04:00",
@@ -461,7 +515,7 @@
   {
     "id": "pr156",
     "role": "Forge",
-    "title": "Forge: tracker item pages, one page per update and issue, linked from lists, feeds and the sitemap (#149 §2.1)",
+    "title": "Forge: tracker item pages, one page per update and issue, linked from lists, feeds and the sitemap (#149 \u00a72.1)",
     "pr": "https://github.com/slopryno/slopworks/pull/156",
     "date": "2026-10-29",
     "merged": "2026-10-29T12:49-04:00",
@@ -1163,7 +1217,7 @@
   {
     "id": "pr83",
     "role": "Comms",
-    "title": "Comms/Polish: lede pass (8 ledes 1,722→1,168 chars), chip count spacing fix, Design log names the CI artifact (i38)",
+    "title": "Comms/Polish: lede pass (8 ledes 1,722\u21921,168 chars), chip count spacing fix, Design log names the CI artifact (i38)",
     "pr": "https://github.com/slopryno/slopworks/pull/83",
     "date": "2026-10-17",
     "merged": "2026-10-17T21:08-04:00",
@@ -1172,7 +1226,7 @@
   {
     "id": "pr82",
     "role": "Sweep",
-    "title": "Sweep: lean repo (i39): screenshots and temp files out of git (263→183 files, 7.5→1.9 MB), lean CI checks, review screenshots as a CI artifact",
+    "title": "Sweep: lean repo (i39): screenshots and temp files out of git (263\u2192183 files, 7.5\u21921.9 MB), lean CI checks, review screenshots as a CI artifact",
     "pr": "https://github.com/slopryno/slopworks/pull/82",
     "date": "2026-10-17",
     "merged": "2026-10-17T20:59-04:00",
@@ -1217,7 +1271,7 @@
   {
     "id": "pr77",
     "role": "Forge",
-    "title": "Hotfix: /work/ titles broken mid-word, footer overflow, footer 13→5 links; new visual CI checks and screenshots of every page",
+    "title": "Hotfix: /work/ titles broken mid-word, footer overflow, footer 13\u21925 links; new visual CI checks and screenshots of every page",
     "pr": "https://github.com/slopryno/slopworks/pull/77",
     "date": "2026-10-17",
     "merged": "2026-10-17T20:23-04:00",
@@ -1478,7 +1532,7 @@
   {
     "id": "pr48",
     "role": "Sweep",
-    "title": "Sweep: Team chat archive rollover (main page 99.9% → 50.7% of budget)",
+    "title": "Sweep: Team chat archive rollover (main page 99.9% \u2192 50.7% of budget)",
     "pr": "https://github.com/slopryno/slopworks/pull/48",
     "date": "2026-10-17",
     "merged": "2026-10-17T09:37-04:00",
@@ -1748,7 +1802,7 @@
   {
     "id": "pr17",
     "role": "Forge",
-    "title": "Avatars v2: animated Grok Bot–style blobs, no tiles, livelier Team hover",
+    "title": "Avatars v2: animated Grok Bot\u2013style blobs, no tiles, livelier Team hover",
     "pr": "https://github.com/slopryno/slopworks/pull/17",
     "date": "2026-10-16",
     "merged": "2026-10-16T22:38-04:00",
@@ -1784,7 +1838,7 @@
   {
     "id": "pr13",
     "role": "Sweep",
-    "title": "Sweep: actions/checkout v4→v7 in ci.yml (supersedes #11)",
+    "title": "Sweep: actions/checkout v4\u2192v7 in ci.yml (supersedes #11)",
     "pr": "https://github.com/slopryno/slopworks/pull/13",
     "date": "2026-10-16",
     "merged": "2026-10-16T11:25-04:00",

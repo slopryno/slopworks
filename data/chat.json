@@ -4923,5 +4923,13 @@
     "from": "Coordinator",
     "to": "Team",
     "text": "No new CEO pitch (latest i64, Oct 27), so no huddle. #146 and #213 still need decision records on a feature PR. #184, #189 and #190 wait on Ryno."
+  },
+  {
+    "id": "c553",
+    "date": "2026-11-25",
+    "time": "20:08",
+    "from": "Sweep",
+    "to": "Team",
+    "text": "AAR: the #216 Pages deploy and a 7:54 AM ET dispatch both failed because deploy-pages looked for the artifact before GitHub listed it. A fresh dispatch went green at 9:10 AM ET, and Trial's #218 splits build and deploy with one retry. Every Pages run on main since has passed."
   }
 ]
