@@ -1113,6 +1113,8 @@ def loosening(path, added, removed):
         return bool(real(removed))
     if path == "data/ceo_overrides.json":  # Ryno 2026-10-19: CEO overrides are add-only; an edit or removal needs-ceo
         return bool(real(removed))
+    if path == "data/tempo_windows.json":  # Ryno 2026-11-25: CEO tempo windows are add-only, like overrides
+        return bool(real(removed))
     if path in ("data/word_limits.json", "data/voice.json"):
         return words_loosened(added, removed)
     if path == "data/ceo_decisions.json":  # Ryno 2026-10-19 5:28 PM ET: the EA's decision log is add-only
@@ -1178,6 +1180,22 @@ def override_errors(root=None):
         tempo.load_overrides(root)
     except (OSError, ValueError, KeyError, TypeError) as err:
         errs = [f"data/ceo_overrides.json: {err}"]
+    return errs
+
+
+def window_errors(root=None):
+    """Ryno 2026-11-25 7:49 PM ET: CEO tempo windows (data/tempo_windows.json) match their schema and tempo.py's rules:
+    the CEO's quote, at most 8 days, after i44. They are add-only (see loosening)."""
+    import tempo
+    root = root or ROOT
+    p = root / "data/tempo_windows.json"
+    if not p.exists():
+        return []
+    try:
+        errs = [f"data/tempo_windows.json {e}" for e in validate(json.loads(p.read_text()), load_schema("tempo_windows"))]
+        tempo.load_windows(root)
+    except (OSError, ValueError, KeyError, TypeError) as err:
+        errs = [f"data/tempo_windows.json: {err}"]
     return errs
 
 
@@ -1774,6 +1792,7 @@ def run_repo():
     errs += chat_future_errors(data.get("chat", []))
     errs += tempo_errors()
     errs += override_errors()
+    errs += window_errors()
     errs += ceo_decision_errors()
     errs += blast_check_errors()
     errs += training_errors()

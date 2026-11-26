@@ -8,6 +8,9 @@ On the trip day, only PRs merged after the trip count toward the slowed day's 3 
 (Ryno 2026-10-19 7:27 AM ET, approving the training plan), every PR merged that ET day counts, before or after a trip:
 a trip can't reopen a day that already used its slowed limit.
 
+A CEO tempo window (data/tempo_windows.json, Ryno 2026-11-25 7:49 PM ET) removes the daily ceiling for a set week; every
+gate stays, and any trip ends it.
+
 Everything here comes from records (data/wins.json, data/aars.json), so anyone can re-derive the mode.
 wins.py writes data/tempo.json; check.py and tests recompute it; bot.py pr refuses a PR over today's limit.
 """
@@ -24,6 +27,9 @@ EFFECTIVE = "2026-10-18T08:35-04:00"  # Ryno's decision (i44); earlier days aren
 WHOLE_DAY_FROM = "2026-10-19"  # loophole fix: from this ET day, a trip no longer resets the day's count
 PENDING = "9999-12-31T23:59-04:00"    # an AAR whose change PR hasn't merged yet trips "now"
 OVERRIDES = "data/ceo_overrides.json"  # add-only CEO records that lift the slowdown for named branches until they expire
+WINDOWS = "data/tempo_windows.json"  # add-only CEO records that remove the daily ceiling for a set window (gates only)
+WINDOW_MAX_DAYS = 8
+NO_CEILING = float("inf")
 
 
 def merged(wins):
@@ -104,12 +110,13 @@ def aar_shipped(aars):
     return {a["shipped_in"]: a for a in aars if a.get("shipped_in") and a.get("date", "") >= AAR_EXCEPTION_FROM}
 
 
-def violations(wins, aars, overrides=None, excused=None):
+def violations(wins, aars, overrides=None, excused=None, windows=None):
     """Every merged PR since the decision that went over its day's limit. A PR over the slowed limit is excused only
     inside a CEO override's window, up to its max_prs, under the normal limit, and only if no trip came after the
     override (excused lists them)."""
     prs, tr, out = merged(wins), trips(wins, aars), []
     overrides = load_overrides() if overrides is None else overrides
+    windows = load_windows() if windows is None else windows
     same_day = aar_shipped(aars)
     for n, m in prs:
         if m < EFFECTIVE:
@@ -120,6 +127,11 @@ def violations(wins, aars, overrides=None, excused=None):
             continue
         mode, last, _ = state_at(prs, tr, m)
         used = used_on(prs, mode, last, m[:10], m)
+        w = open_window(windows, tr, m) if used >= LIMITS[mode]["prs_per_day"] else None
+        if w:
+            if excused is not None:
+                excused.append(f"#{n} merged {m} as PR {used + 1} of the day, inside {w['id']} (no ceiling, gates only; {w['by']}, {w['at']})")
+            continue
         o = lifted(overrides, prs, last, m) if mode == "slowed" and used >= LIMITS[mode]["prs_per_day"] else None
         if o and used < LIMITS["normal"]["prs_per_day"]:
             if excused is not None:
@@ -129,8 +141,9 @@ def violations(wins, aars, overrides=None, excused=None):
     return out
 
 
-def derive(wins, aars, overrides=None):
+def derive(wins, aars, overrides=None, windows=None):
     overrides = load_overrides() if overrides is None else overrides
+    windows = load_windows() if windows is None else windows
     excused = []
     prs, tr = merged(wins), trips(wins, aars)
     mode, last, clean = state_at(prs, tr, PENDING)
@@ -141,19 +154,24 @@ def derive(wins, aars, overrides=None):
             "trip_at": (None if not last or last[0] == PENDING else last[0]),
             "as_of_pr": prs[-1][0] if prs else None,
             "days": [{"date": d, "prs": sum(1 for _, m in prs if m[:10] == d and m >= EFFECTIVE)} for d in days],
-            "violations": violations(wins, aars, overrides, excused), "excused": excused,
-            "ceo_overrides": [{k: o[k] for k in ("id", "by", "quote", "at", "expires", "branches", "max_prs")} for o in overrides]}
+            "violations": violations(wins, aars, overrides, excused, windows), "excused": excused,
+            "ceo_overrides": [{k: o[k] for k in ("id", "by", "quote", "at", "expires", "branches", "max_prs")} for o in overrides],
+            "tempo_windows": [{k: w[k] for k in ("id", "by", "quote", "at", "expires", "after")} for w in windows]}
 
 
-def today(wins, aars, now, branch=None, overrides=None):
+def today(wins, aars, now, branch=None, overrides=None, windows=None):
     """(mode, used, limit) for a new PR at `now` (an aware datetime), for bot.py pr. A CEO override can lift the
-    slowed limit to the normal one, only for a branch it names, only inside its window (see lifted)."""
+    slowed limit to the normal one, only for a branch it names, only inside its window (see lifted). A CEO tempo window
+    removes the daily ceiling (limit NO_CEILING) until it expires or a trip ends it (see open_window)."""
     prs, tr = merged(wins), trips(wins, aars)
     when = now.isoformat(timespec="minutes")
     if any(t[0] == PENDING for t in tr):  # the AAR rides in an unmerged PR: slowed from now
         day = when[:10]
         used = sum(1 for _, m in prs if m[:10] == day and m < when) if day >= WHOLE_DAY_FROM else 0
         return "slowed", used, LIMITS["slowed"]["prs_per_day"]
+    w = open_window(load_windows() if windows is None else windows, tr, when)
+    if w:
+        return f"no ceiling, gates only ({w['id']})", sum(1 for _, m in prs if m[:10] == when[:10] and m < when), NO_CEILING
     mode, last, _ = state_at(prs, tr, when)
     used, limit = used_on(prs, mode, last, when[:10], when), LIMITS[mode]["prs_per_day"]
     if mode == "slowed" and used >= limit and branch:
@@ -206,6 +224,41 @@ def lifted(overrides, prs, last, when, branch=None):
             continue  # no slowdown to lift, or a trip came after the override: the slowdown stands
         if sum(1 for _, m in prs if o["at"] <= m < when) < o["max_prs"]:
             return o
+    return None
+
+
+# ---------- CEO tempo windows (Ryno 2026-11-25 7:24 PM ET: "Pause on the 3 merge a day restriction"; 7:49 PM ET:
+# "No ceiling, gates only") ----------
+# A throughput week: inside the window there is no daily PR ceiling, and every gate, sign-off and check is unchanged.
+# Fail-closed: a pending AAR still slows "now" (today returns before any window), and a trip that lands after the window
+# opens ends it for good; only a new CEO record resumes. after "i44": when it expires, the i44 rules decide again.
+# The file is add-only (check.py loosening flags any removed line).
+def load_windows(root=None):
+    """The CEO tempo window records, validated; a bad record raises ValueError so CI fails closed."""
+    from datetime import datetime as dt
+    p = (root or ROOT) / WINDOWS
+    recs = json.loads(p.read_text()) if p.exists() else []
+    if not isinstance(recs, list):
+        raise ValueError(f"{WINDOWS} must be a list")
+    seen = set()
+    for w in recs:
+        need = {"id", "kind", "by", "quote", "source", "at", "expires", "after"}
+        if not isinstance(w, dict) or set(w) != need:
+            raise ValueError(f"{WINDOWS}: each record has exactly {sorted(need)}")
+        if w["kind"] != "lift-cap" or w["by"] != "Ryno (CEO)" or not w["quote"].strip() or w["id"] in seen or w["after"] != "i44":
+            raise ValueError(f"{WINDOWS} {w['id']}: kind lift-cap, by Ryno (CEO), a quote, a unique id, after i44")
+        seen.add(w["id"])
+        at, exp = dt.fromisoformat(w["at"]), dt.fromisoformat(w["expires"])
+        if not at.tzinfo or not at < exp or (exp - at).total_seconds() > WINDOW_MAX_DAYS * 86400:
+            raise ValueError(f"{WINDOWS} {w['id']}: expires after it starts, at most {WINDOW_MAX_DAYS} days on")
+    return recs
+
+
+def open_window(windows, tr, when):
+    """The window covering `when`, or None: open, and no trip landed since it opened (a trip ends it for good)."""
+    for w in windows:
+        if w["at"] <= when < w["expires"] and not any(w["at"] <= t[0] < when for t in tr if t[0] != PENDING):
+            return w
     return None
 
 
