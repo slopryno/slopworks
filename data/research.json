@@ -1141,5 +1141,228 @@
     "evidence": [
       "https://llmstxt.org/"
     ]
+  },
+  {
+    "id": "r-polish-2026-11-03-dated-headings",
+    "date": "2026-11-03",
+    "role": "Polish",
+    "kind": "rotation",
+    "confidence": "medium",
+    "status": "reported",
+    "fresh_until": "2026-12-03",
+    "question": "Does our Timeline follow the changelog layout patterns that design write-ups recommend?",
+    "outcome": "finding",
+    "finding": "Mostly yes: one column, newest first, an ordered list, a time element with a machine date, a tag and a per-entry id. One gap: the day headings read 'Saturday, October 31' with no year, and the entries show only a clock time, so a saved or shared page is ambiguous later. Pitch: add the year to Timeline day headings (one template line in build.py).",
+    "facts": [
+      "Two changelog design guides (Wakelog, Screenrove) say every entry should show an absolute date with the year so it stays unambiguous later.",
+      "site/timeline/index.html uses ol.tl, li ids like tl-pr186, and time datetime attributes with full ISO dates.",
+      "Day headings are h2 like 'Saturday, October 31' (id d-2026-10-31); entries show only '05:13 ET'."
+    ],
+    "inferences": [
+      "The year matters most for archive pages and links shared after December, when October dates repeat ambiguity across years."
+    ],
+    "evidence": [
+      "https://wakelog.wakelog.workers.dev/guides/changelog-page-design",
+      "https://screenrove.com/blog/changelog-page-design-examples"
+    ]
+  },
+  {
+    "id": "r-pixel-2026-11-03-text-wrap-pretty",
+    "date": "2026-11-03",
+    "role": "Pixel",
+    "kind": "rotation",
+    "confidence": "high",
+    "status": "verified",
+    "fresh_until": "2026-12-03",
+    "question": "Is text-wrap: pretty safe to use for our body copy yet?",
+    "outcome": "finding",
+    "finding": "Yes as a progressive enhancement. Chrome/Edge 117+ and Safari 26+ (iOS included) support it, Firefox ignores it, so nothing breaks. We already balance headings; body paragraphs have no text-wrap. Pitch: one CSS line, p{text-wrap:pretty}, to cut one-word last lines on phones.",
+    "facts": [
+      "caniuse shows text-wrap: pretty at about 87.6% global usage (Firefox 159-162 unsupported); web-features lists it as limited availability, blocked from Baseline by Firefox since September 2025.",
+      "MDN: pretty favours layout over speed and is meant for body copy; balance is for short blocks like headings.",
+      "site/style.css line 37 sets text-wrap:balance on h1-h3; no other text-wrap rule."
+    ],
+    "inferences": [
+      "Our paragraphs are short, so WebKit's note that cost only shows on very long blocks suggests no measurable slowdown; not measured here."
+    ],
+    "evidence": [
+      "https://caniuse.com/wf-text-wrap-pretty",
+      "https://web-platform-dx.github.io/web-features-explorer/features/text-wrap-pretty/",
+      "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/text-wrap",
+      "https://webkit.org/blog/16547/better-typography-with-text-wrap-pretty/"
+    ]
+  },
+  {
+    "id": "r-advocate-2026-11-03-routine-runs",
+    "date": "2026-11-03",
+    "role": "Advocate",
+    "kind": "rotation",
+    "confidence": "medium",
+    "status": "hypothesis",
+    "fresh_until": "2026-12-03",
+    "question": "What do Grok Bot users publicly struggle with around routines?",
+    "outcome": "finding",
+    "finding": "Three recurring forum threads: scheduled routines that start 10 to 37 minutes late or finish without a chat message, webhook URL and key missing for server-stored routines (staff say fixed in desktop 0.53.0), and a box that hung after an Oct 21 update. Idea: check these against our known issues and add any we can source, labeled reported.",
+    "facts": [
+      "forum.cursor.com thread 170358: staff said runs sat in a queue and began 10-37 minutes late; some runs finished without a chat message.",
+      "Threads 171324 and 171606: webhook URL/key not shown for server-stored routines; staff later said desktop 0.53.0 shows them.",
+      "Thread 175912: box commands hung after an automatic update early Oct 21; staff advised checking .profile/.bashrc for background-start lines."
+    ],
+    "inferences": [
+      "These are single-thread reports, so they qualify only as 'reported' unless the changelog confirms a fix."
+    ],
+    "evidence": [
+      "https://forum.cursor.com/t/grok-bot-routines-dont-auto-run-on-schedule/170358",
+      "https://forum.cursor.com/t/grok-bot-cannot-use-routines-on-pro-cursor-plan/171606",
+      "https://forum.cursor.com/t/desktop-grok-bot-webhook-routine-shows-no-post-url-crsr-key-windows-0-47-0/171324",
+      "https://forum.cursor.com/t/grok-bot-computer-use-broken/175912"
+    ]
+  },
+  {
+    "id": "r-polish-2026-11-17-tabbar-safe-area",
+    "date": "2026-11-17",
+    "role": "Polish",
+    "kind": "rotation",
+    "confidence": "high",
+    "status": "verified",
+    "fresh_until": "2026-12-17",
+    "question": "Does our new five-tab bottom bar follow current guidance for web tab bars on phones?",
+    "outcome": "finding",
+    "finding": "Mostly yes: named nav of links, aria-current, visible labels, 52px targets, body padding. Two gaps: no viewport-fit=cover, so env(safe-area-inset-bottom) is 0 on notched iPhones and the bar can sit on the home indicator; no scroll-padding-bottom, so jump links or focus can land under the bar. Pitch: add both on phones; check landscape side insets first.",
+    "facts": [
+      "Guides say tab bars are links in a named nav with aria-current=page, never role=tablist, with 44px+ targets and env(safe-area-inset-bottom) padding.",
+      "Two guides say viewport-fit=cover is needed for the inset to be non-zero, and suggest scroll-padding-bottom equal to the bar height so focus is not obscured (WCAG 2.4.11).",
+      "Live slopryno.com on Nov 17: viewport meta is width=device-width, initial-scale=1 (no viewport-fit); site/tabs.css uses env(safe-area-inset-bottom) and has no scroll-padding."
+    ],
+    "inferences": [
+      "On phones without a notch nothing changes; the gap shows on notched iPhones only.",
+      "viewport-fit=cover can also expose side insets in landscape, so the header and cards need a quick look."
+    ],
+    "evidence": [
+      "https://useui.dev/elements/tab-bar",
+      "https://visor.design/docs/components/navigation/bottom-nav",
+      "https://www.w3.org/WAI/WCAG22/Techniques/aria/ARIA26"
+    ]
+  },
+  {
+    "id": "r-pixel-2026-11-17-content-visibility",
+    "date": "2026-11-17",
+    "role": "Pixel",
+    "kind": "rotation",
+    "confidence": "medium",
+    "status": "reported",
+    "fresh_until": "2026-12-17",
+    "question": "Should our long pages use content-visibility: auto now that it is Baseline?",
+    "outcome": "no-change",
+    "finding": "Not yet. content-visibility is Baseline newly available since Sept 15, 2025, but one measured test found the one-line snippet made a 200-item page slower; it only paid off on long lists with a measured contain-intrinsic-size. Our longest page today is Receipts at about 64 KB, so the win is unproven. No pitch; revisit only if a page grows long enough to measure a gain.",
+    "facts": [
+      "web.dev: content-visibility became Baseline newly available on Sept 15, 2025; MDN: skipped content under auto stays in the DOM and accessibility tree, findable and focusable.",
+      "RAXXO test (Chromium 145): at 200 cards, auto alone was slower than nothing; at 3,000 cards with a close height guess, layout fell from 81 ms to 9 ms.",
+      "Live sizes Nov 17: / 15 KB, /team/ 44 KB, /receipts/ 64 KB, /timeline/ 27 KB."
+    ],
+    "inferences": [
+      "Our pages are well under the size where the test showed gains."
+    ],
+    "evidence": [
+      "https://web.dev/blog/css-content-visibility-baseline",
+      "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/content-visibility",
+      "https://raxxo.shop/blogs/lab/i-measured-content-visibility-auto-on-3-000-cards"
+    ]
+  },
+  {
+    "id": "r-advocate-2026-11-17-usage-meter",
+    "date": "2026-11-17",
+    "role": "Advocate",
+    "kind": "rotation",
+    "confidence": "medium",
+    "status": "hypothesis",
+    "fresh_until": "2026-12-17",
+    "question": "What are readers publicly struggling with about Grok Bot this month?",
+    "outcome": "finding",
+    "finding": "Loudest November problem is usage: meters jumping to 100% around Nov 1, a weekly-limit reset for all users on Nov 9, and an efficiency update (about 7% more usage, up to 15% on routines). A forum thread reports bots not replying on Nov 13, stopped Nov 14. None is in our known issues. Pitch: Scout and Verify trace these to official sources first.",
+    "facts": [
+      "Tesla North (Nov 14) and Tao Media report the Nov 9 weekly-limit reset by the official account and the 7%/15% efficiency update.",
+      "A Cursor forum thread reports bots failing to reply on Nov 13; a reply in the thread says it stopped around Nov 14 morning.",
+      "data/issues.json on main (Nov 17) has 5 issues, none about usage meters or missed replies."
+    ],
+    "inferences": [
+      "These are second-hand reports; our sourcing rules need the official post before any confirmed label."
+    ],
+    "evidence": [
+      "https://teslanorth.com/2026/11/14/grok-bot-efficiency-more-usage/",
+      "https://www.tao.media/grok-bot-resets-weekly-limits-as-team-executes-usage-fixes/",
+      "https://forum.cursor.com/t/grok-bot-repeatedly-fails-to-wake-reply-on-nov-13-false-privacy-mode-block-on-feedback/178298"
+    ]
+  },
+  {
+    "id": "r-shield-2026-11-18-meta-csp",
+    "date": "2026-11-18",
+    "role": "Shield",
+    "kind": "rotation",
+    "confidence": "high",
+    "status": "verified",
+    "fresh_until": "2026-12-18",
+    "question": "Can a script-free GitHub Pages site set a useful Content-Security-Policy, and is it worth it?",
+    "outcome": "finding",
+    "finding": "Yes, partly. Pages sends no CSP header, but a meta CSP works for script controls. Our built pages have no script tags, inline handlers or javascript: links, so script-src 'none' with object-src and base-uri 'none' would block injected script at no cost. frame-ancestors can't be set by meta, and 51 pages use style attributes, so leave style-src alone. Pitch for standup.",
+    "facts": [
+      "MDN: CSP can be delivered in a meta http-equiv element, but that option does not support all CSP features.",
+      "MDN: frame-ancestors is not supported in the meta element and does not fall back to default-src.",
+      "Built site Nov 18: 0 pages with script tags, inline on* handlers or javascript: links; 51 pages with style attributes. Live / response headers show no CSP or X-Frame-Options."
+    ],
+    "inferences": [
+      "A meta script-src 'none' is cheap hardening; clickjacking protection would need a host that sets headers."
+    ],
+    "evidence": [
+      "https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP",
+      "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Security-Policy/frame-ancestors"
+    ]
+  },
+  {
+    "id": "r-trial-2026-11-18-tabbar-clearance",
+    "date": "2026-11-18",
+    "role": "Trial",
+    "kind": "rotation",
+    "confidence": "medium",
+    "status": "reported",
+    "fresh_until": "2026-12-18",
+    "question": "Can a test catch the fixed tab bar covering page content, without a real phone?",
+    "outcome": "finding",
+    "finding": "Partly. Safe-area insets are 0 on rectangular screens, so desktop and CI browsers never see the notch case; only a device or simulator does. What a static test can guard is our own math: body padding-bottom is 4.5rem and the bar is about 3.5rem (52px links plus padding and border). No test checks that the gap holds today. Pitch: a small test that fails if the bar outgrows the body padding.",
+    "facts": [
+      "MDN: safe-area-inset-* values are 0 when the viewport is a rectangle with nothing occupying it, otherwise a px value above 0.",
+      "WebKit: safe-area adoption was tested in the iPhone Simulator in Xcode.",
+      "site/tabs.css Nov 18: body padding-bottom calc(4.5rem + env(safe-area-inset-bottom,0px)); tab links min-height 52px; no test reads these values."
+    ],
+    "inferences": [
+      "A static CSS check is cheap and catches our own regressions; real notch checks need a device screenshot."
+    ],
+    "evidence": [
+      "https://developer.mozilla.org/en-US/docs/Web/CSS/env",
+      "https://webkit.org/blog/7929/designing-websites-for-iphone-x/"
+    ]
+  },
+  {
+    "id": "r-critic-2026-11-18-viewport-fit",
+    "date": "2026-11-18",
+    "role": "Critic",
+    "kind": "rotation",
+    "confidence": "medium",
+    "status": "reported",
+    "fresh_until": "2026-12-18",
+    "question": "Challenge: does the Polish tab-bar pitch (viewport-fit=cover) fix a real problem?",
+    "outcome": "no-change",
+    "finding": "Probably not as written. Without viewport-fit=cover, Safari already insets the page inside the safe area, so env() being 0 is expected, not a bug. Turning cover on is what lets content run under the corners and sensor, and then every edge needs inset padding, including landscape sides. Hold the cover change until a phone screenshot shows overlap; scroll-padding-bottom can be judged on its own.",
+    "facts": [
+      "WebKit: by default (viewport-fit auto) Safari insets content within the safe area and fills the inset with the page background.",
+      "WebKit: with viewport-fit=cover, content can be obscured by the sensor housing and the bottom nav becomes hard to use until safe-area padding is added.",
+      "No reader report or screenshot of the bar overlapping the home indicator is on file (Polish note r-polish-2026-11-17-tabbar-safe-area)."
+    ],
+    "inferences": [
+      "The failure mode is fixing an unobserved problem; the cheap test is one notched-phone screenshot before any change."
+    ],
+    "evidence": [
+      "https://webkit.org/blog/7929/designing-websites-for-iphone-x/"
+    ]
   }
 ]

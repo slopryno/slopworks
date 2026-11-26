@@ -133,6 +133,44 @@ def hm(m):
     return f"{m // 60} h {m % 60} min" if m >= 60 else f"{m} min"
 
 
+def sparkline(values, label):
+    """Inline SVG; latest value and range sit next to the chart. Marks are styled in pages.css."""
+    nums = [v for v in values if v is not None]
+    if not nums:
+        return '<span class="spark">no values yet</span>'
+    lo, hi, n = min(nums), max(nums), len(values)
+    span, w, h, pad = (hi - lo) or 1, 96, 20, 1
+    dx = (w - 2 * pad) / max(n - 1, 1)
+    segs, cur = [], []
+    for i, v in enumerate(values):
+        if v is None:
+            if cur:
+                segs.append(cur)
+                cur = []
+            continue
+        cur.append(f"{round(pad + i * dx)},{round(pad + (h - 2 * pad) * (1 - (v - lo) / span))}")
+    if cur:
+        segs.append(cur)
+    latest = next(v for v in reversed(values) if v is not None)
+    val = e(str(latest) if lo == hi else f"{latest} ({lo}–{hi})")
+    lines = "".join(f'<polyline points="{" ".join(s)}"/>' for s in segs)
+    return (f'<span class="spark"><svg viewBox="0 0 {w} {h}" role="img" aria-label="{e(label)}, {n} days">{lines}</svg>'
+            f'<span class="spark-val">{val}</span></span>')
+
+
+def trend_series(days, key, rate):
+    """Daily series for a trend row: raw counts or the per-10-PRs rate; gaps where there is no record."""
+    out = []
+    for d in days:
+        if key == "ci_catches" and not d.get("ci_recorded"):
+            out.append(None)
+        elif rate:
+            out.append(round(10 * d[key] / d["prs"], 1) if d["prs"] else None)
+        else:
+            out.append(d[key])
+    return out
+
+
 def render(m, up="../"):
     t, src = m["totals"], lambda f: f'<a href="{SRC}{f}">{f}</a>'
     big = [(t["prs"], "PRs merged", "Merged PRs with a Maker line, since the first on Oct 15.", "data/wins.json"),
@@ -149,12 +187,17 @@ def render(m, up="../"):
     if m["trends"]:
         p = nice(m["days"][-2]["date"])
         arrow = {"up": "\u2191 up", "down": "\u2193 down", "flat": "\u2192 flat", "n/a": "n/a"}
-        rows = "".join(f'<tr><th scope="row">{e(x["label"])}</th><td>{"" if x["prev"] is None else x["prev"]}</td><td>{"" if x["new"] is None else x["new"]}</td>'
-                       f'<td>{arrow[x["direction"]]}{", " + x["verdict"] if x["verdict"] else ""}</td></tr>' for x in m["trends"])
+        rate_of = {k: rate for k, _l, rate, _b, _d in TRENDS}
+        rows = "".join(
+            f'<tr><th scope="row">{e(x["label"])}</th><td>{"" if x["prev"] is None else x["prev"]}</td><td>{"" if x["new"] is None else x["new"]}</td>'
+            f'<td>{arrow[x["direction"]]}{", " + x["verdict"] if x["verdict"] else ""}</td></tr>'
+            f'<tr><td colspan="4">{sparkline(trend_series(m["days"], x["key"], rate_of[x["key"]]), x["label"])}</td></tr>'
+            for x in m["trends"])
         out.append(f'<h2 id="trends">Trends</h2><p>{newest} so far against {p}; volume counts are per 10 merged PRs. <strong>Only {n} days of history</strong>: early signals, not proof.</p>'
-                   f'<details><summary>How to read the trends</summary><p>One AAR moves a day\'s rate a lot. "Better" or "worse" appears only where the right direction is clear.</p></details>'
-                   f'<div class="scroll fit"><table class="trend"><caption>Newest day against the day before</caption><thead><tr><th scope="col">Metric</th>'
-                   f'<th scope="col">{p}</th><th scope="col">{newest} (so far)</th><th scope="col">Direction</th></tr></thead><tbody>{rows}</tbody></table></div>'
+                   f'<details><summary>How to read the trends</summary><p>One AAR moves a day\'s rate a lot. "Better" or "worse" appears only where the right direction is clear. Each sparkline is the same series as its row, with the latest value and the range next to the chart.</p></details>'
+                   f'<div class="scroll fit"><table class="trend"><caption>Newest day against the day before, plus the {n}-day series under each row</caption><thead><tr><th scope="col">Metric</th>'
+                   f'<th scope="col">{p}</th><th scope="col">{newest} (so far)</th><th scope="col">Direction</th>'
+                   f'</tr></thead><tbody>{rows}</tbody></table></div>'
                    + (f'<p class="warn-t"><strong>Getting worse:</strong> {e(", ".join(x["label"] for x in m["trends"] if x["verdict"] == "worse"))}. '
                       'Advisor turns a worsening trend into a rule or a check at the Friday retro.</p>' if m["worsening"] else "<p>Nothing is getting worse.</p>"))
     top = max(x["prs"] for x in m["days"]) or 1

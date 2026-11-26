@@ -4,7 +4,9 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
+sys.path.insert(0, str(ROOT / "tests"))
 import avatars, build, cards, ceo, check  # noqa: E402
+import golden  # noqa: E402
 
 
 def team_page(season):
@@ -14,6 +16,10 @@ def team_page(season):
         return build.build()["team/index.html"]
     finally:
         avatars.committed_season = real
+
+
+def stems_of(spec):
+    return {n: n.lower() for n in spec["roles"]}
 
 
 class Cards(unittest.TestCase):
@@ -34,26 +40,14 @@ class Cards(unittest.TestCase):
         for t in names:  # no elemental or game types (Ryno, 11:53 AM ET)
             self.assertNotRegex(t.lower(), r"fire|water|grass|psychic|ghost|electric|dragon")
 
-    def test_one_card_per_role_that_opens_without_script(self):
+    def test_no_script_and_every_role_has_a_card_and_sheet_link(self):
         for s, doc in self.pages.items():
             self.assertNotIn("<script", doc.lower(), s)
-            self.assertEqual(doc.count('class="o" id="'), len(self.roles) + 1, s)  # plus Ryno's CEO card (scripts/ceo.py)
             for f in (ROOT / "bots").glob("*.md"):
-                self.assertIn(f'href="#{f.stem}"', doc)
-                self.assertIn(f'href="#m-{f.stem}"', doc)
-                self.assertIn(f'href="{f.stem}/">Character sheet', doc)
-
-    def test_tap_outside_closes_and_close_link_is_focusable(self):
-        # Ryno, 2026-10-20 9:22 PM ET: no close button; tap outside the card to close. Escape would need script, so it isn't offered.
-        for s, doc in self.pages.items():
-            stems = [f.stem for f in (ROOT / "bots").glob("*.md")] + ["ryno"]
-            for st in stems:  # the backdrop is the open card's own target: a full-screen link back to #m-, out of the tab order and hidden from screen readers
-                self.assertIn(f'<a class="o" id="{st}" href="#m-{st}" tabindex="-1" aria-hidden="true"></a>', doc, (s, st))
-                self.assertIn(f'<a class="cl" href="#m-{st}">Close</a>', doc, (s, st))  # a real link with words: in the tab order
-            self.assertIn(".o:target{inset:0;z-index:8}", doc, s)
-            self.assertIn("position:fixed;z-index:9;", doc, s)  # the open card sits above its backdrop, so taps inside it don't close it
-            self.assertIn(".cl:not(:focus-visible){clip-path:inset(50%)}", doc, s)  # shown only when focused from the keyboard
-            self.assertNotRegex(doc, r'class="cl"[^>]*(tabindex|aria-hidden)')
+                self.assertIn(f'id="card-{f.stem}"', doc, (s, f.stem))
+                self.assertIn(f'href="{f.stem}/">Character sheet', doc, (s, f.stem))
+            self.assertIn('id="card-ryno"', doc, s)
+            self.assertIn('href="ryno/">Character sheet', doc, s)
 
     def test_ids_are_unique_and_sprite_ids_prefixed(self):
         doc = self.pages["halloween"]
@@ -69,8 +63,8 @@ class Cards(unittest.TestCase):
         levels = json.loads((ROOT / "data/progression.json").read_text())["levels"]
         for n in self.roles:
             num = build.level_for(tot.get(n, 0), levels)[0]
-            self.assertIn(f"<b>{n}</b>", doc)
-            self.assertIn(f">Lv <span>{num}</span></span>", doc, n)  # cards v6: the level sits in the corner badge; XP lives on the sheet
+            self.assertIn(f">{n}</p>", doc)  # front face name
+            self.assertIn(f"Lv <span>{num}</span>", doc, n)
 
     def test_cards_v6_stay_uncluttered(self):
         # Cards v6 (CEO direction, Oct 21): no XP words on a card, no pip bars by the move counts, and Weak to / Resists /
@@ -87,22 +81,22 @@ class Cards(unittest.TestCase):
     def test_sheet_icon_has_a_calm_tap_cue(self):
         # Cards v6 (CEO direction, Oct 21): a square outline around the sheet icon, in the card's colour (gold on the CEO's),
         # pulsing 3 times and then still (under 5 s, WCAG 2.2.2), standing still for reduced motion, inside the 44px tap box.
-        import re as _re
         css = (ROOT / "scripts/cards.css").read_text()
-        rule = _re.search(r"\.sh::after\{([^}]*)\}", css).group(1)
+        rule = re.search(r"\.sh::after\{([^}]*)\}", css).group(1)
         self.assertIn("inset:6px", rule)
         self.assertIn("border:2px solid var(--a)", rule)
-        dur, n = _re.search(r"animation:rg ([\d.]+)s \S+ (\d+)", rule).groups()
+        dur, n = re.search(r"animation:rg ([\d.]+)s \S+ (\d+)", rule).groups()
         self.assertLessEqual(float(dur) * int(n), 5)
         self.assertRegex(css, r"prefers-reduced-motion:reduce\)\{[^{]*\.sh::after[^{]*\{animation:none")
         self.assertIn(".lead .lk{--a:#b8860b}", ceo.css("normal"))
 
-    def test_holiday_art_only_in_its_approved_season(self):
-        self.assertIn("October edition: Halloween art.", self.pages["halloween"])
-        self.assertIn(".g-forge{", self.pages["halloween"])
-        for s in ("normal", "winter"):  # winter has no card art yet: it falls back to the type motif
-            self.assertNotIn(".g-forge{", self.pages[s])
-            self.assertNotIn("Halloween", self.pages[s])
+    def test_holiday_scenes_stay_off_the_team_css(self):
+        # Team deck uses season avatar SVGs; .g-* holiday scenes stay on character sheets (budget).
+        stems = stems_of(self.spec)
+        self.assertIn(".g-forge{", cards.css(self.spec, "halloween", stems))
+        self.assertNotIn(".g-forge{", cards.css_team(self.spec, "halloween", stems))
+        h, n = avatars.files("halloween"), avatars.files("normal")
+        self.assertNotEqual(h["forge.svg"], n["forge.svg"])
 
     def test_badge_hook_renders_nothing_until_badges_ship(self):
         for doc in self.pages.values():
@@ -119,19 +113,27 @@ class Cards(unittest.TestCase):
         for w in ("official", "endorsed", "real-time", "live agent", "separate agents"):  # unofficial fan project; roles, not live agents
             self.assertNotIn(w, text)
 
-    def test_badges_sit_in_the_card_corner_not_on_the_blob(self):
+    def test_job_badge_stays_off_the_blob(self):
         # Ryno, Oct 20 10:45-10:47 PM ET: the job badge moves off every blob to the card's corner; his is a gold crown.
-        for s, doc in self.pages.items():
-            self.assertEqual(doc.count('<svg class="jb" viewBox="-10 -10 20 20">'), len(self.roles) + 1, s)
         for s in ("normal", "halloween", "winter"):
             for name, svg in avatars.files(s).items():
                 self.assertNotIn("translate(80 82)", svg, (s, name))
-        self.assertIn('<path d="M-5 5l', self.pages["halloween"])  # his crown badge
 
-    def test_minis_show_dots_not_level_text(self):
-        css = (ROOT / "scripts/cards.css").read_text()
-        self.assertIn(".card:not(.lead .card) .ml{position:absolute;white-space:nowrap;clip-path:inset(50%)}", css)  # read, not shown
-        self.assertIn(".o:target~.card .ml{position:static;clip-path:none}", css)  # the open card keeps its level
+    def test_deck_css_ships_with_team_page(self):
+        css = (ROOT / "scripts/deck.css").read_text()
+        self.assertIn("scroll-snap-type:x mandatory", css)
+        self.assertNotIn(".list-toggle", css)
+        self.assertIn("prefers-reduced-motion", css)
+
+    def test_team_does_not_load_page_only_css(self):
+        """pages.css holds rules Team never matches. Team must not link it, or the 100 KB budget pays for Home/Receipts/chat styles."""
+        for s, doc in self.pages.items():
+            self.assertNotIn("pages.css", doc, s)
+            self.assertEqual(check.page_css("team/index.html", doc, ROOT / "site"), {"style.css", "tabs.css"}, s)
+        home = (ROOT / "site/index.html").read_text()
+        metrics = (ROOT / "site/metrics/index.html").read_text()
+        self.assertIn("pages.css", home)
+        self.assertIn("pages.css", metrics)
 
     def test_team_page_fits_100_kb_in_every_season(self):
         for s, doc in self.pages.items():
@@ -144,6 +146,67 @@ class Cards(unittest.TestCase):
                 imgs = check.page_images("team/index.html", doc)
                 total = len(doc.encode()) + css + sum(len(files[i.split("avatars/", 1)[1]].encode()) for i in imgs if i.startswith("assets/avatars/"))
             self.assertLessEqual(total, 100_000, s)
+
+    def test_normalized_team_html_and_css_team_match_goldens(self):
+        stems = stems_of(self.spec)
+        for s, doc in self.pages.items():
+            golden.assert_matches(self, f"team-{s}.html", golden.normalize_team(golden.team_slice(doc)))
+            # css_team is currently identical across seasons; each season still has to match the same golden
+            # so a later season-specific rule cannot slip in unnoticed.
+            golden.assert_matches(self, "css_team.css", cards.css_team(self.spec, s, stems))
+
+    def test_record_refresh_leaves_goldens_untouched(self):
+        xp_path, wins_path = ROOT / "data/xp_ledger.json", ROOT / "data/wins.json"
+        xp_orig, wins_orig = xp_path.read_text(), wins_path.read_text()
+        try:
+            xp = json.loads(xp_orig)
+            for row in xp:
+                if row.get("agent") == "Forge":
+                    row["base_xp"] = int(row["base_xp"]) + 50
+                    break
+            else:
+                self.fail("need a Forge ledger row to simulate a records refresh")
+            wins = json.loads(wins_orig)
+            latest = None
+            for row in wins:
+                if row.get("role") != "Forge":
+                    continue
+                key = row.get("merged") or row["date"]
+                if latest is None or key > (latest.get("merged") or latest["date"]):
+                    latest = row
+            if latest is None:
+                self.fail("need a Forge win to simulate a records refresh")
+            previous_pr = latest["pr"]
+            latest["pr"] = "https://github.com/slopryno/slopworks/pull/99999"
+            xp_path.write_text(json.dumps(xp))
+            wins_path.write_text(json.dumps(wins))
+            before = self.pages["winter"]
+            xp_before = re.search(r'vh">Forge</span>.*?<li><b>XP</b><em>(\d+)</em>', before, re.S).group(1)
+            doc = team_page("winter")
+            xp_after = re.search(r'vh">Forge</span>.*?<li><b>XP</b><em>(\d+)</em>', doc, re.S).group(1)
+            self.assertIn("pull/99999", doc, "the mutated last-verified PR should appear before normalize")
+            self.assertNotEqual(xp_after, xp_before, "the ledger bump must change Forge's XP so this is a real records refresh")
+            self.assertNotIn("pull/99999", golden.normalize_team(doc))
+            golden.assert_matches(self, "team-winter.html", golden.normalize_team(golden.team_slice(doc)))
+            golden.assert_matches(self, "css_team.css", cards.css_team(self.spec, "winter", stems_of(self.spec)))
+        finally:
+            xp_path.write_text(xp_orig)
+            wins_path.write_text(wins_orig)
+
+    def test_a_markup_or_css_change_fails_with_a_clear_diff(self):
+        self.assertFalse(golden.update_mode(), "UPDATE=1 would rewrite goldens; this test must see the failure")
+        doc = golden.normalize_team(golden.team_slice(self.pages["winter"]))
+        bumped = doc.replace('class="flip"', 'class="flip pilot"', 1)
+        with self.assertRaises(AssertionError) as ctx:
+            golden.assert_matches(self, "team-winter.html", bumped)
+        msg = str(ctx.exception)
+        self.assertIn("golden team-winter.html differs", msg)
+        self.assertIn("flip pilot", msg)
+        self.assertIn("--- goldens/team-winter.html", msg)
+        css = cards.css_team(self.spec, "winter", stems_of(self.spec)) + "\n.pilot{color:red}\n"
+        with self.assertRaises(AssertionError) as ctx:
+            golden.assert_matches(self, "css_team.css", css)
+        self.assertIn("+.pilot{color:red}", str(ctx.exception))
 
 
 if __name__ == "__main__":

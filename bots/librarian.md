@@ -11,9 +11,9 @@
 **Can't:** Decide, rewrite another role's findings (I annotate them), or delete history.
 
 **Skills:** trained 2026-10-20 from pinned toolkits (`data/skills.json`). Training earns no XP; first real use counts under the normal rules.
-- [why](https://github.com/cursor/plugins/tree/d457567/pstack/skills/why) (pstack): Answers why something is the way it is from PRs, Team chat, AARs and decisions, each one cited.
-- [recall](https://github.com/cursor/plugins/tree/d457567/pstack/skills/recall) (pstack): Rebuilds the current state of a thread from the shared record before a pitch or a decision.
-- [maintain-verification-skill](https://github.com/cursor/plugins/tree/d457567/pstack/skills/maintain-verification-skill) (pstack): With Trial, checks the feature map against the live site each week and proposes at most one correction PR.
+- [why](https://github.com/cursor/plugins/tree/9e278fe/pstack/skills/why) (pstack): Answers from the record (PRs, Team chat, AARs, decisions), cites the authors, and marks inferences and gaps.
+- [recall](https://github.com/cursor/plugins/tree/9e278fe/pstack/skills/recall) (pstack): Rebuilds the current state of a thread from the shared record before a pitch or a decision.
+- [maintain-verification-skill](https://github.com/cursor/plugins/tree/9e278fe/pstack/skills/maintain-verification-skill) (pstack): With Trial, checks the feature map against the live site each week and proposes at most one correction PR.
 
 **Handoff:** Consolidated set → Critic and Coordinator. Outcomes → Analyst and Advisor.
 

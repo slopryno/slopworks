@@ -14,7 +14,7 @@ BACKS = (LIGHT, DARK, "#ffffff", "#1c1c22")  # both pages and both card colours
 class DateSwitch(unittest.TestCase):
     def test_windows_and_edges(self):
         cases = {(9, 30): "normal", (10, 1): "halloween", (10, 14): "halloween", (10, 15): "halloween", (10, 20): "halloween", (10, 31): "halloween", (11, 1): "normal",
-                 (11, 30): "normal", (12, 1): "winter", (12, 25): "winter", (12, 26): "winter", (12, 27): "winter", (12, 31): "winter", (1, 1): "normal",
+                 (11, 13): "normal", (11, 14): "winter", (11, 30): "winter", (12, 1): "winter", (12, 25): "winter", (12, 26): "winter", (12, 27): "winter", (12, 31): "winter", (1, 1): "normal",
                  (2, 29): "normal", (7, 4): "normal"}
         for (m, d), want in cases.items():
             self.assertEqual(avatars.in_window(date(2028, m, d)), want, (m, d))
@@ -134,6 +134,7 @@ class Sets(unittest.TestCase):
                 self.assertNotIn('stroke-linejoin="round"', s.split(">", 1)[1], f)
                 self.assertIn(f'<g class="g" fill="{avatars.EYE}">', s, f)
                 if not f.startswith("still/"):
+                    self.assertTrue(s.split("<style>", 1)[1].startswith("@media(prefers-reduced-motion:no-preference){"), f)  # reduce: nothing moves
                     for k in "sqge":
                         self.assertIn(f"animation-name:{k}", s, f)
         cane = [s for s in avatars.files("winter").values() if "stroke-dasharray" in s]
@@ -179,9 +180,11 @@ class Pages(unittest.TestCase):
         self.assertIn("assets/avatars/still/", files["chat/index.html"])
         self.assertNotRegex(files["chat/index.html"], r'assets/avatars/(?!still/)\w+\.svg')
 
-    def test_team_and_role_pages_animate(self):
+    def test_team_deck_animates_every_card(self):
+        # Ryno, Nov 14 11:01 PM ET: every Team card moves all the time, not only after a tap (reduced motion still stops it).
         files = build.build()
         self.assertNotIn("avatars/still/", files["team/index.html"])
+        self.assertEqual(len(re.findall(r'<img class="av" src="\.\./assets/avatars/\w+\.svg"', files["team/index.html"])), len(build.team()) + 1)
         self.assertIn("avatars/lens.svg", files["team/lens/index.html"])
         self.assertNotIn("avatars/still/", files["team/lens/index.html"])
 

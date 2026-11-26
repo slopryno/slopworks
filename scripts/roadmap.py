@@ -163,6 +163,7 @@ def days_between(a, b):
 STALE_DAYS = 14
 REPO = "https://github.com/slopryno/slopworks"
 RECORD_FILE = {"i": "data/ideas.json", "d": "data/design_backlog.json", "c": "data/chat.json", "a": "data/aars.json"}
+RECORD_NAME = {"i": "idea", "d": "design item", "c": "chat", "a": "AAR"}
 
 
 def esc(s):
@@ -183,7 +184,7 @@ def ref_link(ref, up):
         return f"{up}metrics/#goals", f"goal {ref}"
     if ref.startswith("file:"):
         return f"{REPO}/blob/main/{ref[5:]}", ref[5:].rsplit("/", 1)[-1]
-    return f"{REPO}/blob/main/{RECORD_FILE[ref[0]]}", ref
+    return f"{REPO}/blob/main/{RECORD_FILE[ref[0]]}", f"{RECORD_NAME[ref[0]]} {ref}"  # "design item d2", not a bare "d2" (Critic R6)
 
 
 def next_judging(today):
@@ -213,7 +214,7 @@ def render(board, today, lead, up="../"):
         if q.get("fog"):
             extra += f'<p><strong>{WORDS["fog"][0]}</strong> ({WORDS["fog"][1]}): {esc(q["fog"])}</p>'
         if q.get("unlocks"):
-            extra += f'<p><strong>{WORDS["unlocks"][0]}:</strong> <a href="#q-{esc(q["unlocks"])}">{esc(titles[q["unlocks"]])}</a></p>'
+            extra += f'<p class="tap"><strong>{WORDS["unlocks"][0]}:</strong> <a href="#q-{esc(q["unlocks"])}">{esc(titles[q["unlocks"]])}</a></p>'
         if q.get("reason"):
             why = "Why it's held" if q["group"] == "held" else "Why it was abandoned"
             extra += f'<p><strong>{why}:</strong> {esc(q["reason"])}</p>'
@@ -240,7 +241,8 @@ def render(board, today, lead, up="../"):
            + (f'<p class="card"><strong>The board may be out of date.</strong> It was last updated {day(board["updated"])}.</p>' if stale else "")
            + '<ul class="stats" aria-label="The board at a glance">'
            + "".join(f'<li><a href="#{g}"><strong>{len(by(g))}</strong><span>{GROUPS[g][0].split()[0].lower()}</span></a></li>' for g in GROUPS)
-           + f'<li><a href="#oaths"><strong>{kept} of {judged}</strong><span>oaths kept</span></a></li></ul>')
+           + (f'<li><a href="#oaths"><strong>{kept} of {judged}</strong><span>oaths kept</span></a></li></ul>' if judged else
+              f'<li><a href="#oaths"><strong>{len(board["oaths"])}</strong><span>oaths sworn</span></a></li></ul>'))  # no null stat (Critic R4)
     complete = sorted(by("complete"), key=lambda q: q["history"][-1]["date"], reverse=True)[:10]
     out += section("complete", f'The newest {len(complete)}, each with its PR. <a href="{up}timeline/">All of them</a>.', complete)
     out += section("active", "What the team is working on now. Each step links the record that moved it.", by("active"))

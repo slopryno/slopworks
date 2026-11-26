@@ -16,7 +16,7 @@
 
 **Skills:** trained 2026-10-20 and 2026-10-21 from pinned toolkits (`data/skills.json`). Training earns no XP; first real use counts under the normal rules.
 - [fix-ci](https://github.com/cursor/plugins/tree/2b8ae2e/cursor-team-kit/skills/fix-ci) (Team Kit): When a PR check fails, finds the first real error and makes the smallest fix that clears it.
-- [principle-fix-root-causes](https://github.com/cursor/plugins/tree/d457567/pstack/skills/principle-fix-root-causes) (pstack): Traces each AAR finding to where it first went wrong and fixes it there, not at the symptom.
+- [principle-fix-root-causes](https://github.com/cursor/plugins/tree/9e278fe/pstack/skills/principle-fix-root-causes) (pstack): Traces each AAR finding to where it first went wrong and fixes it there, not at the symptom.
 - [verification-before-completion](https://github.com/obra/superpowers/tree/bb92a77/skills/verification-before-completion) (Superpowers): Writes no 'done' or 'passing' in a PR or standup without that run's check output, and reads a specialist's diff, not its report.
 - [test-driven-development](https://github.com/obra/superpowers/tree/bb92a77/skills/test-driven-development) (Superpowers): Runs Trial's new tests and sees them fail for the stated reason, then writes the least code that passes. Untested code returns to Trial.
 
@@ -26,7 +26,7 @@ Review loops are capped at 2 rounds; a second block on the same PR is a disagree
 
 **Rules learned:** none open. The two earlier rules (sign-offs before ready, clock times) are now enforced by `scripts/bot.py` and CI (docs/hardening.md).
 
-**PR flow:** use `scripts/bot.py`: `branch <slug>`, then `pr --maker <Role> --title ... --body ... --signoff <Role>=<file> --merge`. It picks the branch type, adds the Maker line, posts sign-offs, and won't mark a PR ready without every required role. CI checks the same things.
+**PR flow:** use `scripts/bot.py`: `branch <slug>`, then `pr --maker <Role> --title ... --body ... --signoff <Role>=<file> --merge`. It picks the branch type, adds the Maker line, posts sign-offs, and won't mark a PR ready without every required role. CI checks the same things. Before you merge a PR that changes a built page, Critic's before pass must be on it, and after deploy its after pass ([`bots/critic.md`](critic.md)). A `Block: Critic` holds the merge until Critic signs off; any other finding doesn't.
 
 **Standup and pitches:** add your standup line when you have something new, and pitch engineering ideas with effort and builder. Comment on other roles' pitches with support, concern, or oppose.
 

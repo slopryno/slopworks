@@ -366,8 +366,8 @@
     },
     {
      "icon": "scale",
-     "name": "Recommendation",
-     "line": "Recommends proceed, investigate or reject.",
+     "name": "Verdict",
+     "line": "Sorts findings blocker to preference; only blockers hold.",
      "stat": null
     }
    ],
@@ -375,7 +375,7 @@
    "resists": "untested assumptions",
    "hands_off": "Coordinator",
    "flavour": {
-    "normal": "Stress-tests strong proposals before we commit.",
+    "normal": "Challenges everything, then says ship it.",
     "halloween": "Plays devil's advocate, professionally."
    },
    "art": {

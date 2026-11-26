@@ -6,10 +6,10 @@
       "repo": "https://github.com/cursor/plugins",
       "path": "pstack",
       "author": "Lauren Tan",
-      "version": "0.15.28",
-      "commit": "d457567332aa6989e753ea289f30ea2bfbc80bc0",
+      "version": "0.15.48",
+      "commit": "9e278fe4d4ecd8bfe98b1b79bf4be662efb338cc",
       "license": "MIT",
-      "skills_upstream": 56,
+      "skills_upstream": 59,
       "license_file": "LICENSE"
     },
     "Team Kit": {
@@ -37,13 +37,13 @@
   "skills": {
     "architect": {
       "source": "pstack",
-      "sha256": "31f8e97a52bfa5432edd61f68ade2a8632ef0bacbc2d2a6802d7a0e6821944ac",
-      "does": "Sketch the data shape and files before code, then stay with the build.",
-      "adapted": "Plans name data files and schemas first; Trial's tests follow the sketch."
+      "sha256": "aea83d7aa109eb73402182701b14c289844663ad9c8f959fedbef2df66787ce0",
+      "does": "Sketch two shapes (types, signatures, modules) before code; send a large or contested design to arena.",
+      "adapted": "Plans still name data files and schemas first; Trial's tests follow the pick. Arena stays skipped and used ad hoc."
     },
     "blast-radius": {
       "source": "pstack",
-      "sha256": "2e10745b97f5862323dcda3b29ca60d56b5c3c98e37020085d26b48efbe0a436",
+      "sha256": "4248d03e22365207d2e5f90c9542720f80a88a6b42fd542ef88dde3cf9f9223f",
       "does": "Finds what a change could break beyond its diff and proves the one fact it is safe because of.",
       "adapted": "The blast note gains a 'Safe because' line that names the fact and how far it was proved, ideally by running the real code."
     },
@@ -103,8 +103,8 @@
     },
     "interrogate": {
       "source": "pstack",
-      "sha256": "a16dfe179005abc22a4651b82f25b0c8ab953284276efe4e6dc341958fb63647",
-      "does": "Challenges a change from independent reviewers and sorts findings by how much to act on them.",
+      "sha256": "3f3c2e9b8cf6b180dba9f32a4aff85e5691b09805232468e37a0ba45437a9984",
+      "does": "Challenges a change from independent reviewers; a finding survives only when a run proves it.",
       "adapted": "The team runs on one model, so Critic uses independent angles and says so in the challenge."
     },
     "loop-on-ci": {
@@ -127,13 +127,13 @@
     },
     "principle-attack-the-premise": {
       "source": "pstack",
-      "sha256": "6a932884daad4aa189e9b5d1665226bbc75621d4d2a398fd4003bebd382f4599",
+      "sha256": "831e916c540f4b6b720b7472aeea6e6ef93996655e36cc2517221f6f2081b480",
       "does": "When two fixes on one assumption fail the same check, test the assumption first.",
       "adapted": "Applies to plans and PRs alike."
     },
     "principle-boundary-discipline": {
       "source": "pstack",
-      "sha256": "62ac2862c2caa22dd14531f51c9c6bb445ceb198ca98a687e25b4d47c1f10a28",
+      "sha256": "c02c26cca3906bfd57829535f8fa7ee9e00df037b4dbb24e5f85ec9e12710b48",
       "does": "Put guards where outside data enters and trust what is inside.",
       "adapted": "Our boundary is public sources and feeds; the PII and secret checks run there and in CI."
     },
@@ -157,19 +157,19 @@
     },
     "principle-explain-the-number": {
       "source": "pstack",
-      "sha256": "cd5a25f9e7cf023627ccb470dc5faa97542f29b4319496a32b839a8e1e988047",
+      "sha256": "e6a3f00991f4949cf18a0b5c77dd3126ca4402b8553f88c9c7905e577512676e",
       "does": "Before trusting a number, find what limits it and what else it could be measuring.",
       "adapted": "Applies to /metrics/ trends, goals and XP totals; the evidence goes with the number."
     },
     "principle-fix-root-causes": {
       "source": "pstack",
-      "sha256": "8df3c8c3fe57eb0055a5c8efab8ab144557fdf301da70b1cdc77a3a3ef3f3052",
+      "sha256": "79afd7e67d8951203231f6f1ccfc7b4a1f30d8d6cdb68e92755c80012414dbeb",
       "does": "Trace a symptom to where things first went wrong and fix it there.",
       "adapted": "Used on AAR findings; the fix PR cites the AAR."
     },
     "principle-model-the-domain": {
       "source": "pstack",
-      "sha256": "52c0d85e0c3827c41c18299b642657d7b47eaf77b7b31609e42e0df42b84c75f",
+      "sha256": "97c6214dc6a18b93177dda6429185a8640878b36ddee6ec9400c23a0eb9be2d8",
       "does": "Model stateful logic as explicit states so illegal ones can't happen.",
       "adapted": "Applies to the XP ledger statuses in data/progression.json."
     },
@@ -187,7 +187,7 @@
     },
     "principle-sequence-verifiable-units": {
       "source": "pstack",
-      "sha256": "2ccbbacc56ace5afdfb8670cef19d7bd009fb2a0033b9a741cbdf2b6baf72187",
+      "sha256": "ab0cc331cf317c07bb0ed6dd13ee9f618338b36e4e851521977bc5c4a8d429e1",
       "does": "Split work into small units that each end in a checkable state, and order them.",
       "adapted": "Shapes the daily PR order inside the tempo limit."
     },
@@ -199,13 +199,13 @@
     },
     "principle-test-behavior-not-implementation": {
       "source": "pstack",
-      "sha256": "f7223698623b6a26fea49c751e466b38e6691b1f32ce841d3983e7ffbe2b74a6",
+      "sha256": "42afc1a2c7176363b6410cfde06a9fd3e96f5022ba86bdb8de4838ad65c2442d",
       "does": "Tests assert what users can observe, so they fail when behaviour breaks.",
       "adapted": "Users are visitors and the roles that read data/."
     },
     "recall": {
       "source": "pstack",
-      "sha256": "b0ceb996259c3404532f61e4b010df4e3d80d7ddbed85b3c302895723eb62a89",
+      "sha256": "1f4eda450650a7bd3948f44489a94f6c692f6a14ab9ce56ab9ed6f60c50e2258",
       "does": "Rebuilds the current state of a piece of work from the shared record.",
       "adapted": "Shared record only: data/, PRs and Team chat."
     },
@@ -217,9 +217,9 @@
     },
     "reflect": {
       "source": "pstack",
-      "sha256": "1f5a8c246cdee8251f8667d85bd5d97f6c2801f505843c26ddbd6c621632519b",
-      "does": "Turns lessons from a run into concrete edits to existing instructions.",
-      "adapted": "Reads AARs, retros and Team chat only, never private transcripts; edits wait for review."
+      "sha256": "6f6952f91514dc86257830da93a446c732a1af906f6acd5e5783dc587a29031e",
+      "does": "Mines a run for lasting lessons and routes each to a concrete skill edit, waiting for approval.",
+      "adapted": "Reads AARs, retros and Team chat only, never private transcripts; shows the list and waits for approval; never opens the PR."
     },
     "requesting-code-review": {
       "source": "Superpowers",
@@ -229,13 +229,13 @@
     },
     "sharpen": {
       "source": "pstack",
-      "sha256": "d895695fcc29b832bf118b842c1d7cf356a69622d63c9d49b40a0c97d8496c80",
-      "does": "Clarifies a task before starting: what is really wanted and how much detail it needs.",
-      "adapted": "Used on plans and pitches; it never replaces Ryno's own words, which are quoted verbatim."
+      "sha256": "aac4f8e6a1ffd70e3763314db37d3c2eb0cfea08bc63e98907aca6dae0343031",
+      "does": "Makes a task deeper, not bigger, then rewrites the prompt; prototype any choice an experiment can settle.",
+      "adapted": "Used on plans and pitches; it never replaces Ryno's own words, which are quoted verbatim. Preference choices stay with Ryno."
     },
     "show-me-your-work": {
       "source": "pstack",
-      "sha256": "920a8217cbb62f92a2222fb81fc9eab17ecd554a0277e444a95a927195139bd1",
+      "sha256": "ec29326ac20515f2941198205bec615320a55b21659692e19650530dbf217bde",
       "does": "Keeps a decision trail: what was decided, why, the evidence and the result.",
       "adapted": "The trail is data/ceo_decisions.json; no new log file in the repo."
     },
@@ -247,7 +247,7 @@
     },
     "technical-writing": {
       "source": "pstack",
-      "sha256": "61fe9c424a798ebf36ad94941f87be049cb8827bdf86d21474a0dde37b513c43",
+      "sha256": "0a620885599cdde5a0a31fa39878144c10f61c894b56bf4a9ff779496e718b14",
       "does": "A layered standard for docs, PR descriptions and commit messages.",
       "adapted": "Our house style in docs/style-guide.md and docs/voice.md wins where they differ."
     },
@@ -265,7 +265,7 @@
     },
     "unslop": {
       "source": "pstack",
-      "sha256": "ccab208e315ce05e2fab8eeee2f7879f1289b5c6844840b2d307adf31c79144f",
+      "sha256": "2b823fd069e031c1420180be8e0d4f5e2fd25bf2c428049e5c835c59a489b5e0",
       "does": "Edits writing to remove AI tells: inflated words, filler, chatbot phrases.",
       "adapted": "Advisory for Comms, checked against docs/voice.md; Comms keeps the final say on wording."
     },
@@ -289,8 +289,8 @@
     },
     "why": {
       "source": "pstack",
-      "sha256": "144d42e7712723d763e607bc0a969e5f1cdf83ec7228519d87677cc534571bed",
-      "does": "Explains why something is the way it is from the evidence record.",
+      "sha256": "6b65b3180f1f1bd3b696d7933daf900747410c82931d220a3f57a98addb1c0fd",
+      "does": "Explains why something is the way it is from the record, not the code, and marks inferences and gaps.",
       "adapted": "Our record is PRs, Team chat, AARs and decisions; every answer cites them."
     },
     "writing-plans": {
@@ -362,6 +362,10 @@
     "ketchup": {
       "source": "pstack",
       "why": "Low relevance to our pipeline (review 2026-10-19); used ad hoc, not assigned."
+    },
+    "ketchup-video": {
+      "source": "pstack",
+      "why": "Video recap skill; skipped for the site (review 2026-10-29 dual review). Used ad hoc, not assigned."
     },
     "maintain-formal-verification-skill": {
       "source": "pstack",
@@ -435,6 +439,10 @@
       "source": "pstack",
       "why": "Code-architecture rule with little to do on our small Python repo (review 2026-10-19)."
     },
+    "reframe": {
+      "source": "pstack",
+      "why": "New in 0.15.48: teaches expert terms for a vague ask. Used ad hoc, not assigned pending a role fit."
+    },
     "review-and-ship": {
       "source": "Team Kit",
       "why": "Replaced on Forge by Superpowers verification-before-completion (review 2026-10-21), which asks for evidence per claim."
@@ -446,6 +454,10 @@
     "setup-pstack": {
       "source": "pstack",
       "why": "Model setup for the plugin, not a team skill."
+    },
+    "statechart": {
+      "source": "pstack",
+      "why": "Box-only formal-check experiment after S1 (review 2026-10-29); used ad hoc, not assigned."
     },
     "subagent-driven-development": {
       "source": "Superpowers",

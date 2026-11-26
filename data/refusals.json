@@ -128,5 +128,90 @@
     "at": "2026-10-30T20:14-04:00",
     "branch": "bot/feature-rule-lock-wait-missed",
     "reason": "the build changed files or there are uncommitted changes; commit them first"
+  },
+  {
+    "at": "2026-10-31T08:36-04:00",
+    "branch": "bot/data-records-1031",
+    "reason": "Lens's sign-off: Lens's sign-off needs at least one 'Derived: count <file> = N' line"
+  },
+  {
+    "at": "2026-10-31T08:37-04:00",
+    "branch": "bot/data-records-1031",
+    "reason": "python3 -m unittest discover -s tests -q failed:"
+  },
+  {
+    "at": "2026-11-01T04:55-05:00",
+    "branch": "bot/data-morning-scan-1101",
+    "reason": "bot/data-* can't carry tests/test_calendar.py; use bot/feature-*"
+  },
+  {
+    "at": "2026-11-01T04:56-05:00",
+    "branch": "bot/feature-morning-scan-calendar-1101",
+    "reason": "python3 -m unittest discover -s tests -q failed:"
+  },
+  {
+    "at": "2026-11-01T04:57-05:00",
+    "branch": "bot/feature-morning-scan-calendar-1101",
+    "reason": "python3 -m unittest discover -s tests -q failed:"
+  },
+  {
+    "at": "2026-11-01T04:59-05:00",
+    "branch": "bot/feature-morning-scan-calendar-1101",
+    "reason": "the build changed files or there are uncommitted changes; commit them first"
+  },
+  {
+    "at": "2026-11-14T04:54-05:00",
+    "branch": "bot/data-morning-1114",
+    "reason": "missing sign-off from Trial (required for these paths: Lens, Trial)"
+  },
+  {
+    "at": "2026-11-14T04:55-05:00",
+    "branch": "bot/data-morning-1114",
+    "reason": "python3 -m unittest discover -s tests -q failed:"
+  },
+  {
+    "at": "2026-11-14T04:56-05:00",
+    "branch": "bot/data-morning-1114",
+    "reason": "python3 -m unittest discover -s tests -q failed:"
+  },
+  {
+    "at": "2026-11-17T12:33-05:00",
+    "branch": "HEAD",
+    "reason": "missing sign-off from Lens, Trial (required for these paths: Lens, Trial)"
+  },
+  {
+    "at": "2026-11-18T04:52-05:00",
+    "branch": "bot/data-morning-1118",
+    "reason": "bot/data-* can't carry bots/assistant.md; use bot/feature-*"
+  },
+  {
+    "at": "2026-11-18T04:54-05:00",
+    "branch": "bot/data-morning-1118",
+    "reason": "redacted: the check output named a possible secret or personal data"
+  },
+  {
+    "at": "2026-11-18T12:37-05:00",
+    "branch": "bot/feature-ea-log-195-197",
+    "reason": "missing sign-off from Trial (required for these paths: Coordinator, Lens, Trial)"
+  },
+  {
+    "at": "2026-11-18T12:38-05:00",
+    "branch": "bot/feature-ea-log-195-197",
+    "reason": "python3 -m unittest discover -s tests -q failed:"
+  },
+  {
+    "at": "2026-11-18T12:44-05:00",
+    "branch": "bot/feature-ea-log-195-197",
+    "reason": "missing sign-off from Coordinator, Lens, Trial (required for these paths: Coordinator, Lens, Trial)"
+  },
+  {
+    "at": "2026-11-19T06:30-05:00",
+    "branch": "bot/data-morning-1119",
+    "reason": "python3 -m unittest discover -s tests -q failed:"
+  },
+  {
+    "at": "2026-11-19T06:33-05:00",
+    "branch": "bot/feature-data-morning-1119",
+    "reason": "python3 -m unittest discover -s tests -q failed:"
   }
 ]

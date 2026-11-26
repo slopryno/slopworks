@@ -17,7 +17,7 @@
 **Escalate to Ryno (`needs-ceo`) only when:** a yes is unclear, doesn't name the PR, or comes from anyone but Ryno. Then the EA asks him and waits.
 
 **Skills:** trained 2026-10-20 from pinned toolkits (`data/skills.json`). Training earns no XP; first real use counts under the normal rules.
-- [show-me-your-work](https://github.com/cursor/plugins/tree/d457567/pstack/skills/show-me-your-work) (pstack): Logs each CEO decision with Ryno's words, the time, the PR and the evidence, matching data/ceo_decisions.json.
+- [show-me-your-work](https://github.com/cursor/plugins/tree/9e278fe/pstack/skills/show-me-your-work) (pstack): Logs each CEO decision with Ryno's words, the time, the PR and the evidence, matching data/ceo_decisions.json.
 - [get-pr-comments](https://github.com/cursor/plugins/tree/2b8ae2e/cursor-team-kit/skills/get-pr-comments) (Team Kit): Reads the whole PR thread before quoting Ryno, so ceo-approved goes only on the PR he named.
 
 **Handoff:** A labeled PR goes back to its maker to merge on green checks. Each decision goes to Librarian for the record and to Trial for the CI check.
@@ -42,3 +42,7 @@ Add-only. Each line matches an entry in `data/ceo_decisions.json`.
 | [#136](https://github.com/slopryno/slopworks/pull/136) | "Yes, approve the check change and ship sheets" (answering "Approve the page-weight check change so the character sheets can ship?") | 2026-10-21 8:47 AM | Slopbot chat | Executive Assistant, 9:48 AM ([comment](https://github.com/slopryno/slopworks/pull/136#issuecomment-6317707332)) |
 | [#167](https://github.com/slopryno/slopworks/pull/167) | "Raise the repo size limit to 5 MB" (answering how the team should free up repo space) | 2026-10-29 8:35 PM | Slopbot widget | Executive Assistant, 8:43 PM ([comment](https://github.com/slopryno/slopworks/pull/167#issuecomment-6512055753)) |
 | [#181](https://github.com/slopryno/slopworks/pull/181) | "Ship items 1–7 now, including the weekly digest pages" (answering "What should the team ship now?") | 2026-10-30 1:31 PM | Slopbot widget | Executive Assistant, 2:25 PM ([comment](https://github.com/slopryno/slopworks/pull/181#issuecomment-6530404997)) |
+| [#188](https://github.com/slopryno/slopworks/pull/188) | "Ship the mobile training PR now and the Team deck next" (answering the ship ask for the mobile training branch and Team deck) | 2026-10-31 11:46 AM | Slopbot widget | Executive Assistant, 11:53 AM ([comment](https://github.com/slopryno/slopworks/pull/188#issuecomment-6545676325)) |
+| [#195](https://github.com/slopryno/slopworks/pull/195) | "Ship it" (answering the ship ask for #195, #197 and #196) | 2026-11-13 3:58 AM | Slopbot chat | Executive Assistant, 4:01 AM ([comment](https://github.com/slopryno/slopworks/pull/195#issuecomment-6848585655)) |
+| [#196](https://github.com/slopryno/slopworks/pull/196) | "Ship it" (answering the ship ask for #195, #197 and #196) | 2026-11-13 3:58 AM | Slopbot chat | Executive Assistant, 4:01 AM ([comment](https://github.com/slopryno/slopworks/pull/196#issuecomment-6848587033)) |
+| [#197](https://github.com/slopryno/slopworks/pull/197) | "Ship it" (answering the ship ask for #195, #197 and #196) | 2026-11-13 3:58 AM | Slopbot chat | Executive Assistant, 4:01 AM ([comment](https://github.com/slopryno/slopworks/pull/197#issuecomment-6848586424)) |

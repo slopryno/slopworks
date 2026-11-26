@@ -57,5 +57,45 @@
     "applied_at": "2026-10-30T14:25-04:00",
     "evidence": "https://github.com/slopryno/slopworks/pull/181#issuecomment-6530404997",
     "authority": "Ryno (CEO), 2026-10-19 5:28 PM ET, Slopbot chat: \"EA applies ceo-approved only after my explicit yes in chat, quoted on the PR\""
+  },
+  {
+    "pr": 188,
+    "quote": "Ship the mobile training PR now and the Team deck next",
+    "said_at": "2026-10-31T11:46-04:00",
+    "where": "Slopbot widget",
+    "applied_by": "Executive Assistant",
+    "applied_at": "2026-10-31T11:53-04:00",
+    "evidence": "https://github.com/slopryno/slopworks/pull/188#issuecomment-6545676325",
+    "authority": "Ryno (CEO), 2026-10-19 5:28 PM ET, Slopbot chat: \"EA applies ceo-approved only after my explicit yes in chat, quoted on the PR\""
+  },
+  {
+    "pr": 195,
+    "quote": "Ship it",
+    "said_at": "2026-11-13T03:58-05:00",
+    "where": "Slopbot chat",
+    "applied_by": "Executive Assistant",
+    "applied_at": "2026-11-13T04:01-05:00",
+    "evidence": "https://github.com/slopryno/slopworks/pull/195#issuecomment-6848585655",
+    "authority": "Ryno (CEO), 2026-10-19 5:28 PM ET, Slopbot chat: \"EA applies ceo-approved only after my explicit yes in chat, quoted on the PR\""
+  },
+  {
+    "pr": 196,
+    "quote": "Ship it",
+    "said_at": "2026-11-13T03:58-05:00",
+    "where": "Slopbot chat",
+    "applied_by": "Executive Assistant",
+    "applied_at": "2026-11-13T04:01-05:00",
+    "evidence": "https://github.com/slopryno/slopworks/pull/196#issuecomment-6848587033",
+    "authority": "Ryno (CEO), 2026-10-19 5:28 PM ET, Slopbot chat: \"EA applies ceo-approved only after my explicit yes in chat, quoted on the PR\""
+  },
+  {
+    "pr": 197,
+    "quote": "Ship it",
+    "said_at": "2026-11-13T03:58-05:00",
+    "where": "Slopbot chat",
+    "applied_by": "Executive Assistant",
+    "applied_at": "2026-11-13T04:01-05:00",
+    "evidence": "https://github.com/slopryno/slopworks/pull/197#issuecomment-6848586424",
+    "authority": "Ryno (CEO), 2026-10-19 5:28 PM ET, Slopbot chat: \"EA applies ceo-approved only after my explicit yes in chat, quoted on the PR\""
   }
 ]

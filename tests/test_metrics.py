@@ -1,10 +1,12 @@
 """Trial's tests for public metrics and trends (i45, c328 to c335): records only, inspectable, honest directions."""
 import json, re, sys, unittest
+from datetime import date, timedelta
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
-import build, check, metrics  # noqa: E402
+sys.path.insert(0, str(ROOT / "tests"))
+import build, check, golden, metrics  # noqa: E402
 
 load = lambda n: json.loads((ROOT / f"data/{n}.json").read_text())
 
@@ -49,9 +51,11 @@ class Metrics(unittest.TestCase):
             self.assertNotIn(word, self.page.lower())
 
     def test_text_not_color_alone(self):
-        for row in re.findall(r"<tr><th scope=\"row\">[^<]+</th>.*?</tr>", self.page):
+        for row in re.findall(r"<tr>.*?</tr>", self.page):
             if 'class="bar"' in row:
                 self.assertRegex(row, r'aria-hidden="true"></span>\d+</td>')
+            if 'class="spark"' in row:
+                self.assertRegex(row, r'class="spark-val">[^<]+<')
         self.assertRegex(self.page, r"\u2191 up|\u2193 down|\u2192 flat")
 
     def test_linked_and_not_burying_the_tracker(self):
@@ -60,6 +64,54 @@ class Metrics(unittest.TestCase):
         self.assertIn('href="../metrics/"', files["hood/index.html"])
         home = files["index.html"]
         self.assertLess(home.index('aria-labelledby="trk"') if 'aria-labelledby="trk"' in home else home.index("Grok Bot tracker"), home.index('href="metrics/"'))
+    def test_sparklines_sit_next_to_text_values(self):
+        wraps = re.findall(r'<span class="spark"[^>]*>.*?</span></span>', self.page)
+        self.assertEqual(len(wraps), len(metrics.TRENDS))
+        for w in wraps:
+            self.assertIn("<svg", w)
+            self.assertRegex(w, r'role="img"')
+            self.assertRegex(w, r'class="spark-val">[^<]+<')
+        self.assertNotIn("<script", self.page.lower())
+
+    def test_sparklines_stay_off_team_and_shared_css(self):
+        for rel in ("site/style.css", "site/tabs.css", "site/team/index.html"):
+            self.assertNotIn("spark", (ROOT / rel).read_text(), rel)
+
+    def test_normalized_metrics_charts_match_golden(self):
+        slice_ = golden.metrics_chart_slice(self.page)
+        self.assertIn('class="spark"', slice_)
+        self.assertNotIn("as of the newest merged PR", slice_)
+        golden.assert_matches(self, "metrics-charts.html", golden.normalize_metrics_charts(slice_))
+
+
+    def test_a_records_day_does_not_churn_the_metrics_charts_golden(self):
+        """A next-day metrics refresh must not require UPDATE=1 on the charts golden."""
+        path = ROOT / "data/metrics.json"
+        orig = path.read_text()
+        try:
+            before = golden.metrics_chart_slice(self.page)
+            data = json.loads(orig)
+            last = dict(data["days"][-1])
+            nxt = date.fromisoformat(last["date"]) + timedelta(days=1)
+            last["date"] = nxt.isoformat()
+            last["prs"] = int(last.get("prs") or 0) + 3
+            last["open_to_merge_min"] = (last.get("open_to_merge_min") or 0) + 11
+            last["ci_catches"] = int(last.get("ci_catches") or 0) + 2
+            last["ci_recorded"] = True
+            data["days"].append(last)
+            data["days_of_history"] = len(data["days"])
+            data["newest_day"] = last["date"]
+            for row in data["trends"]:
+                row["prev"], row["new"] = row.get("new"), (row.get("new") or 0) + 1
+                row["direction"] = "up"
+            path.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n")
+            after = golden.metrics_chart_slice(build.build()["metrics/index.html"])
+            self.assertNotEqual(after, before, "the added day must change the raw trends table")
+            golden.assert_matches(self, "metrics-charts.html", golden.normalize_metrics_charts(after))
+        finally:
+            path.write_text(orig)
+
+
 
 
 if __name__ == "__main__":

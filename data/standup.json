@@ -238,5 +238,269 @@
     "did": "Evening wrap: 8 merges on Oct 28, all green",
     "doing": "Records refresh through #163 in this PR",
     "blockers": "Heartbeat's first scheduled run is unconfirmed"
+  },
+  {
+    "id": "s-2026-10-31-coordinator",
+    "date": "2026-10-31",
+    "role": "Coordinator",
+    "did": "Oct 30: 15 PRs merged under Ryno's overrides, all green",
+    "doing": "Pace is slowed (3 a day); this data PR is 1 of 3",
+    "blockers": "#184 waits on Ryno's CODEOWNERS yes"
+  },
+  {
+    "id": "s-2026-10-31-scout",
+    "date": "2026-10-31",
+    "role": "Scout",
+    "did": "Oct 30 scan skipped on a held lock",
+    "doing": "Read the changelog feed and two @bot searches: nothing new",
+    "blockers": "none"
+  },
+  {
+    "id": "s-2026-10-31-trial",
+    "date": "2026-10-31",
+    "role": "Trial",
+    "did": "Post-deploy check on Oct 30's 15 merges, all live",
+    "doing": "Watch the next morning run's lock wait",
+    "blockers": "none"
+  },
+  {
+    "id": "s-2026-10-31-sweep",
+    "date": "2026-10-31",
+    "role": "Sweep",
+    "did": "Filed the Oct 30 missed-run AAR (#185)",
+    "doing": "Oct 20/21 AAR closes held: they break an XP link",
+    "blockers": "Oct 30 AAR open until the lock wait is seen working"
+  },
+  {
+    "id": "s-2026-10-31-advisor",
+    "date": "2026-10-31",
+    "role": "Advisor",
+    "did": "Wrote the lock-wait rule (#184)",
+    "doing": "Track the repeat across Oct 20, 21 and 30",
+    "blockers": "#184 needs Ryno's yes"
+  },
+  {
+    "id": "s-2026-11-01-coordinator",
+    "date": "2026-11-01",
+    "role": "Coordinator",
+    "did": "Oct 31: 3 PRs merged (#186 to #188), all green",
+    "doing": "Slowed pace; this data PR is 1 of 3",
+    "blockers": "#184, #189 and #190 wait on Ryno's merge"
+  },
+  {
+    "id": "s-2026-11-01-scout",
+    "date": "2026-11-01",
+    "role": "Scout",
+    "did": "Oct 31 scan: nothing new",
+    "doing": "Read the changelog feed and one @bot search: nothing new",
+    "blockers": "none"
+  },
+  {
+    "id": "s-2026-11-01-pixel",
+    "date": "2026-11-01",
+    "role": "Pixel",
+    "did": "Team deck branch ready (preflight OK)",
+    "doing": "Ships in the next open slot",
+    "blockers": "none"
+  },
+  {
+    "id": "s-2026-11-03-coordinator",
+    "date": "2026-11-03",
+    "role": "Coordinator",
+    "did": "Nov 1: #191 merged; Nov 2: no runs completed",
+    "doing": "Slowed pace; this data PR is 1 of 3",
+    "blockers": "#184, #189 and #190 wait on Ryno's merge"
+  },
+  {
+    "id": "s-2026-11-03-sweep",
+    "date": "2026-11-03",
+    "role": "Sweep",
+    "did": "Nov 2 runs all failed, heartbeat red",
+    "doing": "Recorded Nov 2 as a skipped day",
+    "blockers": "cause of the Nov 2 failures unknown"
+  },
+  {
+    "id": "s-2026-11-03-scout",
+    "date": "2026-11-03",
+    "role": "Scout",
+    "did": "Nov 1 scan: nothing new",
+    "doing": "Changelog and one @bot search: no release",
+    "blockers": "none"
+  },
+  {
+    "id": "s-2026-11-14-forge",
+    "date": "2026-11-14",
+    "role": "Forge",
+    "did": "Nov 13: shipped #195, #197, #196 on the CEO's yes",
+    "doing": "This data PR, 1 of 3 today",
+    "blockers": "none"
+  },
+  {
+    "id": "s-2026-11-14-coordinator",
+    "date": "2026-11-14",
+    "role": "Coordinator",
+    "did": "Nov 13: read-only morning scan, day cap was full",
+    "doing": "Records for Nov 4 to 14 and no huddle (no new CEO pitch)",
+    "blockers": "#184, #189 and #190 wait on Ryno's merge"
+  },
+  {
+    "id": "s-2026-11-14-scout",
+    "date": "2026-11-14",
+    "role": "Scout",
+    "did": "Nov 13: found changelog 1.0.1",
+    "doing": "Five changelog entries, Nov 3 to Nov 11",
+    "blockers": "none"
+  },
+  {
+    "id": "s-2026-11-14-assistant",
+    "date": "2026-11-14",
+    "role": "Assistant",
+    "did": "Nov 13: ceo-approved on #195, #196, #197",
+    "doing": "Decision log follow-up for #195 to #197 in a later PR",
+    "blockers": "needs wins refresh first"
+  },
+  {
+    "id": "s-2026-11-14-sweep",
+    "date": "2026-11-14",
+    "role": "Sweep",
+    "did": "Nov 13: usage 75.8%, research rotation skipped",
+    "doing": "Usage 59% at 4:52 AM ET, resets Mon 10:35 PM ET",
+    "blockers": "none"
+  },
+  {
+    "id": "s-2026-11-17-pixel",
+    "date": "2026-11-17",
+    "role": "Pixel",
+    "did": "Nov 14 to 15: shipped #199 (five tabs), #200 to #202 (winter looks, on now), #203 (winter docs)",
+    "doing": "#204: footer lists the five tabs, records through #203",
+    "blockers": "waits on review and merge"
+  },
+  {
+    "id": "s-2026-11-17-forge",
+    "date": "2026-11-17",
+    "role": "Forge",
+    "did": "Nov 14: shipped the data PR #198 with the calendar test fix",
+    "doing": "This data PR, 1 of 3 today",
+    "blockers": "none"
+  },
+  {
+    "id": "s-2026-11-17-coordinator",
+    "date": "2026-11-17",
+    "role": "Coordinator",
+    "did": "Nov 15 read-only, Nov 16 runs failed",
+    "doing": "Records for Nov 15 and 16; no huddle (no new CEO pitch)",
+    "blockers": "#184, #189 and #190 wait on Ryno"
+  },
+  {
+    "id": "s-2026-11-17-sweep",
+    "date": "2026-11-17",
+    "role": "Sweep",
+    "did": "Nov 15: usage 98.5%, data PR held",
+    "doing": "Usage 9.5% at 4:48 AM ET, resets Mon Nov 23 10:35 PM ET",
+    "blockers": "none"
+  },
+  {
+    "id": "s-2026-11-18-pixel",
+    "date": "2026-11-18",
+    "role": "Pixel",
+    "did": "Nov 17: #204 shipped (footer five tabs, records through #203)",
+    "doing": "Records through #205; watching /team/ winter size",
+    "blockers": "237 B of headroom on /team/ winter"
+  },
+  {
+    "id": "s-2026-11-18-forge",
+    "date": "2026-11-18",
+    "role": "Forge",
+    "did": "Nov 17: #205 data PR; evening data PR failed check.py",
+    "doing": "This PR: research and chat backlog, trimmed to the rules",
+    "blockers": "none"
+  },
+  {
+    "id": "s-2026-11-18-scout",
+    "date": "2026-11-18",
+    "role": "Scout",
+    "did": "Nov 17: changelog read, nothing new found",
+    "doing": "Three new releases tracked: Nov 12, Nov 13, Nov 16 (1.2.0)",
+    "blockers": "none"
+  },
+  {
+    "id": "s-2026-11-18-polish",
+    "date": "2026-11-18",
+    "role": "Polish",
+    "did": "Nov 17: tab bar research",
+    "doing": "Pitch: viewport-fit=cover and scroll-padding-bottom for the tab bar",
+    "blockers": "landscape insets need a check first"
+  },
+  {
+    "id": "s-2026-11-18-assistant",
+    "date": "2026-11-18",
+    "role": "Assistant",
+    "did": "Nov 13: applied ceo-approved to #195 to #197",
+    "doing": "Logging those three decisions in a feature PR (not this data PR)",
+    "blockers": "none"
+  },
+  {
+    "id": "s-2026-11-19-pixel",
+    "date": "2026-11-19",
+    "role": "Pixel",
+    "did": "Nov 18: #210 view transitions, #211 Team CSS cut, #212 metrics sparklines",
+    "doing": "Records through #212",
+    "blockers": "none"
+  },
+  {
+    "id": "s-2026-11-19-forge",
+    "date": "2026-11-19",
+    "role": "Forge",
+    "did": "Nov 18: #206 data PR, #208 expect-test pilot, #209 tab-bar goldens",
+    "doing": "This PR: Nov 18 research backlog and records",
+    "blockers": "none"
+  },
+  {
+    "id": "s-2026-11-19-scout",
+    "date": "2026-11-19",
+    "role": "Scout",
+    "did": "Nov 18: three releases tracked",
+    "doing": "One new release tracked: Nov 18 (1.2.3)",
+    "blockers": "none"
+  },
+  {
+    "id": "s-2026-11-19-trial",
+    "date": "2026-11-19",
+    "role": "Trial",
+    "did": "Nov 18: tab-bar clearance research",
+    "doing": "Blast checks #209 and #210 logged as matched",
+    "blockers": "none"
+  },
+  {
+    "id": "s-2026-11-19-assistant",
+    "date": "2026-11-19",
+    "role": "Assistant",
+    "did": "Nov 18: #207 logged #195 to #197",
+    "doing": "#146 decision record, after checking Ryno's Oct 27 comment",
+    "blockers": "needs a feature PR slot"
+  },
+  {
+    "id": "s-2026-11-25-forge",
+    "date": "2026-11-25",
+    "role": "Forge",
+    "did": "Nov 19: #214 data PR, #215 metrics golden fix",
+    "doing": "This PR: skipped days Nov 20 to 24 and records through #215",
+    "blockers": "none"
+  },
+  {
+    "id": "s-2026-11-25-scout",
+    "date": "2026-11-25",
+    "role": "Scout",
+    "did": "Nov 19: tracked 1.2.3",
+    "doing": "Changelog checked: no release after 1.2.3",
+    "blockers": "none"
+  },
+  {
+    "id": "s-2026-11-25-assistant",
+    "date": "2026-11-25",
+    "role": "Assistant",
+    "did": "Nov 19: #213 approval quoted on the PR",
+    "doing": "#146 and #213 decision records",
+    "blockers": "needs a feature PR slot"
   }
 ]

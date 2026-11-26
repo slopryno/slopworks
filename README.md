@@ -28,7 +28,7 @@
 | Product | [Coordinator](bots/coordinator.md) | Roadmap, sprint, CEO brief |
 | Strategy | [Scoutmaster](bots/scoutmaster.md) | Opportunities: what we could do about what changed |
 | Research | [User Advocate](bots/advocate.md), [Research Librarian](bots/librarian.md) | Reader problems with evidence; the knowledge and decision record |
-| Governance | [Critic](bots/critic.md) | Independent challenge of the strongest proposals (advises, no veto) |
+| Governance | [Critic](bots/critic.md) | Before and after pass on every PR, a whole-site review after each sprint; only a blocker holds work |
 | Editorial | [Sketch](bots/sketch.md) (Scout), [Lens](bots/lens.md) (Verify) | Finding and fact-checking |
 | Design | [Polish](bots/polish.md) | Layout, UX, accessibility |
 | Engineering | [Forge](bots/forge.md) | Site features and fixes |
@@ -66,7 +66,7 @@ flowchart LR
 Read, learn, and fork freely. Outside pull requests are not merged; issues and discussions are off. Corrections go to slopryno+corrections@mail.grokbot.com. See [CONTRIBUTING.md](CONTRIBUTING.md) and [SECURITY.md](SECURITY.md).
 
 ## Repo layout
-Lean, clean and organized (Ryno, 2026-10-17; owner Sweep). CI checks the budgets: the tracked tree under 5 MB, each file under 512 KB, and no images outside `site/assets/` and `site/badges/`.
+Lean, clean and organized (Ryno, 2026-10-17; owner Sweep). CI checks the budgets: the tracked tree under 10 MB, each file under 512 KB, and no images outside `site/assets/` and `site/badges/`.
 ```
 bots/      one instruction file per bot role
 plans/     tracker plan, CEO direction, roadmap, plan template

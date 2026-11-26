@@ -15,13 +15,34 @@ REPO = "https://github.com/slopryno/slopworks"
 CREDIT = "Built and designed by Grok Bots. Reviewed and merged by bots; steered by a human CEO (Ryno)."
 DISCLAIMER = "Unofficial, fan-built project. Not affiliated with or endorsed by Grok Bot, SpaceX, or X."
 CORRECTIONS = "slopryno+corrections@mail.grokbot.com"
-# Information architecture (i36, Team chat c210 to c214): 4 top items plus the brand as Home. Deeper pages sit one tap
-# from their hub, every deep page has one "Back to" link, and the footer lists every page. No URL moved.
+# Information architecture (i36, then the Nov 14 five-tab redesign): Home, Tracker, Team, Receipts and More are the
+# primary nav and the footer sitelist on every page. Deeper pages sit one tap from their hub or from More, every deep
+# page has one "Back to" link, and work/, lessons/ and hood/ keep their URLs. No URL moved.
 WORK = [("timeline/", "Timeline"), ("weekly/", "Weekly recap"), ("metrics/", "Metrics"), ("roadmap/", "Quest board"), ("cases/", "Case files"), ("arena/", "Research Arena"), ("challenges/", "Demo challenge")]
 HOOD = [("how/", "How this works"), ("updates/", "What's new"), ("issues/", "Known issues"), ("chat/", "Team chat"), ("schedule/", "Schedule and limits"), ("calendar/", "Calendar"), ("behind/", "Behind the scenes"), ("design/", "Design log")]
 TOP = [("work/", "Work"), ("team/", "Team"), ("lessons/", "Lessons"), ("hood/", "Under the hood")]
-NAV = [("", "Home")] + WORK + [("team/", "Team"), ("lessons/", "Lessons"), ("how/", "How this works")]  # every visitor page, for llms.txt and the footer
+NAV = [("", "Home")] + WORK + [("team/", "Team"), ("lessons/", "Lessons"), ("how/", "How this works")]  # visitor pages for llms.txt; the footer uses TABS
 OPS = HOOD
+# Mobile redesign (Ryno's Claude design, Nov 14): five tabs replace the primary nav on every page, a bottom tab bar on phones.
+# Tracker is updates/; Receipts is every merged PR and lesson; More links every section, so no page loses its way in.
+TABS = [("", "Home"), ("updates/", "Tracker"), ("team/", "Team"), ("receipts/", "Receipts"), ("more/", "More")]
+
+# The tab bar's rules live in site/tabs.css, linked by every page and counted in each page's weight by check.py. The
+# archive rollover targets stay sized on the stylesheets those pages load, so archive pages and the XP evidence that links
+# into them keep their URLs. Page-only rules live in site/pages.css, linked on every page except Team, so the Team budget
+# does not pay for Receipts, Metrics, Home, and chat styles. A few page-only rules also stay inlined on the page that uses them.
+REDESIGN_CSS = {"moved": ".moved{border:1px solid var(--line);background:var(--card);border-radius:12px;padding:.75rem 1rem}", "rc": ".rc{list-style:none;padding:0;margin:0}.rc li{border-bottom:1px solid var(--line);padding:.55rem 0 .55rem .9rem;position:relative}.rc li::before{content:"";position:absolute;left:0;top:1.05rem;width:8px;height:8px;border-radius:50%;background:var(--ok)}.rc li[data-type=lesson]::before{background:var(--warn)}.rc a{display:flex;align-items:center;min-height:44px;min-width:0;overflow-wrap:anywhere;font-weight:600;text-decoration:none;color:var(--fg)}.rc small{display:block;color:var(--muted);font-size:.8rem}", "recent": ".recent{padding:0;display:grid;gap:.4rem;list-style:none}.recent li{display:flex;justify-content:space-between;border:1px solid var(--line);border-radius:12px;padding:0 .75rem;background:var(--card)}.recent a{display:inline-flex;align-items:center;min-height:44px;font-weight:700}.recent a+a{font-weight:400}"}
+
+
+def tab_of(slug):
+    """The tab a page sits under, for aria-current: the Tracker holds updates and issues, Receipts holds the old Timeline
+    and Lessons, and every other section is one tap from More."""
+    if slug == "":
+        return ""
+    for tab, bases in (("updates/", ("updates/", "issues/")), ("team/", ("team/",)), ("receipts/", ("receipts/", "timeline/", "lessons/"))):
+        if slug.startswith(bases):
+            return tab
+    return "more/"
 
 
 def section(slug):
@@ -36,8 +57,8 @@ def section(slug):
 
 
 def back_link(slug, up):
-    """One 'Back to' link on deep pages (Comms, c211): archives go back to their page, sheets to Team, the rest to their hub."""
-    if slug in ("", "work/", "hood/", "team/", "lessons/"):
+    """One 'Back to' link on deep pages (Comms, c211): archives go back to their page, sheets to Team, the rest to their hub. The five top-level tabs have no Back link."""
+    if slug in ("", "work/", "hood/", "team/", "lessons/", "updates/", "receipts/", "more/"):
         return ""
     for base, title in (("chat/", "Team chat"), ("timeline/", "Timeline"), ("lessons/", "Lessons"), ("team/", "Team"), ("updates/", "What's new"), ("issues/", "Known issues")):
         if slug.startswith(base) and slug != base:
@@ -101,7 +122,7 @@ def avatar_of(name):
 
 
 def avatar(name, up, size=40, move=False):
-    """Long lists (Team chat, the Arena, cases) use the still copy; the Team page, role sheets and home cards animate."""
+    """Long lists (Team chat, the Arena, cases) and the Team deck use the still copy; role sheets and home cards animate."""
     a = avatar_of(name)
     return f'<img class="av" src="{up}assets/avatars/{"" if move else "still/"}{a}.svg" width="{size}" height="{size}" alt="">'
 
@@ -241,6 +262,8 @@ DESCRIPTIONS = {
     "hood/": "How Slopworks runs: the Grok Bot tracker, the bots' own chat, the schedule and limits, and the run and design logs.",
     "how/": "How the Slopworks bot team works, in plain words: the daily run, the weekly role cycle, where Ryno (the human CEO) decides, and a glossary.",
     "schedule/": "When Slopworks runs, what each run does, and the limits the bot team works within.",
+    "receipts/": "Every merged pull request and after-action review from the Slopworks bot team, newest first, each linked to its record.",
+    "more/": "Every section of Slopworks in one list: the team's work, how XP works, lessons, and how the site runs.",
     "calendar/": "The Slopworks team calendar: this month and the next two, with runs, reviews, releases and holiday character themes, plus a subscribe feed.",
 }
 
@@ -269,7 +292,7 @@ def next_link(slug, up, body):
     return f'<p class="next"><a class="more" href="{up}{s}">Next: {e(t)}</a></p>'
 
 
-def page(slug, title, lede, body, source, h1=None, kind=None):
+def page(slug, title, lede, body, source, h1=None, kind=None, head=""):
     up = "../" * slug.count("/")
     desc, url, full = describe(slug, lede), page_url(slug), f"{title} · Slopworks"
     # Structured data as schema.org microdata, not JSON-LD: check.py bans every <script> tag, and that guardrail stays.
@@ -278,12 +301,12 @@ def page(slug, title, lede, body, source, h1=None, kind=None):
              + ('<span hidden itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><meta itemprop="name" content="Slopworks">'
                 f'<link itemprop="url" href="{BASE}"><link itemprop="sameAs" href="{REPO}"></span>' if slug == "" else
                 f'<span hidden itemprop="isPartOf" itemscope itemtype="https://schema.org/WebSite"><meta itemprop="name" content="Slopworks"><link itemprop="url" href="{BASE}"></span>'))
-    here = section(slug)[0]
+    here = tab_of(slug)
     cur = lambda s: ' aria-current="page"' if s == slug else (' aria-current="true"' if s == here else "")
-    nav = "".join(f'<li><a href="{up}{s}"{cur(s)}>{e(t)}</a></li>' for s, t in TOP)
-    # Footer (hotfix after the 2026-10-17 /work/ incident, Comms and Polish): the 5 sections, not every page.
-    sitemap = (f'<nav class="sitelist" aria-label="Sections"><ul><li><a href="{up}">Home</a></li>'
-               + "".join(f'<li><a href="{up}{s}">{e(t)}</a></li>' for s, t in TOP) + "</ul></nav>")
+    nav = "".join(f'<li><a href="{up}{s}"{cur(s)}>{e(t)}</a></li>' for s, t in TABS)
+    # Footer (hotfix after the 2026-10-17 /work/ incident, Comms and Polish): the five tabs, not every page.
+    sitemap = (f'<nav class="sitelist" aria-label="Sections"><ul>'
+               + "".join(f'<li><a href="{up}{s}">{e(t)}</a></li>' for s, t in TABS) + "</ul></nav>")
     return f"""<!doctype html>
 <html lang="en">
 <head>
@@ -308,15 +331,16 @@ def page(slug, title, lede, body, source, h1=None, kind=None):
 <meta name="theme-color" content="#F6F5F1" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#141418" media="(prefers-color-scheme: dark)">
 <link rel="stylesheet" href="{up}style.css">
+{"" if slug == "team/" else '<link rel="stylesheet" href="' + up + 'pages.css">\n'}<link rel="stylesheet" href="{up}tabs.css">
 <link rel="alternate" type="application/rss+xml" title="Slopworks" href="{up}feed.xml">
 <link rel="alternate" type="application/feed+json" title="Slopworks" href="{up}feed.json">
-</head>
+{head}</head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <header><div class="wrap">
 <a class="brand" href="{up}"{' aria-current="page"' if slug == "" else ""}><img src="{up}assets/favicon.svg" alt="" width="28" height="28">Slopworks</a>
 <label class="tf"><input type="checkbox" id="theme-flip"><span class="tf-d"><span class="vh">Switch to </span>Dark<span class="vh"> theme</span></span><span class="tf-l"><span class="vh">Switch to </span>Light<span class="vh"> theme</span></span></label>
-<nav aria-label="Main"><ul>{nav}</ul></nav>
+<nav class="tabs" aria-label="Main"><ul>{nav}</ul></nav>
 </div></header>
 <main id="main" class="wrap{" home" if slug == "" else ""}" itemscope itemtype="https://schema.org/{kind}">{micro}
 {back_link(slug, up)}<p class="disclaimer">{e(DISCLAIMER)}</p>
@@ -348,7 +372,7 @@ def entry_card(x, issue=False):
     if issue and x.get("workaround"):
         extra += f'<p><strong>Workaround:</strong> {e(x["workaround"])}</p>'
     if issue and x.get("fixed_source"):
-        extra += f'<p>Fixed {e(x.get("fixed_date", ""))} · <a href="{e(x["fixed_source"])}">fix source</a></p>'
+        extra += f'<p class="tap">Fixed {e(x.get("fixed_date", ""))} · <a href="{e(x["fixed_source"])}">fix source</a></p>'
     if x.get("corrected"):
         extra += f'<p><strong>Corrected:</strong> {e(x["corrected"])}</p>'
     return (f'<article class="card" id="e{e(x["id"])}" data-area="{e(x["area"])}"><h3>{e(x["title"])}</h3><p>{e(x["summary"])}</p>{extra}'
@@ -491,6 +515,29 @@ def badge(label, value, color):
             f'<text x="{w1 / 2}" y="14">{e(label)}</text><text x="{w1 + w2 / 2}" y="14">{e(value)}</text></g></svg>\n')
 
 
+def tracker_body(ups, iss, records):
+    """The Tracker (updates/, the redesign's second tab): status chips that filter in place with CSS only (anchors,
+    :target, :has()), and a Known issues chip that swaps the list for the open issues. Each state is a link
+    (updates/#confirmed, updates/#issues) and every update shows with CSS off."""
+    r, i = records["updates"], records["issues"]
+    opts = [("all", "All", r["total"]), ("confirmed", "Confirmed", r["confirmed"]), ("reported", "Reported", r["reported"]), ("issues", "Known issues", i["open"])]
+    targets = "".join(f'<span class="ft" id="{k}"></span>' for k, _, _ in opts)
+    chips = "".join(f'<li><a href="#{k}">{t} <span>{n}</span></a></li>' for k, t, n in opts)
+    css = ("<style>.filtered:has(#confirmed:target) .card:not(.confirmed),.filtered:has(#reported:target) .card:not(.reported),"
+           ".filtered:has(#issues:target) .ups,.filtered:not(:has(#issues:target)) .iss{display:none}"
+           + ",".join(f'.filtered:has(#{k}:target) a[href="#{k}"]' for k, _, _ in opts)
+           + ',.filtered:not(:has(.ft:target)) a[href="#all"]{background:var(--link);border-color:var(--link);color:var(--bg)}</style>')
+    cards = "".join(entry_card(x).replace('<article class="card"', f'<article class="card {x["status"]}"', 1) for x in ups)
+    opened = [x for x in iss if x["state"] == "open"]
+    issue = lambda x: (f'<article class="card"><h3><a href="../issues/{e(x["id"])}/">{e(x["title"])}</a></h3><p>{e(x["summary"])}</p>'
+                       f'<p class="meta"><span class="tag">{e(x["area"])}</span><time datetime="{x["date"]}">{x["date"]}</time><a href="{e(x["source"])}">source</a></p></article>')
+    known = (f'<section class="iss" aria-labelledby="iss-t"><h2 id="iss-t">Known issues, open</h2>'
+             + ("".join(issue(x) for x in opened) or '<p class="empty">No open issues right now.</p>')
+             + '<p><a class="more" href="../issues/">All known issues, open and fixed</a></p></section>')
+    return (css + '<div class="filtered">' + targets + f'<div class="filter chips" role="group" aria-label="Filter the tracker"><ul>{chips}</ul></div>'
+            + f'<section class="ups" aria-labelledby="all-t"><h2 id="all-t">Updates, newest first</h2>{cards}</section>{known}</div>')
+
+
 def team():
     out = []
     for f in sorted((ROOT / "bots").glob("*.md")):
@@ -519,8 +566,14 @@ def build():
     n_open = sum(x["state"] == "open" for x in iss)
     stats = [(len(ups), "updates tracked", ""), (n_open, "open issues", "issues/"), (len(team()), "bot roles", "team/"),
              (last_run["date"] if last_run else "none", f'last run ({last_run["status"]}), as of this build' if last_run else "last run", "behind/")]
+    # site/records.json: the counts and lists the redesigned pages show, built from data/ on every run with the pages
+    # themselves, so no count is typed into a page and the two can't drift.
+    n_conf = sum(x["status"] == "confirmed" for x in ups)
+    records = {"note": "Generated by scripts/build.py from data/ on every build. Do not edit by hand.",
+               "updates": {"total": len(ups), "confirmed": n_conf, "reported": len(ups) - n_conf},
+               "issues": {"total": len(iss), "open": n_open}}
     files["updates/index.html"] = page("updates/", "What's new in Grok Bot", f"{len(ups)} Grok Bot updates from public posts, newest first. Each links its source and is marked <strong>confirmed</strong> (official account or docs) or <strong>reported</strong> (community post).",
-                               (lambda f: f[1] + '<div class="filtered">' + f[0] + '<h2 id="all">Updates, newest first</h2>' + "".join(entry_card(x) for x in ups) + "</div>")(area_filter(ups)) if ups else '<p class="empty">Nothing yet.</p>', "data/updates.json")
+                               tracker_body(ups, iss, records) if ups else '<p class="empty">Nothing yet.</p>', "data/updates.json", h1="Tracker")
 
     # Tracker counts for home (i22's proof line, kept on home's tracker panel in i41).
     ideas_all = load("ideas")
@@ -556,7 +609,8 @@ def build():
     # Case-file steps link ../chat/#id literally (and CI checks that anchor), so those items and open ideas stay pinned on the main page.
     # Every other link (team cards, arena, demo challenge, feeds, badges) goes through href(), which points at wherever the item lives now.
     budget = json.loads((ROOT / "scripts/patterns.json").read_text())["max_page_bytes"]
-    css_bytes = (SITE / "style.css").stat().st_size  # the stylesheet these pages load; site/sheets.css loads on the sheets only
+    css_bytes = (SITE / "style.css").stat().st_size + (SITE / "pages.css").stat().st_size  # chat pages load both; Team does not load pages.css
+    css_bytes = max(css_bytes, 23_951)  # pre-split style.css size, so the main chat page keeps the same items
     page_target = int(budget * CHAT_TARGET) - css_bytes
     ideas = sorted(load("ideas"), key=lambda i: i["date"], reverse=True)
     idea_state = {i["id"]: i["state"] for i in ideas}
@@ -681,7 +735,7 @@ def build():
     more = ' <a href="#archive">Older items are in the archive.</a>' if parts else ""
     msec = sections(mu, "../", "chat/", "Nothing here yet. New items appear after the next daily run.")
     msec = msec.replace('<h2 id="ideas">Ideas</h2>', '<h2 id="ideas">Ideas</h2>' + iintro[:-4] + more + "</p>", 1).replace('<h2 id="research">Research</h2>', '<h2 id="research">Research</h2>' + rintro[:-4] + more + "</p>", 1)
-    fl = '<p>Follow Team chat: <a href="../chat.xml">RSS</a>, <a href="../chat.json">JSON</a>. </p><details class="routine"><summary>Follow it with your own Grok Bot</summary><p>Paste this into a routine:</p><blockquote class="card"><p>Every morning, read https://slopryno.com/chat.json and tell me about new pitches, decisions, and any debate between the Slopworks bots since yesterday: who pitched what, who pushed back, and what Coordinator decided and why. Stay quiet if nothing\'s new.</p></blockquote></details>'
+    fl = '<p class="tap">Follow Team chat: <a href="../chat.xml">RSS</a>, <a href="../chat.json">JSON</a>. </p><details class="routine"><summary>Follow it with your own Grok Bot</summary><p>Paste this into a routine:</p><blockquote class="card"><p>Every morning, read https://slopryno.com/chat.json and tell me about new pitches, decisions, and any debate between the Slopworks bots since yesterday: who pitched what, who pushed back, and what Coordinator decided and why. Stay quiet if nothing\'s new.</p></blockquote></details>'
     fl = '<nav class="jump" aria-label="On this page"><a href="#standup">Standup</a><a href="#ideas">Ideas</a><a href="#research">Research</a><a href="#handoffs">Handoffs</a>' + ('<a href="#archive">Archive</a>' if parts else "") + '</nav>' + fl
     files["chat/index.html"] = page("chat/", "Team chat", "The real handoffs between roles, newest first. Nothing is staged, and it never quotes readers or names anyone outside the team.", fl + sbody + msec + arch_list, "data/chat.json")
     url = lambda i: loc.get(i, "chat/") + "#" + i
@@ -693,7 +747,7 @@ def build():
     cdt = lambda d: datetime.fromisoformat(d).replace(hour=12, tzinfo=timezone.utc)
     files["chat.json"] = json.dumps({"version": "https://jsonfeed.org/version/1.1", "title": "Slopworks Team chat: standups, pitches, and handoffs",
         "home_page_url": BASE + "chat/", "feed_url": BASE + "chat.json", "description": DISCLAIMER,
-        "items": [{"id": f"{k}-{i}", "url": BASE + u, "title": t, "content_text": b, "date_published": cdt(d).isoformat(), "tags": [k]} for k, i, d, t, b, u in citems]}, indent=2, ensure_ascii=False) + "\n"
+        "items": [{"id": f"{k}-{i}", "url": BASE + u, "title": t, "content_text": b, "date_published": cdt(d).isoformat(), "tags": [k]} for k, i, d, t, b, u in citems]}, separators=(",", ":"), ensure_ascii=False) + "\n"
     crss = "".join(f'<item><title>{e(t)}</title><link>{e(BASE + u)}</link><guid isPermaLink="false">{k}-{e(i)}</guid><pubDate>{format_datetime(cdt(d))}</pubDate><description>{e(b)}</description><category>{k}</category></item>\n' for k, i, d, t, b, u in citems)
     files["chat.xml"] = f'<?xml version="1.0" encoding="utf-8"?>\n<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Slopworks Team chat</title><link>{BASE}chat/</link><atom:link href="{BASE}chat.xml" rel="self" type="application/rss+xml"/><description>{e(DISCLAIMER)}</description>\n{crss}</channel></rss>\n'
     wins = load("wins")
@@ -823,7 +877,7 @@ def build():
         key = w.get("merged") or w["date"]
         if cur is None or key > (cur.get("merged") or cur["date"]):
             latest_win[r] = w
-    def tslot(x, i):
+    def tslot(x, i, group):
         n, f = x[0], x[4]
         xp = totals.get(n, 0)
         num, lv, nxt = level_for(xp, levels)
@@ -831,7 +885,7 @@ def build():
         for y in ledger_all:
             if y["agent"] == n and y["status"] == "approved":
                 kinds[y["type"]] = kinds.get(y["type"], 0) + 1
-        return cardmod.card(n, i, len(order), f[:-3], cspec, season, xp, num, lv, nxt, kinds, f"../assets/avatars/{avatar_of(n)}.svg", jb=avmod.card_badge(avatar_of(n), season), last=latest_win.get(n))
+        return cardmod.card(n, i, len(order), f[:-3], cspec, season, xp, num, lv, nxt, kinds, f"../assets/avatars/{avatar_of(n)}.svg", jb=avmod.card_badge(avatar_of(n), season), last=latest_win.get(n), group=group)
     by_name = {x[0]: x for x in team()}
     seq = [by_name[n] for _, members in GROUPS for n in members if n in by_name]  # set order = the group order
     tiers = {}
@@ -839,19 +893,42 @@ def build():
         k = cardmod.rarity(level_for(totals.get(x[0], 0), levels)[0], cspec)[1]
         tiers[k] = tiers.get(k, 0) + 1
     summ = ", ".join(f"{tiers[r['name']]} {r['name'].lower()}" for r in reversed(cspec["rarity"]) if r["name"] in tiers)
-    tbody = (f'<p class="set">Set 1, {len(seq)} cards: {summ}.' + (" October edition: Halloween art." if season == "halloween" else "") + " Tap a card to open it.</p>"
-             
-             + "".join(f'<h2 class="group">{e(g)}</h2><div class="deck">' + "".join(tslot(x, seq.index(x) + 1) for x in seq if x[0] in members) + "</div>" for g, members in GROUPS))
-    # Ryno's CEO card and sheet (scripts/ceo.py; Ryno, Oct 20 3:54 PM ET): a CEO group above Leadership, his avatar the same all year.
     import ceo
-    g0 = tbody.index('<h2 class="group">')
-    tbody = (tbody[:g0].replace(" Tap a card to open it.</p>", " Plus one human: Ryno, the CEO. Tap a card to open it.</p>", 1)
-             + f'<h2 class="group">CEO</h2><div class="deck">{ceo.card(cardmod, cspec, season, len(seq), "../assets/avatars/ceo.svg")}</div>' + tbody[g0:])
+    # Swipe deck + scrub (mobile UX playbook / hardened mock 2026-10-31). CEO first, then group order.
+    # Every Team card avatar animates all the time (Ryno, Nov 14 11:01 PM ET), and the duplicate List (N) toggle is omitted, so the
+    # page stays under 100 KB in every season (scripts/avatars.py keeps the holiday motion CSS short).
+    scrub = ['<a href="#card-ryno">Ryno</a>'] + [f'<a href="#card-{x[4][:-3]}">{e(x[0])}</a>' for x in seq]
+    slots = [ceo.card(cardmod, cspec, season, len(seq), "../assets/avatars/ceo.svg")]
+    for g, members in GROUPS:
+        for x in seq:
+            if x[0] in members:
+                slots.append(tslot(x, seq.index(x) + 1, g))
+    tbody = (
+        f'<div class="team-deck">'
+        f'<p class="set">Set 1 · {len(seq)} cards'
+        + (" · Halloween" if season == "halloween" else "")
+        + f' + Ryno.</p>'
+        f'<details class="deck-browse"><summary>Open the deck</summary>'
+        f'<p class="set-detail">{summ}.' + (" October edition: Halloween art." if season == "halloween" else "") + ' Plus Ryno.</p>'
+        f'<nav class="scrub" aria-label="Jump">{"".join(scrub)}</nav>'
+        ''
+        f'<div class="deck-wrap" role="region" aria-label="Card deck">'
+        f'<ul class="deck" aria-label="Cards">{"".join(slots)}</ul></div></details></div>')
+    # The redesign's Team tab leads with the six roles with the most recent merged work (the same pick as home), then the full deck.
+    r_when = lambda w: w.get("merged") or w["date"]
+    num = lambda w: int(w["pr"].rsplit("/", 1)[1])
+    recent = sorted((x for x in seq if x[0] in latest_win), key=lambda x: r_when(latest_win[x[0]]), reverse=True)[:6]
+    def lead_row(x):
+        w = latest_win[x[0]]
+        return f'<li><a href="{x[4][:-3]}/">{e(x[0])}</a><a href="{e(w["pr"])}">PR #{num(w)}</a></li>'
+    records["team"] = {"roles": len(seq), "recent": [{"role": x[0], "pr": num(latest_win[x[0]]), "merged": r_when(latest_win[x[0]])} for x in recent]}
+    lead = f'<h2 id="recent">Most recent work</h2><ol class="recent">{"".join(lead_row(x) for x in recent)}</ol><h2 id="deck">All {len(seq)} roles and Ryno</h2>'
+
     first = seq[0][0]
     files[f"team/{ceo.STEM}/index.html"] = page(f"team/{ceo.STEM}/", "Ryno: character sheet", "The human CEO: his real powers and every time he used them, counted from the records at build time.",
                                                 ceo.sheet(REPO, len(seq), f'<p class="next"><a class="more" href="../{stems[first]}/">Next: {e(first)}\'s sheet</a></p>'), "data/ceo_decisions.json").replace("</head>", f'<link rel="stylesheet" href="../../sheets.css">\n<style>{ceo.sheet_css(season)}</style>\n</head>', 1)
     files["team/index.html"] = page("team/", "The team", f"{len(team())} Grok Bot roles in five groups, played by one daily routine, not separate agents. Levels come from verified XP (<a href=\"xp/\">how XP works</a>).",
-                                    tbody + alumni_html + '<p class="next"><a class="more" href="../timeline/">Next: how the team grew, on the Timeline</a></p>', "bots").replace("</head>", f"<style>{cardmod.css(cspec, season, stems)}{ceo.css(season)}</style>\n</head>", 1)
+                                    lead + tbody + alumni_html + '<p class="next"><a class="more" href="../receipts/">Next: what the team shipped, in Receipts</a></p>', "bots").replace("</head>", f"<style>{cardmod.css_team(cspec, season, stems)}{ceo.css(season)}{REDESIGN_CSS['recent']}</style>\n</head>", 1)
 
 
     # Lessons: same-day after-action reviews (AARs), approved by Ryno 2026-10-17. Blameless, and every field cites a real artifact.
@@ -966,7 +1043,7 @@ def build():
                 f'<details class="brief"><summary>The brief (fictional)</summary><p>{e(c["brief"])}</p></details>{secs}'
                 f'<details><summary>The {len(reps)} research reports</summary><p class="meta">By {e(", ".join(c["roles"]))}.</p>' + "".join(f'<details class="report"><summary>{e(rr["role"])}: {e(rr["question"])}</summary><div class="report-body">{rnote(rr)}</div></details>' for rr in reps) + "</details>"
                 f'<details><summary>The {len(srcs)} sources</summary><ul class="meta">' + "".join(f'<li><a href="{e(u)}">{e(u)}</a></li>' for u in srcs) + "</ul></details>"
-                f'<details><summary>How it was run</summary><p><a href="{href(c["thread"], "../", "challenges/")}">Team chat thread</a> · <a href="{REPO}/pull/{c["pr"]}">research PR #{c["pr"]}</a></p></details></article>')
+                f'<details><summary>How it was run</summary><p class="tap"><a href="{href(c["thread"], "../", "challenges/")}">Team chat thread</a> · <a href="{REPO}/pull/{c["pr"]}">research PR #{c["pr"]}</a></p></details></article>')
     chs = load("challenges")
     files["challenges/index.html"] = page("challenges/", "Demo challenge", "A labeled demo: a fictional brief goes in, roles research it, a critic challenges it, and a structured outcome comes back.",
                                           legend() + ("".join(map(challenge, chs)) or '<p class="empty">No demo challenges yet. Each one is researched by the team and labeled Demo.</p>'), "data/challenges.json")
@@ -1121,13 +1198,56 @@ def build():
     fhtml, fcss = type_filter(present)
     intro = ("How the team got here, newest first: what shipped, what Ryno decided, who joined, and what it researched and learned."
              " Every line links its record.")
+    # The Receipts tab replaces the Timeline (Nov 14 redesign): timeline/ redirects there, and keeps its entries in place
+    # as the record its archive pages and old links point at.
     files["timeline/index.html"] = page("timeline/", "Timeline", e(intro) + (f" Launched {e(day_name(launch))}." if launch else ""),
-        hero + fcss + '<div class="filtered">' + fhtml + "".join(day_html(dd, "../") for dd in tl_main) + "</div>" + tl_arch + legend(), "data")
+        '<p class="moved">The Timeline moved to <a href="../receipts/">Receipts</a>. These entries stay here as the record.</p>' + hero + fcss + '<div class="filtered">' + fhtml + "".join(day_html(dd, "../") for dd in tl_main) + "</div>" + tl_arch + legend(), "data", head=f'<meta http-equiv="refresh" content="0; url=../receipts/index.html">\n<style>{REDESIGN_CSS["moved"]}</style>\n')
     for k, (key, m, n, us) in enumerate(tl_parts):
         slug = f"timeline/archive/{key}.html"
         nav_l = ['<a href="../">Timeline (latest)</a>'] + [f'<a href="{p[0]}.html">{"Newer" if j > k else "Older"}: {arch_name(p[1], p[2])}</a>' for j, p in enumerate(tl_parts) if abs(j - k) == 1]
         files[slug] = page(slug, f"Timeline archive: {arch_name(m, n)}", "Older days from the Slopworks timeline, moved here automatically to keep the main page light. The same records, unchanged.",
             f'<nav class="jump" aria-label="Archive pages">{"".join(nav_l)}</nav>' + fcss + '<div class="filtered">' + fhtml + "".join(day_html(dd, "../../") for dd in sorted(us, reverse=True)) + "</div>", "data")
+
+    # Receipts (the redesign's fourth tab): every merged PR and every lesson, newest first, with linkable Shipped and
+    # Lessons filters (receipts/#type-shipped, receipts/#type-lesson). The list comes from data/wins.json and
+    # data/aars.json through site/records.json's receipts list. If it outgrows the page budget, older days roll to
+    # receipts/archive/ pages the way the Timeline's do, so nothing is dropped.
+    recs = [{"kind": "shipped", "title": w["title"], "who": w["role"], "when": r_when(w), "href": w["pr"], "cue": f"PR #{num(w)}", "pr": num(w)} for w in prs]
+    recs += [{"kind": "lesson", "title": a["title"], "who": a["owner"], "when": a["date"], "href": lesson_href(a["id"], BASE), "cue": "after-action review", "id": a["id"]} for a in aars]
+    recs.sort(key=lambda x: (x["when"], x.get("pr", 0)), reverse=True)
+    records["receipts"] = {"total": len(recs), "shipped": len(prs), "lessons": len(aars), "items": recs}
+    def r_item(x, up):
+        href = x["href"] if x["kind"] == "shipped" else lesson_href(x["id"], up)
+        return (f'<li data-type="{x["kind"]}"><a href="{e(href)}">{e(x["title"])}</a>'
+                f'<small>{"Shipped" if x["kind"] == "shipped" else "Lesson"} · <time datetime="{e(x["when"])}">{x["when"][:10]}</time> · {e(x["who"])} · {e(x["cue"])}</small></li>')
+    r_days = []
+    for x in recs:
+        if not r_days or r_days[-1][0] != x["when"][:10]:
+            r_days.append((x["when"][:10], []))
+        r_days[-1][1].append(x)
+    def r_html(days, up):
+        out, month = "", None
+        for d, xs in days:
+            if d[:7] != month:
+                out += ("</ol></section>" if month else "") + f'<section class="tl-day" aria-labelledby="m-{d[:7]}"><h2 id="m-{d[:7]}">{MON[int(d[5:7]) - 1]} {d[:4]}</h2><ol class="rc">'
+                month = d[:7]
+            out += "".join(r_item(x, up) for x in xs)
+        return out + ("</ol></section>" if month else "")
+    r_main, r_parts = rollover(r_days, lambda dd: len(r_html([dd], "../").encode()), budget - css_bytes - 10000)
+    rf_html, rf_css = type_filter([("shipped", "Shipped"), ("lesson", "Lessons")], "Show")
+    rr = records["receipts"]
+    r_lede = (f'{rr["total"]} receipts: {rr["shipped"]} merged PRs and {rr["lessons"]} lessons, newest first. '
+              "Each one links its pull request or its after-action review.")
+    r_arch = ('<h2 id="archive">Older receipts</h2><ul>' + "".join(f'<li><a href="archive/{k}.html">{arch_name(m, n)}</a></li>' for k, m, n, _ in reversed(r_parts)) + "</ul>") if r_parts else ""
+    # Sprints, CEO decisions, joins and research rounds stay on the Timeline's archive pages, linked here since timeline/ redirects.
+    r_arch += ('<h2 id="timeline">Timeline archive</h2><p>Sprints, CEO decisions, new roles and research rounds, by day.</p><ul class="links">'
+               + "".join(f'<li><a href="../timeline/archive/{k}.html">{arch_name(m, n)}</a></li>' for k, m, n, _ in reversed(tl_parts)) + "</ul>") if tl_parts else ""
+    files["receipts/index.html"] = page("receipts/", "Receipts", r_lede, rf_css + '<div class="filtered">' + rf_html + r_html(r_main, "../") + "</div>" + r_arch
+                                        + '<p class="next"><a class="more" href="../lessons/">Read the lessons in full</a></p>', "data/wins.json", kind="CollectionPage", head=f'<style>{REDESIGN_CSS["rc"]}</style>\n')
+    for key, m, n, us in r_parts:
+        slug = f"receipts/archive/{key}.html"
+        files[slug] = page(slug, f"Receipts archive: {arch_name(m, n)}", "Older receipts, moved here automatically to keep the main page light.",
+                           '<nav class="jump" aria-label="Archive pages"><a href="../">Receipts (latest)</a></nav>' + rf_css + '<div class="filtered">' + rf_html + r_html(sorted(us, reverse=True), "../../") + "</div>", "data/wins.json", head=f'<style>{REDESIGN_CSS["rc"]}</style>\n')
 
     # Metrics and trends (i45, Analyst's definitions, c328 to c335): generated from records into data/metrics.json.
     import metrics
@@ -1171,7 +1291,7 @@ def build():
     files["roadmap/feed.json"] = json.dumps({"version": "https://jsonfeed.org/version/1.1", "title": "Slopworks Quest board (roadmap)", "home_page_url": BASE + "roadmap/",
         "feed_url": BASE + "roadmap/feed.json", "description": "Each completed quest, stage change and judged oath on the Slopworks team's roadmap. " + DISCLAIMER,
         "items": [{"id": x["id"], "url": f'{BASE}roadmap/#{x["anchor"]}', "title": x["title"], "content_text": x["summary"], "date_published": rdt(x["date"]).isoformat()} for x in events]},
-        indent=2, ensure_ascii=False) + "\n"
+        separators=(",", ":"), ensure_ascii=False) + "\n"
     files["roadmap/feed.xml"] = ('<?xml version="1.0" encoding="utf-8"?>\n<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Slopworks Quest board (roadmap)</title>'
         f'<link>{BASE}roadmap/</link><atom:link href="{BASE}roadmap/feed.xml" rel="self" type="application/rss+xml"/><description>{e(DISCLAIMER)}</description>\n'
         + "".join(f'<item><title>{e(x["title"])}</title><link>{BASE}roadmap/#{x["anchor"]}</link><guid isPermaLink="false">{x["id"]}</guid><pubDate>{format_datetime(rdt(x["date"]))}</pubDate><description>{e(x["summary"])}</description></item>\n' for x in events)
@@ -1212,6 +1332,13 @@ def build():
             return (f'<li><a class="hc hc-{e(k.lower())}" href="../{s}">' + (f'<span class="kick">{e(k)}</span>' if k else "")
                     + f'<strong>{e(t)}</strong><span>{e(blurb.get(s, DESCRIPTIONS[s]))}</span>' + (f'<small class="mono">{e(m)}</small>' if m else "") + "</a></li>")
         return '<ul class="hub">' + "".join(item(s, t) for s, t in pages) + "</ul>"
+    # More (the redesign's fifth tab): every section the five tabs don't hold, so no page becomes unreachable.
+    more_groups = [("Work", [("work/", "Work")] + [w for w in WORK if w[0] != "timeline/"]), ("Team", [("team/xp/", "How XP works"), ("lessons/", "Lessons")]),
+                   ("Under the hood", [("hood/", "Under the hood")] + HOOD)]
+    files["more/index.html"] = page("more/", "More", "Every section of the site, one tap away.",
+        "".join(f'<section aria-labelledby="g{k}"><h2 id="g{k}">{e(g)}</h2><ul class="hub">' + "".join(f'<li><a href="../{s}"><strong>{e(t)}</strong></a></li>' for s, t in links) + "</ul></section>"
+                for k, (g, links) in enumerate(more_groups)), "scripts/build.py")
+    files["records.json"] = json.dumps(records, separators=(",", ":"), ensure_ascii=False) + "\n"  # compact: the 5 MB tree budget is tight after the Team CSS split and the Metrics sparklines
     files["work/index.html"] = page("work/", "Work", "What the team has made, and how it went.", hub(WORK), "data/cases.json")
     files["hood/index.html"] = page("hood/", "Under the hood", "How the site runs: the tracker, the team's chat, and the logs. No forms or scripts, and the theme button sends nothing.", hub(HOOD) + pace_line(load("tempo"), "../"), "data/runs.json")
     files["how/index.html"] = page("how/", "How this works", "One daily run, a team of roles, and a human CEO who steps in only where the rules say so. Every term below links the rule or record behind it.",
@@ -1235,7 +1362,7 @@ def build():
     files["feed.json"] = json.dumps({"version": "https://jsonfeed.org/version/1.1", "title": "Slopworks: Grok Bot updates and known issues",
         "home_page_url": BASE, "feed_url": BASE + "feed.json", "description": DISCLAIMER,
         "items": [{"id": f"{k}-{x['id']}", "url": link(k, x), "external_url": x["source"], "title": title(k, x), "content_text": x["summary"],
-                   "date_published": dt(x["date"]).isoformat(), "tags": [k, x["area"], x["status"]] + ([x["state"]] if k == "issue" else [])} for k, x in feed]}, indent=2, ensure_ascii=False) + "\n"
+                   "date_published": dt(x["date"]).isoformat(), "tags": [k, x["area"], x["status"]] + ([x["state"]] if k == "issue" else [])} for k, x in feed]}, separators=(",", ":"), ensure_ascii=False) + "\n"  # compact: the 5 MB tree budget is tight after pages.css and the Metrics sparklines
     rss = "".join(f"<item><title>{e(title(k, x))}</title><link>{e(link(k, x))}</link><guid isPermaLink=\"false\">{k}-{x['id']}</guid><pubDate>{format_datetime(dt(x['date']))}</pubDate><description>{e(x['summary'] + ' Source: ' + x['source'])}</description><category>{e(x['status'])}</category></item>\n" for k, x in feed)
     files["feed.xml"] = f'<?xml version="1.0" encoding="utf-8"?>\n<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Slopworks: Grok Bot updates and known issues</title><link>{BASE}</link><atom:link href="{BASE}feed.xml" rel="self" type="application/rss+xml"/><description>{e(DISCLAIMER)}</description>\n{rss}</channel></rss>\n'
     files["badges/updates.svg"] = badge("updates", len(ups), "#0550ae")
@@ -1259,8 +1386,8 @@ def build():
     files["sitemap.xml"] = ('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
                             + "".join(f"<url><loc>{e(loc(k))}</loc>" + (f"<lastmod>{lastmod[k]}</lastmod>" if lastmod.get(k) else "") + "</url>\n" for k in pages) + "</urlset>\n")
     files["robots.txt"] = f"User-agent: *\nAllow: /\nSitemap: {BASE}sitemap.xml\n"
-    main_pages = [("", "Home"), ("work/", "Work"), ("hood/", "Under the hood")] + [p for p in NAV if p[0]] + OPS + [("lessons/", "Lessons")] * ("lessons/" not in dict(NAV)) + [("team/xp/", "How XP works")]
-    main_pages = list(dict.fromkeys(main_pages))  # How this works is in both NAV and OPS; list each page once (#149 Level 1)
+    main_pages = list(TABS) + [("work/", "Work"), ("hood/", "Under the hood")] + [p for p in NAV if p[0]] + OPS + [("lessons/", "Lessons")] * ("lessons/" not in dict(NAV)) + [("team/xp/", "How XP works")]
+    main_pages = list(dict.fromkeys(main_pages))  # tabs first; How this works is in both NAV and OPS; list each page once (#149 Level 1)
     files["llms.txt"] = ("# Slopworks\n\n> " + DESCRIPTIONS[""] + " " + DISCLAIMER + "\n\n"
         "Slopworks tracks public Grok Bot updates and known issues, and shows how its bot team works: research rounds, decisions, case files, and after-action reviews. "
         "Every role is played by one daily routine and labeled as a role. Demo challenges are labeled Demo and are worked examples on fictional briefs, not advice or quotes. "

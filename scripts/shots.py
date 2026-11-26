@@ -44,8 +44,9 @@ def slug(page):
 
 def shoot(exe, url, width, height, dark, out):
     with tempfile.TemporaryDirectory() as tmp:
-        args = [exe, "--headless", "--disable-gpu", "--no-sandbox", "--hide-scrollbars", f"--user-data-dir={tmp}/p",
-                f"--window-size={width},{height}", f"--screenshot={out}", url]
+        # virtual-time-budget matches mobile_audit, so a page that immediately refreshes still produces a screenshot.
+        args = [exe, "--headless", "--disable-gpu", "--no-sandbox", "--hide-scrollbars", "--virtual-time-budget=60000",
+                f"--user-data-dir={tmp}/p", f"--window-size={width},{height}", f"--screenshot={out}", url]
         if dark:
             args[1:1] = ["--force-dark-mode", "--blink-settings=preferredColorScheme=0"]
         subprocess.run(args, capture_output=True, timeout=120)

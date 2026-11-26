@@ -39,15 +39,36 @@ def verdict(state, schedule, now, grace=4):
                    "Sweep: record the missed run and open an after-action review.")
 
 
+def stale_labels(record, today, judging, committed, wanted):
+    """Dated labels on the built site that a reader would now read as wrong (Critic S3, 2026-11-13): the site counts
+    "so far" and the next oath judging from the newest record, so they freeze when runs stop. Dates are datetime.date."""
+    out = []
+    if (today - record).days > 1:
+        out.append(f"'so far' labels on the weekly recap and home count to {record}, {(today - record).days} days ago")
+    if judging < today:
+        out.append(f"the quest board's next oath judging, {judging}, has passed")
+    if committed != wanted:
+        out.append(f"the Team page shows the {committed} avatar set; {today} needs {wanted} (scripts/avatars.py)")
+    return out
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("--grace", type=float, default=4)
     a = ap.parse_args(argv)
     state = json.loads((ROOT / "data/state.json").read_text())
     schedule = json.loads((ROOT / "data/schedule.json").read_text())
-    ok, msg = verdict(state, schedule, datetime.datetime.now(ET), a.grace)
+    now = datetime.datetime.now(ET)
+    ok, msg = verdict(state, schedule, now, a.grace)
     print(msg if ok else f"::error::{msg}")
-    return 0 if ok else 1
+    sys.path.insert(0, str(ROOT / "scripts"))
+    import avatars, roadmap  # repo scripts, standard library only
+    record = datetime.date.fromisoformat(state.get("updated") or state["last_run"])
+    stale = stale_labels(record, now.date(), datetime.date.fromisoformat(roadmap.next_judging(record.isoformat())),
+                         avatars.committed_season(), avatars.season_for(now.date()))
+    for s in stale:
+        print(f"::error::stale label: {s}")
+    return 0 if ok and not stale else 1
 
 
 if __name__ == "__main__":

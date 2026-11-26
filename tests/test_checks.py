@@ -58,6 +58,11 @@ class PII(unittest.TestCase):
         self.assertTrue(check.pii_hits("https://x.com/someuser/status/1"))
         self.assertTrue(check.pii_hits("slopryno@mail.grokbot.com"))
 
+    def test_view_transition_at_rule_is_not_a_handle(self):
+        css = "@media(prefers-reduced-motion:no-preference){@view-transition{navigation:auto}}"
+        self.assertEqual(check.pii_hits(css), [])
+        self.assertTrue(check.pii_hits("see @view for the write-up"))
+
 
 class Files(unittest.TestCase):
     def test_blocked(self):
@@ -103,6 +108,14 @@ class ReviewGate(unittest.TestCase):
     def test_blocking_comment_wins(self):
         c = [{"body": "Sign-off: Lens"}, {"body": "Block: Lens\nsource is dead"}]
         self.assertTrue(check.review_gate(["data/x.json"], "Maker: Scout", c))
+
+    def test_critic_blocker_holds_until_cleared(self):
+        ok = [{"body": "Sign-off: Lens"}]
+        held = ok + [{"body": "Verdict: Critic (before)\nBlock: Critic\nbroken link"}]
+        self.assertIn("Critic blocked this PR (BLOCKER); a later 'Sign-off: Critic' clears it",
+                      check.review_gate(["data/x.json"], "Maker: Scout", held))
+        self.assertEqual(check.review_gate(["data/x.json"], "Maker: Scout", held + [{"body": "Sign-off: Critic\nfixed"}]), [])
+        self.assertEqual(check.review_gate(["data/x.json"], "Maker: Scout", ok + [{"body": "Verdict: Critic\nSIGNIFICANT: x"}]), [])
 
 
 class GuardrailGate(unittest.TestCase):

@@ -1,33 +1,6 @@
 {
-  "window_start": "2026-10-17T09:28-04:00",
+  "window_start": "2026-10-20T00:14-04:00",
   "days": [
-    {
-      "date": "2026-10-17",
-      "main_ci_runs": 44,
-      "main_ci_failed": 0,
-      "pages_runs": 45,
-      "pages_failed": 0,
-      "pr_ci_failed_bot": 0,
-      "pr_ci_failed_dependabot": 0
-    },
-    {
-      "date": "2026-10-18",
-      "main_ci_runs": 10,
-      "main_ci_failed": 0,
-      "pages_runs": 10,
-      "pages_failed": 0,
-      "pr_ci_failed_bot": 2,
-      "pr_ci_failed_dependabot": 0
-    },
-    {
-      "date": "2026-10-19",
-      "main_ci_runs": 18,
-      "main_ci_failed": 0,
-      "pages_runs": 18,
-      "pages_failed": 0,
-      "pr_ci_failed_bot": 3,
-      "pr_ci_failed_dependabot": 0
-    },
     {
       "date": "2026-10-20",
       "main_ci_runs": 18,
@@ -75,11 +48,101 @@
     },
     {
       "date": "2026-10-30",
-      "main_ci_runs": 15,
+      "main_ci_runs": 17,
       "main_ci_failed": 0,
-      "pages_runs": 15,
+      "pages_runs": 17,
       "pages_failed": 0,
       "pr_ci_failed_bot": 3,
+      "pr_ci_failed_dependabot": 0
+    },
+    {
+      "date": "2026-10-31",
+      "main_ci_runs": 4,
+      "main_ci_failed": 0,
+      "pages_runs": 4,
+      "pages_failed": 0,
+      "pr_ci_failed_bot": 4,
+      "pr_ci_failed_dependabot": 0
+    },
+    {
+      "date": "2026-11-01",
+      "main_ci_runs": 1,
+      "main_ci_failed": 0,
+      "pages_runs": 1,
+      "pages_failed": 0,
+      "pr_ci_failed_bot": 0,
+      "pr_ci_failed_dependabot": 0
+    },
+    {
+      "date": "2026-11-03",
+      "main_ci_runs": 3,
+      "main_ci_failed": 0,
+      "pages_runs": 3,
+      "pages_failed": 0,
+      "pr_ci_failed_bot": 1,
+      "pr_ci_failed_dependabot": 0
+    },
+    {
+      "date": "2026-11-13",
+      "main_ci_runs": 3,
+      "main_ci_failed": 0,
+      "pages_runs": 3,
+      "pages_failed": 0,
+      "pr_ci_failed_bot": 0,
+      "pr_ci_failed_dependabot": 0
+    },
+    {
+      "date": "2026-11-14",
+      "main_ci_runs": 4,
+      "main_ci_failed": 0,
+      "pages_runs": 4,
+      "pages_failed": 0,
+      "pr_ci_failed_bot": 0,
+      "pr_ci_failed_dependabot": 0
+    },
+    {
+      "date": "2026-11-15",
+      "main_ci_runs": 2,
+      "main_ci_failed": 0,
+      "pages_runs": 2,
+      "pages_failed": 0,
+      "pr_ci_failed_bot": 0,
+      "pr_ci_failed_dependabot": 0
+    },
+    {
+      "date": "2026-11-16",
+      "main_ci_runs": 0,
+      "main_ci_failed": 0,
+      "pages_runs": 0,
+      "pages_failed": 0,
+      "pr_ci_failed_bot": 0,
+      "pr_ci_failed_dependabot": 0
+    },
+    {
+      "date": "2026-11-17",
+      "main_ci_runs": 2,
+      "main_ci_failed": 0,
+      "pages_runs": 2,
+      "pages_failed": 0,
+      "pr_ci_failed_bot": 0,
+      "pr_ci_failed_dependabot": 0
+    },
+    {
+      "date": "2026-11-18",
+      "main_ci_runs": 7,
+      "main_ci_failed": 0,
+      "pages_runs": 7,
+      "pages_failed": 0,
+      "pr_ci_failed_bot": 5,
+      "pr_ci_failed_dependabot": 0
+    },
+    {
+      "date": "2026-11-19",
+      "main_ci_runs": 3,
+      "main_ci_failed": 0,
+      "pages_runs": 3,
+      "pages_failed": 0,
+      "pr_ci_failed_bot": 1,
       "pr_ci_failed_dependabot": 0
     }
   ]

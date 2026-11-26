@@ -72,7 +72,7 @@ def render_week(b, n, s, t, days, final, items, wins, ups, iss, aars, objectives
     decisions = [x for x in wk if "decision" in x["types"]]
     added = [u for u in ups if inside(u["added"], s, t)]
     issues = [i for i in iss if inside(i["date"], s, t) or (i.get("fixed_date") and inside(i["fixed_date"], s, t))]
-    label = "Final" if final else f"Days 1 to {days} so far"
+    label = "Final" if final else f"Days 1 to {days} so far, to {nice(s + timedelta(days=days - 1))}"  # names its date (Critic S3)
     counts = [(len(prs), "merged PRs"), (len(sprints), "sprints completed"), (len(decisions), "CEO decisions"),
               (len(research), "research rounds"), (len(lessons), "lessons written up"), (len(added), "Grok Bot updates added")]
     latest = lambda xs: [max(xs, key=lambda x: (x["date"], x["time"] or ""))] if xs else []

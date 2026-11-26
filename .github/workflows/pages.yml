@@ -11,16 +11,30 @@ concurrency:
   group: pages
   cancel-in-progress: false
 jobs:
-  deploy:
+  # Upload and deploy are separate jobs (GitHub's starter layout). deploy-pages looks the artifact up once, with no
+  # retry, and since Nov 25 2026 the artifact list can lag the upload by seconds (actions/deploy-pages#451). A job
+  # boundary adds that time, and "Re-run failed jobs" reruns only deploy, so it doesn't find two github-pages artifacts.
+  build:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v7
       - uses: actions/configure-pages@v6
       - uses: actions/upload-pages-artifact@v5
         with:
           path: site
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url || steps.retry.outputs.page_url }}
+    steps:
       - id: deployment
+        uses: actions/deploy-pages@v5
+        continue-on-error: true
+      - name: Wait for the artifact list to catch up
+        if: steps.deployment.outcome == 'failure'
+        run: sleep 60
+      - id: retry
+        if: steps.deployment.outcome == 'failure'
         uses: actions/deploy-pages@v5

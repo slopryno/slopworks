@@ -4,7 +4,8 @@ Transparent, flat, animated with inline CSS only (idle squish, staggered blinks)
 prefers-reduced-motion. Inspired by the Grok Bot app style, not copied. Changes need Polish + Shield review.
 
 Seasonal sets (Ryno, 2026-10-19 9:30 PM ET: "Ship tomorrow but make them see-through, no tiles"; 9:52 PM ET: full
-months): for all of October each role becomes its Halloween character and for all of December its winter one, but only once
+months): for all of October each role becomes its Halloween character and from Nov 14 to Dec 31 its winter one (Ryno, Nov 14
+11:49 PM ET: winter on now instead of Dec 1), but only once
 Ryno's yes for that theme is done on data/calendar.json (9:56 PM ET: "Yes, holiday looks wait for my yes before switching
 on"); the rest of the year, or with no yes, it's the blob. Same file names, picked by the ET date when this script runs
 (the daily run). Every file also gets a still copy in still/ (no <style>, the neutral pose) for long lists like Team chat.
@@ -113,14 +114,14 @@ def svg(i, name, color, shape, p, badge, why):
 # ---------- seasonal sets ----------
 ET = ZoneInfo("America/New_York")
 CALENDAR = Path(__file__).resolve().parent.parent / "data/calendar.json"
-SEASONS = {"halloween": ((10, 1), (10, 31)), "winter": ((12, 1), (12, 31))}  # full months (Ryno, Oct 19 9:52 PM ET)
+SEASONS = {"halloween": ((10, 1), (10, 31)), "winter": ((11, 14), (12, 31))}  # Halloween a full month (Ryno, Oct 19 9:52 PM ET); winter from Nov 14 (Ryno, Nov 14 11:49 PM ET: on now, not Dec 1)
 EYE = "#1b1f24"  # eyes and cut-outs: the blob's own eye colour, the same in both themes
 BAND = (.142, .268)  # relative luminance with 3:1 against both page backgrounds (#F6F5F1, #141418) and both card colours (#FFFFFF, #1C1C22)
 RIM_W = 4  # half shows outside the shape: a soft same-hue edge, only on shapes too light (or dark) for one theme
 
 
 def in_window(d):
-    """'halloween' Oct 1-31, 'winter' Dec 1-31, else 'normal' (inclusive, by calendar date). The date alone; see season_for."""
+    """'halloween' Oct 1-31, 'winter' Nov 14-Dec 31, else 'normal' (inclusive, by calendar date). The date alone; see season_for."""
     md = (d.month, d.day)
     return next((n for n, (a, b) in SEASONS.items() if a <= md <= b), "normal")
 
@@ -215,30 +216,49 @@ def M(s): return f'<g transform="matrix(-1 0 0 1 100 0)">{s}</g>'
 def G(c, s): return f'<g class="{c}">{s}</g>'
 
 
+def d1(x):
+    """A path number to one decimal in its shortest form: 26.0 -> 26, -0.4 -> -.4, -0.0 -> 0 (page budget; the same point)."""
+    t = f"{x:.1f}".rstrip("0").rstrip(".")
+    t = "0" if t in ("-0", "") else t
+    return t.replace("0.", ".", 1) if t.startswith(("0.", "-0.")) else t
+
+
+def xy(x, y):
+    """A path coordinate pair; a minus sign already separates the numbers, so the space goes."""
+    y = d1(y)
+    return f"{d1(x)}{'' if y[0] == '-' else ' '}{y}"
+
+
 def star(cx, cy, r, ri):
-    return "M" + "L".join(f"{cx + (r if k % 2 == 0 else ri) * math.cos(-math.pi / 2 + k * math.pi / 5):.1f} "
-                          f"{cy + (r if k % 2 == 0 else ri) * math.sin(-math.pi / 2 + k * math.pi / 5):.1f}" for k in range(10)) + "Z"
+    return "M" + "L".join(xy(cx + (r if k % 2 == 0 else ri) * math.cos(-math.pi / 2 + k * math.pi / 5),
+                             cy + (r if k % 2 == 0 else ri) * math.sin(-math.pi / 2 + k * math.pi / 5)) for k in range(10)) + "Z"
 
 
 # Motions: the pose at 25% (L) and 75% (R), the neutral pose at 0/50/100%, and the squash at each. Eyes slide toward the
 # turn and go from tall pills to circles, like a head turning.
 def dance(a=10, sq=.08, dur=3.0):
-    return dict(L=f"rotate(-{a}deg)", R=f"rotate({a}deg)", N="rotate(0)", o="50px 90px", qN=(1 - sq / 2, 1 + sq / 2), qS=(1 + sq, 1 - sq), dur=dur)
+    return dict(L=f"rotate(-{a}deg)", R=f"rotate({a}deg)", N="none", o="50px 90px", qN=(1 - sq / 2, 1 + sq / 2), qS=(1 + sq, 1 - sq), dur=dur)
 def floaty(a=6, y=5, dur=3.6):
-    return dict(L=f"translateY(-{y}px) rotate(-{a}deg)", R=f"translateY(-{y}px) rotate({a}deg)", N="translateY(0)", o="50px 60px", qN=(.98, 1.03), qS=(1.04, .96), dur=dur)
+    return dict(L=f"translateY(-{y}px) rotate(-{a}deg)", R=f"translateY(-{y}px) rotate({a}deg)", N="none", o="50px 60px", qN=(.98, 1.03), qS=(1.04, .96), dur=dur)
 def hop(a=5, y=8, dur=2.4):
-    return dict(L=f"translateY(-{y}px) rotate(-{a}deg)", R=f"translateY(-{y}px) rotate({a}deg)", N="translateY(0)", o="50px 90px", qN=(1.09, .9), qS=(.95, 1.07), dur=dur)
+    return dict(L=f"translateY(-{y}px) rotate(-{a}deg)", R=f"translateY(-{y}px) rotate({a}deg)", N="none", o="50px 90px", qN=(1.09, .9), qS=(.95, 1.07), dur=dur)
 def swing(a=9, px=50, py=6, dur=3.2):
-    return dict(L=f"rotate({a}deg)", R=f"rotate(-{a}deg)", N="rotate(0)", o=f"{px}px {py}px", qN=(.98, 1.02), qS=(1.03, .97), dur=dur)
+    return dict(L=f"rotate({a}deg)", R=f"rotate(-{a}deg)", N="none", o=f"{px}px {py}px", qN=(.98, 1.02), qS=(1.03, .97), dur=dur)
 def shuffle(x=5, a=4, dur=2.6):
-    return dict(L=f"translateX(-{x}px) rotate({a}deg)", R=f"translateX({x}px) rotate(-{a}deg)", N="translateX(0)", o="50px 90px", qN=(.97, 1.04), qS=(1.06, .93), dur=dur)
+    return dict(L=f"translateX(-{x}px) rotate({a}deg)", R=f"translateX({x}px) rotate(-{a}deg)", N="none", o="50px 90px", qN=(.97, 1.04), qS=(1.06, .93), dur=dur)
 def twinkle(a=8, s=1.07, dur=2.8):
     return dict(L=f"rotate(-{a}deg) scale({s})", R=f"rotate({a}deg) scale({s})", N="rotate(0) scale(1)", o="50px 56px", qN=(1, 1), qS=(1.03, .97), dur=dur)
 
 
+def num(x):
+    """A CSS number in its shortest form: 2.0 -> 2, 0.37 -> .37, -0.5 -> -.5 (page budget; the same value)."""
+    t = f"{x:g}" if isinstance(x, float) else str(x)
+    return t.replace("0.", ".", 1) if t.startswith(("0.", "-0.")) else t
+
+
 def part(cls, dur, origin, frame, extra=""):
     """A part with its own loop (a tail wag, a wing flap), as CSS."""
-    return f".{cls}{{animation:{cls} {dur}s ease-in-out infinite;transform-origin:{origin}{extra}}}@keyframes {cls}{{{frame}}}"
+    return f".{cls}{{animation:{cls} {num(dur)}s ease-in-out infinite;transform-origin:{origin}{extra}}}@keyframes {cls}{{{frame}}}"
 
 
 # Each costume: name, line (the role's own pick, in its words), body (shapes, back to front), eyes (cy, left x, right x,
@@ -336,8 +356,8 @@ HALLOWEEN = {
              + P("M44 60L50 64L44 68ZM56 60L50 64L56 68Z", EYE),
         eyes=(46, 44, 56, 3, 5.4), face="#7d8a99", m=dance(5, .05, 3.6)),
 }
-_flake = "".join(f"M50 56l{30 * math.cos(a):.1f} {30 * math.sin(a):.1f}M{50 + 19 * math.cos(a):.1f} {56 + 19 * math.sin(a):.1f}l{8 * math.cos(a + .9):.1f} {8 * math.sin(a + .9):.1f}"
-                 f"M{50 + 19 * math.cos(a):.1f} {56 + 19 * math.sin(a):.1f}l{8 * math.cos(a - .9):.1f} {8 * math.sin(a - .9):.1f}" for a in (k * math.pi / 3 - math.pi / 2 for k in range(6)))
+_flake = "".join(f"M50 56l{xy(30 * math.cos(a), 30 * math.sin(a))}M{xy(50 + 19 * math.cos(a), 56 + 19 * math.sin(a))}l{xy(8 * math.cos(a + .9), 8 * math.sin(a + .9))}"
+                 f"M{xy(50 + 19 * math.cos(a), 56 + 19 * math.sin(a))}l{xy(8 * math.cos(a - .9), 8 * math.sin(a - .9))}" for a in (k * math.pi / 3 - math.pi / 2 for k in range(6)))
 WINTER = {
     "coordinator": dict(name="Santa", line="Makes the list, checks it twice, ships it in order.",
         body=E(50, 64, 26, 26, "#e03a3e") + P("M28 64C30 82 40 90 50 90C60 90 70 82 72 64Q61 70 50 66Q39 70 28 64Z", "#f4f4f4")
@@ -348,9 +368,9 @@ WINTER = {
              + G("tp", P("M30 52Q40 28 73 19Q60 33 70 52Z", "#e03a3e") + C(73, 19, 4, "#f2c14e")) + R(27, 49, 46, 6, 3, "#0969da"),
         eyes=(67, 44, 56, 3.2, 5.6), face="#2f9e4f", m=hop(5, 9, 2.0),
         css=part("tp", 1.2, "50px 52px", "50%{transform:skewX(-7deg)}")),
-    "lens": dict(name="Rudolph", line="A bright red nose that spots problems through the fog.",
+    "lens": dict(name="Reindeer", line="A bright red nose that spots problems through the fog.",
         body=S("M40 38V22M40 31L32 25M40 26L46 18", "#d9b27c", 3.6) + M(S("M40 38V22M40 31L32 25M40 26L46 18", "#d9b27c", 3.6))
-             + E(50, 62, 22, 25, "#a8743f") + R(32, 81, 36, 5, 2.5, "#1a7f37", True) + C(50, 74, 4.6, "#ef4444", True),
+             + E(50, 62, 22, 25, "#a8743f") + R(32, 81, 36, 5, 2.5, "#1a7f37", True) + C(50, 74, 5.4, "#ef4444", True),
         eyes=(59, 44, 56, 3.2, 5.6), face="#a8743f", m=hop(6, 7, 2.5)),
     "shield": dict(name="Nutcracker", line="Stands guard at the door all season.",
         body=R(34, 12, 32, 26, 3, "#cf222e") + R(34, 32, 32, 5, 0, "#f2c14e", True) + R(32, 37, 36, 28, 6, "#f3dcc4") + R(30, 64, 40, 26, 8, "#cf222e")
@@ -362,7 +382,8 @@ WINTER = {
         eyes=(32, 45, 55, 2.6, 4.6), face="#bc6a30", m=dance(10, .07, 2.4)),
     "trial": dict(name="Present", line="Wrapped, tagged, and tested before anyone opens it.",
         body=R(24, 42, 52, 46, 6, "#e0a400") + R(20, 35, 60, 12, 4, "#f0b400") + R(46, 35, 8, 53, 0, "#e03a3e", True)
-             + P("M50 35C40 21 30 27 36 33Q42 37 50 35C60 21 70 27 64 33Q58 37 50 35Z", "#e03a3e"),
+             + P("M50 35C40 21 30 27 36 33Q42 37 50 35C60 21 70 27 64 33Q58 37 50 35Z", "#e03a3e")
+             + R(72, 38, 11, 15, 1.5, "#f4f4f4") + C(77.5, 43, 1.4, "#e03a3e", True),
         eyes=(64, 40, 60, 3.2, 5.8), face="#e0a400", m=hop(6, 6, 2.2)),
     "polish": dict(name="Bauble", line="Adds the finishing sparkle, never more than it needs.",
         body=S("M50 18A4 4 0 1 1 50.1 18", "#f2c14e", 2) + R(42, 20, 16, 8, 2, "#f2c14e")
@@ -379,7 +400,8 @@ WINTER = {
         css=part("sp", 9, "50px 56px", "to{transform:rotate(60deg)}").replace("ease-in-out", "linear")),
     "sweep": dict(name="Snowman", line="Keeps cool under load, all winter.",
         body=E(50, 75, 23, 17, "#f4f6fb") + C(50, 47, 16, "#f4f6fb") + R(32, 30, 36, 5, 2.5, "#218bff") + R(38, 12, 24, 20, 3, "#218bff")
-             + R(33, 59, 34, 6, 3, "#218bff") + P("M50 52L62 54.5L50 57Z", "#f28c28", True),
+             + R(33, 59, 34, 6, 3, "#218bff") + P("M50 52L62 54.5L50 57Z", "#f28c28", True)
+             + C(50, 68, 2, EYE, True) + C(50, 78, 2, EYE, True),
         eyes=(45, 45, 55, 2.6, 4.6), face="#f4f6fb", m=dance(8, .04, 2.4)),
     "analyst": dict(name="Advent calendar", line="Counts down the days, one honest number at a time.",
         body=R(23, 25, 54, 63, 8, "#a371f7") + "".join(R(x, 31, 11, 9, 1.5, "#d3bdff", True) for x in (29, 44.5, 60)) + R(29, 72, 11, 10, 1.5, "#d3bdff", True)
@@ -421,7 +443,7 @@ WINTER = {
         eyes=(63, 38, 46, 2.6, 4.6), face="#f6f6f6", m=dance(9, .06, 2.8)),
 }
 COSTUMES = {"halloween": HALLOWEEN, "winter": WINTER}
-PROPER = ("Santa", "Rudolph", "Frankenstein's monster", "North Star", "Scrooge in his nightcap")
+PROPER = ("Santa", "Frankenstein's monster", "North Star", "Scrooge in his nightcap")
 
 
 def costume_svg(i, name, season):
@@ -437,28 +459,35 @@ def character(i, ch, label, badge_fill, badge):
     """A drawn character (costume or fixed): the shared motion, eyes and job badge around ch["body"]."""
     m, dur = ch["m"], ch["m"]["dur"]
     lag = round((i * .37) % dur, 2)
-    a = f"{dur}s{f' -{lag}s' if lag else ''} ease-in-out infinite"  # negative delay: out of step, already moving
+    a = f"{num(dur)}s{f' -{num(lag)}s' if lag else ''} ease-in-out infinite"  # negative delay: out of step, already moving
     cy, xl, xr, rx, ry = ch["eyes"]
     k = 3.2 if rx < 3.4 else 4
-    qn, qs = m["qN"], m["qS"]
+    qn, qs = [num(x) for x in m["qN"]], [num(x) for x in m["qS"]]
     # One shared timing for the four loops, then each loop's name and origin (same motion as four full shorthands).
     # Keyframes leave out 0% and 100% where the pose is the resting one: a missing end keyframe is the element's own
     # transform (none), so it draws the same (page budget, Oct 20 3:54 PM ET).
     if ch.get("calm"):  # a slow sway and the blink only (the CEO: calm motion, fewer bytes on the Team page)
-        css = (f".s,.e{{animation:{a}}}.s{{animation-name:s;transform-origin:{m['o']}}}.e{{animation-name:e;transform-box:fill-box;transform-origin:center}}"
+        css = (f"*{{animation:{a}}}.s{{animation-name:s;transform-origin:{m['o']}}}.e{{animation-name:e;transform-box:fill-box;transform-origin:center}}"
                f"@keyframes s{{50%{{transform:{m['N']}}}25%{{transform:{m['L']}}}75%{{transform:{m['R']}}}}}"
-               f"@keyframes e{{10%,50%,60%{{transform:none}}25%,75%{{transform:scale(1.32,.7)}}}}@media(prefers-reduced-motion:reduce){{*{{animation:none!important}}}}")
+               f"@keyframes e{{10%,50%,60%{{transform:none}}25%,75%{{transform:scale(1.32,.7)}}}}")
     else:
-        css = (f".s,.q,.g,.e{{animation:{a}}}.s{{animation-name:s;transform-origin:{m['o']}}}.q{{animation-name:q;transform-origin:50px 90px}}"
-               f".g{{animation-name:g}}.e{{animation-name:e;transform-box:fill-box;transform-origin:center}}"
+        # *{animation:a} names no keyframes, so only the classes below move; a shared origin is written once.
+        og = ".s,.q{transform-origin:50px 90px}" if m["o"] == "50px 90px" else f".s{{transform-origin:{m['o']}}}.q{{transform-origin:50px 90px}}"
+        css = (f"*{{animation:{a}}}.s{{animation-name:s}}.q{{animation-name:q}}{og}"
+               f".g{{animation-name:g}}.g>*{{animation-name:e;transform-box:fill-box;transform-origin:center}}"
                f"@keyframes s{{50%{{transform:{m['N']}}}25%{{transform:{m['L']}}}75%{{transform:{m['R']}}}}}"
                f"@keyframes q{{0%,50%,to{{transform:scale({qn[0]},{qn[1]})}}25%,75%{{transform:scale({qs[0]},{qs[1]})}}}}"
                f"@keyframes g{{50%{{transform:none}}25%{{transform:translateX(-{k}px)}}75%{{transform:translateX({k}px)}}}}"
                f"@keyframes e{{10%,50%,60%{{transform:none}}25%,75%{{transform:scale(1.32,.7)}}}}"
-               + ch.get("css", "") + "@media(prefers-reduced-motion:reduce){*{animation:none!important}}")
+               + ch.get("css", ""))
+    # Reduced motion: every loop sits inside a no-preference query, so under reduce nothing is set to move (same as the old
+    # reduce rule turning all of it off, fewer bytes per file on the Team page).
+    css = f"@media(prefers-reduced-motion:no-preference){{{css}}}"
     glyph = (f'<path d="{BADGE[badge]}" fill="none" stroke="#fff" stroke-width="1.8"/>'
              if badge in STROKED else f'<path d="{BADGE[badge]}" fill="#fff"/>')
-    eyes = "".join(f'<ellipse class="e" cx="{x}" cy="{cy}" rx="{rx}" ry="{ry}"/>' for x in (xl, xr))
+    # The calm CEO marks his eyes with class e; the others' eyes are the eye group's children (.g>*), so no class per eye.
+    ec = ' class="e"' if ch.get("calm") else ""
+    eyes = "".join(f'<ellipse{ec} cx="{x}" cy="{cy}" rx="{rx}" ry="{ry}"/>' for x in (xl, xr))
     # Page budget (Ryno, Oct 20 7:27 AM ET): round caps and joins are set once on the root and the eye colour once on the
     # eye group (SVG attributes inherit; the stills keep them because still() only drops <style>). Same pixels, fewer bytes.
     return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="{label}"'

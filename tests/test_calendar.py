@@ -1,7 +1,7 @@
 """Trial's tests for the team calendar (Ryno, 2026-10-19 9:34 PM ET): month grids, the agenda, the .ics feed, routines
 from the schedule, and the holiday-theme rule (no avatar set or switch without plan, design and review on the calendar)."""
 import json, re, shutil, sys, tempfile, unittest
-from datetime import date
+from datetime import date, timedelta
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -56,7 +56,8 @@ class Page(unittest.TestCase):
 
     def test_reachable_in_two_taps_with_back_and_next(self):
         self.assertIn('href="../calendar/"', FILES["hood/index.html"])
-        self.assertIn('href="hood/"', FILES["index.html"])
+        self.assertIn('href="more/"', FILES["index.html"])
+        self.assertIn('href="../calendar/"', FILES["more/index.html"])
         self.assertIn('href="../calendar/"', FILES["schedule/index.html"])
         self.assertIn('class="back"><a href="../hood/">', self.html)
         self.assertIn('class="next"', self.html)
@@ -65,6 +66,8 @@ class Page(unittest.TestCase):
     def test_every_dated_event_in_window_is_in_the_agenda(self):
         today = date.fromisoformat(json.loads((ROOT / "data/state.json").read_text())["updated"])
         for x in cal.dated(CAL):
+            if x["date"] < date(today.year, today.month, 1):
+                continue  # months before this one leave the page by design (cal.render window)
             self.assertIn(f'<time datetime="{x["date"].isoformat()}">{cal.nice(x["date"])}</time>', self.html, x["id"])
 
     def test_past_days_show_no_invented_routines(self):
@@ -92,7 +95,7 @@ class Feed(unittest.TestCase):
     def test_routines_recur_and_themes_span_their_window(self):
         self.assertIn("RRULE:FREQ=WEEKLY;BYDAY=FR", self.text)
         self.assertIn("RRULE:FREQ=MONTHLY;BYDAY=1MO", self.text)
-        self.assertIn("DTSTART;VALUE=DATE:20261201\r\nDTEND;VALUE=DATE:20270101", self.text)  # Ryno 9:52 PM ET: Dec 1-31
+        self.assertIn("DTSTART;VALUE=DATE:20261114\r\nDTEND;VALUE=DATE:20270101", self.text)  # Ryno, Nov 14 11:49 PM ET: winter Nov 14-Dec 31
         self.assertIn("DTSTART;VALUE=DATE:20261020\r\nDTEND;VALUE=DATE:20261101", self.text)  # Halloween live from Oct 20
 
     def test_ics_errors_catch_bad_feeds(self):
@@ -164,7 +167,7 @@ class HolidayRule(unittest.TestCase):
         return self.errs()
 
     def test_avatars_py_seasons_must_match_the_calendar(self):
-        ok = 'SEASONS = {"halloween": ((10, 1), (10, 31)), "winter": ((12, 1), (12, 31))}\n'
+        ok = 'SEASONS = {"halloween": ((10, 1), (10, 31)), "winter": ((11, 14), (12, 31))}\n'
         self.assertEqual(self.seasons(ok), [])
         old = 'SEASONS = {"halloween": ((10, 15), (10, 31)), "winter": ((12, 1), (12, 26))}\n'
         self.assertTrue(any("doesn't match scripts/avatars.py" in x for x in self.seasons(old)))
@@ -172,7 +175,7 @@ class HolidayRule(unittest.TestCase):
         self.assertTrue(any("season 'easter' switches with no scheduled theme" in x for x in self.seasons(extra)))
 
     def test_a_season_needs_next_years_dates_once_this_one_ends(self):
-        ok = 'SEASONS = {"halloween": ((10, 1), (10, 31)), "winter": ((12, 1), (12, 31))}\n'
+        ok = 'SEASONS = {"halloween": ((10, 1), (10, 31)), "winter": ((11, 14), (12, 31))}\n'
         self.cal["themes"] = [t for t in self.cal["themes"] if t["id"] != "winter-2027"]
         self.cal["events"] = [x for x in self.cal["events"] if x.get("theme") != "winter-2027"]
         state = json.loads((self.tmp / "data/state.json").read_text())
@@ -204,8 +207,8 @@ class HolidayRule(unittest.TestCase):
         self.assertTrue(any("in that order" in e for e in self.errs()))
 
     def test_review_needs_a_week_of_lead_time(self):
-        x = next(x for x in self.cal["events"] if x["id"] == "wi26-review")
-        x["date"] = "2026-11-28"
+        x = next(x for x in self.cal["events"] if x["id"] == "wi27-review")  # winter 2026 records its Nov 14 start in live_from
+        x["date"] = "2027-11-10"
         self.assertTrue(any("at least a week before" in e for e in self.errs()))
 
     def test_designer_cannot_review_own_set(self):
@@ -215,6 +218,11 @@ class HolidayRule(unittest.TestCase):
 
     def test_done_in_the_future_and_unknown_owner_fail(self):
         x = next(x for x in self.cal["events"] if x["id"] == "wi26-design")
+        # "today" is the newest record, pinned to the day before this event so
+        # a done status is still in the future when the event date moves.
+        state = json.loads((self.tmp / "data/state.json").read_text())
+        state["updated"] = (date.fromisoformat(x["date"]) - timedelta(days=1)).isoformat()
+        (self.tmp / "data/state.json").write_text(json.dumps(state))
         x["status"] = "done"
         self.assertTrue(any("marked done" in e for e in self.errs()))
         x["status"], x["owner"] = "planned", "Santa"
@@ -233,11 +241,14 @@ class Switch(unittest.TestCase):
     def test_active_set_needs_window_and_yes(self):
         self.assertEqual(cal.active_set(CAL, date(2026, 10, 20)), "halloween")
         self.assertIsNone(cal.active_set(CAL, date(2026, 11, 1)))
-        self.assertIsNone(cal.active_set(CAL, date(2026, 12, 5)))  # winter yes not done yet: stays off
+        self.assertEqual(cal.active_set(CAL, date(2026, 12, 5)), "winter")  # Ryno's yes, Nov 14 (moved up from Nov 24)
+        self.assertEqual(cal.active_set(CAL, date(2026, 11, 14)), "winter")  # on from Nov 14 (Ryno, Nov 14 11:49 PM ET)
+        self.assertIsNone(cal.active_set(CAL, date(2026, 11, 13)))
         c = json.loads(json.dumps(CAL))
-        next(x for x in c["events"] if x["id"] == "wi26-yes")["status"] = "done"
-        self.assertEqual(cal.active_set(c, date(2026, 12, 31)), "winter")
-        self.assertIsNone(cal.active_set(c, date(2027, 1, 1)))
+        next(x for x in c["events"] if x["id"] == "wi26-yes")["status"] = "planned"
+        self.assertIsNone(cal.active_set(c, date(2026, 12, 5)))  # without the yes: stays off
+        self.assertEqual(cal.active_set(CAL, date(2026, 12, 31)), "winter")
+        self.assertIsNone(cal.active_set(CAL, date(2027, 1, 1)))
         self.assertEqual(cal.active_set(CAL, date(2026, 10, 1)), "halloween")  # full month (Ryno, 9:52 PM ET)
 
 

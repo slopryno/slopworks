@@ -1,5 +1,5 @@
 {
-  "_note": "The team calendar (Ryno, 2026-10-19 9:34 PM ET). One-off dated events live here; routines come from data/schedule.json by schedule_id and the build expands them from recurring_from on. Holiday character themes: a theme with an avatar set or switch dates needs plan, design, review and ceo-yes events (scripts/check.py calendar_errors). Each season in scripts/avatars.py SEASONS needs a scheduled theme with the same avatar_set and the same window, through the current one or the next. Ryno, 9:52 PM ET: themes run a full month (Halloween Oct 1-31, winter Dec 1-31). Placeholders are plan-only until Ryno says yes.",
+  "_note": "The team calendar (Ryno, 2026-10-19 9:34 PM ET). One-off dated events live here; routines come from data/schedule.json by schedule_id and the build expands them from recurring_from on. Holiday character themes: a theme with an avatar set or switch dates needs plan, design, review and ceo-yes events (scripts/check.py calendar_errors). Each season in scripts/avatars.py SEASONS needs a scheduled theme with the same avatar_set and the same window, through the current one or the next. Ryno, 9:52 PM ET: themes run a full month (Halloween Oct 1-31); winter runs Nov 14-Dec 31 (Ryno, Nov 14 11:49 PM ET). Placeholders are plan-only until Ryno says yes.",
   "timezone": "America/New_York",
   "recurring_from": "2026-10-20",
   "recurring": [
@@ -68,8 +68,9 @@
       "name": "Winter holiday",
       "status": "scheduled",
       "avatar_set": "winter",
-      "switch_on": "2026-12-01",
-      "switch_off": "2026-12-31"
+      "switch_on": "2026-11-14",
+      "switch_off": "2026-12-31",
+      "live_from": "2026-11-14"
     },
     {
       "id": "halloween-2027",
@@ -84,7 +85,7 @@
       "name": "Winter holiday",
       "status": "scheduled",
       "avatar_set": "winter",
-      "switch_on": "2027-12-01",
+      "switch_on": "2027-11-14",
       "switch_off": "2027-12-31"
     },
     {
@@ -181,63 +182,64 @@
     },
     {
       "id": "wi26-plan-confirm",
-      "date": "2026-11-03",
+      "date": "2026-11-14",
       "title": "Winter plan confirmed",
       "owner": "Coordinator",
       "type": "holiday-theme",
-      "status": "planned",
+      "status": "done",
       "theme": "winter-2026",
       "step": "plan",
-      "note": "Four weeks before the Dec 1 switch: costumes, owners and dates."
+      "note": "Costumes, owners and dates confirmed. The switch still needs Ryno's yes."
     },
     {
       "id": "wi26-design",
-      "date": "2026-11-10",
+      "date": "2026-11-14",
       "title": "Winter costumes final design",
       "owner": "Polish",
       "with": [
         "Sketch"
       ],
       "type": "holiday-theme",
-      "status": "planned",
+      "status": "done",
       "theme": "winter-2026",
       "step": "design",
-      "note": "Drafts exist from Oct 19; refresh them with Halloween feedback."
+      "note": "Oct 19 drafts refreshed with Halloween feedback. Still and animated copies both work."
     },
     {
       "id": "wi26-words",
-      "date": "2026-11-12",
+      "date": "2026-11-14",
       "title": "Winter names and lines checked",
       "owner": "Comms",
       "type": "holiday-theme",
-      "status": "planned",
+      "status": "done",
       "theme": "winter-2026",
-      "step": "wording"
+      "step": "wording",
+      "note": "Comms checked every name and line. Honest, and no trademarked characters."
     },
     {
       "id": "wi26-review",
-      "date": "2026-11-17",
+      "date": "2026-11-14",
       "title": "Winter screenshot review",
       "owner": "Lens",
       "with": [
         "Critic"
       ],
       "type": "holiday-theme",
-      "status": "planned",
+      "status": "done",
       "theme": "winter-2026",
       "step": "review",
-      "note": "Every width, light and dark, with the theme button."
+      "note": "Moved up with Ryno's yes: PR #200 screenshots at every width, light and dark; Critic said yes."
     },
     {
       "id": "wi26-yes",
-      "date": "2026-11-24",
-      "title": "Ryno's yes for the Dec 1 switch",
+      "date": "2026-11-14",
+      "title": "Ryno's yes for the winter switch",
       "owner": "Ryno",
       "type": "holiday-theme",
-      "status": "planned",
+      "status": "done",
       "theme": "winter-2026",
       "step": "ceo-yes",
-      "note": "The winter set stays off without it."
+      "note": "Ryno said yes on Nov 14 and turned the set on that day instead of Dec 1."
     },
     {
       "id": "vd27-plan",
@@ -322,18 +324,18 @@
     },
     {
       "id": "wi27-plan",
-      "date": "2027-11-03",
+      "date": "2027-10-20",
       "title": "Winter 2027 costumes planned",
       "owner": "Coordinator",
       "type": "holiday-theme",
       "status": "planned",
       "theme": "winter-2027",
       "step": "plan",
-      "note": "Four weeks before the Dec 1 switch. Same costumes or new ones."
+      "note": "Four weeks before the Nov 14 switch. Same costumes or new ones."
     },
     {
       "id": "wi27-design",
-      "date": "2027-11-10",
+      "date": "2027-10-27",
       "title": "Winter 2027 costumes designed",
       "owner": "Polish",
       "type": "holiday-theme",
@@ -346,7 +348,7 @@
     },
     {
       "id": "wi27-words",
-      "date": "2027-11-12",
+      "date": "2027-10-29",
       "title": "Winter 2027 names and lines checked",
       "owner": "Comms",
       "type": "holiday-theme",
@@ -356,7 +358,7 @@
     },
     {
       "id": "wi27-review",
-      "date": "2027-11-17",
+      "date": "2027-11-03",
       "title": "Winter 2027 screenshot review",
       "owner": "Lens",
       "type": "holiday-theme",
@@ -370,8 +372,8 @@
     },
     {
       "id": "wi27-yes",
-      "date": "2027-11-24",
-      "title": "Ryno's yes for the Dec 1 switch",
+      "date": "2027-11-10",
+      "title": "Ryno's yes for the Nov 14 switch",
       "owner": "Ryno",
       "type": "holiday-theme",
       "status": "planned",

@@ -17,12 +17,14 @@
 **When X search is rate limited:** keep going with sources 1 to 3. Retry X once at the end of the run if the per-run cap allows. Otherwise log `x_search: skipped (rate limited)` in runs.json, mark bug coverage partial, and look back over the missed window next run. Never fabricate a source or fill the gap with filler.
 
 **Skills:** trained 2026-10-20 and 2026-10-21 from pinned toolkits (`data/skills.json`). Training earns no XP; first real use counts under the normal rules.
-- [architect](https://github.com/cursor/plugins/tree/d457567/pstack/skills/architect) (pstack): Sketches the data files and their shape before code, so Trial can write tests against the plan.
-- [sharpen](https://github.com/cursor/plugins/tree/d457567/pstack/skills/sharpen) (pstack): States what Ryno is really asking for, and how much detail the plan needs, before planning starts.
+- [architect](https://github.com/cursor/plugins/tree/9e278fe/pstack/skills/architect) (pstack): Sketches two shapes for the data files and their types before code, so Trial can write tests against the pick.
+- [sharpen](https://github.com/cursor/plugins/tree/9e278fe/pstack/skills/sharpen) (pstack): Deepens the plan ask before writing it: what a pro would do, the raw evidence, and which choices an experiment can settle.
 - [brainstorming](https://github.com/obra/superpowers/tree/bb92a77/skills/brainstorming) (Superpowers): Before a plan, plays Ryno's ask back in short parts, marks guesses as guesses, sizes the work and asks only what changes the build.
 - [writing-plans](https://github.com/obra/superpowers/tree/bb92a77/skills/writing-plans) (Superpowers): Splits each plan into tasks small enough for one test cycle and one review, each step with a result Trial can check.
 
 **Handoff:** To Lens for review, then Coordinator for plans.
+
+**Mobile UX notes (trained 2026-10-31):** plans that touch phone layout must name the pattern per page — list, featured strip (≤5), browse deck, or `details` disclosure — plus CSS primitives (scroll-snap, `:has`, details/summary; Popover only as enhancement). Default to list-first for lookup. Every swipe path in the plan lists its single-pointer alternative and acceptance checks (ov=0@7, 44px taps, reduced-motion, budget). Do not plan JS View Transitions or gesture libraries. Source playbook: `/workspace/research/mobile-ux-workshop-2026-10-31.md`.
 
 Review loops are capped at 2 rounds; a second block on the same PR is a disagreement and goes to the CEO (`needs-ceo`).
 

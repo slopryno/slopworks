@@ -17,6 +17,7 @@ ALLOW = json.loads((ROOT / "data/schema/allowed_handles.json").read_text())
 ALLOWED_HANDLES = {h.lower() for h in ALLOW["handles"]}
 ALLOWED_EMAILS = {e.lower() for e in ALLOW["emails"]}
 CSS_AT_RULES = {"media", "font", "keyframes", "import", "supports", "charset", "page", "layer", "container", "namespace"}
+CSS_AT_RULES |= {"view-transition"}
 SOURCE_HOSTS = ("x.com", "github.com", "grokbot.com", "grok.com", "x.ai")
 DATA_FILES = ["updates", "issues", "runs", "chat", "design_backlog", "state", "schedule"]
 DATA_FILES += ["standup", "ideas"]
@@ -313,6 +314,10 @@ def pii_hits(text):
         hits.append(("phone", m.group()))
     for m in re.finditer(PATTERNS["pii"]["handle"], text):
         h = m.group(1).lower()
+        # The handle regex stops at a hyphen, so @view-transition is scanned as @view.
+        tail = re.match(r"(?:-[A-Za-z0-9]+)+", text[m.end():])
+        if tail and (h + tail.group(0).lower()) in CSS_AT_RULES:
+            continue
         if h in CSS_AT_RULES or h in ALLOWED_HANDLES:
             continue
         if any(m.start() >= e.start() and m.end() <= e.end() for e in re.finditer(PATTERNS["pii"]["email"], text)):
@@ -544,6 +549,9 @@ def review_gate(paths, pr_body, comments):
             errs.append(f"missing sign-off from {role}")
         elif role == maker:
             errs.append(f"self-approval by {role} does not count")
+    if latest.get("Critic") == "block" and "Critic" not in required_roles(paths):
+        # Critic's before/after pass (Ryno, 2026-11-13 3:13 AM ET): a BLOCKER holds any PR until Critic signs off.
+        errs.append("Critic blocked this PR (BLOCKER); a later 'Sign-off: Critic' clears it")
     return sorted(set(errs))
 
 
@@ -1120,7 +1128,7 @@ def _diff_lines(base, head, path):
 
 
 # ---------- lean repo (Ryno, 2026-10-17, 8:49 and 8:51 PM ET): additions only, these only tighten ----------
-LEAN_TREE_BYTES = 5_000_000  # raised from 4 MB to 5 MB (Ryno, 2026-10-29 8:35 PM ET: "Raise the repo size limit to 5 MB"); still no slack for screenshots
+LEAN_TREE_BYTES = 10_000_000  # raised from 5 MB to 10 MB (Ryno, Thursday Nov 19, 2026, 6:11 AM ET: "Ok raise to 10MB and carry on"); earlier raised from 4 MB to 5 MB (Ryno, 2026-10-29 8:35 PM ET: "Raise the repo size limit to 5 MB"); still no slack for screenshots
 LEAN_FILE_BYTES = 512_000  # per tracked file (CI's 1 MB rule stays as a backstop)
 LEAN_IMAGE_EXT = (".png", ".jpg", ".jpeg", ".gif", ".webp", ".avif", ".bmp", ".tif", ".tiff", ".ico", ".svg")
 LEAN_IMAGE_OK = ("site/assets/", "site/badges/")

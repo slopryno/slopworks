@@ -45,3 +45,18 @@ class Heartbeat(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class StaleLabels(unittest.TestCase):
+    """Critic S3 (2026-11-13): the Nov 3 to Nov 13 freeze, caught by name."""
+    D = datetime.date
+
+    def test_the_november_freeze_is_caught(self):
+        out = heartbeat.stale_labels(self.D(2026, 11, 3), self.D(2026, 11, 13), self.D(2026, 11, 6), "halloween", "normal")
+        self.assertEqual(len(out), 3)
+        self.assertIn("10 days ago", out[0])
+        self.assertIn("2026-11-06", out[1])
+        self.assertIn("halloween", out[2])
+
+    def test_a_fresh_site_passes(self):
+        self.assertEqual(heartbeat.stale_labels(self.D(2026, 11, 13), self.D(2026, 11, 13), self.D(2026, 11, 13), "normal", "normal"), [])
