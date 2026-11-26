@@ -61,10 +61,15 @@ class Feed(unittest.TestCase):
 
     def test_a_judged_oath_adds_an_item_and_keeps_the_sworn_one(self):
         b = json.loads(json.dumps(BOARD))
-        b["oaths"][1].update(verdict="kept", judged="2026-11-18", evidence="G2")
+        o = b["oaths"][1]
+        o.update(verdict="open")
+        for k in ("aar", "evidence", "reason", "judged"):
+            o.pop(k, None)
+        baseline = {x["id"] for x in roadmap.feed_items(b)}
+        o.update(verdict="kept", judged="2026-11-18", evidence="G2")
         ids = {x["id"] for x in roadmap.feed_items(b)}
-        self.assertIn(f'roadmap-oath-{b["oaths"][1]["id"]}-kept-2026-11-18', ids)
-        self.assertTrue({x["id"] for x in roadmap.feed_items(BOARD)} <= ids)
+        self.assertIn(f'roadmap-oath-{o["id"]}-kept-2026-11-18', ids)
+        self.assertTrue(baseline <= ids)
 
 
 class Calendar(unittest.TestCase):
@@ -79,11 +84,17 @@ class Calendar(unittest.TestCase):
             self.assertIn(f'UID:oath-{o["id"]}.slopworks-calendar', self.ICS)
 
     def test_withdrawn_oath_stays_cancelled_with_a_higher_sequence(self):
-        b = json.loads(json.dumps(BOARD))
-        b["oaths"][0].update(verdict="withdrawn", judged="2026-11-18", reason="Measurement stayed on hold.")
-        uid, _, _, _, status, seq = next(x for x in roadmap.calendar_events(b) if x[0] == f'oath-{b["oaths"][0]["id"]}')
+        open_board = json.loads(json.dumps(BOARD))
+        o = open_board["oaths"][0]
+        o.update(verdict="open")
+        for k in ("aar", "evidence", "reason", "judged"):
+            o.pop(k, None)
+        withdrawn = json.loads(json.dumps(open_board))
+        withdrawn["oaths"][0].update(verdict="withdrawn", judged="2026-11-18", reason="Measurement stayed on hold.")
+        uid = f'oath-{withdrawn["oaths"][0]["id"]}'
+        _, _, _, _, status, seq = next(x for x in roadmap.calendar_events(withdrawn) if x[0] == uid)
         self.assertEqual((status, seq), ("CANCELLED", 1))
-        self.assertEqual(next(x for x in roadmap.calendar_events(BOARD) if x[0] == uid)[5], 0)
+        self.assertEqual(next(x for x in roadmap.calendar_events(open_board) if x[0] == uid)[5], 0)
 
 
 if __name__ == "__main__":
