@@ -88,15 +88,26 @@ class BrokenBoards(unittest.TestCase):
         self.broken(lambda b: quest(b, "rpg-quests").update(unlocks="nowhere"), "isn't a quest on the board")
 
     def test_oath_left_open_past_due(self):
-        self.broken(lambda b: oath(b, "g2-showcase").update(due="2026-10-20"), "still open")
+        def change(b):
+            o = oath(b, "g2-showcase")
+            o.update(due="2026-10-20", verdict="open")
+            for k in ("aar", "evidence", "reason", "judged"):
+                o.pop(k, None)
+        self.broken(change, "still open")
 
     def test_broken_oath_links_evidence_and_its_aar(self):
         def broke(b):
-            oath(b, "g3-fast-features").update(verdict="broken", judged="2026-10-28", evidence="G3")
+            o = oath(b, "g3-fast-features")
+            o.pop("aar", None)
+            o.update(verdict="broken", judged="2026-10-28", evidence="G3")
         self.broken(broke, "after-action review")
 
     def test_unjudged_oath_needs_a_reason(self):
-        self.broken(lambda b: oath(b, "g1-get-found").update(verdict="unjudged", judged="2026-10-28"), "needs its reason")
+        def change(b):
+            o = oath(b, "g1-get-found")
+            o.pop("reason", None)
+            o.update(verdict="unjudged", judged="2026-10-28")
+        self.broken(change, "needs its reason")
 
     def test_oath_never_pre_dated(self):
         self.broken(lambda b: oath(b, "g2-showcase").update(sworn="2099-01-01", due="2099-02-01"), "never backdated")
