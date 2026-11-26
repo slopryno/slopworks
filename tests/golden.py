@@ -85,7 +85,8 @@ def normalize_team(html):
     change would still move.
     """
     text = html
-    text = re.sub(r'<li class="lvf">.*?</li>', '<li class="lvf">Last verified · #N</li>', text)
+    # Drop last-verified rows entirely so a role's first verified PR does not change the structure.
+    text = re.sub(r'<li class="lvf">.*?</li>', '', text)
     text = re.sub(r"<li><b>XP</b><em>\d+</em></li>", "<li><b>XP</b><em>N</em></li>", text)
     text = re.sub(r"Lv <span>\d+</span></span> · [^<]+", "Lv <span>N</span></span> · RANK", text)
     text = re.sub(
@@ -139,7 +140,7 @@ ASOF_ET = re.compile(r"\d{4}-\d{2}-\d{2} \d{2}:\d{2} ET")
 DAY_LABEL = re.compile(
     r"(Mon|Tue|Wed|Thu|Fri|Sat|Sun) (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[ \u00a0]\d{1,2}( \(so far\))?"
 )
-DIRECTION = re.compile(r"(?:[↑↓→] (?:up|down|flat)|n/a)")
+DIRECTION = re.compile(r"(?:[↑↓→] (?:up|down|flat)(?:, (?:better|worse))?|n/a)")
 
 
 def metrics_chart_slice(html):
