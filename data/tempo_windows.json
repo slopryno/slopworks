@@ -1,0 +1,12 @@
+[
+  {
+    "id": "win-2026-11-26-throughput-week",
+    "kind": "lift-cap",
+    "by": "Ryno (CEO)",
+    "quote": "No ceiling, gates only",
+    "source": "CEO setup picks, Wed 2026-11-25 7:49 PM ET, Slopbot chat, after his 7:24 PM ET pause of the 3-a-day cap: one throughput week Thu Nov 26 to Wed Dec 2 ET, every gate unchanged, any trip ends it, then i44 decides.",
+    "at": "2026-11-26T00:00-05:00",
+    "expires": "2026-12-02T23:59-05:00",
+    "after": "i44"
+  }
+]

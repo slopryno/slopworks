@@ -101,7 +101,7 @@ def records_registry(root=None):
     """His exact words from the structured records: these must never reach a page, attributed or not."""
     root = root or ROOT
     load = lambda n: json.loads((root / "data" / n).read_text()) if (root / "data" / n).exists() else []
-    qs = {(r.get("quote") or "").strip() for f in ("ceo_decisions.json", "ceo_overrides.json") for r in load(f)}
+    qs = {(r.get("quote") or "").strip() for f in ("ceo_decisions.json", "ceo_overrides.json", "tempo_windows.json") for r in load(f)}
     for r in load("ceo_decisions.json"):
         qs.update(_inner(m.group(0)) for m in re.finditer(Q, r.get("authority") or ""))
     return sorted((q for q in qs if q), key=len, reverse=True)

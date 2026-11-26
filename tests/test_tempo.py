@@ -162,3 +162,65 @@ class CeoOverride(unittest.TestCase):
         self.assertEqual(check.override_errors(), [])
         for o in tempo.load_overrides():
             self.assertLessEqual(o["expires"][:10], o["at"][:10])
+
+
+class TempoWindow(unittest.TestCase):
+    """Ryno 2026-11-25 7:24 PM ET: "Pause on the 3 merge a day restriction"; 7:49 PM ET: "No ceiling, gates only".
+    A throughput week with no daily ceiling, fail-closed on any trip, then i44 decides again."""
+    W = {"id": "win-2026-10-20-t", "kind": "lift-cap", "by": "Ryno (CEO)", "quote": "No ceiling, gates only",
+         "source": "test", "at": "2026-10-20T00:00-04:00", "expires": "2026-10-22T23:59-04:00", "after": "i44"}
+    TRIP = [aar("data-correction", 1)]
+    WINS = [pr(1, "19T09:00")] + [pr(n, f"20T{8 + n:02d}:00") for n in range(2, 7)]  # 5 merged on the 20th, slowed
+    at = lambda self, d, h=17: datetime(2026, 10, d, h, tzinfo=ET)
+
+    def test_no_ceiling_inside_the_window(self):
+        mode, used, limit = tempo.today(self.WINS, self.TRIP, self.at(20), None, [], [self.W])
+        self.assertEqual((used, limit), (5, tempo.NO_CEILING))
+        self.assertIn(self.W["id"], mode)
+        self.assertFalse(used >= limit)  # bot.py's tempo_gate refuses only when used >= limit
+
+    def test_closed_outside_the_window(self):
+        self.assertEqual(tempo.today(self.WINS, self.TRIP, self.at(19), None, [], [self.W])[2], 3)
+        self.assertEqual(tempo.today(self.WINS, self.TRIP, self.at(23, 0), None, [], [self.W])[::2], ("slowed", 3))
+
+    def test_after_expiry_i44_decides(self):
+        wins = self.WINS + [pr(n, f"21T{n - 2:02d}:00") for n in range(7, 13)]  # 11 clean PRs since the trip
+        self.assertEqual(tempo.today(wins, self.TRIP, self.at(23, 9), None, [], [self.W])[::2], ("normal", 18))
+
+    def test_a_pending_aar_beats_the_window(self):
+        self.assertEqual(tempo.today(self.WINS, self.TRIP + [aar("revert", 99)], self.at(20), None, [], [self.W])[::2], ("slowed", 3))
+
+    def test_a_trip_after_it_opens_ends_it_for_good(self):
+        wins = self.WINS + [pr(7, "20T15:00")]
+        for trig in ("revert", "failed-deploy", "ci-main", "incident"):
+            self.assertEqual(tempo.today(wins, self.TRIP + [aar(trig, 7)], self.at(20), None, [], [self.W])[::2], ("slowed", 3), trig)
+            self.assertEqual(tempo.today(wins, self.TRIP + [aar(trig, 7)], self.at(21), None, [], [self.W])[2], 3, trig)
+
+    def test_violations_excused_only_inside_the_window(self):
+        t = tempo.derive(self.WINS, self.TRIP, [], [self.W])
+        self.assertEqual(t["violations"], [])
+        self.assertEqual(len([e for e in t["excused"] if self.W["id"] in e]), 2)
+        self.assertEqual(len(tempo.derive(self.WINS, self.TRIP, [], [])["violations"]), 2)
+        self.assertEqual(t["tempo_windows"][0]["quote"], self.W["quote"])
+        wins = self.WINS + [pr(7, "20T15:00"), pr(8, "20T16:00")]  # a trip at #7 ends the window: #8 is over the limit again
+        self.assertEqual([v.split()[0] for v in tempo.derive(wins, self.TRIP + [aar("revert", 7)], [], [self.W])["violations"]][-1:], ["#8"])
+
+    def test_records_are_strict(self):
+        for bad in ({"expires": "2026-10-29T00:01-04:00"}, {"expires": "2026-10-19T16:00-04:00"}, {"by": "Advisor"},
+                    {"quote": " "}, {"after": "never"}, {"kind": "bypass"}, {"at": "2026-10-20T00:00"}):
+            with tempfile.TemporaryDirectory() as d:
+                (Path(d) / "data").mkdir()
+                (Path(d) / tempo.WINDOWS).write_text(json.dumps([{**self.W, **bad}]))
+                with self.assertRaises(ValueError, msg=bad):
+                    tempo.load_windows(Path(d))
+
+    def test_window_file_is_add_only_and_checked(self):
+        self.assertTrue(check.loosening("data/tempo_windows.json", [], ['    "expires": "2026-12-02T23:59-05:00",']))
+        self.assertFalse(check.loosening("data/tempo_windows.json", ['  {"id": "win-2026-12-09-x"}'], []))
+        self.assertEqual(check.window_errors(), [])
+        self.assertEqual(len(tempo.load_windows()), len(json.loads((ROOT / tempo.WINDOWS).read_text())))
+
+    def test_the_quote_is_in_the_site_registry(self):
+        import ceo_quotes
+        for w in tempo.load_windows():
+            self.assertIn(w["quote"], ceo_quotes.registry())

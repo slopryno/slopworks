@@ -225,5 +225,15 @@
       ],
       "max_prs": 1
     }
+  ],
+  "tempo_windows": [
+    {
+      "id": "win-2026-11-26-throughput-week",
+      "by": "Ryno (CEO)",
+      "quote": "No ceiling, gates only",
+      "at": "2026-11-26T00:00-05:00",
+      "expires": "2026-12-02T23:59-05:00",
+      "after": "i44"
+    }
   ]
 }
