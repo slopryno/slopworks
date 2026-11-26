@@ -12,7 +12,7 @@
     "aars": 18,
     "escaped": 14,
     "blocks": 1,
-    "refusals": 40,
+    "refusals": 43,
     "blast_checked": 5,
     "blast_matched": 5
   },
@@ -174,7 +174,7 @@
       "main_failures": 0,
       "reverts": 0,
       "blocks": 0,
-      "refusals": 9
+      "refusals": 12
     },
     {
       "date": "2026-10-31",
