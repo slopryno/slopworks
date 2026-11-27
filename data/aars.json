@@ -1063,5 +1063,106 @@
     "thread": "c553",
     "fix_pr": 218,
     "closed": "2026-11-25"
+  },
+  {
+    "id": "aar-2026-11-26-g2-showcase-missed",
+    "date": "2026-11-26",
+    "title": "Month-1 showcase oath missed: no new real-trace entries after the Oct 17 baseline",
+    "trigger": "oath-miss",
+    "links": {
+      "prs": [
+        221
+      ],
+      "runs": [],
+      "commits": [],
+      "chat": [
+        "c574",
+        "c575",
+        "c578",
+        "c576"
+      ]
+    },
+    "expected": {
+      "text": "By Nov 18, 12 real-trace showcase entries, 6 of them new since the Oct 19 baseline of 6, with at least one new format.",
+      "cite": [
+        "file:data/goals.json",
+        "file:data/roadmap.json"
+      ]
+    },
+    "actual": {
+      "text": "The records still have 6 entries (3 cases, 2 arena, 1 challenge), all dated Oct 17, before the oath was sworn. None were added in the window, and no new format shipped.",
+      "cite": [
+        "file:data/cases.json",
+        "file:data/arena.json",
+        "file:data/challenges.json"
+      ]
+    },
+    "why": {
+      "text": "The team did not schedule or ship new showcase work after the Oct 17 baseline. Month-1 attention went to site and ops work, and the oath was not checked again until it was past due.",
+      "cite": [
+        "file:data/cases.json",
+        "chat:c575"
+      ]
+    },
+    "change": {
+      "text": "PR #221 adds a non-trip oath-miss trigger, so a missed oath can be recorded without ending a tempo window. The miss stays on the board. A follow-up will have Coordinator check oath progress at Monday planning so a slip is visible before the due date.",
+      "cite": [
+        "pr:221"
+      ]
+    },
+    "change_pr": 221,
+    "owner": "Coordinator",
+    "status": "open",
+    "thread": "c576"
+  },
+  {
+    "id": "aar-2026-11-26-g3-fast-features-missed",
+    "date": "2026-11-26",
+    "title": "Month-1 fast-features oath missed: most tracker items logged late, no demos in the window",
+    "trigger": "oath-miss",
+    "links": {
+      "prs": [
+        221
+      ],
+      "runs": [],
+      "commits": [],
+      "chat": [
+        "c574",
+        "c575",
+        "c578",
+        "c577"
+      ]
+    },
+    "expected": {
+      "text": "Every new tracker item logged within 1 day of its source date, and 2 features demoed within 7 days of entry, by Nov 18.",
+      "cite": [
+        "file:data/goals.json",
+        "file:data/roadmap.json"
+      ]
+    },
+    "actual": {
+      "text": "Of 17 tracker items dated Oct 19–Nov 18, 15 were logged more than a day late (lags of 2–11 days). The only demo in the records is dated Oct 17, before the window; no feature was demoed in the window.",
+      "cite": [
+        "file:data/updates.json",
+        "file:data/challenges.json"
+      ]
+    },
+    "why": {
+      "text": "Changelog items were often added in later batches, not on the day they appeared. No demo work was scheduled in the window, and the oath was not checked again until it was past due.",
+      "cite": [
+        "file:data/updates.json",
+        "chat:c575"
+      ]
+    },
+    "change": {
+      "text": "PR #221 adds a non-trip oath-miss trigger, so a missed oath can be recorded without ending a tempo window. The miss stays on the board. A follow-up will have Coordinator check oath progress at Monday planning so a slip is visible before the due date.",
+      "cite": [
+        "pr:221"
+      ]
+    },
+    "change_pr": 221,
+    "owner": "Coordinator",
+    "status": "open",
+    "thread": "c577"
   }
 ]

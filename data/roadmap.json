@@ -1,6 +1,6 @@
 {
   "owner": "Coordinator",
-  "updated": "2026-10-30",
+  "updated": "2026-11-26",
   "quests": [
     {
       "id": "trading-cards",
@@ -441,8 +441,10 @@
       "due": "2026-11-18",
       "lead": "Strategy",
       "ref": "G1",
-      "verdict": "open",
-      "note": "Visitor measurement is on hold, so this may be judged Unjudged."
+      "verdict": "unjudged",
+      "note": "Visitor measurement is on hold (CEO, Oct 19). Public star count is 0; that is not a substitute for the missing source.",
+      "judged": "2026-11-26",
+      "reason": "Visitor measurement has been on hold since Oct 19, the day this oath was sworn, and its source file was never written."
     },
     {
       "id": "g2-showcase",
@@ -451,7 +453,11 @@
       "due": "2026-11-18",
       "lead": "Strategy",
       "ref": "G2",
-      "verdict": "open"
+      "verdict": "broken",
+      "judged": "2026-11-26",
+      "evidence": "G2",
+      "aar": "aar-2026-11-26-g2-showcase-missed",
+      "note": "Still 6 entries, all dated Oct 17. None added in the window, and no new format shipped."
     },
     {
       "id": "g3-fast-features",
@@ -460,7 +466,11 @@
       "due": "2026-11-18",
       "lead": "Strategy",
       "ref": "G3",
-      "verdict": "open"
+      "verdict": "broken",
+      "judged": "2026-11-26",
+      "evidence": "G3",
+      "aar": "aar-2026-11-26-g3-fast-features-missed",
+      "note": "15 of 17 tracker items in the window were logged more than a day late; no feature was demoed in the window."
     }
   ],
   "camp": [
