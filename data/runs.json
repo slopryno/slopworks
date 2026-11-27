@@ -940,5 +940,32 @@
       "Morning scan. Lock free at start. Changelog read: 1.2.3 is still newest, no new entries; no X reads.",
       "Recorded Nov 20 to 23 as skipped and Nov 24 as a partial day, and records through #215. No new CEO pitch, so no huddle."
     ]
+  },
+  {
+    "id": "2026-11-26-daily",
+    "date": "2026-11-26",
+    "kind": "daily",
+    "status": "ok",
+    "x_reads": 0,
+    "counts": {
+      "posts_screened": 0,
+      "candidates": 1,
+      "published_updates": 1,
+      "published_issues": 0,
+      "corrected": 0,
+      "dropped_verify": 0,
+      "stripped_privacy": 0,
+      "dropped_privacy": 0,
+      "ci_failures": 0,
+      "corrections_mail": 0,
+      "web_reads_sources": 1,
+      "web_reads_research": 0,
+      "research_notes": 0,
+      "pitches": 0
+    },
+    "notes": [
+      "Morning scan, throughput week day 1. Lock free at start. Changelog read: 1.3.0 (Nov 24) is new and added; no X reads.",
+      "No new CEO pitch, so no huddle. This row was recorded after the missed-run heartbeat failed at 5:54 PM ET Nov 26 (run 45907719950)."
+    ]
   }
 ]

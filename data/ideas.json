@@ -1788,5 +1788,193 @@
     ],
     "acceptance_verified_by": "Trial",
     "shipped": "#162: the decision is recorded as i64 (its hex typo fixed to #141418 on Oct 29); Trial checked all five criteria live on Oct 29"
+  },
+  {
+    "id": "i65",
+    "date": "2026-11-25",
+    "by": "Coordinator",
+    "source": "team",
+    "short_title": "GitHub merge queue",
+    "problem": "GitHub merge queues can re-check stacked PRs automatically, but they are org-owned only, so slopworks would have to leave the personal account.",
+    "helps": "The team, when two PRs land close together and the second goes stale on main",
+    "effort": "L",
+    "builder": "Forge",
+    "state": "pitched",
+    "comments": [
+      {
+        "date": "2026-11-25",
+        "role": "Critic",
+        "stance": "oppose",
+        "strong": true,
+        "text": "Reject the org move. slopryno.com is verified on the personal account, so only that account's repos may publish on it, and GitHub does not redirect Pages after a transfer. Need is thin, and require-up-to-date is already on."
+      },
+      {
+        "date": "2026-11-25",
+        "role": "Trial",
+        "stance": "concern",
+        "text": "A queue needs a merge_group trigger on CI. Keep ceo-label and Pages off that event: Pages is push-to-main only since #218. Queue squash also ignores custom subject/body, so bot.py cannot scrub Co-authored-by trailers."
+      },
+      {
+        "date": "2026-11-25",
+        "role": "Shield",
+        "stance": "concern",
+        "text": "Do not move the verified custom domain off the personal account for a rare rebase. Un-verifying first would open a takeover window, and a transfer may leave GitHub App installs behind."
+      },
+      {
+        "date": "2026-11-25",
+        "role": "Atlas",
+        "stance": "concern",
+        "text": "Fit is poor at 3 merges a day. The stale-base hits were mostly generated site files, fixed by a rebuild. A merge queue does not remove that step."
+      }
+    ],
+    "evidence": [
+      "https://github.com/github/docs/blob/main/data/reusables/gated-features/merge-queue.md",
+      "https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/configuring-pull-request-merges/managing-a-merge-queue",
+      "https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/verifying-your-custom-domain-for-github-pages",
+      "https://docs.github.com/en/repositories/creating-and-managing-repositories/transferring-a-repository",
+      "Pages API: slopryno.com protected_domain_state=verified; owner_type=User; required_status_checks.strict=true",
+      "RUNLOG: #204 CONFLICTING after #205; #156 generated-file conflicts; #212 commit After rebase onto #211 (force-push 9:11 PM ET Nov 18)"
+    ],
+    "scores": {
+      "impact": 2,
+      "evidence": 4,
+      "fit": 2,
+      "effort": 4,
+      "risk": 4,
+      "reversibility": 2
+    },
+    "librarian_checked": true,
+    "fresh_until": "2026-12-25",
+    "experiment": "Do not transfer the repo as a test. If another open PR goes stale the same day, have bot.py or merge.sh update the branch before merge (already used on #165).",
+    "challenge": {
+      "by": "Critic",
+      "recommendation": "reject",
+      "summary": "Reject adopting a merge queue. It is confirmed org-only (github/docs gated-features/merge-queue.md), and slopworks is a public User-owned repo. Moving it would re-home slopryno.com: a personal-account verification only covers that account's repos, and GitHub does not redirect Pages sites. Need is thin, and 'Require branches up to date' is already on. Stay put."
+    }
+  },
+  {
+    "id": "i66",
+    "date": "2026-11-25",
+    "by": "Coordinator",
+    "source": "team",
+    "short_title": "Open-work triage checklist",
+    "problem": "Status lives in SHIP.md, but a mid-day failure can hide a blocked path. On Nov 25 Pages on main was red, bot.py refused new PRs, and 'wait for the next merge' could not start.",
+    "helps": "The team, each morning and evening: one checklist for CI/Pages, main_red, open PRs waiting on Ryno, the queue, the next move and real questions for him",
+    "effort": "S",
+    "builder": "Coordinator",
+    "state": "pitched",
+    "comments": [
+      {
+        "date": "2026-11-25",
+        "role": "Critic",
+        "stance": "concern",
+        "strong": false,
+        "text": "This may only be a few missing lines in the habit we already have (SHIP.md, morning scan, evening wrap, P1). Try it on the next 3 runs and any mid-day main/Pages fail. If those notes would have caught the blocked path anyway, drop i66 as a separate idea."
+      },
+      {
+        "date": "2026-11-25",
+        "role": "Trial",
+        "stance": "concern",
+        "text": "The settling check is classification plus one allowed recovery, not a new scheduled job. Do not cite W6 as support; extra review rounds were already 0."
+      },
+      {
+        "date": "2026-11-25",
+        "role": "Shield",
+        "stance": "concern",
+        "text": "The checklist must not dispatch Pages, open a PR, merge, or enable other routines on its own. No secrets and nothing posted."
+      },
+      {
+        "date": "2026-11-25",
+        "role": "Atlas",
+        "stance": "support",
+        "text": "The useful line is structural: bot.py will not open a PR while Pages on main is red, so a merge cannot be the redeploy path until main is green again. The checklist has to say that."
+      }
+    ],
+    "evidence": [
+      "https://lethain.com/passing-100-prs-in-a-week/",
+      "SHIP.md Nov 25: #216 Pages failed; bot.py pr refused on main_red; wait-for-next-merge could not open the pstack PR",
+      "Pages runs: 45590949118 and 45618223841 failed (0 artifacts); a fresh dispatch landed 9:23 AM ET (45631151299)",
+      "https://github.com/actions/deploy-pages/issues/451",
+      "Librarian check: data/ideas.json through i64 has no open-work-triage idea; i65 is a box draft only"
+    ],
+    "scores": {
+      "impact": 3,
+      "evidence": 4,
+      "fit": 5,
+      "effort": 1,
+      "risk": 1,
+      "reversibility": 5
+    },
+    "librarian_checked": true,
+    "fresh_until": "2026-12-25",
+    "experiment": "Next 3 morning or evening runs, plus any mid-day main/Pages fail: follow the checklist and record whether it named a blocked path and the allowed recovery. Metric = missed catch-22s or invented plans vs the Nov 25 Pages miss. Stay box-only unless a later bots/ PR is approved.",
+    "challenge": {
+      "by": "Critic",
+      "recommendation": "proceed",
+      "summary": "Proceed as a box experiment, not a new system. Overlap with SHIP.md and P1 is why Impact is 3. If the next 3 runs already would have named the blocked path, drop i66 as its own idea and keep the three lines in the run notes. The checklist must not dispatch, merge, or enable routines."
+    }
+  },
+  {
+    "id": "i67",
+    "date": "2026-11-25",
+    "by": "Coordinator",
+    "source": "team",
+    "short_title": "Pages/CI distress playbook",
+    "problem": "When Pages or CI on main fails, the team invents the recovery. A re-run of a failed Pages deploy can see 0 artifacts, then 2, and fail; 'wait for the next merge' fails while bot.py refuses PRs.",
+    "helps": "The team, when main or Pages fails: classify it, use a fresh dispatch (never a re-run of a failed deploy), and stop and report after a set window",
+    "effort": "S",
+    "builder": "Sweep",
+    "state": "pitched",
+    "comments": [
+      {
+        "date": "2026-11-25",
+        "role": "Critic",
+        "stance": "concern",
+        "strong": true,
+        "text": "#218 may already have removed the lag failure. Keep this as a box playbook. If the next 3 Pages runs on main are green, leave it in the AAR and do not encode a routine. Do not restart today's hourly retry."
+      },
+      {
+        "date": "2026-11-25",
+        "role": "Trial",
+        "stance": "concern",
+        "text": "Revisit only if a miss after #218 still matches deploy-pages#451. The first split-job deploy was green on the first try."
+      },
+      {
+        "date": "2026-11-25",
+        "role": "Shield",
+        "stance": "oppose",
+        "strong": true,
+        "text": "No standing routine that dispatches deploys or talks outside the box without a fresh yes. A written playbook is fine; self-dispatch is not."
+      },
+      {
+        "date": "2026-11-25",
+        "role": "Atlas",
+        "stance": "concern",
+        "text": "A re-run of a failed deploy-pages job is the wrong fix when the artifact list already shows 0 or 2. Say that in the playbook; do not add workflow triggers from this pitch."
+      }
+    ],
+    "evidence": [
+      "https://lethain.com/passing-100-prs-in-a-week/",
+      "https://github.com/actions/deploy-pages/issues/451",
+      "Pages runs 45590949118 and 45618223841 failed; 45631151299 landed 9:23 AM ET Nov 25",
+      "#218 (43a894c) split upload and deploy and retries once; first split-job deploy was green",
+      "Librarian check: no existing distress-playbook idea in data/ideas.json through i64"
+    ],
+    "scores": {
+      "impact": 3,
+      "evidence": 4,
+      "fit": 4,
+      "effort": 1,
+      "risk": 2,
+      "reversibility": 4
+    },
+    "librarian_checked": true,
+    "fresh_until": "2026-12-25",
+    "experiment": "Keep the playbook on the box next to the failed-deploy AAR. Revisit only if a Pages or CI miss after #218 still matches #451. If the next 3 Pages runs on main are green, do not encode a routine.",
+    "challenge": {
+      "by": "Critic",
+      "recommendation": "proceed",
+      "summary": "Proceed as a box note only, not a routine. #218 may have fixed the only failure we have. Shield vetoes standing self-dispatch. If the next 3 Pages runs are green, leave this in the AAR."
+    }
   }
 ]

@@ -1364,5 +1364,78 @@
     "evidence": [
       "https://webkit.org/blog/7929/designing-websites-for-iphone-x/"
     ]
+  },
+  {
+    "id": "r-shield-2026-11-25-generic-secret-patterns",
+    "date": "2026-11-25",
+    "role": "Shield",
+    "kind": "rotation",
+    "confidence": "medium",
+    "status": "reported",
+    "fresh_until": "2026-12-25",
+    "question": "Is our public repo using every free secret-scanning guard GitHub offers?",
+    "outcome": "finding",
+    "finding": "Mostly. Secret scanning, push protection and Dependabot security updates are on. Generic patterns (private keys, connection strings, generic API keys) are off. GitHub turns that on per repo under Advanced Security. Whether it is offered free on a personal public repo is unknown until someone opens the settings page. It is a repo setting, so it is Ryno's to flip. Pitch for standup.",
+    "facts": [
+      "GitHub API Nov 25: secret scanning and push protection are on; generic patterns and validity checks are off; Dependabot security updates are on.",
+      "GitHub Docs: generic patterns are enabled under Settings > Advanced Security > Secret Protection > Generic patterns.",
+      "GitHub Docs: secret scanning scans the full Git history on all branches."
+    ],
+    "inferences": [
+      "Generic patterns would catch a pasted private key or connection string that provider patterns miss; cost is one settings click if available."
+    ],
+    "evidence": [
+      "https://docs.github.com/en/code-security/secret-scanning/using-advanced-secret-scanning-and-push-protection-features/non-provider-patterns/enabling-secret-scanning-for-non-provider-patterns",
+      "https://docs.github.com/en/code-security/concepts/secret-security/secret-scanning"
+    ]
+  },
+  {
+    "id": "r-trial-2026-11-25-pages-split-job",
+    "date": "2026-11-25",
+    "role": "Trial",
+    "kind": "rotation",
+    "confidence": "medium",
+    "status": "reported",
+    "fresh_until": "2026-12-25",
+    "question": "Why couldn't today's failed Pages deploy be fixed by re-running it?",
+    "outcome": "finding",
+    "finding": "Our pages.yml uploads and deploys in one job. Today attempt 1 deployed 0 artifacts, and the re-run uploaded a second github-pages artifact, so deploy found 2 and failed. Both official actions recommend a build job that uploads and a separate deploy job with needs: build. Then a re-run of failed jobs would redo only the deploy and reuse the one artifact. Pitch for standup.",
+    "facts": [
+      "Pages run 45590949118 (Nov 25): attempt 1 'Found 0 artifact(s)'; attempt 2 'Multiple artifacts named github-pages'; single job named deploy.",
+      "actions/deploy-pages README: recommends a dedicated deploy job that needs the build job.",
+      "actions/upload-pages-artifact README: default artifact name github-pages, retention 1 day."
+    ],
+    "inferences": [
+      "A split workflow makes 're-run failed jobs' a working recovery; it does not prevent the first-attempt API lag."
+    ],
+    "evidence": [
+      "https://github.com/actions/deploy-pages",
+      "https://github.com/actions/upload-pages-artifact",
+      "https://github.com/slopryno/slopworks/actions/runs/45590949118"
+    ]
+  },
+  {
+    "id": "r-critic-2026-11-25-pages-split-premortem",
+    "date": "2026-11-25",
+    "role": "Critic",
+    "kind": "rotation",
+    "confidence": "medium",
+    "status": "reported",
+    "fresh_until": "2026-12-25",
+    "question": "Challenge: is splitting pages.yml worth changing the deploy path after one failure?",
+    "outcome": "no-change",
+    "finding": "Not yet. Pages has failed once in its last 200 runs (Oct 17 to Nov 25), and a fresh workflow_dispatch or the next merge already redeploys. The split only improves recovery, not the first failure, and it touches the one workflow that ships the live site. A premortem on the change finds more risk than the problem it fixes. Log it in the AAR and split only if Pages fails again.",
+    "facts": [
+      "gh run list pages.yml, last 200 runs since Oct 17: 199 success, 1 failure (45590949118, Nov 25).",
+      "Klein (HBR 2007): a premortem assumes the project has already failed and asks the team to list plausible reasons why.",
+      "Morning scan Nov 25 hand-off names gh workflow run pages.yml --ref main as the fix."
+    ],
+    "inferences": [
+      "Base rate is about 0.5% of runs; a runbook line is the cheaper first step."
+    ],
+    "evidence": [
+      "https://hbr.org/2007/09/performing-a-project-premortem",
+      "https://github.com/slopryno/slopworks/actions/workflows/pages.yml"
+    ]
   }
 ]

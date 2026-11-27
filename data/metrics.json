@@ -12,7 +12,7 @@
     "aars": 21,
     "escaped": 14,
     "blocks": 1,
-    "refusals": 43,
+    "refusals": 45,
     "blast_checked": 5,
     "blast_matched": 5
   },
@@ -328,7 +328,7 @@
       "main_failures": 2,
       "reverts": 0,
       "blocks": 0,
-      "refusals": 0
+      "refusals": 2
     },
     {
       "date": "2026-11-26",
@@ -519,7 +519,7 @@
       "target": "Every new tracker item logged within 1 day, and 2 features demoed within 7 days of entry",
       "source": "data/updates.json, data/cases.json",
       "status": "in progress",
-      "now": "2 of 18 new tracker items logged within 1 day since Mon Oct 19; 0 of 2 demos."
+      "now": "2 of 19 new tracker items logged within 1 day since Mon Oct 19; 0 of 2 demos."
     }
   ]
 }
