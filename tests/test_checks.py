@@ -202,9 +202,10 @@ class ReviewGate(unittest.TestCase):
 
     def test_design_branch_with_html_only_still_needs_verdicts(self):
         c = [{"body": "Sign-off: Trial\nok"}, {"body": "Sign-off: Lens\nok"}]
-        errs = check.review_gate(["site/team/index.html"], "Maker: Forge", c, branch="bot/design-deck-grid")
+        errs = check.screenshot_team_review_errors(["site/team/index.html"], "Maker: Forge", c, branch="bot/design-deck-grid")
         self.assertTrue(any("missing whole-screen verdict from Polish" in e for e in errs))
-        self.assertEqual(check.review_gate(["site/team/index.html"], "Maker: Forge", c, branch="bot/data-morning"), [])
+        self.assertEqual(check.screenshot_team_review_errors(["site/team/index.html"], "Maker: Forge", c, branch="bot/data-morning"), [])
+        self.assertEqual(check.review_gate(["site/team/index.html"], "Maker: Forge", c), [])  # HTML-only, no branch: not visible
 
     def test_maker_verdict_does_not_count(self):
         sign = [{"body": "Sign-off: Lens\nok"}, {"body": "Sign-off: Trial\nok"}]

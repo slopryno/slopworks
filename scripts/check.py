@@ -608,7 +608,7 @@ def screenshot_team_review_errors(paths, pr_body, comments, branch=None):
     return errs
 
 
-def review_gate(paths, pr_body, comments, branch=None):
+def review_gate(paths, pr_body, comments):
     errs = []
     m = re.search(r"^\s*Maker:\s*(\S+)", pr_body or "", re.M | re.I)
     if not m:
@@ -631,7 +631,7 @@ def review_gate(paths, pr_body, comments, branch=None):
     if latest.get("Critic") == "block" and "Critic" not in required_roles(paths):
         # Critic's before/after pass (Ryno, 2026-11-13 3:13 AM ET): a BLOCKER holds any PR until Critic signs off.
         errs.append("Critic blocked this PR (BLOCKER); a later 'Sign-off: Critic' clears it")
-    errs += screenshot_team_review_errors(paths, pr_body, comments, branch)
+    errs += screenshot_team_review_errors(paths, pr_body, comments)
     return sorted(set(errs))
 
 
@@ -1983,7 +1983,9 @@ def run_review_gate():
     if review_deferred(pr):
         print("review-gate: draft PR, sign-offs are checked when it is marked ready for review")
         return []
-    errs = review_gate(changed(base, head), pr.get("body") or "", comments, branch=(pr.get("head") or {}).get("ref"))
+    errs = review_gate(changed(base, head), pr.get("body") or "", comments)
+    vis = screenshot_team_review_errors(changed(base, head), pr.get("body") or "", comments, branch=(pr.get("head") or {}).get("ref"))
+    errs += [e for e in vis if e not in errs]
     errs += blast_radius_errors(changed(base, head), pr.get("body") or "", comments)
     errs += lens_derived_errors(comments)
     errs += coauthor_text_errors(pr.get("body") or "", f"PR {os.environ.get('PR', '?')} body")
