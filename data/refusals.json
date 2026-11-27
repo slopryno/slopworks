@@ -213,5 +213,15 @@
     "at": "2026-11-19T06:33-05:00",
     "branch": "bot/feature-data-morning-1119",
     "reason": "python3 -m unittest discover -s tests -q failed:"
+  },
+  {
+    "at": "2026-11-25T07:32-05:00",
+    "branch": "bot/feature-pstack-pins-1125",
+    "reason": "main is red: the latest Pages run on main failed; fix it and write the same-day AAR first"
+  },
+  {
+    "at": "2026-11-25T19:59-05:00",
+    "branch": "bot/feature-tempo-week-window",
+    "reason": "tempo: slowed mode allows 3 merged PRs today and 4 already count; wait for tomorrow (ET) or 10 clean PRs (scripts/tempo.py, data/tempo.json); not a same-day-AAR-only PR: changes more than a same-day A"
   }
 ]

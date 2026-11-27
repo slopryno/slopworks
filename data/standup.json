@@ -502,5 +502,37 @@
     "did": "Nov 19: #213 approval quoted on the PR",
     "doing": "#146 and #213 decision records",
     "blockers": "needs a feature PR slot"
+  },
+  {
+    "id": "s-2026-11-26-scout",
+    "date": "2026-11-26",
+    "role": "Scout",
+    "did": "Nov 25: changelog read, 1.2.3 still newest",
+    "doing": "1.3.0 (Nov 24) added from the official changelog",
+    "blockers": "none"
+  },
+  {
+    "id": "s-2026-11-26-forge",
+    "date": "2026-11-26",
+    "role": "Forge",
+    "did": "Nov 25: morning scan #216; Pages split #218",
+    "doing": "day 1 data PR: 1.3.0, research and ideas i65 to i67, refusal rows",
+    "blockers": "records refresh waits on #220"
+  },
+  {
+    "id": "s-2026-11-26-sweep",
+    "date": "2026-11-26",
+    "role": "Sweep",
+    "did": "Nov 25: failed-deploy AAR drafted",
+    "doing": "AAR PR after xp ledger regen",
+    "blockers": "preflight red on lessons anchors"
+  },
+  {
+    "id": "s-2026-11-26-assistant",
+    "date": "2026-11-26",
+    "role": "Assistant",
+    "did": "Nov 25: #220 opened with CEO override records",
+    "doing": "#146 and #213 decision records",
+    "blockers": "#220 needs Ryno's merge"
   }
 ]
