@@ -52,3 +52,4 @@ nav.scrub a{flex:0 0 auto;display:inline-flex;align-items:center;min-height:44px
 .deck-browse>summary{cursor:pointer;font-weight:600;padding:.6rem .8rem;min-height:44px;display:flex;align-items:center;border:1px solid var(--line);border-radius:12px;background:var(--card);list-style:none}
 .deck-browse>summary::-webkit-details-marker{display:none}
 .deck-browse .set-detail{font-size:.9rem;margin:.1rem 0 .5rem}
+@media(min-width:48rem){.deck-browse[open] .slot{justify-content:center}.deck-browse[open] .flip{max-width:26rem;width:100%}}

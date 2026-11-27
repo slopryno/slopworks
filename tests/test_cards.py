@@ -124,6 +124,9 @@ class Cards(unittest.TestCase):
         self.assertIn("scroll-snap-type:x mandatory", css)
         self.assertNotIn(".list-toggle", css)
         self.assertIn("prefers-reduced-motion", css)
+        # Desktop: cap the open-deck card so it does not stretch to 100cqw (Ryno, Nov 27 3:01 PM ET).
+        self.assertIn("@media(min-width:48rem)", css)
+        self.assertIn(".deck-browse[open] .flip{max-width:26rem;width:100%}", css)
 
     def test_team_does_not_load_page_only_css(self):
         """pages.css holds rules Team never matches. Team must not link it, or the 100 KB budget pays for Home/Receipts/chat styles."""
