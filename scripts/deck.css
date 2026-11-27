@@ -53,3 +53,4 @@ nav.scrub a{flex:0 0 auto;display:inline-flex;align-items:center;min-height:44px
 .deck-browse>summary::-webkit-details-marker{display:none}
 .deck-browse .set-detail{font-size:.9rem;margin:.1rem 0 .5rem}
 @media(min-width:48rem){.deck-browse[open] .slot{justify-content:center}.deck-browse[open] .flip{max-width:26rem;width:100%}}
+@media(min-width:48rem){.deck-browse[open] .deck-wrap{overflow-x:hidden;overflow-y:auto;scroll-snap-type:none}.deck-browse[open] .deck{position:static;display:grid;grid-template-columns:repeat(auto-fill,26rem);justify-content:center;gap:1rem;width:auto;height:auto;padding:1rem 0}.deck-browse[open] .slot{flex:none;width:auto;height:40rem;padding:0;scroll-snap-align:none;scroll-snap-stop:normal}}
