@@ -1,5 +1,5 @@
 """Trial's tests for same-day after-action reviews (approved by Ryno 2026-10-17). Written to fail on each rule they guard."""
-import copy, datetime as dt, json, sys, unittest
+import copy, datetime as dt, json, re, sys, unittest
 from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
@@ -32,6 +32,11 @@ class Aars(unittest.TestCase):
             self.assertTrue(check.validate(a, check.load_schema("aars")), k)
         self.assertTrue(check.validate(bad(trigger="vibes"), check.load_schema("aars")))
         self.assertTrue(errs(bad(why={"text": "Because reasons happened.", "cite": []})))
+
+    def test_every_schema_trigger_has_a_lessons_label(self):
+        src = (ROOT / "scripts/build.py").read_text()
+        for trig in check.load_schema("aars")["items"]["properties"]["trigger"]["enum"]:
+            self.assertRegex(src, rf'"{re.escape(trig)}": "[^"]+"')
 
     def test_cites_must_be_real(self):
         self.assertTrue(errs(bad(why={"text": "Made-up cause for testing.", "cite": ["pr:999"]})))

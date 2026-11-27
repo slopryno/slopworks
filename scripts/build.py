@@ -933,7 +933,7 @@ def build():
 
     # Lessons: same-day after-action reviews (AARs), approved by Ryno 2026-10-17. Blameless, and every field cites a real artifact.
     TRIGGERS = {"revert": "Revert", "failed-deploy": "Failed deploy", "post-deploy-check": "Failed post-deploy check", "ci-main": "CI failure on main",
-                "ci-pr": "CI failure on a PR", "data-correction": "Published-data correction", "block-upheld": "Block proven right", "incident": "Incident"}
+                "ci-pr": "CI failure on a PR", "data-correction": "Published-data correction", "block-upheld": "Block proven right", "incident": "Incident", "oath-miss": "Missed oath"}
     def cite(ref):
         k, v = ref.split(":", 1)
         if k == "pr":

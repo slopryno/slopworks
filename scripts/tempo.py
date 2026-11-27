@@ -9,7 +9,8 @@ On the trip day, only PRs merged after the trip count toward the slowed day's 3 
 a trip can't reopen a day that already used its slowed limit.
 
 A CEO tempo window (data/tempo_windows.json, Ryno 2026-11-25 7:49 PM ET) removes the daily ceiling for a set week; every
-gate stays, and any trip ends it.
+gate stays, and any trip ends it. An oath-miss AAR (a judged, missed roadmap oath) is not a trip: it does not slow
+the day or end a tempo window.
 
 Everything here comes from records (data/wins.json, data/aars.json), so anyone can re-derive the mode.
 wins.py writes data/tempo.json; check.py and tests recompute it; bot.py pr refuses a PR over today's limit.
@@ -19,7 +20,7 @@ from datetime import datetime
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-TRIPS = ("revert", "failed-deploy", "ci-main", "incident", "data-correction")
+TRIPS = ("revert", "failed-deploy", "ci-main", "incident", "data-correction")  # not oath-miss (or ci-pr, block-upheld, post-deploy-check)
 LIMITS = {"normal": {"prs_per_day": 18, "sprints_per_day": 3, "prs_per_sprint": 6},
           "slowed": {"prs_per_day": 3, "sprints_per_day": 1, "prs_per_sprint": 3}}
 CLEAN_NEEDED = 10
