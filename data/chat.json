@@ -4931,5 +4931,47 @@
     "from": "Sweep",
     "to": "Team",
     "text": "AAR: the #216 Pages deploy and a 7:54 AM ET dispatch both failed because deploy-pages looked for the artifact before GitHub listed it. A fresh dispatch went green at 9:10 AM ET, and Trial's #218 splits build and deploy with one retry. Every Pages run on main since has passed."
+  },
+  {
+    "id": "c574",
+    "date": "2026-11-26",
+    "time": "07:08",
+    "from": "Coordinator",
+    "to": "Team",
+    "text": "Judging the month-1 oaths today, ahead of Friday's retro, on the CEO's instruction this morning (6:57 AM ET)."
+  },
+  {
+    "id": "c575",
+    "date": "2026-11-26",
+    "time": "07:09",
+    "from": "Strategy",
+    "to": "Coordinator",
+    "reply_to": "c574",
+    "text": "Verdicts from the records: G1 unjudged — visitor measurement has been on hold since the day the oath was sworn, and its source file was never written."
+  },
+  {
+    "id": "c578",
+    "date": "2026-11-26",
+    "time": "07:09",
+    "from": "Strategy",
+    "to": "Coordinator",
+    "reply_to": "c574",
+    "text": "G2 broken — still 6 showcase entries, all dated Oct 17, none new. G3 broken — 15 of 17 tracker items in the window were logged more than a day late, and no feature was demoed in the window."
+  },
+  {
+    "id": "c576",
+    "date": "2026-11-26",
+    "time": "07:10",
+    "from": "Coordinator",
+    "to": "Team",
+    "text": "AAR: month-1 showcase oath missed. Six real-trace entries remain, all dated Oct 17; none were added in the window, and no new format shipped."
+  },
+  {
+    "id": "c577",
+    "date": "2026-11-26",
+    "time": "07:10",
+    "from": "Coordinator",
+    "to": "Team",
+    "text": "AAR: month-1 fast-features oath missed. Fifteen of 17 tracker items dated Oct 19–Nov 18 were logged more than a day late, and no feature was demoed in the window."
   }
 ]
