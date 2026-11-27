@@ -1,15 +1,15 @@
 {
-  "as_of": "2026-11-19T10:23-05:00",
-  "newest_day": "2026-11-19",
-  "days_of_history": 21,
-  "ci_window_start": "2026-10-20T00:14-04:00",
+  "as_of": "2026-11-26T06:58-05:00",
+  "newest_day": "2026-11-26",
+  "days_of_history": 23,
+  "ci_window_start": "2026-10-20T10:28-04:00",
   "totals": {
-    "prs": 206,
+    "prs": 212,
     "open_to_merge_min": 2,
     "ci_catches": 25,
-    "main_failures": 0,
+    "main_failures": 2,
     "reverts": 0,
-    "aars": 18,
+    "aars": 19,
     "escaped": 14,
     "blocks": 1,
     "refusals": 43,
@@ -18,7 +18,7 @@
   },
   "pace": {
     "mode": "slowed",
-    "clean_prs": 0,
+    "clean_prs": 2,
     "clean_needed": 10
   },
   "days": [
@@ -315,6 +315,34 @@
       "reverts": 0,
       "blocks": 0,
       "refusals": 2
+    },
+    {
+      "date": "2026-11-25",
+      "prs": 5,
+      "open_to_merge_min": 245,
+      "escaped": 0,
+      "corrections": 0,
+      "aars": 1,
+      "ci_catches": 0,
+      "ci_recorded": true,
+      "main_failures": 2,
+      "reverts": 0,
+      "blocks": 0,
+      "refusals": 0
+    },
+    {
+      "date": "2026-11-26",
+      "prs": 1,
+      "open_to_merge_min": 645,
+      "escaped": 0,
+      "corrections": 0,
+      "aars": 0,
+      "ci_catches": 0,
+      "ci_recorded": true,
+      "main_failures": 0,
+      "reverts": 0,
+      "blocks": 0,
+      "refusals": 0
     }
   ],
   "sprints": [
@@ -395,17 +423,17 @@
     {
       "key": "prs",
       "label": "Merged PRs",
-      "prev": 7,
-      "new": 3,
+      "prev": 5,
+      "new": 1,
       "direction": "down",
       "verdict": null
     },
     {
       "key": "open_to_merge_min",
       "label": "Median open to merge, minutes",
-      "prev": 15,
-      "new": 7,
-      "direction": "down",
+      "prev": 245,
+      "new": 645,
+      "direction": "up",
       "verdict": null
     },
     {
@@ -427,26 +455,26 @@
     {
       "key": "aars",
       "label": "AARs per 10 PRs",
+      "prev": 2.0,
+      "new": 0.0,
+      "direction": "down",
+      "verdict": "better"
+    },
+    {
+      "key": "ci_catches",
+      "label": "CI catches before merge per 10 PRs",
       "prev": 0.0,
       "new": 0.0,
       "direction": "flat",
       "verdict": null
     },
     {
-      "key": "ci_catches",
-      "label": "CI catches before merge per 10 PRs",
-      "prev": 7.1,
-      "new": 3.3,
-      "direction": "down",
-      "verdict": null
-    },
-    {
       "key": "main_failures",
       "label": "Failures on main",
-      "prev": 0,
+      "prev": 2,
       "new": 0,
-      "direction": "flat",
-      "verdict": null
+      "direction": "down",
+      "verdict": "better"
     },
     {
       "key": "reverts",
