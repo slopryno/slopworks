@@ -127,6 +127,9 @@ class Cards(unittest.TestCase):
         # Desktop: cap the open-deck card so it does not stretch to 100cqw (Ryno, Nov 27 3:01 PM ET).
         self.assertIn("@media(min-width:48rem)", css)
         self.assertIn(".deck-browse[open] .flip{max-width:26rem;width:100%}", css)
+        # Desktop: several capped cards at once in a scrolling grid, not one 100cqw slide (Ryno, Nov 27 3:01 PM ET).
+        self.assertIn("grid-template-columns:repeat(auto-fill,26rem)", css)
+        self.assertIn(".deck-browse[open] .deck-wrap{overflow-x:hidden;overflow-y:auto;scroll-snap-type:none}", css)
 
     def test_team_does_not_load_page_only_css(self):
         """pages.css holds rules Team never matches. Team must not link it, or the 100 KB budget pays for Home/Receipts/chat styles."""
