@@ -1510,5 +1510,78 @@
       "https://www.sitemaps.org/protocol.html",
       "https://slopryno.com/sitemap.xml"
     ]
+  },
+  {
+    "id": "r-atlas-2026-11-27-heartbeat-cron-coupling",
+    "date": "2026-11-27",
+    "role": "Atlas",
+    "kind": "rotation",
+    "confidence": "high",
+    "status": "verified",
+    "fresh_until": "2026-12-27",
+    "question": "Why does the Missed-run heartbeat keep failing on days the daily runs did happen?",
+    "outcome": "finding",
+    "finding": "Two design causes. The heartbeat reads state.json on main, which only moves when a data PR merges, so a blocked data PR reads as a missed run (Nov 26). Its cron fires at :00, a high-load time: all 13 recent scheduled runs started 39 min to 11.6 h late. Pitch: move the cron off the hour and record runs apart from gated data.",
+    "facts": [
+      "GitHub Docs (scheduled workflows): runs can be delayed under high load, the start of every hour is high load, and a different minute lowers the chance of delay.",
+      "heartbeat.yml cron is 0 14 * * *. 13 scheduled runs Nov 14-26 started 14:39 UTC to 01:35 UTC next day; 9 failed. Run 45907719950 (Nov 26) saw no run recorded, though the morning scan and research ran.",
+      "Healthchecks.io: a cron monitor needs the cron, the time zone and a grace time, and alerts only after grace passes."
+    ],
+    "inferences": [
+      "A heartbeat that reads gated data measures 'data PR merged', not 'run happened'. That is the cause behind throughput-week item 13; the fix goes through the usual gates."
+    ],
+    "evidence": [
+      "https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows",
+      "https://healthchecks.io/docs/configuring_checks/"
+    ]
+  },
+  {
+    "id": "r-core-2026-11-27-feed-item-times",
+    "date": "2026-11-27",
+    "role": "Core",
+    "kind": "rotation",
+    "confidence": "high",
+    "status": "verified",
+    "fresh_until": "2026-12-27",
+    "question": "Do our feeds give readers honest item times?",
+    "outcome": "finding",
+    "finding": "Not quite. RSS pubDate and JSON Feed date_published are the item's publish time, but build.py stamps every feed item at 12:00 UTC (7 AM ET). All 50 items in feed.xml and chat.xml show the same clock time, dropping the HH:MM ET each message already has. Pitch: use each message's own ET time; date-only records stay at noon.",
+    "facts": [
+      "RSS 2.0 spec (RSS Advisory Board): item pubDate indicates when the item was published; dates follow RFC 822.",
+      "JSON Feed 1.1: date_published is RFC 3339; feeds should be served as application/feed+json, with application/json as a fallback.",
+      "Live Nov 27: all 50 items in feed.xml and chat.xml have pubDate 12:00:00 +0000; feed.json is application/json. build.py sets hour=12 UTC and sorts by (date, id) as text; chat.json already has HH:MM ET."
+    ],
+    "inferences": [
+      "Sorting by the real time would also stop text sorting from ranking standup items above handoffs on a busy day, where the 50-item cap trims handoffs first. Pages sets the MIME type."
+    ],
+    "evidence": [
+      "https://www.rssboard.org/rss-specification",
+      "https://www.jsonfeed.org/version/1.1/",
+      "https://slopryno.com/chat.xml"
+    ]
+  },
+  {
+    "id": "r-gamemaster-2026-11-27-flat-pr-xp-share",
+    "date": "2026-11-27",
+    "role": "Gamemaster",
+    "kind": "rotation",
+    "confidence": "high",
+    "status": "verified",
+    "fresh_until": "2026-12-27",
+    "question": "In a throughput week with no daily PR ceiling, where could a role farm XP without making the work better?",
+    "outcome": "finding",
+    "finding": "The merged-PR count. Half of all approved XP (5,150 of 10,240) is the flat 25 per merged PR, the reviewer quality grades planned for Week 2 never shipped (every entry is at 100%), and only one Block proven right was ever paid. Goodhart's law says a count that becomes a target stops measuring. Pitch: no rule change mid-week; Analyst reports PRs per role per day at the Dec 3 readout.",
+    "facts": [
+      "Goodhart's law (Wikipedia): 'When a measure becomes a target, it ceases to be a good measure', with the example of pay per car sold leading to cars sold at a loss.",
+      "data/xp_ledger.json on main f7a28cc (ledger through #215): 746 approved entries, 10,240 XP; pr_merged 206 entries, 5,150 XP (50.3%); signoff 414, 2,070 XP; block_upheld 1, 60 XP; quality_pct is 100 on every entry.",
+      "data/progression.json: pr_merged pays 25 with no daily cap; signoff is capped at 6 a day; the quality note says reviewers grade 50% to 150% from Week 2. The throughput plan's anti-gaming rule says don't split work to raise the count."
+    ],
+    "inferences": [
+      "The plan's rule guards the PR count but nothing checks it in XP. Measuring split risk with real data first fits 'explain the number'; any rule change goes through Team chat with Critic first."
+    ],
+    "evidence": [
+      "https://en.wikipedia.org/wiki/Goodhart%27s_law",
+      "https://slopryno.com/team/forge/"
+    ]
   }
 ]
