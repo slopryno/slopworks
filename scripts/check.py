@@ -529,6 +529,85 @@ def _role(name):
     return ALIASES.get(n, n.capitalize())
 
 
+# Whole-team screenshot review (Ryno, 2026-11-27 3:44 PM ET: "Get the whole team to review screenshots every time").
+# Every role with a bots/*.md file; Pixel, Core, Vault and Relay are Forge labels, not separate reviewers.
+TEAM_ROLES = (
+    "Advisor", "Advocate", "Analyst", "Assistant", "Atlas", "Comms",
+    "Coordinator", "Critic", "Forge", "Gamemaster", "Lens", "Librarian",
+    "Polish", "Scoutmaster", "Shield", "Sketch", "Strategy", "Sweep", "Trial",
+)
+# Layout/paint sources. A records refresh that only regenerates HTML does not trip this on its own.
+VISIBLE_PATH_PREFIXES = (
+    "site/style.css", "site/pages.css", "site/sheets.css", "site/tabs.css",
+    "scripts/deck.css", "scripts/cards.css", "scripts/sheets.css",
+    "scripts/avatars.py", "scripts/cards.py", "scripts/sheets.py", "scripts/build.py",
+    "site/assets/",
+)
+VERDICT_HEAD = re.compile(r"^\s*Whole-screen verdict:\s*(\S+)", re.M | re.I)
+VERDICT_SHARE = re.compile(r"\d+\s*%")
+VERDICT_FLAG = re.compile(r"\bFlag:\s*(none|large empty space|broken layout|missing tap cue)\b", re.I)
+VERDICT_WIDTHS = ("1280", "1440", "1920", "390")
+VERDICT_BLOCK_FLAGS = ("large empty space", "broken layout", "missing tap cue")
+
+
+def is_visible_change(paths, branch=None):
+    """True when the PR can change how a page looks: design branches, CSS, or paint/template sources."""
+    if (branch or "").startswith("bot/design-"):
+        return True
+    for p in paths or ():
+        if p.endswith(".css") or p.startswith(VISIBLE_PATH_PREFIXES):
+            return True
+    return False
+
+
+def parse_screenshot_verdict(text):
+    """If this comment is a whole-screen verdict, return (role, flag, errors); otherwise None."""
+    m = VERDICT_HEAD.search(text or "")
+    if not m:
+        return None
+    role = _role(m.group(1))
+    errs = []
+    missing = [w for w in VERDICT_WIDTHS if w not in (text or "")]
+    if missing:
+        errs.append(f"{role}'s whole-screen verdict must name 1280, 1440, 1920 and 390 (missing {', '.join(missing)})")
+    if not VERDICT_SHARE.search(text or ""):
+        errs.append(f"{role}'s whole-screen verdict must state what share of the viewport the content uses (a percentage)")
+    fm = VERDICT_FLAG.search(text or "")
+    if not fm:
+        errs.append(f"{role}'s whole-screen verdict must include Flag: none or Flag: large empty space, broken layout, or missing tap cue")
+        return role, None, errs
+    flag = fm.group(1).lower()
+    return role, flag, errs
+
+
+def screenshot_team_review_errors(paths, pr_body, comments, branch=None):
+    """Visible PRs need a one-line whole-screen verdict from every roster role except the maker (Ryno, 2026-11-27 3:44 PM ET)."""
+    if not is_visible_change(paths, branch):
+        return []
+    m = re.search(r"^\s*Maker:\s*(\S+)", pr_body or "", re.M | re.I)
+    if not m:
+        return []  # review_gate already reports a missing maker
+    maker = _role(m.group(1))
+    latest = {}  # role -> (flag, errors, raw)
+    for c in trusted(comments):
+        parsed = parse_screenshot_verdict(c.get("body", ""))
+        if parsed:
+            latest[parsed[0]] = parsed
+    errs = []
+    need = [r for r in TEAM_ROLES if r != maker]
+    for role in need:
+        if role not in latest:
+            errs.append(f"missing whole-screen verdict from {role} (open 1280, 1440, 1920 and 390 before/after; one line; Flag: none or a blocker)")
+            continue
+        _, flag, verrs = latest[role]
+        errs.extend(verrs)
+        if flag in VERDICT_BLOCK_FLAGS:
+            errs.append(f"{role} flagged {flag} (BLOCKER)")
+    if maker in latest:
+        errs.append(f"{maker} made this PR, so their whole-screen verdict does not count; the rest of the team reviews the screenshots")
+    return errs
+
+
 def review_gate(paths, pr_body, comments):
     errs = []
     m = re.search(r"^\s*Maker:\s*(\S+)", pr_body or "", re.M | re.I)
@@ -552,6 +631,7 @@ def review_gate(paths, pr_body, comments):
     if latest.get("Critic") == "block" and "Critic" not in required_roles(paths):
         # Critic's before/after pass (Ryno, 2026-11-13 3:13 AM ET): a BLOCKER holds any PR until Critic signs off.
         errs.append("Critic blocked this PR (BLOCKER); a later 'Sign-off: Critic' clears it")
+    errs += screenshot_team_review_errors(paths, pr_body, comments)
     return sorted(set(errs))
 
 
@@ -1904,6 +1984,8 @@ def run_review_gate():
         print("review-gate: draft PR, sign-offs are checked when it is marked ready for review")
         return []
     errs = review_gate(changed(base, head), pr.get("body") or "", comments)
+    vis = screenshot_team_review_errors(changed(base, head), pr.get("body") or "", comments, branch=(pr.get("head") or {}).get("ref"))
+    errs += [e for e in vis if e not in errs]
     errs += blast_radius_errors(changed(base, head), pr.get("body") or "", comments)
     errs += lens_derived_errors(comments)
     errs += coauthor_text_errors(pr.get("body") or "", f"PR {os.environ.get('PR', '?')} body")

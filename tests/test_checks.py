@@ -118,6 +118,106 @@ class ReviewGate(unittest.TestCase):
         self.assertEqual(check.review_gate(["data/x.json"], "Maker: Scout", ok + [{"body": "Verdict: Critic\nSIGNIFICANT: x"}]), [])
 
 
+
+    def _verdicts(self, maker="Forge", flag="none", share="70%", skip=()):
+        rows = []
+        for r in check.TEAM_ROLES:
+            if r == maker or r in skip:
+                continue
+            rows.append({"body": (
+                f"Whole-screen verdict: {r} — opened 1280, 1440, 1920, 390; "
+                f"content uses {share} of the 1920 viewport; leftover even side margin; Flag: {flag}"
+            )})
+        return rows
+
+    def test_team_roles_match_bot_files(self):
+        bots = {f.stem.capitalize() for f in (Path(__file__).resolve().parent.parent / "bots").glob("*.md")}
+        self.assertEqual(set(check.TEAM_ROLES), bots)
+
+    def test_data_pr_does_not_need_screenshot_verdicts(self):
+        c = [{"body": "Sign-off: Lens\nChecked: sources."}]
+        self.assertEqual(check.review_gate(["data/x.json"], "Maker: Scout", c), [])
+
+    def test_visible_css_pr_needs_every_role_except_the_maker(self):
+        sign = [{"body": "Sign-off: Lens\nok"}, {"body": "Sign-off: Trial\nok"}]
+        errs = check.review_gate(["site/style.css"], "Maker: Forge", sign)
+        # Lens and Trial are signed; whole-screen verdicts are still missing.
+        missing = [e for e in errs if e.startswith("missing whole-screen verdict from ")]
+        need = [r for r in check.TEAM_ROLES if r != "Forge"]
+        self.assertEqual(sorted(e.rsplit(" from ", 1)[1].split(" (")[0] for e in missing), sorted(need))
+        self.assertFalse(any("Forge" in e and "missing whole-screen verdict" in e for e in errs))
+
+    def test_visible_css_pr_passes_with_verdicts_and_signoffs(self):
+        sign = [{"body": "Sign-off: Lens\nok"}, {"body": "Sign-off: Trial\nok"}]
+        comments = sign + self._verdicts("Forge")
+        self.assertEqual(check.review_gate(["site/style.css"], "Maker: Forge", comments), [])
+
+    def test_verdict_in_the_same_comment_as_a_signoff_counts(self):
+        comments = self._verdicts("Forge")
+        # attach Lens sign-off + verdict in one body
+        comments = [c for c in comments if "Lens" not in c["body"][:40]]
+        comments.append({"body": (
+            "Sign-off: Lens\nChecked.\n"
+            "Whole-screen verdict: Lens — opened 1280, 1440, 1920, 390; content uses 70% of the 1920 viewport; Flag: none"
+        )})
+        comments.append({"body": "Sign-off: Trial\nok"})
+        self.assertEqual(check.review_gate(["scripts/deck.css"], "Maker: Forge", comments), [])
+
+    def test_incomplete_verdict_is_rejected(self):
+        sign = [{"body": "Sign-off: Lens\nok"}, {"body": "Sign-off: Trial\nok"}]
+        comments = sign + self._verdicts("Forge", skip=("Polish",))
+        comments.append({"body": "Whole-screen verdict: Polish — looks fine. Flag: none"})
+        errs = check.review_gate(["site/style.css"], "Maker: Forge", comments)
+        self.assertTrue(any("Polish's whole-screen verdict must name 1280" in e for e in errs))
+        self.assertTrue(any("percentage" in e for e in errs))
+
+    def test_large_empty_space_flag_is_a_blocker(self):
+        sign = [{"body": "Sign-off: Lens\nok"}, {"body": "Sign-off: Trial\nok"}]
+        comments = sign + self._verdicts("Forge", skip=("Critic",))
+        comments.append({"body": (
+            "Whole-screen verdict: Critic — opened 1280, 1440, 1920, 390; "
+            "content uses 22% of the 1920 viewport; large side gutters; Flag: large empty space"
+        )})
+        errs = check.review_gate(["scripts/deck.css"], "Maker: Forge", comments)
+        self.assertIn("Critic flagged large empty space (BLOCKER)", errs)
+        # a later Flag: none from Critic clears it
+        comments.append({"body": (
+            "Whole-screen verdict: Critic — opened 1280, 1440, 1920, 390; "
+            "content uses 70% of the 1920 viewport; leftover even margin; Flag: none"
+        )})
+        self.assertEqual(check.review_gate(["scripts/deck.css"], "Maker: Forge", comments), [])
+
+    def test_outsider_verdict_is_ignored(self):
+        sign = [{"body": "Sign-off: Lens\nok"}, {"body": "Sign-off: Trial\nok"}]
+        comments = sign + self._verdicts("Forge", skip=("Polish",))
+        comments.append({
+            "body": (
+                "Whole-screen verdict: Polish — opened 1280, 1440, 1920, 390; "
+                "content uses 70% of the 1920 viewport; Flag: none"
+            ),
+            "author_association": "NONE",
+        })
+        errs = check.review_gate(["site/style.css"], "Maker: Forge", comments)
+        self.assertTrue(any("missing whole-screen verdict from Polish" in e for e in errs))
+
+    def test_design_branch_with_html_only_still_needs_verdicts(self):
+        c = [{"body": "Sign-off: Trial\nok"}, {"body": "Sign-off: Lens\nok"}]
+        errs = check.screenshot_team_review_errors(["site/team/index.html"], "Maker: Forge", c, branch="bot/design-deck-grid")
+        self.assertTrue(any("missing whole-screen verdict from Polish" in e for e in errs))
+        self.assertEqual(check.screenshot_team_review_errors(["site/team/index.html"], "Maker: Forge", c, branch="bot/data-morning"), [])
+        self.assertEqual(check.review_gate(["site/team/index.html"], "Maker: Forge", c), [])  # HTML-only, no branch: not visible
+
+    def test_maker_verdict_does_not_count(self):
+        sign = [{"body": "Sign-off: Lens\nok"}, {"body": "Sign-off: Trial\nok"}]
+        comments = sign + self._verdicts("Forge")
+        comments.append({"body": (
+            "Whole-screen verdict: Forge — opened 1280, 1440, 1920, 390; "
+            "content uses 70% of the 1920 viewport; Flag: none"
+        )})
+        errs = check.review_gate(["site/style.css"], "Maker: Forge", comments)
+        self.assertTrue(any("Forge made this PR, so their whole-screen verdict does not count" in e for e in errs))
+
+
 class GuardrailGate(unittest.TestCase):
     def test_loosening(self):
         self.assertTrue(check.loosening("data/schema/allowed_handles.json", added=['"someone",'], removed=[]))

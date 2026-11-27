@@ -13,6 +13,10 @@
                                     a full set on the box (scripts/shots.py N, outside the checkout), the PR's
                                     review-shots-N CI artifact, and Polish and Trial sign-offs that
                                     say which screenshots they looked at and what problems they found (AAR 2026-10-17)
+                                    a visible change (CSS, deck/sheet/card paint, bot/design-*) also needs --verdict
+                                    Role=FILE for every roster role except the maker: a one-line Whole-screen verdict
+                                    after opening 1280, 1440, 1920 and 390, with Flag: none or a blocker
+                                    (Ryno, 2026-11-27 3:44 PM ET: "Get the whole team to review screenshots every time")
                                     a PR touching shared paths (check.BLAST_SHARED) also needs --blast FILE: Atlas's
                                     blast-radius note (bots/atlas.md), posted as Atlas's comment; the maker can't be Atlas (i46)
   bot.py resume N [--signoff Role=FILE ...] [--blast FILE] [--merge]
@@ -368,6 +372,62 @@ def plan_review(n, kind, paths, signoffs, root=ROOT, full=None, removed=()):
         raise Refused("visual review incomplete:\n- " + "\n- ".join(problems))
 
 
+
+def plan_screenshot_verdicts(maker, paths, signoffs, verdicts, branch=None):
+    """verdicts: {role: text}. For a visible PR, every TEAM_ROLES member except the maker must have a
+    valid Whole-screen verdict, either in these files or already inside a sign-off body."""
+    if not check.is_visible_change(paths, branch):
+        if verdicts:
+            raise Refused("this PR is not a visible change, so it does not take --verdict files")
+        return []
+    maker = role(maker)
+    texts = []
+    # Sign-off bodies may already carry a Whole-screen verdict: line.
+    covered = {}
+    for who, text in (signoffs or {}).items():
+        parsed = check.parse_screenshot_verdict(text)
+        if parsed:
+            covered[parsed[0]] = text
+    for who, text in (verdicts or {}).items():
+        r = role(who)
+        if r == maker:
+            raise Refused(f"{maker} made this PR, so it can't post a whole-screen verdict; the rest of the team reviews the screenshots")
+        body = text if check.VERDICT_HEAD.search(text or "") else f"Whole-screen verdict: {r} — {text}"
+        parsed = check.parse_screenshot_verdict(body)
+        if not parsed or parsed[0] != r:
+            raise Refused(f"the verdict text for {r} must start with 'Whole-screen verdict: {r}'")
+        covered[r] = body
+    comments = []
+    need = [r for r in check.TEAM_ROLES if r != maker]
+    missing = []
+    for r in need:
+        if r not in covered:
+            missing.append(r)
+            continue
+        body = covered[r]
+        parsed = check.parse_screenshot_verdict(body)
+        _, flag, errs = parsed
+        if errs:
+            raise Refused(f"{r}'s whole-screen verdict: " + "; ".join(errs))
+        if flag in check.VERDICT_BLOCK_FLAGS:
+            raise Refused(f"{r} flagged {flag} (BLOCKER); do not open or merge until a follow-up fix and a Flag: none verdict")
+        # Skip posting when this verdict already lives in a sign-off we are posting.
+        sign_body = (signoffs or {}).get(r) or (signoffs or {}).get(r.lower())
+        # signoffs keys may be role names as passed; also check any value containing this verdict head
+        already = False
+        for raw in (signoffs or {}).values():
+            sp = check.parse_screenshot_verdict(raw)
+            if sp and sp[0] == r:
+                already = True
+                break
+        if not already:
+            comments.append(body if body.strip().startswith("Whole-screen") or body.strip().lower().startswith("whole-screen") else body)
+    if missing:
+        raise Refused("missing whole-screen verdict from " + ", ".join(missing) +
+                      " (visible PR: every role except the maker opens 1280, 1440, 1920 and 390 and posts one line with Flag: none)")
+    return comments
+
+
 def artifact_problems(n, artifacts):
     """artifacts: the run's list from the GitHub API. The PR needs its unexpired review-shots-<n> artifact."""
     ok = [a for a in artifacts if a.get("name") == ARTIFACT.format(n=n) and not a.get("expired")]
@@ -600,11 +660,16 @@ def _cmd_pr(a):
     for s in a.signoff or []:
         who, _, f = s.partition("=")
         signoffs[who] = Path(f).read_text()
+    verdicts = {}
+    for s in a.verdict or []:
+        who, _, f = s.partition("=")
+        verdicts[who] = Path(f).read_text()
     comments = plan_signoffs(a.maker, paths, signoffs)  # refuse before anything is pushed
     blast = plan_blast(a.maker, paths, Path(a.blast).read_text() if a.blast else None)
     if blast:
         comments = [blast] + comments
     plan_review(a.review, m.group(1), paths, signoffs, removed=[p for p in paths if not (ROOT / p).exists()])
+    comments += plan_screenshot_verdicts(a.maker, paths, signoffs, verdicts, branch=branch)
     main_red(json.loads(gh("run", "list", "--branch", "main", "--limit", "10", "--json", "name,status,conclusion")))
     mode, used, limit = tempo_gate(merged_now(), json.loads((ROOT / "data/aars.json").read_text()), datetime.datetime.now(ET), branch,
                                    exception=aar_exception(paths, next_pr_number()))
@@ -645,6 +710,7 @@ def main(argv=None):
     r = sub.add_parser("pr"); r.add_argument("--maker", required=True); r.add_argument("--title", required=True)
     r.add_argument("--body", required=True); r.add_argument("--signoff", action="append"); r.add_argument("--merge", action="store_true")
     r.add_argument("--review", type=int); r.add_argument("--blast")
+    r.add_argument("--verdict", action="append")
     u = sub.add_parser("resume"); u.add_argument("pr", type=int); u.add_argument("--signoff", action="append")
     u.add_argument("--blast"); u.add_argument("--merge", action="store_true")
     k = sub.add_parser("blast-check"); k.add_argument("--pr", type=int, required=True); k.add_argument("--by", required=True)

@@ -20,4 +20,6 @@ Maker: <!-- role name, e.g. Forge -->
 
 **Sign-offs needed:** <!-- from scripts/bot.py roles for these paths; maker cannot sign off -->
 
+**Whole-team screenshot review (visible PRs):** If this PR changes how a page looks (CSS, deck/sheet/card layout, avatars, `bot/design-*`, or other paint/template sources), every roster role except the maker must open the full-page before/after screenshots at 1280, 1440, 1920 and 390 and post a one-line `Whole-screen verdict: <role>` that states the viewport share and ends with `Flag: none` or `Flag: large empty space`, `broken layout`, or `missing tap cue`. A blocking flag holds the merge. After deploy, the same roles post the same form of verdict again on the PR (Ryno, Fri Nov 27 3:44 PM ET: "Get the whole team to review screenshots every time"). Leave N/A if nothing visible changed.
+
 **Trailers:** Do not add `Co-authored-by:` lines. Keep Claude Code `includeCoAuthoredBy: false`.

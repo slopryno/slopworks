@@ -178,6 +178,39 @@ if __name__ == "__main__":
     unittest.main()
 
 
+
+def _one_line(role, flag="none", share="70%"):
+    return (f"Whole-screen verdict: {role} — opened 1280, 1440, 1920, 390; "
+            f"content uses {share} of the 1920 viewport; leftover even side margin; Flag: {flag}")
+
+
+class ScreenshotVerdicts(unittest.TestCase):
+    def test_data_pr_does_not_take_verdicts(self):
+        self.assertEqual(bot.plan_screenshot_verdicts("Scout", ["data/x.json"], {"Lens": "ok"}, {}), [])
+        with self.assertRaisesRegex(bot.Refused, "does not take --verdict"):
+            bot.plan_screenshot_verdicts("Scout", ["data/x.json"], {"Lens": "ok"}, {"Polish": _one_line("Polish")})
+
+    def test_visible_pr_refuses_until_every_role_has_a_line(self):
+        with self.assertRaisesRegex(bot.Refused, "missing whole-screen verdict from"):
+            bot.plan_screenshot_verdicts("Forge", ["scripts/deck.css"], {}, {})
+        verdicts = {r: _one_line(r) for r in check.TEAM_ROLES if r != "Forge"}
+        comments = bot.plan_screenshot_verdicts("Forge", ["scripts/deck.css"], {}, verdicts)
+        self.assertEqual(len(comments), len(check.TEAM_ROLES) - 1)
+
+    def test_flag_is_a_blocker(self):
+        verdicts = {r: _one_line(r) for r in check.TEAM_ROLES if r != "Forge"}
+        verdicts["Polish"] = _one_line("Polish", flag="large empty space", share="22%")
+        with self.assertRaisesRegex(bot.Refused, "Polish flagged large empty space"):
+            bot.plan_screenshot_verdicts("Forge", ["site/style.css"], {}, verdicts)
+
+    def test_signoff_body_can_carry_the_verdict(self):
+        verdicts = {r: _one_line(r) for r in check.TEAM_ROLES if r not in {"Forge", "Trial"}}
+        signoffs = {"Trial": "Sign-off: Trial\n" + _one_line("Trial")}
+        comments = bot.plan_screenshot_verdicts("Forge", ["scripts/deck.css"], signoffs, verdicts)
+        self.assertFalse(any(check.parse_screenshot_verdict(c)[0] == "Trial" for c in comments))
+        self.assertEqual(len(comments), len(check.TEAM_ROLES) - 2)  # maker + Trial already in sign-off
+
+
 class GhRetry(unittest.TestCase):
     """Forge ops: bot.py gh() backs off on 429 / secondary rate limit / 5xx; other 4xx fail immediately."""
 
