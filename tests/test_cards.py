@@ -90,6 +90,18 @@ class Cards(unittest.TestCase):
         self.assertRegex(css, r"prefers-reduced-motion:reduce\)\{[^{]*\.sh::after[^{]*\{animation:none")
         self.assertIn(".lead .lk{--a:#b8860b}", ceo.css("normal"))
 
+    def test_flip_pill_on_the_back_is_a_clickable_44px_control(self):
+        # Ryno, Nov 27 8:33 PM ET: users must be able to click and see something. The front pill is
+        # pointer-events:none; once a card is flipped the summary shrinks to the top band, so the pill needs
+        # its own live, 44px target or tapping "Flip" on the back does nothing.
+        css = (Path(__file__).resolve().parent.parent / "scripts/deck.css").read_text()
+        rules = [r for r in re.findall(r"([^{}]+)\{([^{}]*)\}", css) if ".flip[open]>summary::after" in r[0]]
+        self.assertTrue(rules, "no .flip[open]>summary::after rule")
+        body = ";".join(r[1] for r in rules)
+        self.assertIn("pointer-events:auto", body)
+        self.assertIn("min-width:44px", body)
+        self.assertIn("min-height:44px", body)
+
     def test_holiday_scenes_stay_off_the_team_css(self):
         # Team deck uses season avatar SVGs; .g-* holiday scenes stay on character sheets (budget).
         stems = stems_of(self.spec)
