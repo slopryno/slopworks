@@ -179,9 +179,12 @@ if __name__ == "__main__":
 
 
 
+CLICK_OK = "Click: Flip button on a card; Sees: the back face fills the card, readable; Goes: stays on this page; In view: yes"
+
+
 def _one_line(role, flag="none", share="70%"):
     return (f"Whole-screen verdict: {role} — opened 1280, 1440, 1920, 390; "
-            f"content uses {share} of the 1920 viewport; leftover even side margin; Flag: {flag}")
+            f"content uses {share} of the 1920 viewport; leftover even side margin; {CLICK_OK}; Flag: {flag}")
 
 
 class ScreenshotVerdicts(unittest.TestCase):
@@ -209,6 +212,18 @@ class ScreenshotVerdicts(unittest.TestCase):
         comments = bot.plan_screenshot_verdicts("Forge", ["scripts/deck.css"], signoffs, verdicts)
         self.assertFalse(any(check.parse_screenshot_verdict(c)[0] == "Trial" for c in comments))
         self.assertEqual(len(comments), len(check.TEAM_ROLES) - 2)  # maker + Trial already in sign-off
+
+    def test_verdict_without_click_answers_is_refused(self):
+        verdicts = {r: _one_line(r) for r in check.TEAM_ROLES if r != "Forge"}
+        verdicts["Polish"] = "Whole-screen verdict: Polish — opened 1280, 1440, 1920, 390; content uses 70% of the 1920 viewport; Flag: none"
+        with self.assertRaisesRegex(bot.Refused, "Polish's whole-screen verdict: .*click questions"):
+            bot.plan_screenshot_verdicts("Forge", ["site/style.css"], {}, verdicts)
+
+    def test_in_view_no_is_a_blocker(self):
+        verdicts = {r: _one_line(r) for r in check.TEAM_ROLES if r != "Forge"}
+        verdicts["Polish"] = _one_line("Polish").replace("In view: yes", "In view: no")
+        with self.assertRaisesRegex(bot.Refused, "Polish flagged click shows nothing"):
+            bot.plan_screenshot_verdicts("Forge", ["site/style.css"], {}, verdicts)
 
 
 class GhRetry(unittest.TestCase):
