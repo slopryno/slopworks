@@ -550,6 +550,31 @@ VERDICT_WIDTHS = ("1280", "1440", "1920", "390")
 VERDICT_BLOCK_FLAGS = ("large empty space", "broken layout", "missing tap cue")
 
 
+# Click questions (Ryno, 2026-11-27 8:33 PM ET: "Can users actually see anything if they click? That should be a main
+# question everytime, where should users click and what should be shown to them or where should they be navigated to?
+# When looking at UI/UX those questions must always have an answer"). Every whole-screen verdict also answers them.
+VERDICT_BLOCK_FLAGS += ("click shows nothing",)
+CLICK_PARTS = (
+    ("Click", re.compile(r"\bClick:\s*([^;\n]{4,})", re.I), "where users click (name the exact tap target, or 'n/a: nothing tappable changed')"),
+    ("Sees", re.compile(r"\bSees:\s*([^;\n]{4,})", re.I), "what they see after the click"),
+    ("Goes", re.compile(r"\bGoes:\s*([^;\n]{4,})", re.I), "where they are navigated (a page, or 'stays on this page')"),
+)
+CLICK_IN_VIEW = re.compile(r"\bIn view:\s*(yes|no)\b", re.I)
+
+
+def click_answer_errors(role, text):
+    """The three click questions plus 'In view: yes|no' (visible, in the viewport, not clipped or off-screen).
+    Returns (errors, shows_nothing). 'In view: no' is a BLOCKER (Flag 'click shows nothing')."""
+    errs = []
+    for label, rx, what in CLICK_PARTS:
+        if not rx.search(text or ""):
+            errs.append(f"{role}'s whole-screen verdict must answer the click questions: add '{label}: ...' ({what})")
+    iv = CLICK_IN_VIEW.search(text or "")
+    if not iv:
+        errs.append(f"{role}'s whole-screen verdict must say 'In view: yes' or 'In view: no' (is what the click shows visible in the viewport, not clipped or off-screen?)")
+    return errs, bool(iv and iv.group(1).lower() == "no")
+
+
 def is_visible_change(paths, branch=None):
     """True when the PR can change how a page looks: design branches, CSS, or paint/template sources."""
     if (branch or "").startswith("bot/design-"):
@@ -572,11 +597,15 @@ def parse_screenshot_verdict(text):
         errs.append(f"{role}'s whole-screen verdict must name 1280, 1440, 1920 and 390 (missing {', '.join(missing)})")
     if not VERDICT_SHARE.search(text or ""):
         errs.append(f"{role}'s whole-screen verdict must state what share of the viewport the content uses (a percentage)")
+    click_errs, shows_nothing = click_answer_errors(role, text)
+    errs += click_errs
     fm = VERDICT_FLAG.search(text or "")
     if not fm:
         errs.append(f"{role}'s whole-screen verdict must include Flag: none or Flag: large empty space, broken layout, or missing tap cue")
         return role, None, errs
     flag = fm.group(1).lower()
+    if shows_nothing and flag == "none":
+        flag = "click shows nothing"
     return role, flag, errs
 
 

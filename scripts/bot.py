@@ -17,6 +17,9 @@
                                     Role=FILE for every roster role except the maker: a one-line Whole-screen verdict
                                     after opening 1280, 1440, 1920 and 390, with Flag: none or a blocker
                                     (Ryno, 2026-11-27 3:44 PM ET: "Get the whole team to review screenshots every time")
+                                    each verdict also answers the click questions: "Click: ...; Sees: ...; Goes: ...; In view: yes|no"
+                                    (Ryno, 2026-11-27 8:33 PM ET: "where should users click and what should be shown to them or
+                                    where should they be navigated to? ... those questions must always have an answer")
                                     a PR touching shared paths (check.BLAST_SHARED) also needs --blast FILE: Atlas's
                                     blast-radius note (bots/atlas.md), posted as Atlas's comment; the maker can't be Atlas (i46)
   bot.py resume N [--signoff Role=FILE ...] [--blast FILE] [--merge]

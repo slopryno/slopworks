@@ -4,6 +4,8 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "scripts"))
 import check  # noqa: E402
 
+CLICK_OK = "Click: Flip button on a card; Sees: the back face fills the card, readable; Goes: stays on this page; In view: yes"
+
 ENTRY = {"id": "1", "date": "2026-10-01", "added": "2026-10-15", "added_by": "Scout",
          "status": "confirmed", "area": "app", "title": "T", "summary": "S",
          "source": "https://x.com/bot/status/1"}
@@ -126,7 +128,7 @@ class ReviewGate(unittest.TestCase):
                 continue
             rows.append({"body": (
                 f"Whole-screen verdict: {r} — opened 1280, 1440, 1920, 390; "
-                f"content uses {share} of the 1920 viewport; leftover even side margin; Flag: {flag}"
+                f"content uses {share} of the 1920 viewport; leftover even side margin; {CLICK_OK}; Flag: {flag}"
             )})
         return rows
 
@@ -158,7 +160,7 @@ class ReviewGate(unittest.TestCase):
         comments = [c for c in comments if "Lens" not in c["body"][:40]]
         comments.append({"body": (
             "Sign-off: Lens\nChecked.\n"
-            "Whole-screen verdict: Lens — opened 1280, 1440, 1920, 390; content uses 70% of the 1920 viewport; Flag: none"
+            "Whole-screen verdict: Lens — opened 1280, 1440, 1920, 390; content uses 70% of the 1920 viewport; " + CLICK_OK + "; Flag: none"
         )})
         comments.append({"body": "Sign-off: Trial\nok"})
         self.assertEqual(check.review_gate(["scripts/deck.css"], "Maker: Forge", comments), [])
@@ -176,14 +178,14 @@ class ReviewGate(unittest.TestCase):
         comments = sign + self._verdicts("Forge", skip=("Critic",))
         comments.append({"body": (
             "Whole-screen verdict: Critic — opened 1280, 1440, 1920, 390; "
-            "content uses 22% of the 1920 viewport; large side gutters; Flag: large empty space"
+            "content uses 22% of the 1920 viewport; large side gutters; " + CLICK_OK + "; Flag: large empty space"
         )})
         errs = check.review_gate(["scripts/deck.css"], "Maker: Forge", comments)
         self.assertIn("Critic flagged large empty space (BLOCKER)", errs)
         # a later Flag: none from Critic clears it
         comments.append({"body": (
             "Whole-screen verdict: Critic — opened 1280, 1440, 1920, 390; "
-            "content uses 70% of the 1920 viewport; leftover even margin; Flag: none"
+            "content uses 70% of the 1920 viewport; leftover even margin; " + CLICK_OK + "; Flag: none"
         )})
         self.assertEqual(check.review_gate(["scripts/deck.css"], "Maker: Forge", comments), [])
 
@@ -193,7 +195,7 @@ class ReviewGate(unittest.TestCase):
         comments.append({
             "body": (
                 "Whole-screen verdict: Polish — opened 1280, 1440, 1920, 390; "
-                "content uses 70% of the 1920 viewport; Flag: none"
+                "content uses 70% of the 1920 viewport; " + CLICK_OK + "; Flag: none"
             ),
             "author_association": "NONE",
         })
@@ -212,10 +214,40 @@ class ReviewGate(unittest.TestCase):
         comments = sign + self._verdicts("Forge")
         comments.append({"body": (
             "Whole-screen verdict: Forge — opened 1280, 1440, 1920, 390; "
-            "content uses 70% of the 1920 viewport; Flag: none"
+            "content uses 70% of the 1920 viewport; " + CLICK_OK + "; Flag: none"
         )})
         errs = check.review_gate(["site/style.css"], "Maker: Forge", comments)
         self.assertTrue(any("Forge made this PR, so their whole-screen verdict does not count" in e for e in errs))
+
+    def test_verdict_without_click_answers_is_rejected(self):
+        # Ryno, Nov 27 8:33 PM ET: where to click, what they see, where it goes must always have an answer.
+        sign = [{"body": "Sign-off: Lens\nok"}, {"body": "Sign-off: Trial\nok"}]
+        comments = sign + self._verdicts("Forge", skip=("Polish",))
+        comments.append({"body": (
+            "Whole-screen verdict: Polish — opened 1280, 1440, 1920, 390; content uses 70% of the 1920 viewport; Flag: none"
+        )})
+        errs = check.review_gate(["site/style.css"], "Maker: Forge", comments)
+        for label in ("Click:", "Sees:", "Goes:"):
+            self.assertTrue(any(f"Polish's whole-screen verdict must answer the click questions: add '{label}" in e for e in errs), label)
+        self.assertTrue(any("Polish's whole-screen verdict must say 'In view: yes' or 'In view: no'" in e for e in errs))
+
+    def test_click_shows_nothing_is_a_blocker(self):
+        sign = [{"body": "Sign-off: Lens\nok"}, {"body": "Sign-off: Trial\nok"}]
+        comments = sign + self._verdicts("Forge", skip=("Polish",))
+        comments.append({"body": (
+            "Whole-screen verdict: Polish — opened 1280, 1440, 1920, 390; content uses 70% of the 1920 viewport; "
+            "Click: Flip on the Forge card; Sees: back is scrolled off-screen below the fold; Goes: stays on this page; "
+            "In view: no; Flag: none"
+        )})
+        errs = check.review_gate(["site/style.css"], "Maker: Forge", comments)
+        self.assertTrue(any("Polish flagged click shows nothing (BLOCKER)" in e for e in errs))
+        comments[-1] = {"body": comments[-1]["body"].replace("In view: no", "In view: yes")}
+        self.assertEqual(check.review_gate(["site/style.css"], "Maker: Forge", comments), [])
+
+    def test_na_click_answer_is_accepted(self):
+        text = ("Whole-screen verdict: Polish — opened 1280, 1440, 1920, 390; content uses 70% of the 1920 viewport; "
+                "Click: n/a: nothing tappable changed; Sees: same page, no new content; Goes: stays on this page; In view: yes; Flag: none")
+        self.assertEqual(check.parse_screenshot_verdict(text), ("Polish", "none", []))
 
 
 class GuardrailGate(unittest.TestCase):
