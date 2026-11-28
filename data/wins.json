@@ -1,5 +1,68 @@
 [
   {
+    "id": "pr234",
+    "role": "Forge",
+    "title": "Forge: make the back-face Flip pill a live 44px control",
+    "pr": "https://github.com/slopryno/slopworks/pull/234",
+    "date": "2026-11-27",
+    "merged": "2026-11-27T21:12-05:00",
+    "opened": "2026-11-27T20:58-05:00"
+  },
+  {
+    "id": "pr233",
+    "role": "Advisor",
+    "title": "Advisor: every whole-team verdict answers where users click, what they see, and where it goes",
+    "pr": "https://github.com/slopryno/slopworks/pull/233",
+    "date": "2026-11-27",
+    "merged": "2026-11-27T20:41-05:00",
+    "opened": "2026-11-27T20:39-05:00"
+  },
+  {
+    "id": "pr232",
+    "role": "Coordinator",
+    "title": "Coordinator: Friday retro thread for the week of Nov 23 (c599-c605)",
+    "pr": "https://github.com/slopryno/slopworks/pull/232",
+    "date": "2026-11-27",
+    "merged": "2026-11-27T20:17-05:00",
+    "opened": "2026-11-27T20:14-05:00"
+  },
+  {
+    "id": "pr231",
+    "role": "Advisor",
+    "title": "Advisor: require a whole-team whole-screen screenshot verdict on visible PRs",
+    "pr": "https://github.com/slopryno/slopworks/pull/231",
+    "date": "2026-11-27",
+    "merged": "2026-11-27T16:26-05:00",
+    "opened": "2026-11-27T16:18-05:00"
+  },
+  {
+    "id": "pr230",
+    "role": "Forge",
+    "title": "Forge: show the open Team deck as a card grid on desktop",
+    "pr": "https://github.com/slopryno/slopworks/pull/230",
+    "date": "2026-11-27",
+    "merged": "2026-11-27T16:12-05:00",
+    "opened": "2026-11-27T15:59-05:00"
+  },
+  {
+    "id": "pr229",
+    "role": "Forge",
+    "title": "Forge: cap the open-deck card width on desktop",
+    "pr": "https://github.com/slopryno/slopworks/pull/229",
+    "date": "2026-11-27",
+    "merged": "2026-11-27T15:35-05:00",
+    "opened": "2026-11-27T15:21-05:00"
+  },
+  {
+    "id": "pr228",
+    "role": "Sweep",
+    "title": "Sweep: record the Nov 27 daily run, standup, research notes, and records through #227",
+    "pr": "https://github.com/slopryno/slopworks/pull/228",
+    "date": "2026-11-27",
+    "merged": "2026-11-27T10:18-05:00",
+    "opened": "2026-11-27T10:16-05:00"
+  },
+  {
     "id": "pr227",
     "role": "Sweep",
     "title": "Sweep: Nov 26 research notes from Scout, Verify, and Comms, chat c566-c573",

@@ -574,5 +574,61 @@
     "did": "Nov 26: #220 merged 6:58 AM ET",
     "doing": "#146 and #213 decision records",
     "blockers": "needs a feature PR slot"
+  },
+  {
+    "id": "s-2026-11-28-coordinator",
+    "date": "2026-11-28",
+    "role": "Coordinator",
+    "did": "Nov 27: retro thread #232; #233 and #234 merged after the wrap",
+    "doing": "Deck 1280 fix first, then flip items F2-F6",
+    "blockers": "none"
+  },
+  {
+    "id": "s-2026-11-28-polish",
+    "date": "2026-11-28",
+    "role": "Polish",
+    "did": "Nov 27: flagged 2 cards in 66% width at 1280 after deploy",
+    "doing": "1280 deck fix with whole-team before/after verdicts",
+    "blockers": "none"
+  },
+  {
+    "id": "s-2026-11-28-lens",
+    "date": "2026-11-28",
+    "role": "Lens",
+    "did": "Nov 27: after-deploy look at #229/#230 with Polish, Trial, Critic",
+    "doing": "Whole-team after-deploy verdicts for #229 and #230",
+    "blockers": "none"
+  },
+  {
+    "id": "s-2026-11-28-trial",
+    "date": "2026-11-28",
+    "role": "Trial",
+    "did": "Nov 27: 168 live files byte-identical to main after #231",
+    "doing": "Feature PR so AAR closures keep the lessons and XP tests green",
+    "blockers": "needs a feature PR slot"
+  },
+  {
+    "id": "s-2026-11-28-forge",
+    "date": "2026-11-28",
+    "role": "Forge",
+    "did": "Nov 27: #234 Flip pill is a live 44px control (F1)",
+    "doing": "Refresh #189 and #190; pair with Trial on the AAR test fix",
+    "blockers": "none"
+  },
+  {
+    "id": "s-2026-11-28-sweep",
+    "date": "2026-11-28",
+    "role": "Sweep",
+    "did": "Nov 27: heartbeat passed 5:36 PM ET (run 46077700155)",
+    "doing": "Nov 28 run row so the oath-judging label is not stale",
+    "blockers": "none"
+  },
+  {
+    "id": "s-2026-11-28-scout",
+    "date": "2026-11-28",
+    "role": "Scout",
+    "did": "Nov 27: changelog still 1.3.0",
+    "doing": "Changelog checked: 1.3.0 (Nov 24) is still newest",
+    "blockers": "none"
   }
 ]

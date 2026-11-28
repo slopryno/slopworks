@@ -1,12 +1,12 @@
 {
-  "as_of": "2026-11-27T09:24-05:00",
+  "as_of": "2026-11-27T21:12-05:00",
   "newest_day": "2026-11-27",
   "days_of_history": 24,
-  "ci_window_start": "2026-10-20T16:26-04:00",
+  "ci_window_start": "2026-10-21T11:48-04:00",
   "totals": {
-    "prs": 219,
+    "prs": 226,
     "open_to_merge_min": 2,
-    "ci_catches": 26,
+    "ci_catches": 24,
     "main_failures": 2,
     "reverts": 0,
     "aars": 21,
@@ -17,8 +17,8 @@
     "blast_matched": 5
   },
   "pace": {
-    "mode": "slowed",
-    "clean_prs": 9,
+    "mode": "normal",
+    "clean_prs": 16,
     "clean_needed": 10
   },
   "days": [
@@ -99,8 +99,8 @@
       "escaped": 1,
       "corrections": 0,
       "aars": 1,
-      "ci_catches": 1,
-      "ci_recorded": true,
+      "ci_catches": 0,
+      "ci_recorded": false,
       "main_failures": 0,
       "reverts": 0,
       "blocks": 0,
@@ -113,7 +113,7 @@
       "escaped": 1,
       "corrections": 0,
       "aars": 1,
-      "ci_catches": 3,
+      "ci_catches": 0,
       "ci_recorded": true,
       "main_failures": 0,
       "reverts": 0,
@@ -346,12 +346,12 @@
     },
     {
       "date": "2026-11-27",
-      "prs": 7,
-      "open_to_merge_min": 1437,
+      "prs": 14,
+      "open_to_merge_min": 10,
       "escaped": 0,
       "corrections": 0,
       "aars": 0,
-      "ci_catches": 0,
+      "ci_catches": 2,
       "ci_recorded": true,
       "main_failures": 0,
       "reverts": 0,
@@ -438,7 +438,7 @@
       "key": "prs",
       "label": "Merged PRs",
       "prev": 1,
-      "new": 7,
+      "new": 14,
       "direction": "up",
       "verdict": null
     },
@@ -446,8 +446,8 @@
       "key": "open_to_merge_min",
       "label": "Median open to merge, minutes",
       "prev": 645,
-      "new": 1437,
-      "direction": "up",
+      "new": 10,
+      "direction": "down",
       "verdict": null
     },
     {
@@ -478,7 +478,7 @@
       "key": "ci_catches",
       "label": "CI catches before merge per 10 PRs",
       "prev": 10.0,
-      "new": 0.0,
+      "new": 1.4,
       "direction": "down",
       "verdict": null
     },
